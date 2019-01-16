@@ -13,8 +13,9 @@ import { SearchAndSort } from '@folio/stripes/smart-components';
 const INITIAL_RESULT_COUNT = 100;
 
 export default class PatronRequests extends React.Component {
+
   static manifest = Object.freeze({
-    agreements: {
+    patronrequests: {
       type: 'okapi',
       path: 'rs/patronrequests',
       records: 'results',
@@ -27,7 +28,6 @@ export default class PatronRequests extends React.Component {
   });
 
   static propTypes = {
-    match: PropTypes.object.isRequired,
     resources: PropTypes.object,
     mutator: PropTypes.object,
   }
