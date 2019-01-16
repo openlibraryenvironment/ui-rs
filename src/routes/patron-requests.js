@@ -1,16 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
+import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Headline,
   Pane,
   Paneset
 } from '@folio/stripes-components';
+import { SearchAndSort } from '@folio/stripes/smart-components';
+
+const INITIAL_RESULT_COUNT = 100;
 
 export default class PatronRequests extends React.Component {
+  static manifest = Object.freeze({
+    agreements: {
+      type: 'okapi',
+      path: 'rs/patronrequests',
+      records: 'results',
+      recordsRequired: '%{resultCount}',
+      perRequest: 100,
+      limitParam: 'perPage',
+      query: {},
+      resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    }
+  });
+
   static propTypes = {
     match: PropTypes.object.isRequired,
+    resources: PropTypes.object,
+    mutator: PropTypes.object,
   }
 
   constructor(props) {
@@ -24,22 +43,45 @@ export default class PatronRequests extends React.Component {
   }
 
   render() {
+    const { mutator, resources } = this.props;
+    const path = '/rs/patronrequests';
     return (
-      <Paneset static>
-        <Pane defaultWidth="20%" paneTitle="Examples">
-          <Headline size="small">Paneset and Panes</Headline>
-          These columns are created with Paneset and Pane components.
-          <hr />
-          <div data-test-example-page-home>
-            <Link to="/rs">home page</Link>
-          </div>
-        </Pane>
-        <Pane defaultWidth="80%" paneTitle="Some Stripes Components">
-          <Headline size="small" margin="medium">Button with modal</Headline>
-          <hr />
-          <Headline size="small" margin="medium">More...</Headline>
-        </Pane>
-      </Paneset>
-    );
+      <React.Fragment>
+        <SearchAndSort 
+	  key="patronrequests"
+          objectName="patronrequest"
+          initialResultCount={INITIAL_RESULT_COUNT}
+          resultCountIncrement={INITIAL_RESULT_COUNT}
+          viewRecordPerms="module.rs.enabled"
+          newRecordPerms="module.rs.enabled"
+          parentResources={{
+            ...resources,
+            records: resources.patronrequests,
+          }}
+          parentMutator={{
+            ...mutator,
+            records: mutator.patronrequests,
+          }}
+          showSingleResult
+          visibleColumns={[
+            'id',
+            'title',
+            'patronReference',
+          ]}
+          columnMapping={{
+            id: <FormattedMessage id="ui-rs.patronrequests.id" />,
+            title: <FormattedMessage id="ui-rs.patronrequests.title" />,
+            patronReference: <FormattedMessage id="ui-rs.patronrequests.patronReference" />
+          }}
+          columnWidths={{
+            id: 300,
+            title: 200,
+            patronReference: 120,
+          }}
+          resultsFormatter={{
+          }}
+        />
+      </React.Fragment>
+    )
   }
 }
