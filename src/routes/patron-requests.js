@@ -10,21 +10,31 @@ import {
 } from '@folio/stripes-components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
+import ViewPatronRequest from '../components/patron-request/view-patron-request';
+import packageInfo from '../../package';
+
+
 const INITIAL_RESULT_COUNT = 100;
+
+const filterConfig = [
+];
+
 
 export default class PatronRequests extends React.Component {
 
   static manifest = Object.freeze({
-    patronrequests: {
-      type: 'okapi',
-      path: 'rs/patronrequests',
-      records: 'results',
-      recordsRequired: '%{resultCount}',
-      perRequest: 100,
-      limitParam: 'perPage',
-      query: {},
-      resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    }
+    // patronrequests: {
+    //   type: 'okapi',
+    //   path: 'rs/patronrequests',
+    //   records: 'results',
+    //   recordsRequired: '%{resultCount}',
+    //   perRequest: 100,
+    //   limitParam: 'perPage',
+    //   query: {},
+    //   resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    // },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    query: {},
   });
 
   static propTypes = {
@@ -45,13 +55,20 @@ export default class PatronRequests extends React.Component {
   render() {
     const { mutator, resources } = this.props;
     const path = '/rs/patronrequests';
+
+    packageInfo.stripes.route = path;
+    packageInfo.stripes.home = path;
+
     return (
       <React.Fragment>
         <SearchAndSort 
 	  key="patronrequests"
           objectName="patronrequest"
+	  packageInfo={packageInfo}
+	  filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
+	  viewRecordComponent={ViewPatronRequest}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms="module.rs.enabled"
           parentResources={{
