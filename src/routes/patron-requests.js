@@ -23,16 +23,19 @@ const filterConfig = [
 export default class PatronRequests extends React.Component {
 
   static manifest = Object.freeze({
-    // patronrequests: {
-    //   type: 'okapi',
-    //   path: 'rs/patronrequests',
-    //   records: 'results',
-    //   recordsRequired: '%{resultCount}',
-    //   perRequest: 100,
-    //   limitParam: 'perPage',
-    //   query: {},
-    //   resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    // },
+    patronrequests: {
+      type: 'okapi',
+      path: 'rs/patronrequests',
+      params: {
+        stats:"true"
+      },
+      records: 'results',
+      recordsRequired: '%{resultCount}',
+      perRequest: 100,
+      limitParam: 'perPage',
+      query: {},
+      resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     query: {},
   });
@@ -53,6 +56,7 @@ export default class PatronRequests extends React.Component {
   }
 
   render() {
+    console.log("Render PatronRequests");
     const { mutator, resources } = this.props;
     const path = '/rs/patronrequests';
 

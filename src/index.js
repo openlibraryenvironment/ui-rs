@@ -24,6 +24,7 @@ class Rs extends React.Component {
     super(props);
     console.log("Attempt to connect %o",PatronRequests);
     this.connectedPatronRequests = props.stripes.connect(PatronRequests);
+    console.log("Connected %o",PatronRequests);
   }
 
   render() {
