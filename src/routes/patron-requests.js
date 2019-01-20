@@ -34,11 +34,19 @@ export default class PatronRequests extends React.Component {
       recordsRequired: '%{resultCount}',
       perRequest: 100,
       limitParam: 'perPage',
-      query: {},
       resultCount: { initialValue: INITIAL_RESULT_COUNT },
     },
+    selectedPatronRequest: {
+      type: 'okapi',
+      path: 'rs/patronrequests/${selectedPatronRequestId}', // eslint-disable-line no-template-curly-in-string
+      fetch: false,
+    },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
+
+    // If this (query) isn't here, then we get this.props.parentMutator.query is undefined in the UI
     query: {},
+
+    selectedPatronRequestId: { initialValue: '' },
   });
 
   static propTypes = {
@@ -57,9 +65,10 @@ export default class PatronRequests extends React.Component {
   }
 
   handleUpdate = (patronRequest) => {
-    console.log("handleUpdate");
+    console.log("handleUpdate %o",patronRequest);
+    this.props.mutator.selectedPatronRequestId.replace(patronRequest.id);
+    return this.props.mutator.selectedPatronRequest.PUT(patronRequest);
   }
-
 
   render() {
     const { mutator, resources } = this.props;
