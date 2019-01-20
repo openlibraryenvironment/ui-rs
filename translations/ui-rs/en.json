@@ -5,5 +5,10 @@
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
-  "settings.some-feature.message": "These are your settings for some app feature."
+  "settings.some-feature.message": "These are your settings for some app feature.",
+  "patronrequests.id": "Request Id",
+  "patronrequests.title": "Title",
+  "patronrequests.patronReference": "Patron",
+  "patronrequests.state": "Current State",
+  "patronrequests.serviceType": "Service Type"
 }

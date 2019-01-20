@@ -88,18 +88,26 @@ export default class PatronRequests extends React.Component {
             'id',
             'title',
             'patronReference',
+            'state',
+            'serviceType',
           ]}
           columnMapping={{
             id: <FormattedMessage id="ui-rs.patronrequests.id" />,
             title: <FormattedMessage id="ui-rs.patronrequests.title" />,
-            patronReference: <FormattedMessage id="ui-rs.patronrequests.patronReference" />
+            patronReference: <FormattedMessage id="ui-rs.patronrequests.patronReference" />,
+            state: <FormattedMessage id="ui-rs.patronrequests.state" />,
+            serviceType: <FormattedMessage id="ui-rs.patronrequests.serviceType" />,
           }}
           columnWidths={{
             id: 300,
             title: 200,
             patronReference: 120,
+            state: 120,
+            serviceType: 120,
           }}
           resultsFormatter={{
+            state: a => a.state && a.state.value,
+            serviceType: a => a.serviceType && a.serviceType.value,
           }}
         />
       </React.Fragment>
