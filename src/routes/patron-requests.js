@@ -12,7 +12,7 @@ import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import ViewPatronRequest from '../components/patron-request/view-patron-request';
 import packageInfo from '../../package';
-
+import getSASParams from '../util/getSASParams';
 
 const INITIAL_RESULT_COUNT = 100;
 
@@ -26,9 +26,9 @@ export default class PatronRequests extends React.Component {
     patronrequests: {
       type: 'okapi',
       path: 'rs/patronrequests',
-      params: {
-        stats:"true"
-      },
+      params: getSASParams({
+        searchKey: 'title',
+      }),
       records: 'results',
       recordsRequired: '%{resultCount}',
       perRequest: 100,
