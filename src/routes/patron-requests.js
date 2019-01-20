@@ -11,6 +11,7 @@ import {
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import ViewPatronRequest from '../components/patron-request/view-patron-request';
+import EditPatronRequest from '../components/patron-request/edit-patron-request';
 import packageInfo from '../../package';
 import getSASParams from '../util/getSASParams';
 
@@ -55,11 +56,14 @@ export default class PatronRequests extends React.Component {
     this.toggleModal(false);
   }
 
+  handleUpdate = (patronRequest) => {
+    console.log("handleUpdate");
+  }
+
+
   render() {
-    console.log("Render PatronRequests");
     const { mutator, resources } = this.props;
     const path = '/rs/patronrequests';
-
     packageInfo.stripes.route = path;
     packageInfo.stripes.home = path;
 
@@ -73,8 +77,12 @@ export default class PatronRequests extends React.Component {
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
 	  viewRecordComponent={ViewPatronRequest}
+	  editRecordComponent={EditPatronRequest}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms="module.rs.enabled"
+          detailProps={{
+            onUpdate: this.handleUpdate
+          }}
           parentResources={{
             ...resources,
             records: resources.patronrequests,
