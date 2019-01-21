@@ -51,7 +51,7 @@ export default class PatronRequests extends React.Component {
 
   static propTypes = {
     resources: PropTypes.object,
-    mutator: PropTypes.object,
+    mutator: PropTypes.object
   }
 
   constructor(props) {
