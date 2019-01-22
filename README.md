@@ -6,7 +6,7 @@ This software is distributed under the terms of the Apache License, Version 2.0.
 
 ## Introduction
 
-Congratulations on creating a new Stripes UI app module!  Follow the instructions below to run ui-rs and start your development.
+Congratulations on creating a new Stripes UI app module! Follow the instructions below to run ui-rs and start your development.
 
 ## Prerequisites
 
