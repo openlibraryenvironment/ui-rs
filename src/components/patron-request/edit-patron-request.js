@@ -21,4 +21,4 @@ class EditPatronRequest extends React.Component {
   }
 }
 
-export default EditPatronRequest
+export default EditPatronRequest;

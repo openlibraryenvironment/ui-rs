@@ -45,14 +45,14 @@ class ViewPatronRequest extends React.Component {
       <Pane
         id="pane-view-agreement"
         defaultWidth={this.props.paneWidth}
-        paneTitle={agreement.name}
+        paneTitle='THE TITLE'
         dismissible
-        onClose={this.props.onClose}>
+        onClose={this.props.onClose}
+      >
         <h1>Hello</h1>
       </Pane>
-    )
-
+    );
   }
 }
 
-export default ViewPatronRequest
+export default ViewPatronRequest;
