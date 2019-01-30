@@ -48,7 +48,9 @@
     "displayName": "ui-rs.meta.title",
     "route": "/rs",
     "hasSettings": true,
-    "okapiInterfaces": {},
+    "okapiInterfaces": {
+      "resourcesharing": "1.0"
+    },
     "permissionSets": [
       {
         "permissionName": "module.rs.enabled",
