@@ -22,9 +22,9 @@ class Rs extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log("Attempt to connect %o",PatronRequests);
+    // console.log('Attempt to connect %o',PatronRequests);
     this.connectedPatronRequests = props.stripes.connect(PatronRequests);
-    console.log("Connected %o",PatronRequests);
+    // console.log('Connected %o',PatronRequests);
   }
 
   render() {
@@ -35,15 +35,15 @@ class Rs extends React.Component {
     }
     return (
       <Switch>
-        <Route path={`${match.path}/requests`}
-	       render={() => <this.connectedPatronRequests stripes={stripes} />} 
-	/>
-        <Redirect
-              exact
-              from={`${match.path}`}
-              to={`${match.path}/requests`}
+        <Route
+          path={`${match.path}/requests`}
+          render={() => <this.connectedPatronRequests stripes={stripes} />}
         />
-
+        <Redirect
+          exact
+          from={`${match.path}`}
+          to={`${match.path}/requests`}
+        />
       </Switch>
     );
   }

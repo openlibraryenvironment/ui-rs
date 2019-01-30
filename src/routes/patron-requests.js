@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
-import {
-  Button,
-  Headline,
-  Pane,
-  Paneset
-} from '@folio/stripes-components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import ViewPatronRequest from '../components/patron-request/view-patron-request';
@@ -20,9 +13,7 @@ const INITIAL_RESULT_COUNT = 100;
 const filterConfig = [
 ];
 
-
 export default class PatronRequests extends React.Component {
-
   static manifest = Object.freeze({
     patronrequests: {
       type: 'okapi',
@@ -65,7 +56,7 @@ export default class PatronRequests extends React.Component {
   }
 
   handleUpdate = (patronRequest) => {
-    console.log("handleUpdate %o",patronRequest);
+    // console.log('handleUpdate %o', patronRequest);
     this.props.mutator.selectedPatronRequestId.replace(patronRequest.id);
     return this.props.mutator.selectedPatronRequest.PUT(patronRequest);
   }
@@ -78,15 +69,15 @@ export default class PatronRequests extends React.Component {
 
     return (
       <React.Fragment>
-        <SearchAndSort 
-	  key="patronrequests"
+        <SearchAndSort
+          key="patronrequests"
           objectName="patronrequest"
-	  packageInfo={packageInfo}
-	  filterConfig={filterConfig}
+          packageInfo={packageInfo}
+          filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
-	  viewRecordComponent={ViewPatronRequest}
-	  editRecordComponent={EditPatronRequest}
+          viewRecordComponent={ViewPatronRequest}
+          editRecordComponent={EditPatronRequest}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms="module.rs.enabled"
           detailProps={{
@@ -128,6 +119,6 @@ export default class PatronRequests extends React.Component {
           }}
         />
       </React.Fragment>
-    )
+    );
   }
 }

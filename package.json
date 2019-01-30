@@ -36,9 +36,11 @@
     "sinon": "^6.3.4"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "redux-form": "^7.0.3"
   },
   "peerDependencies": {
     "@folio/stripes": "^1.0.0",
