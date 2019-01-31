@@ -47,6 +47,7 @@
     "type": "app",
     "displayName": "ui-rs.meta.title",
     "route": "/rs",
+    "queryResource": "query",
     "hasSettings": true,
     "okapiInterfaces": {
       "resourcesharing": "1.0"
