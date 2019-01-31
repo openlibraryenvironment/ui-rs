@@ -63,7 +63,7 @@ export default class PatronRequests extends React.Component {
 
   render() {
     const { mutator, resources } = this.props;
-    const path = '/rs/patronrequests';
+    const path = '/rs/requests';
     packageInfo.stripes.route = path;
     packageInfo.stripes.home = path;
 
