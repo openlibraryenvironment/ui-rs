@@ -78,8 +78,8 @@ export default class DirectoryEntries extends React.Component {
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewPatronRequest}
           editRecordComponent={EditPatronRequest}
-          viewRecordPerms="module.rs.enabled"
-          newRecordPerms="module.rs.enabled"
+          viewRecordPerms="module.directory.enabled"
+          newRecordPerms="module.directory.enabled"
           detailProps={{
             onUpdate: this.handleUpdate
           }}
