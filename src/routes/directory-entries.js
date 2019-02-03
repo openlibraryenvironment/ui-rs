@@ -76,8 +76,8 @@ export default class DirectoryEntries extends React.Component {
           filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={ViewPatronRequest}
-          editRecordComponent={EditPatronRequest}
+          viewRecordComponent={ViewDirectoryEntry}
+          editRecordComponent={EditDirectoryEntry}
           viewRecordPerms="module.directory.enabled"
           newRecordPerms="module.directory.enabled"
           detailProps={{
@@ -100,9 +100,9 @@ export default class DirectoryEntries extends React.Component {
           ]}
           columnMapping={{
             id: <FormattedMessage id="ui-directory.entries.id" />,
-            name: <FormattedMessage id="ui-directory.entries.title" />,
-            slug: <FormattedMessage id="ui-directory.entries.patronReference" />,
-            status: <FormattedMessage id="ui-directory.entries.state" />,
+            name: <FormattedMessage id="ui-directory.entries.name" />,
+            slug: <FormattedMessage id="ui-directory.entries.slug" />,
+            status: <FormattedMessage id="ui-directory.entries.status" />,
           }}
           columnWidths={{
             id: 300,
@@ -112,7 +112,7 @@ export default class DirectoryEntries extends React.Component {
             serviceType: 120,
           }}
           resultsFormatter={{
-            state: a => a.state && a.state.value,
+            status: a => a.status && a.status.value,
             serviceType: a => a.serviceType && a.serviceType.value,
           }}
         />

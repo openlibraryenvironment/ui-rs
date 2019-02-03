@@ -7,5 +7,9 @@
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
   "new-app.greeting": "Library Services Directory -- Welcome",
-  "new-app.message":"Library Services Directory"
+  "new-app.message":"Library Services Directory",
+  "entries.id":"Directory Entry Id",
+  "entries.name":"Name",
+  "entries.slug":"SLUG",
+  "entries.status":"Status"
 }

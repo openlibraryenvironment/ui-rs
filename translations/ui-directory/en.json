@@ -6,5 +6,8 @@
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
-  "directory.id": "Request Id"
+  "entries.id":"Directory Entry Id",
+  "entries.name":"Name",
+  "entries.slug":"SLUG",
+  "entries.status":"Status"
 }
