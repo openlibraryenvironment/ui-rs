@@ -1,11 +1,20 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import { FormattedMessage } from 'react-intl';
+
 import {
+  AccordionSet,
   Icon,
+  Layout,
   Pane,
+  Layer,
   Button,
 } from '@folio/stripes/components';
+
+import {
+  DirectoryEntryInfo
+} from './Sections';
 
 class ViewDirectoryEntry extends React.Component {
 
@@ -18,9 +27,18 @@ class ViewDirectoryEntry extends React.Component {
   });
 
   static propTypes = {
+    match: PropTypes.object,
     onClose: PropTypes.func,
+    parentResources: PropTypes.object,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    stripes: PropTypes.object,
   };
+
+  state = {
+    sections: {
+      directoryEntryInfo: true
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -30,6 +48,36 @@ class ViewDirectoryEntry extends React.Component {
   getDirectoryEntry() {
     return get(this.props.resources.selectedDirectoryEntry, ['records', 0], {});
   }
+
+  getSectionProps() {
+    return {
+      directoryEntry: this.getDirectoryEntry(),
+      onToggle: this.handleSectionToggle,
+      stripes: this.props.stripes,
+    };
+  }
+
+  handleSectionToggle = ({ id }) => {
+    this.setState((prevState) => ({
+      sections: {
+        ...prevState.sections,
+        [id]: !prevState.sections[id],
+      }
+    }));
+  }
+
+  renderEditLayer() {
+    const { resources: { query } } = this.props;
+
+    return (
+      <Layer
+        isOpen={query.layer === 'edit'}
+        contentLabel='cant get intl to work'
+      >
+      </Layer>
+    );
+  }
+
 
   getActionMenu({ onToggle }) {
     const items = [];
@@ -68,9 +116,10 @@ class ViewDirectoryEntry extends React.Component {
     );
   }
 
-
   render() {
     const directoryEntry = this.getDirectoryEntry();
+    const sectionProps = this.getSectionProps();
+    const { stripes } = this.props;
 
     return (
       <Pane
@@ -80,10 +129,11 @@ class ViewDirectoryEntry extends React.Component {
         dismissible
         onClose={this.props.onClose}
       >
-        <h1>Hello</h1>
-	<p>
-	    {JSON.stringify(this.getDirectoryEntry())}
-	</p>
+        <AccordionSet>
+          <DirectoryEntryInfo id="directoryEntryInfo" open={this.state.sections.directoryEntryInfo} {...sectionProps} />
+        </AccordionSet>
+        <pre>{JSON.stringify(this.getDirectoryEntry(), null, '\t')}</pre>
+        { this.renderEditLayer() }
       </Pane>
     );
   }
