@@ -96,13 +96,15 @@ export default class DirectoryEntries extends React.Component {
             'id',
             'name',
             'slug',
-            'status'
+            'status',
+            'parent'
           ]}
           columnMapping={{
             id: <FormattedMessage id="ui-directory.entries.id" />,
             name: <FormattedMessage id="ui-directory.entries.name" />,
             slug: <FormattedMessage id="ui-directory.entries.slug" />,
             status: <FormattedMessage id="ui-directory.entries.status" />,
+            parent: <FormattedMessage id="ui-directory.entries.parent" />,
           }}
           columnWidths={{
             id: 300,
@@ -110,10 +112,12 @@ export default class DirectoryEntries extends React.Component {
             patronReference: 120,
             state: 120,
             serviceType: 120,
+            parent: 120,
           }}
           resultsFormatter={{
             status: a => a.status && a.status.value,
             serviceType: a => a.serviceType && a.serviceType.value,
+            parent: a => a.parent && a.parent.name,
           }}
         />
       </React.Fragment>

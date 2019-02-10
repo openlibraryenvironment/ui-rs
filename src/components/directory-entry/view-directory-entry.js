@@ -28,7 +28,7 @@ class ViewDirectoryEntry extends React.Component {
   }
 
   getDirectoryEntry() {
-    return get(this.props.resources.selectedDirectoryEntryId, ['records', 0], {});
+    return get(this.props.resources.selectedDirectoryEntry, ['records', 0], {});
   }
 
   getActionMenu({ onToggle }) {
@@ -81,6 +81,9 @@ class ViewDirectoryEntry extends React.Component {
         onClose={this.props.onClose}
       >
         <h1>Hello</h1>
+	<p>
+	    {JSON.stringify(this.getDirectoryEntry())}
+	</p>
       </Pane>
     );
   }
