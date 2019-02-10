@@ -41,7 +41,7 @@ class DirectoryEntryInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue
-              label='label'
+              label='name'
               value={directoryEntry.name}
             />
           </Col>

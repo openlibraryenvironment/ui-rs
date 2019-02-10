@@ -9,5 +9,6 @@
   "entries.id":"Directory Entry Id",
   "entries.name":"Name",
   "entries.slug":"SLUG",
-  "entries.status":"Status"
+  "entries.status":"Status",
+  "entries.parent":"Parent Entry"
 }
