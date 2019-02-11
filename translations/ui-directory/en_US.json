@@ -12,5 +12,7 @@
   "entries.name":"Name",
   "entries.slug":"SLUG",
   "entries.status":"Status",
-  "entries.parent":"Parent Entry"
+  "entries.parent":"Parent Entry",
+  "entries.tagSummary":"Tags",
+  "entries.symbolSummary":"Symbols"
 }

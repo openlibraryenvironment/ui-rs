@@ -93,26 +93,21 @@ export default class DirectoryEntries extends React.Component {
           }}
           showSingleResult
           visibleColumns={[
-            'name',
-            'slug',
-            'status',
-            'parent'
+            'fullyQualifiedName',
+            'tagSummary',
+            'symbolSummary'
           ]}
           columnMapping={{
-            name: <FormattedMessage id="ui-directory.entries.name" />,
-            slug: <FormattedMessage id="ui-directory.entries.slug" />,
-            status: <FormattedMessage id="ui-directory.entries.status" />,
-            parent: <FormattedMessage id="ui-directory.entries.parent" />,
+            fullyQualifiedName: <FormattedMessage id="ui-directory.entries.name" />,
+            tagSummary: <FormattedMessage id="ui-directory.entries.tagSummary" />,
+            symbolSummary: <FormattedMessage id="ui-directory.entries.symbolSummary" />,
           }}
           columnWidths={{
-            title: 200,
-            patronReference: 120,
-            state: 120,
-            serviceType: 120,
-            parent: 200,
+            fullyQualifiedName: 420,
+            tagSummary: 300,
+            symbolSummary: 300,
           }}
           resultsFormatter={{
-            status: a => a.status && a.status.value,
             parent: a => a.parent && a.parent.name,
           }}
         />
