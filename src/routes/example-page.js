@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import {
   Button,
   Headline,
   Pane,
   Paneset
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 import GreetingModal from '../components/greeting-modal';
 
 /*
@@ -16,10 +15,6 @@ import GreetingModal from '../components/greeting-modal';
 */
 
 export default class ExamplePage extends React.Component {
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-  }
-
   constructor(props) {
     super(props);
     this.toggleModal = this.toggleModal.bind(this);
