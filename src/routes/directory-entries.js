@@ -103,9 +103,9 @@ export default class DirectoryEntries extends React.Component {
             symbolSummary: <FormattedMessage id="ui-directory.entries.symbolSummary" />,
           }}
           columnWidths={{
-            fullyQualifiedName: 420,
-            tagSummary: 300,
-            symbolSummary: 300,
+            fullyQualifiedName: '40%',
+            tagSummary: '30%',
+            symbolSummary: '30%',
           }}
           resultsFormatter={{
             parent: a => a.parent && a.parent.name,
