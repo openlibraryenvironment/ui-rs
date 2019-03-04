@@ -1,12 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
   Icon,
-  Layout,
   Pane,
   Layer,
   Button,
@@ -17,7 +15,6 @@ import {
 } from './Sections';
 
 class ViewDirectoryEntry extends React.Component {
-
   static manifest = Object.freeze({
     selectedDirectoryEntry: {
       type: 'okapi',
@@ -34,15 +31,15 @@ class ViewDirectoryEntry extends React.Component {
     stripes: PropTypes.object,
   };
 
+  constructor(props) {
+    super(props);
+    this.getActionMenu = this.getActionMenu.bind(this);
+  }
+
   state = {
     sections: {
       directoryEntryInfo: true
     }
-  }
-
-  constructor(props) {
-    super(props);
-    this.getActionMenu = this.getActionMenu.bind(this);
   }
 
   getDirectoryEntry() {
@@ -72,9 +69,8 @@ class ViewDirectoryEntry extends React.Component {
     return (
       <Layer
         isOpen={query.layer === 'edit'}
-        contentLabel='cant get intl to work'
-      >
-      </Layer>
+        contentLabel="cant get intl to work"
+      />
     );
   }
 
@@ -119,7 +115,6 @@ class ViewDirectoryEntry extends React.Component {
   render() {
     const directoryEntry = this.getDirectoryEntry();
     const sectionProps = this.getSectionProps();
-    const { stripes } = this.props;
 
     return (
       <Pane
