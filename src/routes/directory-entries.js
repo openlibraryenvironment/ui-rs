@@ -20,6 +20,11 @@ export default class DirectoryEntries extends React.Component {
       path: 'directory/entry',
       params: getSASParams({
         searchKey: 'name',
+        columnMap: {
+          'fullyQualifiedName': 'name',
+          'tagSummary': 'tags[0].value', // XXX doesn't work
+          'symbolSummary': 'symbols[0].symbol', // XXX doesn't work
+        }
       }),
       records: 'results',
       recordsRequired: '%{resultCount}',
