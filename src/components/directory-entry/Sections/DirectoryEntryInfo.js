@@ -1,18 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import {
   Accordion,
-  AccordionSet,
   Col,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
 
-import css from './DirectoryEntryInfo.css';
-
 class DirectoryEntryInfo extends React.Component {
-
   static propTypes = {
     directoryEntry: PropTypes.object,
     id: PropTypes.string,
@@ -21,27 +16,23 @@ class DirectoryEntryInfo extends React.Component {
     stripes: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
+    // eslint-disable-next-line no-console
+    console.log('DirectoryEntryInfo::render %o,%o', this.props, this.props.stripes);
 
-    console.log("DirectoryEntryInfo::render %o,%o",this.props,this.props.stripes);
-
-    const { directoryEntry, stripes } = this.props;
+    const { directoryEntry } = this.props;
 
     return (
       <Accordion
         id={this.props.id}
-        label='label'
+        label="label"
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
         <Row>
           <Col xs={12}>
             <KeyValue
-              label='name'
+              label="name"
               value={directoryEntry.name}
             />
           </Col>
@@ -52,4 +43,3 @@ class DirectoryEntryInfo extends React.Component {
 }
 
 export default DirectoryEntryInfo;
-
