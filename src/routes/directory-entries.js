@@ -19,7 +19,7 @@ export default class DirectoryEntries extends React.Component {
       type: 'okapi',
       path: 'directory/entry',
       params: getSASParams({
-        searchKey: 'title',
+        searchKey: 'name',
       }),
       records: 'results',
       recordsRequired: '%{resultCount}',
