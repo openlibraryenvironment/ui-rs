@@ -114,6 +114,7 @@ export default class DirectoryEntries extends React.Component {
           }}
           resultsFormatter={{
             parent: a => a.parent && a.parent.name,
+            symbolSummary: a => a.symbolSummary || '',
           }}
         />
       </React.Fragment>
