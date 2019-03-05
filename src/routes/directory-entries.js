@@ -22,8 +22,8 @@ export default class DirectoryEntries extends React.Component {
         searchKey: 'name',
         columnMap: {
           'fullyQualifiedName': 'name',
-          'tagSummary': 'tags[0].value', // XXX doesn't work
-          'symbolSummary': 'symbols[0].symbol', // XXX doesn't work
+          'tagSummary': 'tags.value',
+          'symbolSummary': 'symbols.symbol',
         }
       }),
       records: 'results',
