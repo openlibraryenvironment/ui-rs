@@ -27,18 +27,6 @@ const filterConfig = [
       { name: 'Reshare', cql: 'Reshare' },
     ],
   },
-  {
-    label: 'Symbol',
-    name: 's',
-    cql: 'symbols.symbol',
-    // XXX values should be obtained at run-time from back-end
-    values: [
-      { name: 'IDS', cql: 'IDS' },
-      { name: 'OCLC', cql: 'OCLC' },
-      { name: 'PALCI', cql: 'PALCI' },
-      { name: 'RESHARE', cql: 'RESHARE' },
-    ],
-  },
 ];
 
 export default class DirectoryEntries extends React.Component {
