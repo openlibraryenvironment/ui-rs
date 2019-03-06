@@ -11,6 +11,34 @@ import getSASParams from '../util/getSASParams';
 const INITIAL_RESULT_COUNT = 100;
 
 const filterConfig = [
+  {
+    label: 'Tag',
+    name: 't',
+    cql: 'tags.value',
+    // XXX values should be obtained at run-time from back-end
+    values: [
+      // XXX I have to redundantly provide these as both `name` and `cql` to avoid `.label` being appended to the index name
+      { name: 'Branch', cql: 'Branch' },
+      { name: 'Community', cql: 'Community' },
+      { name: 'Consortium', cql: 'Consortium' },
+      { name: 'E-ZBorrow', cql: 'E-ZBorrow' },
+      { name: 'Institution', cql: 'Institution' },
+      { name: 'RapidILL', cql: 'RapidILL' },
+      { name: 'Reshare', cql: 'Reshare' },
+    ],
+  },
+  {
+    label: 'Symbol',
+    name: 's',
+    cql: 'symbols.symbol',
+    // XXX values should be obtained at run-time from back-end
+    values: [
+      { name: 'IDS', cql: 'IDS' },
+      { name: 'OCLC', cql: 'OCLC' },
+      { name: 'PALCI', cql: 'PALCI' },
+      { name: 'RESHARE', cql: 'RESHARE' },
+    ],
+  },
 ];
 
 export default class DirectoryEntries extends React.Component {
@@ -24,7 +52,8 @@ export default class DirectoryEntries extends React.Component {
           'fullyQualifiedName': 'name',
           'tagSummary': 'tags.value',
           'symbolSummary': 'symbols.symbol',
-        }
+        },
+        filterConfig,
       }),
       records: 'results',
       recordsRequired: '%{resultCount}',
