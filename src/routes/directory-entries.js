@@ -2,13 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
-import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
+//import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
+import getSASParams from '../util/getSASParams.js';
 
 import ViewDirectoryEntry from '../components/directory-entry/view-directory-entry';
 import EditDirectoryEntry from '../components/directory-entry/edit-directory-entry';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
+
+const searchableIndexes = [
+//{ label: 'Search all fields', value: '' }, // Don't know yet how to support this
+  { label: 'Name', value: 'name' },
+  { label: 'Tags', value: 'tags.value' },
+  { label: 'Symbols', value: 'symbols.symbol' },
+];
 
 const filterConfig = [
   {
@@ -68,7 +76,12 @@ export default class DirectoryEntries extends React.Component {
   });
 
   static propTypes = {
-    resources: PropTypes.object,
+    resources: PropTypes.shape({
+      query: PropTypes.shape({
+        qindex: PropTypes.string,
+      }),
+    }),
+
     mutator: PropTypes.object
   }
 
@@ -80,6 +93,12 @@ export default class DirectoryEntries extends React.Component {
 
   onClose() {
     this.toggleModal(false);
+  }
+
+  onChangeIndex = (e) => {
+    const qindex = e.target.value;
+    this.props.stripes.logger.log('action', `changed query-index to '${qindex}'`);
+    this.props.mutator.query.update({ qindex });
   }
 
   handleUpdate = (patronRequest) => {
@@ -100,6 +119,9 @@ export default class DirectoryEntries extends React.Component {
           key="dirents"
           objectName="dirents"
           packageInfo={packageInfo}
+          searchableIndexes={searchableIndexes}
+          selectedIndex={_.get(this.props.resources.query, 'qindex')}
+          onChangeIndex={this.onChangeIndex}
           filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
