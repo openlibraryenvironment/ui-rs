@@ -15,7 +15,7 @@ const filterConfig = [
     label: 'Tag',
     name: 't',
     cql: 'tags.value',
-    // XXX values should be obtained at run-time from back-end
+    // XXX values should be obtained at run-time from back-end (PR-149)
     values: [
       'Branch',
       'Community',
