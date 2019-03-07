@@ -2,6 +2,7 @@ export default (options) => (queryParams, pathComponents, resources) => {
   const {
     searchKey = '',
     columnMap = {},
+    filterKeys = {},
     filterConfig = [],
   } = options;
 
@@ -34,22 +35,23 @@ export default (options) => (queryParams, pathComponents, resources) => {
     // together into the same param to act as a union rather than an intersection.
     // e.g., filters=["status.label==Draft||status.label==Active", "priority.label==High"]
     Object.entries(filterMap).forEach(([name, values]) => {
-      const config = filterConfig.find(c => c.name === name);
-      let filterOnLabel = true;
+      let filterKey = `${name}.label`;
+      if (filterKeys[name]) filterKey = filterKeys[name];
 
       const filter = values
         // Check if the `cql` rather than `name` should be used as the filter value.
         .map(value => {
+          const config = filterConfig.find(c => c.name === name);
           if (!config || !config.values) return value;
 
           const valueObject = config.values.find(v => v.name === value);
           if (!valueObject || !valueObject.cql) return value;
 
-          filterOnLabel = false;
+          filterKey = name;
           return valueObject.cql;
         })
         // Construct the actual filter string
-        .map(value => `${config.cql || name}${filterOnLabel ? '.label' : ''}==${value}`)
+        .map(value => `${filterKey}==${value}`)
         .join('||');
 
       params.filters.push(filter);
