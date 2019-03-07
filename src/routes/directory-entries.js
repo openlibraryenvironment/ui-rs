@@ -30,11 +30,7 @@ const filterConfig = [
 
 // Provide the specific mapping that getSASParams wants
 function filterConfig2filterKeys(config) {
-  const res = {};
-  config.forEach(entry => {
-    res[entry.name] = entry.cql;
-  });
-  return res;
+  return config.reduce((a, e) => Object.assign({}, a, { [e.name]: e.cql }), {});
 }
 
 
