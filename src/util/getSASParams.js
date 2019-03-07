@@ -14,7 +14,6 @@ export default (options) => (queryParams, pathComponents, resources) => {
 
   if (query) {
     params.match = qindex || searchKey;
-    console.log('params.match =', params.match);
     params.term = query;
   }
 
