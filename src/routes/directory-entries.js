@@ -17,17 +17,26 @@ const filterConfig = [
     cql: 'tags.value',
     // XXX values should be obtained at run-time from back-end
     values: [
-      // XXX I have to redundantly provide these as both `name` and `cql` to avoid `.label` being appended to the index name
-      { name: 'Branch', cql: 'Branch' },
-      { name: 'Community', cql: 'Community' },
-      { name: 'Consortium', cql: 'Consortium' },
-      { name: 'E-ZBorrow', cql: 'E-ZBorrow' },
-      { name: 'Institution', cql: 'Institution' },
-      { name: 'RapidILL', cql: 'RapidILL' },
-      { name: 'Reshare', cql: 'Reshare' },
+      'Branch',
+      'Community',
+      'Consortium',
+      'E-ZBorrow',
+      'Institution',
+      'RapidILL',
+      'Reshare',
     ],
   },
 ];
+
+// Provide the specific mapping that getSASParams wants
+function filterConfig2filterKeys(config) {
+  const res = {};
+  config.forEach(entry => {
+    res[entry.name] = entry.cql;
+  });
+  return res;
+}
+
 
 export default class DirectoryEntries extends React.Component {
   static manifest = Object.freeze({
@@ -41,7 +50,7 @@ export default class DirectoryEntries extends React.Component {
           'tagSummary': 'tags.value',
           'symbolSummary': 'symbols.symbol',
         },
-        filterConfig,
+        filterKeys: filterConfig2filterKeys(filterConfig),
       }),
       records: 'results',
       recordsRequired: '%{resultCount}',
