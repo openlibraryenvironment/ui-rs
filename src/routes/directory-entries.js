@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
+import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
 import ViewDirectoryEntry from '../components/directory-entry/view-directory-entry';
 import EditDirectoryEntry from '../components/directory-entry/edit-directory-entry';
 import packageInfo from '../../package';
-import getSASParams from '../util/getSASParams';
 
 const INITIAL_RESULT_COUNT = 100;
 
