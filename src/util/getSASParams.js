@@ -13,7 +13,7 @@ export default (options) => (queryParams, pathComponents, resources) => {
   const { query: { qindex, query, filters, sort } } = resources;
 
   if (query) {
-    params.match = qindex || searchKey;
+    params.match = (qindex || searchKey).split(',');
     params.term = query;
   }
 
