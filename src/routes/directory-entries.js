@@ -12,7 +12,7 @@ import packageInfo from '../../package';
 const INITIAL_RESULT_COUNT = 100;
 
 const searchableIndexes = [
-//{ label: 'Search all fields', value: '' }, // Don't know yet how to support this
+  { label: 'Search all fields', value: 'name,tags.value,symbols.symbol' },
   { label: 'Name', value: 'name' },
   { label: 'Tags', value: 'tags.value' },
   { label: 'Symbols', value: 'symbols.symbol' },
