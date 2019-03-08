@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
-//import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
-import getSASParams from '../util/getSASParams.js';
+import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
 import ViewDirectoryEntry from '../components/directory-entry/view-directory-entry';
 import EditDirectoryEntry from '../components/directory-entry/edit-directory-entry';
