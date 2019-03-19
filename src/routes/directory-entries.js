@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -22,16 +23,7 @@ const filterConfig = [
     label: 'Tag',
     name: 't',
     cql: 'tags.value',
-    // XXX values should be obtained at run-time from back-end (PR-149)
-    values: [
-      'Branch',
-      'Community',
-      'Consortium',
-      'E-ZBorrow',
-      'Institution',
-      'RapidILL',
-      'Reshare',
-    ],
+    values: [], // will be filled in by componentDidUpdate
   },
 ];
 
@@ -66,6 +58,10 @@ export default class DirectoryEntries extends React.Component {
       path: 'directory/entry/${directoryEntryId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
     },
+    tags: {
+      type: 'okapi',
+      path: 'directory/tags',
+    },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
 
     // If this (query) isn't here, then we get this.props.parentMutator.query is undefined in the UI
@@ -79,6 +75,9 @@ export default class DirectoryEntries extends React.Component {
       query: PropTypes.shape({
         qindex: PropTypes.string,
       }),
+      tags: PropTypes.shape({
+        records: PropTypes.array,
+      }),
     }),
 
     mutator: PropTypes.object
@@ -87,7 +86,28 @@ export default class DirectoryEntries extends React.Component {
   constructor(props) {
     super(props);
     this.onClose = this.onClose.bind(this);
-    this.state = { };
+    this.state = { initializedFilterConfig: false };
+  }
+
+  componentDidUpdate() {
+    if (!this.state.initializedFilterConfig) {
+      const tags = (this.props.resources.tags || {}).records || [];
+
+      if (tags.length > 0) {
+        const tagsFilterConfig = filterConfig.find(g => g.name === 't');
+        // WS response contains a dummy value and duplicates, and is unsorted
+        tagsFilterConfig.values = _.uniq(
+          tags
+            .map(rec => rec.value)
+            .filter(v => v !== 'system-default')
+            .sort()
+        );
+
+        // Setting state triggers re-render
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({ initializedFilterConfig: true });
+      }
+    }
   }
 
   onClose() {
