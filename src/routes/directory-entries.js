@@ -80,7 +80,13 @@ export default class DirectoryEntries extends React.Component {
       }),
     }),
 
-    mutator: PropTypes.object
+    mutator: PropTypes.object,
+
+    stripes: PropTypes.shape({
+      logger: PropTypes.shape({
+        log: PropTypes.func,
+      }),
+    }),
   }
 
   constructor(props) {
