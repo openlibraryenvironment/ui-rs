@@ -126,9 +126,9 @@ class ViewDirectoryEntry extends React.Component {
         dismissible
         onClose={this.props.onClose}
       >
-        <AccordionSet>
-          <DirectoryEntryInfo id="directoryEntryInfo" open={this.state.sections.directoryEntryInfo} {...sectionProps} />
-          <Accordion id="developerInfo" label="Developer info" open={this.state.sections.developerInfo} {...sectionProps}>
+        <AccordionSet accordionStatus={this.state.sections}>
+          <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
+          <Accordion id="developerInfo" label="Developer info" {...sectionProps}>
             <pre>{JSON.stringify(this.getDirectoryEntry(), null, '\t')}</pre>
           </Accordion>
         </AccordionSet>
