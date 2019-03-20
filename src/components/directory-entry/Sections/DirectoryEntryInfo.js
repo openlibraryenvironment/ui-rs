@@ -25,7 +25,7 @@ class DirectoryEntryInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label="label"
+        label="Directory entry info"
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
