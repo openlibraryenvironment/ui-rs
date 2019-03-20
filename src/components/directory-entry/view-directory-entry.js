@@ -130,7 +130,7 @@ class ViewDirectoryEntry extends React.Component {
           <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
           <Accordion id="developerInfo" label="Developer info" {...sectionProps}
             displayWhenClosed="(Shows JSON dump of raw record)">
-            <pre>{JSON.stringify(this.getDirectoryEntry(), null, '\t')}</pre>
+            <pre>{JSON.stringify(this.getDirectoryEntry(), null, 2)}</pre>
           </Accordion>
         </AccordionSet>
         { this.renderEditLayer() }
