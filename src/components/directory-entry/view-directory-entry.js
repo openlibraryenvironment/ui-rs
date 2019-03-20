@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 import {
   AccordionSet,
+  Accordion,
   Icon,
   Pane,
   Layer,
@@ -38,7 +39,8 @@ class ViewDirectoryEntry extends React.Component {
 
   state = {
     sections: {
-      directoryEntryInfo: true
+      directoryEntryInfo: true,
+      developerInfo: false,
     }
   }
 
@@ -89,7 +91,7 @@ class ViewDirectoryEntry extends React.Component {
      * Return action menu
      */
     return (
-      <Fragment>
+      <React.Fragment>
         {items.map((item, index) => (
           <Button
             key={index}
@@ -108,7 +110,7 @@ class ViewDirectoryEntry extends React.Component {
             </Icon>
           </Button>
         ))}
-      </Fragment>
+      </React.Fragment>
     );
   }
 
@@ -126,8 +128,10 @@ class ViewDirectoryEntry extends React.Component {
       >
         <AccordionSet>
           <DirectoryEntryInfo id="directoryEntryInfo" open={this.state.sections.directoryEntryInfo} {...sectionProps} />
+          <Accordion id="developerInfo" label="Developer info" open={this.state.sections.developerInfo} {...sectionProps}>
+            <pre>{JSON.stringify(this.getDirectoryEntry(), null, '\t')}</pre>
+          </Accordion>
         </AccordionSet>
-        <pre>{JSON.stringify(this.getDirectoryEntry(), null, '\t')}</pre>
         { this.renderEditLayer() }
       </Pane>
     );
