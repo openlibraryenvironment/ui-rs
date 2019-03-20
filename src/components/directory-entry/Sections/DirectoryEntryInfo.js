@@ -13,12 +13,11 @@ class DirectoryEntryInfo extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    stripes: PropTypes.object,
   };
 
   render() {
     // eslint-disable-next-line no-console
-    console.log('DirectoryEntryInfo::render %o,%o', this.props, this.props.stripes);
+    console.log('DirectoryEntryInfo::render %o,%o', this.props);
 
     const { directoryEntry } = this.props;
 
