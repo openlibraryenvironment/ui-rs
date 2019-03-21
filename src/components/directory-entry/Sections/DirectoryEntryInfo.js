@@ -17,7 +17,7 @@ class DirectoryEntryInfo extends React.Component {
 
   render() {
     // eslint-disable-next-line no-console
-    console.log('DirectoryEntryInfo::render %o,%o', this.props);
+    console.log('DirectoryEntryInfo::render', this.props);
 
     const { directoryEntry } = this.props;
 
