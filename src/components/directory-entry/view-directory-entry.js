@@ -122,7 +122,7 @@ class ViewDirectoryEntry extends React.Component {
       <Pane
         id="pane-view-directory-entry"
         defaultWidth={this.props.paneWidth}
-        paneTitle={directoryEntry.id}
+        paneTitle={directoryEntry.name || 'Directory entry details'}
         dismissible
         onClose={this.props.onClose}
       >
