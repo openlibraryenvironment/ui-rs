@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  FormattedMessage,
+} from 'react-intl';
+import {
   Accordion,
   Col,
   KeyValue,
@@ -29,10 +32,16 @@ class DirectoryEntryInfo extends React.Component {
         onToggle={this.props.onToggle}
       >
         <Row>
-          <Col xs={12}>
+          <Col xs={6}>
             <KeyValue
-              label="name"
+              label={<FormattedMessage id="ui-directory.information.name" />}
               value={directoryEntry.name}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-directory.information.slug" />}
+              value={directoryEntry.slug}
             />
           </Col>
         </Row>
