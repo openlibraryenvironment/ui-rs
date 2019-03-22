@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
   Col,
@@ -25,7 +23,7 @@ class DirectoryEntryInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label="Directory entry info"
+        label={<FormattedMessage id="ui-directory.information.heading.directoryEntry" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
