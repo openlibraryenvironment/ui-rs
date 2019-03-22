@@ -128,8 +128,12 @@ class ViewDirectoryEntry extends React.Component {
       >
         <AccordionSet accordionStatus={this.state.sections}>
           <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
-          <Accordion id="developerInfo" label="Developer info" {...sectionProps}
-            displayWhenClosed={<span>(Shows JSON dump of raw record)</span>}>
+          <Accordion
+            id="developerInfo"
+            label="Developer info"
+            displayWhenClosed={<span>(JSON dump of raw record)</span>}
+            {...sectionProps}
+          >
             <pre>{JSON.stringify(this.getDirectoryEntry(), null, 2)}</pre>
           </Accordion>
         </AccordionSet>
