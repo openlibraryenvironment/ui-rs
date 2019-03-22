@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
 import {
@@ -130,8 +131,8 @@ class ViewDirectoryEntry extends React.Component {
           <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
           <Accordion
             id="developerInfo"
-            label="Developer info"
-            displayWhenClosed={<span>(JSON dump of raw record)</span>}
+            label={<FormattedMessage id="ui-directory.information.heading.developer" />}
+            displayWhenClosed={<FormattedMessage id="ui-directory.information.heading.developer.help" />}
             {...sectionProps}
           >
             <pre>{JSON.stringify(this.getDirectoryEntry(), null, 2)}</pre>
