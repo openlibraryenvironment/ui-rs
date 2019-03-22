@@ -13,10 +13,13 @@
   "entries.parent":"Parent Entry",
   "entries.tagSummary":"Tags",
   "entries.symbolSummary":"Symbols",
+  "information.heading.directoryEntry": "Directory entry info",
   "information.name": "Name",
   "information.slug": "Slug",
   "information.qualifiedName": "Fully qualified name",
   "information.parent": "Parent institution",
   "information.tags": "Tags",
-  "information.symbols": "Symbols"
+  "information.symbols": "Symbols",
+  "information.heading.developer": "Developer info",
+  "information.heading.developer.help": "(JSON dump of raw record)"
 }
