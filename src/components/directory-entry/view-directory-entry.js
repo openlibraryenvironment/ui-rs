@@ -42,6 +42,10 @@ class ViewDirectoryEntry extends React.Component {
     sections: {
       directoryEntryInfo: true,
       developerInfo: false,
+      1: false,
+      2: false,
+      3: false,
+      4: false,
     }
   }
 
@@ -129,6 +133,10 @@ class ViewDirectoryEntry extends React.Component {
       >
         <AccordionSet accordionStatus={this.state.sections}>
           <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
+          <Accordion id="1" label="Custom properties">(XXX not yet implemented)</Accordion>
+          <Accordion id="2" label="Addresses">(XXX not yet implemented)</Accordion>
+          <Accordion id="3" label="Announcements">(XXX not yet implemented)</Accordion>
+          <Accordion id="4" label="Friends">(XXX not yet implemented)</Accordion>
           <Accordion
             id="developerInfo"
             label={<FormattedMessage id="ui-directory.information.heading.developer" />}
