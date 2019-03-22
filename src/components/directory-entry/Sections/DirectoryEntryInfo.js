@@ -71,6 +71,7 @@ class DirectoryEntryInfo extends React.Component {
             />
           </Col>
         </Row>
+        {!directoryEntry.symbolSummary ? '' :
         <Row>
           <Col xs={12}>
             <KeyValue
@@ -79,6 +80,7 @@ class DirectoryEntryInfo extends React.Component {
             />
           </Col>
         </Row>
+        }
       </Accordion>
     );
   }
