@@ -46,6 +46,9 @@ class ViewDirectoryEntry extends React.Component {
       2: false,
       3: false,
       4: false,
+      5: false,
+      6: false,
+      7: false,
     }
   }
 
@@ -137,6 +140,9 @@ class ViewDirectoryEntry extends React.Component {
           <Accordion id="2" label="Addresses">(XXX not yet implemented)</Accordion>
           <Accordion id="3" label="Announcements">(XXX not yet implemented)</Accordion>
           <Accordion id="4" label="Friends">(XXX not yet implemented)</Accordion>
+          <Accordion id="5" label="Status">(XXX not yet implemented)</Accordion>
+          <Accordion id="6" label="Items">(XXX not yet implemented)</Accordion>
+          <Accordion id="7" label="Services">(XXX not yet implemented)</Accordion>
           <Accordion
             id="developerInfo"
             label={<FormattedMessage id="ui-directory.information.heading.developer" />}
