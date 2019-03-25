@@ -14,32 +14,36 @@ The first of these is most definitive, but not easy to read if you're not used t
 
 ## Fields
 
-Field                | Kind      | In JSON Schema?  | In response? | In UI?
-------               | --------- | ---------------  | ------------ | ------
-`addresses`          | structure | --               |              |
-`announcements`      | structure | --               |              |
-`customProperties`   | structure | (See below)      |              |
-`description`        | scalar    | string           |              |
-`friends`            | structure | (See below)      |              |
-`fullyQualifiedName` | scalar    | --               |              | Y
-`id`                 | scalar    | string           |              | _Not needed_
-`items`              | structure | --               |              |
-`name`               | scalar    | string           |              | Y
-`parent`             | structure | --               |              | Y
-`services`           | structure | --               |              |
-`slug`               | scalar    | string           |              | Y
-`status`             | structure | object           |              |
-`symbolSummary`      | scalar    | --               |              | Y
-`symbols`            | array     | (See below)      |              | _redundant_
-`tagSummary`         | scalar    | --               |              | Y
-`tags`               | array     | (See below)      |              | _redundant_
-`units`              | array     | (See below)      |              |
+In the following table, "Kind" indicates what can be inferred about the field's type from a combination of the JSON Schema and actual responses; "Response 1" indicates what is included in the whole-record response for a top-level institution such as Allegheny College; and "Response 2" indicates what is included in for a branch such as Allegheny College Annex Library.
+
+Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | In UI?
+------               | --------- | ---------------  | ---------- | ---------- | ------
+`addresses`          | array     | --               | empty      | empty      |
+`announcements`      | structure | --               | empty      | empty      |
+`customProperties`   | structure | (See below)      | empty      | empty      |
+`description`        | scalar    | string           |            |            |
+`friends`            | array     | (See below)      | empty      | empty      |
+`fullyQualifiedName` | scalar    | --               | Y          | Y          | Y
+`id`                 | scalar    | string           | Y          | Y          | _Not needed_
+`items`              | array     | --               | Y          |            | XXX
+`name`               | scalar    | string           | Y          | Y          | Y
+`parent`             | structure | --               |            | Y          | Y
+`services`           | structure | --               | Y          |            | XXX
+`slug`               | scalar    | string           | Y          | Y          | Y
+`status`             | structure | object           | Y          |            | XXX
+`symbolSummary`      | scalar    | --               | Y          | null       | Y
+`symbols`            | array     | (See below)      | Y          | empty      | _redundant_
+`tagSummary`         | scalar    | --               | Y          | Y           | Y
+`tags`               | array     | (See below)      | Y          | Y          | _redundant_
+`units`              | array     | (See below)      |            |            |
 
 ### Notes
 
 * `customProperties`: although the JSON Schema describes this only as an object, a comment adds: "Custom properties are a runtime defined set of name:value pairs, where values are themselves arbitrarily scalar types or complex objects."
 
 * `friends`: described in the JSON Schema as an array of `Friend`, which defined as an object in which the only defined field is the string `id`.
+
+* `items` seems to be the list of sub-entries, e.g. branches of a top-level library.
 
 * `symbols`: described in the JSON Schema as an array of `Symbol`, which defined as an object with string fields `id`, `authority` and `priority`, and a `symbol` field which can be either a string of an `Authority`. The latter is defined as an object with string fields `id` and `symbol`.
 
