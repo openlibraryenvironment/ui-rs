@@ -53,7 +53,7 @@ Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | 
 
 ## Questions
 
-The following fields mentioned in the JSON Schema do not appear in either record: `description`, `units`. What is the intention for them?
+The following fields mentioned in the JSON Schema do not appear in either record: `description`, `units`. What is the intention for them? `description` does not appear anywhere in the PALCI sample data; `units` does, but that data is not delivered by the web-service.
 
-The following fields appear only as empty arrays or objects: `addresses`, `announcements`, `customProperties`, `friends`. What is their status?
+The following fields appear only as empty arrays or objects: `addresses`, `announcements`, `customProperties`, `friends`. What is their status? `addresses` appears in the DIKU record of the PALCI sample data, but is not delivered by the web-service. The other three do not appear in the sample data at all. (There is a `customProperties` field within some `services` objects but never at the top level of a directory entry.
 
