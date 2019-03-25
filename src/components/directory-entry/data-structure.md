@@ -51,3 +51,9 @@ Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | 
 
 * `units`: described only as an array, with nothing said about what the elements are. A comment adds: "items is a recursive structure".
 
+## Questions
+
+The following fields mentioned in the JSON Schema do not appear in either record: `description`, `units`. What is the intention for them?
+
+The following fields appear only as empty arrays or objects: `addresses`, `announcements`, `customProperties`, `friends`. What is their status?
+
