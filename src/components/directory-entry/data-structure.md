@@ -31,7 +31,7 @@ Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | 
 `parent`             | structure | --               |            | Y          | Y
 `services`           | structure | --               | Y          |            | XXX
 `slug`               | scalar    | string           | Y          | Y          | Y
-`status`             | structure | object           | Y          |            | XXX
+`status`             | structure | object           | Y          |            | Y
 `symbolSummary`      | scalar    | --               | null       | null       | Y
 `symbols`            | array     | (See below)      | empty      | empty      | _redundant_
 `tagSummary`         | scalar    | --               | Y          | Y           | Y
