@@ -28,13 +28,19 @@ class DirectoryEntryInfo extends React.Component {
         onToggle={this.props.onToggle}
       >
         <Row>
-          <Col xs={6}>
+          <Col xs={5}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.name" />}
               value={directoryEntry.name}
             />
           </Col>
-          <Col xs={6}>
+          <Col xs={2}>
+            <KeyValue
+              label={<FormattedMessage id="ui-directory.information.status" />}
+              value={(directoryEntry.status || {}).label}
+            />
+          </Col>
+          <Col xs={5}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.slug" />}
               value={directoryEntry.slug}
