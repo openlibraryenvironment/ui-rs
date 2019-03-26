@@ -14,46 +14,43 @@ The first of these is most definitive, but not easy to read if you're not used t
 
 ## Fields
 
-In the following table, "Kind" indicates what can be inferred about the field's type from a combination of the JSON Schema and actual responses; "Response 1" indicates what is included in the whole-record response for a top-level institution such as Allegheny College; and "Response 2" indicates what is included in for a branch such as Allegheny College Annex Library.
+In the following table, "Kind" indicates what can be inferred about the field's type from a combination of the JSON Schema and actual responses; "Response 1" indicates what is included in the whole-record response for a top-level institution such as DIKU; and "Response 2" indicates what is included in for a branch such as Allegheny College Annex Library.
 
 Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | In UI?
 ------               | --------- | ---------------  | ---------- | ---------- | ------
-`addresses`          | array     | --               | empty      | empty      |
+`addresses`          | array     | --               | Y          | empty      | XXX
 `announcements`      | structure | --               | empty      | empty      |
-`customProperties`   | structure | (See below)      | empty      | empty      |
-`description`        | scalar    | string           |            |            |
+`customProperties`   | structure | (See below)      | Y          | empty      | XXX
+`description`        | scalar    | string           | Y          |            |
+`entries`            | array     | --               | Y          |            | XXX
 `friends`            | array     | (See below)      | empty      | empty      |
 `fullyQualifiedName` | scalar    | --               | Y          | Y          | Y
 `id`                 | scalar    | string           | Y          | Y          | _Not needed_
-`items`              | array     | --               | Y          |            | XXX
+`items`              | array     | --               |            |            | _Probably superseded by `entries`_
 `name`               | scalar    | string           | Y          | Y          | Y
 `parent`             | structure | --               |            | Y          | Y
 `services`           | structure | --               | Y          |            | XXX
 `slug`               | scalar    | string           | Y          | Y          | Y
 `status`             | structure | object           | Y          |            | XXX
-`symbolSummary`      | scalar    | --               | Y          | null       | Y
-`symbols`            | array     | (See below)      | Y          | empty      | _redundant_
+`symbolSummary`      | scalar    | --               | null       | null       | Y
+`symbols`            | array     | (See below)      | empty      | empty      | _redundant_
 `tagSummary`         | scalar    | --               | Y          | Y           | Y
 `tags`               | array     | (See below)      | Y          | Y          | _redundant_
-`units`              | array     | (See below)      |            |            |
+`units`              | array     | (See below)      |            |            | _Probably omitted to prefer `entries`_
 
 ### Notes
 
 * `customProperties`: although the JSON Schema describes this only as an object, a comment adds: "Custom properties are a runtime defined set of name:value pairs, where values are themselves arbitrarily scalar types or complex objects."
 
-* `friends`: described in the JSON Schema as an array of `Friend`, which defined as an object in which the only defined field is the string `id`.
+* `entries`, `items` and `units` all seem to be alternative names for the same thing, the list of child institutions (i.e. those of which the current institution is the parent). This was originally called `items` and was (I think) intended to be renamed `units`, but got accidentally renamed `entries` instead.
 
-* `items` seems to be the list of sub-entries, e.g. branches of a top-level library.
+* `friends`: described in the JSON Schema as an array of `Friend`, which defined as an object in which the only defined field is the string `id`. No example data yet.
 
 * `symbols`: described in the JSON Schema as an array of `Symbol`, which defined as an object with string fields `id`, `authority` and `priority`, and a `symbol` field which can be either a string of an `Authority`. The latter is defined as an object with string fields `id` and `symbol`.
 
 * `tags`: described in the JSON Schema as an array of elements each of which can be either a string or a `Tag`; the latter is defined as an object in which the only defined field is the string `id`.
 
-* `units`: described only as an array, with nothing said about what the elements are. A comment adds: "items is a recursive structure".
 
 ## Questions
 
-The following fields mentioned in the JSON Schema do not appear in either record: `description`, `units`. What is the intention for them? `description` does not appear anywhere in the PALCI sample data; `units` does, but that data is not delivered by the web-service.
-
-The following fields appear only as empty arrays or objects: `addresses`, `announcements`, `customProperties`, `friends`. What is their status? `addresses` appears in the DIKU record of the PALCI sample data, but is not delivered by the web-service. The other three do not appear in the sample data at all. (There is a `customProperties` field within some `services` objects but never at the top level of a directory entry.
-
+The following fields appear only as empty arrays or objects: `announcements`, `friends`. What is their status? These do not appear in the sample data at all.
