@@ -21,6 +21,7 @@
   "information.parent": "Parent institution",
   "information.tags": "Tags",
   "information.symbols": "Symbols",
+  "information.heading.customProps": "Custom properties",
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)"
 }
