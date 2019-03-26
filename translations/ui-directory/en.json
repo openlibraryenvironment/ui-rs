@@ -15,6 +15,7 @@
   "entries.symbolSummary":"Symbols",
   "information.heading.directoryEntry": "Directory entry info",
   "information.name": "Name",
+  "information.status": "Status",
   "information.slug": "Slug",
   "information.qualifiedName": "Fully qualified name",
   "information.parent": "Parent institution",
