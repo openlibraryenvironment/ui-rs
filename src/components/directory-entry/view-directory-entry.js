@@ -41,11 +41,11 @@ class ViewDirectoryEntry extends React.Component {
   state = {
     sections: {
       directoryEntryInfo: true,
-      developerInfo: false,
+      customProperties: true,
       1: false,
       2: false,
       3: false,
-      4: false,
+      developerInfo: false,
     }
   }
 
@@ -124,6 +124,7 @@ class ViewDirectoryEntry extends React.Component {
     const sectionProps = this.getSectionProps();
     let title = directoryEntry.name || 'Directory entry details';
     if (directoryEntry.status) title += ` (${directoryEntry.status.label})`;
+    const p = directoryEntry.customProperties || {};
 
     return (
       <Pane
@@ -135,10 +136,26 @@ class ViewDirectoryEntry extends React.Component {
       >
         <AccordionSet accordionStatus={this.state.sections}>
           <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
+          <Accordion
+            id="customProperties"
+            label={<FormattedMessage id="ui-directory.information.heading.customProps" />}
+            {...sectionProps}
+          >
+            <ul>
+              {
+                Object.keys(p).sort().map(key => (
+                  <li>
+                    <b>{key}</b>
+                    :
+                    {JSON.stringify(p[key], null, 2)}
+                  </li>
+                ))
+              }
+            </ul>
+          </Accordion>
           <Accordion id="1" label="Entries">(XXX not yet implemented)</Accordion>
-          <Accordion id="2" label="Custom properties">(XXX not yet implemented)</Accordion>
-          <Accordion id="3" label="Addresses">(XXX not yet implemented)</Accordion>
-          <Accordion id="4" label="Services">(XXX not yet implemented)</Accordion>
+          <Accordion id="2" label="Addresses">(XXX not yet implemented)</Accordion>
+          <Accordion id="3" label="Services">(XXX not yet implemented)</Accordion>
           <Accordion
             id="developerInfo"
             label={<FormattedMessage id="ui-directory.information.heading.developer" />}
