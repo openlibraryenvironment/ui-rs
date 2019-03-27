@@ -63,6 +63,17 @@ class DirectoryEntryInfo extends React.Component {
           </Col>
         </Row>
 
+        {!directoryEntry.description ? '' :
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-directory.information.description" />}
+              value={directoryEntry.description}
+            />
+          </Col>
+        </Row>
+        }
+
         {!directoryEntry.symbolSummary ? '' :
         <Row>
           <Col xs={12}>
