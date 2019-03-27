@@ -17,10 +17,11 @@
   "information.name": "Name",
   "information.status": "Status",
   "information.slug": "Slug",
+  "information.symbols": "Symbols",
   "information.qualifiedName": "Fully qualified name",
   "information.parent": "Parent institution",
+  "information.entries": "Entries",
   "information.tags": "Tags",
-  "information.symbols": "Symbols",
   "information.heading.customProps": "Custom properties",
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)"
