@@ -14,6 +14,7 @@ import {
 
 import {
   DirectoryEntryInfo,
+  Addresses,
   CustomProperties,
 } from './Sections';
 
@@ -42,9 +43,9 @@ class ViewDirectoryEntry extends React.Component {
   state = {
     sections: {
       directoryEntryInfo: true,
-      customProperties: false,
-      1: false,
+      addresses: true,
       2: false,
+      customProperties: false,
       developerInfo: false,
     }
   }
@@ -135,9 +136,9 @@ class ViewDirectoryEntry extends React.Component {
       >
         <AccordionSet accordionStatus={this.state.sections}>
           <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
-          <CustomProperties id="customProperties" {...sectionProps} />
-          <Accordion id="1" label="Addresses">(XXX not yet implemented)</Accordion>
+          <Addresses id="addresses" {...sectionProps} />
           <Accordion id="2" label="Services">(XXX not yet implemented)</Accordion>
+          <CustomProperties id="customProperties" {...sectionProps} />
           <Accordion
             id="developerInfo"
             label={<FormattedMessage id="ui-directory.information.heading.developer" />}
