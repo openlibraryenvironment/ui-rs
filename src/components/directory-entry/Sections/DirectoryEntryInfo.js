@@ -47,6 +47,7 @@ class DirectoryEntryInfo extends React.Component {
             />
           </Col>
         </Row>
+
         {!directoryEntry.symbolSummary ? '' :
         <Row>
           <Col xs={12}>
@@ -57,6 +58,7 @@ class DirectoryEntryInfo extends React.Component {
           </Col>
         </Row>
         }
+
         {directoryEntry.fullyQualifiedName === directoryEntry.name ? '' :
         <React.Fragment>
           <Row>
@@ -79,6 +81,7 @@ class DirectoryEntryInfo extends React.Component {
           </Row>
         </React.Fragment>
         }
+
         <Row>
           <Col xs={12}>
             <KeyValue
