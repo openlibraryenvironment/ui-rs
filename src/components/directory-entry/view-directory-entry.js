@@ -13,7 +13,8 @@ import {
 } from '@folio/stripes/components';
 
 import {
-  DirectoryEntryInfo
+  DirectoryEntryInfo,
+  CustomProperties,
 } from './Sections';
 
 class ViewDirectoryEntry extends React.Component {
@@ -123,7 +124,6 @@ class ViewDirectoryEntry extends React.Component {
     const sectionProps = this.getSectionProps();
     let title = directoryEntry.name || 'Directory entry details';
     if (directoryEntry.status) title += ` (${directoryEntry.status.label})`;
-    const p = directoryEntry.customProperties || {};
 
     return (
       <Pane
@@ -135,23 +135,7 @@ class ViewDirectoryEntry extends React.Component {
       >
         <AccordionSet accordionStatus={this.state.sections}>
           <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
-          <Accordion
-            id="customProperties"
-            label={<FormattedMessage id="ui-directory.information.heading.customProps" />}
-            {...sectionProps}
-          >
-            <ul>
-              {
-                Object.keys(p).sort().map(key => (
-                  <li key={key}>
-                    <b>{key}</b>
-                    :
-                    <pre>{JSON.stringify(p[key], null, 2)}</pre>
-                  </li>
-                ))
-              }
-            </ul>
-          </Accordion>
+          <CustomProperties id="customProperties" {...sectionProps} />
           <Accordion id="1" label="Addresses">(XXX not yet implemented)</Accordion>
           <Accordion id="2" label="Services">(XXX not yet implemented)</Accordion>
           <Accordion
