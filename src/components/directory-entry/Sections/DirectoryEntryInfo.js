@@ -9,6 +9,20 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+
+function makeEntryList(entries) {
+  if (!entries || entries.length === 0) return null;
+
+  return (
+    <ul>
+      {entries.map(e => (
+        <li><Link to={e.id}>{e.name}</Link></li>
+      ))}
+    </ul>
+  );
+}
+
+
 class DirectoryEntryInfo extends React.Component {
   static propTypes = {
     directoryEntry: PropTypes.object,
@@ -19,6 +33,7 @@ class DirectoryEntryInfo extends React.Component {
 
   render() {
     const { directoryEntry } = this.props;
+    const entryList = makeEntryList(directoryEntry.entries);
 
     return (
       <Accordion
@@ -77,6 +92,19 @@ class DirectoryEntryInfo extends React.Component {
                   value={directoryEntry.parent.name}
                 />
               </Link>
+            </Col>
+          </Row>
+        </React.Fragment>
+        }
+
+        {!entryList ? '' :
+        <React.Fragment>
+          <Row>
+            <Col xs={12}>
+              <KeyValue
+                label={<FormattedMessage id="ui-directory.information.entries" />}
+                value={entryList}
+              />
             </Col>
           </Row>
         </React.Fragment>
