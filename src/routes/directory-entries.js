@@ -183,6 +183,7 @@ export default class DirectoryEntries extends React.Component {
           }}
           resultsFormatter={{
             parent: a => a.parent && a.parent.name,
+            tagSummary: a => a.tagSummary || '',
             symbolSummary: a => a.symbolSummary || '',
           }}
         />
