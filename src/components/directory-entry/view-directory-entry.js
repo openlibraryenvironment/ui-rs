@@ -41,7 +41,7 @@ class ViewDirectoryEntry extends React.Component {
   state = {
     sections: {
       directoryEntryInfo: true,
-      customProperties: true,
+      customProperties: false,
       1: false,
       2: false,
       3: false,
@@ -147,7 +147,7 @@ class ViewDirectoryEntry extends React.Component {
                   <li>
                     <b>{key}</b>
                     :
-                    {JSON.stringify(p[key], null, 2)}
+                    <pre>{JSON.stringify(p[key], null, 2)}</pre>
                   </li>
                 ))
               }
