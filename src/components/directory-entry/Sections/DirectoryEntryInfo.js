@@ -47,6 +47,16 @@ class DirectoryEntryInfo extends React.Component {
             />
           </Col>
         </Row>
+        {!directoryEntry.symbolSummary ? '' :
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-directory.information.symbols" />}
+              value={directoryEntry.symbolSummary}
+            />
+          </Col>
+        </Row>
+        }
         {directoryEntry.fullyQualifiedName === directoryEntry.name ? '' :
         <React.Fragment>
           <Row>
@@ -77,16 +87,6 @@ class DirectoryEntryInfo extends React.Component {
             />
           </Col>
         </Row>
-        {!directoryEntry.symbolSummary ? '' :
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-directory.information.symbols" />}
-              value={directoryEntry.symbolSummary}
-            />
-          </Col>
-        </Row>
-        }
       </Accordion>
     );
   }
