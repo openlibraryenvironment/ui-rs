@@ -143,7 +143,7 @@ class ViewDirectoryEntry extends React.Component {
             <ul>
               {
                 Object.keys(p).sort().map(key => (
-                  <li>
+                  <li key={key}>
                     <b>{key}</b>
                     :
                     <pre>{JSON.stringify(p[key], null, 2)}</pre>
