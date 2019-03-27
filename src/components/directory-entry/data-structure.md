@@ -21,7 +21,7 @@ Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | 
 `addresses`          | array     | --               | Y          | empty      | XXX
 `announcements`      | structure | --               | empty      | empty      |
 `customProperties`   | structure | (See below)      | Y          | empty      | Y
-`description`        | scalar    | string           | Y          |            | XXX
+`description`        | scalar    | string           | Y          |            | Y
 `entries`            | array     | --               | Y          |            | Y
 `friends`            | array     | (See below)      | empty      | empty      |
 `fullyQualifiedName` | scalar    | --               | Y          | Y          | Y
