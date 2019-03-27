@@ -16,7 +16,7 @@ function makeEntryList(entries) {
   return (
     <ul>
       {entries.map(e => (
-        <li><Link to={e.id}>{e.name}</Link></li>
+        <li key={e.id}><Link to={e.id}>{e.name}</Link></li>
       ))}
     </ul>
   );
