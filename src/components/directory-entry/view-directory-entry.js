@@ -162,7 +162,7 @@ class ViewDirectoryEntry extends React.Component {
             displayWhenClosed={<FormattedMessage id="ui-directory.information.heading.developer.help" />}
             {...sectionProps}
           >
-            <pre>{JSON.stringify(this.getDirectoryEntry(), null, 2)}</pre>
+            <pre>{JSON.stringify(directoryEntry, null, 2)}</pre>
           </Accordion>
         </AccordionSet>
         { this.renderEditLayer() }
