@@ -23,6 +23,8 @@
   "information.parent": "Parent institution",
   "information.entries": "Entries",
   "information.tags": "Tags",
+  "information.heading.addresses": "Addresses",
+  "information.address": "Address",
   "information.heading.customProps": "Custom properties",
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)"
