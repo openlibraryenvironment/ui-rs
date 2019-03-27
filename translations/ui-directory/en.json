@@ -17,6 +17,7 @@
   "information.name": "Name",
   "information.status": "Status",
   "information.slug": "Slug",
+  "information.description": "Description",
   "information.symbols": "Symbols",
   "information.qualifiedName": "Fully qualified name",
   "information.parent": "Parent institution",
