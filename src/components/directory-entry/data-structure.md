@@ -20,9 +20,9 @@ Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | 
 ------               | --------- | ---------------  | ---------- | ---------- | ------
 `addresses`          | array     | --               | Y          | empty      | XXX
 `announcements`      | structure | --               | empty      | empty      |
-`customProperties`   | structure | (See below)      | Y          | empty      | XXX
-`description`        | scalar    | string           | Y          |            |
-`entries`            | array     | --               | Y          |            | XXX
+`customProperties`   | structure | (See below)      | Y          | empty      | Y
+`description`        | scalar    | string           | Y          |            | XXX
+`entries`            | array     | --               | Y          |            | Y
 `friends`            | array     | (See below)      | empty      | empty      |
 `fullyQualifiedName` | scalar    | --               | Y          | Y          | Y
 `id`                 | scalar    | string           | Y          | Y          | _Not needed_
