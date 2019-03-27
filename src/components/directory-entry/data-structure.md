@@ -18,7 +18,7 @@ In the following table, "Kind" indicates what can be inferred about the field's 
 
 Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | In UI?
 ------               | --------- | ---------------  | ---------- | ---------- | ------
-`addresses`          | array     | --               | Y          | empty      | XXX
+`addresses`          | array     | --               | Y          | empty      | Y
 `announcements`      | structure | --               | empty      | empty      |
 `customProperties`   | structure | (See below)      | Y          | empty      | Y
 `description`        | scalar    | string           | Y          |            | Y
