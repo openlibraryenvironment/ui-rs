@@ -57,7 +57,7 @@ Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | 
 * Check all translation-key names and make consistent.
 * Update mod-directory and switch from `entries` to `units`.
 * Update this document.
-* Support `announcements` when it becomes available.
-* Support `friends` when it becomes available.
+* Support the `announcements` array when it becomes available.
+* Support the `friends` array when it becomes available.
 
 
