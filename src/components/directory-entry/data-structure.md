@@ -51,6 +51,12 @@ Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | 
 * `tags`: described in the JSON Schema as an array of elements each of which can be either a string or a `Tag`; the latter is defined as an object in which the only defined field is the string `id`.
 
 
-## Questions
+## To Do
 
-The following fields appear only as empty arrays or objects: `announcements`, `friends`. What is their status? These do not appear in the sample data at all.
+* Check all translation-key names and make consistent.
+* Update mod-directory and switch from `entries` to `units`.
+* Update this document.
+* Support `announcements` when it becomes available.
+* Support `friends` when it becomes available.
+
+
