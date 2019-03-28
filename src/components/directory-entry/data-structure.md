@@ -38,7 +38,8 @@ Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | 
 `tags`               | array     | (See below)      | Y          | Y          | _redundant_
 `units`              | array     | (See below)      |            |            | _Probably omitted to prefer `entries`_
 
-### Notes
+
+## Notes
 
 * `customProperties`: although the JSON Schema describes this only as an object, a comment adds: "Custom properties are a runtime defined set of name:value pairs, where values are themselves arbitrarily scalar types or complex objects."
 
