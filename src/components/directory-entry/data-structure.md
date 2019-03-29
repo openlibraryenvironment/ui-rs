@@ -22,11 +22,9 @@ Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In
 `announcements`      | structure | --             | empty      | empty      |
 `customProperties`   | structure | (See below)    | Y          | empty      | Y
 `description`        | scalar    | string         | Y          |            | Y
-`entries`            | array     | --             | Y          |            | Y
 `friends`            | array     | (See below)    | empty      | empty      |
 `fullyQualifiedName` | scalar    | --             | Y          | Y          | Y
 `id`                 | scalar    | string         | Y          | Y          | _Not needed_
-`items`              | array     | --             |            |            | _Superseded by `entries`_
 `name`               | scalar    | string         | Y          | Y          | Y
 `parent`             | structure | --             |            | Y          | Y
 `services`           | structure | --             | Y          |            | Y
@@ -36,14 +34,12 @@ Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In
 `symbols`            | array     | (See below)    | empty      | empty      | _redundant_
 `tagSummary`         | scalar    | --             | Y          | Y           | Y
 `tags`               | array     | (See below)    | Y          | Y          | _redundant_
-`units`              | array     | (See below)    |            |            | _Probably omitted to prefer `entries`_
+`units`              | array     | (See below)    | Y          |            | Y
 
 
 ## Notes
 
 * `customProperties`: although the JSON Schema describes this only as an object, a comment adds: "Custom properties are a runtime defined set of name:value pairs, where values are themselves arbitrarily scalar types or complex objects."
-
-* `entries`, `items` and `units` all seem to be alternative names for the same thing, the list of child institutions (i.e. those of which the current institution is the parent). This was originally called `items` and was (I think) intended to be renamed `units`, but got accidentally renamed `entries` instead.
 
 * `friends`: described in the JSON Schema as an array of `Friend`, which defined as an object in which the only defined field is the string `id`. No example data yet.
 
@@ -54,7 +50,6 @@ Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In
 
 ## To Do
 
-* Update mod-directory and switch from `entries` to `units`.
 * Check all translation-key names and make consistent.
 * Update this document.
 * Support the `announcements` array when it becomes available.
