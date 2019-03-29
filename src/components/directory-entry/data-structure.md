@@ -18,7 +18,7 @@ In the following table, "Kind" indicates what can be inferred about the field's 
 
 Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In UI?
 ------               | --------- | -------------- | ---------- | ---------- | ------
-`addresses`          | array     | --             | Y          | empty      | Y
+`addresses`          | array     | (See below)    | Y          | empty      | Y
 `announcements`      | structure | --             | empty      | empty      |
 `customProperties`   | structure | (See below)    | Y          | empty      | Y
 `description`        | scalar    | string         | Y          |            | Y
@@ -29,7 +29,7 @@ Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In
 `parent`             | structure | --             |            | Y          | Y
 `services`           | structure | --             | Y          |            | Y
 `slug`               | scalar    | string         | Y          | Y          | Y
-`status`             | structure | object         | Y          |            | Y
+`status`             | structure | (See below)    | Y          |            | Y
 `symbolSummary`      | scalar    | --             | null       | null       | Y
 `symbols`            | array     | (See below)    | empty      | empty      | _redundant_
 `tagSummary`         | scalar    | --             | Y          | Y           | Y
@@ -39,13 +39,19 @@ Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In
 
 ## Notes
 
+* `addresses`: XXX
+
 * `customProperties`: although the JSON Schema describes this only as an object, a comment adds: "Custom properties are a runtime defined set of name:value pairs, where values are themselves arbitrarily scalar types or complex objects."
 
 * `friends`: described in the JSON Schema as an array of `Friend`, which defined as an object in which the only defined field is the string `id`. No example data yet.
 
+* `status`: XXX
+
 * `symbols`: described in the JSON Schema as an array of `Symbol`, which defined as an object with string fields `id`, `authority` and `priority`, and a `symbol` field which can be either a string of an `Authority`. The latter is defined as an object with string fields `id` and `symbol`.
 
 * `tags`: described in the JSON Schema as an array of elements each of which can be either a string or a `Tag`; the latter is defined as an object in which the only defined field is the string `id`.
+
+* `units`: XXX
 
 
 ## To Do
