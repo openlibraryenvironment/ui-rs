@@ -18,23 +18,23 @@ In the following table, "Kind" indicates what can be inferred about the field's 
 
 Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In UI?
 ------               | --------- | -------------- | ---------- | ---------- | ------
-`addresses`          | array     | (See below)    | Y          | empty      | Y
+`addresses`          | array     | [Note 1]       | Y          | empty      | Y
 `announcements`      | structure | --             | empty      | empty      |
-`customProperties`   | structure | (See below)    | Y          | empty      | Y
+`customProperties`   | structure | [Note 2]       | Y          | empty      | Y
 `description`        | scalar    | string         | Y          |            | Y
-`friends`            | array     | (See below)    | empty      | empty      |
+`friends`            | array     | [Note 3]       | empty      | empty      |
 `fullyQualifiedName` | scalar    | --             | Y          | Y          | Y
 `id`                 | scalar    | string         | Y          | Y          | _Not needed_
 `name`               | scalar    | string         | Y          | Y          | Y
 `parent`             | structure | --             |            | Y          | Y
 `services`           | structure | --             | Y          |            | Y
 `slug`               | scalar    | string         | Y          | Y          | Y
-`status`             | structure | (See below)    | Y          |            | Y
+`status`             | structure | [Note 4]       | Y          |            | Y
 `symbolSummary`      | scalar    | --             | null       | null       | Y
-`symbols`            | array     | (See below)    | empty      | empty      | _redundant_
+`symbols`            | array     | [Note 5]       | empty      | empty      | _redundant_
 `tagSummary`         | scalar    | --             | Y          | Y           | Y
-`tags`               | array     | (See below)    | Y          | Y          | _redundant_
-`units`              | array     | (See below)    | Y          |            | Y
+`tags`               | array     | [Note 6]       | Y          | Y          | _redundant_
+`units`              | array     | [Note 7]       | Y          |            | Y
 
 
 ## Notes
