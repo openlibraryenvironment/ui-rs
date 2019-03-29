@@ -16,27 +16,27 @@ The Groovy data model most definitive, but not easy to read if you're not used t
 
 In the following table, "Kind" indicates what can be inferred about the field's type from a combination of the JSON Schema and actual responses; "Response 1" indicates what is included in the whole-record response for a top-level institution such as DIKU; and "Response 2" indicates what is included in for a branch such as Allegheny College Annex Library.
 
-Field                | Kind      | In JSON Schema?  | Response 1 | Response 2 | In UI?
-------               | --------- | ---------------  | ---------- | ---------- | ------
-`addresses`          | array     | --               | Y          | empty      | Y
-`announcements`      | structure | --               | empty      | empty      |
-`customProperties`   | structure | (See below)      | Y          | empty      | Y
-`description`        | scalar    | string           | Y          |            | Y
-`entries`            | array     | --               | Y          |            | Y
-`friends`            | array     | (See below)      | empty      | empty      |
-`fullyQualifiedName` | scalar    | --               | Y          | Y          | Y
-`id`                 | scalar    | string           | Y          | Y          | _Not needed_
-`items`              | array     | --               |            |            | _Probably superseded by `entries`_
-`name`               | scalar    | string           | Y          | Y          | Y
-`parent`             | structure | --               |            | Y          | Y
-`services`           | structure | --               | Y          |            | Y
-`slug`               | scalar    | string           | Y          | Y          | Y
-`status`             | structure | object           | Y          |            | Y
-`symbolSummary`      | scalar    | --               | null       | null       | Y
-`symbols`            | array     | (See below)      | empty      | empty      | _redundant_
-`tagSummary`         | scalar    | --               | Y          | Y           | Y
-`tags`               | array     | (See below)      | Y          | Y          | _redundant_
-`units`              | array     | (See below)      |            |            | _Probably omitted to prefer `entries`_
+Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In UI?
+------               | --------- | -------------- | ---------- | ---------- | ------
+`addresses`          | array     | --             | Y          | empty      | Y
+`announcements`      | structure | --             | empty      | empty      |
+`customProperties`   | structure | (See below)    | Y          | empty      | Y
+`description`        | scalar    | string         | Y          |            | Y
+`entries`            | array     | --             | Y          |            | Y
+`friends`            | array     | (See below)    | empty      | empty      |
+`fullyQualifiedName` | scalar    | --             | Y          | Y          | Y
+`id`                 | scalar    | string         | Y          | Y          | _Not needed_
+`items`              | array     | --             |            |            | _Probably superseded by `entries`_
+`name`               | scalar    | string         | Y          | Y          | Y
+`parent`             | structure | --             |            | Y          | Y
+`services`           | structure | --             | Y          |            | Y
+`slug`               | scalar    | string         | Y          | Y          | Y
+`status`             | structure | object         | Y          |            | Y
+`symbolSummary`      | scalar    | --             | null       | null       | Y
+`symbols`            | array     | (See below)    | empty      | empty      | _redundant_
+`tagSummary`         | scalar    | --             | Y          | Y           | Y
+`tags`               | array     | (See below)    | Y          | Y          | _redundant_
+`units`              | array     | (See below)    |            |            | _Probably omitted to prefer `entries`_
 
 
 ## Notes
