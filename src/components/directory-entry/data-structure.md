@@ -56,7 +56,6 @@ Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In
 
 ## To Do
 
-* Update this document.
 * Support the `announcements` array when it becomes available.
 * Support the `friends` array when it becomes available.
 
