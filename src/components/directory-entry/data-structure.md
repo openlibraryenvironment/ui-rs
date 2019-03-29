@@ -6,10 +6,10 @@
 There are several sources of truth regarding the directory-entry structure that the code in this directory is trying to provide a UI for:
 
 1. [The JSON Schema in mod-directory](https://github.com/openlibraryenvironment/mod-directory/blob/master/ramls/dirent.json)
-2. [The Grovvy data-model that this is based on](https://github.com/openlibraryenvironment/mod-directory/blob/master/service/grails-app/domain/org/olf/okapi/modules/directory/DirectoryEntry.groovy)
+2. [The Groovy data-model that this is based on](https://github.com/openlibraryenvironment/mod-directory/blob/master/service/grails-app/domain/org/olf/okapi/modules/directory/DirectoryEntry.groovy)
 3. The actual records that come back from the service
 
-The first of these is most definitive, but not easy to read if you're not used to the code conventions. The JSON Schema is, or should be, the most explicit statement of structure, but it's rather incomplete and out of date, so not hugely useful. Ultimately, the data that comes back from the service is reality, so when a data field is present in such a response that's the best guide of all.
+The Groovy data model most definitive, but not easy to read if you're not used to the code conventions. The JSON Schema is, or should be, the most explicit statement of structure, but it's rather incomplete and out of date, so not hugely useful. Ultimately, the data that comes back from the service is reality, so when a data field is present in such a response that's the best guide of all.
 
 
 ## Fields
