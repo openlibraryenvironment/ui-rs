@@ -21,7 +21,7 @@
   "information.symbols": "Symbols",
   "information.qualifiedName": "Fully qualified name",
   "information.parent": "Parent institution",
-  "information.entries": "Entries",
+  "information.units": "Units",
   "information.tags": "Tags",
   "information.heading.addresses": "Addresses",
   "information.addressNofM": "Address {index} of {count}",
