@@ -10,12 +10,12 @@ import {
 } from '@folio/stripes/components';
 
 
-function makeEntryList(entries) {
-  if (!entries || entries.length === 0) return null;
+function makeUnitList(units) {
+  if (!units || units.length === 0) return null;
 
   return (
     <ul>
-      {entries.map(e => (
+      {units.map(e => (
         <li key={e.id}><Link to={e.id}>{e.name}</Link></li>
       ))}
     </ul>
@@ -33,7 +33,7 @@ class DirectoryEntryInfo extends React.Component {
 
   render() {
     const { directoryEntry } = this.props;
-    const entryList = makeEntryList(directoryEntry.entries);
+    const unitList = makeUnitList(directoryEntry.units);
 
     return (
       <Accordion
@@ -108,13 +108,13 @@ class DirectoryEntryInfo extends React.Component {
         </React.Fragment>
         }
 
-        {!entryList ? '' :
+        {!unitList ? '' :
         <React.Fragment>
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-directory.information.entries" />}
-                value={entryList}
+                label={<FormattedMessage id="ui-directory.information.units" />}
+                value={unitList}
               />
             </Col>
           </Row>
