@@ -26,7 +26,7 @@ Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In
 `friends`            | array     | (See below)    | empty      | empty      |
 `fullyQualifiedName` | scalar    | --             | Y          | Y          | Y
 `id`                 | scalar    | string         | Y          | Y          | _Not needed_
-`items`              | array     | --             |            |            | _Probably superseded by `entries`_
+`items`              | array     | --             |            |            | _Superseded by `entries`_
 `name`               | scalar    | string         | Y          | Y          | Y
 `parent`             | structure | --             |            | Y          | Y
 `services`           | structure | --             | Y          |            | Y
@@ -54,8 +54,8 @@ Field                | Kind      | In JSON Schema | Response 1 | Response 2 | In
 
 ## To Do
 
-* Check all translation-key names and make consistent.
 * Update mod-directory and switch from `entries` to `units`.
+* Check all translation-key names and make consistent.
 * Update this document.
 * Support the `announcements` array when it becomes available.
 * Support the `friends` array when it becomes available.
