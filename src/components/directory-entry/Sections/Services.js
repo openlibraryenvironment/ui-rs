@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, KeyValue, Row, Col } from '@folio/stripes/components';
+import { Accordion, KeyValue, Row, Col, Headline } from '@folio/stripes/components';
 
 
 function renderService(service, index, count) {
@@ -13,7 +13,7 @@ function renderService(service, index, count) {
 
   return (
     <React.Fragment key={index}>
-      <h2>{header}</h2>
+      <Headline>{header}</Headline>
       <Row>
         <Col xs={6}>
           <KeyValue

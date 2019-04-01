@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, KeyValue } from '@folio/stripes/components';
+import { Accordion, KeyValue, Headline } from '@folio/stripes/components';
 
 
 function renderAddress(address, index, count) {
@@ -11,7 +11,7 @@ function renderAddress(address, index, count) {
 
   return (
     <React.Fragment key={index}>
-      <h2>{header}</h2>
+      <Headline>{header}</Headline>
       <ul>
         {
           _.sortBy(address.lines, e => e.seq).map((line, j) => (
