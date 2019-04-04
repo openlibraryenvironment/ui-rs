@@ -36,11 +36,6 @@ class ViewDirectoryEntry extends React.Component {
     stripes: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-    this.getActionMenu = this.getActionMenu.bind(this);
-  }
-
   state = {
     sections: {
       directoryEntryInfo: false,
@@ -79,45 +74,30 @@ class ViewDirectoryEntry extends React.Component {
       <Layer
         isOpen={query.layer === 'edit'}
         contentLabel="cant get intl to work"
-      />
+      >
+        Editing ...
+      </Layer>
     );
   }
 
 
-  getActionMenu({ onToggle }) {
-    const items = [];
-    /**
-     * We only want to render the action menu
-     * if we have something to show
-     */
-    if (!items.length) {
-      return null;
-    }
+  getActionMenu = ({ onToggle }) => {
+    const { onEdit } = this.props;
+    const handleClick = () => {
+      onEdit();
+      onToggle();
+    };
 
-    /**
-     * Return action menu
-     */
     return (
-      <React.Fragment>
-        {items.map((item, index) => (
-          <Button
-            key={index}
-            buttonStyle="dropdownItem"
-            id={item.id}
-            aria-label={item.ariaLabel}
-            href={item.href}
-            onClick={() => {
-              // Toggle the action menu dropdown
-              onToggle();
-              item.onClick();
-            }}
-          >
-            <Icon icon={item.icon}>
-              {item.label}
-            </Icon>
-          </Button>
-        ))}
-      </React.Fragment>
+      <Button
+        data-directory-entry-edit-action
+        buttonStyle="dropdownItem"
+        onClick={handleClick}
+      >
+        <Icon icon="edit">
+          <FormattedMessage id="ui-directory.edit" />
+        </Icon>
+      </Button>
     );
   }
 
@@ -134,6 +114,7 @@ class ViewDirectoryEntry extends React.Component {
         paneTitle={title}
         dismissible
         onClose={this.props.onClose}
+        actionMenu={this.getActionMenu}
       >
         <AccordionSet accordionStatus={this.state.sections}>
           <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
