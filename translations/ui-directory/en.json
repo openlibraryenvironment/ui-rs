@@ -1,5 +1,6 @@
 {
   "meta.title": "Directory",
+  "edit": "Edit",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
