@@ -1,11 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from 'react';'test2'
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import PatronRequestInfo from './Sections/PatronRequestInfo'
 import {
+  AccordionSet,
+  Accordion,
   Icon,
   Pane,
+  Layer,
   Button,
 } from '@folio/stripes/components';
+
 
 class ViewPatronRequest extends React.Component {
   static manifest = Object.freeze({
@@ -17,9 +22,18 @@ class ViewPatronRequest extends React.Component {
   });
 
   static propTypes = {
+    match: PropTypes.object,
     onClose: PropTypes.func,
+    parentResources: PropTypes.object,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    stripes: PropTypes.object,
   };
+
+  state = {
+    sections: {
+      requestInfo: false,
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -67,9 +81,32 @@ class ViewPatronRequest extends React.Component {
     );
   }
 
+  getSectionProps() {
+    return {
+      patronRequest: this.getPatronRequest(),
+      onToggle: this.handleSectionToggle,
+      stripes: this.props.stripes,
+    };
+  }
+
+  renderEditLayer() {
+    const { resources: { query } } = this.props;
+
+    return (
+      <Layer
+        isOpen={query.layer === 'edit'}
+        contentLabel="cant get intl to work"
+      >
+        Editing ...
+      </Layer>
+    );
+  }
+
+
 
   render() {
     const patronRequest = this.getPatronRequest();
+    const sectionProps = this.getSectionProps();
 
     return (
       <Pane
@@ -78,8 +115,20 @@ class ViewPatronRequest extends React.Component {
         paneTitle={patronRequest.id}
         dismissible
         onClose={this.props.onClose}
+        actionMenu={this.getActionMenu}
       >
-        <h1>Hello</h1>
+        <AccordionSet accordionStatus={this.state.sections}>
+          <PatronRequestInfo id="patronRequestInfo" {...sectionProps} />
+          <Accordion
+            id="developerInfo"
+            label="test"
+            displayWhenClosed='test2'
+            {...sectionProps}
+          >
+            <pre>{JSON.stringify(patronRequest, null, 2)}</pre>
+          </Accordion>
+        </AccordionSet>
+        { this.renderEditLayer() }
       </Pane>
     );
   }
