@@ -12,6 +12,8 @@ import {
   Button,
 } from '@folio/stripes/components';
 
+import EditDirectoryEntry from './edit-directory-entry';
+
 import {
   DirectoryEntryInfo,
   Addresses,
@@ -46,11 +48,38 @@ class ViewDirectoryEntry extends React.Component {
     }
   }
 
-  getDirectoryEntry() {
+  getDirectoryEntry = () => {
     return get(this.props.resources.selectedDirectoryEntry, ['records', 0], {});
   }
 
-  getSectionProps() {
+  getInitialValues = () => {
+    const record = Object.assign({}, this.getDirectoryEntry());
+
+    /*
+    const { customProperties = {}, orgs, status, type } = record;
+    if (status && status.id) {
+      record.status = status.id;
+    }
+
+    if (type && type.id) {
+      record.type = type.id;
+    }
+
+    if (orgs && orgs.length) {
+      record.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
+    }
+
+    const defaultCustomProperties = get(this.props.defaultDirEntryValues, ['customProperties'], {});
+    record.customProperties = {
+      ...defaultCustomProperties,
+      ...customProperties,
+    };
+    */
+
+    return record;
+  }
+
+  getSectionProps = () => {
     return {
       directoryEntry: this.getDirectoryEntry(),
       onToggle: this.handleSectionToggle,
@@ -67,31 +96,40 @@ class ViewDirectoryEntry extends React.Component {
     }));
   }
 
-  renderEditLayer() {
+  renderEditLayer = () => {
     const { resources: { query } } = this.props;
 
     return (
-      <Layer
-        isOpen={query.layer === 'edit'}
-        contentLabel="cant get intl to work"
-      >
-        Editing ...
-      </Layer>
+      <FormattedMessage id="ui-directory.editDirEntry">
+        {layerContentLabel => (
+          <Layer
+            isOpen={query.layer === 'edit'}
+            contentLabel={layerContentLabel}
+          >
+            <EditDirectoryEntry
+              {...this.props}
+              onCancel={this.props.onCloseEdit}
+              onSubmit={this.handleSubmit}
+              parentMutator={this.props.mutator}
+              initialValues={this.getInitialValues()}
+            />
+          </Layer>
+        )}
+      </FormattedMessage>
     );
   }
 
-
   getActionMenu = ({ onToggle }) => {
-    const { onEdit } = this.props;
     const handleClick = () => {
-      onEdit();
+      this.props.onEdit();
       onToggle();
     };
 
     return (
       <Button
-        data-directory-entry-edit-action
         buttonStyle="dropdownItem"
+        href={this.props.editLink}
+        id="clickable-edit-direntry"
         onClick={handleClick}
       >
         <Icon icon="edit">
