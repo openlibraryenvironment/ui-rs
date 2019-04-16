@@ -130,7 +130,7 @@ This section is the same as the previous one but sliced at right-angles, so that
 * Record update:
 
   * In `<Licences>`'s invocation of `<SearchAndSort>`, `this.handleUpdate` is passed as `detailProps.onUpdate`.
-  * Within `<SearchAndSort>`, `props.onUpdate` is passed through to the view-record component (since is is part of the contents of `props.detailProps`).
+  * Within `<SearchAndSort>`, `props.onUpdate` is passed through to the view-record component (since it is part of the contents of `props.detailProps`).
   * Within the view-record component, all props, including `onUpdate`, are passed through to the edit-record component.
   * Within the edit-record component, the `props.onUpdate` function is invoked from `handleSubmit`, which is installed as the redux-form submit handler.
   * the `handleUpdate` method in the top-level `<Licenses>` component invokes the PUT mutator and updates some local state.
