@@ -53,7 +53,7 @@ export default class DirectoryEntries extends React.Component {
       limitParam: 'perPage',
       resultCount: { initialValue: INITIAL_RESULT_COUNT },
     },
-    selectedPatronRequest: {
+    selectedRecord: {
       type: 'okapi',
       path: 'directory/entry/${directoryEntryId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
@@ -126,10 +126,23 @@ export default class DirectoryEntries extends React.Component {
     this.props.mutator.query.update({ qindex });
   }
 
-  handleUpdate = (patronRequest) => {
-    // console.log('handleUpdate %o', patronRequest);
-    this.props.mutator.selectedPatronRequestId.replace(patronRequest.id);
-    return this.props.mutator.selectedPatronRequest.PUT(patronRequest);
+  handleCreate = (record) => {
+    console.log('handleCreate %o', record);
+    const { mutator } = this.props;
+
+    mutator.records.POST(record)
+      .then((newRecord) => {
+        mutator.query.update({
+          _path: `/directory/entries/view/${newRecord.id}`,
+          layer: '',
+        });
+      });
+  };
+
+  handleUpdate = (record) => {
+    console.log('handleUpdate %o', record);
+    this.props.mutator.selectedRecordId.replace(record.id);
+    return this.props.mutator.selectedRecord.PUT(record);
   }
 
   render() {
@@ -154,6 +167,7 @@ export default class DirectoryEntries extends React.Component {
           editRecordComponent={EditDirectoryEntry}
           viewRecordPerms="module.directory.enabled"
           newRecordPerms="module.directory.enabled"
+          onCreate={this.handleCreate}
           detailProps={{
             onUpdate: this.handleUpdate
           }}
@@ -162,7 +176,8 @@ export default class DirectoryEntries extends React.Component {
             records: resources.dirents,
           }}
           parentMutator={{
-            ...mutator,
+            query: mutator.query,
+            resultCount: mutator.resultCount,
             records: mutator.dirents,
           }}
           showSingleResult
