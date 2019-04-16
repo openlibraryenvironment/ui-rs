@@ -28,5 +28,8 @@
   "information.serviceAddress": "Address",
   "information.heading.customProps": "Custom properties",
   "information.heading.developer": "Developer info",
-  "information.heading.developer.help": "(JSON dump of raw record)"
+  "information.heading.developer.help": "(JSON dump of raw record)",
+  "createDirEntry": "Create directory entry",
+  "updateDirEntry": "Update directory entry",
+  "closeNewDirEntry": "Close new directory entry"
 }
