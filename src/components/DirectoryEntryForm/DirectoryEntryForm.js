@@ -8,13 +8,9 @@ import {
   Row
 } from '@folio/stripes/components';
 
-/*
 import {
   DirectoryEntryFormInfo,
 } from './sections';
-*/
-
-function DirectoryEntryFormInfo() { return <p>form info</p>; }
 
 class DirectoryEntryForm extends React.Component {
   static propTypes = {
