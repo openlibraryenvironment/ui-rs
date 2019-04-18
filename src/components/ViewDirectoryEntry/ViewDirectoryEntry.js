@@ -12,7 +12,7 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-import EditDirectoryEntry from './edit-directory-entry';
+import EditDirectoryEntry from '../EditDirectoryEntry';
 
 import {
   DirectoryEntryInfo,

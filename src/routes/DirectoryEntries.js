@@ -5,8 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
-import ViewDirectoryEntry from '../components/directory-entry/view-directory-entry';
-import EditDirectoryEntry from '../components/directory-entry/edit-directory-entry';
+import ViewDirectoryEntry from '../components/ViewDirectoryEntry';
+import EditDirectoryEntry from '../components/EditDirectoryEntry';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;

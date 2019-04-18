@@ -10,7 +10,7 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
-import DirEntryForm from '../directory-entry-form';
+import DirEntryForm from '../DirectoryEntryForm';
 
 const handleSubmit = (agreement, dispatch, props) => {
   props.onUpdate(agreement)
