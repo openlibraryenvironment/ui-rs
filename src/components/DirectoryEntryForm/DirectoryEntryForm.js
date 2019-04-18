@@ -10,13 +10,13 @@ import {
 
 /*
 import {
-  DirEntryFormInfo,
+  DirectoryEntryFormInfo,
 } from './sections';
 */
 
-function DirEntryFormInfo() { return <p>form info</p>; }
+function DirectoryEntryFormInfo() { return <p>form info</p>; }
 
-class DirEntryForm extends React.Component {
+class DirectoryEntryForm extends React.Component {
   static propTypes = {
     // XXX I don't think we need either of these
     parentResources: PropTypes.object,
@@ -25,7 +25,7 @@ class DirEntryForm extends React.Component {
 
   state = {
     sections: {
-      dirEntryFormInfo: true,
+      directoryEntryFormInfo: true,
     }
   }
 
@@ -65,11 +65,11 @@ class DirEntryForm extends React.Component {
               />
             </Col>
           </Row>
-          <DirEntryFormInfo id="dirEntryFormInfo" open={sections.dirEntryFormInfo} {...sectionProps} />
+          <DirectoryEntryFormInfo id="directoryEntryFormInfo" open={sections.directoryEntryFormInfo} {...sectionProps} />
         </AccordionSet>
       </div>
     );
   }
 }
 
-export default DirEntryForm;
+export default DirectoryEntryForm;

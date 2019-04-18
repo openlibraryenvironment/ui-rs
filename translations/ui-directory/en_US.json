@@ -1,7 +1,7 @@
 {
   "meta.title": "Directory",
   "edit": "Edit",
-  "editDirEntry": "Edit Directory Entry",
+  "editDirectoryEntry": "Edit Directory Entry",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
@@ -29,7 +29,7 @@
   "information.heading.customProps": "Custom properties",
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)",
-  "createDirEntry": "Create directory entry",
-  "updateDirEntry": "Update directory entry",
-  "closeNewDirEntry": "Close new directory entry"
+  "createDirectoryEntry": "Create directory entry",
+  "updateDirectoryEntry": "Update directory entry",
+  "closeNewDirectoryEntry": "Close new directory entry"
 }

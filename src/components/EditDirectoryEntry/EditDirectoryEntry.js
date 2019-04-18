@@ -10,7 +10,7 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
-import DirEntryForm from '../DirectoryEntryForm';
+import DirectoryEntryForm from '../DirectoryEntryForm';
 
 const handleSubmit = (agreement, dispatch, props) => {
   props.onUpdate(agreement)
@@ -34,7 +34,7 @@ class EditDirectoryEntry extends React.Component {
   renderFirstMenu() {
     return (
       <PaneMenu>
-        <FormattedMessage id="ui-directory.closeNewDirEntry">
+        <FormattedMessage id="ui-directory.closeNewDirectoryEntry">
           {ariaLabel => (
             <IconButton
               icon="times"
@@ -55,10 +55,10 @@ class EditDirectoryEntry extends React.Component {
     let label;
     if (initialValues && initialValues.id) {
       id = 'clickable-update-directory-entry';
-      label = <FormattedMessage id="ui-directory.updateDirEntry" />;
+      label = <FormattedMessage id="ui-directory.updateDirectoryEntry" />;
     } else {
       id = 'clickable-create-directory-entry';
-      label = <FormattedMessage id="ui-directory.createDirEntry" />;
+      label = <FormattedMessage id="ui-directory.createDirectoryEntry" />;
     }
 
     return (
@@ -80,7 +80,7 @@ class EditDirectoryEntry extends React.Component {
   render() {
     const { initialValues } = this.props;
     const paneTitle = initialValues && initialValues.id ?
-      initialValues.name : <FormattedMessage id="ui-directory.createDirEntry" />;
+      initialValues.name : <FormattedMessage id="ui-directory.createDirectoryEntry" />;
 
     return (
       <form id="form-directory-entry">
@@ -90,7 +90,7 @@ class EditDirectoryEntry extends React.Component {
           lastMenu={this.renderLastMenu()}
           paneTitle={paneTitle}
         >
-          <DirEntryForm {...this.props} />
+          <DirectoryEntryForm {...this.props} />
         </Pane>
       </form>
     );

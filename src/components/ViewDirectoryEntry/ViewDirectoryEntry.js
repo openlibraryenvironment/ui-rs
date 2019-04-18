@@ -69,7 +69,7 @@ class ViewDirectoryEntry extends React.Component {
       record.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
     }
 
-    const defaultCustomProperties = get(this.props.defaultDirEntryValues, ['customProperties'], {});
+    const defaultCustomProperties = get(this.props.defaultDirectoryEntryValues, ['customProperties'], {});
     record.customProperties = {
       ...defaultCustomProperties,
       ...customProperties,
@@ -100,7 +100,7 @@ class ViewDirectoryEntry extends React.Component {
     const { resources: { query } } = this.props;
 
     return (
-      <FormattedMessage id="ui-directory.editDirEntry">
+      <FormattedMessage id="ui-directory.editDirectoryEntry">
         {layerContentLabel => (
           <Layer
             isOpen={query.layer === 'edit'}
@@ -129,7 +129,7 @@ class ViewDirectoryEntry extends React.Component {
       <Button
         buttonStyle="dropdownItem"
         href={this.props.editLink}
-        id="clickable-edit-direntry"
+        id="clickable-edit-directoryentry"
         onClick={handleClick}
       >
         <Icon icon="edit">
