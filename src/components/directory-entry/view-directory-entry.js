@@ -19,7 +19,7 @@ import {
   Addresses,
   Services,
   CustomProperties,
-} from './Sections';
+} from './sections';
 
 class ViewDirectoryEntry extends React.Component {
   static manifest = Object.freeze({
