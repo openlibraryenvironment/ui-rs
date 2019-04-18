@@ -127,7 +127,6 @@ export default class DirectoryEntries extends React.Component {
   }
 
   handleCreate = (record) => {
-    console.log('handleCreate %o', record);
     const { mutator } = this.props;
 
     mutator.records.POST(record)
@@ -140,7 +139,6 @@ export default class DirectoryEntries extends React.Component {
   };
 
   handleUpdate = (record) => {
-    console.log('handleUpdate %o', record);
     this.props.mutator.selectedRecordId.replace(record.id);
     return this.props.mutator.selectedRecord.PUT(record);
   }
