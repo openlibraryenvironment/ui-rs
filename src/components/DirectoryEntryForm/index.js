@@ -1,1 +1,1 @@
-export { default } from './DirectoryEntryForm.js';
+export { default } from './DirectoryEntryForm';
