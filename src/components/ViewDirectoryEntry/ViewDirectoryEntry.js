@@ -31,11 +31,20 @@ class ViewDirectoryEntry extends React.Component {
   });
 
   static propTypes = {
-    match: PropTypes.object,
-    onClose: PropTypes.func,
-    parentResources: PropTypes.object,
-    paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     stripes: PropTypes.object,
+    resources: PropTypes.shape({
+      query: PropTypes.shape({
+        layer: PropTypes.string,
+      }),
+      selectedDirectoryEntry: PropTypes.shape({
+        records: PropTypes.array,
+      }),
+    }),
+    paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onClose: PropTypes.func,
+    onEdit: PropTypes.func,
+    editLink: PropTypes.string,
+    onCloseEdit: PropTypes.func,
   };
 
   state = {
@@ -110,7 +119,6 @@ class ViewDirectoryEntry extends React.Component {
               {...this.props}
               onCancel={this.props.onCloseEdit}
               onSubmit={this.handleSubmit}
-              parentMutator={this.props.mutator}
               initialValues={this.getInitialValues()}
             />
           </Layer>
