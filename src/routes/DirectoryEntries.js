@@ -55,7 +55,7 @@ export default class DirectoryEntries extends React.Component {
     },
     selectedRecord: {
       type: 'okapi',
-      path: 'directory/entry/${directoryEntryId}', // eslint-disable-line no-template-curly-in-string
+      path: 'directory/entry/${selectedRecordId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
     },
     tags: {
@@ -63,11 +63,12 @@ export default class DirectoryEntries extends React.Component {
       path: 'directory/tags',
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    selectedLicenseId: { initialValue: '' },
 
     // If this (query) isn't here, then we get this.props.parentMutator.query is undefined in the UI
     query: {},
 
-    selectedDirectoryEntryId: { initialValue: '' },
+    selectedRecordId: { initialValue: '' },
   });
 
   static propTypes = {
@@ -127,9 +128,10 @@ export default class DirectoryEntries extends React.Component {
   }
 
   handleCreate = (record) => {
+    console.log('handleCreate: this =', this);
     const { mutator } = this.props;
 
-    mutator.records.POST(record)
+    mutator.dirents.POST(record)
       .then((newRecord) => {
         mutator.query.update({
           _path: `/directory/entries/view/${newRecord.id}`,
