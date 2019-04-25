@@ -128,7 +128,6 @@ export default class DirectoryEntries extends React.Component {
   }
 
   handleCreate = (record) => {
-    console.log('handleCreate: this =', this);
     const { mutator } = this.props;
 
     mutator.dirents.POST(record)
