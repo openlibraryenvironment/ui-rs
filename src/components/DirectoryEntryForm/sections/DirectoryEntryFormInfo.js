@@ -44,7 +44,7 @@ class DirectoryEntryFormInfo extends React.Component {
                   <Field
                     id="edit-directory-entry-name"
                     name="name"
-                    label="LABEL"
+                    label={placeholder}
                     component={TextField}
                     placeholder={placeholder}
                     required
@@ -54,10 +54,22 @@ class DirectoryEntryFormInfo extends React.Component {
               </FormattedMessage>
             </Col>
             <Col xs={2}>
-              status
+             (Status)
             </Col>
             <Col xs={5}>
-              slug
+              <FormattedMessage id="ui-directory.information.slug">
+                {placeholder => (
+                  <Field
+                    id="edit-directory-entry-slug"
+                    name="slug"
+                    label={placeholder}
+                    component={TextField}
+                    placeholder={placeholder}
+                    required
+                    validate={required}
+                  />
+                )}
+              </FormattedMessage>
             </Col>
           </Row>
         </React.Fragment>
