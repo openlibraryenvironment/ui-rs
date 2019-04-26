@@ -177,7 +177,6 @@ export default class DirectoryEntries extends React.Component {
           parentMutator={{
             query: mutator.query,
             resultCount: mutator.resultCount,
-            records: mutator.dirents,
           }}
           showSingleResult
           visibleColumns={[
