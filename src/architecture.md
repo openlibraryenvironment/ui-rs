@@ -113,7 +113,7 @@ Here are the key update-related props when using `<SearchAndSort>`, and their jo
   * (`onSubmit` is also passed, but in error, and is ignored: see the Appendix.)
 
 * Within the edit-record component:
-  * _I think_ that the `onSubmit` function passed from `<SearchAndSort>` in the new-record case overrided the `onSubmit` defined in the redux-form invocation, and so becomes the submit handler. **XXX check this.**
+  * _I think_ that the `onSubmit` function passed from `<SearchAndSort>` in the new-record case overrides the `onSubmit` defined in the redux-form invocation, and so becomes the submit handler. **XXX check this.**
   * The `props.onUpdate` function is invoked from `handleSubmit`, which is installed as the redux-form submit handler.
 
 ### By operation
