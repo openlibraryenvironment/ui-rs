@@ -52,7 +52,7 @@ The `renderRecordDetails` function renders the full record, when the relevant ID
 * `onEdit`, a callback provided by `<SearchAndSort>` for the view-record component to begin editing the viewed record (which it does by adding a `layer=edit` URL parameter)
 * `onCloseEdit`, a callback provided by `<SearchAndSort>` for the edit layer to close itself (which it does by removing the `layer` URL parameter).
 
-`detailProps` is a bit of an escape hatch, and warrants further analysis: see [below](XXX).
+`detailProps` is a bit of an escape hatch, and warrants further analysis: see [below](#whats-the-deal-with-detailprops).
 
 ### Creating a new record
 
