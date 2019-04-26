@@ -14,9 +14,7 @@ import {
 
 class DirectoryEntryForm extends React.Component {
   static propTypes = {
-    // XXX I don't think we need either of these
-    parentResources: PropTypes.object,
-    parentMutator: PropTypes.object,
+    parentResources: PropTypes.object, // XXX I don't think we need this
   }
 
   state = {
@@ -29,7 +27,6 @@ class DirectoryEntryForm extends React.Component {
     return {
       onToggle: this.handleSectionToggle,
       parentResources: this.props.parentResources,
-      parentMutator: this.props.parentMutator,
     };
   }
 
