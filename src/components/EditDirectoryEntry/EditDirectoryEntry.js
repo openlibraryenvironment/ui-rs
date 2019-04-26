@@ -21,14 +21,10 @@ class EditDirectoryEntry extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    // onSave: PropTypes.func,
     onCancel: PropTypes.func,
-    // onRemove: PropTypes.func,
     onUpdate: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
-    // parentResources: PropTypes.object,
-    // parentMutator: PropTypes.object,
   }
 
   renderFirstMenu() {
