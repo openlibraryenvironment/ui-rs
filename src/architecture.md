@@ -46,7 +46,6 @@ The `renderRecordDetails` function renders the full record, when the relevant ID
 
 * `connectedSource`, which is a ConnectedSouce object for the stripes-connect or Apollo GraphQL source that data is taken from.
 * `parentResources`, passed through from props.
-* `parentMutator`, passed through from props.
 * `detailProps` -- a set of additional properties which are passed individually into both the edit-record component (for record creation) and the view-record component.
 * `onClose`, a callback provided by `<SearchAndSort>` for the view-record component to close its pane (which it does my modifying the URL path).
 * `onEdit`, a callback provided by `<SearchAndSort>` for the view-record component to begin editing the viewed record (which it does by adding a `layer=edit` URL parameter)
@@ -60,7 +59,6 @@ The `renderCreateRecordLayer` function renders the create-record layer, when the
 
 * `connectedSource` -- (as above)
 * `parentresources` -- (as above)
-* `parentmutator` -- (as above)
 * `detailProps` -- (as above)
 * `onSubmit` is provided by `<SearchAndSort>` as the local method `createRecord`, which invokes `props.onCreate`.
 * `onCancel` is provided by `<SearchAndSort>`.
@@ -76,7 +74,6 @@ The view-record component's invocation of the edit-component record typically pa
 
 * `onCancel` -- the `onCloseEdit` function passed in as a prop.
 * `onSubmit` -- this seems to be unused. See [appendix](#appendix-is-the-onsubmit-prop-used-in-editing).
-* `parentMutator` -- the mutator passed as `props.mutator` from `<SearchAndSort>`, which is the one passed _into_ `<SearchAndSort>`.
 * `initialValues` -- a set of values representing the current state of the record to be edited.
 
 ### What's the deal with `detailProps`?
@@ -137,7 +134,7 @@ This section is the same as the previous one but sliced at right-angles, so that
 
 ### Note
 
-(The `parentMutator` prop passed into `<SearchAndSort>` is directly used only to manipulate the URL query and the `resultCount` local resource. It does get passed into the edit component (via the view component in the case of editing an existing record) but is not needed there in the case where all the mutations are performed in the top-level component that has the manifest.)
+The `parentMutator` prop passed into `<SearchAndSort>` is directly used only to manipulate the URL query and the `resultCount` local resource. It does get passed into the edit component (via the view component in the case of editing an existing record) but is not needed there in the case where all the mutations are performed in the top-level component that has the manifest. For this reason, we do not blindly pass `parentMutator: this.props.mutator` into `<SearchAndSort>`, but construct a minimal parent-mutator object containing only `query` and `resultCount`.
 
 
 ## Appendix: is the `onSubmit` prop used in editing?
