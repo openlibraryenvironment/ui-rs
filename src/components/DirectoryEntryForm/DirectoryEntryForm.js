@@ -14,7 +14,7 @@ import {
 
 class DirectoryEntryForm extends React.Component {
   static propTypes = {
-    parentResources: PropTypes.object, // XXX I don't think we need this
+    parentResources: PropTypes.object,
   }
 
   state = {
