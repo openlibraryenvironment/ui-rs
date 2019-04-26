@@ -12,7 +12,7 @@
 * [Summary](#summary)
     * [By component](#by-component)
     * [By operation](#by-operation)
-    * [Note](#note)
+    * [Note on `parentResources` and `parentMutator`](#note-on-parentresources-and-parentmutator)
 * [Appendix: is the `onSubmit` prop used in editing?](#appendix-is-the-onsubmit-prop-used-in-editing)
 
 
@@ -132,9 +132,11 @@ This section is the same as the previous one but sliced at right-angles, so that
   * Within the edit-record component, the `props.onUpdate` function is invoked from `handleSubmit`, which is installed as the redux-form submit handler.
   * the `handleUpdate` method in the top-level `<Licenses>` component invokes the PUT mutator and updates some local state.
 
-### Note
+### Note on `parentResources` and `parentMutator`
 
 The `parentMutator` prop passed into `<SearchAndSort>` is directly used only to manipulate the URL query and the `resultCount` local resource. It does get passed into the edit component (via the view component in the case of editing an existing record) but is not needed there in the case where all the mutations are performed in the top-level component that has the manifest. For this reason, we do not blindly pass `parentMutator: this.props.mutator` into `<SearchAndSort>`, but construct a minimal parent-mutator object containing only `query` and `resultCount`.
+
+But `parentResources`, which is also passed into `<SearchAndSort>` is used not only directly by that component, but also potentially by the edit-record component, for fetching controlled lists. For example, the edit-licence components use `parentResources` to get the lists of status-values and type-values.
 
 
 ## Appendix: is the `onSubmit` prop used in editing?
