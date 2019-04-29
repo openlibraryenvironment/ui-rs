@@ -15,7 +15,7 @@ export default class GeneralSettings extends React.Component {
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <div data-test-application-settings-general-message>
-          <FormattedMessage id="ui-directory.settings.general.message" />
+          <FormattedMessage id="ui-directory.settings.tags.message" />
         </div>
       </Pane>
     );
