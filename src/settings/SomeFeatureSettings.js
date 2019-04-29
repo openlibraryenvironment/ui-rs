@@ -5,7 +5,10 @@ import { FormattedMessage } from 'react-intl';
 
 export default class FeatureSettings extends React.Component {
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object, // React component
+    ]).isRequired,
   };
 
   render() {
