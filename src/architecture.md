@@ -110,7 +110,7 @@ Here are the key update-related props when using `<SearchAndSort>`, and their jo
   * (`onSubmit` is also passed, but in error, and is ignored: see the Appendix.)
 
 * Within the edit-record component:
-  * _I think_ that the `onSubmit` function passed from `<SearchAndSort>` in the new-record case overrides the `onSubmit` defined in the redux-form invocation, and so becomes the submit handler. **XXX check this.**
+  * The `onSubmit` function passed from `<SearchAndSort>` in the new-record case overrides the `onSubmit` defined in the redux-form invocation, and so becomes the submit handler.
   * The `props.onUpdate` function is invoked from `handleSubmit`, which is installed as the redux-form submit handler.
 
 ### By operation
@@ -121,7 +121,7 @@ This section is the same as the previous one but sliced at right-angles, so that
 
   * In `<Licences>`'s invocation of `<SearchAndSort>`, `this.handleCreate` is passed in as the `onCreate` prop.
   * Within `<SearchAndSort>`, `props.onCreate` is invoked in a callback (`this.createRecord`) which is passed as the `onSubmit` prop to the edit components when a new record is to be created.
-  * Within the edit-record component: _I think_ that the `onSubmit` function passed from `<SearchAndSort>` in the new-record case overrides the `onSubmit` defined in the redux-form invocation, and so becomes the submit handler. **XXX check this.**
+  * Within the edit-record component: the `onSubmit` function passed from `<SearchAndSort>` in the new-record case overrides the `onSubmit` defined in the redux-form invocation, and so becomes the submit handler.
   * the `handleCreate` method in the top-level `<Licenses>` component invokes the POST mutator and redirects to the newly created licence's page.
 
 * Record update:
