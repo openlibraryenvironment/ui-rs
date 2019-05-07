@@ -40,7 +40,7 @@ class TagSettings extends React.Component {
         }}
         id="tags"
         sortby="value"
-        x_hiddenFields={['lastUpdated', 'numberOfObjects']}
+        hiddenFields={['lastUpdated', 'numberOfObjects']}
         clientGeneratePk=""
         limitParam="perPage"
       />
