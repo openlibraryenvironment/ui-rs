@@ -7,6 +7,15 @@ import {
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { withStripes } from '@folio/stripes/core';
 
+// Can be passed into <ControlledVocab> using: preUpdateHook={removeNormValue}
+// eslint-disable-next-line no-unused-vars
+function removeNormValue(obj) {
+  const res = Object.assign({}, obj);
+  delete res.normValue;
+  console.log('removeNormValue', obj, '->', res); // eslint-disable-line no-console
+  return res;
+}
+
 class TagSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
