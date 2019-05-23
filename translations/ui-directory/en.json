@@ -8,6 +8,8 @@
   "settings.status.message": "Maintain the statuses available for directory entries.",
   "objectName.tag": "Tag",
   "objectName.tags": "Tags",
+  "objectName.statuses": "Statuses",
+  "objectName.status": "Status",
   "headings.value": "Value",
   "headings.normValue": "Normalized Value:",
   "entries.name":"Name",
