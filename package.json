@@ -49,6 +49,13 @@
     "route": "/rs",
     "queryResource": "query",
     "hasSettings": true,
+    "icons": [
+      {
+        "name": "app",
+        "alt": "Create, view and manage patron requests",
+        "title": "Requests"
+      }
+    ],
     "okapiInterfaces": {
       "resourcesharing": "1.0"
     },
