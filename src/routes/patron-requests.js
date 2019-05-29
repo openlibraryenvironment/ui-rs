@@ -94,6 +94,8 @@ export default class PatronRequests extends React.Component {
           showSingleResult
           visibleColumns={[
             'id',
+            'isRequester',
+            'dateCreated',
             'title',
             'patronReference',
             'state',
@@ -101,6 +103,8 @@ export default class PatronRequests extends React.Component {
           ]}
           columnMapping={{
             id: <FormattedMessage id="ui-rs.patronrequests.id" />,
+            isRequester: <FormattedMessage id="ui-rs.patronrequests.isRequester" />,
+            dateCreated: <FormattedMessage id="ui-rs.patronrequests.dateCreated" />,
             title: <FormattedMessage id="ui-rs.patronrequests.title" />,
             patronReference: <FormattedMessage id="ui-rs.patronrequests.patronReference" />,
             state: <FormattedMessage id="ui-rs.patronrequests.state" />,
@@ -108,13 +112,15 @@ export default class PatronRequests extends React.Component {
           }}
           columnWidths={{
             id: 300,
+            role: 80,
+            dateCreated: 120,
             title: 200,
             patronReference: 120,
             state: 120,
             serviceType: 120,
           }}
           resultsFormatter={{
-            state: a => a.state && a.state.value,
+            state: a => a.state && a.state.name,
             serviceType: a => a.serviceType && a.serviceType.value,
           }}
         />
