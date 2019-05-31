@@ -4,13 +4,15 @@
 * [Introduction](#introduction)
 * [Concepts](#concepts)
 * [Operations](#operations)
-    * [List and search for categories](#list-and-search-for-categories)
-    * [Create a new category](#create-a-new-category)
-    * [Delete a category](#delete-a-category)
-    * [Add values to an existing category](#add-values-to-an-existing-category)
-    * [Change a value within a category](#change-a-value-within-a-category)
-    * [Delete a value from a category](#delete-a-value-from-a-category)
-    * [Combining operations](#combining-operations)
+    * [Operations on categories](#operations-on-categories)
+        * [List and search for categories](#list-and-search-for-categories)
+        * [Create a new category](#create-a-new-category)
+        * [Delete a category](#delete-a-category)
+    * [Operations on values](#operations-on-values)
+        * [Add values to an existing category](#add-values-to-an-existing-category)
+        * [Change a value within a category](#change-a-value-within-a-category)
+        * [Delete a value from a category](#delete-a-value-from-a-category)
+        * [Combining operations on values](#combining-operations-on-values)
 * [Syntactic sugar](#syntactic-sugar)
 
 
@@ -44,7 +46,9 @@ The endpoint for managing each module's Refdata is `refdata` at the top level wi
 ## Operations
 
 
-### List and search for categories
+### Operations on categories
+
+#### List and search for categories
 
 `GET /directory/refdata` will return all Refdata categories (including their values).
 
@@ -52,8 +56,7 @@ This endpoint optionally takes a `filters` parameter, whose value is a query suc
 
 For more detail on how to use `filters`, see [the **Searching and filtering DirectoryEntry records** section of _DirectoryEntry Resources_](https://github.com/openlibraryenvironment/mod-directory/blob/master/doc/entry.md#searching-and-filtering-directoryentry-records).
 
-
-### Create a new category
+#### Create a new category
 
 To add a new category, POST it to `/directory/refdata`. It must contain as human-readable `desc` field, and may also contain an initial set of `values`. If that is provided, it must be an array of objects each with a `value` and a `label`: for example:
 
@@ -70,15 +73,16 @@ To add a new category, POST it to `/directory/refdata`. It must contain as human
 
 The response to this POST should be 201 Created, with the new category (including its server-generated `id`) included as the content. XXX check that this is true. The ID is used in all subsequent operations on the category.
 
-
-### Delete a category
+#### Delete a category
 
 It should be possible to delete a category by reference to its ID. For example, `DELETE /directory/refdata/12345`. XXX check that this is true.
 
 Deletion will fail (by design) if any of the values of the category are in use in any application-level records. XXX but with what diagnostic?
 
 
-### Add values to an existing category
+### Operations on values
+
+#### Add values to an existing category
 
 To add a value to an existing category, you must PUT the modified category. (You cannot POST the new value, as values do not have their own existence separate from that of the category.) All PUTs in grails have PATCH-like semantics, so it is not necessary to include the existing values in the set that is part of the PUT record, only the new values. For example, `PUT /directory/refdata/12345` with the payload
 
@@ -96,8 +100,7 @@ Categories are additive in this way because in many cases there are thousands of
 
 XXX what is the response? Presumably we get the new value's ID from it. Check this also for values included at creation time via POST.
 
-
-### Change a value within a category
+#### Change a value within a category
 
 Because values are not directly addressable but only as part of the category they belong to, changing an existing value is very much like adding a new one. In both cases, this is done by a PUT to the category -- for example `PUT /directory/refdata/12345`. The difference is that in the case of changing an existing value, the `id` of that value is specified along with the new label or value. For example:
 
@@ -111,8 +114,7 @@ This would change the label of the Refdata value with ID: 43 to "Unknown".
 
 XXX What is the response?
 
-
-### Delete a value from a category
+#### Delete a value from a category
 
 Deletion is a special case. Once more, it is achieved by a `PUT` to the category, since the values are not individually adressable, but this time the value must be specified via ID, and the special `_delete` key must be provided with value `true`:
 
@@ -126,8 +128,7 @@ This would remove the value with ID 6789 from the category whose ID was specifie
 
 XXX What is the response?
 
-
-### Combining operations
+#### Combining operations on values
 
 Because the addition, modification and deletion of values within a single category are all accomplished by a PUT to that category, it's possible to perform compound operations in a single shot: adding some values, modifying others, and deleting yet others. For example, `PUT /directory/refdata/12345` with the following payload:
 
