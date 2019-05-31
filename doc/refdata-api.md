@@ -10,6 +10,7 @@
     * [Add values to an existing category](#add-values-to-an-existing-category)
     * [Change a value within a category](#change-a-value-within-a-category)
     * [Delete a value from a category](#delete-a-value-from-a-category)
+    * [Combining operations](#combining-operations)
 * [Syntactic sugar](#syntactic-sugar)
 
 
