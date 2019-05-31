@@ -50,7 +50,7 @@ The endpoint for managing each module's Refdata is `refdata` at the top level wi
 
 `GET /directory/refdata` will return all Refdata categories (including their values).
 
-This endpoint optionally takes a `filters` parameter, whose value is a query such as `desc=DirectoryEntry.Status`. We can therefore list only the DirectoryEntry.Status values using `GET "/directory/refdata?filters=desc%3DDirectoryEntry.Status"` -- or indeed `GET "/directory/refdata?filters=id%3D12345"`, though you need to know the ID for that.
+This endpoint optionally takes a `filters` parameter, whose value is a query such as `desc=DirectoryEntry.Status`. We can therefore list only the DirectoryEntry.Status values using `GET /directory/refdata?filters=desc%3DDirectoryEntry.Status` -- or indeed `GET /directory/refdata?filters=id%3D12345`, though you need to know the ID for that.
 
 For more detail on how to use `filters`, see [the **Searching and filtering DirectoryEntry records** section of _DirectoryEntry Resources_](https://github.com/openlibraryenvironment/mod-directory/blob/master/doc/entry.md#searching-and-filtering-directoryentry-records).
 
@@ -69,13 +69,35 @@ To add a new category, POST it to `/directory/refdata`. It must contain as human
 
 (As when adding values to an existing category (see [below](#add-values-to-an-existing-category)), the `value` in each value is optional: if omitted, the label will be normalized and the result used as the value.)
 
-The response to this POST should be 201 Created, with the new category (including its server-generated `id`) included as the content. XXX check that this is true. The ID is used in all subsequent operations on the category.
+The response to this POST should be 201 Created, with the new category (including its server-generated `id`) included as the content. Server-generated IDs will also be included for the individual values. For example, the response to the POST above might be:
+
+	{
+	  "id" : "8a0081546b0eba8f016b0f4adc820000",
+	  "desc" : "Yes/No/Other",
+	  "values" : [
+	    {
+	      "id" : "8a0081546b0eba8f016b0f4adc890001",
+	      "label" : "Other (see notes)",
+	      "value" : "other"
+	    },
+	    {
+	      "id" : "8a0081546b0eba8f016b0f4adc8a0002",
+	      "value" : "no",
+	      "label" : "No"
+	    },
+	    {
+	      "id" : "8a0081546b0eba8f016b0f4adc8a0003",
+	      "label" : "Yes",
+	      "value" : "yes"
+	    }
+	  ]
+	}
 
 #### Delete a category
 
-It should be possible to delete a category by reference to its ID. For example, `DELETE /directory/refdata/12345`. XXX check that this is true.
+A category can be deleted by reference to its ID. For example, `DELETE /directory/refdata/12345`.
 
-Deletion will fail (by design) if any of the values of the category are in use in any application-level records. XXX but with what diagnostic?
+Deletion will fail (by design) if any of the values of the category are in use in any application-level records. In this case, the HTTP request is rejected with status 500 Internal Server Error (though 400 Bad Request, 409 Conflict or 422 Unprocessable Entity would be more appropriate).
 
 
 ### Operations on values
@@ -85,7 +107,7 @@ Deletion will fail (by design) if any of the values of the category are in use i
 To add a value to an existing category, you must PUT the modified category. (You cannot POST the new value, as values do not have their own existence separate from that of the category.) All PUTs in grails have PATCH-like semantics, so it is not necessary to include the existing values in the set that is part of the PUT record, only the new values. For example, `PUT /directory/refdata/12345` with the payload
 
 	{
-	  "values":[
+	  "values": [
 	    { "label": "Unknown" }
 	  ]
 	}
@@ -96,21 +118,21 @@ Categories are additive in this way because in many cases there are thousands of
 
 (As when creating a new category with an initial set of values (see [above](#create-a-new-category)), the `value` in each value is optional: if omitted, the label will be normalized and the result used as the value.)
 
-XXX what is the response? Presumably we get the new value's ID from it. Check this also for values included at creation time via POST.
+The content of the response to a successful operation is the entire new value of the category, including its `values` array which now contains the newly added value or values as well as all the old values. From this, it is possible to obtain the server-assigned ID of the new value.
 
 #### Change a value within a category
 
 Because values are not directly addressable but only as part of the category they belong to, changing an existing value is very much like adding a new one. In both cases, this is done by a PUT to the category -- for example `PUT /directory/refdata/12345`. The difference is that in the case of changing an existing value, the `id` of that value is specified along with the new label or value. For example:
 
 	{
-	  "values":[
-	    {"id": 43, "label": "Unknown" }
+	  "values": [
+	    { "id": 43, "label": "Unknowable" }
 	  ]
 	}
 
-This would change the label of the Refdata value with ID: 43 to "Unknown".
+The result of this _is supposed to be_ that the label of the Refdata value with ID 43 changes to "Unknowable".
 
-XXX What is the response?
+XXX However, at present this does not work: instead, a new value is created (and is allocated a new ID), and both the old and new versions now exist in the category.
 
 #### Delete a value from a category
 
@@ -122,13 +144,13 @@ Deletion is a special case. Once more, it is achieved by a `PUT` to the category
 	  ]
 	}
 
-This would remove the value with ID 6789 from the category whose ID was specified in the PUT URL.
+This should remove the value with ID 6789 from the category whose ID was specified in the PUT URL.
 
-XXX What is the response?
+XXX However, at present this does not work: the value is not removed, and the whole category is returned unchanged in the response.
 
 #### Combining operations on values
 
-Because the addition, modification and deletion of values within a single category are all accomplished by a PUT to that category, it's possible to perform compound operations in a single shot: adding some values, modifying others, and deleting yet others. For example, `PUT /directory/refdata/12345` with the following payload:
+Because the addition, modification and deletion of values within a single category are all accomplished by a PUT to that category, it should be possible to perform compound operations in a single shot: adding some values, modifying others, and deleting yet others. For example, `PUT /directory/refdata/12345` with the following payload:
 
 	{
 	  "values": [
@@ -143,15 +165,20 @@ Because the addition, modification and deletion of values within a single catego
 
 Should add three new values with labels "Red", "Blue" and "Yellow"; change the label of existing value 6789 to "Cyan"; and delete two existing values, 7890 and 8901.
 
+XXX I will test this once the Change and Delete bugs have been fixed.
+
 
 
 ## Syntactic sugar
 
 Rather than having to search for a specific category by name using `/directory/refdata?filters=desc%3DDirectoryEntry.Status`, it is possible to use the more elegant URL `directory/refdata/DirectoryEntry/Status`. However, note the following restrictions:
 
-* While it is possible to GET such URLs, it is not possible to PUT to it. ### check this
+* The response content consists on of the `values` array of the category, so the ID and description are not available.
+* While it is possible to GET such URLs, it is not possible to PUT to it. In fact, the HTTP method and any request content is simply ignored and a GET performed.
 * It is not possible to POST to such URLs in order to add values to the specific category.
-* For some reason, the period in the description "Directoryentry.Status" becomes a forward slash in the path `/directory/refdata/DirectoryEntry/Status`. XXX Does this work if there is no period? XXX How does it work if there are two or more?
+* For some reason, the period in the description "Directoryentry.Status" becomes a forward slash in the path `/directory/refdata/DirectoryEntry/Status`. Among other things, this means that it is impossible to successfully use this syntax to access a category whose name contains a forward slash, such as "Yes/No/Other" above.
+
+These limitations mean that the sugared version of the API is best not relied on for most purposes. It _is_ however useful when invoking `<ControlledVocab>` from stripes-smart-components, as the `baseURL` passed into that component must consist of a path only, and may not include query parameters.
 
 
 
