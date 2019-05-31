@@ -27,9 +27,7 @@ Examples can be invoked using the `okapi-cmd` command-line utility provided in t
 
 	$ mod-directory/scripts/okapi-cmd /directory/refdata/DirectoryEntry/Status
 
-Or, if the default Okapi URL, tenant, username and password are not as required, then more verbosely:
-
-	$ mod-directory/scripts/okapi-cmd -o https://okapi-reshare.apps.k-int.com -t reshare -u admin -p rE0gNx7m2o /directory/refdata/DirectoryEntry/Status
+(The default Okapi URL, tenant, username and password can be specified in a `.okapirc` file, either in the working directory or in the home directory.)
 
 
 
