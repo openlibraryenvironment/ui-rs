@@ -22,14 +22,11 @@ This document describes the API for creating new categories, adding new values t
 
 Examples can be invoked using the `okapi-cmd` command-line utility provided in the `scripts` area of mod-directory. For example:
 
-```shell
-$ mod-directory/scripts/okapi-cmd /directory/refdata/DirectoryEntry/Status
-```
+	$ mod-directory/scripts/okapi-cmd /directory/refdata/DirectoryEntry/Status
+
 Or, if the default Okapi URL, tenant, username and password are not as required, then more verbosely:
 
-```shell
-$ mod-directory/scripts/okapi-cmd -o https://okapi-reshare.apps.k-int.com -t reshare -u admin -p rE0gNx7m2o /directory/refdata/DirectoryEntry/Status
-```
+	$ mod-directory/scripts/okapi-cmd -o https://okapi-reshare.apps.k-int.com -t reshare -u admin -p rE0gNx7m2o /directory/refdata/DirectoryEntry/Status
 
 
 
@@ -50,142 +47,111 @@ The endpoint for managing each module's Refdata is `refdata` at the top level wi
 
 `GET /directory/refdata` will return all Refdata categories (including their values).
 
-This endpoint optionally takes a `filters` parameter, whose value is a query such as `desc=DirectoryEntry.Status`. We can therefore list only the DirectoryEntry.Status values using `GET "/directory/refdata?filters=desc%3DDirectoryEntry.Status"` -- or indeed `GET "/directory/refdata?filters=id%3D8a0081826a921974016a96daa1980000"`, though you need to know the ID for that.
+This endpoint optionally takes a `filters` parameter, whose value is a query such as `desc=DirectoryEntry.Status`. We can therefore list only the DirectoryEntry.Status values using `GET "/directory/refdata?filters=desc%3DDirectoryEntry.Status"` -- or indeed `GET "/directory/refdata?filters=id%3D12345"`, though you need to know the ID for that.
 
 For more detail on how to use `filters`, see [the **Searching and filtering DirectoryEntry records** section of _DirectoryEntry Resources_](https://github.com/openlibraryenvironment/mod-directory/blob/master/doc/entry.md#searching-and-filtering-directoryentry-records).
 
 
 ### Create a new category
 
-XXX
+To add a new category, POST it to `/directory/refdata`. It must contain as human-readable `desc` field, and may also contain an initial set of `values`. If that is provided, it must be an array of objects each with a `value` and a `label`: for example:
+
+	{
+	  "desc": "Yes/No/Other",
+	  "values": [
+	    { "value": "yes", "label": "Yes" },
+	    { "value": "no", "label": "No" },
+	    { "value": "other", "label": "Other (see notes)" }
+	  ]
+	}
+
+(As when adding values to an existing category (see [below](#add-values-to-an-existing-category)), the `value` in each value is optional: if omitted, the label will be normalized and the result used as the value.)
+
+The response to this POST should be 201 Created, with the new category (including its server-generated `id`) included as the content. XXX check that this is true. The ID is used in all subsequent operations on the category.
 
 
 ### Delete a category
 
-XXX You shouldn't be able to delete a category with a value that is used by something somewhere. But if it is a new category that you haven't used... Then I would expect it to work.
+It should be possible to delete a category by reference to its ID. For example, `DELETE /directory/refdata/12345`. XXX check that this is true.
+
+Deletion will fail (by design) if any of the values of the category are in use in any application-level records. XXX but with what diagnostic?
 
 
 ### Add values to an existing category
 
-XXX
+To add a value to an existing category, you must PUT the modified category. (You cannot POST the new value, as values do not have their own existence separate from that of the category.) All PUTs in grails have PATCH-like semantics, so it is not necessary to include the existing values in the set that is part of the PUT record, only the new values. For example, `PUT /directory/refdata/12345` with the payload
+
+	{
+	  "values":[
+	    { "label": "Unknown" }
+	  ]
+	}
+
+will add the "Unknown" value to the existing set.
+
+Categories are additive in this way because in many cases there are thousands of values, and it would be inefficient to have to send all those values back every time it's necessary to make a change.
+
+(As when creating a new category with an initial set of values (see [above](#create-a-new-category)), the `value` in each value is optional: if omitted, the label will be normalized and the result used as the value.)
+
+XXX what is the response? Presumably we get the new value's ID from it. Check this also for values included at creation time via POST.
 
 
 ### Change a value within a category
 
-XXX
+Because values are not directly addressable but only as part of the category they belong to, changing an existing value is very much like adding a new one. In both cases, this is done by a PUT to the category -- for example `PUT /directory/refdata/12345`. The difference is that in the case of changing an existing value, the `id` of that value is specified along with the new label or value. For example:
+
+	{
+	  "values":[
+	    {"id": 43, "label": "Unknown" }
+	  ]
+	}
+
+This would change the label of the Refdata value with ID: 43 to "Unknown".
+
+XXX What is the response?
 
 
 ### Delete a value from a category
 
-XXX
+Deletion is a special case. Once more, it is achieved by a `PUT` to the category, since the values are not individually adressable, but this time the value must be specified via ID, and the special `_delete` key must be provided with value `true`:
+
+	{
+	  "values": [
+	    { "id": 6789, "_delete": true }
+	  ]
+	}
+
+This would remove the value with ID 6789 from the category whose ID was specified in the PUT URL.
+
+XXX What is the response?
+
+
+### Combining operations
+
+Because the addition, modification and deletion of values within a single category are all accomplished by a PUT to that category, it's possible to perform compound operations in a single shot: adding some values, modifying others, and deleting yet others. For example, `PUT /directory/refdata/12345` with the following payload:
+
+	{
+	  "values": [
+	    { "label": "Red" },
+	    { "label": "Blue" },
+	    { "label": "Yellow" },
+	    { "id": 6789, label: "Cyan" },
+	    { "id": 7890, "_delete": true },
+	    { "id": 8901, "_delete": true }
+	  ]
+	}
+
+Should add three new values with labels "Red", "Blue" and "Yellow"; change the label of existing value 6789 to "Cyan"; and delete two existing values, 7890 and 8901.
 
 
 
 ## Syntactic sugar
 
-XXX
-.
+Rather than having to search for a specific category by name using `/directory/refdata?filters=desc%3DDirectoryEntry.Status`, it is possible to use the more elegant URL `directory/refdata/DirectoryEntry/Status`. However, note the following restrictions:
+
+* While it is possible to GET such URLs, it is not possible to PUT to it. ### check this
+* It is not possible to POST to such URLs in order to add values to the specific category.
+* For some reason, the period in the description "Directoryentry.Status" becomes a forward slash in the path `/directory/refdata/DirectoryEntry/Status`. XXX Does this work if there is no period? XXX How does it work if there are two or more?
 
 
 
-# NOTES
-
-I think the refdata controller will allow you to do what you want. The subject is the Category.To add a new category all together with values (probably not useful, but I'll include for completeness.
-POST to `/refdata`
-
-	{
-	  "desc":"Yes/No/Other", 
-	  "values":[
-	    { "value":"yes", "label":"Yes" },
-	    { "value":"no", "label":"No" },
-	    { "value":"other", "label":"Other (see notes)" }
-	  ]
-	}
-
-The "value" is optional and if omitted the label will be normalized.To add a value to an existing category (remembering that all puts in grails are patch-like. You could.PUT /refdata/{category ID}
-
-	{
-	  "values":[
-	    {"label" : "Unknown" }
-	  ]
-	}
-
-
-Where does the categoryId come from in this scenario? There doesn't seem to be one in the new category that I post to `/refdata`.
-Steve Osguthorpe   [1 hour ago]
-If you post a new category do you not receive the created object with an ID?
-Mike Taylor   [1 hour ago]
-Ah, I see.
-Steve Osguthorpe   [1 hour ago]
-ID's should be created on the fly. (edited)
-Mike Taylor   [1 hour ago]
-So the sequence is that I POST `{"desc": "Mike's category"}` to `/refdata`, and the message body that comes back in the 201 Created response includes `{"dect": "Mike's category", "id": "2345"}`?
-Steve Osguthorpe   [1 hour ago]
-HOwever if you are creatinga category complete with values just  PUT the values with the category fields.
-Mike Taylor   [1 hour ago]
-(I won't be doing it that way.)
-Steve Osguthorpe   [1 hour ago]
-OK.
-Steve Osguthorpe   [1 hour ago]
-Then yes.
-Mike Taylor   [1 hour ago]
-And once I have done this initial operation, I can POST new values to `/refdata/12345`, only I due to some Grails brain-damage I have to lie to the server and call it a PUT instead.
-Steve Osguthorpe   [45 minutes ago]
-You would `PUT` any changes to the `Category` (this includes any changes to it's values) to `/refdata/categoryID`. Values are not allowed to be put on their own as they always need a parent.
-`PUT /refdata/2345`
-
-     ```{
-      "values":[
-        {"label" : "Unknown" }
-      ]
-    }```
-
-would add a single new value with a label of "Unknown" to the category identified by 12345
-You do not need to include the full category object as it treats what you send as changes.
-Steve Osguthorpe   [45 minutes ago]
-You can not and should not be able to POST/PUT/DELETE a RefdataValue
-Steve Osguthorpe   [44 minutes ago]
-As a first class resource. As they are not treated as such. (edited)
-Mike Taylor   [43 minutes ago]
-This is both helpful and horrifying :slightly_smiling_face: (edited)
-Mike Taylor   [42 minutes ago]
-So are you saying that PUT will _add_ a value? Not replace the existing set of values?
-Steve Osguthorpe   [30 minutes ago]
-Well...
-Databinding targets anything with an ID. So you can still edit them but the Category is still the source.PUT `/refdata/12345`
-
-    ```{
-      "values":[
-        {"id":43, "label" : "Unknown" }
-      ]
-   }```
-
-This would change the label of refdataValue with ID: 43 to "Unknown"
-Steve Osguthorpe   [29 minutes ago]
-Basically the idea is that there is always a parent context.
-Steve Osguthorpe   [29 minutes ago]
-In this case it is Category
-Steve Osguthorpe   [29 minutes ago]
-This allows us to contain all the cahnges into a single transaction
-Steve Osguthorpe   [28 minutes ago]
-Then if validation fails on a nested relationship you can roll back the whole database transaction
-Steve Osguthorpe   [28 minutes ago]
-And not commit partial data
-Steve Osguthorpe   [27 minutes ago]
-Being able to collect changes and send them in a single payload also means edits are un-doable before sent etc, etc
-Steve Osguthorpe   [26 minutes ago]
-It limits churn.
-Mike Taylor   [18 minutes ago]
-OK, thanks. This makes sense in its own terms, even if it's not what I wanted to hear :slightly_smiling_face:
-Mike Taylor   [17 minutes ago]
-I guess the way to go is to make a Stripes settings page that can be used to maintain _all_ refdata values. But I won't be able to use all that much from existing components that we use for _apparently_ similar controlled-vocab maintenance.
-Mike Taylor   [17 minutes ago]
-Last practical question: how can I delete a value from a category?
-Steve Osguthorpe   [15 minutes ago]
-Yeah I had to invent something there....
-
-```{ "values": [ { "id":2345, "_delete": true } ] }```
-
-Would remove refdataValue id 2345. (edited)
-Steve Osguthorpe   [14 minutes ago]
-Collections are additive because in many of the relationship we have thousands of related rows. We don't want to have to put the whole thing back to remove one.
