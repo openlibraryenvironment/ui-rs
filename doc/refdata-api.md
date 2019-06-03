@@ -132,7 +132,7 @@ Because values are not directly addressable but only as part of the category the
 
 The result of this _is supposed to be_ that the label of the Refdata value with ID 43 changes to "Unknowable".
 
-XXX However, at present this does not work: instead, a new value is created (and is allocated a new ID), and both the old and new versions now exist in the category.
+XXX However, at present this does not work: instead, a new value is created (and is allocated a new ID), and both the old and new versions now exist in the category. See [PR-190](https://openlibraryenvironment.atlassian.net/browse/PR-190).
 
 #### Delete a value from a category
 
@@ -146,7 +146,7 @@ Deletion is a special case. Once more, it is achieved by a `PUT` to the category
 
 This should remove the value with ID 6789 from the category whose ID was specified in the PUT URL.
 
-XXX However, at present this does not work: the value is not removed, and the whole category is returned unchanged in the response.
+XXX However, at present this does not work: the value is not removed, and the whole category is returned unchanged in the response. See [PR-191](https://openlibraryenvironment.atlassian.net/browse/PR-191).
 
 #### Combining operations on values
 
