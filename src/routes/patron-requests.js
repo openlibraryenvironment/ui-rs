@@ -111,15 +111,16 @@ export default class PatronRequests extends React.Component {
             serviceType: <FormattedMessage id="ui-rs.patronrequests.serviceType" />,
           }}
           columnWidths={{
-            id: 300,
+            id: 80,
             role: 80,
-            dateCreated: 120,
+            dateCreated: 130,
             title: 200,
             patronReference: 120,
             state: 120,
             serviceType: 120,
           }}
           resultsFormatter={{
+            id: a => a.id.substring(0, 8),
             state: a => a.state && a.state.name,
             serviceType: a => a.serviceType && a.serviceType.value,
           }}
