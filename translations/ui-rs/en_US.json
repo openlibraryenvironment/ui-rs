@@ -8,10 +8,10 @@
   "settings.some-feature.message": "These are your settings for some app feature.",
   "patronrequests.id": "Request Id",
   "patronrequests.role": "Role",
-  "patronrequests.isRequester": "Requester",
+  "patronrequests.isRequester": "Requester?",
   "patronrequests.dateCreated": "Date Created",
   "patronrequests.title": "Title",
   "patronrequests.patronReference": "Patron",
-  "patronrequests.state": "Current State",
+  "patronrequests.state": "State",
   "patronrequests.serviceType": "Service Type"
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import PatronRequests from './routes/patron-requests';
+import PatronRequests from './routes/PatronRequests';
 import Settings from './settings';
 
 /*

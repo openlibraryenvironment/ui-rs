@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
-import GeneralSettings from './general-settings';
-import SomeFeatureSettings from './some-feature-settings';
+import GeneralSettings from './GeneralSettings';
+import SomeFeatureSettings from './SomeFeatureSettings';
 
 /*
   STRIPES-NEW-APP
