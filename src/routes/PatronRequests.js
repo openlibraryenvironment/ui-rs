@@ -6,7 +6,7 @@ import { SearchAndSort } from '@folio/stripes/smart-components';
 import ViewPatronRequest from '../components/patron-request/view-patron-request';
 import EditPatronRequest from '../components/patron-request/edit-patron-request';
 import packageInfo from '../../package';
-import getSASParams from '../util/getSASParams';
+import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
 const INITIAL_RESULT_COUNT = 100;
 
