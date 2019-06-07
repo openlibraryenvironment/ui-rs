@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
-import ViewPatronRequest from '../components/patron-request/view-patron-request';
-import EditPatronRequest from '../components/patron-request/edit-patron-request';
+import ViewPatronRequest from '../components/PatronRequest/ViewPatronRequest';
+import EditPatronRequest from '../components/PatronRequest/EditPatronRequest';
 import packageInfo from '../../package';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
