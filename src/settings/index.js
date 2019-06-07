@@ -4,12 +4,6 @@ import { Settings } from '@folio/stripes/smart-components';
 import GeneralSettings from './GeneralSettings';
 import SomeFeatureSettings from './SomeFeatureSettings';
 
-/*
-  STRIPES-NEW-APP
-  Your app's settings pages are defined here.
-  The pages "general" and "some feature" are examples. Name them however you like.
-*/
-
 export default class ResourceSharingSettings extends React.Component {
   pages = [
     {
