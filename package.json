@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^4.1.1",
-    "@folio/stripes": "^2.4.0",
-    "@folio/stripes-cli": "^1.8.0",
+    "@folio/stripes": "^2.6.1",
+    "@folio/stripes-cli": "^1.10.0",
     "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
