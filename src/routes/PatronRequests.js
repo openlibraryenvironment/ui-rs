@@ -111,7 +111,7 @@ export default class PatronRequests extends React.Component {
           }}
           columnWidths={{
             id: 80,
-            role: 80,
+            isRequester: 80,
             dateCreated: 140,
             title: 200,
             patronReference: 120,
