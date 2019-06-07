@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+
 import {
   AccordionSet,
   Accordion,
@@ -9,8 +10,8 @@ import {
   Layer,
   Button,
 } from '@folio/stripes/components';
-import PatronRequestInfo from './Sections/PatronRequestInfo';
 
+import PatronRequestInfo from './Sections/PatronRequestInfo';
 
 class ViewPatronRequest extends React.Component {
   static manifest = Object.freeze({
@@ -22,10 +23,6 @@ class ViewPatronRequest extends React.Component {
   });
 
   static propTypes = {
-    match: PropTypes.object,
-    onClose: PropTypes.func,
-    parentResources: PropTypes.object,
-    paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     stripes: PropTypes.object,
     resources: PropTypes.shape({
       query: PropTypes.shape({
@@ -35,6 +32,8 @@ class ViewPatronRequest extends React.Component {
         records: PropTypes.array,
       }),
     }),
+    paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onClose: PropTypes.func,
   };
 
   constructor(props) {
@@ -50,6 +49,36 @@ class ViewPatronRequest extends React.Component {
 
   getPatronRequest() {
     return get(this.props.resources.selectedPatronRequest, ['records', 0], {});
+  }
+
+  getSectionProps() {
+    return {
+      patronRequest: this.getPatronRequest(),
+      onToggle: this.handleSectionToggle,
+      stripes: this.props.stripes,
+    };
+  }
+
+  handleSectionToggle = ({ id }) => {
+    this.setState((prevState) => ({
+      sections: {
+        ...prevState.sections,
+        [id]: !prevState.sections[id],
+      }
+    }));
+  }
+
+  renderEditLayer() {
+    const { resources: { query } } = this.props;
+
+    return ( // XXX do this bit first
+      <Layer
+        isOpen={query.layer === 'edit'}
+        contentLabel="cant get intl to work"
+      >
+        Editing ...
+      </Layer>
+    );
   }
 
   getActionMenu({ onToggle }) {
@@ -89,34 +118,13 @@ class ViewPatronRequest extends React.Component {
     );
   }
 
-  getSectionProps() {
-    return {
-      patronRequest: this.getPatronRequest(),
-      onToggle: this.handleSectionToggle,
-      stripes: this.props.stripes,
-    };
-  }
-
-  renderEditLayer() {
-    const { resources: { query } } = this.props;
-
-    return (
-      <Layer
-        isOpen={query.layer === 'edit'}
-        contentLabel="cant get intl to work"
-      >
-        Editing ...
-      </Layer>
-    );
-  }
-
   render() {
     const patronRequest = this.getPatronRequest();
     const sectionProps = this.getSectionProps();
 
     return (
       <Pane
-        id="pane-view-agreement"
+        id="pane-view-patron-request"
         defaultWidth={this.props.paneWidth}
         paneTitle={patronRequest.id}
         dismissible
