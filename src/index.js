@@ -4,49 +4,45 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import PatronRequests from './routes/PatronRequests';
 import Settings from './settings';
 
-/*
-  STRIPES-NEW-APP
-  This is the main entry point into your new app.
-*/
-
-class Rs extends React.Component {
+class ResourceSharing extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     showSettings: PropTypes.bool,
-    mutator: PropTypes.object,
-    resources: PropTypes.object,
     stripes: PropTypes.shape({
       connect: PropTypes.func,
     }),
-  }
+  };
 
   constructor(props) {
     super(props);
-    // console.log('Attempt to connect %o',PatronRequests);
     this.connectedPatronRequests = props.stripes.connect(PatronRequests);
-    // console.log('Connected %o',PatronRequests);
   }
 
   render() {
-    const { stripes, match } = this.props;
+    const {
+      showSettings,
+      match: {
+        path
+      }
+    } = this.props;
 
-    if (this.props.showSettings) {
+    if (showSettings) {
       return <Settings {...this.props} />;
     }
     return (
       <Switch>
-        <Route
-          path={`${match.path}/requests`}
-          render={() => <this.connectedPatronRequests stripes={stripes} />}
-        />
         <Redirect
           exact
-          from={`${match.path}`}
-          to={`${match.path}/requests`}
+          from={path}
+          to={`${path}/requests`}
+        />
+        <Route
+          path={`${path}/requests`}
+          render={() => <this.connectedPatronRequests {...this.props} />}
         />
       </Switch>
     );
   }
 }
 
-export default Rs;
+export default ResourceSharing;
