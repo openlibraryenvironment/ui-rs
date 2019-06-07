@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';'test2'
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import PatronRequestInfo from './Sections/PatronRequestInfo'
 import {
   AccordionSet,
   Accordion,
@@ -10,6 +9,7 @@ import {
   Layer,
   Button,
 } from '@folio/stripes/components';
+import PatronRequestInfo from './Sections/PatronRequestInfo';
 
 
 class ViewPatronRequest extends React.Component {
@@ -27,17 +27,25 @@ class ViewPatronRequest extends React.Component {
     parentResources: PropTypes.object,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     stripes: PropTypes.object,
+    resources: PropTypes.shape({
+      query: PropTypes.shape({
+        layer: PropTypes.string,
+      }),
+      selectedPatronRequest: PropTypes.shape({
+        records: PropTypes.array,
+      }),
+    }),
   };
+
+  constructor(props) {
+    super(props);
+    this.getActionMenu = this.getActionMenu.bind(this);
+  }
 
   state = {
     sections: {
       requestInfo: false,
     }
-  }
-
-  constructor(props) {
-    super(props);
-    this.getActionMenu = this.getActionMenu.bind(this);
   }
 
   getPatronRequest() {
@@ -102,8 +110,6 @@ class ViewPatronRequest extends React.Component {
     );
   }
 
-
-
   render() {
     const patronRequest = this.getPatronRequest();
     const sectionProps = this.getSectionProps();
@@ -122,7 +128,7 @@ class ViewPatronRequest extends React.Component {
           <Accordion
             id="developerInfo"
             label="test"
-            displayWhenClosed='test2'
+            displayWhenClosed="test2"
             {...sectionProps}
           >
             <pre>{JSON.stringify(patronRequest, null, 2)}</pre>
