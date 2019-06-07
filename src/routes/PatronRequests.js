@@ -113,10 +113,10 @@ export default class PatronRequests extends React.Component {
           columnWidths={{
             id: 80,
             role: 80,
-            dateCreated: 130,
+            dateCreated: 140,
             title: 200,
             patronReference: 120,
-            state: 120,
+            state: 60,
             serviceType: 120,
           }}
           resultsFormatter={{
