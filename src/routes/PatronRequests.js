@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
+import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
-import ViewPatronRequest from '../components/PatronRequest/ViewPatronRequest';
+import ViewPatronRequest from '../components/PatronRequest';
 import EditPatronRequest from '../components/PatronRequest/EditPatronRequest';
 import packageInfo from '../../package';
-import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
 const INITIAL_RESULT_COUNT = 100;
 
@@ -27,9 +27,9 @@ export default class PatronRequests extends React.Component {
       limitParam: 'perPage',
       resultCount: { initialValue: INITIAL_RESULT_COUNT },
     },
-    selectedPatronRequest: {
+    selectedRecord: {
       type: 'okapi',
-      path: 'rs/patronrequests/${selectedPatronRequestId}', // eslint-disable-line no-template-curly-in-string
+      path: 'rs/patronrequests/${selectedRecordId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -37,28 +37,27 @@ export default class PatronRequests extends React.Component {
     // If this (query) isn't here, then we get this.props.parentMutator.query is undefined in the UI
     query: {},
 
-    selectedPatronRequestId: { initialValue: '' },
+    selectedRecordId: { initialValue: '' },
   });
 
   static propTypes = {
     resources: PropTypes.object,
-    mutator: PropTypes.object
+    mutator: PropTypes.object,
   }
 
   constructor(props) {
     super(props);
     this.onClose = this.onClose.bind(this);
-    this.state = { };
+    this.state = {};
   }
 
   onClose() {
     this.toggleModal(false);
   }
 
-  handleUpdate = (patronRequest) => {
-    // console.log('handleUpdate %o', patronRequest);
-    this.props.mutator.selectedPatronRequestId.replace(patronRequest.id);
-    return this.props.mutator.selectedPatronRequest.PUT(patronRequest);
+  handleUpdate = (record) => {
+    this.props.mutator.selectedRecordId.replace(record.id);
+    return this.props.mutator.selectedRecord.PUT(record);
   }
 
   render() {
