@@ -63,7 +63,6 @@ export default class DirectoryEntries extends React.Component {
       path: 'directory/tags',
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    selectedLicenseId: { initialValue: '' },
 
     // If this (query) isn't here, then we get this.props.parentMutator.query is undefined in the UI
     query: {},
@@ -195,7 +194,6 @@ export default class DirectoryEntries extends React.Component {
             symbolSummary: '30%',
           }}
           resultsFormatter={{
-            parent: a => a.parent && a.parent.name,
             tagSummary: a => a.tagSummary || '',
             symbolSummary: a => a.symbolSummary || '',
           }}
