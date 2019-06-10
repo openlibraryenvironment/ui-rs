@@ -23,7 +23,7 @@ import {
 
 class ViewDirectoryEntry extends React.Component {
   static manifest = Object.freeze({
-    selectedDirectoryEntry: {
+    selectedRecord: {
       type: 'okapi',
       path: 'directory/entry/:{id}',
     },
@@ -36,7 +36,7 @@ class ViewDirectoryEntry extends React.Component {
       query: PropTypes.shape({
         layer: PropTypes.string,
       }),
-      selectedDirectoryEntry: PropTypes.shape({
+      selectedRecord: PropTypes.shape({
         records: PropTypes.array,
       }),
     }),
@@ -57,12 +57,12 @@ class ViewDirectoryEntry extends React.Component {
     }
   }
 
-  getDirectoryEntry = () => {
-    return get(this.props.resources.selectedDirectoryEntry, ['records', 0], {});
+  getRecord() {
+    return get(this.props.resources.selectedRecord, ['records', 0], {});
   }
 
   getInitialValues = () => {
-    const record = Object.assign({}, this.getDirectoryEntry());
+    const record = Object.assign({}, this.getRecord());
 
     /*
     const { customProperties = {}, orgs, status, type } = record;
@@ -88,9 +88,9 @@ class ViewDirectoryEntry extends React.Component {
     return record;
   }
 
-  getSectionProps = () => {
+  getSectionProps() {
     return {
-      directoryEntry: this.getDirectoryEntry(),
+      directoryEntry: this.getRecord(),
       onToggle: this.handleSectionToggle,
       stripes: this.props.stripes,
     };
@@ -105,7 +105,7 @@ class ViewDirectoryEntry extends React.Component {
     }));
   }
 
-  renderEditLayer = () => {
+  renderEditLayer() {
     const { resources: { query } } = this.props;
 
     return (
@@ -146,7 +146,7 @@ class ViewDirectoryEntry extends React.Component {
   }
 
   render() {
-    const directoryEntry = this.getDirectoryEntry();
+    const directoryEntry = this.getRecord();
     const sectionProps = this.getSectionProps();
     let title = directoryEntry.name || 'Directory entry details';
     if (directoryEntry.status) title += ` (${directoryEntry.status.label})`;
