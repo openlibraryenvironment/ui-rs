@@ -146,14 +146,14 @@ class ViewDirectoryEntry extends React.Component {
   }
 
   render() {
-    const directoryEntry = this.getRecord();
+    const record = this.getRecord();
     const sectionProps = this.getSectionProps();
-    let title = directoryEntry.name || 'Directory entry details';
-    if (directoryEntry.status) title += ` (${directoryEntry.status.label})`;
+    let title = record.name || 'Directory entry details';
+    if (record.status) title += ` (${record.status.label})`;
 
     return (
       <Pane
-        id="pane-view-directory-entry"
+        id="pane-view-directoryentry"
         defaultWidth={this.props.paneWidth}
         paneTitle={title}
         dismissible
@@ -171,7 +171,7 @@ class ViewDirectoryEntry extends React.Component {
             displayWhenClosed={<FormattedMessage id="ui-directory.information.heading.developer.help" />}
             {...sectionProps}
           >
-            <pre>{JSON.stringify(directoryEntry, null, 2)}</pre>
+            <pre>{JSON.stringify(record, null, 2)}</pre>
           </Accordion>
         </AccordionSet>
         { this.renderEditLayer() }
