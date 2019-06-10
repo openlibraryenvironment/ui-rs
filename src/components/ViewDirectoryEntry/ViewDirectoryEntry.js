@@ -128,17 +128,15 @@ class ViewDirectoryEntry extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const handleClick = () => {
-      this.props.onEdit();
-      onToggle();
-    };
-
     return (
       <Button
         buttonStyle="dropdownItem"
         href={this.props.editLink}
         id="clickable-edit-directoryentry"
-        onClick={handleClick}
+        onClick={() => {
+          this.props.onEdit();
+          onToggle();
+        }}
       >
         <Icon icon="edit">
           <FormattedMessage id="ui-directory.edit" />
