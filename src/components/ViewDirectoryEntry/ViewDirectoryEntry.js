@@ -147,7 +147,6 @@ class ViewDirectoryEntry extends React.Component {
             id="developerInfo"
             label={<FormattedMessage id="ui-directory.information.heading.developer" />}
             displayWhenClosed={<FormattedMessage id="ui-directory.information.heading.developer.help" />}
-            {...sectionProps}
           >
             <pre>{JSON.stringify(record, null, 2)}</pre>
           </Accordion>
