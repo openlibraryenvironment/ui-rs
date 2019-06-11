@@ -1,5 +1,7 @@
 {
   "meta.title": "Resource Sharing",
+  "edit": "Edit",
+  "editPatronRequest": "Edit Patron Request",
   "new-app.greeting": "Congratulations!",
   "new-app.message": "Your Stripes app is running.",
   "settings.general": "General",
@@ -13,5 +15,7 @@
   "patronrequests.title": "Title",
   "patronrequests.patronReference": "Patron",
   "patronrequests.state": "State",
-  "patronrequests.serviceType": "Service Type"
+  "patronrequests.serviceType": "Service Type",
+  "information.heading.developer": "Developer info",
+  "information.heading.developer.help": "(JSON dump of raw record)"
 }
