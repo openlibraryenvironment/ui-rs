@@ -25,15 +25,15 @@ function makeUnitList(units) {
 
 class DirectoryEntryInfo extends React.Component {
   static propTypes = {
-    directoryEntry: PropTypes.object,
+    record: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
 
   render() {
-    const { directoryEntry } = this.props;
-    const unitList = makeUnitList(directoryEntry.units);
+    const { record } = this.props;
+    const unitList = makeUnitList(record.units);
 
     return (
       <Accordion
@@ -46,61 +46,61 @@ class DirectoryEntryInfo extends React.Component {
           <Col xs={5}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.name" />}
-              value={directoryEntry.name}
+              value={record.name}
             />
           </Col>
           <Col xs={2}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.status" />}
-              value={(directoryEntry.status || {}).label}
+              value={(record.status || {}).label}
             />
           </Col>
           <Col xs={5}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.slug" />}
-              value={directoryEntry.slug}
+              value={record.slug}
             />
           </Col>
         </Row>
 
-        {!directoryEntry.description ? '' :
+        {!record.description ? '' :
         <Row>
           <Col xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.description" />}
-              value={directoryEntry.description}
+              value={record.description}
             />
           </Col>
         </Row>
         }
 
-        {!directoryEntry.symbolSummary ? '' :
+        {!record.symbolSummary ? '' :
         <Row>
           <Col xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.symbols" />}
-              value={directoryEntry.symbolSummary}
+              value={record.symbolSummary}
             />
           </Col>
         </Row>
         }
 
-        {directoryEntry.fullyQualifiedName === directoryEntry.name ? '' :
+        {record.fullyQualifiedName === record.name ? '' :
         <React.Fragment>
           <Row>
             <Col xs={12}>
               <KeyValue
                 label={<FormattedMessage id="ui-directory.information.qualifiedName" />}
-                value={directoryEntry.fullyQualifiedName}
+                value={record.fullyQualifiedName}
               />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <Link to={directoryEntry.parent.id}>
+              <Link to={record.parent.id}>
                 <KeyValue
                   label={<FormattedMessage id="ui-directory.information.parent" />}
-                  value={directoryEntry.parent.name}
+                  value={record.parent.name}
                 />
               </Link>
             </Col>
@@ -125,7 +125,7 @@ class DirectoryEntryInfo extends React.Component {
           <Col xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.tags" />}
-              value={directoryEntry.tagSummary}
+              value={record.tagSummary}
             />
           </Col>
         </Row>

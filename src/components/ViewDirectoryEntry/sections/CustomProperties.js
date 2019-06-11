@@ -6,14 +6,14 @@ import { Accordion } from '@folio/stripes/components';
 
 class CustomProperties extends React.Component {
   static propTypes = {
-    directoryEntry: PropTypes.object,
+    record: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
 
   render() {
-    const p = this.props.directoryEntry.customProperties || {};
+    const p = this.props.record.customProperties || {};
 
     return (
       <Accordion

@@ -68,7 +68,7 @@ class ViewDirectoryEntry extends React.Component {
 
   getSectionProps() {
     return {
-      directoryEntry: this.getRecord(),
+      record: this.getRecord(),
       onToggle: this.handleSectionToggle,
       stripes: this.props.stripes,
     };

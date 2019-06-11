@@ -32,14 +32,14 @@ function renderAddress(address, index, count) {
 
 class Addresses extends React.Component {
   static propTypes = {
-    directoryEntry: PropTypes.object,
+    record: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
 
   render() {
-    const addresses = this.props.directoryEntry.addresses || [];
+    const addresses = this.props.record.addresses || [];
 
     return (
       <Accordion

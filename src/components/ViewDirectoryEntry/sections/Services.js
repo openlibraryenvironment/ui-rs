@@ -42,14 +42,14 @@ function renderService(service, index, count) {
 
 class Services extends React.Component {
   static propTypes = {
-    directoryEntry: PropTypes.object,
+    record: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
 
   render() {
-    const services = this.props.directoryEntry.services || [];
+    const services = this.props.record.services || [];
 
     return (
       <Accordion
