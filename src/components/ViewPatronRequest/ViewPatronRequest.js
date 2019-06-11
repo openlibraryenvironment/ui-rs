@@ -14,7 +14,9 @@ import {
 
 import EditPatronRequest from '../EditPatronRequest';
 
-import PatronRequestInfo from './sections/PatronRequestInfo';
+import {
+  PatronRequestInfo,
+} from './sections';
 
 class ViewPatronRequest extends React.Component {
   static manifest = Object.freeze({
@@ -44,7 +46,7 @@ class ViewPatronRequest extends React.Component {
 
   state = {
     sections: {
-      requestInfo: false,
+      patronRequestInfo: false,
     }
   }
 
@@ -59,7 +61,7 @@ class ViewPatronRequest extends React.Component {
 
   getSectionProps() {
     return {
-      patronRequest: this.getRecord(),
+      record: this.getRecord(),
       onToggle: this.handleSectionToggle,
       stripes: this.props.stripes,
     };

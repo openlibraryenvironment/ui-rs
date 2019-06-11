@@ -13,14 +13,14 @@ import {
 class PatronRequestInfo extends React.Component {
 
   static propTypes = {
-    patronRequestInfo: PropTypes.object,
+    record: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
 
   render() {
-    const { patronRequestInfo } = this.props;
+    const { record } = this.props;
 
     return (
       <h1>Patron Request Info</h1>
