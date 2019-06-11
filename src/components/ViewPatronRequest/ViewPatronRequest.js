@@ -47,6 +47,7 @@ class ViewPatronRequest extends React.Component {
   state = {
     sections: {
       patronRequestInfo: false,
+      developerInfo: false,
     }
   }
 
@@ -134,9 +135,8 @@ class ViewPatronRequest extends React.Component {
           <PatronRequestInfo id="patronRequestInfo" {...sectionProps} />
           <Accordion
             id="developerInfo"
-            label="test"
-            displayWhenClosed="test2"
-            {...sectionProps}
+            label={<FormattedMessage id="ui-rs.information.heading.developer" />}
+            displayWhenClosed={<FormattedMessage id="ui-rs.information.heading.developer.help" />}
           >
             <pre>{JSON.stringify(record, null, 2)}</pre>
           </Accordion>
