@@ -4,8 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
-import ViewPatronRequest from '../components/PatronRequest';
-import EditPatronRequest from '../components/PatronRequest/EditPatronRequest';
+import ViewPatronRequest from '../components/ViewPatronRequest';
+import EditPatronRequest from '../components/EditPatronRequest';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
