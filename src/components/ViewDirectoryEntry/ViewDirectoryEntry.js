@@ -63,28 +63,6 @@ class ViewDirectoryEntry extends React.Component {
 
   getInitialValues = () => {
     const record = Object.assign({}, this.getRecord());
-
-    /*
-    const { customProperties = {}, orgs, status, type } = record;
-    if (status && status.id) {
-      record.status = status.id;
-    }
-
-    if (type && type.id) {
-      record.type = type.id;
-    }
-
-    if (orgs && orgs.length) {
-      record.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
-    }
-
-    const defaultCustomProperties = get(this.props.defaultDirectoryEntryValues, ['customProperties'], {});
-    record.customProperties = {
-      ...defaultCustomProperties,
-      ...customProperties,
-    };
-    */
-
     return record;
   }
 
