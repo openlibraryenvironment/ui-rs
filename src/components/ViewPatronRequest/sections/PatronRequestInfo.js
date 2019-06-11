@@ -11,7 +11,6 @@ import {
 
 
 class PatronRequestInfo extends React.Component {
-
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
@@ -23,7 +22,35 @@ class PatronRequestInfo extends React.Component {
     const { record } = this.props;
 
     return (
-      <h1>Patron Request Info</h1>
+      <Accordion
+        id={this.props.id}
+        label={<FormattedMessage id="ui-rs.information.heading.request" />}
+        open={this.props.open}
+        onToggle={this.props.onToggle}
+      >
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.title" />}
+              value={record.title}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.date" />}
+              value={record.publicationDate}
+            />
+          </Col>
+          <Col xs={9}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.author" />}
+              value={record.author}
+            />
+          </Col>
+        </Row>
+      </Accordion>
     );
   }
 }
