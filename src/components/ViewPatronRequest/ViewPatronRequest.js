@@ -120,7 +120,7 @@ class ViewPatronRequest extends React.Component {
   render() {
     const record = this.getRecord();
     const sectionProps = this.getSectionProps();
-    const title = record.id;
+    const title = record.title || record.id;
 
     return (
       <Pane
