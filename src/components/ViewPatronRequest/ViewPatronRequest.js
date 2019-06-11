@@ -14,7 +14,7 @@ import {
 
 import EditPatronRequest from '../EditPatronRequest';
 
-import PatronRequestInfo from './Sections/PatronRequestInfo';
+import PatronRequestInfo from './sections/PatronRequestInfo';
 
 class ViewPatronRequest extends React.Component {
   static manifest = Object.freeze({
