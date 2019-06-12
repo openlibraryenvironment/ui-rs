@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import { Field } from 'redux-form';
 
 import {
@@ -11,7 +10,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { required } from '@folio/stripes-util/validators';
+import { required } from '@folio/stripes-util';
 
 class PatronRequestFormInfo extends React.Component {
   static propTypes = {
