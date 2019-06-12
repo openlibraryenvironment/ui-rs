@@ -21,5 +21,9 @@
   "information.heading.request": "Request metadata",
   "information.title": "Title",
   "information.date": "Date",
-  "information.author": "Author"
+  "information.author": "Author",
+  "createPatronRequest": "Create patron request",
+  "updatePatronRequest": "Update patron request",
+  "closeNewPatronRequest": "Close new patron request",
+  "information.heading.patronRequest": "Patron request: item metadata"
 }

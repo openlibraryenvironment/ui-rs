@@ -1,1 +1,1 @@
-export default () => 'editing patron request';
+export { default } from './EditPatronRequest';
