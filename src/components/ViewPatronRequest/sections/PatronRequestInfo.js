@@ -23,7 +23,7 @@ class PatronRequestInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={<FormattedMessage id="ui-rs.information.heading.request" />}
+        label={<FormattedMessage id="ui-rs.information.heading.requestedItem" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >

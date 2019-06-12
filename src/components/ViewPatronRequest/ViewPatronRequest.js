@@ -15,6 +15,7 @@ import {
 import EditPatronRequest from '../EditPatronRequest';
 
 import {
+  RequestMetadata,
   PatronRequestInfo,
 } from './sections';
 
@@ -46,6 +47,7 @@ class ViewPatronRequest extends React.Component {
 
   state = {
     sections: {
+      requestMetadata: true,
       patronRequestInfo: false,
       developerInfo: false,
     }
@@ -132,6 +134,7 @@ class ViewPatronRequest extends React.Component {
         actionMenu={this.getActionMenu}
       >
         <AccordionSet accordionStatus={this.state.sections}>
+          <RequestMetadata id="requestMetadata" {...sectionProps} />
           <PatronRequestInfo id="patronRequestInfo" {...sectionProps} />
           <Accordion
             id="developerInfo"
