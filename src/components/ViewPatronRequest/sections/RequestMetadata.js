@@ -21,7 +21,7 @@ class RequestMetadata extends React.Component {
 
   render() {
     const { record } = this.props;
-R
+
     return (
       <Accordion
         id={this.props.id}
