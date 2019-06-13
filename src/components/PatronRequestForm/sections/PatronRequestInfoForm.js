@@ -12,7 +12,7 @@ import {
 
 import { required } from '@folio/stripes-util';
 
-class PatronRequestFormInfo extends React.Component {
+class PatronRequestInfoForm extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     onToggle: PropTypes.func,
@@ -86,4 +86,4 @@ class PatronRequestFormInfo extends React.Component {
   }
 }
 
-export default PatronRequestFormInfo;
+export default PatronRequestInfoForm;

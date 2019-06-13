@@ -9,7 +9,7 @@ import {
 } from '@folio/stripes/components';
 
 import {
-  PatronRequestFormInfo,
+  PatronRequestInfoForm,
 } from './sections';
 
 class PatronRequestForm extends React.Component {
@@ -19,7 +19,7 @@ class PatronRequestForm extends React.Component {
 
   state = {
     sections: {
-      patronRequestFormInfo: true,
+      patronRequestInfoForm: true,
     }
   }
 
@@ -58,7 +58,7 @@ class PatronRequestForm extends React.Component {
               />
             </Col>
           </Row>
-          <PatronRequestFormInfo id="patronRequestFormInfo" open={sections.patronRequestFormInfo} {...sectionProps} />
+          <PatronRequestInfoForm id="patronRequestInfoForm" open={sections.patronRequestInfoForm} {...sectionProps} />
         </AccordionSet>
       </div>
     );
