@@ -9,8 +9,6 @@ import {
 } from '@folio/stripes/components';
 
 
-// XXX dateNeeded does not yet exist in the patronRequest schema
-
 class RequestMetadata extends React.Component {
   static propTypes = {
     record: PropTypes.object,
@@ -52,8 +50,8 @@ class RequestMetadata extends React.Component {
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-rs.information.dateNeeded" />}
-              value={record.dateNeeded}
+              label={<FormattedMessage id="ui-rs.information.neededBy" />}
+              value={record.neededBy}
             />
           </Col>
         </Row>
