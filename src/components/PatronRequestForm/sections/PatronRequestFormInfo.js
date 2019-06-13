@@ -32,7 +32,7 @@ class PatronRequestFormInfo extends React.Component {
       >
         <React.Fragment>
           <Row>
-            <Col xs={6}>
+            <Col xs={12}>
               <FormattedMessage id="ui-rs.information.title">
                 {placeholder => (
                   <Field
@@ -47,7 +47,24 @@ class PatronRequestFormInfo extends React.Component {
                 )}
               </FormattedMessage>
             </Col>
-            <Col xs={6}>
+          </Row>
+          <Row>
+            <Col xs={3}>
+              <FormattedMessage id="ui-rs.information.date">
+                {placeholder => (
+                  <Field
+                    id="edit-patron-request-publicationDate"
+                    name="publicationDate"
+                    label={placeholder}
+                    component={TextField}
+                    placeholder={placeholder}
+                    required
+                    validate={required}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+            <Col xs={9}>
               <FormattedMessage id="ui-rs.information.author">
                 {placeholder => (
                   <Field
