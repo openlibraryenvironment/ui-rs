@@ -8,6 +8,7 @@ class ResourceSharing extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     actAs: PropTypes.string.isRequired,
+
     stripes: PropTypes.shape({
       connect: PropTypes.func,
     }),
@@ -26,7 +27,6 @@ class ResourceSharing extends React.Component {
       }
     } = this.props;
 
-    console.log('actAs =', actAs);
     if (actAs === 'settings') {
       return <Settings {...this.props} />;
     }
