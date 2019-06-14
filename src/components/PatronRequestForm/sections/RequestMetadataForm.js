@@ -6,6 +6,7 @@ import { Field } from 'redux-form';
 import {
   Accordion,
   Col,
+  Datepicker,
   Row,
   TextField,
 } from '@folio/stripes/components';
@@ -80,9 +81,10 @@ class RequestMetadataForm extends React.Component {
                   <Field
                     id="edit-request-metadata-neededBy"
                     name="neededBy"
+                    dateFormat="YYYY-MM-DD"
+                    backendDateStandard="YYYY-MM-DD"
                     label={placeholder}
-                    component={TextField}
-                    placeholder={placeholder}
+                    component={Datepicker}
                   />
                 )}
               </FormattedMessage>
