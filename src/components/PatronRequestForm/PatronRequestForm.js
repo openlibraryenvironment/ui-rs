@@ -9,6 +9,7 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  RequestMetadataForm,
   PatronRequestInfoForm,
 } from './sections';
 
@@ -19,6 +20,7 @@ class PatronRequestForm extends React.Component {
 
   state = {
     sections: {
+      requestMetadataForm: true,
       patronRequestInfoForm: true,
     }
   }
@@ -58,6 +60,7 @@ class PatronRequestForm extends React.Component {
               />
             </Col>
           </Row>
+          <RequestMetadataForm id="requestMetadataForm" open={sections.requestMetadataForm} {...sectionProps} />
           <PatronRequestInfoForm id="patronRequestInfoForm" open={sections.patronRequestInfoForm} {...sectionProps} />
         </AccordionSet>
       </div>

@@ -58,8 +58,8 @@ class ViewPatronRequest extends React.Component {
   }
 
   getInitialValues = () => {
-    const record = Object.assign({}, this.getRecord());
-    return record;
+    const record = this.getRecord();
+    return Object.assign({}, record, { shortId: record.id && record.id.substring(0, 8) });
   }
 
   getSectionProps() {
