@@ -50,7 +50,7 @@ class RequestMetadata extends React.Component {
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-rs.information.neededBy" />}
+              label={<FormattedMessage id="ui-rs.information.dateNeeded" />}
               value={record.neededBy}
             />
           </Col>
