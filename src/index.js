@@ -8,7 +8,6 @@ class ResourceSharing extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     actAs: PropTypes.string.isRequired,
-
     stripes: PropTypes.shape({
       connect: PropTypes.func,
     }),
