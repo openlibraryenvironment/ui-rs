@@ -173,7 +173,7 @@ XXX I will test this once the Change and Delete bugs have been fixed.
 
 Rather than having to search for a specific category by name using `/directory/refdata?filters=desc%3DDirectoryEntry.Status`, it is possible to use the more elegant URL `directory/refdata/DirectoryEntry/Status`. However, note the following restrictions:
 
-* The response content consists on of the `values` array of the category, so the ID and description are not available.
+* The response content consists only of the `values` array of the category, so the ID and description are not available.
 * While it is possible to GET such URLs, it is not possible to PUT to it. In fact, the HTTP method and any request content is simply ignored and a GET performed.
 * It is not possible to POST to such URLs in order to add values to the specific category.
 * For some reason, the period in the description "Directoryentry.Status" becomes a forward slash in the path `/directory/refdata/DirectoryEntry/Status`. Among other things, this means that it is impossible to successfully use this syntax to access a category whose name contains a forward slash, such as "Yes/No/Other" above.
