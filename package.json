@@ -44,6 +44,7 @@
     "react": "*"
   },
   "stripes": {
+    "type": "app",
     "actsAs": ["app", "settings"],
     "displayName": "ui-rs.meta.title",
     "route": "/rs",
