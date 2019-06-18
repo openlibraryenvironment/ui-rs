@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -8,11 +9,21 @@ import { ControlledVocab } from '@folio/stripes/smart-components';
 import { withStripes } from '@folio/stripes/core';
 
 class StatusSettings extends React.Component {
+  static manifest = Object.freeze({
+    category: {
+      type: 'okapi',
+      path: 'directory/refdata?filters=desc=DirectoryEntry.Status',
+    },
+  });
+
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
     intl: intlShape.isRequired,
+    resources: PropTypes.shape({
+      category: PropTypes.object,
+    }),
   };
 
   constructor(props) {
@@ -21,19 +32,19 @@ class StatusSettings extends React.Component {
   }
 
   render() {
-    const {
-      stripes,
-      intl,
-    } = this.props;
+    const { stripes, intl } = this.props;
+    const category = get(this.props, 'resources.category.records.0');
+    if (!category) return null;
 
     return (
       <this.connectedControlledVocab
         stripes={stripes}
-        baseUrl="directory/refdata/DirectoryEntry/Status"
+        baseUrl={`directory/refdata/${category.id}`}
+        records="values"
         label={intl.formatMessage({ id: 'ui-directory.objectName.statuses' })}
         labelSingular={intl.formatMessage({ id: 'ui-directory.objectName.status' })}
         objectLabel="Entries"
-        visibleFields={['value', 'normValue']}
+        visibleFields={['label', 'value']}
         columnMapping={{
           value: intl.formatMessage({ id: 'ui-directory.headings.value' }),
           normValue: intl.formatMessage({ id: 'ui-directory.headings.normValue' }),
@@ -43,6 +54,7 @@ class StatusSettings extends React.Component {
         hiddenFields={['lastUpdated', 'numberOfObjects']}
         clientGeneratePk=""
         limitParam="perPage"
+        actuatorType="refdata"
       />
     );
   }
