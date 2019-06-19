@@ -62,6 +62,19 @@ class RequestMetadataForm extends React.Component {
           </Row>
           <Row>
             <Col xs={6}>
+              <FormattedMessage id="ui-rs.information.requestingUser">
+                {placeholder => (
+                  <Field
+                    id="edit-request-metadata-requestingUser"
+                    name="patronReference"
+                    label={placeholder}
+                    component={TextField}
+                    placeholder={placeholder}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+            <Col xs={3}>
               <FormattedMessage id="ui-rs.information.dateSubmitted">
                 {placeholder => (
                   <Field
@@ -75,7 +88,7 @@ class RequestMetadataForm extends React.Component {
                 )}
               </FormattedMessage>
             </Col>
-            <Col xs={6}>
+            <Col xs={3}>
               <FormattedMessage id="ui-rs.information.dateNeeded">
                 {placeholder => (
                   <Field
