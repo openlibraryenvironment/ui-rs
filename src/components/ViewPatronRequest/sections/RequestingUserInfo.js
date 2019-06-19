@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  Accordion,
-  Card,
-  Col,
-  KeyValue,
-  Row,
-} from '@folio/stripes/components';
+import { Accordion } from '@folio/stripes/components';
+import UserCard from './cards/UserCard';
 
 
 class RequestingUserInfo extends React.Component {
@@ -28,16 +23,7 @@ class RequestingUserInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <Card id="requestingUserInfo-card" headerStart="User">
-          <Row>
-            <Col xs={12}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.fullId" />}
-                value={record.patronReference}
-              />
-            </Col>
-          </Row>
-        </Card>
+        <UserCard id="requestingUserInfo-card" userId={record.patronReference} />
       </Accordion>
     );
   }
