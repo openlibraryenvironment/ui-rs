@@ -25,7 +25,6 @@
   "createPatronRequest": "Create patron request",
   "updatePatronRequest": "Update patron request",
   "closeNewPatronRequest": "Close new patron request",
-  "information.heading.patronRequest": "Request metadata",
   "information.shortId": "Short ID",
   "information.fullId": "Full ID",
   "information.requestingUser": "Requesting user",
