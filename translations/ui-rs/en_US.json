@@ -30,5 +30,6 @@
   "information.requestingUser": "Requesting user",
   "information.dateSubmitted": "Date submitted",
   "information.dateNeeded": "Date needed by",
+  "information.heading.requester": "Requesting user",
   "information.heading.requestedItem": "Item metadata"
 }
