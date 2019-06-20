@@ -1,35 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import {
-  Card,
-  Col,
-  KeyValue,
-  Row,
-} from '@folio/stripes/components';
+import { withStripes } from '@folio/stripes/core';
+import StripesableUserCard from './StripesableUserCard';
 
-class UserCard extends React.Component {
+class SmartUserCard extends React.Component {
   static propTypes = {
     userId: PropTypes.string,
   };
 
-  render() {
-    const { userId } = this.props;
-    if (!userId) return null;
+  constructor(props) {
+    super(props);
+    this.stripeyUserCard = withStripes(StripesableUserCard);
+  }
 
-    return (
-      <Card id="requestingUserInfo-card" headerStart="User">
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-rs.information.fullId" />}
-              value={userId}
-            />
-          </Col>
-        </Row>
-      </Card>
-    );
+  render() {
+    return <this.stripeyUserCard {...this.props} />;
   }
 }
 
-export default UserCard;
+export default SmartUserCard;

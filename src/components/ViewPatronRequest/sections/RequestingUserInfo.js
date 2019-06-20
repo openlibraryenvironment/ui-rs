@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
-import UserCard from './cards/UserCard';
-
+import SmartUserCard from '../../cards/user/SmartUserCard';
 
 class RequestingUserInfo extends React.Component {
   static propTypes = {
@@ -23,7 +22,7 @@ class RequestingUserInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <UserCard id="requestingUserInfo-card" userId={record.patronReference} />
+        <SmartUserCard id="requestingUserInfo-card" userId={record.patronReference} />
       </Accordion>
     );
   }
