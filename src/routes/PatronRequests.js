@@ -41,6 +41,7 @@ export default class PatronRequests extends React.Component {
   });
 
   static propTypes = {
+    appName: PropTypes.string.isRequired,
     resources: PropTypes.object,
     mutator: PropTypes.object,
   }
@@ -61,17 +62,29 @@ export default class PatronRequests extends React.Component {
   }
 
   render() {
-    const { mutator, resources } = this.props;
-    const path = '/rs/requests';
-    packageInfo.stripes.route = path;
-    packageInfo.stripes.home = path;
+    const { mutator, resources, appName } = this.props;
+    const tweakedPackageInfo = Object.assign({}, packageInfo, {
+      stripes: Object.assign({}, packageInfo.stripes, {
+        route: `/${appName}/requests`,
+      }),
+    });
+
+    const visibleColumns = [
+      'id',
+      'dateCreated',
+      'title',
+      'patronReference',
+      'state',
+      'serviceType',
+    ];
+    if (appName === 'rs') visibleColumns.splice(1, 0, 'isRequester');
 
     return (
       <React.Fragment>
         <SearchAndSort
           key="patronrequests"
           objectName="patronrequest"
-          packageInfo={packageInfo}
+          packageInfo={tweakedPackageInfo}
           filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
@@ -91,15 +104,7 @@ export default class PatronRequests extends React.Component {
             records: mutator.patronrequests,
           }}
           showSingleResult
-          visibleColumns={[
-            'id',
-            'isRequester',
-            'dateCreated',
-            'title',
-            'patronReference',
-            'state',
-            'serviceType',
-          ]}
+          visibleColumns={visibleColumns}
           columnMapping={{
             id: <FormattedMessage id="ui-rs.patronrequests.id" />,
             isRequester: <FormattedMessage id="ui-rs.patronrequests.isRequester" />,
