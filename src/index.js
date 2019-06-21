@@ -10,6 +10,9 @@ class ResourceSharing extends React.Component {
     actAs: PropTypes.string.isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func,
+      logger: PropTypes.shape({
+        log: PropTypes.func,
+      }),
     }),
   };
 
@@ -26,8 +29,11 @@ class ResourceSharing extends React.Component {
       }
     } = this.props;
 
+    const appName = path.substring(1).replace(/\/.*/, '');
+    this.props.stripes.logger.log('appName', `us-rs: path='${path}', appName='${appName}'`);
+
     if (actAs === 'settings') {
-      return <Settings {...this.props} />;
+      return <Settings {...this.props} appName={appName} />;
     }
     return (
       <Switch>
@@ -38,7 +44,7 @@ class ResourceSharing extends React.Component {
         />
         <Route
           path={`${path}/requests`}
-          render={() => <this.connectedPatronRequests {...this.props} />}
+          render={() => <this.connectedPatronRequests {...this.props} appName={appName} />}
         />
       </Switch>
     );
