@@ -22,10 +22,16 @@ class UserCard extends React.Component {
     return (
       <Card id="requestingUserInfo-card" headerStart="User" roundedBorder cardStyle={user ? 'positive' : 'negative'}>
         <Row>
-          <Col xs={12}>
+          <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-rs.information.fullId" />}
+              label={<FormattedMessage id="ui-rs.information.userId" />}
               value={user && user.id}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.userName" />}
+              value={user && user.username}
             />
           </Col>
         </Row>
