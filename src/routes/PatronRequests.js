@@ -13,6 +13,20 @@ const INITIAL_RESULT_COUNT = 100;
 const filterConfig = [
 ];
 
+
+function queryModifiedForApp(resources, props) {
+  const { appName } = props;
+  const res = Object.assign({}, resources.query);
+  if (appName === 'request') {
+    res.filters = 'r.true';
+  } else if (appName === 'supply') {
+    res.filters = 'r.false';
+  }
+
+  return res;
+}
+
+
 export default class PatronRequests extends React.Component {
   static manifest = Object.freeze({
     patronrequests: {
@@ -20,6 +34,10 @@ export default class PatronRequests extends React.Component {
       path: 'rs/patronrequests',
       params: getSASParams({
         searchKey: 'title',
+        filterKeys: {
+          'r': 'isRequester',
+        },
+        queryGetter: queryModifiedForApp,
       }),
       records: 'results',
       recordsRequired: '%{resultCount}',
@@ -125,6 +143,7 @@ export default class PatronRequests extends React.Component {
           }}
           resultsFormatter={{
             id: a => a.id.substring(0, 8),
+            isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             state: a => a.state && a.state.name,
             serviceType: a => a.serviceType && a.serviceType.value,
           }}
