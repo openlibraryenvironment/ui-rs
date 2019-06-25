@@ -176,7 +176,7 @@ Rather than having to search for a specific category by name using `/directory/r
 * The response content consists only of the `values` array of the category, so the ID and description are not available.
 * While it is possible to GET such URLs, it is not possible to PUT to it. In fact, the HTTP method and any request content is simply ignored and a GET performed.
 * It is not possible to POST to such URLs in order to add values to the specific category.
-* For some reason, the period in the description "Directoryentry.Status" becomes a forward slash in the path `/directory/refdata/DirectoryEntry/Status`. Among other things, this means that it is impossible to successfully use this syntax to access a category whose name contains a forward slash, such as "Yes/No/Other" above.
+* For some reason, the period in the description "DirectoryEntry.Status" becomes a forward slash in the path `/directory/refdata/DirectoryEntry/Status`. Among other things, this means that it is impossible to successfully use this syntax to access a category whose name contains a forward slash, such as "Yes/No/Other" above.
 
 These limitations mean that the sugared version of the API is best not relied on for most purposes. It _is_ however useful when invoking `<ControlledVocab>` from stripes-smart-components, as the `baseURL` passed into that component must consist of a path only, and may not include query parameters.
 
