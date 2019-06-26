@@ -13,7 +13,7 @@
         * [Change a value within a category](#change-a-value-within-a-category)
         * [Delete a value from a category](#delete-a-value-from-a-category)
         * [Combining operations on values](#combining-operations-on-values)
-* [Syntactic sugar](#syntactic-sugar)
+* [Values used in domain-level records](#values-used-in-domain-level-records)
 
 
 
@@ -169,16 +169,37 @@ XXX I will test this once the Change and Delete bugs have been fixed.
 
 
 
-## Syntactic sugar
+## Values used in domain-level records
 
-Rather than having to search for a specific category by name using `/directory/refdata?filters=desc%3DDirectoryEntry.Status`, it is possible to use the more elegant URL `directory/refdata/DirectoryEntry/Status`. However, note the following restrictions:
+Up to this point, we have considered only how categories and their values are organized. But their purpose is to be used in domain-level records that describe objects of use to an application, such a directory entries, patron requests and bibliographic items.
 
-* The response content consists only of the `values` array of the category, so the ID and description are not available.
-* While it is possible to GET such URLs, it is not possible to PUT to it. In fact, the HTTP method and any request content is simply ignored and a GET performed.
-* It is not possible to POST to such URLs in order to add values to the specific category.
-* For some reason, the period in the description "DirectoryEntry.Status" becomes a forward slash in the path `/directory/refdata/DirectoryEntry/Status`. Among other things, this means that it is impossible to successfully use this syntax to access a category whose name contains a forward slash, such as "Yes/No/Other" above.
+Each kind of domain-level object has a defined name such as `DirectoryEntry`, taken from [the class name in the Groovy source file for the domain model](https://github.com/openlibraryenvironment/mod-directory/blob/ec9a2e25ba1c7aca66a81df254975e9f18fb211b/service/grails-app/domain/org/olf/okapi/modules/directory/DirectoryEntry.groovy#L13). And within each such class there may be any number of fields whose type is RefdataValue, whose available values will be represented by the data structures described here: for example, [the status field](https://github.com/openlibraryenvironment/mod-directory/blob/ec9a2e25ba1c7aca66a81df254975e9f18fb211b/service/grails-app/domain/org/olf/okapi/modules/directory/DirectoryEntry.groovy#L27-L28).
 
-These limitations mean that the sugared version of the API is best not relied on for most purposes. It _is_ however useful when invoking `<ControlledVocab>` from stripes-smart-components, as the `baseURL` passed into that component must consist of a path only, and may not include query parameters.
+A WSAPI endpoint is provided to discover the values in use for each such field in each such domain-level class of records. It is constructed using the module-name, class-name and field-name in the template
+`/MODULE/refdata/CLASS/FIELD`
+-- for example,
+`/directory/refdata/DirectoryEntry/Status`.
+These endpoints respond only to HTTP GET (POST, PUT and DELETE are not supported), and return a JSON document that is an array of values structured like the `values` element of the category objects described above:
 
-
+	$ curl `auth-params` https://okapi-reshare.apps.k-int.com/directory/refdata/DirectoryEntry/Status
+	[
+	  {
+	    "id": "8a0081e16b51a19a016b51a336960001",
+	    "value": "managed",
+	    "label": "Managed",
+	    "owner": {
+	      "id": "8a0081e16b51a19a016b51a335ad0000",
+	      "desc": "DirectoryEntry.Status"
+	    }
+	  },
+	  {
+	    "id": "8a0081e16b51a19a016b51a336bf0002",
+	    "value": "reference",
+	    "label": "Reference",
+	    "owner": {
+	      "id": "8a0081e16b51a19a016b51a335ad0000",
+	      "desc": "DirectoryEntry.Status"
+	    }
+	  }
+	]
 
