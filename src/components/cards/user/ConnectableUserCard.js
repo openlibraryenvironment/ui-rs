@@ -23,7 +23,7 @@ class ConnectableUserCard extends React.Component {
   };
 
   render() {
-    return <UserCard user={get(this.props, 'resources.user.records.0')} />;
+    return <UserCard user={get(this.props, 'resources.user.records.0')} {...this.props} />;
   }
 }
 

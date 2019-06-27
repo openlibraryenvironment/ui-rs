@@ -20,7 +20,7 @@ class UserCard extends React.Component {
     const user = this.props.user;
 
     return (
-      <Card id="requestingUserInfo-card" headerStart="User" roundedBorder cardStyle={user ? 'positive' : 'negative'}>
+      <Card id="requestingUserInfo-card" headerStart="User" roundedBorder cardStyle={user ? 'positive' : 'negative'} {...this.props}>
         <Row>
           <Col xs={6}>
             <KeyValue
