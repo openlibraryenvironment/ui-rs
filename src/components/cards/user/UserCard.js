@@ -18,21 +18,42 @@ class UserCard extends React.Component {
   };
 
   render() {
-    const user = this.props.user;
+    const user = this.props.user || {};
+    const p = user.personal || {};
 
     return (
-      <Card id="requestingUserInfo-card" headerStart="User" roundedBorder cardStyle={user ? 'positive' : 'negative'} {...this.props}>
+      <Card
+        id="requestingUserInfo-card"
+        headerStart="User"
+        roundedBorder
+        cardStyle={user ? 'positive' : 'negative'}
+        {...this.props}
+      >
         <Row>
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.userId" />}
-              value={user && user.id}
+              value={user.id}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.userName" />}
-              value={user && user.username}
+              value={user.username}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.lastName" />}
+              value={p.lastName}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.firstName" />}
+              value={p.firstName}
             />
           </Col>
         </Row>
