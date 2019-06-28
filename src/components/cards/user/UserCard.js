@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
+  Accordion,
   Card,
   Col,
   KeyValue,
@@ -37,9 +38,15 @@ class UserCard extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <pre>
-              {JSON.stringify(user, null, 2)}
-            </pre>
+            <Accordion
+              id="requestingUserInfo-card-dev"
+              label={<FormattedMessage id="ui-rs.information.devInfo" />}
+              closedByDefault
+            >
+              <pre>
+                {JSON.stringify(user, null, 2)}
+              </pre>
+            </Accordion>
           </Col>
         </Row>
       </Card>
