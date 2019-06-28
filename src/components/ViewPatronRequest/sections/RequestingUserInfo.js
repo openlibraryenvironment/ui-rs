@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
 import SmartUserCard from '../../cards/user/SmartUserCard';
 
+import css from './RequestingUserInfo.css';
+
 class RequestingUserInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
@@ -22,7 +24,12 @@ class RequestingUserInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <SmartUserCard id="requestingUserInfo-card" userId={record.patronReference} />
+        <SmartUserCard
+          id="requestingUserInfo-card"
+          userId={record.patronReference}
+          cardClass={css.userCard}
+          headerClass={css.userCardHeader}
+        />
       </Accordion>
     );
   }
