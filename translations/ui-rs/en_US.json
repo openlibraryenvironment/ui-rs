@@ -33,5 +33,6 @@
   "information.heading.requester": "Requesting user",
   "information.heading.requestedItem": "Item metadata",
   "information.userId": "User ID",
-  "information.userName": "Username"
+  "information.userName": "Username",
+  "information.devInfo": "Developer info"
 }
