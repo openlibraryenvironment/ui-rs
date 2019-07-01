@@ -1,21 +1,32 @@
+import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStripes } from '@folio/stripes/core';
-import StripesableUserCard from './StripesableUserCard';
+import { stripesConnect } from '@folio/stripes/core';
+import UserCard from './UserCard';
 
 class SmartUserCard extends React.Component {
-  static propTypes = {
-    userId: PropTypes.string,
+  static manifest = {
+    user: {
+      type: 'okapi',
+      path: 'users/!{userId}',
+      throwErrors: false,
+    },
   };
 
-  constructor(props) {
-    super(props);
-    this.stripeyUserCard = withStripes(StripesableUserCard);
-  }
+  static propTypes = {
+    userId: PropTypes.string,
+    resources: PropTypes.shape({
+      user: PropTypes.shape({
+        records: PropTypes.arrayOf(
+          PropTypes.object
+        ),
+      }),
+    }),
+  };
 
   render() {
-    return <this.stripeyUserCard {...this.props} />;
+    return <UserCard user={get(this.props, 'resources.user.records.0')} {...this.props} />;
   }
 }
 
-export default SmartUserCard;
+export default stripesConnect(SmartUserCard);
