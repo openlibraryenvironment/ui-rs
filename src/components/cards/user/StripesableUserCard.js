@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from '@folio/stripes/components';
 import ConnectableUserCard from './ConnectableUserCard';
 
 class StripesableUserCard extends React.Component {
