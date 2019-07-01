@@ -8,6 +8,7 @@ class ConnectableUserCard extends React.Component {
     user: {
       type: 'okapi',
       path: 'users/!{userId}',
+      throwErrors: false,
     },
   };
 
