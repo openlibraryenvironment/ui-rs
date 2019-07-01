@@ -17,15 +17,6 @@ class StripesableUserCard extends React.Component {
   }
 
   render() {
-    // Remove this hack when https://github.com/folio-org/stripes-connect/pull/93 is fixed
-    if (!this.props.userId) {
-      return (
-        <Card id="requestingUserInfo-card" headerStart="User" roundedBorder cardStyle="negative">
-         (No user)
-        </Card>
-      );
-    }
-
     return <this.connectedUserCard {...this.props} />;
   }
 }
