@@ -18,7 +18,21 @@ class UserCard extends React.Component {
   };
 
   render() {
-    const user = this.props.user || {};
+    const props = Object.assign({}, this.props);
+    // React complains if any of these props are passed in <Card>
+    delete props.refreshRemote;
+    delete props.dataKey;
+    delete props.userId;
+
+    let user = props.user;
+    if (user) {
+      props.cardStyle = 'positive';
+    } else {
+      props.cardStyle = 'negative';
+      delete props.headerClass;
+      delete props.cardClass;
+      user = {};
+    }
     const p = user.personal || {};
 
     return (
@@ -26,8 +40,7 @@ class UserCard extends React.Component {
         id="requestingUserInfo-card"
         headerStart="User"
         roundedBorder
-        cardStyle={user ? 'positive' : 'negative'}
-        {...this.props}
+        {...props}
       >
         <Row>
           <Col xs={6}>
