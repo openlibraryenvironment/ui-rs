@@ -15,8 +15,6 @@ query ($id: String!) {
       lastName
       email
     }
-    patronGroup
-    patronGroupName
     patronGroupDescription
   }
 }`;
