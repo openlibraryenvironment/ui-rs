@@ -20,22 +20,10 @@ query ($id: String!) {
 }`;
 
 class GraphQLUserCard extends React.Component {
-  static manifest = {
-    user: {
-      type: 'okapi',
-      path: 'users/!{userId}',
-      throwErrors: false,
-    },
-  };
-
   static propTypes = {
     userId: PropTypes.string,
-    resources: PropTypes.shape({
-      user: PropTypes.shape({
-        records: PropTypes.arrayOf(
-          PropTypes.object
-        ),
-      }),
+    data: PropTypes.shape({
+      users_SINGLE: PropTypes.object,
     }),
   };
 
@@ -45,11 +33,9 @@ class GraphQLUserCard extends React.Component {
 }
 
 export default graphql(GET_USER, {
-  options: props => {
-    return ({
-      variables: {
-        id: props.userId,
-      }
-    });
-  }
+  options: props => ({
+    variables: {
+      id: props.userId,
+    }
+  })
 })(GraphQLUserCard);
