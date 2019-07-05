@@ -71,6 +71,20 @@ class UserCard extends React.Component {
           </Col>
         </Row>
         <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.patronGroup" />}
+              value={user.patronGroupDescription}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.emailAddress" />}
+              value={p.email}
+            />
+          </Col>
+        </Row>
+        <Row>
           <Col xs={12}>
             <Accordion
               id="requestingUserInfo-card-dev"
