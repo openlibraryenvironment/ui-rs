@@ -36,5 +36,7 @@
   "information.userName": "Username",
   "information.lastName": "Last name",
   "information.firstName": "First name",
+  "information.patronGroup": "Patron Group",
+  "information.emailAddress": "Email Address",
   "information.devInfo": "Developer info"
 }
