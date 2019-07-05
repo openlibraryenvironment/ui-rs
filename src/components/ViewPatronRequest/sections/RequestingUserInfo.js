@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
-import SmartUserCard from '../../cards/user/SmartUserCard';
+import GraphQLUserCard from '../../cards/user/GraphQLUserCard';
 
 import css from './RequestingUserInfo.css';
 
@@ -24,7 +24,7 @@ class RequestingUserInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <SmartUserCard
+        <GraphQLUserCard
           id="requestingUserInfo-card"
           userId={record.patronReference}
           cardClass={css.userCard}
