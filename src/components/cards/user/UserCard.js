@@ -34,6 +34,7 @@ class UserCard extends React.Component {
       user = {};
     }
     const p = user.personal || {};
+    const g = user.patronGroupRecord || {};
 
     return (
       <Card
@@ -74,7 +75,7 @@ class UserCard extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.patronGroup" />}
-              value={user.patronGroupDescription}
+              value={g.desc}
             />
           </Col>
           <Col xs={6}>
