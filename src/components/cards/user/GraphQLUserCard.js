@@ -36,6 +36,7 @@ class GraphQLUserCard extends React.Component {
 }
 
 export default graphql(GET_USER, {
+  skip: props => !props.userId,
   options: props => ({
     variables: {
       id: props.userId,
