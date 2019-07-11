@@ -82,6 +82,7 @@ export default class PatronRequests extends React.Component {
   render() {
     const { mutator, resources, appName } = this.props;
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
+      name: `@folio/${appName}`,
       stripes: Object.assign({}, packageInfo.stripes, {
         route: `/${appName}/requests`,
       }),
@@ -101,6 +102,7 @@ export default class PatronRequests extends React.Component {
       <React.Fragment>
         <SearchAndSort
           key="patronrequests"
+          title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
           objectName="patronrequest"
           packageInfo={tweakedPackageInfo}
           filterConfig={filterConfig}
