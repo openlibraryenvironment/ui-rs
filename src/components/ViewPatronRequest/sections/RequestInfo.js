@@ -9,7 +9,7 @@ import {
 } from '@folio/stripes/components';
 
 
-class RequestMetadata extends React.Component {
+class RequestInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
@@ -60,4 +60,4 @@ class RequestMetadata extends React.Component {
   }
 }
 
-export default RequestMetadata;
+export default RequestInfo;
