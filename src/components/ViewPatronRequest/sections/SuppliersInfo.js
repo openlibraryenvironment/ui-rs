@@ -37,13 +37,13 @@ class PatronRequestInfo extends React.Component {
             <Row>
               <Col xs={6}>
                 <KeyValue
-                  label="Item ID"
+                  label={<FormattedMessage id="ui-rs.information.itemId" />}
                   value={supplier.systemIdentifier}
                 />
               </Col>
               <Col xs={6}>
                 <KeyValue
-                  label="State"
+                  label={<FormattedMessage id="ui-rs.information.state" />}
                   value={supplier.state.name}
                 />
               </Col>
@@ -51,13 +51,13 @@ class PatronRequestInfo extends React.Component {
             <Row>
               <Col xs={6}>
                 <KeyValue
-                  label="Availability"
+                  label={<FormattedMessage id="ui-rs.information.availability" />}
                   value={supplier.availability}
                 />
               </Col>
               <Col xs={6}>
                 <KeyValue
-                  label="Shelf mark"
+                  label={<FormattedMessage id="ui-rs.information.shelfMark" />}
                   value={supplier.shelfmark}
                 />
               </Col>
