@@ -30,6 +30,7 @@ class PatronRequestInfo extends React.Component {
       >
         {((record || {}).rota || []).map((supplier, i) => (
           <Card
+            key={i}
             id={`${this.props.id}-card`}
             headerStart={`Supplier ${i + 1}`}
             roundedBorder
