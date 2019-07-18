@@ -2,3 +2,4 @@
 export { default as RequestInfo } from './RequestInfo';
 export { default as RequestingUserInfo } from './RequestingUserInfo';
 export { default as PatronRequestInfo } from './PatronRequestInfo';
+export { default as SuppliersInfo } from './SuppliersInfo';
