@@ -18,6 +18,7 @@ import {
   RequestInfo,
   RequestingUserInfo,
   PatronRequestInfo,
+  SuppliersInfo,
 } from './sections';
 
 class ViewPatronRequest extends React.Component {
@@ -51,6 +52,7 @@ class ViewPatronRequest extends React.Component {
       requestInfo: true,
       requestingUserInfo: false,
       patronRequestInfo: false,
+      suppliersInfo: true,
       developerInfo: false,
     }
   }
@@ -139,6 +141,7 @@ class ViewPatronRequest extends React.Component {
           <RequestInfo id="requestInfo" {...sectionProps} />
           <RequestingUserInfo id="requestingUserInfo" {...sectionProps} />
           <PatronRequestInfo id="patronRequestInfo" {...sectionProps} />
+          <SuppliersInfo id="suppliersInfo" {...sectionProps} />
           <Accordion
             id="developerInfo"
             label={<FormattedMessage id="ui-rs.information.heading.developer" />}
