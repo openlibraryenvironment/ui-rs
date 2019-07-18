@@ -33,11 +33,16 @@
   "information.dateNeeded": "Date needed by",
   "information.heading.requester": "Requesting user",
   "information.heading.requestedItem": "Item metadata",
+  "information.heading.suppliers": "Suppliers",
   "information.userId": "User ID",
   "information.userName": "Username",
   "information.lastName": "Last name",
   "information.firstName": "First name",
   "information.patronGroup": "Patron Group",
   "information.emailAddress": "Email Address",
+  "information.itemId": "Item ID",
+  "information.state": "State",
+  "information.availability": "Availability",
+  "information.shelfMark": "Shelf mark",
   "information.devInfo": "Developer info"
 }
