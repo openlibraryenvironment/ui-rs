@@ -28,7 +28,7 @@ class PatronRequestInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        {((record || {}).rota || []).map((supplier, i) => (
+        {((record || {}).rota || []).sort((a, b) => a.rotaPosition - b.rotaPosition).map((supplier, i) => (
           <Card
             key={i}
             id={`${this.props.id}-card`}
@@ -45,7 +45,7 @@ class PatronRequestInfo extends React.Component {
               <Col xs={6}>
                 <KeyValue
                   label={<FormattedMessage id="ui-rs.information.state" />}
-                  value={supplier.state.name}
+                  value={(supplier.state || {}).name}
                 />
               </Col>
             </Row>
