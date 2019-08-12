@@ -10,6 +10,13 @@ import {
 } from '@folio/stripes/components';
 
 
+function supplierState(state) {
+  if (!state) return '';
+  const description = state.description;
+  return description ? `${state.name} (${description})` : state.name;
+}
+
+
 class PatronRequestInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
@@ -45,7 +52,7 @@ class PatronRequestInfo extends React.Component {
               <Col xs={6}>
                 <KeyValue
                   label={<FormattedMessage id="ui-rs.information.state" />}
-                  value={(supplier.state || {}).name}
+                  value={supplierState(supplier.state)}
                 />
               </Col>
             </Row>
