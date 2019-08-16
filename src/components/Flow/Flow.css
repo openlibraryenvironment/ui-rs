@@ -1,0 +1,21 @@
+@import "@folio/stripes-components/lib/variables";
+
+.flowList {
+  margin-bottom: 1rem;
+  font-size: var(--font-size-medium);
+  padding: 0;
+
+  & li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--gutter-static-one-third) 0;
+    border-radius: var(--radius);
+    margin-bottom: var(--gutter-static-one-third);
+    
+  }
+}
+
+.flowListCurrent {
+  border: 1px solid var(--primary);
+}
