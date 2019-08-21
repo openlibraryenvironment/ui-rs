@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import PatronRequests from './routes/PatronRequests';
 import Settings from './settings';
+import AppNameContext from './AppNameContext';
 
 class ResourceSharing extends React.Component {
   static propTypes = {
@@ -36,17 +37,19 @@ class ResourceSharing extends React.Component {
       return <Settings {...this.props} appName={appName} />;
     }
     return (
-      <Switch>
-        <Redirect
-          exact
-          from={path}
-          to={`${path}/requests`}
-        />
-        <Route
-          path={`${path}/requests`}
-          render={() => <this.connectedPatronRequests {...this.props} appName={appName} />}
-        />
-      </Switch>
+      <AppNameContext.Provider value={appName}>
+        <Switch>
+          <Redirect
+            exact
+            from={path}
+            to={`${path}/requests`}
+          />
+          <Route
+            path={`${path}/requests`}
+            render={() => <this.connectedPatronRequests {...this.props} appName={appName} />}
+          />
+        </Switch>
+      </AppNameContext.Provider>
     );
   }
 }
