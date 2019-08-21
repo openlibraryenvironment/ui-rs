@@ -44,13 +44,13 @@ class InstitutionCard extends React.Component {
         <Row>
           <Col xs={6}>
             <KeyValue
-              label="ID"
+              label={<FormattedMessage id="ui-rs.information.institutionId" />}
               value={institution.id}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
-              label="Name"
+              label={<FormattedMessage id="ui-rs.information.institutionName" />}
               value={institution.name}
             />
           </Col>
@@ -58,13 +58,13 @@ class InstitutionCard extends React.Component {
         <Row>
           <Col xs={6}>
             <KeyValue
-              label="Status"
+              label={<FormattedMessage id="ui-rs.information.institutionStatus" />}
               value={get(institution.status, ['label'])}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
-              label="Slug"
+              label={<FormattedMessage id="ui-rs.information.slug" />}
               value={institution.slug}
             />
           </Col>
@@ -72,7 +72,7 @@ class InstitutionCard extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue
-              label="Symbols"
+              label={<FormattedMessage id="ui-rs.information.symbols" />}
               value={institution.symbolSummary}
             />
           </Col>
@@ -80,7 +80,7 @@ class InstitutionCard extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue
-              label="Tags"
+              label={<FormattedMessage id="ui-rs.information.tags" />}
               value={institution.tagSummary}
             />
           </Col>

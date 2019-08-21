@@ -45,5 +45,11 @@
   "information.state": "State",
   "information.availability": "Availability",
   "information.shelfMark": "Shelf mark",
-  "information.devInfo": "Developer info"
+  "information.devInfo": "Developer info",
+  "information.institutionId": "ID",
+  "information.institutionName": "Name",
+  "information.institutionStatus": "Status",
+  "information.slug": "Slug",
+  "information.symbols": "Symbols",
+  "information.tags": "Tags"
 }
