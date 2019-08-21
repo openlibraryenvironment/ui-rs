@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
 import SmartInstitutionCard from '../../cards/institution/SmartInstitutionCard';
 
+import css from './RequestingInstitutionInfo.css';
+
 class RequestingInstitutionInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
@@ -25,6 +27,8 @@ class RequestingInstitutionInfo extends React.Component {
         <SmartInstitutionCard
           id="requestingInstitutionInfo-card"
           institutionSymbol={record.requestingInstitutionSymbol}
+          cardClass={css.institutionCard}
+          headerClass={css.institutionCardHeader}
         />
       </Accordion>
     );
