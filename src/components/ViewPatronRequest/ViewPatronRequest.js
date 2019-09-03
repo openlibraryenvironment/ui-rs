@@ -16,6 +16,7 @@ import EditPatronRequest from '../EditPatronRequest';
 
 import {
   RequestInfo,
+  RequestingInstitutionInfo,
   RequestingUserInfo,
   PatronRequestInfo,
   SuppliersInfo,
@@ -50,6 +51,7 @@ class ViewPatronRequest extends React.Component {
   state = {
     sections: {
       requestInfo: true,
+      requestingInstitutionInfo: false,
       requestingUserInfo: false,
       patronRequestInfo: false,
       suppliersInfo: true,
@@ -139,6 +141,7 @@ class ViewPatronRequest extends React.Component {
       >
         <AccordionSet accordionStatus={this.state.sections}>
           <RequestInfo id="requestInfo" {...sectionProps} />
+          <RequestingInstitutionInfo id="requestingInstitutionInfo" {...sectionProps} />
           <RequestingUserInfo id="requestingUserInfo" {...sectionProps} />
           <PatronRequestInfo id="patronRequestInfo" {...sectionProps} />
           <SuppliersInfo id="suppliersInfo" {...sectionProps} />
