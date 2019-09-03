@@ -2,18 +2,19 @@
 
 .flowList {
   margin-bottom: 1rem;
+  margin-right: calc(var(--gutter-static-one-third) * -1);
+  margin-left: calc(var(--gutter-static-one-third) * -1);
   font-size: var(--font-size-medium);
   padding: 0;
+}
 
-  & li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--gutter-static-one-third) 0;
-    border-radius: var(--radius);
-    margin-bottom: var(--gutter-static-one-third);
-    
-  }
+.flowListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--gutter-static-one-third) var(--gutter-static-one-third);
+  border-radius: var(--radius);
+  margin-bottom: var(--gutter-static-one-third);
 }
 
 .flowListCurrent {

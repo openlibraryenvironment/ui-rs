@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import classNames from 'classnames';
 import { Icon } from '@folio/stripes/components';
 import css from './Flow.css';
 
@@ -31,7 +32,7 @@ export default ({ currentState, flow, stateMap }) => {
           icon = statusIcons.done;
         }
         return (
-          <li className={isCurrent ? css.flowListCurrent : ''} key={i}>
+          <li className={classNames(css.flowListItem, { [css.flowListCurrent]: isCurrent })} key={i}>
             <Icon icon={icon}>
               <FormattedMessage id={`ui-rs.flow.${status}`} />
             </Icon>
