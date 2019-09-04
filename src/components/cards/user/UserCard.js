@@ -75,7 +75,7 @@ class UserCard extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.patronGroup" />}
-              value={g.desc}
+              value={`${g.group} (${g.desc})`}
             />
           </Col>
           <Col xs={6}>
