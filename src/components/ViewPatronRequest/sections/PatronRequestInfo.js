@@ -9,6 +9,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import css from './PatronRequestInfo.css';
 
 class PatronRequestInfo extends React.Component {
   static propTypes = {
@@ -37,6 +38,8 @@ class PatronRequestInfo extends React.Component {
           id={`${this.props.id}-card`}
           headerStart={summary}
           roundedBorder
+          cardClass={css.citationMetadataCard}
+          headerClass={css.citationMetadataCardHeader}
         >
           <Row>
             <Col xs={4}>
