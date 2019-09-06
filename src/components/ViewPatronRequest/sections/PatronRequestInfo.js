@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
+  Card,
   Col,
   KeyValue,
   Row,
@@ -19,6 +20,11 @@ class PatronRequestInfo extends React.Component {
 
   render() {
     const { record } = this.props;
+    let summary = record.title || '[UNKNOWN]';
+    let author = record.author;
+    const date = record.publicationDate;
+    if (date) author = `${author} (${date})`;
+    if (record.author) summary = `${author}: ${summary}`;
 
     return (
       <Accordion
@@ -27,28 +33,66 @@ class PatronRequestInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-rs.information.title" />}
-              value={record.title}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={3}>
-            <KeyValue
-              label={<FormattedMessage id="ui-rs.information.date" />}
-              value={record.publicationDate}
-            />
-          </Col>
-          <Col xs={9}>
-            <KeyValue
-              label={<FormattedMessage id="ui-rs.information.author" />}
-              value={record.author}
-            />
-          </Col>
-        </Row>
+        <Card
+          id={`${this.props.id}-card`}
+          headerStart={summary}
+          roundedBorder
+        >
+          <Row>
+            <Col xs={4}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.author" />}
+                value={record.author}
+              />
+            </Col>
+            <Col xs={2}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.date" />}
+                value={record.publicationDate}
+              />
+            </Col>
+            <Col xs={6}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.title" />}
+                value={record.title}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={8}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.publisher" />}
+                value={record.publisher}
+              />
+            </Col>
+            <Col xs={4}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.edition" />}
+                value={record.edition}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={4}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.isbn" />}
+                value={record.isbn}
+              />
+            </Col>
+            <Col xs={4}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.issn" />}
+                value={record.issn}
+              />
+            </Col>
+            <Col xs={4}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.volume" />}
+                value={record.volume}
+              />
+            </Col>
+          </Row>
+        </Card>
       </Accordion>
     );
   }
