@@ -33,7 +33,7 @@
   "information.dateNeeded": "Date needed by",
   "information.heading.requestinginstitution": "Requesting institution",
   "information.heading.requester": "Requesting user",
-  "information.heading.requestedItem": "Item metadata",
+  "information.heading.citationMetadata": "Citation metadata",
   "information.heading.suppliers": "Suppliers",
   "information.userId": "User ID",
   "information.userName": "Username",
