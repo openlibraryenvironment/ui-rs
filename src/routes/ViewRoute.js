@@ -3,11 +3,11 @@ import { FormattedMessage } from 'react-intl';
 import { Button, ButtonGroup, Layout, Pane, Paneset } from '@folio/stripes/components';
 import css from './ViewRoute.css';
 
-export default ({ children, history, location: { pathname }, match: { url } }) => (
+export default ({ children, history, location: { pathname }, match: { url, params } }) => (
   <React.Fragment>
     <Paneset>
       <Pane
-        paneTitle="Request"
+        paneTitle={`Request ${params.id}`}
         padContent={false}
         onClose={history.goBack}
         dismissible
