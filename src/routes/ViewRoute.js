@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Button, ButtonGroup, Layout, Pane, Paneset } from '@folio/stripes/components';
 import css from './ViewRoute.css';
-import ViewPatronRequest from '../components/ViewPatronRequest';
 
 const ViewRoute = ({ children, history, location: { pathname }, match: { url, params } }) => (
   <React.Fragment>
