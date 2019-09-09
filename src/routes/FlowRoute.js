@@ -1,25 +1,25 @@
 import React, { useContext } from 'react';
 import _ from 'lodash';
-import { Pane, Paneset } from '@folio/stripes/components';
 import { stripesConnect } from '@folio/stripes/core';
 import Flow from '../components/Flow/Flow';
 import AppNameContext from '../AppNameContext';
 import flows from '../flows';
+import css from './FlowRoute.css';
 
 const FlowRoute = props => {
   const appName = useContext(AppNameContext);
   const { flow, stateMap } = flows[appName];
   return (
-    <Paneset>
-      <Pane defaultWidth="320px">
+    <div className={css.container}>
+      <div className={css.flow}>
         {_.get(props.resources.viewRecord, 'hasLoaded') &&
           <Flow currentState={props.resources.viewRecord.records[0].state.id} flow={flow} stateMap={stateMap} />
         }
-      </Pane>
-      <Pane defaultWidth="fill">
+      </div>
+      <div className={css.context}>
         Yet to be determined how we populate this.
-      </Pane>
-    </Paneset>
+      </div>
+    </div>
   );
 };
 
