@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { Icon } from '@folio/stripes/components';
@@ -11,7 +12,7 @@ const statusIcons = {
   manual: 'arrow-right',
 };
 
-export default ({ currentState, flow, stateMap }) => {
+const Flow = ({ currentState, flow, stateMap }) => {
   const current = stateMap[currentState];
   if (!Array.isArray(current) || !(flow)) return <FormattedMessage id="ui-rs.flow.unknown" />;
   let foundCurrent = false;
@@ -42,3 +43,11 @@ export default ({ currentState, flow, stateMap }) => {
     </ul>
   );
 };
+
+Flow.propTypes = {
+  currentState: PropTypes.string,
+  flow: PropTypes.arrayOf(PropTypes.object).isRequired,
+  stateMap: PropTypes.object.isRequired
+};
+
+export default Flow;

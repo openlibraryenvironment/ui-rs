@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import Flow from '../components/Flow/Flow';
@@ -28,6 +29,10 @@ FlowRoute.manifest = {
     type: 'okapi',
     path: 'rs/patronrequests/:{id}', // eslint-disable-line no-template-curly-in-string
   },
+};
+
+FlowRoute.propTypes = {
+  resources: PropTypes.object.isRequired
 };
 
 export default stripesConnect(FlowRoute);

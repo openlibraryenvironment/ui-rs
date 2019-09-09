@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Button, ButtonGroup, Layout, Pane, Paneset } from '@folio/stripes/components';
 import css from './ViewRoute.css';
+import ViewPatronRequest from '../components/ViewPatronRequest';
 
-export default ({ children, history, location: { pathname }, match: { url, params } }) => (
+const ViewRoute = ({ children, history, location: { pathname }, match: { url, params } }) => (
   <React.Fragment>
     <Paneset>
       <Pane
@@ -30,3 +32,15 @@ export default ({ children, history, location: { pathname }, match: { url, param
     </Paneset>
   </React.Fragment>
 );
+
+ViewRoute.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.object).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.object,
+    url: PropTypes.object
+  }).isRequired,
+  location: PropTypes.shape({ pathname: PropTypes.object }).isRequired,
+  history: PropTypes.object.isRequired
+};
+
+export default ViewRoute;
