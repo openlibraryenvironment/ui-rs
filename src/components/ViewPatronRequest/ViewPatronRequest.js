@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
+import { Link } from 'react-router-dom';
 
 import {
   AccordionSet,
@@ -139,6 +140,7 @@ class ViewPatronRequest extends React.Component {
         onClose={this.props.onClose}
         actionMenu={this.getActionMenu}
       >
+        <Link to={`/request/view/${record.id}/flow`}>[flow]</Link>
         <AccordionSet accordionStatus={this.state.sections}>
           <RequestInfo id="requestInfo" {...sectionProps} />
           <RequestingInstitutionInfo id="requestingInstitutionInfo" {...sectionProps} />
