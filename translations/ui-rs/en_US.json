@@ -40,6 +40,7 @@
   "information.heading.requester": "Requesting user",
   "information.heading.citationMetadata": "Citation metadata",
   "information.heading.suppliers": "Suppliers",
+  "information.heading.requestedItem": "Requested item",
   "information.userId": "User ID",
   "information.userName": "Username",
   "information.lastName": "Last name",
