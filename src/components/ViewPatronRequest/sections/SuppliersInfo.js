@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import {
   Accordion,
   Card,
@@ -40,33 +41,20 @@ class PatronRequestInfo extends React.Component {
             key={i}
             id={`${this.props.id}-card`}
             headerStart={`Supplier ${i + 1}`}
+            headerEnd={<Link to={`/directory/entries?qindex=symbols.symbol&query=${supplier.directoryId.replace(/.*:/, '')}`}>View in directory</Link>}
             roundedBorder
           >
             <Row>
               <Col xs={6}>
                 <KeyValue
-                  label={<FormattedMessage id="ui-rs.information.itemId" />}
-                  value={supplier.systemIdentifier}
+                  label="Branch"
+                  value={supplier.directoryId}
                 />
               </Col>
               <Col xs={6}>
                 <KeyValue
-                  label={<FormattedMessage id="ui-rs.information.state" />}
-                  value={supplierState(supplier.state)}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6}>
-                <KeyValue
-                  label={<FormattedMessage id="ui-rs.information.availability" />}
-                  value={supplier.availability}
-                />
-              </Col>
-              <Col xs={6}>
-                <KeyValue
-                  label={<FormattedMessage id="ui-rs.information.shelfMark" />}
-                  value={supplier.shelfmark}
+                  label="Status"
+                  value={supplierState({ name: 'Pending', description: 'Awaiting handling' })}
                 />
               </Col>
             </Row>
