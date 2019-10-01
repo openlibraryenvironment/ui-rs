@@ -20,7 +20,7 @@ function supplierState(state) {
 }
 
 
-class PatronRequestInfo extends React.Component {
+class SuppliersInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
@@ -69,4 +69,4 @@ class PatronRequestInfo extends React.Component {
   }
 }
 
-export default PatronRequestInfo;
+export default SuppliersInfo;
