@@ -10,6 +10,8 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import css from './SuppliersInfo.css';
+
 
 function supplierState(state) {
   if (!state) return '';
@@ -43,6 +45,8 @@ class PatronRequestInfo extends React.Component {
             headerStart={`Supplier ${i + 1}`}
             headerEnd={<Link to={`/directory/entries?qindex=symbols.symbol&query=${supplier.directoryId.replace(/.*:/, '')}`}>View in directory</Link>}
             roundedBorder
+            cardClass={css.supplierCard}
+            headerClass={css.supplierCardHeader}
           >
             <Row>
               <Col xs={6}>

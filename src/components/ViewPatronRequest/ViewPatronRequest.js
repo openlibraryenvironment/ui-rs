@@ -55,7 +55,7 @@ class ViewPatronRequest extends React.Component {
       requestingInstitutionInfo: false, // Blue card
       requestingUserInfo: false,        // Gold card
       patronRequestInfo: false,         // Pink card
-      suppliersInfo: true,
+      suppliersInfo: true,              // Green card
       developerInfo: false,             // No card
     }
   }
