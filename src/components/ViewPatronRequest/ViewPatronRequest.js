@@ -51,12 +51,12 @@ class ViewPatronRequest extends React.Component {
 
   state = {
     sections: {
-      requestInfo: true,
-      requestingInstitutionInfo: false,
-      requestingUserInfo: false,
-      patronRequestInfo: false,
+      requestInfo: true,                // No card
+      requestingInstitutionInfo: false, // Blue card
+      requestingUserInfo: false,        // Gold card
+      patronRequestInfo: false,         // Pink card
       suppliersInfo: true,
-      developerInfo: false,
+      developerInfo: false,             // No card
     }
   }
 
