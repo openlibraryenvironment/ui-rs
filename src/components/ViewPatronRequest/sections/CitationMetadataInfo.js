@@ -9,9 +9,9 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import css from './PatronRequestInfo.css';
+import css from './CitationMetadata.css';
 
-class PatronRequestInfo extends React.Component {
+class CitationMetadataInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
@@ -93,4 +93,4 @@ class PatronRequestInfo extends React.Component {
   }
 }
 
-export default PatronRequestInfo;
+export default CitationMetadataInfo;

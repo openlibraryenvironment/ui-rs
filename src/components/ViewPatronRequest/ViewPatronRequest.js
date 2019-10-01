@@ -19,7 +19,7 @@ import {
   RequestInfo,
   RequestingInstitutionInfo,
   RequestingUserInfo,
-  PatronRequestInfo,
+  CitationMetadataInfo,
   SuppliersInfo,
 } from './sections';
 
@@ -54,7 +54,7 @@ class ViewPatronRequest extends React.Component {
       requestInfo: true,                // No card
       requestingInstitutionInfo: false, // Blue card
       requestingUserInfo: false,        // Gold card
-      patronRequestInfo: false,         // Pink card
+      citationMetadataInfo: false,         // Pink card
       suppliersInfo: true,              // Green card
       developerInfo: false,             // No card
     }
@@ -145,7 +145,7 @@ class ViewPatronRequest extends React.Component {
           <RequestInfo id="requestInfo" {...sectionProps} />
           <RequestingInstitutionInfo id="requestingInstitutionInfo" {...sectionProps} />
           <RequestingUserInfo id="requestingUserInfo" {...sectionProps} />
-          <PatronRequestInfo id="patronRequestInfo" {...sectionProps} />
+          <CitationMetadataInfo id="citationMetadataInfo" {...sectionProps} />
           <SuppliersInfo id="suppliersInfo" {...sectionProps} />
           <Accordion
             id="developerInfo"
