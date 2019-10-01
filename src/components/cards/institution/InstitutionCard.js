@@ -22,6 +22,7 @@ class InstitutionCard extends React.Component {
     // React complains if any of these props are passed in <Card>
     delete props.refreshRemote;
     delete props.dataKey;
+    const institutionSymbol = props.institutionSymbol;
     delete props.institutionSymbol;
 
     let institution = props.institution;
@@ -45,7 +46,7 @@ class InstitutionCard extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.institutionId" />}
-              value={institution.id}
+              value={institution.id || institutionSymbol}
             />
           </Col>
           <Col xs={6}>
