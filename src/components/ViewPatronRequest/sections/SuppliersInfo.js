@@ -13,8 +13,8 @@ import {
 
 function supplierState(state) {
   if (!state) return '';
-  const description = state.description;
-  return description ? `${state.name} (${description})` : state.name;
+  const s = state.code.replace(/^REQ_/, '').replace(/_/g, ' ');
+  return s[0].toUpperCase() + s.substring(1).toLowerCase();
 }
 
 
@@ -54,7 +54,7 @@ class PatronRequestInfo extends React.Component {
               <Col xs={6}>
                 <KeyValue
                   label="Status"
-                  value={supplierState({ name: 'Pending', description: 'Awaiting handling' })}
+                  value={supplierState(supplier.state)}
                 />
               </Col>
             </Row>
