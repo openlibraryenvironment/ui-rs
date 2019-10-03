@@ -47,7 +47,13 @@ class CatalogInfo extends React.Component {
         >
           <Row>
             <Col xs={12}>
-              <a target="_blank" href={`${stripes.config.sharedIndexUI}/inventory/view/${id}`}>[link to catalog record]</a>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`${stripes.config.sharedIndexUI}/inventory/view/${id}`}
+              >
+                [link to catalog record]
+              </a>
             </Col>
           </Row>
         </Card>
