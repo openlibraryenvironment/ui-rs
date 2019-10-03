@@ -20,6 +20,7 @@
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)",
   "information.heading.request": "Request metadata",
+  "information.heading.catalogInfo": "Catalogue record",
   "information.title": "Title",
   "information.date": "Date",
   "information.author": "Author",
