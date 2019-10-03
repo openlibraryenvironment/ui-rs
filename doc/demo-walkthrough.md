@@ -24,9 +24,7 @@ and `rft_id` set to the UUID of the instance record for title you chose.
 The display in the right pane should include various cards:
 
 1. **Requesting institution.**
-   This should be correctly looked up in directory,
-   but XXX currently is not, due to the absence of directory entry
-   with symbol `RESHARE:idVuFind`.
+   This should be correctly looked up in directory.
 2. **Requesting user.**
    This will in general _not_ be filled in,
    because the user ID from the Shared Index (which is used in discovery)
