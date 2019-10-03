@@ -23,7 +23,10 @@ and `rft_id` set to the UUID of the instance record for title you chose.
 
 The display in the right pane should include various cards:
 
-1. **Requesting institution.** This should be correctly looked up in directory.
+1. **Requesting institution.**
+   This should be correctly looked up in directory,
+   but XXX currently is not, due to the absence of directory entry
+   with symbol `RESHARE:idVuFind`.
 2. **Requesting user.**
    This will in general _not_ be filled in,
    because the user ID from the Shared Index (which is used in discovery)
@@ -37,7 +40,7 @@ The display in the right pane should include various cards:
 
 ## 3. Shared Index catalog
 
-* Click on the **[shared index]** link in the patron-request display (XXX not yet implemented)
+* Click on the **[Link to Shared Index]** link in the patron-request display.
 
 You should now be at the relevant title's page within the Shared Index catalog at
 http://shared-index.reshare-dev.indexdata.com/inventory/
