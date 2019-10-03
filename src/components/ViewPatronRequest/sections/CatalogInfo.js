@@ -52,7 +52,7 @@ class CatalogInfo extends React.Component {
                 rel="noopener noreferrer"
                 href={`${stripes.config.sharedIndexUI}/inventory/view/${id}`}
               >
-                [link to catalog record]
+                [Link to Shared Index]
               </a>
             </Col>
           </Row>
