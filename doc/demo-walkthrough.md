@@ -30,7 +30,8 @@ The display in the right pane should include various cards:
    because the user ID from the Shared Index (which is used in discovery)
    is not valid within the ReShare node. That will change in future.
 3. **Citation metadata**. This is derived directly from the OpenURL.
-4. More complete bibliographic details, looked up from the Shared Index
+4. **Gatalog record**.
+   More complete bibliographic details, looked up from the Shared Index
    (XXX not yet implemented: see
    [PR-229](https://openlibraryenvironment.atlassian.net/browse/PR-229).)
 5. **Suppliers** These are cards representing the dummied-up rota,
