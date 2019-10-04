@@ -1,0 +1,73 @@
+{
+  "request": {
+    "flow": [
+      "created",
+      "validated",
+      "sourcing",
+      "supplierIdentified",
+      "requestSent",
+      "shipped",
+      "received",
+      "transitToPickup",
+      "shelved",
+      "checkedOut",
+      "patronReturned",
+      "awaitingReturnShipping",
+      "borrowerShipped",
+      "complete"
+    ],
+    "stateMap": {
+      "approved": ["supplierIdentified", "done"],
+      "awaiting collection": [],
+      "cancelled": [],
+      "checked in": [],
+      "collected": [],
+      "error": [],
+      "fulfilled": [],
+      "idle": ["created", "done"],
+      "in process": [],
+      "located": ["supplierIdentified", "done"],
+      "no locations": [],
+      "patron returned": ["awaitingReturnShipping", "manual"],
+      "pending": ["requestSent", "done"],
+      "received": ["received", "manual"],
+      "returned": ["borrowerShipped", "manual"],
+      "sending message": [],
+      "shipped": [],
+      "unfilled": [],
+      "validated": ["sourcing", "done"]
+    }
+  },
+  "supply": {
+    "flow": [
+      "awaitingPullSlip",
+      "stacksSearching",
+      "itemFound",
+      "shipped",
+      "received",
+      "borrowerShipped",
+      "complete"
+    ],
+    "stateMap": {
+      "approved": [],
+      "awaiting collection": [],
+      "cancelled": [],
+      "checked in": [],
+      "collected": [],
+      "error": [],
+      "fulfilled": [],
+      "idle": [],
+      "in process": ["itemFound", "manual"],
+      "located": [],
+      "no locations": [],
+      "patron returned": [],
+      "pending": [],
+      "received": ["received", "done"],
+      "returned": [],
+      "sending message": [],
+      "shipped": ["shipped", "done"],
+      "unfilled": [],
+      "validated": []
+    }
+  }
+}

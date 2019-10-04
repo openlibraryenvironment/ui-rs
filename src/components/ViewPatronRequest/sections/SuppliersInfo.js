@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import {
   Accordion,
   Card,
@@ -9,15 +10,17 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import css from './SuppliersInfo.css';
+
 
 function supplierState(state) {
   if (!state) return '';
-  const description = state.description;
-  return description ? `${state.name} (${description})` : state.name;
+  const s = state.code.replace(/^REQ_/, '').replace(/_/g, ' ');
+  return s[0].toUpperCase() + s.substring(1).toLowerCase();
 }
 
 
-class PatronRequestInfo extends React.Component {
+class SuppliersInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
@@ -40,33 +43,22 @@ class PatronRequestInfo extends React.Component {
             key={i}
             id={`${this.props.id}-card`}
             headerStart={`Supplier ${i + 1}`}
+            headerEnd={<Link to={`/directory/entries?qindex=symbols.symbol&query=${supplier.directoryId.replace(/.*:/, '')}`}>View in directory</Link>}
             roundedBorder
+            cardClass={css.supplierCard}
+            headerClass={css.supplierCardHeader}
           >
             <Row>
               <Col xs={6}>
                 <KeyValue
-                  label={<FormattedMessage id="ui-rs.information.itemId" />}
-                  value={supplier.systemIdentifier}
+                  label="Branch"
+                  value={supplier.directoryId}
                 />
               </Col>
               <Col xs={6}>
                 <KeyValue
-                  label={<FormattedMessage id="ui-rs.information.state" />}
+                  label="Status"
                   value={supplierState(supplier.state)}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6}>
-                <KeyValue
-                  label={<FormattedMessage id="ui-rs.information.availability" />}
-                  value={supplier.availability}
-                />
-              </Col>
-              <Col xs={6}>
-                <KeyValue
-                  label={<FormattedMessage id="ui-rs.information.shelfMark" />}
-                  value={supplier.shelfmark}
                 />
               </Col>
             </Row>
@@ -77,4 +69,4 @@ class PatronRequestInfo extends React.Component {
   }
 }
 
-export default PatronRequestInfo;
+export default SuppliersInfo;

@@ -74,6 +74,12 @@ export default class PatronRequests extends React.Component {
     this.toggleModal(false);
   }
 
+  createPatronRequest = (record) => {
+    this.props.mutator.patronrequests.POST(record).then(() => {
+      this.props.mutator.query.update({ layer: null });
+    });
+  };
+
   handleUpdate = (record) => {
     this.props.mutator.selectedRecordId.replace(record.id);
     return this.props.mutator.selectedRecord.PUT(record);
@@ -120,6 +126,7 @@ export default class PatronRequests extends React.Component {
           editRecordComponent={EditPatronRequest}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms="module.rs.enabled"
+          onCreate={this.createPatronRequest}
           detailProps={{
             onUpdate: this.handleUpdate
           }}

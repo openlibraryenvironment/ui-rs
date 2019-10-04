@@ -9,9 +9,9 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import css from './PatronRequestInfo.css';
+import css from './CitationMetadata.css';
 
-class PatronRequestInfo extends React.Component {
+class CitationMetadataInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
@@ -26,6 +26,10 @@ class PatronRequestInfo extends React.Component {
     const date = record.publicationDate;
     if (date) author = `${author} (${date})`;
     if (record.author) summary = `${author}: ${summary}`;
+
+    const hasISSN = !!record.issn;
+    const idKey = `ui-rs.information.${hasISSN ? 'issn' : 'isbn'}`;
+    const idValue = record[hasISSN ? 'issn' : 'isbn'];
 
     return (
       <Accordion
@@ -42,56 +46,44 @@ class PatronRequestInfo extends React.Component {
           headerClass={css.citationMetadataCardHeader}
         >
           <Row>
-            <Col xs={4}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.author" />}
-                value={record.author}
-              />
-            </Col>
-            <Col xs={2}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.date" />}
-                value={record.publicationDate}
-              />
-            </Col>
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.information.title" />}
                 value={record.title}
               />
             </Col>
+            <Col xs={6}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.author" />}
+                value={record.author}
+              />
+            </Col>
           </Row>
           <Row>
-            <Col xs={8}>
+            <Col xs={6}>
+              <KeyValue
+                label={<FormattedMessage id={idKey} />}
+                value={idValue}
+              />
+            </Col>
+            <Col xs={6}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.date" />}
+                value={record.publicationDate}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.information.publisher" />}
                 value={record.publisher}
               />
             </Col>
-            <Col xs={4}>
+            <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.information.edition" />}
                 value={record.edition}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={4}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.isbn" />}
-                value={record.isbn}
-              />
-            </Col>
-            <Col xs={4}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.issn" />}
-                value={record.issn}
-              />
-            </Col>
-            <Col xs={4}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.volume" />}
-                value={record.volume}
               />
             </Col>
           </Row>
@@ -101,4 +93,4 @@ class PatronRequestInfo extends React.Component {
   }
 }
 
-export default PatronRequestInfo;
+export default CitationMetadataInfo;

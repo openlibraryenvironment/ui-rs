@@ -26,7 +26,7 @@ class RequestingInstitutionInfo extends React.Component {
       >
         <SmartInstitutionCard
           id="requestingInstitutionInfo-card"
-          institutionSymbol={record.requestingInstitutionSymbol}
+          institutionSymbol={(record.requestingInstitutionSymbol || '').replace(/^RESHARE:/, '')}
           cardClass={css.institutionCard}
           headerClass={css.institutionCardHeader}
         />

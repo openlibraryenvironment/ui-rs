@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
+import { Link } from 'react-router-dom';
 
 import {
   AccordionSet,
@@ -18,7 +19,8 @@ import {
   RequestInfo,
   RequestingInstitutionInfo,
   RequestingUserInfo,
-  PatronRequestInfo,
+  CitationMetadataInfo,
+  CatalogInfo,
   SuppliersInfo,
 } from './sections';
 
@@ -50,12 +52,13 @@ class ViewPatronRequest extends React.Component {
 
   state = {
     sections: {
-      requestInfo: true,
-      requestingInstitutionInfo: false,
-      requestingUserInfo: false,
-      patronRequestInfo: false,
-      suppliersInfo: true,
-      developerInfo: false,
+      requestInfo: true,                // No card
+      requestingInstitutionInfo: false, // Blue card
+      requestingUserInfo: false,        // Gold card
+      citationMetadataInfo: false,      // Pink card
+      catalogInfo: true,                // Pale green card
+      suppliersInfo: true,              // Green card
+      developerInfo: false,             // No card
     }
   }
 
@@ -139,11 +142,13 @@ class ViewPatronRequest extends React.Component {
         onClose={this.props.onClose}
         actionMenu={this.getActionMenu}
       >
+        <Link to={`/request/view/${record.id}/flow`}>[flow]</Link>
         <AccordionSet accordionStatus={this.state.sections}>
           <RequestInfo id="requestInfo" {...sectionProps} />
           <RequestingInstitutionInfo id="requestingInstitutionInfo" {...sectionProps} />
           <RequestingUserInfo id="requestingUserInfo" {...sectionProps} />
-          <PatronRequestInfo id="patronRequestInfo" {...sectionProps} />
+          <CitationMetadataInfo id="citationMetadataInfo" {...sectionProps} />
+          <CatalogInfo id="catalogInfo" {...sectionProps} />
           <SuppliersInfo id="suppliersInfo" {...sectionProps} />
           <Accordion
             id="developerInfo"

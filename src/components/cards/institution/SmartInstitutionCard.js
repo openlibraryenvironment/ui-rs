@@ -8,7 +8,7 @@ class SmartInstitutionCard extends React.Component {
   static manifest = {
     institution: {
       type: 'okapi',
-      path: 'directory/entry?match=symbols.symbol&stats=true&term=!{institutionSymbol}',
+      path: 'directory/entry?stats=true&filters=symbols.symbol=!{institutionSymbol}',
       throwErrors: false,
     },
   };
