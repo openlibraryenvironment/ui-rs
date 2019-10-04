@@ -108,7 +108,7 @@ export default class PatronRequests extends React.Component {
         visibleColumns.splice(1, 0, 'isRequester');
         break;
       case 'supply':
-        visibleColumns.splice(-1, 0, 'localCallNumber', 'pickLocation.name', 'pickShelvingLocation');
+        visibleColumns.push( 'requestingInstitutionSymbol', 'localCallNumber', 'pickLocation.name', 'pickShelvingLocation' );
         break;
     }
 
