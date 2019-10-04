@@ -5,6 +5,7 @@
   "editPatronRequest": "Edit Patron Request",
   "new-app.greeting": "Congratulations!",
   "new-app.message": "Your Stripes app is running.",
+  "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
