@@ -96,7 +96,15 @@ export default class PatronRequests extends React.Component {
       'state',
       'serviceType',
     ];
-    if (appName === 'rs') visibleColumns.splice(1, 0, 'isRequester');
+
+    switch ( appName ) {
+      case 'rs':
+        visibleColumns.splice(1, 0, 'isRequester');
+        break;
+      case 'supply':
+        visibleColumns.splice(-1, 0, 'localCallNumber', 'pickLocation.name', 'pickShelvingLocation');
+        break;
+    }
 
     return (
       <React.Fragment>
