@@ -33,7 +33,7 @@ The display in the right pane should include various cards:
 4. More complete bibliographic details, looked up from the Shared Index
    (XXX not yet implemented: see
    [PR-229](https://openlibraryenvironment.atlassian.net/browse/PR-229).)
-5. *Suppliers** These are cards representing the dummied-up rota,
+5. **Suppliers** These are cards representing the dummied-up rota,
    each listing a supplier institution and a status.
 
 ## 3. Shared Index catalog
