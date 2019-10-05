@@ -108,7 +108,7 @@ export default class PatronRequests extends React.Component {
         visibleColumns.splice(1, 0, 'isRequester');
         break;
       case 'supply':
-        visibleColumns.push( 'requestingInstitutionSymbol', 'localCallNumber', 'pickLocation.name', 'pickShelvingLocation' );
+        visibleColumns.push( 'requestingInstitutionSymbol', 'localCallNumber', 'pickLocation', 'pickShelvingLocation' );
         break;
     }
 
@@ -148,6 +148,9 @@ export default class PatronRequests extends React.Component {
             patronReference: <FormattedMessage id="ui-rs.patronrequests.patronReference" />,
             state: <FormattedMessage id="ui-rs.patronrequests.state" />,
             serviceType: <FormattedMessage id="ui-rs.patronrequests.serviceType" />,
+            pickLocation: <FormattedMessage id="ui-rs.patronrequests.pickLocation" />,
+            localCallNumber: <FormattedMessage id="ui-rs.patronrequests.localCallNumber" />,
+            pickShelvingLocation: <FormattedMessage id="ui-rs.patronrequests.pickShelvingLocation" />,
           }}
           columnWidths={{
             id: 80,
@@ -161,8 +164,9 @@ export default class PatronRequests extends React.Component {
           resultsFormatter={{
             id: a => a.id.substring(0, 8),
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
-            state: a => a.state && a.state.name,
+            state: a => a.state && a.state.code,
             serviceType: a => a.serviceType && a.serviceType.value,
+            pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}
         />
       </React.Fragment>
