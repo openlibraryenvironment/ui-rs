@@ -64,7 +64,7 @@
       }
     ],
     "okapiInterfaces": {
-      "resourcesharing": "1.0"
+      "rs": "1.4"
     },
     "permissionSets": [
       {

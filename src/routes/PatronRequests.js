@@ -158,7 +158,7 @@ export default class PatronRequests extends React.Component {
             dateCreated: 140,
             title: 200,
             patronReference: 120,
-            state: 60,
+            state: 120,
             serviceType: 120,
           }}
           resultsFormatter={{
