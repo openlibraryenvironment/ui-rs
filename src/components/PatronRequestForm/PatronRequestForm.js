@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
   AccordionSet,
@@ -14,10 +13,6 @@ import {
 } from './sections';
 
 class PatronRequestForm extends React.Component {
-  static propTypes = {
-    parentResources: PropTypes.object,
-  }
-
   state = {
     sections: {
       requestMetadataForm: true,
@@ -28,7 +23,6 @@ class PatronRequestForm extends React.Component {
   getSectionProps() {
     return {
       onToggle: this.handleSectionToggle,
-      parentResources: this.props.parentResources,
     };
   }
 

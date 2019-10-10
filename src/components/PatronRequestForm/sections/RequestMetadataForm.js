@@ -16,9 +16,6 @@ class RequestMetadataForm extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    parentResources: PropTypes.shape({
-      typeValues: PropTypes.object,
-    }),
   };
 
   render() {
