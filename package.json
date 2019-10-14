@@ -39,13 +39,13 @@
     "prop-types": "^15.6.0",
     "react-apollo": "^2.1.3",
     "react-intl": "^2.4.0",
-    "react-router-dom": "^4.1.1",
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
     "@folio/stripes": "^2.7.4",
     "@folio/stripes-connect": "^5.2.3",
-    "react": "*"
+    "react": "*",
+    "react-router-dom": "^4.1.1"
   },
   "stripes": {
     "actsAs": [
