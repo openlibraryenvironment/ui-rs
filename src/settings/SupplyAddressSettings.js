@@ -28,12 +28,12 @@ class SupplyAddressSettings extends React.Component {
         stripes={stripes}
         baseUrl="rs/settings/appSettings"
         label={<FormattedMessage id="ui-rs.settings.supply-address-settings" />}
-        labelSingular={<FormattedMessage id="ui-rs.settings.supply-address-settings.singular" />}
+        labelSingular={<FormattedMessage id="ui-rs.settings.supply-address.Address" />}
         objectLabel={<FormattedMessage id="ui-rs.settings.supply-address-settings" />}
         visibleFields={['key', 'value']}
         columnMapping={{
-          st_key: <FormattedMessage id="ui-rs.settings.supply-address-settings.name" />,
-          st_value: <FormattedMessage id="ui-rs.settings.supply-address-settings.value" />,
+          st_key: <FormattedMessage id="ui-rs.settings.supply-address.Name" />,
+          st_value: <FormattedMessage id="ui-rs.settings.supply-address.Value" />,
         }}
         id="addresses"
         sortby="value"
