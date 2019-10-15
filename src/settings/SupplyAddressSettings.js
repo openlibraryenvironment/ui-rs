@@ -27,13 +27,13 @@ class SupplyAddressSettings extends React.Component {
       <this.connectedControlledVocab
         stripes={stripes}
         baseUrl="rs/settings/appSettings"
-        label={<FormattedMessage id="ui-rs.settings.supply-address-settings" />}
-        labelSingular={<FormattedMessage id="ui-rs.settings.supply-address.Address" />}
-        objectLabel={<FormattedMessage id="ui-rs.settings.supply-address-settings" />}
+        label={<FormattedMessage id="ui-rs.settings.supply-address.addresses" />}
+        labelSingular={<FormattedMessage id="ui-rs.settings.supply-address.address" />}
+        objectLabel={<FormattedMessage id="ui-rs.settings.supply-address.addresses" />}
         visibleFields={['key', 'value']}
         columnMapping={{
-          st_key: <FormattedMessage id="ui-rs.settings.supply-address.Name" />,
-          st_value: <FormattedMessage id="ui-rs.settings.supply-address.Value" />,
+          st_key: <FormattedMessage id="ui-rs.settings.supply-address.name" />,
+          st_value: <FormattedMessage id="ui-rs.settings.supply-address.value" />,
         }}
         id="addresses"
         sortby="value"

@@ -33,7 +33,7 @@ class ResourceSharingSettings extends React.Component {
       pages: [
         {
         route: 'supplyaddress',
-        label: <FormattedMessage id="ui-rs.settings.supply-address.AddressSettings" />,
+        label: <FormattedMessage id="ui-rs.settings.supply-address.addressSettings" />,
         component: SupplyAddressSettings,
         },
       ],
