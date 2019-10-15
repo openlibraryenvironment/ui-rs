@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import stripesForm from '@folio/stripes/form';
+import { Form } from 'react-final-form';
+import { Prompt } from 'react-router-dom';
 
 import {
   Button,
@@ -12,19 +13,21 @@ import {
 
 import DirectoryEntryForm from '../DirectoryEntryForm';
 
-const handleSubmit = (agreement, dispatch, props) => {
-  props.onUpdate(agreement)
+const defaultSubmit = (agreement, dispatch, props) => {
+  return props.onUpdate(agreement)
     .then(() => props.onCancel());
 };
 
 class EditDirectoryEntry extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
     onUpdate: PropTypes.func.isRequired,
-    pristine: PropTypes.bool,
-    submitting: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    onSubmit: defaultSubmit
   }
 
   renderFirstMenu() {
@@ -44,7 +47,7 @@ class EditDirectoryEntry extends React.Component {
     );
   }
 
-  renderLastMenu() {
+  renderLastMenu(pristine, submitting, submit) {
     const { initialValues } = this.props;
 
     let id;
@@ -62,8 +65,8 @@ class EditDirectoryEntry extends React.Component {
         <Button
           id={id}
           type="submit"
-          disabled={this.props.pristine || this.props.submitting}
-          onClick={this.props.handleSubmit}
+          disabled={pristine || submitting}
+          onClick={submit}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
@@ -74,29 +77,36 @@ class EditDirectoryEntry extends React.Component {
   }
 
   render() {
-    const { initialValues } = this.props;
+    const { initialValues, onSubmit } = this.props;
+    // the submit handler passed in from SearchAndSort expects props as provided by redux-form
+    const compatSubmit = values => onSubmit(values, null, this.props);
     const paneTitle = initialValues && initialValues.id ?
       initialValues.name : <FormattedMessage id="ui-directory.createDirectoryEntry" />;
 
     return (
-      <form id="form-directory-entry">
-        <Pane
-          defaultWidth="100%"
-          firstMenu={this.renderFirstMenu()}
-          lastMenu={this.renderLastMenu()}
-          paneTitle={paneTitle}
-        >
-          <DirectoryEntryForm {...this.props} />
-        </Pane>
-      </form>
+      <Form
+        onSubmit={compatSubmit}
+        initialValues={initialValues}
+        keepDirtyOnReinitialize
+      >
+        {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
+          <form id="form-directory-entry">
+            <Pane
+              defaultWidth="100%"
+              firstMenu={this.renderFirstMenu()}
+              lastMenu={this.renderLastMenu(pristine, submitting, handleSubmit)}
+              paneTitle={paneTitle}
+            >
+              <DirectoryEntryForm {...this.props} />
+              <FormattedMessage id="ui-directory.confirmDirtyNavigate">
+                {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
+              </FormattedMessage>
+            </Pane>
+          </form>
+        )}
+      </Form>
     );
   }
 }
 
-export default stripesForm({
-  form: 'directoryForm',
-  onSubmit: handleSubmit,
-  navigationCheck: true,
-  enableReinitialize: true,
-  keepDirtyOnReinitialize: true,
-})(EditDirectoryEntry);
+export default EditDirectoryEntry;

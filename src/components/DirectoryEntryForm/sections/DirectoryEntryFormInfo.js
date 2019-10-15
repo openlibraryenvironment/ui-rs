@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,

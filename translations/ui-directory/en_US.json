@@ -35,5 +35,6 @@
   "information.heading.developer.help": "(JSON dump of raw record)",
   "createDirectoryEntry": "Create directory entry",
   "updateDirectoryEntry": "Update directory entry",
-  "closeNewDirectoryEntry": "Close new directory entry"
+  "closeNewDirectoryEntry": "Close new directory entry",
+  "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?"
 }
