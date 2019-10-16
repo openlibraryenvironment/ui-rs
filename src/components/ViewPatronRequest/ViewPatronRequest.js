@@ -34,7 +34,6 @@ class ViewPatronRequest extends React.Component {
   });
 
   static propTypes = {
-    stripes: PropTypes.object,
     resources: PropTypes.shape({
       query: PropTypes.shape({
         layer: PropTypes.string,
@@ -75,7 +74,6 @@ class ViewPatronRequest extends React.Component {
     return {
       record: this.getRecord(),
       onToggle: this.handleSectionToggle,
-      stripes: this.props.stripes,
     };
   }
 
