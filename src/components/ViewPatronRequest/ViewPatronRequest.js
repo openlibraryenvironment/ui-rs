@@ -49,18 +49,6 @@ class ViewPatronRequest extends React.Component {
     onCloseEdit: PropTypes.func,
   };
 
-  state = {
-    sections: {
-      requestInfo: true,                // No card
-      requestingInstitutionInfo: false, // Blue card
-      requestingUserInfo: false,        // Gold card
-      citationMetadataInfo: false,      // Pink card
-      catalogInfo: true,                // Pale green card
-      suppliersInfo: true,              // Green card
-      developerInfo: false,             // No card
-    }
-  }
-
   getRecord() {
     return get(this.props.resources.selectedRecord, ['records', 0], {});
   }
@@ -68,22 +56,12 @@ class ViewPatronRequest extends React.Component {
   getInitialValues = () => {
     const record = this.getRecord();
     return Object.assign({}, record, { shortId: record.id && record.id.substring(0, 8) });
-  }
+  };
 
   getSectionProps() {
     return {
       record: this.getRecord(),
-      onToggle: this.handleSectionToggle,
     };
-  }
-
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
   }
 
   renderEditLayer() {
@@ -124,7 +102,7 @@ class ViewPatronRequest extends React.Component {
         </Icon>
       </Button>
     );
-  }
+  };
 
   render() {
     const record = this.getRecord();
@@ -141,22 +119,30 @@ class ViewPatronRequest extends React.Component {
         actionMenu={this.getActionMenu}
       >
         <Link to={`/request/view/${record.id}/flow`}>[flow]</Link>
-        <AccordionSet accordionStatus={this.state.sections}>
+        <AccordionSet>
+          {/* No card */}
           <RequestInfo id="requestInfo" {...sectionProps} />
-          <RequestingInstitutionInfo id="requestingInstitutionInfo" {...sectionProps} />
-          <RequestingUserInfo id="requestingUserInfo" {...sectionProps} />
-          <CitationMetadataInfo id="citationMetadataInfo" {...sectionProps} />
+          {/* Blue card */}
+          <RequestingInstitutionInfo id="requestingInstitutionInfo" closedByDefault {...sectionProps} />
+          {/* Gold card */}
+          <RequestingUserInfo id="requestingUserInfo" closedByDefault {...sectionProps} />
+          {/* Pink card */}
+          <CitationMetadataInfo id="citationMetadataInfo" closedByDefault {...sectionProps} />
+          {/* Pale green card */}
           <CatalogInfo id="catalogInfo" {...sectionProps} />
+          {/* Green card */}
           <SuppliersInfo id="suppliersInfo" {...sectionProps} />
+          {/* No card */}
           <Accordion
             id="developerInfo"
+            closedByDefault
             label={<FormattedMessage id="ui-rs.information.heading.developer" />}
             displayWhenClosed={<FormattedMessage id="ui-rs.information.heading.developer.help" />}
           >
             <pre>{JSON.stringify(record, null, 2)}</pre>
           </Accordion>
         </AccordionSet>
-        { this.renderEditLayer() }
+        {this.renderEditLayer()}
       </Pane>
     );
   }
