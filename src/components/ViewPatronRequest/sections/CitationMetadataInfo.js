@@ -15,8 +15,7 @@ class CitationMetadataInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
+    closedByDefault: PropTypes.bool,
   };
 
   render() {
@@ -35,8 +34,7 @@ class CitationMetadataInfo extends React.Component {
       <Accordion
         id={this.props.id}
         label={<FormattedMessage id="ui-rs.information.heading.citationMetadata" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        closedByDefault={this.props.closedByDefault}
       >
         <Card
           id={`${this.props.id}-card`}
