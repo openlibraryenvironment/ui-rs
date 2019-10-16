@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
-import ViewPatronRequest from '../components/ViewPatronRequest';
+import PatronRequestDetailPane from '../components/PatronRequestDetailPane';
 import EditPatronRequest from '../components/EditPatronRequest';
 import packageInfo from '../../package';
 
@@ -122,7 +122,7 @@ export default class PatronRequests extends React.Component {
           filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={ViewPatronRequest}
+          viewRecordComponent={PatronRequestDetailPane}
           editRecordComponent={EditPatronRequest}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms="module.rs.enabled"
