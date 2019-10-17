@@ -14,15 +14,15 @@ const PullSlip = (props) => {
           <h2>Borrower &amp; more</h2>
           <div className={css.patronName}>
             XXX lastname, firstname
-            <br />
-            ID:
+            (ID:
             {record.patronReference}
+            )
           </div>
           <div className={css.pickupLocation}>
             XXX pickup location
           </div>
           <div className={css.requestBarcode}>
-           <Barcode value={record.id} />
+            <Barcode value={record.id} />
           </div>
           <div className={css.requestId}>
             {record.id}
@@ -54,9 +54,13 @@ const PullSlip = (props) => {
             (XXX email)
           </div>
           <div className={css.doNotRemove}>
-            Do not remove this slip.
-            <br />
-            Thank you!
+            <div>
+              Do not remove
+              <br />
+              this slip.
+              <br />
+              Thank you!
+            </div>
           </div>
         </div>
         <div className={css.section}>
