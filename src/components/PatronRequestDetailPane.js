@@ -103,6 +103,8 @@ class PatronRequestDetailPane extends React.Component {
         actionMenu={this.getActionMenu}
       >
         <Link to={`/request/view/${record.id}/flow`}>[flow]</Link>
+        &nbsp;
+        <Link to={`/request/view/${record.id}/pullslip`}>[pull slip]</Link>
         <ViewPatronRequest record={record} />
         {this.renderEditLayer()}
       </Pane>
