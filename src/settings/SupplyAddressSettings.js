@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStripes } from '@folio/stripes/core';
-import { Pane } from '@folio/stripes/components';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { FormattedMessage } from 'react-intl';
 
@@ -14,15 +13,16 @@ class SupplyAddressSettings extends React.Component {
   });
 
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    stripes: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
+
   render() {
-    const{ stripes } = this.props;
+    const { stripes } = this.props;
     return (
       <this.connectedControlledVocab
         stripes={stripes}
@@ -37,7 +37,7 @@ class SupplyAddressSettings extends React.Component {
         }}
         id="addresses"
         sortby="value"
-        hiddenFields={['id', 'version', 'section', 'settingType', 'vocab', 'defValue', 'lastUpdated','numberOfObjects']}
+        hiddenFields={['id', 'version', 'section', 'settingType', 'vocab', 'defValue', 'lastUpdated', 'numberOfObjects']}
         limitParam="perPage"
       />
     );
