@@ -14,6 +14,9 @@ import {
 
 const ViewPatronRequest = ({ record }) => (
   <React.Fragment>
+    <Link to={`/request/view/${record.id}/flow`}>[flow]</Link>
+    &nbsp;
+    <Link to={`/request/view/${record.id}/pullslip`}>[pull slip]</Link>
     <AccordionSet>
       {/* No card */}
       <RequestInfo id="requestInfo" record={record} />
