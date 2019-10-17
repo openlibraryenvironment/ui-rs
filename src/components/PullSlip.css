@@ -4,6 +4,104 @@
 }
 
 .section {
-    border: 2px solid black;
-    padding: 0.5em 2em;
+  border: 2px solid black;
+  padding: 0.5em 2em;
+}
+
+.section h2 {
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.patronName {
+  font-size: 200%;
+  font-weight: bold;
+}
+
+.pickupLocation {
+  font-weight: bold;
+}
+
+.requestBarcode {
+}
+
+.requestId {
+}
+
+.requestId:not(:empty):before {
+  content: "Request ";
+}
+
+.title {
+  font-weight: bold;
+}
+
+.author {
+}
+
+.author:before {
+  content: "By: ";
+}
+
+.volume {
+}
+
+.volume:not(:empty):before {
+  content: "Volume: ";
+}
+
+.mayBeRecalled {
+  font-weight: bold;
+}
+
+.ifRecalled {
+}
+
+.questions {
+  font-weight: bold;
+}
+
+.answers {
+}
+
+.doNotRemove {
+  font-weight: bold;
+}
+
+.callNumber {
+  font-size: 150%;
+  font-weight: bold;
+}
+
+.location {
+  font-size: 150%;
+}
+
+.fromLibrary {
+  font-size: 150%;
+}
+
+.fromLibrary:before {
+  content: "From ";
+}
+
+.toLibrary {
+  font-size: 150%;
+}
+
+.toLibrary:before {
+  content: "To ";
+}
+
+.datePrinted {
+  font-size: 150%;
+}
+
+.consortiumLogo {
+}
+
+.itemBarcode {
+}
+
+.itemId {
 }
