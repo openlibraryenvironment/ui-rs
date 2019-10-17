@@ -33,7 +33,6 @@ const PullSlip = (props) => {
             {record.title}
           </div>
           <div className={css.author}>
-            By:
             {record.author}
           </div>
           <div className={css.volume}>
