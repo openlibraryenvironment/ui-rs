@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import Barcode from 'react-barcode';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
 import css from './PullSlip.css';
 
@@ -21,7 +22,7 @@ const PullSlip = (props) => {
             XXX pickup location
           </div>
           <div className={css.requestBarcode}>
-            XXX barcode TODO
+           <Barcode value={record.id} />
           </div>
           <div className={css.requestId}>
             {record.id}
