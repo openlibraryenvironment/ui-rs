@@ -7,10 +7,9 @@ import SomeFeatureSettings from './SomeFeatureSettings';
 import SupplyAddressSettings from './SupplyAddressSettings';
 
 class ResourceSharingSettings extends React.Component {
- 
   settingsSections = [
     {
-      label: "General",
+      label: 'General',
       pages: [
         {
           route: 'general',
@@ -25,16 +24,16 @@ class ResourceSharingSettings extends React.Component {
       ],
     },
     {
-      label: "Request",
+      label: 'Request',
       pages: [],
     },
     {
-      label: "Supply",
+      label: 'Supply',
       pages: [
         {
-        route: 'supplyaddress',
-        label: <FormattedMessage id="ui-rs.settings.supply-address.addressSettings" />,
-        component: SupplyAddressSettings,
+          route: 'supplyaddress',
+          label: <FormattedMessage id="ui-rs.settings.supply-address.addressSettings" />,
+          component: SupplyAddressSettings,
         },
       ],
     },
