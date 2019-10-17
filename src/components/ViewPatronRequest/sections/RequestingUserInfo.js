@@ -10,8 +10,7 @@ class RequestingUserInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
+    closedByDefault: PropTypes.bool,
   };
 
   render() {
@@ -21,8 +20,7 @@ class RequestingUserInfo extends React.Component {
       <Accordion
         id={this.props.id}
         label={<FormattedMessage id="ui-rs.information.heading.requester" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        closedByDefault={this.props.closedByDefault}
       >
         <GraphQLUserCard
           id="requestingUserInfo-card"

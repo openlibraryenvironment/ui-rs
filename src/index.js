@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Route as NestedRoute } from '@folio/stripes/core';
 import PatronRequests from './routes/PatronRequests';
+import CreateEditRoute from './routes/CreateEditRoute';
 import ViewRoute from './routes/ViewRoute';
 import DetailsRoute from './routes/DetailsRoute';
 import FlowRoute from './routes/FlowRoute';
@@ -48,6 +49,8 @@ class ResourceSharing extends React.Component {
             from={path}
             to={`${path}/requests`}
           />
+          <Route path={`${path}/requests/create`} component={CreateEditRoute} />
+          <Route path={`${path}/requests/edit/:id`} component={CreateEditRoute} />
           <Route
             path={`${path}/requests`}
             render={() => <this.connectedPatronRequests {...this.props} appName={appName} />}

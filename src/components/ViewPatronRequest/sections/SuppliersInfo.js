@@ -24,8 +24,7 @@ class SuppliersInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
+    closedByDefault: PropTypes.bool,
   };
 
   render() {
@@ -35,8 +34,7 @@ class SuppliersInfo extends React.Component {
       <Accordion
         id={this.props.id}
         label={<FormattedMessage id="ui-rs.information.heading.suppliers" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        closedByDefault={this.props.closedByDefault}
       >
         {((record || {}).rota || []).sort((a, b) => a.rotaPosition - b.rotaPosition).map((supplier, i) => (
           <Card
