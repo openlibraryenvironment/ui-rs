@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
 import Barcode from 'react-barcode';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
 import css from './PullSlip.css';
 
 const PullSlip = (props) => {
   const { record } = props;
+  const now = new Date();
+
   return (
     <div>
       <div className={css.pullslip}>
@@ -78,7 +80,9 @@ const PullSlip = (props) => {
             {record.requestingInstitutionSymbol}
           </div>
           <div className={css.datePrinted}>
-            XXX date right now TODO
+            <FormattedDate value={now} />
+            &nbsp;
+            <FormattedTime value={now} />
           </div>
           <div className={css.consortiumLogo}>
             XXX logo TODO
