@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
+import { FormattedDate, FormattedTime } from 'react-intl';
 import Barcode from 'react-barcode';
-import { AccordionSet, Accordion } from '@folio/stripes/components';
 import css from './PullSlip.css';
 import logo from './images/palci-logo.png';
 
@@ -96,17 +95,6 @@ const PullSlip = (props) => {
           </div>
         </div>
       </div>
-
-      <AccordionSet>
-        <Accordion
-          id="callslip-developerInfo"
-          closedByDefault
-          label={<FormattedMessage id="ui-rs.information.heading.developer" />}
-          displayWhenClosed={<FormattedMessage id="ui-rs.information.heading.developer.help" />}
-        >
-          <pre>{JSON.stringify(record, null, 2)}</pre>
-        </Accordion>
-      </AccordionSet>
     </div>
   );
 };

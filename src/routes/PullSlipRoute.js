@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
-import PullSlip from '../components/PullSlip';
+import PrintPullSlip from '../components/PrintPullSlip';
 
 const PullSlipRoute = props => {
   return (
@@ -10,7 +10,7 @@ const PullSlipRoute = props => {
       <div>
         {
           get(props.resources.viewRecord, 'hasLoaded') &&
-            <PullSlip record={props.resources.viewRecord.records[0]} />
+            <PrintPullSlip record={props.resources.viewRecord.records[0]} />
         }
       </div>
     </div>
