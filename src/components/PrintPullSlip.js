@@ -40,6 +40,8 @@ class PrintPullSlip extends React.Component {
           <PullSlip record={this.props.record} />
         </div>
 
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
         <AccordionSet>
           <Accordion
             id="callslip-developerInfo"
