@@ -7,6 +7,7 @@ import CreateEditRoute from './routes/CreateEditRoute';
 import ViewRoute from './routes/ViewRoute';
 import DetailsRoute from './routes/DetailsRoute';
 import FlowRoute from './routes/FlowRoute';
+import PullSlipRoute from './routes/PullSlipRoute';
 import Settings from './settings';
 import AppNameContext from './AppNameContext';
 
@@ -55,6 +56,7 @@ class ResourceSharing extends React.Component {
             path={`${path}/requests`}
             render={() => <this.connectedPatronRequests {...this.props} appName={appName} />}
           />
+          <Route path={`${path}/view/:id/pullslip`} component={PullSlipRoute} />
           <NestedRoute path={`${path}/view/:id`} component={ViewRoute}>
             <NestedRoute path={`${path}/view/:id/details`} component={DetailsRoute} />
             <NestedRoute path={`${path}/view/:id/flow`} component={FlowRoute} />
