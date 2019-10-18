@@ -90,5 +90,6 @@
   "flow.awaitingPullSlip": "New - awaiting pull slip printing",
   "flow.stacksSearching": "Pullslip printed - stacks searching",
   "flow.itemFound": "Item found - ready to ship",
-  "flow.shippedToRequester": "Item shipped to requester"
+  "flow.shippedToRequester": "Item shipped to requester",
+  "button.print": "Print"
 }

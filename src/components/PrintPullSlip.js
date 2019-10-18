@@ -38,7 +38,7 @@ class PrintPullSlip extends React.Component {
               data-test-print-pull-slip
               marginBottom0
             >
-              Print!
+              <FormattedMessage id="ui-rs.button.print" />
             </Button>
           )}
           content={() => this.editorRef.current}
