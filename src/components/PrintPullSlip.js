@@ -1,3 +1,17 @@
+// IMPORTANT NOTE
+//
+// When running a dev system on localhost under HTTP (not HTTPS), in
+// at least some configurations, Firefox 16.0.1 will fail to print,
+// reporting "SecurityError: The operation is insecure" when clicking
+// the Print button. Possible fixes:
+//
+// * In `about:config`, remove `localhost` from the the
+//   comma-separated list of domains in the
+//   `network.trr.excluded-domains` property. This sometimes seems to
+//   work, and other times does not.
+// * Use Chrome instead of Firefox.
+// * Run your development system under HTTPS somehow.
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
