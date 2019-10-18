@@ -16,7 +16,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import ReactToPrint from 'react-to-print';
-import { AccordionSet, Accordion } from '@folio/stripes/components';
+import { Button, AccordionSet, Accordion } from '@folio/stripes/components';
 import PullSlip from './PullSlip';
 
 class PrintPullSlip extends React.Component {
@@ -33,7 +33,14 @@ class PrintPullSlip extends React.Component {
     return (
       <div>
         <ReactToPrint
-          trigger={() => <button type="button">Print!</button>}
+          trigger={() => (
+            <Button
+              data-test-print-pull-slip
+              marginBottom0
+            >
+              Print!
+            </Button>
+          )}
           content={() => this.editorRef.current}
         />
         <div ref={this.editorRef}>
