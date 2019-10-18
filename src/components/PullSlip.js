@@ -4,6 +4,7 @@ import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
 import Barcode from 'react-barcode';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
 import css from './PullSlip.css';
+import logo from './images/palci-logo.png';
 
 const PullSlip = (props) => {
   const { record } = props;
@@ -85,7 +86,7 @@ const PullSlip = (props) => {
             <FormattedTime value={now} />
           </div>
           <div className={css.consortiumLogo}>
-            XXX logo TODO
+            <img src={logo} height="66" width="179" alt="PALCI logo" />
           </div>
           <div className={css.itemBarcode}>
             XXX item barcode
