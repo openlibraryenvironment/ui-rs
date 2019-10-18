@@ -21,7 +21,7 @@ const PullSlip = (props) => {
             )
           </div>
           <div className={css.pickupLocation}>
-            XXX pickup location
+            {(record.pickLocation || {}).name}
           </div>
           <div className={css.requestBarcode}>
             <Barcode value={record.id} />
@@ -68,10 +68,10 @@ const PullSlip = (props) => {
         <div className={css.section}>
           <h2>Details for staff</h2>
           <div className={css.callNumber}>
-            XXX call number
+            {record.localCallNumber}
           </div>
           <div className={css.location}>
-            XXX location
+            {record.pickShelvingLocation}
           </div>
           <div className={css.fromLibrary}>
             {record.supplyingInstitutionSymbol}
