@@ -10,7 +10,7 @@ import {
 
 import {
   DirectoryEntryFormInfo,
-} from './sections';
+} from './sectionsShared';
 
 class DirectoryEntryForm extends React.Component {
   static propTypes = {
@@ -18,7 +18,7 @@ class DirectoryEntryForm extends React.Component {
   }
 
   state = {
-    sections: {
+    sectionsShared: {
       directoryEntryFormInfo: true,
     }
   }
@@ -32,20 +32,20 @@ class DirectoryEntryForm extends React.Component {
 
   handleSectionToggle = ({ id }) => {
     this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
+      sectionsShared: {
+        ...prevState.sectionsShared,
+        [id]: !prevState.sectionsShared[id],
       }
     }));
   }
 
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
+  handleAllSectionsToggle = (sectionsShared) => {
+    this.setState({ sectionsShared });
   }
 
   render() {
     const sectionProps = this.getSectionProps();
-    const { sections } = this.state;
+    const { sectionsShared } = this.state;
 
     return (
       <div>
@@ -53,12 +53,12 @@ class DirectoryEntryForm extends React.Component {
           <Row end="xs">
             <Col xs>
               <ExpandAllButton
-                accordionStatus={sections}
+                accordionStatus={sectionsShared}
                 onToggle={this.handleAllSectionsToggle}
               />
             </Col>
           </Row>
-          <DirectoryEntryFormInfo id="directoryEntryFormInfo" open={sections.directoryEntryFormInfo} {...sectionProps} />
+          <DirectoryEntryFormInfo id="directoryEntryFormInfo" open={sectionsShared.directoryEntryFormInfo} {...sectionProps} />
         </AccordionSet>
       </div>
     );
