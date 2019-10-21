@@ -1,15 +1,28 @@
 import React from 'react';
-import { Paneset } from '@folio/stripes/components';
-import { stripesConnect, withStripes } from '@folio/stripes/core';
+import PropTypes from 'prop-types';
+import { Layout } from '@folio/stripes/components';
+import { stripesConnect } from '@folio/stripes/core';
 import ViewPatronRequest from '../components/ViewPatronRequest';
 
-export default () => {
-  const ConnectedViewPatronRequest = stripesConnect(withStripes(ViewPatronRequest));
-  // This is going to be tedious to supply the API for:
-  // https://github.com/folio-org/stripes-smart-components/blob/master/lib/SearchAndSort/SearchAndSort.js#L766
+const DetailsRoute = ({ resources: { selectedRecord: resource } }) => {
+  if (!resource || !resource.hasLoaded) return null;
+  const record = resource.records[0];
   return (
-    <Paneset>
-      <ConnectedViewPatronRequest />
-    </Paneset>
+    <Layout className="centered" style={{ maxWidth: '80em' }}>
+      <ViewPatronRequest record={record} />
+    </Layout>
   );
 };
+
+DetailsRoute.manifest = {
+  selectedRecord: {
+    type: 'okapi',
+    path: 'rs/patronrequests/:{id}',
+  },
+};
+
+DetailsRoute.propTypes = {
+  resources: PropTypes.object.isRequired
+};
+
+export default stripesConnect(DetailsRoute);

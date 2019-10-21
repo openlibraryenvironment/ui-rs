@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Button, ButtonGroup, Layout, Pane, Paneset } from '@folio/stripes/components';
+import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes/components';
 import css from './ViewRoute.css';
 
 const ViewRoute = ({ children, history, location: { pathname }, match: { url, params } }) => (
@@ -14,17 +14,36 @@ const ViewRoute = ({ children, history, location: { pathname }, match: { url, pa
         dismissible
         defaultWidth="fill"
         subheader={
-          <Layout className={`${css.tabContainer} flex centerContent flex-align-items-center full padding-start-gutter padding-end-gutter`}>
+          <Layout
+            className={`${css.tabContainer} flex centerContent flex-align-items-center full padding-start-gutter padding-end-gutter`}
+          >
             <ButtonGroup>
-              <Button marginBottom0 to={`${url}/flow`} buttonStyle={pathname.includes('/flow') ? 'primary' : 'default'}>
+              <Button
+                marginBottom0
+                to={`${url}/flow`}
+                buttonStyle={pathname.includes('/flow') ? 'primary' : 'default'}
+                replace
+              >
                 <FormattedMessage id="ui-rs.flow.flow" />
               </Button>
-              <Button marginBottom0 to={`${url}/details`} buttonStyle={pathname.includes('/details') ? 'primary' : 'default'}>
+              <Button
+                marginBottom0
+                to={`${url}/details`}
+                buttonStyle={pathname.includes('/details') ? 'primary' : 'default'}
+                replace
+              >
                 <FormattedMessage id="ui-rs.flow.details" />
               </Button>
             </ButtonGroup>
           </Layout>
         }
+        actionMenu={() => (
+          <Button buttonStyle="dropdownItem" to={`../../requests/edit/${params.id}`} id="clickable-edit-patronrequest">
+            <Icon icon="edit">
+              <FormattedMessage id="ui-rs.edit" />
+            </Icon>
+          </Button>
+        )}
       >
         {children}
       </Pane>
@@ -36,10 +55,10 @@ ViewRoute.propTypes = {
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
   match: PropTypes.shape({
     params: PropTypes.object,
-    url: PropTypes.object
+    url: PropTypes.object,
   }).isRequired,
   location: PropTypes.shape({ pathname: PropTypes.object }).isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 };
 
 export default ViewRoute;
