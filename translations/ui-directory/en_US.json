@@ -35,6 +35,11 @@
   "information.heading.customProps": "Custom properties",
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)",
+
+
+  "information.local.patronAccountBarcode": "Patron account barcode",
+  "information.local.heading.directoryEntry": "Local directory entry info",
+  
   "createDirectoryEntry": "Create directory entry",
   "updateDirectoryEntry": "Update directory entry",
   "closeNewDirectoryEntry": "Close new directory entry",

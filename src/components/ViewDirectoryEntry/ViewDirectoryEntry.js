@@ -22,6 +22,7 @@ import {
   Services,
   CustomProperties,
 } from './sectionsShared';
+import LocalDirectoryEntryInfo from './sectionsLocal/LocalDirectoryEntryInfo';
 
 class ViewDirectoryEntry extends React.Component {
   static manifest = Object.freeze({
@@ -176,7 +177,9 @@ class ViewDirectoryEntry extends React.Component {
           </AccordionSet>
         }
         {tab === "local" &&
-          <p>Local Information about {title}</p>
+          <AccordionSet>
+            <LocalDirectoryEntryInfo id="directoryEntryInfo" {...sectionProps}/>
+          </AccordionSet>
         }
         { this.renderEditLayer() }
       </Pane>
