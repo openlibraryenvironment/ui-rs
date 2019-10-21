@@ -21,7 +21,7 @@ import {
   Addresses,
   Services,
   CustomProperties,
-} from './sections';
+} from './sectionsShared';
 
 class ViewDirectoryEntry extends React.Component {
   static manifest = Object.freeze({
@@ -50,7 +50,7 @@ class ViewDirectoryEntry extends React.Component {
   };
 
   state = {
-    sections: {
+    sectionsShared: {
       directoryEntryInfo: false,
       addresses: false,
       services: true,
@@ -79,9 +79,9 @@ class ViewDirectoryEntry extends React.Component {
 
   handleSectionToggle = ({ id }) => {
     this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
+      sectionsShared: {
+        ...prevState.sectionsShared,
+        [id]: !prevState.sectionsShared[id],
       }
     }));
   }
@@ -161,7 +161,7 @@ class ViewDirectoryEntry extends React.Component {
           </ButtonGroup>
         </Layout>
         {tab === "shared" &&
-          <AccordionSet accordionStatus={this.state.sections}>
+          <AccordionSet accordionStatus={this.state.sectionsShared}>
             <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
             <Addresses id="addresses" {...sectionProps} />
             <Services id="services" {...sectionProps} />
