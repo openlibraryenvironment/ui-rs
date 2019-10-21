@@ -23,6 +23,8 @@
   "information.parent": "Parent institution",
   "information.units": "Units",
   "information.tags": "Tags",
+  "information.tab.shared": "Shared information",
+  "information.tab.local": "Local information",
   "information.heading.addresses": "Addresses",
   "information.addressNofM": "Address {index} of {count}",
   "information.heading.services": "Services",

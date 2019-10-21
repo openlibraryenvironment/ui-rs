@@ -6,10 +6,12 @@ import { get } from 'lodash';
 import {
   AccordionSet,
   Accordion,
-  Icon,
-  Pane,
-  Layer,
   Button,
+  Icon,
+  Layer,
+  Layout,
+  Pane,
+  ButtonGroup,
 } from '@folio/stripes/components';
 
 import EditDirectoryEntry from '../EditDirectoryEntry';
@@ -54,7 +56,8 @@ class ViewDirectoryEntry extends React.Component {
       services: true,
       customProperties: false,
       developerInfo: false,
-    }
+    },
+    tab: "shared",
   }
 
   getRecord() {
@@ -128,6 +131,7 @@ class ViewDirectoryEntry extends React.Component {
     const sectionProps = this.getSectionProps();
     let title = record.name || 'Directory entry details';
     if (record.status) title += ` (${record.status.label})`;
+    const { tab } = this.state;
 
     return (
       <Pane
@@ -138,19 +142,42 @@ class ViewDirectoryEntry extends React.Component {
         onClose={this.props.onClose}
         actionMenu={this.getActionMenu}
       >
-        <AccordionSet accordionStatus={this.state.sections}>
-          <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
-          <Addresses id="addresses" {...sectionProps} />
-          <Services id="services" {...sectionProps} />
-          <CustomProperties id="customProperties" {...sectionProps} />
-          <Accordion
-            id="developerInfo"
-            label={<FormattedMessage id="ui-directory.information.heading.developer" />}
-            displayWhenClosed={<FormattedMessage id="ui-directory.information.heading.developer.help" />}
-          >
-            <pre>{JSON.stringify(record, null, 2)}</pre>
-          </Accordion>
-        </AccordionSet>
+        <Layout className="textCentered">
+          <ButtonGroup>
+            <Button
+              onClick={() => this.setState({ tab: "shared"})}
+              buttonStyle={tab === "shared" ? 'primary' : 'default'}
+              id="clickable-nav-shared"
+            >
+              <FormattedMessage id="ui-directory.information.tab.shared" />
+            </Button>
+            <Button
+              onClick={() => this.setState({ tab: "local"})}
+              buttonStyle={tab === "local" ? 'primary' : 'default'}
+              id="clickable-nav-local"
+            >
+              <FormattedMessage id="ui-directory.information.tab.local" />
+            </Button>
+          </ButtonGroup>
+        </Layout>
+        {tab === "shared" &&
+          <AccordionSet accordionStatus={this.state.sections}>
+            <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
+            <Addresses id="addresses" {...sectionProps} />
+            <Services id="services" {...sectionProps} />
+            <CustomProperties id="customProperties" {...sectionProps} />
+            <Accordion
+              id="developerInfo"
+              label={<FormattedMessage id="ui-directory.information.heading.developer" />}
+              displayWhenClosed={<FormattedMessage id="ui-directory.information.heading.developer.help" />}
+            >
+              <pre>{JSON.stringify(record, null, 2)}</pre>
+            </Accordion>
+          </AccordionSet>
+        }
+        {tab === "local" &&
+          <p>Local Information about {title}</p>
+        }
         { this.renderEditLayer() }
       </Pane>
     );
