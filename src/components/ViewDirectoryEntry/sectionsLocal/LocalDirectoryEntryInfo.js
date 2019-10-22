@@ -31,7 +31,7 @@ class LocalDirectoryEntryInfo extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.local.patronAccountBarcode" />}
-              value={record.customProperties.local_patronAccountBarcode ? record.customProperties.local_patronAccountBarcode : '-'}
+              value={record.customProperties.local_patronAccountBarcode ? record.customProperties.local_patronAccountBarcode[0].value : '-'}
             />
           </Col>
         </Row>

@@ -133,7 +133,6 @@ class ViewDirectoryEntry extends React.Component {
     let title = record.name || 'Directory entry details';
     if (record.status) title += ` (${record.status.label})`;
     const { tab } = this.state;
-
     return (
       <Pane
         id="pane-view-directoryentry"
@@ -178,7 +177,7 @@ class ViewDirectoryEntry extends React.Component {
         }
         {tab === "local" &&
           <AccordionSet>
-            <LocalDirectoryEntryInfo id="directoryEntryInfo" {...sectionProps}/>
+            <LocalDirectoryEntryInfo id="localDirectoryEntryInfo" {...sectionProps}/>
           </AccordionSet>
         }
         { this.renderEditLayer() }

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form } from 'react-final-form';
+import arrayMutators from 'final-form-arrays'
 import { Prompt } from 'react-router-dom';
 
 import {
@@ -88,6 +89,9 @@ class EditDirectoryEntry extends React.Component {
         onSubmit={compatSubmit}
         initialValues={initialValues}
         keepDirtyOnReinitialize
+        mutators={{
+          ...arrayMutators
+        }}
       >
         {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
           <form id="form-directory-entry">
