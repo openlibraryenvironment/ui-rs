@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { Field } from 'react-final-form';
-import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Accordion,
-  Col,
   Row,
   TextField,
 } from '@folio/stripes/components';
+
 
 import { required } from '../../../util/validators';
 
@@ -30,6 +29,23 @@ class LocalDirectoryEntryFormInfo extends React.Component {
   }
 
   render() {
+    const custProps = this.props.parentResources.selectedRecord.records[0].customProperties
+    let id
+    if (custProps.local_patronAccountBarcode) {
+      id = custProps.local_patronAccountBarcode[0].id
+    }
+    const handleChange = (e, input) => {
+      if (id) {
+        input.onChange({
+          "local_patronAccountBarcode": [{id: id, value: e.target.value }], 
+        });
+      } else {
+        input.onChange({
+          "local_patronAccountBarcode": [{value: e.target.value }],
+        });
+      }
+    };
+
     return (
       <Accordion
         id={this.props.id}
@@ -39,21 +55,23 @@ class LocalDirectoryEntryFormInfo extends React.Component {
       >
         <React.Fragment>
           <Row>
-            <FieldArray name="customProperties">
-              {({ fields }) => 
-                fields.map((name) => (
-                  <div key = {name}>
-                    <FormattedMessage id="ui-directory.information.local.patronAccountBarcode">
-                    <Field
+            <FormattedMessage id="ui-directory.information.local.patronAccountBarcode">
+              {placeholder => (
+                <Field
+                  name="customProperties"
+                  render={({ input }) => {
+                    return (
+                      <TextField
                       id="edit-directory-entry-patron-account-barcode"
-                      name={'${name}.local_patronAccountBarcode'}
-                      component={TextField}
-                    />
-                    </FormattedMessage>
-                  </div>
-                ))
-              }
-            </FieldArray>
+                        onChange={(e) => handleChange(e, input)}
+                        label={placeholder}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }}
+                />
+              )}
+            </FormattedMessage>
           </Row>
           <Row>
             <FormattedMessage id="ui-directory.information.description">

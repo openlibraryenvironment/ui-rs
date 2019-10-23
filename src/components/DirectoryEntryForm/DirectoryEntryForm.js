@@ -32,7 +32,7 @@ class DirectoryEntryForm extends React.Component {
     sectionsLocal: {
       localDirectoryEntryFormInfo: true,
     },
-    tab: "shared",
+    tab: 'shared',
   }
 
   getSectionProps() {
@@ -68,22 +68,22 @@ class DirectoryEntryForm extends React.Component {
         <Layout className="textCentered">
           <ButtonGroup>
             <Button
-              onClick={() => this.setState({ tab: "shared"})}
-              buttonStyle={tab === "shared" ? 'primary' : 'default'}
+              onClick={() => this.setState({ tab: 'shared' })}
+              buttonStyle={tab === 'shared' ? 'primary' : 'default'}
               id="clickable-nav-shared"
             >
               <FormattedMessage id="ui-directory.information.tab.shared" />
             </Button>
             <Button
-              onClick={() => this.setState({ tab: "local"})}
-              buttonStyle={tab === "local" ? 'primary' : 'default'}
+              onClick={() => this.setState({ tab: 'local' })}
+              buttonStyle={tab === 'local' ? 'primary' : 'default'}
               id="clickable-nav-local"
             >
               <FormattedMessage id="ui-directory.information.tab.local" />
             </Button>
           </ButtonGroup>
         </Layout>
-        {tab === "shared" &&
+        {tab === 'shared' &&
           <AccordionSet>
             <Row end="xs">
               <Col xs>
@@ -96,18 +96,18 @@ class DirectoryEntryForm extends React.Component {
             <DirectoryEntryFormInfo id="directoryEntryFormInfo" open={sectionsShared.directoryEntryFormInfo} {...sectionProps} />
           </AccordionSet>
         }
-        {tab === "local" &&
+        {tab === 'local' &&
           <AccordionSet>
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton
-                accordionStatus={sectionsLocal}
-                onToggle={this.handleAllSectionsToggle}
-              />
-            </Col>
-          </Row>
-          <LocalDirectoryEntryFormInfo id="localDirectoryEntryFormInfo" open={sectionsLocal.localDirectoryEntryFormInfo} {...sectionProps} />
-        </AccordionSet>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton
+                  accordionStatus={sectionsLocal}
+                  onToggle={this.handleAllSectionsToggle}
+                />
+              </Col>
+            </Row>
+            <LocalDirectoryEntryFormInfo id="localDirectoryEntryFormInfo" open={sectionsLocal.localDirectoryEntryFormInfo} {...sectionProps} />
+          </AccordionSet>
         }
       </div>
     );
