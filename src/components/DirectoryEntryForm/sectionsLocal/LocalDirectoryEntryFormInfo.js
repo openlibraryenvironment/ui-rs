@@ -6,10 +6,10 @@ import { Field } from 'react-final-form';
 
 import {
   Accordion,
+  Col,
   Row,
   TextField,
 } from '@folio/stripes/components';
-
 
 import { required } from '../../../util/validators';
 
@@ -20,6 +20,9 @@ class LocalDirectoryEntryFormInfo extends React.Component {
     open: PropTypes.bool,
     parentResources: PropTypes.shape({
       typeValues: PropTypes.object,
+      selectedRecord: PropTypes.shape({
+        records: PropTypes.array
+      }),
     }),
   };
 
@@ -28,23 +31,25 @@ class LocalDirectoryEntryFormInfo extends React.Component {
       .map(({ id, label }) => ({ label, value: id }));
   }
 
-  render() {
-    const custProps = this.props.parentResources.selectedRecord.records[0].customProperties
-    let id
-    if (custProps.local_patronAccountBarcode) {
-      id = custProps.local_patronAccountBarcode[0].id
+  handleCustPropChange(property_name, e, input) {
+    const custProps = this.props.parentResources.selectedRecord.records[0].customProperties;
+    let id;
+
+    if (custProps[property_name]) {
+      id = custProps[property_name][0].id;
     }
-    const handleChange = (e, input) => {
       if (id) {
         input.onChange({
-          "local_patronAccountBarcode": [{id: id, value: e.target.value }], 
+          [property_name]: [{ id, value: e.target.value }],
         });
       } else {
         input.onChange({
-          "local_patronAccountBarcode": [{value: e.target.value }],
+          [property_name]: [{ value: e.target.value }],
         });
       }
-    };
+  }
+
+  render() {
 
     return (
       <Accordion
@@ -55,36 +60,84 @@ class LocalDirectoryEntryFormInfo extends React.Component {
       >
         <React.Fragment>
           <Row>
-            <FormattedMessage id="ui-directory.information.local.patronAccountBarcode">
-              {placeholder => (
-                <Field
-                  name="customProperties"
-                  render={({ input }) => {
-                    return (
-                      <TextField
-                      id="edit-directory-entry-patron-account-barcode"
-                        onChange={(e) => handleChange(e, input)}
-                        label={placeholder}
-                        placeholder={placeholder}
-                      />
-                    );
-                  }}
-                />
-              )}
-            </FormattedMessage>
+            <Col xs={6}>
+              <FormattedMessage id="ui-directory.information.local.patronAccountBarcode">
+                {placeholder => (
+                  <Field
+                    name="local_Barcode"
+                    render={({ input }) => {
+                      return (
+                        <TextField
+                          id="edit-directory-entry-patron-account-barcode"
+                          onChange={(e) => this.handleCustPropChange('local_patronAccountBarcode', e, input)}
+                          label={placeholder}
+                          placeholder={placeholder}
+                        />
+                      );
+                    }}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+            <Col xs={6}>
+              <FormattedMessage id="ui-directory.information.local.widget1">
+                {placeholder => (
+                  <Field
+                    name="local_widg1"
+                    render={({ input }) => {
+                      return (
+                        <TextField
+                          id="edit-directory-entry-widget-1"
+                          onChange={(e) => this.handleCustPropChange('local_widget_1', e, input)}
+                          label={placeholder}
+                          placeholder={placeholder}
+                        />
+                      );
+                    }}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
           </Row>
           <Row>
-            <FormattedMessage id="ui-directory.information.description">
-              {placeholder => (
-                <Field
-                  id="edit-directory-entry-description"
-                  name="description"
-                  label={placeholder}
-                  component={TextField}
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
+          <Col xs={6}>
+              <FormattedMessage id="ui-directory.information.local.widget2">
+                {placeholder => (
+                  <Field
+                    name="local_widg2"
+                    render={({ input }) => {
+                      return (
+                        <TextField
+                          id="edit-directory-entry-widget-2"
+                          onChange={(e) => this.handleCustPropChange('local_widget_2', e, input)}
+                          label={placeholder}
+                          placeholder={placeholder}
+                        />
+                      );
+                    }}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+            <Col xs={6}>
+              <FormattedMessage id="ui-directory.information.local.widget3">
+                {placeholder => (
+                  <Field
+                    name="local_widg3"
+                    render={({ input }) => {
+                      return (
+                        <TextField
+                          id="edit-directory-entry-widget-3"
+                          onChange={(e) => this.handleCustPropChange('local_widget_3', e, input)}
+                          label={placeholder}
+                          placeholder={placeholder}
+                        />
+                      );
+                    }}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
           </Row>
         </React.Fragment>
       </Accordion>

@@ -38,6 +38,9 @@
 
 
   "information.local.patronAccountBarcode": "Patron account barcode",
+  "information.local.widget1": "Widget 1",
+  "information.local.widget2": "Widget 2",
+  "information.local.widget3": "Widget 3",
   "information.local.heading.directoryEntry": "Local directory entry info",
   
   "createDirectoryEntry": "Create directory entry",

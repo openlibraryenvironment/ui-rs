@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form } from 'react-final-form';
-import arrayMutators from 'final-form-arrays'
 import { Prompt } from 'react-router-dom';
 
 import {
   Button,
+  Card,
   IconButton,
   Pane,
   PaneMenu,
@@ -81,8 +81,19 @@ class EditDirectoryEntry extends React.Component {
     const { initialValues, onSubmit } = this.props;
     // the submit handler passed in from SearchAndSort expects props as provided by redux-form
     const compatSubmit = values => {
+
+      //Logic to take several "local" fields and send their data into the single "customProperties" field
+      Object.keys(values).forEach(function (prop) {
+        if(prop.substring(0,5) === "local") {
+          let custPropName = Object.keys(values[prop])[0]
+          values.customProperties[custPropName] = values[prop][custPropName]
+          delete values[prop]
+        }
+      });
+      console.log("Values: %o", values)
+
       onSubmit(values, null, this.props);
-    }
+    };
     const paneTitle = initialValues && initialValues.id ?
       initialValues.name : <FormattedMessage id="ui-directory.createDirectoryEntry" />;
     return (
@@ -90,11 +101,8 @@ class EditDirectoryEntry extends React.Component {
         onSubmit={compatSubmit}
         initialValues={initialValues}
         keepDirtyOnReinitialize
-        mutators={{
-          ...arrayMutators
-        }}
       >
-        {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
+        {({ handleSubmit, pristine, submitting, submitSucceeded, values }) => (
           <form id="form-directory-entry">
             <Pane
               defaultWidth="100%"

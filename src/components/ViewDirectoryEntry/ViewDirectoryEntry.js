@@ -58,7 +58,7 @@ class ViewDirectoryEntry extends React.Component {
       customProperties: false,
       developerInfo: false,
     },
-    tab: "shared",
+    tab: 'shared',
   }
 
   getRecord() {
@@ -145,22 +145,22 @@ class ViewDirectoryEntry extends React.Component {
         <Layout className="textCentered">
           <ButtonGroup>
             <Button
-              onClick={() => this.setState({ tab: "shared"})}
-              buttonStyle={tab === "shared" ? 'primary' : 'default'}
+              onClick={() => this.setState({ tab: 'shared' })}
+              buttonStyle={tab === 'shared' ? 'primary' : 'default'}
               id="clickable-nav-shared"
             >
               <FormattedMessage id="ui-directory.information.tab.shared" />
             </Button>
             <Button
-              onClick={() => this.setState({ tab: "local"})}
-              buttonStyle={tab === "local" ? 'primary' : 'default'}
+              onClick={() => this.setState({ tab: 'local' })}
+              buttonStyle={tab === 'local' ? 'primary' : 'default'}
               id="clickable-nav-local"
             >
               <FormattedMessage id="ui-directory.information.tab.local" />
             </Button>
           </ButtonGroup>
         </Layout>
-        {tab === "shared" &&
+        {tab === 'shared' &&
           <AccordionSet accordionStatus={this.state.sectionsShared}>
             <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
             <Addresses id="addresses" {...sectionProps} />
@@ -175,9 +175,9 @@ class ViewDirectoryEntry extends React.Component {
             </Accordion>
           </AccordionSet>
         }
-        {tab === "local" &&
+        {tab === 'local' &&
           <AccordionSet>
-            <LocalDirectoryEntryInfo id="localDirectoryEntryInfo" {...sectionProps}/>
+            <LocalDirectoryEntryInfo id="localDirectoryEntryInfo" {...sectionProps} />
           </AccordionSet>
         }
         { this.renderEditLayer() }
