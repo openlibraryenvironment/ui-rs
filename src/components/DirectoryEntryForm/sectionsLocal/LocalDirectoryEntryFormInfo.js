@@ -13,6 +13,8 @@ import {
 
 import { required } from '../../../util/validators';
 
+import { CustPropsListField } from './components';
+
 class LocalDirectoryEntryFormInfo extends React.Component {
   static propTypes = {
     id: PropTypes.string,
@@ -23,79 +25,76 @@ class LocalDirectoryEntryFormInfo extends React.Component {
       selectedRecord: PropTypes.shape({
         records: PropTypes.array
       }),
+      custprops: PropTypes.array,
     }),
   };
+
+  constructor(props) {
+    super(props);
+    this.refToCustPropsListField = React.createRef();
+    this.state = {
+      custprops: [],
+    };
+  }
 
   getTypeValues() {
     return get(this.props.parentResources.typeValues, ['records'], [])
       .map(({ id, label }) => ({ label, value: id }));
   }
 
+  static getDerivedStateFromProps(props, state) {
+    const { custprops } = props.parentResources
+    if (custprops.length !== state.custprops.length) {
+      return {
+        custprops: custprops.map((custprop) => {
+          let options = get(custprop.category, ['values']);
+          if (options) {
+            options = [{
+              label: <FormattedMessage id='ui-directory.notSet'/>,
+              value: '',
+            },
+            ...options];
+          }
+
+          return {
+            description: custprop.description,
+            label: custprop.label,
+            primary: custprop.primary,
+            type: custprop.type,
+            options,
+            value: custprop.name,
+            defaultInternal: custprop.defaultInternal,
+          };
+        }),
+      };
+    }
+
+    return null;
+  }
+
   render() {
+    const { id, onToggle, open } = this.props;
     return (
       <Accordion
-        id={this.props.id}
+        id={id}
         label={<FormattedMessage id="ui-directory.information.local.heading.directoryEntry" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        open={open}
+        onToggle={onToggle}
       >
         <React.Fragment>
-          <Row>
-            <Col xs={6}>
-              <FormattedMessage id="ui-directory.information.local.patronAccountBarcode">
-                {placeholder => (
-                  <Field
-                    name="local_patronAccountBarcode"
-                    component={TextField}
-                    id="edit-directory-entry-patron-account-barcode"
-                    label={placeholder}
-                    placeholder={placeholder}
-                  />
-                )}
-              </FormattedMessage>
-            </Col>
-            <Col xs={6}>
-              <FormattedMessage id="ui-directory.information.local.widget1">
-                {placeholder => (
-                  <Field
-                    name="local_widget_1"
-                    component={TextField}
-                    id="edit-directory-entry-widget-1"
-                    label={placeholder}
-                    placeholder={placeholder}
-                  />
-                )}
-              </FormattedMessage>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6}>
-              <FormattedMessage id="ui-directory.information.local.widget2">
-                {placeholder => (
-                  <Field
-                    name="local_widget_2"
-                    component={TextField}
-                    id="edit-directory-entry-widget-2"
-                    label={placeholder}
-                    placeholder={placeholder}
-                  />
-                )}
-              </FormattedMessage>
-            </Col>
-            <Col xs={6}>
-              <FormattedMessage id="ui-directory.information.local.widget3">
-                {placeholder => (
-                  <Field
-                    name="local_widget_3"
-                    component={TextField}
-                    id="edit-directory-entry-widget-3"
-                    label={placeholder}
-                    placeholder={placeholder}
-                  />
-                )}
-              </FormattedMessage>
-            </Col>
-          </Row>
+          <Field
+            name="customProperties"
+            //validate={(value) => this.refToCustPropsListField.current && this.refToCustPropsField.current.isInvalid(value)}
+            render={props => {
+              return (
+                <CustPropsListField
+                  availableCustProps={this.state.custprops}
+                  ref={this.refToCustPropsListField}
+                  {...props}
+                />
+              );
+            }}
+          />
         </React.Fragment>
       </Accordion>
     );

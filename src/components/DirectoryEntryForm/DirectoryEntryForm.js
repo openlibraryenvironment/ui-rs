@@ -62,7 +62,6 @@ class DirectoryEntryForm extends React.Component {
   render() {
     const sectionProps = this.getSectionProps();
     const { sectionsShared, sectionsLocal, tab } = this.state;
-
     return (
       <div>
         <Layout className="textCentered">

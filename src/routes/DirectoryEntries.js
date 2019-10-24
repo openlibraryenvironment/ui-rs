@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
@@ -62,6 +63,11 @@ export default class DirectoryEntries extends React.Component {
       type: 'okapi',
       path: 'directory/tags',
     },
+    custprops: {
+      type: 'okapi',
+      path: 'directory/custprops',
+      shouldRefresh: () => false,
+    },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
 
     // If this (query) isn't here, then we get this.props.parentMutator.query is undefined in the UI
@@ -78,6 +84,7 @@ export default class DirectoryEntries extends React.Component {
       tags: PropTypes.shape({
         records: PropTypes.array,
       }),
+      custprops: PropTypes.object,
     }),
 
     mutator: PropTypes.object,
@@ -172,6 +179,7 @@ export default class DirectoryEntries extends React.Component {
           parentResources={{
             ...resources,
             records: resources.dirents,
+            custprops: get(resources, 'custprops.records', []),
           }}
           parentMutator={{
             query: mutator.query,
