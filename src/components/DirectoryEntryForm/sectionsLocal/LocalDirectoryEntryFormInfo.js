@@ -31,9 +31,7 @@ class LocalDirectoryEntryFormInfo extends React.Component {
       .map(({ id, label }) => ({ label, value: id }));
   }
 
-
   render() {
-
     return (
       <Accordion
         id={this.props.id}
@@ -52,7 +50,7 @@ class LocalDirectoryEntryFormInfo extends React.Component {
                     id="edit-directory-entry-patron-account-barcode"
                     label={placeholder}
                     placeholder={placeholder}
-                    />
+                  />
                 )}
               </FormattedMessage>
             </Col>
@@ -71,7 +69,7 @@ class LocalDirectoryEntryFormInfo extends React.Component {
             </Col>
           </Row>
           <Row>
-          <Col xs={6}>
+            <Col xs={6}>
               <FormattedMessage id="ui-directory.information.local.widget2">
                 {placeholder => (
                   <Field

@@ -6,7 +6,6 @@ import { Prompt } from 'react-router-dom';
 
 import {
   Button,
-  Card,
   IconButton,
   Pane,
   PaneMenu,
@@ -81,27 +80,22 @@ class EditDirectoryEntry extends React.Component {
     const { initialValues, onSubmit } = this.props;
     // the submit handler passed in from SearchAndSort expects props as provided by redux-form
     const compatSubmit = values => {
-
-
-
-
       // Logic to change several local fields into sub-fields in the single customProperties field
       if (!values.customProperties) {
-        values.customProperties = {}
+        values.customProperties = {};
       }
-      Object.keys(values).forEach(function (prop) {
-        if(prop.substring(0,5) === "local") {
+      Object.keys(values).forEach(prop => {
+        if (prop.substring(0, 5) === 'local') {
           let id;
           if (values.customProperties[prop]) {
             id = values.customProperties[prop][0].id;
           }
-          console.log("Id: ", id)
           if (id) {
-            values.customProperties[prop] = [{ id: id, value: values[prop] }]
+            values.customProperties[prop] = [{ id, value: values[prop] }];
           } else {
-            values.customProperties[prop] = [{ value: values[prop] }]
+            values.customProperties[prop] = [{ value: values[prop] }];
           }
-          delete values[prop]
+          delete values[prop];
         }
       });
 
@@ -115,7 +109,7 @@ class EditDirectoryEntry extends React.Component {
         initialValues={initialValues}
         keepDirtyOnReinitialize
       >
-        {({ handleSubmit, pristine, submitting, submitSucceeded, values }) => (
+        {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
           <form id="form-directory-entry">
             <Pane
               defaultWidth="100%"
