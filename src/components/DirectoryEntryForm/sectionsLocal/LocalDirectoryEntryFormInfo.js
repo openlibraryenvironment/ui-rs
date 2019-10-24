@@ -31,23 +31,6 @@ class LocalDirectoryEntryFormInfo extends React.Component {
       .map(({ id, label }) => ({ label, value: id }));
   }
 
-  handleCustPropChange(property_name, e, input) {
-    const custProps = this.props.parentResources.selectedRecord.records[0].customProperties;
-    let id;
-
-    if (custProps[property_name]) {
-      id = custProps[property_name][0].id;
-    }
-      if (id) {
-        input.onChange({
-          [property_name]: [{ id, value: e.target.value }],
-        });
-      } else {
-        input.onChange({
-          [property_name]: [{ value: e.target.value }],
-        });
-      }
-  }
 
   render() {
 
@@ -64,18 +47,12 @@ class LocalDirectoryEntryFormInfo extends React.Component {
               <FormattedMessage id="ui-directory.information.local.patronAccountBarcode">
                 {placeholder => (
                   <Field
-                    name="local_Barcode"
-                    render={({ input }) => {
-                      return (
-                        <TextField
-                          id="edit-directory-entry-patron-account-barcode"
-                          onChange={(e) => this.handleCustPropChange('local_patronAccountBarcode', e, input)}
-                          label={placeholder}
-                          placeholder={placeholder}
-                        />
-                      );
-                    }}
-                  />
+                    name="local_patronAccountBarcode"
+                    component={TextField}
+                    id="edit-directory-entry-patron-account-barcode"
+                    label={placeholder}
+                    placeholder={placeholder}
+                    />
                 )}
               </FormattedMessage>
             </Col>
@@ -83,17 +60,11 @@ class LocalDirectoryEntryFormInfo extends React.Component {
               <FormattedMessage id="ui-directory.information.local.widget1">
                 {placeholder => (
                   <Field
-                    name="local_widg1"
-                    render={({ input }) => {
-                      return (
-                        <TextField
-                          id="edit-directory-entry-widget-1"
-                          onChange={(e) => this.handleCustPropChange('local_widget_1', e, input)}
-                          label={placeholder}
-                          placeholder={placeholder}
-                        />
-                      );
-                    }}
+                    name="local_widget_1"
+                    component={TextField}
+                    id="edit-directory-entry-widget-1"
+                    label={placeholder}
+                    placeholder={placeholder}
                   />
                 )}
               </FormattedMessage>
@@ -104,17 +75,11 @@ class LocalDirectoryEntryFormInfo extends React.Component {
               <FormattedMessage id="ui-directory.information.local.widget2">
                 {placeholder => (
                   <Field
-                    name="local_widg2"
-                    render={({ input }) => {
-                      return (
-                        <TextField
-                          id="edit-directory-entry-widget-2"
-                          onChange={(e) => this.handleCustPropChange('local_widget_2', e, input)}
-                          label={placeholder}
-                          placeholder={placeholder}
-                        />
-                      );
-                    }}
+                    name="local_widget_2"
+                    component={TextField}
+                    id="edit-directory-entry-widget-2"
+                    label={placeholder}
+                    placeholder={placeholder}
                   />
                 )}
               </FormattedMessage>
@@ -123,17 +88,11 @@ class LocalDirectoryEntryFormInfo extends React.Component {
               <FormattedMessage id="ui-directory.information.local.widget3">
                 {placeholder => (
                   <Field
-                    name="local_widg3"
-                    render={({ input }) => {
-                      return (
-                        <TextField
-                          id="edit-directory-entry-widget-3"
-                          onChange={(e) => this.handleCustPropChange('local_widget_3', e, input)}
-                          label={placeholder}
-                          placeholder={placeholder}
-                        />
-                      );
-                    }}
+                    name="local_widget_3"
+                    component={TextField}
+                    id="edit-directory-entry-widget-3"
+                    label={placeholder}
+                    placeholder={placeholder}
                   />
                 )}
               </FormattedMessage>

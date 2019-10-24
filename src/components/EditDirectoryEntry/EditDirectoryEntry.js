@@ -82,15 +82,28 @@ class EditDirectoryEntry extends React.Component {
     // the submit handler passed in from SearchAndSort expects props as provided by redux-form
     const compatSubmit = values => {
 
-      //Logic to take several "local" fields and send their data into the single "customProperties" field
+
+
+
+      // Logic to change several local fields into sub-fields in the single customProperties field
+      if (!values.customProperties) {
+        values.customProperties = {}
+      }
       Object.keys(values).forEach(function (prop) {
         if(prop.substring(0,5) === "local") {
-          let custPropName = Object.keys(values[prop])[0]
-          values.customProperties[custPropName] = values[prop][custPropName]
+          let id;
+          if (values.customProperties[prop]) {
+            id = values.customProperties[prop][0].id;
+          }
+          console.log("Id: ", id)
+          if (id) {
+            values.customProperties[prop] = [{ id: id, value: values[prop] }]
+          } else {
+            values.customProperties[prop] = [{ value: values[prop] }]
+          }
           delete values[prop]
         }
       });
-      console.log("Values: %o", values)
 
       onSubmit(values, null, this.props);
     };

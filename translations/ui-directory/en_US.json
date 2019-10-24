@@ -23,8 +23,6 @@
   "information.parent": "Parent institution",
   "information.units": "Units",
   "information.tags": "Tags",
-  "information.tab.shared": "Shared information",
-  "information.tab.local": "Local information",
   "information.heading.addresses": "Addresses",
   "information.addressNofM": "Address {index} of {count}",
   "information.heading.services": "Services",
@@ -36,7 +34,9 @@
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)",
 
-
+  "information.tab.shared": "Shared information",
+  "information.tab.local": "Local information",
+  
   "information.local.patronAccountBarcode": "Patron account barcode",
   "information.local.widget1": "Widget 1",
   "information.local.widget2": "Widget 2",
