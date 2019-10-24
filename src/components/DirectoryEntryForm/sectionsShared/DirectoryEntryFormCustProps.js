@@ -13,9 +13,9 @@ import {
 
 import { required } from '../../../util/validators';
 
-import { LocalCustPropsListField } from './components';
+import { SharedCustPropsListField } from './components';
 
-class LocalDirectoryEntryFormInfo extends React.Component {
+class DirectoryEntryFormCustProps extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     onToggle: PropTypes.func,
@@ -77,7 +77,7 @@ class LocalDirectoryEntryFormInfo extends React.Component {
     return (
       <Accordion
         id={id}
-        label={<FormattedMessage id="ui-directory.information.local.heading.directoryEntry" />}
+        label={<FormattedMessage id="ui-directory.information.heading.customProps" />}
         open={open}
         onToggle={onToggle}
       >
@@ -87,7 +87,7 @@ class LocalDirectoryEntryFormInfo extends React.Component {
             //validate={(value) => this.refToCustPropsListField.current && this.refToCustPropsField.current.isInvalid(value)}
             render={props => {
               return (
-                <LocalCustPropsListField
+                <SharedCustPropsListField
                   availableCustProps={this.state.custprops}
                   ref={this.refToCustPropsListField}
                   {...props}
@@ -101,4 +101,4 @@ class LocalDirectoryEntryFormInfo extends React.Component {
   }
 }
 
-export default LocalDirectoryEntryFormInfo;
+export default DirectoryEntryFormCustProps;
