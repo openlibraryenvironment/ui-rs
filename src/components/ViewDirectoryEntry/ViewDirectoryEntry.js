@@ -26,7 +26,7 @@ import {
 import {
   LocalDirectoryEntryInfo,
   LocalCustomProperties,
- } from './sectionsLocal';
+} from './sectionsLocal';
 
 class ViewDirectoryEntry extends React.Component {
   static manifest = Object.freeze({

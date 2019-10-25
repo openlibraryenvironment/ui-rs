@@ -15,8 +15,8 @@ class LocalCustomProperties extends React.Component {
 
   render() {
     const pFull = this.props.record.customProperties || {};
-    const pLocalKeys = Object.keys(pFull).filter(key => pFull[key][0].type.defaultInternal === true)
-    const p = _.pick(pFull, pLocalKeys)
+    const pLocalKeys = Object.keys(pFull).filter(key => pFull[key][0].type.defaultInternal === true);
+    const p = _.pick(pFull, pLocalKeys);
     return (
       <Accordion
         id={this.props.id}
