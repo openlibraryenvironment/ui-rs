@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
@@ -162,7 +162,7 @@ export default class DirectoryEntries extends React.Component {
           objectName="dirents"
           packageInfo={packageInfo}
           searchableIndexes={searchableIndexes}
-          selectedIndex={get(this.props.resources.query, 'qindex')}
+          selectedIndex={_.get(this.props.resources.query, 'qindex')}
           onChangeIndex={this.onChangeIndex}
           filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
@@ -178,7 +178,7 @@ export default class DirectoryEntries extends React.Component {
           parentResources={{
             ...resources,
             records: resources.dirents,
-            custprops: get(resources, 'custprops.records', []),
+            custprops: _.get(resources, 'custprops.records', []),
           }}
           parentMutator={{
             query: mutator.query,
