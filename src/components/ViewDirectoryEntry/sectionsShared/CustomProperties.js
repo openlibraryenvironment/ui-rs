@@ -13,7 +13,9 @@ class CustomProperties extends React.Component {
   };
 
   render() {
-    const p = this.props.record.customProperties || {};
+    const pFull = this.props.record.customProperties || {};
+    const pSharedKeys = Object.keys(pFull).filter(key => pFull[key][0].type.defaultInternal === false)
+    const p = _.pick(pFull, pSharedKeys)
 
     return (
       <Accordion

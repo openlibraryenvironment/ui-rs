@@ -1,19 +1,26 @@
 {
   "meta.title": "Directory",
+
   "edit": "Edit",
+  "notSet": "Not set",
+
   "editDirectoryEntry": "Edit Directory Entry",
+
   "settings.tags": "Tags",
   "settings.status": "Statuses",
+
   "objectName.tag": "Tag",
   "objectName.tags": "Tags",
   "objectName.statuses": "Statuses",
   "objectName.status": "Status",
+
   "headings.value": "Value",
   "headings.normValue": "Normalized Value:",
+
   "entries.name":"Name",
   "entries.tagSummary":"Tags",
   "entries.symbolSummary":"Symbols",
-  "information.heading.directoryEntry": "Directory entry info",
+
   "information.name": "Name",
   "information.status": "Status",
   "information.slug": "Slug",
@@ -30,9 +37,12 @@
   "information.serviceFunction": "Function",
   "information.serviceType": "Type",
   "information.serviceAddress": "Address",
+
+  "information.heading.directoryEntry": "Directory entry info",
   "information.heading.customProps": "Custom properties",
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)",
+  
 
   "information.tab.shared": "Shared information",
   "information.tab.local": "Local information",
@@ -42,7 +52,11 @@
   "information.local.widget2": "Widget 2",
   "information.local.widget3": "Widget 3",
   "information.local.heading.directoryEntry": "Local directory entry info",
+  "information.local.heading.customProps": "Local custom properties JSON",
+
   "information.local.custPropValue": "Value",
+
+  "errors.custPropsNoteWithoutValue": "A value must be set for this custom property in order to save a note",
   
   "createDirectoryEntry": "Create directory entry",
   "updateDirectoryEntry": "Update directory entry",
