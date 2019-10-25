@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
@@ -163,7 +162,7 @@ export default class DirectoryEntries extends React.Component {
           objectName="dirents"
           packageInfo={packageInfo}
           searchableIndexes={searchableIndexes}
-          selectedIndex={_.get(this.props.resources.query, 'qindex')}
+          selectedIndex={get(this.props.resources.query, 'qindex')}
           onChangeIndex={this.onChangeIndex}
           filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
