@@ -57,8 +57,11 @@ class DirectoryEntryForm extends React.Component {
     }));
   }
 
-  handleAllSectionsToggle = (sectionsShared, sectionsLocal) => {
-    this.setState({ sectionsShared, sectionsLocal });
+  handleAllSectionsToggleShared = (sectionsShared) => {
+    this.setState({ sectionsShared });
+  }
+  handleAllSectionsToggleLocal = (sectionsLocal) => {
+    this.setState({ sectionsLocal });
   }
 
   render() {
@@ -90,7 +93,7 @@ class DirectoryEntryForm extends React.Component {
               <Col xs>
                 <ExpandAllButton
                   accordionStatus={sectionsShared}
-                  onToggle={this.handleAllSectionsToggle}
+                  onToggle={this.handleAllSectionsToggleShared}
                 />
               </Col>
             </Row>
@@ -104,7 +107,7 @@ class DirectoryEntryForm extends React.Component {
               <Col xs>
                 <ExpandAllButton
                   accordionStatus={sectionsLocal}
-                  onToggle={this.handleAllSectionsToggle}
+                  onToggle={this.handleAllSectionsToggleLocal}
                 />
               </Col>
             </Row>
