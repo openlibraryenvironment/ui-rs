@@ -36,11 +36,6 @@ class LocalDirectoryEntryFormInfo extends React.Component {
     };
   }
 
-  getTypeValues() {
-    return get(this.props.parentResources.typeValues, ['records'], [])
-      .map(({ id, label }) => ({ label, value: id }));
-  }
-
   static getDerivedStateFromProps(props, state) {
     const { custprops } = props.parentResources;
     if (custprops.length !== state.custprops.length) {
@@ -69,6 +64,11 @@ class LocalDirectoryEntryFormInfo extends React.Component {
     }
 
     return null;
+  }
+
+  getTypeValues() {
+    return get(this.props.parentResources.typeValues, ['records'], [])
+      .map(({ id, label }) => ({ label, value: id }));
   }
 
   render() {
