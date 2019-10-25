@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { IntlConsumer } from '@folio/stripes/core';
 import {
-  Button,
   Col,
-  KeyValue,
   Row,
   Select,
   TextArea,
@@ -53,7 +50,7 @@ export default class CustPropsListField extends React.Component {
       const custPropsLocal = availableCustProps.filter(custprop => custprop.defaultInternal === true);
       const custPropsShared = availableCustProps.filter(custprop => custprop.defaultInternal === false);
 
-      if (tab === 'local' )  {
+      if (tab === 'local') {
         return {
           custprops: custPropsLocal
         };
@@ -70,8 +67,6 @@ export default class CustPropsListField extends React.Component {
   getCustProp = (custPropValue) => {
     return this.props.availableCustProps.find(custprop => custprop.value === custPropValue);
   }
-
-
 
   isInvalid = (values) => {
     const errors = {};
@@ -146,8 +141,7 @@ export default class CustPropsListField extends React.Component {
 
   renderCustProps() {
     const custPropsList = this.state.custprops.map((custprop, i) => {
-    const header = custprop.label;
-      //console.log("Cust Prop Label: ", custprop.label)
+      const header = custprop.label;
       return (
         <EditCard
           header={header}
@@ -161,9 +155,7 @@ export default class CustPropsListField extends React.Component {
         </EditCard>
       );
     });
-
-    return custPropsList
-    
+    return custPropsList;
   }
 
   render() {

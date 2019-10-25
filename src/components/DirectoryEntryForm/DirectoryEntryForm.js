@@ -60,6 +60,7 @@ class DirectoryEntryForm extends React.Component {
   handleAllSectionsToggleShared = (sectionsShared) => {
     this.setState({ sectionsShared });
   }
+
   handleAllSectionsToggleLocal = (sectionsLocal) => {
     this.setState({ sectionsLocal });
   }
@@ -98,7 +99,7 @@ class DirectoryEntryForm extends React.Component {
               </Col>
             </Row>
             <DirectoryEntryFormInfo id="directoryEntryFormInfo" open={sectionsShared.directoryEntryFormInfo} {...sectionProps} />
-            <DirectoryEntryFormCustProps id="directoryEntryFormCustProps" open={sectionsShared.directoryEntryFormCustProps} {...sectionProps}/>
+            <DirectoryEntryFormCustProps id="directoryEntryFormCustProps" open={sectionsShared.directoryEntryFormCustProps} {...sectionProps} />
           </AccordionSet>
         }
         {tab === 'local' &&

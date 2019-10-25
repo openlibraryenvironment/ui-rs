@@ -42,14 +42,14 @@ class LocalDirectoryEntryFormInfo extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const { custprops } = props.parentResources
+    const { custprops } = props.parentResources;
     if (custprops.length !== state.custprops.length) {
       return {
         custprops: custprops.map((custprop) => {
           let options = get(custprop.category, ['values']);
           if (options) {
             options = [{
-              label: <FormattedMessage id='ui-directory.notSet'/>,
+              label: <FormattedMessage id="ui-directory.notSet" />,
               value: '',
             },
             ...options];
@@ -83,11 +83,11 @@ class LocalDirectoryEntryFormInfo extends React.Component {
         <React.Fragment>
           <Field
             name="customProperties"
-            //validate={(value) => this.refToCustPropsListField.current && this.refToCustPropsField.current.isInvalid(value)}
+            // validate={(value) => this.refToCustPropsListField.current && this.refToCustPropsField.current.isInvalid(value)}
             render={props => {
               return (
                 <CustPropsListField
-                  tab = 'local'
+                  tab="local"
                   availableCustProps={this.state.custprops}
                   ref={this.refToCustPropsListField}
                   {...props}
