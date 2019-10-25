@@ -14,6 +14,7 @@ import {
 import { required } from '../../../util/validators';
 
 import { SharedCustPropsListField } from './components';
+import { CustPropsListField } from '../components';
 
 class DirectoryEntryFormCustProps extends React.Component {
   static propTypes = {
@@ -87,7 +88,8 @@ class DirectoryEntryFormCustProps extends React.Component {
             //validate={(value) => this.refToCustPropsListField.current && this.refToCustPropsField.current.isInvalid(value)}
             render={props => {
               return (
-                <SharedCustPropsListField
+                <CustPropsListField
+                  tab='shared'
                   availableCustProps={this.state.custprops}
                   ref={this.refToCustPropsListField}
                   {...props}

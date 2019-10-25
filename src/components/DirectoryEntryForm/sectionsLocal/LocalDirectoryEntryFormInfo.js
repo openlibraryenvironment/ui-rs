@@ -14,6 +14,7 @@ import {
 import { required } from '../../../util/validators';
 
 import { LocalCustPropsListField } from './components';
+import { CustPropsListField } from '../components';
 
 class LocalDirectoryEntryFormInfo extends React.Component {
   static propTypes = {
@@ -87,7 +88,8 @@ class LocalDirectoryEntryFormInfo extends React.Component {
             //validate={(value) => this.refToCustPropsListField.current && this.refToCustPropsField.current.isInvalid(value)}
             render={props => {
               return (
-                <LocalCustPropsListField
+                <CustPropsListField
+                  tab = 'local'
                   availableCustProps={this.state.custprops}
                   ref={this.refToCustPropsListField}
                   {...props}
