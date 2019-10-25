@@ -12,8 +12,6 @@ import {
 } from '@folio/stripes/components';
 
 import { required } from '../../../util/validators';
-
-import { LocalCustPropsListField } from './components';
 import { CustPropsListField } from '../components';
 
 class LocalDirectoryEntryFormInfo extends React.Component {

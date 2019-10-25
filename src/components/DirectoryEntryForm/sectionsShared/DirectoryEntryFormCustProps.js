@@ -12,8 +12,6 @@ import {
 } from '@folio/stripes/components';
 
 import { required } from '../../../util/validators';
-
-import { SharedCustPropsListField } from './components';
 import { CustPropsListField } from '../components';
 
 class DirectoryEntryFormCustProps extends React.Component {
