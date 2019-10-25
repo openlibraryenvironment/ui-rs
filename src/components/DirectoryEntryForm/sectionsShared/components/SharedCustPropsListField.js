@@ -49,7 +49,7 @@ export default class SharedCustPropsListField extends React.Component {
     } = props;
     if (pristine && !state.dirtying) {
       return {
-        custprops: availableCustProps.filter(custprop => custprop.value.substring(0,6) !== 'local_'),
+        custprops: availableCustProps.filter(custprop => custprop.defaultInternal === false),
       };
     }
 
