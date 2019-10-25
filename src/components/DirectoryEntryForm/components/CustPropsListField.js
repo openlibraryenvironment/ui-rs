@@ -49,14 +49,17 @@ export default class CustPropsListField extends React.Component {
       availableCustProps = [],
       tab,
     } = props;
-    if (pristine && !state.dirtying) {
+    if (!state.dirtying) {
+      const custPropsLocal = availableCustProps.filter(custprop => custprop.defaultInternal === true);
+      const custPropsShared = availableCustProps.filter(custprop => custprop.defaultInternal === false);
+
       if (tab === 'local' )  {
         return {
-          custprops: availableCustProps.filter(custprop => custprop.defaultInternal === true),
+          custprops: custPropsLocal
         };
       } else {
         return {
-          custprops: availableCustProps.filter(custprop => custprop.defaultInternal === false),
+          custprops: custPropsShared
         };
       }
     }
