@@ -62,6 +62,10 @@ class ViewDirectoryEntry extends React.Component {
       customProperties: false,
       developerInfo: false,
     },
+    sectionsLocal: {
+      localDirectoryEntryInfo: false,
+      localCustomProperties: false,
+    },
     tab: 'shared',
   }
 
@@ -180,7 +184,7 @@ class ViewDirectoryEntry extends React.Component {
           </AccordionSet>
         }
         {tab === 'local' &&
-          <AccordionSet>
+          <AccordionSet accordionStatus={this.state.sectionsLocal}>
             <LocalDirectoryEntryInfo id="localDirectoryEntryInfo" {...sectionProps} />
             <LocalCustomProperties id="localCustomProperties" {...sectionProps} />
           </AccordionSet>
