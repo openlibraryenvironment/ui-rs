@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import ReactToPrint from 'react-to-print';
 import { Button, AccordionSet, Accordion } from '@folio/stripes/components';
-import OldPullSlip from './OldPullSlip';
+import PullSlip from './OldPullSlip';
 
 class PrintPullSlip extends React.Component {
   static propTypes = {
@@ -44,7 +44,7 @@ class PrintPullSlip extends React.Component {
           content={() => this.editorRef.current}
         />
         <div ref={this.editorRef}>
-          <OldPullSlip record={this.props.record} />
+          <PullSlip record={this.props.record} />
         </div>
 
         <p>&nbsp;</p>
