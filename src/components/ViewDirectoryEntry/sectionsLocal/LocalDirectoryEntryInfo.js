@@ -17,7 +17,7 @@ class LocalDirectoryEntryInfo extends React.Component {
   };
 
   render() {
-    const { record } = this.props;
+    const { record, custprops } = this.props;
     return (
       <Accordion
         id={this.props.id}
@@ -28,13 +28,13 @@ class LocalDirectoryEntryInfo extends React.Component {
         <Row>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-directory.information.local.patronAccountBarcode" />}
+              label={custprops.local_patronAccountBarcode.label}
               value={record.customProperties.local_patronAccountBarcode ? record.customProperties.local_patronAccountBarcode[0].value : '-'}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-directory.information.local.institutionalPatronAccount" />}
+              label={custprops.local_institutionalPatronAccount.label}
               value={record.customProperties.local_institutionalPatronAccount ? record.customProperties.local_institutionalPatronAccount[0].value : '-'}
             />
           </Col>
@@ -42,13 +42,13 @@ class LocalDirectoryEntryInfo extends React.Component {
         <Row>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-directory.information.local.widget2" />}
+              label={custprops.local_widget_2.label}
               value={record.customProperties.local_widget_2 ? record.customProperties.local_widget_2[0].value : '-'}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-directory.information.local.widget3" />}
+              label={custprops.local_widget_3.label}
               value={record.customProperties.local_widget_3 ? record.customProperties.local_widget_3[0].value : '-'}
             />
           </Col>

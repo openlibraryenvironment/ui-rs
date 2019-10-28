@@ -75,6 +75,16 @@ class ViewDirectoryEntry extends React.Component {
     return get(this.props.resources.selectedRecord, ['records', 0], {});
   }
 
+  getCustProps() {
+    const custprops = this.props.parentResources.custprops
+    const arrayToObject = (array, keyField) =>
+      array.reduce((obj, item) => {
+      obj[item[keyField]] = item
+      return obj
+      }, {})
+    return arrayToObject(custprops, "name")
+  }
+
   getInitialValues = () => {
     const record = Object.assign({}, this.getRecord());
     return record;
@@ -85,6 +95,7 @@ class ViewDirectoryEntry extends React.Component {
       record: this.getRecord(),
       onToggle: this.handleSectionToggle,
       stripes: this.props.stripes,
+      custprops: this.getCustProps(),
     };
   }
 
