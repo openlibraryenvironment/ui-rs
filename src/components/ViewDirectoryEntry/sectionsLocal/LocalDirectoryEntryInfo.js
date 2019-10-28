@@ -18,7 +18,6 @@ class LocalDirectoryEntryInfo extends React.Component {
 
   render() {
     const { record } = this.props;
-    console.log("Props: %o", this.props)
     return (
       <Accordion
         id={this.props.id}
