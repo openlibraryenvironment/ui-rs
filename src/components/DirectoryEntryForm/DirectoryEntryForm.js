@@ -32,7 +32,7 @@ class DirectoryEntryForm extends React.Component {
       directoryEntryFormCustProps: false,
     },
     sectionsLocal: {
-      localDirectoryEntryFormInfo: true,
+      localDirectoryEntryFormInfo: false,
     },
     tab: 'shared',
   }

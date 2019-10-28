@@ -42,7 +42,9 @@
   "information.heading.customProps": "Custom properties",
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)",
-  
+  "information.heading.display-text": "The information in this section is managed by {directory_entry} themselves. If something is not updated, please reach out to {directory_entry} and ask them to update it.",
+
+  "information.titleNotFound": "[Title not found]",
 
   "information.tab.shared": "Shared information",
   "information.tab.local": "Local information",
@@ -53,7 +55,7 @@
   "information.local.widget3": "Widget 3",
   "information.local.heading.directoryEntry": "Local directory entry info",
   "information.local.heading.customProps": "Local custom properties JSON",
-
+  "information.local.heading.display-text": "The information in this section is managed by your institution, and any data added or edited here will be visible to your institution only.",
   "information.local.custPropValue": "Value",
 
   "errors.custPropsNoteWithoutValue": "A value must be set for this custom property in order to save a note",
