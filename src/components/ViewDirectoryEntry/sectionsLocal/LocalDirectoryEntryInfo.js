@@ -18,7 +18,7 @@ class LocalDirectoryEntryInfo extends React.Component {
 
   render() {
     const { record } = this.props;
-
+    console.log("Props: %o", this.props)
     return (
       <Accordion
         id={this.props.id}
@@ -35,8 +35,8 @@ class LocalDirectoryEntryInfo extends React.Component {
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-directory.information.local.widget1" />}
-              value={record.customProperties.local_widget_1 ? record.customProperties.local_widget_1[0].value : '-'}
+              label={<FormattedMessage id="ui-directory.information.local.institutionalPatronAccount" />}
+              value={record.customProperties.local_institutionalPatronAccount ? record.customProperties.local_institutionalPatronAccount[0].value : '-'}
             />
           </Col>
         </Row>
