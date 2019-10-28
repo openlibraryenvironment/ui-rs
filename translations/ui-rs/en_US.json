@@ -25,7 +25,7 @@
   "patronrequests.state": "State",
   "patronrequests.serviceType": "Service Type",
   "patronrequests.localCallNumber": "Call Number",
-  "patronrequests.pickLocation.name": "Location",
+  "patronrequests.pickLocation": "Location",
   "patronrequests.pickShelvingLocation": "Shelving Location",
   "patronrequests.requestingInstitutionSymbol": "Peer Symbol",
   "information.heading.developer": "Developer info",
