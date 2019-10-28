@@ -49,10 +49,6 @@
   "information.tab.shared": "Shared information",
   "information.tab.local": "Local information",
 
-  "information.local.patronAccountBarcode": "Patron account barcode",
-  "information.local.institutionalPatronAccount": "Institutional patron account",
-  "information.local.widget2": "Widget 2",
-  "information.local.widget3": "Widget 3",
   "information.local.heading.directoryEntry": "Local directory entry info",
   "information.local.heading.customProps": "Local custom properties JSON",
   "information.local.heading.display-text": "The information in this section is managed by your institution, and any data added or edited here will be visible to your institution only.",
