@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import ReactToPrint from 'react-to-print';
 import { Button, AccordionSet, Accordion } from '@folio/stripes/components';
-import PullSlip from './OldPullSlip';
+import PullSlip from './PullSlip';
 
 class PrintPullSlip extends React.Component {
   static propTypes = {

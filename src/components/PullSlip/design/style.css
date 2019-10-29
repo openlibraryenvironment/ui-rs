@@ -1,0 +1,432 @@
+@media print {
+  @page {
+    margin: 0mm;
+    size: 216mm 279mm;
+  }
+}
+html {
+  font-family: "Source Sans Pro", times;
+}
+body {
+  background: #333;
+}
+@media print {
+  body {
+    background: transparent;
+  }
+}
+.site {
+  position: relative;
+}
+@media only screen {
+  .site {
+    padding-top: 56px;
+  }
+}
+.site__header {
+  z-index: 2;
+}
+@media only screen {
+  .site__header {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background-color: rgba(255,255,255,0.97);
+    -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    color: #000;
+    padding: 15px;
+  }
+}
+@media print {
+  .site__header {
+    display: none;
+  }
+}
+.site__header__flex-start,
+.site__header__flex-end {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.site__title,
+.site__subtitle {
+  font-size: 17px;
+  letter-spacing: 0.04em;
+}
+.site__title {
+  font-weight: 700;
+}
+.ui-select {
+  border-radius: 100px;
+  font-size: 17px;
+  font-family: $font-family;
+  font-weight: 700;
+  padding: 0.5em 2em;
+  border: none;
+  margin: 0 17px;
+}
+.ui-button {
+  background: #2b75bb;
+  border: none;
+  color: #fff;
+  border-radius: 100px;
+  font-size: 17px;
+  font-family: $font-family;
+  font-weight: 700;
+  padding: 0.5em 2em;
+  cursor: pointer;
+}
+.ui-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(43,117,187,0.5);
+}
+.ui-button::-moz-focus-inner {
+  border: 0;
+}
+.ui-button:active {
+  opacity: 0.8;
+}
+.site__body {
+  z-index: 1;
+  position: relative;
+}
+@media only screen {
+  .site__body {
+    min-width: 236mm;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+.page {
+  position: relative;
+}
+@media only screen {
+  .page {
+    margin: 10mm;
+    box-shadow: 0mm 5mm 5mm 0mm rgba(0,0,0,0.3);
+    background: #fff;
+    background-image: linear-gradient(342deg, rgba(0,0,0,0.1), rgba(0,0,0,0));
+  }
+}
+@media print {
+  .page {
+    page-break-before: always;
+  }
+}
+.page-size-is-letter .page {
+  height: calc(279mm - .5mm);
+  width: 216mm;
+}
+.page-size-is-a4 .page {
+  height: calc(400mm - .5mm);
+  width: 210mm;
+}
+.slip-wrapper {
+  position: relative;
+  float: left;
+  box-sizing: border-box;
+  width: 108mm;
+  height: 279mm;
+  top: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.slip {
+  border: 1.5pt solid #000;
+  width: calc(100% - 10mm);
+  height: auto;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.slip__section:first-child {
+  border-top: none;
+}
+.slip__section {
+  border-top: 1.5pt solid #000;
+  padding: 5mm;
+}
+.slip__section.slip__section--staff-details {
+  font-size: 11pt;
+  border-bottom: 0.5pt dotted #000;
+  margin-bottom: 5mm;
+  padding-bottom: 0.15em;
+}
+.slip__section__header {
+  position: relative;
+  padding-bottom: 3mm;
+}
+.slip__section__header h1.slip__section__headline {
+  font-size: 7pt;
+  letter-spacing: 0.49em;
+  text-transform: uppercase;
+}
+.slip__section__body {
+  position: relative;
+}
+.slip__section__body h2 {
+  font-size: 10pt;
+  line-height: 1.6em;
+  font-weight: 700;
+}
+.slip__section__body p {
+  font-size: 10pt;
+  line-height: 1.6em;
+}
+.slip__section__body .spacer--m {
+  height: 8pt;
+}
+.slip__section__body .spacer--l {
+  height: 5mm;
+}
+.do-not-remove-badge {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: absolute;
+  bottom: -16mm;
+  right: 0mm;
+  border: 2.5pt solid #000;
+  box-sizing: border-box;
+  width: 30mm;
+  height: 30mm;
+  border-radius: 50%;
+  font-size: 8.5pt;
+  font-weight: 700;
+  line-height: 1.14em;
+}
+@media only screen {
+  .do-not-remove-badge {
+    background: #efefef;
+  }
+}
+@media only print {
+  .do-not-remove-badge {
+    background: #fff;
+  }
+}
+.site__body:not(.slips-have-phone-number) .do-not-remove-badge,
+.site__body:not(.slips-have-email) .do-not-remove-badge {
+  bottom: 0mm;
+}
+.site__body:not(.slips-have-phone-number):not(.slips-have-email) .do-not-remove-badge {
+  bottom: -11mm;
+}
+.slot--item-title,
+.item-metadata {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+p.slot--patron-name {
+  font-size: 22pt;
+  line-height: 1.2em;
+  font-weight: 700;
+}
+.pick-up-location-and-due-date {
+  font-weight: 700;
+}
+.site__body:not(.slips-have-due-date) .conditional-display--due-date {
+  display: none;
+}
+.site__body:not(.slips-have-phone-number) .conditional-display--phone-number {
+  display: none;
+}
+.site__body:not(.slips-have-email) .conditional-display--email {
+  display: none;
+}
+.site__body:not(.slips-have-phone-number):not(.slips-have-email) .conditional-display--contact-information {
+  display: none;
+}
+.site__body:not(.slips-have-phone-number) .conditional-display--recall-policy,
+.site__body:not(.slips-have-email) .conditional-display--recall-policy {
+  width: calc(100% - 30mm - 5mm);
+}
+.conditional-display--contact-information {
+  width: calc(100% - 30mm - 5mm);
+}
+.request-barcode {
+  margin-top: 5mm;
+}
+.barcode__text {
+  margin-top: 1mm;
+  font-size: 10pt;
+}
+.slot--item-call-number {
+  box-sizing: border-box;
+  font-family: "Source Code Pro", times;
+  font-weight: 700;
+  border-top: 0.5pt dotted #000;
+  padding: 0.15em 5mm;
+  margin: 2mm -5mm 0 -5mm;
+  line-height: 1.6em;
+}
+.slot--item-location {
+  box-sizing: border-box;
+  border-top: 0.5pt dotted #000;
+  padding: 0.15em 5mm;
+  margin: 0 -5mm;
+  line-height: 1.6em;
+}
+.details-row {
+  border-top: 0.5pt dotted #000;
+  margin: 0 -5mm;
+  line-height: 1.6em;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+.details-row__column {
+  flex: 0 0 50%;
+  line-height: 1.6em;
+  padding: 0.15em 5mm;
+  box-sizing: border-box;
+}
+.details-row__column--first {
+  padding-right: 2.5mm;
+}
+.details-row__column--second {
+  padding-left: 2.5mm;
+  border-left: 0.5pt dotted #000;
+}
+.item-barcode {
+  border-top: 0.5pt dotted #000;
+  margin: 0 -5mm;
+  padding: 2.5mm 5mm 1.5mm 5mm;
+}
+.site__body:not(.slips-have-local-item-barcode) .item-barcode {
+  display: none;
+}
+.monospaced {
+  font-family: "Source Code Pro", times;
+}
+@media only screen {
+  .end-of-content {
+    color: #fff;
+    padding: 10mm 0 10mm 0;
+    letter-spacing: 0.04em;
+  }
+}
+@media print {
+  .end-of-content {
+    display: none;
+  }
+}
+.programmatic-controls {
+  z-index: 999;
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  width: 280px;
+  height: auto;
+  background: #bf2b21;
+  border-radius: 1em;
+  padding: 1em;
+  line-height: 1.5em;
+}
+@media print {
+  .programmatic-controls {
+    display: none;
+  }
+}
+.programmatic-controls label {
+  color: #fff;
+}
+.programmatic-controls h2 {
+  font-weight: 700;
+  font-size: 1.2em;
+  margin-bottom: 0.3em;
+  color: #fff;
+}
+.programmatic-controls .note {
+  color: #fff;
+  font-size: 0.7em;
+  line-height: 1.5em;
+  margin-bottom: 1.5em;
+}
+.programmatic-controls h3 {
+  font-weight: 600;
+  font-size: 1.05em;
+  margin-bottom: 0.3em;
+  color: #fff;
+}
+/* class applies to select element itself, not a wrapper element */
+.select-css {
+  display: block;
+  font-size: 17px;
+  font-family: $font-family;
+  font-weight: 700;
+  color: #000;
+  line-height: 1;
+  padding: 0.6em 1.4em 0.5em 0.8em;
+  width: 100%;
+  max-width: 100%; /* useful when width is set to anything other than 100% */
+  box-sizing: border-box;
+  margin: 0 8px;
+  border: 1px solid rgba(0,0,0,0.2);
+  box-shadow: none;
+  border-radius: 100px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #eee;
+/* note: bg image below uses 2 urls. The first is an svg data uri for the arrow icon, and the second is the gradient. 
+		for the icon, if you want to change the color, be sure to use `%23` instead of `#`, since it's a url. You can also swap in a different svg icon or an external image reference
+		
+	*/
+/* arrow icon position (1em from the right, 50% vertical) , then gradient position*/
+/* icon size, then gradient */
+}
+/* Hide arrow icon in IE browsers */
+.select-css::-ms-expand {
+  display: none;
+}
+/* Hover style */
+.select-css:hover {
+  border-color: #888;
+}
+/* Focus style */
+.select-css:focus {
+  border-color: #aaa;
+/* It'd be nice to use -webkit-focus-ring-color here but it doesn't work on box-shadow */
+  box-shadow: 0 0 1px 3px rgba(59,153,252,0.7);
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #222;
+  outline: none;
+}
+/* Set options to normal weight */
+.select-css option {
+  font-weight: normal;
+}
+/* Support for rtl text, explicit support for Arabic and Hebrew */
+*[dir="rtl"] .select-css,
+:root:lang(ar) .select-css,
+:root:lang(iw) .select-css {
+  background-position: left 0.7em top 50%, 0 0;
+  padding: 0.6em 0.8em 0.5em 1.4em;
+}
+/* Disabled styles */
+.select-css:disabled,
+.select-css[aria-disabled=true] {
+  color: graytext;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22graytext%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"), linear-gradient(to bottom, #fff 0%, #e5e5e5 100%);
+}
+.select-css:disabled:hover,
+.select-css[aria-disabled=true] {
+  border-color: #aaa;
+}
