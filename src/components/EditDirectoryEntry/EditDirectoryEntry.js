@@ -78,10 +78,21 @@ class EditDirectoryEntry extends React.Component {
 
   render() {
     const { initialValues, onSubmit } = this.props;
+
+    // This allows the initial values to hold the current parent value
+    if (initialValues.parent) {
+      initialValues.parent = initialValues.parent.id 
+    }
+
     // the submit handler passed in from SearchAndSort expects props as provided by redux-form
     const compatSubmit = values => {
+
+      // TODO This could possibly be neatened and sorted before submittal
+      values.parent = {id: values.parent}
+
       onSubmit(values, null, this.props);
     };
+
     const paneTitle = initialValues && initialValues.id ?
       initialValues.name : <FormattedMessage id="ui-directory.createDirectoryEntry" />;
     return (

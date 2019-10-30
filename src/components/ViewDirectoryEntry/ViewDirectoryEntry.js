@@ -154,7 +154,7 @@ class ViewDirectoryEntry extends React.Component {
     let title = record.name || 'Directory entry details';
     if (record.status) title += ` (${record.status.label})`;
     const { tab } = this.state;
-    const directoryEntry = record.fullyQualifiedName || <FormattedMessage id="ui-directory.information.titleNotFound" />;
+    const directoryEntry = record.name || <FormattedMessage id="ui-directory.information.titleNotFound" />;
     return (
       <Pane
         id="pane-view-directoryentry"
