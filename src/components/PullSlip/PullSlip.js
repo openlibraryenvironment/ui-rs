@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Parser } from 'html-to-react';
 import template from './design/pullslip.handlebars';
+import './tmp.global-css';
 
 const PullSlip = (props) => {
   const s = template(props.record);
