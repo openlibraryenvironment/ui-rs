@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Parser } from 'html-to-react';
 import template from './design/pullslip.handlebars';
-import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./tmp.global-css';
+import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
 
 const PullSlip = (props) => {
   useEffect(() => {
