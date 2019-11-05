@@ -34,8 +34,6 @@ class DirectoryEntryFormInfo extends React.Component {
       selectedParent: '',
       warning: '',
     };
-    this.clearValue = this.clearValue.bind(this);
-    this.changeValue = this.changeValue.bind(this);
   }
 
   static getDerivedStateFromProps(props, state) {
