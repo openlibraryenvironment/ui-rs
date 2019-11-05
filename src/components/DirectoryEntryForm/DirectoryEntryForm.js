@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-
-import stripesFinalForm from '@folio/stripes/final-form';
-import setFieldData from 'final-form-set-field-data';
 
 import {
   AccordionSet,
@@ -74,7 +70,6 @@ class DirectoryEntryForm extends React.Component {
 
   render() {
     const sectionProps = this.getSectionProps();
-    console.log(sectionProps)
     const { sectionsShared, sectionsLocal, tab } = this.state;
     return (
       <div>
