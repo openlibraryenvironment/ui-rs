@@ -39,7 +39,7 @@ class DirectoryEntryFormInfo extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const { parentResources } = props;
+    const { parentResources, values } = props;
     const newState = {};
 
     // TODO the blank option below is used to allow "unsetting" of parent whilst waiting for component https://issues.folio.org/browse/STCOM-576
@@ -47,8 +47,8 @@ class DirectoryEntryFormInfo extends React.Component {
       newState.directoryEntryValues = [
         { value: '', label: ''},
         ...parentResources.records.records.map(obj => ({ value: obj.id, label: obj.fullyQualifiedName })).filter( obj => {
-          if (parentResources.selectedRecord.records[0]) {
-            return obj.value !== parentResources.selectedRecord.records[0].id
+          if (values) {
+            return obj.value !== values.id
           } else {
             return obj.value
           }
