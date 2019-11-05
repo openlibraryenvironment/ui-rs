@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+
+import setFieldData from 'final-form-set-field-data';
 
 import {
   AccordionSet,
@@ -21,6 +24,8 @@ import {
   LocalDirectoryEntryFormInfo,
 } from './sectionsLocal';
 
+import stripesFinalForm from '@folio/stripes/final-form';
+
 class DirectoryEntryForm extends React.Component {
   static propTypes = {
     parentResources: PropTypes.object,
@@ -38,9 +43,11 @@ class DirectoryEntryForm extends React.Component {
   }
 
   getSectionProps() {
+    const { values = {} } = this.props;
     return {
       onToggle: this.handleSectionToggle,
       parentResources: this.props.parentResources,
+      values,
     };
   }
 
@@ -120,4 +127,13 @@ class DirectoryEntryForm extends React.Component {
   }
 }
 
-export default DirectoryEntryForm;
+//export default DirectoryEntryForm;
+export default stripesFinalForm({
+  initialValuesEqual: (a, b) => isEqual(a, b),
+  keepDirtyOnReinitialize: true,
+  subscription: {
+    values: true,
+  },
+  mutators: { setFieldData },
+  navigationCheck: true,
+})(DirectoryEntryForm);

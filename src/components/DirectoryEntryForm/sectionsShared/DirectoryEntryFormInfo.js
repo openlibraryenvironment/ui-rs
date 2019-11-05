@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { Field } from 'react-final-form';
-import { Select } from '@folio/stripes/components';
+import { Select, FormattedUTCDate } from '@folio/stripes/components';
 
 import {
   Accordion,
   Col,
+  MessageBanner,
   Row,
   SearchField,
   TextField,
@@ -25,11 +26,13 @@ class DirectoryEntryFormInfo extends React.Component {
     }),
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       directoryEntryValues: [],
-      searchedParentValue: '',
+      selectedParent: '',
+      warning: '',
     };
     this.clearValue = this.clearValue.bind(this);
     this.changeValue = this.changeValue.bind(this);
@@ -86,8 +89,10 @@ class DirectoryEntryFormInfo extends React.Component {
 
   render() {
     console.log("State: %o", this.state)
-    const { directoryEntryValues, searchedParentValue } = this.state;
+    console.log("Props: %o", this.props)
+    const { directoryEntryValues, selectedParent, warning } = this.state;
     const  entriesOptions = this.props.parentResources.records.records;
+    const { values } = this.props;
     return (
       <Accordion
         id={this.props.id}
@@ -98,19 +103,32 @@ class DirectoryEntryFormInfo extends React.Component {
         <React.Fragment>
           <Row>
             <Col xs={5}>
-              <FormattedMessage id="ui-directory.information.name">
-                {placeholder => (
-                  <Field
-                    id="edit-directory-entry-name"
-                    name="name"
-                    label={placeholder}
-                    component={TextField}
-                    placeholder={placeholder}
-                    required
-                    validate={required}
+              <Field
+                id="edit-directory-entry-name"
+                name="name"
+                label={<FormattedMessage id="ui-directory.information.name"/>}
+                validate={required}
+                required
+              >
+                {props => (
+                  <TextField
+                    {...props}
+                    onChange={(e) => {
+                      props.input.onChange(e);
+                      const { value } = e.target;
+                      let warning='';
+
+                      if (value!=null && selectedParent.includes(value)) {
+                        warning = <FormattedMessage id="ui-directory.information.parent.warning" />
+                      }
+                      this.setState({ warning });
+                      
+                    }}
+                    placeholder="Name"
                   />
                 )}
-              </FormattedMessage>
+                
+              </Field>
             </Col>
             <Col xs={2}>
              (Status)
@@ -133,30 +151,39 @@ class DirectoryEntryFormInfo extends React.Component {
           </Row>
           <Row>
             <Col xs={6}>
-              {/* <SearchField
-                onClear={this.clearValue}
-                value={searchedParentValue}
-                onChange={this.changeValue}
-                placeholder="Search to filter direcotry entries"
-                ariaLabel="Search for stuff."
-                clearSearchId="clear-parent-search-button"
-                id="clear-parent-search-field"
-                searchableIndexes={{label: 'Name', value: 'name'}}
-              /> */}
-              <FormattedMessage id="ui-directory.information.parent">
-                {placeholder => (
-                  <Field
-                    id="edit-directory-entry-parent"
-                    name="parent"
-                    label={placeholder}
-                    component={Select}
+              <Field
+                id="edit-directory-entry-parent"
+                name="parent"
+                label={<FormattedMessage id="ui-directory.information.parent" />}
+              >
+                {props => (
+                  <Select
+                    {...props}
                     dataOptions={directoryEntryValues}
-                    placeholder={placeholder}
+                    onChange={(e) => {
+                      props.input.onChange(e);
+                      const { value } = e.target;
+                      const valueObj = directoryEntryValues.filter(obj => {
+                        return obj.value == value
+                      });
+                      const valueName = valueObj[0].label
+                      this.setState({ selectedParent: valueName })
+                      console.log("value: %o", valueName)
+
+                      let warning='';
+
+                      if (values.name!=null && valueName.includes(values.name)) {
+                        warning = <FormattedMessage id="ui-directory.information.parent.warning" />
+                      }
+                      this.setState({ warning });
+                    }}
+                    placeholder=" "
                   />
                 )}
-              </FormattedMessage>
+              </Field>
             </Col>
           </Row>
+          {warning ? <MessageBanner type="warning"> {warning} </MessageBanner> : null}
         </React.Fragment>
       </Accordion>
     );
