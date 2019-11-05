@@ -9,6 +9,7 @@ import {
   Accordion,
   Col,
   Row,
+  SearchField,
   TextField,
 } from '@folio/stripes/components';
 
@@ -24,8 +25,14 @@ class DirectoryEntryFormInfo extends React.Component {
     }),
   };
 
-  state = {
-    directoryEntryValues: [],
+  constructor() {
+    super();
+    this.state = {
+      directoryEntryValues: [],
+      searchedParentValue: '',
+    };
+    this.clearValue = this.clearValue.bind(this);
+    this.changeValue = this.changeValue.bind(this);
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -51,9 +58,31 @@ class DirectoryEntryFormInfo extends React.Component {
       .map(({ id, label }) => ({ label, value: id }));
   }
 
+
+
+  clearValue() {
+    this.setState({
+      searchedParentValue: '',
+    });
+  }
+
+  changeValue(e) {
+    this.setState({
+      searchedParentValue: e.target.value,
+      directoryEntryValues: directoryEntryValues.filter(obj => {return obj.label.includes(e.target.value)})
+    });
+
+  }
+
+  changeIndex(e) {
+    this.setState({
+      selectedIndex: e.target.value,
+    });
+  }
+
   render() {
-    console.log("State: %o", this.state);
-    const { directoryEntryValues } = this.state;
+    console.log("State: %o", this.state)
+    const { directoryEntryValues, searchedParentValue } = this.state;
     const  entriesOptions = this.props.parentResources.records.records;
     return (
       <Accordion
@@ -100,7 +129,17 @@ class DirectoryEntryFormInfo extends React.Component {
           </Row>
           <Row>
             <Col xs={6}>
-            <FormattedMessage id="ui-directory.information.parent">
+              {/* <SearchField
+                onClear={this.clearValue}
+                value={searchedParentValue}
+                onChange={this.changeValue}
+                placeholder="Search to filter direcotry entries"
+                ariaLabel="Search for stuff."
+                clearSearchId="clear-parent-search-button"
+                id="clear-parent-search-field"
+                searchableIndexes={{label: 'Name', value: 'name'}}
+              /> */}
+              <FormattedMessage id="ui-directory.information.parent">
                 {placeholder => (
                   <Field
                     id="edit-directory-entry-parent"
