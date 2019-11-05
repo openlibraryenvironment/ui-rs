@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import { Field } from 'react-final-form';
 
 import {
@@ -89,16 +88,15 @@ class DirectoryEntryFormInfo extends React.Component {
                       const { value } = e.target;
                       let warningMessage = '';
 
-                      if (value!=null && selectedParent.includes(value)) {
-                        warningMessage = <FormattedMessage id="ui-directory.information.parent.warning" />
+                      if (value != null && selectedParent.includes(value)) {
+                        warningMessage = <FormattedMessage id="ui-directory.information.parent.warning" />;
                       }
                       this.setState({ warning: warningMessage });
-                      
                     }}
                     placeholder="Name"
                   />
                 )}
-                
+
               </Field>
             </Col>
             <Col xs={2}>
@@ -135,18 +133,17 @@ class DirectoryEntryFormInfo extends React.Component {
                       props.input.onChange(e);
                       const { value } = e.target;
                       const valueObj = directoryEntryValues.filter(obj => {
-                        return obj.value == value
+                        return obj.value === value;
                       });
-                      const valueName = valueObj[0].label
-                      this.setState({ selectedParent: valueName })
-                      console.log("value: %o", valueName)
+                      const valueName = valueObj[0].label;
+                      this.setState({ selectedParent: valueName });
 
-                      let warning='';
+                      let warningMessage = '';
 
-                      if (values.name!=null && valueName.includes(values.name)) {
-                        warning = <FormattedMessage id="ui-directory.information.parent.warning" />
+                      if (values.name != null && valueName.includes(values.name)) {
+                        warningMessage = <FormattedMessage id="ui-directory.information.parent.warning" />;
                       }
-                      this.setState({ warning });
+                      this.setState({ warning: warningMessage });
                     }}
                     placeholder=" "
                   />

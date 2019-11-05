@@ -7,7 +7,6 @@ import {
   AccordionSet,
   Accordion,
   Button,
-  Card,
   Icon,
   Layer,
   Layout,
@@ -50,9 +49,12 @@ class ViewDirectoryEntry extends React.Component {
         records: PropTypes.array,
       }),
     }),
-    paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClose: PropTypes.func,
     onEdit: PropTypes.func,
+    paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    parentResources: PropTypes.shape({
+      custprops: PropTypes.array,
+    }),
     editLink: PropTypes.string,
     onCloseEdit: PropTypes.func,
   };
@@ -77,13 +79,12 @@ class ViewDirectoryEntry extends React.Component {
   }
 
   getCustProps() {
-    const custprops = this.props.parentResources.custprops
-    const arrayToObject = (array, keyField) =>
-      array.reduce((obj, item) => {
-      obj[item[keyField]] = item
-      return obj
-      }, {})
-    return arrayToObject(custprops, "name")
+    const custprops = this.props.parentResources.custprops;
+    const arrayToObject = (array, keyField) => array.reduce((obj, item) => {
+      obj[item[keyField]] = item;
+      return obj;
+    }, {});
+    return arrayToObject(custprops, 'name');
   }
 
   getInitialValues = () => {

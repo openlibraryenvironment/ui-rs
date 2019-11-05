@@ -14,6 +14,7 @@ class LocalDirectoryEntryInfo extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    custprops: PropTypes.object,
   };
 
   render() {
