@@ -41,8 +41,6 @@ export default class CustPropsListField extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     const {
-      input: { value },
-      meta: { pristine },
       availableCustProps = [],
       tab,
     } = props;

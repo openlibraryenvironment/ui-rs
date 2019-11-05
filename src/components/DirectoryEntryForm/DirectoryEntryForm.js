@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
+import stripesFinalForm from '@folio/stripes/final-form';
 import setFieldData from 'final-form-set-field-data';
 
 import {
@@ -24,11 +25,10 @@ import {
   LocalDirectoryEntryFormInfo,
 } from './sectionsLocal';
 
-import stripesFinalForm from '@folio/stripes/final-form';
-
 class DirectoryEntryForm extends React.Component {
   static propTypes = {
     parentResources: PropTypes.object,
+    values: PropTypes.object,
   }
 
   state = {
@@ -127,7 +127,6 @@ class DirectoryEntryForm extends React.Component {
   }
 }
 
-//export default DirectoryEntryForm;
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),
   keepDirtyOnReinitialize: true,

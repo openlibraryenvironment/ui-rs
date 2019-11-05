@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { Field } from 'react-final-form';
-import { Select, FormattedUTCDate } from '@folio/stripes/components';
 
 import {
   Accordion,
   Col,
   MessageBanner,
   Row,
-  SearchField,
+  Select,
   TextField,
 } from '@folio/stripes/components';
 
@@ -23,7 +22,9 @@ class DirectoryEntryFormInfo extends React.Component {
     open: PropTypes.bool,
     parentResources: PropTypes.shape({
       typeValues: PropTypes.object,
+      records: PropTypes.array,
     }),
+    values: PropTypes.object,
   };
 
   constructor(props) {
@@ -45,53 +46,23 @@ class DirectoryEntryFormInfo extends React.Component {
     // TODO the blank option below is used to allow "unsetting" of parent whilst waiting for component https://issues.folio.org/browse/STCOM-576
     if (parentResources.records.records.length !== state.directoryEntryValues.length) {
       newState.directoryEntryValues = [
-        { value: '', label: ''},
-        ...parentResources.records.records.map(obj => ({ value: obj.id, label: obj.fullyQualifiedName })).filter( obj => {
+        { value: '', label: '' },
+        ...parentResources.records.records.map(obj => ({ value: obj.id, label: obj.fullyQualifiedName })).filter(obj => {
           if (values) {
-            return obj.value !== values.id
+            return obj.value !== values.id;
           } else {
-            return obj.value
+            return obj.value;
           }
         }),
-      ]
+      ];
     }
     if (Object.keys(newState).length) return newState;
 
     return null;
   }
 
-  getTypeValues() {
-    return get(this.props.parentResources.typeValues, ['records'], [])
-      .map(({ id, label }) => ({ label, value: id }));
-  }
-
-
-
-  clearValue() {
-    this.setState({
-      searchedParentValue: '',
-    });
-  }
-
-  changeValue(e) {
-    this.setState({
-      searchedParentValue: e.target.value,
-      directoryEntryValues: directoryEntryValues.filter(obj => {return obj.label.includes(e.target.value)})
-    });
-
-  }
-
-  changeIndex(e) {
-    this.setState({
-      selectedIndex: e.target.value,
-    });
-  }
-
   render() {
-    console.log("State: %o", this.state)
-    console.log("Props: %o", this.props)
     const { directoryEntryValues, selectedParent, warning } = this.state;
-    const  entriesOptions = this.props.parentResources.records.records;
     const { values } = this.props;
     return (
       <Accordion
@@ -106,7 +77,7 @@ class DirectoryEntryFormInfo extends React.Component {
               <Field
                 id="edit-directory-entry-name"
                 name="name"
-                label={<FormattedMessage id="ui-directory.information.name"/>}
+                label={<FormattedMessage id="ui-directory.information.name" />}
                 validate={required}
                 required
               >
@@ -116,12 +87,12 @@ class DirectoryEntryFormInfo extends React.Component {
                     onChange={(e) => {
                       props.input.onChange(e);
                       const { value } = e.target;
-                      let warning='';
+                      let warningMessage = '';
 
                       if (value!=null && selectedParent.includes(value)) {
-                        warning = <FormattedMessage id="ui-directory.information.parent.warning" />
+                        warningMessage = <FormattedMessage id="ui-directory.information.parent.warning" />
                       }
-                      this.setState({ warning });
+                      this.setState({ warning: warningMessage });
                       
                     }}
                     placeholder="Name"

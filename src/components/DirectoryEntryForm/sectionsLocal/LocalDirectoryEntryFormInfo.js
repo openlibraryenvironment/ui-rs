@@ -6,12 +6,8 @@ import { Field } from 'react-final-form';
 
 import {
   Accordion,
-  Col,
-  Row,
-  TextField,
 } from '@folio/stripes/components';
 
-import { required } from '../../../util/validators';
 import { CustPropsListField } from '../components';
 
 class LocalDirectoryEntryFormInfo extends React.Component {
