@@ -21,7 +21,7 @@ class DirectoryEntryFormInfo extends React.Component {
     open: PropTypes.bool,
     parentResources: PropTypes.shape({
       typeValues: PropTypes.object,
-      records: PropTypes.array,
+      records: PropTypes.object,
     }),
     values: PropTypes.object,
   };

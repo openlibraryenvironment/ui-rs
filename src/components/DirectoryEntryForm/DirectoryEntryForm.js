@@ -74,6 +74,7 @@ class DirectoryEntryForm extends React.Component {
 
   render() {
     const sectionProps = this.getSectionProps();
+    console.log(sectionProps)
     const { sectionsShared, sectionsLocal, tab } = this.state;
     return (
       <div>
@@ -127,12 +128,4 @@ class DirectoryEntryForm extends React.Component {
   }
 }
 
-export default stripesFinalForm({
-  initialValuesEqual: (a, b) => isEqual(a, b),
-  keepDirtyOnReinitialize: true,
-  subscription: {
-    values: true,
-  },
-  mutators: { setFieldData },
-  navigationCheck: true,
-})(DirectoryEntryForm);
+export default DirectoryEntryForm;

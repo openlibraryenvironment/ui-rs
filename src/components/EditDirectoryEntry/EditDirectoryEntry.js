@@ -13,8 +13,8 @@ import {
 
 import DirectoryEntryForm from '../DirectoryEntryForm';
 
-const defaultSubmit = (agreement, dispatch, props) => {
-  return props.onUpdate(agreement)
+const defaultSubmit = (directory, dispatch, props) => {
+  return props.onUpdate(directory)
     .then(() => props.onCancel());
 };
 
@@ -77,7 +77,7 @@ class EditDirectoryEntry extends React.Component {
   }
 
   render() {
-    const { initialValues, onSubmit } = this.props;
+    const { initialValues, onSubmit} = this.props;
 
     // This allows the initial values to hold the current parent value
     if (initialValues) {
@@ -101,7 +101,7 @@ class EditDirectoryEntry extends React.Component {
         initialValues={initialValues}
         keepDirtyOnReinitialize
       >
-        {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
+        {({ handleSubmit, pristine, submitting, submitSucceeded, values }) => (
           <form id="form-directory-entry">
             <Pane
               defaultWidth="100%"
@@ -109,7 +109,7 @@ class EditDirectoryEntry extends React.Component {
               lastMenu={this.renderLastMenu(pristine, submitting, handleSubmit)}
               paneTitle={paneTitle}
             >
-              <DirectoryEntryForm {...this.props} />
+              <DirectoryEntryForm values={values} {...this.props} />
               <FormattedMessage id="ui-directory.confirmDirtyNavigate">
                 {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
               </FormattedMessage>
