@@ -44,7 +44,11 @@ class DirectoryEntryFormInfo extends React.Component {
       newState.directoryEntryValues = [
         { value: '', label: ''},
         ...parentResources.records.records.map(obj => ({ value: obj.id, label: obj.fullyQualifiedName })).filter( obj => {
-          return obj.value !== parentResources.selectedRecord.records[0].id
+          if (parentResources.selectedRecord.records[0]) {
+            return obj.value !== parentResources.selectedRecord.records[0].id
+          } else {
+            return obj.value
+          }
         }),
       ]
     }

@@ -11,6 +11,7 @@ import {
   Icon,
   Layer,
   Layout,
+  MessageBanner,
   Pane,
   Row,
   ButtonGroup,
@@ -185,13 +186,9 @@ class ViewDirectoryEntry extends React.Component {
         {tab === 'shared' &&
           <React.Fragment>
             <Row>
-              <Card
-                id="directory-shared-info-display-text"
-                cardStyle="positive"
-                roundedBorder
-              >
+              <MessageBanner>
                 <FormattedMessage id="ui-directory.information.heading.display-text" values={{ directory_entry: directoryEntry }} />
-              </Card>
+              </MessageBanner>
             </Row>
             <AccordionSet accordionStatus={this.state.sectionsShared}>
               <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
@@ -211,13 +208,9 @@ class ViewDirectoryEntry extends React.Component {
         {tab === 'local' &&
           <React.Fragment>
             <Row>
-              <Card
-                id="directory-local-info-display-text"
-                cardStyle="positive"
-                roundedBorder
-              >
+              <MessageBanner>
                 <FormattedMessage id="ui-directory.information.local.heading.display-text" />
-              </Card>
+              </MessageBanner>
             </Row>
             <AccordionSet accordionStatus={this.state.sectionsLocal}>
               <LocalDirectoryEntryInfo id="localDirectoryEntryInfo" {...sectionProps} />
