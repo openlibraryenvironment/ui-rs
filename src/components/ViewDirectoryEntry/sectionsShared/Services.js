@@ -13,7 +13,7 @@ function renderService(service, index, count) {
   return (
     <React.Fragment key={index}>
       <Card
-        headerStart={<Headline margin={"none"}>{header}</Headline>}
+        headerStart={<Headline margin="none">{header}</Headline>}
         roundedBorder
         hasMargin
       >
