@@ -109,9 +109,11 @@ class DirectoryEntryForm extends React.Component {
         {tab === 'shared' &&
           <React.Fragment>
             <Row>
-              <MessageBanner>
-                <FormattedMessage id="ui-directory.information.heading.display-text" values={{ directory_entry: name }} />
-              </MessageBanner>
+              <Col xsOffset={1} xs={10}>
+                <MessageBanner>
+                  <FormattedMessage id="ui-directory.information.heading.display-text" values={{ directory_entry: name }} />
+                </MessageBanner>
+              </Col>
             </Row>
             <AccordionSet>
               <Row end="xs">
@@ -130,9 +132,11 @@ class DirectoryEntryForm extends React.Component {
         {tab === 'local' &&
           <React.Fragment>
             <Row>
-              <MessageBanner>
-                <FormattedMessage id="ui-directory.information.local.heading.display-text" />
-              </MessageBanner>
+              <Col xsOffset={1} xs={10}>
+                <MessageBanner>
+                  <FormattedMessage id="ui-directory.information.local.heading.display-text" />
+                </MessageBanner>
+              </Col>
             </Row>
             <AccordionSet>
               <Row end="xs">

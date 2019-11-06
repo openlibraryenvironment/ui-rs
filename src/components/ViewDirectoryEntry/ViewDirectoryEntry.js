@@ -7,6 +7,7 @@ import {
   AccordionSet,
   Accordion,
   Button,
+  Col,
   Icon,
   Layer,
   Layout,
@@ -187,9 +188,11 @@ class ViewDirectoryEntry extends React.Component {
         {tab === 'shared' &&
           <React.Fragment>
             <Row>
-              <MessageBanner>
-                <FormattedMessage id="ui-directory.information.heading.display-text" values={{ directory_entry: directoryEntry }} />
-              </MessageBanner>
+              <Col xsOffset={1} xs={10}>
+                <MessageBanner>
+                  <FormattedMessage id="ui-directory.information.heading.display-text" values={{ directory_entry: directoryEntry }} />
+                </MessageBanner>
+              </Col>
             </Row>
             <AccordionSet accordionStatus={this.state.sectionsShared}>
               <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
@@ -209,9 +212,11 @@ class ViewDirectoryEntry extends React.Component {
         {tab === 'local' &&
           <React.Fragment>
             <Row>
-              <MessageBanner>
-                <FormattedMessage id="ui-directory.information.local.heading.display-text" />
-              </MessageBanner>
+              <Col xsOffset={1} xs={10}>
+                <MessageBanner>
+                  <FormattedMessage id="ui-directory.information.local.heading.display-text" />
+                </MessageBanner>
+              </Col>
             </Row>
             <AccordionSet accordionStatus={this.state.sectionsLocal}>
               <LocalDirectoryEntryInfo id="localDirectoryEntryInfo" {...sectionProps} />
