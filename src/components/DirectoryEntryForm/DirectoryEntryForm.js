@@ -9,7 +9,8 @@ import {
   Col,
   ExpandAllButton,
   Layout,
-  Row
+  MessageBanner,
+  Row,
 } from '@folio/stripes/components';
 
 import {
@@ -24,6 +25,11 @@ import {
 class DirectoryEntryForm extends React.Component {
   static propTypes = {
     parentResources: PropTypes.object,
+    resources: PropTypes.shape({
+      selectedRecord: PropTypes.shape({
+        records: PropTypes.object,
+      }),
+    }),
     values: PropTypes.object,
   }
 
@@ -71,6 +77,15 @@ class DirectoryEntryForm extends React.Component {
   render() {
     const sectionProps = this.getSectionProps();
     const { sectionsShared, sectionsLocal, tab } = this.state;
+
+    const { selectedRecord } = this.props.resources;
+    let name;
+    if (selectedRecord.records[0]) {
+      name = this.props.resources.selectedRecord.records[0].fullyQualifiedName;
+    } else {
+      name = 'this institution';
+    }
+
     return (
       <div>
         <Layout className="textCentered">
@@ -92,31 +107,45 @@ class DirectoryEntryForm extends React.Component {
           </ButtonGroup>
         </Layout>
         {tab === 'shared' &&
-          <AccordionSet>
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton
-                  accordionStatus={sectionsShared}
-                  onToggle={this.handleAllSectionsToggleShared}
-                />
-              </Col>
+          <React.Fragment>
+            <Row>
+              <MessageBanner>
+                <FormattedMessage id="ui-directory.information.heading.display-text" values={{ directory_entry: name }} />
+              </MessageBanner>
             </Row>
-            <DirectoryEntryFormInfo id="directoryEntryFormInfo" open={sectionsShared.directoryEntryFormInfo} {...sectionProps} />
-            <DirectoryEntryFormCustProps id="directoryEntryFormCustProps" open={sectionsShared.directoryEntryFormCustProps} {...sectionProps} />
-          </AccordionSet>
+            <AccordionSet>
+              <Row end="xs">
+                <Col xs>
+                  <ExpandAllButton
+                    accordionStatus={sectionsShared}
+                    onToggle={this.handleAllSectionsToggleShared}
+                  />
+                </Col>
+              </Row>
+              <DirectoryEntryFormInfo id="directoryEntryFormInfo" open={sectionsShared.directoryEntryFormInfo} {...sectionProps} />
+              <DirectoryEntryFormCustProps id="directoryEntryFormCustProps" open={sectionsShared.directoryEntryFormCustProps} {...sectionProps} />
+            </AccordionSet>
+          </React.Fragment>
         }
         {tab === 'local' &&
-          <AccordionSet>
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton
-                  accordionStatus={sectionsLocal}
-                  onToggle={this.handleAllSectionsToggleLocal}
-                />
-              </Col>
+          <React.Fragment>
+            <Row>
+              <MessageBanner>
+                <FormattedMessage id="ui-directory.information.local.heading.display-text" />
+              </MessageBanner>
             </Row>
-            <LocalDirectoryEntryFormInfo id="localDirectoryEntryFormInfo" open={sectionsLocal.localDirectoryEntryFormInfo} {...sectionProps} />
-          </AccordionSet>
+            <AccordionSet>
+              <Row end="xs">
+                <Col xs>
+                  <ExpandAllButton
+                    accordionStatus={sectionsLocal}
+                    onToggle={this.handleAllSectionsToggleLocal}
+                  />
+                </Col>
+              </Row>
+              <LocalDirectoryEntryFormInfo id="localDirectoryEntryFormInfo" open={sectionsLocal.localDirectoryEntryFormInfo} {...sectionProps} />
+            </AccordionSet>
+          </React.Fragment>
         }
       </div>
     );
