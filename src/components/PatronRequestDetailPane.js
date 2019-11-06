@@ -25,6 +25,9 @@ class PatronRequestDetailPane extends React.Component {
   });
 
   static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     resources: PropTypes.shape({
       query: PropTypes.shape({
         layer: PropTypes.string,
@@ -72,20 +75,39 @@ class PatronRequestDetailPane extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
+    const record = this.getRecord();
+    const url = `/request/view/${record.id}/pullslip`;
+
     return (
-      <Button
-        buttonStyle="dropdownItem"
-        href={this.props.editLink}
-        id="clickable-edit-patronrequest"
-        onClick={() => {
-          this.props.onEdit();
-          onToggle();
-        }}
-      >
-        <Icon icon="edit">
-          <FormattedMessage id="ui-rs.edit" />
-        </Icon>
-      </Button>
+      <React.Fragment>
+        <Button
+          buttonStyle="dropdownItem"
+          href={this.props.editLink}
+          id="clickable-edit-patronrequest"
+          onClick={() => {
+            this.props.onEdit();
+            onToggle();
+          }}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-rs.edit" />
+          </Icon>
+        </Button>
+        <Button
+          buttonStyle="dropdownItem"
+          href={url}
+          id="clickable-pullslip"
+          onClick={() => {
+            // XXX why is this necessary? Why doesn't `href` do it?
+            this.props.history.push(url);
+            onToggle();
+          }}
+        >
+          <Icon icon="print">
+            <FormattedMessage id="ui-rs.printPullslip" />
+          </Icon>
+        </Button>
+      </React.Fragment>
     );
   };
 
@@ -103,8 +125,6 @@ class PatronRequestDetailPane extends React.Component {
         actionMenu={this.getActionMenu}
       >
         <Link to={`/request/view/${record.id}/flow`}>[flow]</Link>
-        &nbsp;
-        <Link to={`/request/view/${record.id}/pullslip`}>[pull slip]</Link>
         <ViewPatronRequest record={record} />
         {this.renderEditLayer()}
       </Pane>
