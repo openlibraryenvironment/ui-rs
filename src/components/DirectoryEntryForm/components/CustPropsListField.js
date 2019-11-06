@@ -140,16 +140,16 @@ export default class CustPropsListField extends React.Component {
     const custPropsList = this.state.custprops.map((custprop, i) => {
       const header = custprop.label;
       return (
-        <Row>
-          <Col xs={12} md={6}>
-            <EditCard
-              header={header}
-              key={custprop.value}
-            >
+        <EditCard
+          header={header}
+          key={custprop.value}
+        >
+          <Row>
+            <Col xs={12} md={6}>
               {this.renderCustPropValue(custprop, i)}
-            </EditCard>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </EditCard>
       );
     });
     return custPropsList;
