@@ -129,7 +129,8 @@ class DirectoryEntryFormInfo extends React.Component {
                     dataOptions={directoryEntryValues}
                     onChange={(e) => {
                       props.input.onChange(e);
-
+                      
+                      // The below is finding the selected index and then grabbing the label of that element (saves doing a separate lookup)
                       const selectedValue = e.target[e.target.selectedIndex].text;
                       this.setState({ selectedParent: selectedValue });
 
