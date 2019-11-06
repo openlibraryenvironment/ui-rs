@@ -127,7 +127,6 @@ export default class CustPropsListField extends React.Component {
       <FieldComponent
         data-test-custprop-value
         id={`edit-custprop-${i}-value`}
-        label={<FormattedMessage id="ui-directory.information.local.custPropValue" />}
         onChange={handleChange}
         value={controlledFieldValue}
         error={!isEmpty(errors) ? errors[custprop.value] : undefined}
@@ -141,16 +140,16 @@ export default class CustPropsListField extends React.Component {
     const custPropsList = this.state.custprops.map((custprop, i) => {
       const header = custprop.label;
       return (
-        <EditCard
-          header={header}
-          key={custprop.value}
-        >
-          <Row>
-            <Col xs={12} md={6}>
+        <Row>
+          <Col xs={12} md={6}>
+            <EditCard
+              header={header}
+              key={custprop.value}
+            >
               {this.renderCustPropValue(custprop, i)}
-            </Col>
-          </Row>
-        </EditCard>
+            </EditCard>
+          </Col>
+        </Row>
       );
     });
     return custPropsList;
