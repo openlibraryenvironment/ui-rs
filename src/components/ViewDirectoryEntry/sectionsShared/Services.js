@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, KeyValue, Row, Col, Headline } from '@folio/stripes/components';
+import { Accordion, Card, KeyValue, Row, Col, Headline } from '@folio/stripes/components';
 
 
 function renderService(service, index, count) {
@@ -12,29 +12,34 @@ function renderService(service, index, count) {
 
   return (
     <React.Fragment key={index}>
-      <Headline>{header}</Headline>
-      <Row>
-        <Col xs={6}>
-          <KeyValue
-            label={<FormattedMessage id="ui-directory.information.serviceFunction" />}
-            value={ss.businessFunction.value}
-          />
-        </Col>
-        <Col xs={6}>
-          <KeyValue
-            label={<FormattedMessage id="ui-directory.information.serviceType" />}
-            value={ss.type.value}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-directory.information.serviceAddress" />}
-            value={<tt>{ss.address}</tt>}
-          />
-        </Col>
-      </Row>
+      <Card
+        headerStart={<Headline margin={"none"}>{header}</Headline>}
+        roundedBorder
+        hasMargin
+      >
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-directory.information.serviceFunction" />}
+              value={ss.businessFunction.value}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-directory.information.serviceType" />}
+              value={ss.type.value}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-directory.information.serviceAddress" />}
+              value={<tt>{ss.address}</tt>}
+            />
+          </Col>
+        </Row>
+      </Card>
     </React.Fragment>
   );
 }
