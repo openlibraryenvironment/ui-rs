@@ -91,5 +91,6 @@
   "flow.stacksSearching": "Pullslip printed - stacks searching",
   "flow.itemFound": "Item found - ready to ship",
   "flow.shippedToRequester": "Item shipped to requester",
+  "printPullslip": "Print pull slip",
   "button.print": "Print"
 }
