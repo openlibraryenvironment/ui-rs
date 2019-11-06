@@ -138,7 +138,7 @@ class DirectoryEntryFormInfo extends React.Component {
 
                       this.setState({ selectedParent: valueName });
 
-                      let warningMessage = ''; 
+                      let warningMessage = '';
 
                       if (values.name != null && valueName.includes(values.name)) {
                         warningMessage = <FormattedMessage id="ui-directory.information.parent.warning" />;
