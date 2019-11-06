@@ -188,7 +188,7 @@ class ViewDirectoryEntry extends React.Component {
         {tab === 'shared' &&
           <React.Fragment>
             <Row>
-              <Col xsOffset={1} xs={10}>
+              <Col xs={12} lgOffset={1} lg={10}>
                 <MessageBanner>
                   <FormattedMessage id="ui-directory.information.heading.display-text" values={{ directory_entry: directoryEntry }} />
                 </MessageBanner>
@@ -212,7 +212,7 @@ class ViewDirectoryEntry extends React.Component {
         {tab === 'local' &&
           <React.Fragment>
             <Row>
-              <Col xsOffset={1} xs={10}>
+              <Col xs={12} lgOffset={1} lg={10}>
                 <MessageBanner>
                   <FormattedMessage id="ui-directory.information.local.heading.display-text" />
                 </MessageBanner>
