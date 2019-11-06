@@ -130,17 +130,12 @@ class DirectoryEntryFormInfo extends React.Component {
                     onChange={(e) => {
                       props.input.onChange(e);
 
-                      const selectedValue = e.target.value;
-                      const valueObj = directoryEntryValues.filter(obj => {
-                        return obj.value === selectedValue;
-                      });
-                      const valueName = valueObj[0].label;
-
-                      this.setState({ selectedParent: valueName });
+                      const selectedValue = e.target[e.target.selectedIndex].text;
+                      this.setState({ selectedParent: selectedValue });
 
                       let warningMessage = '';
 
-                      if (values.name != null && valueName.includes(values.name)) {
+                      if (values.name != null && selectedValue.includes(values.name)) {
                         warningMessage = <FormattedMessage id="ui-directory.information.parent.warning" />;
                       }
                       this.setState({ warning: warningMessage });
