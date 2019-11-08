@@ -50,6 +50,9 @@
   "information.tab.shared": "Shared information",
   "information.tab.local": "Local information",
 
+  "information.callout.save.error": "There was an error saving the directory entry. {error}",
+  "information.callout.save.success": "Directory entry successfully saved.",
+
   "information.local.heading.directoryEntry": "Local directory entry info",
   "information.local.heading.customProps": "Local custom properties JSON",
   "information.local.heading.display-text": "The information in this section is managed by your institution, and any data added or edited here will be visible to your institution only.",
