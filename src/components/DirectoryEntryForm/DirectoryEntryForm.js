@@ -82,10 +82,12 @@ class DirectoryEntryForm extends React.Component {
     let name;
     if (selectedRecord){
       if (selectedRecord.records) {
-        name = selectedRecord.records[0].fullyQualifiedName;
-      } else {
-        name = 'this institution';
+        if (selectedRecord.records[0]) {
+          name = selectedRecord.records[0].fullyQualifiedName;
+        }
       }
+    } else {
+      name = 'this institution';
     }
 
     return (
