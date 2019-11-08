@@ -27,7 +27,7 @@ class DirectoryEntryForm extends React.Component {
     parentResources: PropTypes.object,
     resources: PropTypes.shape({
       selectedRecord: PropTypes.shape({
-        records: PropTypes.object,
+        records: PropTypes.array,
       }),
     }),
     values: PropTypes.object,
