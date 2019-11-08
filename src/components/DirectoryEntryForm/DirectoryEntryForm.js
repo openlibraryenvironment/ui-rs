@@ -78,12 +78,14 @@ class DirectoryEntryForm extends React.Component {
     const sectionProps = this.getSectionProps();
     const { sectionsShared, sectionsLocal, tab } = this.state;
 
-    const { selectedRecord } = this.props.resources;
+    const selectedRecord = this.props.resources ? this.props.resources.selectedRecord : {};
     let name;
-    if (selectedRecord.records[0]) {
-      name = this.props.resources.selectedRecord.records[0].fullyQualifiedName;
-    } else {
-      name = 'this institution';
+    if (selectedRecord){
+      if (selectedRecord.records) {
+        name = selectedRecord.records[0].fullyQualifiedName;
+      } else {
+        name = 'this institution';
+      }
     }
 
     return (
