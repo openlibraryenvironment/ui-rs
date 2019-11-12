@@ -14,7 +14,7 @@ function recordToData(record) {
     requestId: record.id,
     title: record.title,
     author: record.author,
-    volume: 'XXX volume',
+    volume: record.volume,
     phoneNumber: 'XXX phoneNumber',
     emailAddress: 'XXX emailAddress',
     callNumber: record.localCallNumber,
