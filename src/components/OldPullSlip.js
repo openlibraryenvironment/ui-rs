@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedDate, FormattedTime } from 'react-intl';
 import Barcode from 'react-barcode';
 import css from './OldPullSlip.css';
-import logo from './images/palci-logo.png';
+import logo from './PullSlip/design/images/palci-logo.png';
 
 const PullSlip = (props) => {
   const { record } = props;
