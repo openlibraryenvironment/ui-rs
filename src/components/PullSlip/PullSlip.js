@@ -2,12 +2,15 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Parser } from 'html-to-react';
 import get from 'lodash/get';
+import { injectIntl } from 'react-intl';
 import template from './design/pullslip.handlebars';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
 import logoUrl from './design/images/palci-logo.png';
 
-function recordToData(record) {
+function recordToData(intl, record) {
+  const now = new Date();
+
   return {
     borrower: record.patronReference, // XXX Should be "Last Name, First Name"
     pickupLocation: record.pickShelvingLocation,
@@ -22,7 +25,7 @@ function recordToData(record) {
     location: get(record, 'pickLocation.name'),
     fromSlug: 'XXX fromSlug',
     toSlug: record.requestingInstitutionSymbol, // XXX Should be slug from directory entry
-    now: new Date().toLocaleString(),
+    now: `${intl.formatDate(now)} ${intl.formatTime(now)}`,
     logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
     itemBarcode: 'YYY itemBarcode',
     itemId: 'XXX itemId',
@@ -37,7 +40,7 @@ const PullSlip = (props) => {
     };
   }, []);
 
-  const data = recordToData(props.record);
+  const data = recordToData(props.intl, props.record);
   const s = template(data);
   const htmlToReactParser = new Parser();
   return htmlToReactParser.parse(s);
@@ -47,4 +50,4 @@ PullSlip.propTypes = {
   record: PropTypes.object.isRequired,
 };
 
-export default PullSlip;
+export default injectIntl(PullSlip);
