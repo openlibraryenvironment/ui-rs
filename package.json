@@ -31,6 +31,7 @@
     "sinon": "^6.3.4"
   },
   "dependencies": {
+    "@folio/stripes-core": "^3.11.1000619",
     "@folio/stripes-erm-components": "^1.4.1",
     "@folio/stripes-util": "^1.5.0",
     "classnames": "^2.2.6",
@@ -38,7 +39,6 @@
     "html-to-react": "^1.4.2",
     "lodash": "^4.17.4",
     "postcss-nested": "^4.1.2",
-    "handlebars": "^4.5.1",
     "prop-types": "^15.6.0",
     "react-apollo": "^2.1.3",
     "react-barcode": "^1.3.4",
