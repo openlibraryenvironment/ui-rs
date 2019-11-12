@@ -5,6 +5,7 @@ import get from 'lodash/get';
 import template from './design/pullslip.handlebars';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
+import logoUrl from './design/images/palci-logo.png';
 
 function recordToData(record) {
   return {
@@ -22,7 +23,7 @@ function recordToData(record) {
     fromSlug: 'XXX fromSlug',
     toSlug: record.requestingInstitutionSymbol, // XXX Should be slug from directory entry
     now: new Date().toLocaleString(),
-    logo: 'ZZZ logo',
+    logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
     itemBarcode: 'YYY itemBarcode',
     itemId: 'XXX itemId',
   };
