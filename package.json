@@ -44,13 +44,12 @@
     "react-final-form": "^6.3.0",
     "react-intl": "^2.4.0",
     "react-to-print": "^2.5.0",
-    "redux-form": "^7.0.3",
-    "handlebars": "^4.5.1"
+    "redux-form": "^7.0.3"
   },
   "peerDependencies": {
     "@folio/stripes": "^2.7.4",
     "@folio/stripes-connect": "^5.2.3",
-    "@folio/stripes-core": "^3.11.1000619",
+    "@folio/stripes-core": "^3.11.1000620",
     "react": "*",
     "react-router-dom": "^4.1.1"
   },
