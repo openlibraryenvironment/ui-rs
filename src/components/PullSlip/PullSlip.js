@@ -41,7 +41,7 @@ function recordToData(intl, record) {
     toSlug: record.requestingInstitutionSymbol, // XXX Should be slug from directory entry
     now: `${intl.formatDate(now)} ${intl.formatTime(now)}`,
     logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
-    itemBarcode: 'YYY itemBarcode',
+    itemBarcode: 'XXX itemBarcode', // styledBarCodeString(itemId)
     itemId: 'XXX itemId',
   };
 }
