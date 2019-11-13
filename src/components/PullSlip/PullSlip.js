@@ -3,22 +3,11 @@ import PropTypes from 'prop-types';
 import { Parser } from 'html-to-react';
 import get from 'lodash/get';
 import { injectIntl } from 'react-intl';
-import JsBarcode from 'jsbarcode';
+import barCodeString from './BarCodeString';
 import template from './design/pullslip.handlebars';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
 import logoUrl from './design/images/palci-logo.png';
-
-// Based on sample code in the "With svg" section at https://github.com/lindell/JsBarcode/blob/master/README.md
-function barCodeString(text, options) {
-  const { DOMImplementation, XMLSerializer } = require('xmldom');
-  const xmlSerializer = new XMLSerializer();
-  const document = new DOMImplementation().createDocument('http://www.w3.org/1999/xhtml', 'html', null);
-  const svgNode = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-
-  JsBarcode(svgNode, text, Object.assign({}, { xmlDocument: document }, options));
-  return xmlSerializer.serializeToString(svgNode);
-}
 
 function styledBarCodeString(text) {
   return barCodeString(text, {
