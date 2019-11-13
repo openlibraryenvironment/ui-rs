@@ -45,6 +45,7 @@
     "react-intl": "^2.4.0",
     "react-to-print": "^2.5.0",
     "redux-form": "^7.0.3",
+    "reset-css": "^5.0.1",
     "xmldom": "^0.1.27"
   },
   "peerDependencies": {

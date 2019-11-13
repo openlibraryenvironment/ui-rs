@@ -6,6 +6,8 @@ import { injectIntl } from 'react-intl';
 import barCodeString from './BarCodeString';
 import template from './design/pullslip.handlebars';
 // eslint-disable-next-line import/no-webpack-loader-syntax
+import reset from '!!style-loader?injectType=lazyStyleTag!css-loader!reset-css/reset.css';
+// eslint-disable-next-line import/no-webpack-loader-syntax
 import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
 import logoUrl from './design/images/palci-logo.png';
 
@@ -48,9 +50,11 @@ function recordToData(intl, record) {
 
 const PullSlip = (props) => {
   useEffect(() => {
+    reset.use();
     style.use();
     return () => {
       style.unuse();
+      reset.unuse();
     };
   }, []);
 
