@@ -6,16 +6,23 @@
   "new-app.greeting": "Congratulations!",
   "new-app.message": "Your Stripes app is running.",
   "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
+
+  "settings.name": "Name",
+  "settings.value": "Value",
+
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
+
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
-  "settings.supply-address.addresses": "Addresses",
-  "settings.supply-address.addressSettings": "Address Settings",
-  "settings.supply-address.addressList": "Address List",
-  "settings.supply-address.address": "Address",
-  "settings.supply-address.name": "Name",
-  "settings.supply-address.value": "Value",
+
+  "settings.z3950": "Z3950",
+  "settings.z3950.singular": "Z3950 setting",
+  "settings.z3950.objectLabel": "Z3950 object label",
+  "settings.z3950.name": "Name",
+  "settings.z3950.value": "Value",
+
+  
   "patronrequests.id": "Request Id",
   "patronrequests.role": "Role",
   "patronrequests.isRequester": "Requester?",

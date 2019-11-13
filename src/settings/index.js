@@ -4,7 +4,7 @@ import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 import GeneralSettings from './GeneralSettings';
 import SomeFeatureSettings from './SomeFeatureSettings';
-import SupplyAddressSettings from './SupplyAddressSettings';
+import Z3950Settings from './Z3950Settings';
 
 class ResourceSharingSettings extends React.Component {
   settingsSections = [
@@ -21,6 +21,11 @@ class ResourceSharingSettings extends React.Component {
           label: <FormattedMessage id="ui-rs.settings.some-feature" />,
           component: SomeFeatureSettings,
         },
+        {
+          route: 'z3950',
+          label: <FormattedMessage id="ui-rs.settings.z3950" />,
+          component: Z3950Settings,
+        },
       ],
     },
     {
@@ -30,11 +35,7 @@ class ResourceSharingSettings extends React.Component {
     {
       label: 'Supply',
       pages: [
-        {
-          route: 'supplyaddress',
-          label: <FormattedMessage id="ui-rs.settings.supply-address.addressSettings" />,
-          component: SupplyAddressSettings,
-        },
+        
       ],
     },
   ];
