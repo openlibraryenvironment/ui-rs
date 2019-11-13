@@ -7,9 +7,6 @@
 // but should be considered a black box.
 
 import JsBarcode from 'jsbarcode';
-// I have no idea why, but ESLint complains about the following line
-// although it likes the "requre"-based equivalent just fine.
-// eslint-disable-next-line import/no-unresolved
 import { DOMImplementation, XMLSerializer } from 'xmldom';
 
 function barCodeString(text, options) {

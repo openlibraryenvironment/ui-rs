@@ -44,7 +44,8 @@
     "react-final-form": "^6.3.0",
     "react-intl": "^2.4.0",
     "react-to-print": "^2.5.0",
-    "redux-form": "^7.0.3"
+    "redux-form": "^7.0.3",
+    "xmldom": "^0.1.27"
   },
   "peerDependencies": {
     "@folio/stripes": "^2.7.4",
