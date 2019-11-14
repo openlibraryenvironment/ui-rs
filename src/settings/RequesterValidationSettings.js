@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStripes } from '@folio/stripes/core';
 
-import { Form, Field } from 'react-final-form';
+import { Form } from 'react-final-form';
 
 import {
   Paneset,
@@ -48,21 +48,13 @@ class RequesterValidationSettings extends React.Component {
           <Form onSubmit={this.handleSubmit}>
             {(...props) => (
               <form id="requester-validation-settings" >
-                <Field
-                  name="value"
-                  render={props => {
-                    return (
-                      <EditableSettingsList 
-                        data={{
-                          settings: rows,
-                          refdatavalues
-                        }}
-                        onSubmit={this.handleSubmit}
-                      />
-                    );
+                <EditableSettingsList 
+                  data={{
+                    settings: rows,
+                    refdatavalues
                   }}
-                >
-                </Field>
+                  onSubmit={this.handleSubmit}
+                />
               </form>
             )}
           </Form>

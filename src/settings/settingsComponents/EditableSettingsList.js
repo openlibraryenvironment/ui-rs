@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Field } from 'react-final-form';
+
 import {
   Button,
   Card,
@@ -19,17 +21,23 @@ class EditableSettingsList extends React.Component {
   };
 
   renderSettingValue = (setting, i) => {
-    console.log("Setting: %o", setting)
-    return (
-      <p>{setting.value}</p>
-    );
+    const { editing } = this.state;
+      if (editing[i] == true) {
+        return <p> Edit Stuff</p>;
+      }
+      else {
+        return <p>{setting.value}</p>;
+      }
   }
 
   handleEditClick(i) {
-    console.log(`handleEditClick called for setting ${i}`)
     this.setState(prevState => {
       const editing = [...prevState.editing];
-      editing[i] = true;
+      if ( editing[i] ) {
+        editing[i] = !editing[i];
+      } else {
+        editing[i] = true;
+      }
       return { editing };
     });
   }
@@ -38,10 +46,21 @@ class EditableSettingsList extends React.Component {
   renderSettingList() {
     const settingList = this.props.data.settings.map((setting, i) => {
       const settingName = setting.key;
+      let EditText
+      if ( this.state.editing[i] ) {
+        if ( this.state.editing[i] === true ) {
+          EditText = "Finish Editing"
+        } else {
+          EditText = "Edit"
+        }
+      } else {
+        EditText = "Edit"
+      }
+
       return (
         <Card
         headerStart={settingName}
-        headerEnd={<Button onClick={this.handleEditClick(i)}>Edit</Button>}
+        headerEnd={<Button onClick={(e) => this.handleEditClick(i)}>{EditText}</Button>}
         hasMargin
         roundedBorder
         >
@@ -62,7 +81,14 @@ class EditableSettingsList extends React.Component {
     console.log("EditableSettingsList state: %o", this.state)
 
     return (
-      this.renderSettingList()
+      <Field
+        name="value"
+        render={props => {
+          return (
+            this.renderSettingList()
+          );
+        }}
+      />
     );
   }
 
