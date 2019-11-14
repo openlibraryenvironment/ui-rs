@@ -21,14 +21,14 @@ class EditableSettingsList extends React.Component {
   };
 
   renderSettingValue = (setting, i) => {
-    const { editing } = this.state;
-      if (editing[i] == true) {
-        return <p> Edit Stuff</p>;
-      }
-      else {
-        return <p>{setting.value}</p>;
-      }
+    return <p>{setting.value}</p>;
   }
+
+  renderEditSettingValue = (setting, i) => {
+    const { editing } = this.state;
+  }
+  
+
 
   handleEditClick(i) {
     this.setState(prevState => {
@@ -44,17 +44,26 @@ class EditableSettingsList extends React.Component {
 
 
   renderSettingList() {
+    const { editing } = this.state;
     const settingList = this.props.data.settings.map((setting, i) => {
       const settingName = setting.key;
       let EditText
-      if ( this.state.editing[i] ) {
-        if ( this.state.editing[i] === true ) {
+      if ( editing[i] ) {
+        if ( editing[i] === true ) {
           EditText = "Finish Editing"
         } else {
           EditText = "Edit"
         }
       } else {
         EditText = "Edit"
+      }
+
+      let renderFunction;
+      if (editing[i] == true) {
+        renderFunction = <p>Editing value {i}</p>
+      }
+      else {
+        renderFunction = this.renderSettingValue(setting, i)
       }
 
       return (
@@ -66,7 +75,7 @@ class EditableSettingsList extends React.Component {
         >
           <Row>
             <Col xs={12} md={6}>
-              {this.renderSettingValue(setting, i)}
+              {renderFunction}
             </Col>
           </Row>
         </Card>
@@ -88,6 +97,7 @@ class EditableSettingsList extends React.Component {
             this.renderSettingList()
           );
         }}
+        onSubmit={this.props.onSubmit}
       />
     );
   }
