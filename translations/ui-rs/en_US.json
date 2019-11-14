@@ -10,19 +10,18 @@
   "settings.name": "Name",
   "settings.value": "Value",
 
-  "settings.general": "General",
-  "settings.general.message": "These are your general app settings.",
-
-  "settings.some-feature": "Some Feature",
-  "settings.some-feature.message": "These are your settings for some app feature.",
-
-  "settings.z3950": "Z3950",
+  "settings.z3950": "Z3950 settings",
   "settings.z3950.singular": "Z3950 setting",
   "settings.z3950.objectLabel": "Z3950 object label",
-  "settings.z3950.name": "Name",
-  "settings.z3950.value": "Value",
 
-  
+  "settings.local-ncip": "Local NCIP settings",
+  "settings.local-ncip.singular": "Local NCIP setting",
+  "settings.local-ncip.objectLabel": "Local NCIP object label",
+
+  "settings.requester-validation": "Requester validation settings",
+  "settings.requester-validation.singular": "Requester validation setting",
+  "settings.requester-validation.singular": "Requester validation object label",
+ 
   "patronrequests.id": "Request Id",
   "patronrequests.role": "Role",
   "patronrequests.isRequester": "Requester?",

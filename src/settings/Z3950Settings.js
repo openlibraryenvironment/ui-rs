@@ -1,17 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStripes } from '@folio/stripes/core';
-import { ControlledVocab } from '@folio/stripes/smart-components';
+import { ControlledVocab, EditableList } from '@folio/stripes/smart-components';
 import { FormattedMessage } from 'react-intl';
 
 class Z3950Settings extends React.Component {
-  static manifest = Object.freeze({
-    setting: {
-      type: 'okapi',
-      path: 'rs/settings/appSettings?stats=true&filters=section%3Dz3950',
-    },
-  });
-
   static propTypes = {
     stripes: PropTypes.object.isRequired,
   };
@@ -23,11 +16,11 @@ class Z3950Settings extends React.Component {
 
   render() {
     const { stripes } = this.props;
-    console.log("Props: %o", this.props)
     return (
       <this.connectedControlledVocab
+        {...this.props}
         stripes={stripes}
-        baseUrl='rs/settings/appSettings?stats=true&filters=section%3Dz3950'
+        baseUrl={`rs/settings/appSettings`}
         label={<FormattedMessage id="ui-rs.settings.z3950" />}
         labelSingular={<FormattedMessage id="ui-rs.settings.z3950.singular" />}
         objectLabel={<FormattedMessage id="ui-rs.settings.z3950.objectLabel" />}
@@ -36,6 +29,13 @@ class Z3950Settings extends React.Component {
           st_key: <FormattedMessage id="ui-rs.settings.name" />,
           st_value: <FormattedMessage id="ui-rs.settings.value" />,
         }}
+        rowFilterFunction={(row) => {
+          return (
+            console.log("Row: %o", row),
+            row.section === "z3950"
+          );
+        }
+        }
         id="z3950-settings"
         sortby="value"
         hiddenFields={['id', 'version', 'section', 'settingType', 'vocab', 'defValue', 'lastUpdated', 'numberOfObjects']}

@@ -2,8 +2,8 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
-import GeneralSettings from './GeneralSettings';
-import SomeFeatureSettings from './SomeFeatureSettings';
+import RequesterValidationSettings from './RequesterValidationSettings';
+import LocalNCIPSettings from './LocalNCIPSettings';
 import Z3950Settings from './Z3950Settings';
 
 class ResourceSharingSettings extends React.Component {
@@ -12,19 +12,19 @@ class ResourceSharingSettings extends React.Component {
       label: 'General',
       pages: [
         {
-          route: 'general',
-          label: <FormattedMessage id="ui-rs.settings.general" />,
-          component: GeneralSettings,
-        },
-        {
-          route: 'somefeature',
-          label: <FormattedMessage id="ui-rs.settings.some-feature" />,
-          component: SomeFeatureSettings,
+          route: 'local-ncip',
+          label: <FormattedMessage id="ui-rs.settings.local-ncip" />,
+          component: LocalNCIPSettings,
         },
         {
           route: 'z3950',
           label: <FormattedMessage id="ui-rs.settings.z3950" />,
           component: Z3950Settings,
+        },
+        {
+          route: 'requester-validation',
+          label: <FormattedMessage id="ui-rs.settings.requester-validation" />,
+          component: RequesterValidationSettings,
         },
       ],
     },
