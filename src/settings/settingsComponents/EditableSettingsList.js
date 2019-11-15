@@ -13,6 +13,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import { FormattedMessage } from 'react-intl';
+
 class EditableSettingsList extends React.Component {
   
 
@@ -21,7 +23,7 @@ class EditableSettingsList extends React.Component {
   };
 
   renderSettingValue = (setting, i) => {
-    return <p> {setting.value} </p>;
+    return <p> {setting.value ? setting.value : <FormattedMessage id="ui-rs.settings.no-current-value" />} </p>;
   }
 
   renderEditSettingValue = (setting, i) => {
@@ -68,7 +70,7 @@ class EditableSettingsList extends React.Component {
     if (isSubmitClick === true) {
       return submit;
     } else {
-      return null;
+      return undefined;
     }
   }
 
@@ -77,11 +79,12 @@ class EditableSettingsList extends React.Component {
     let EditText
 
     if ( editing[i] === true ) {
-      EditText = "Finish Editing"
+      EditText = <FormattedMessage id="ui-rs.settings.finish-editing"/>
       return (
         <Button
           type="submit" 
           onClick={(e) => {
+            e.preventDefault()
             console.log("Form filled, submitting")
             return (
               this.handleEditClick(i, submit, true)
@@ -93,10 +96,11 @@ class EditableSettingsList extends React.Component {
         </Button>
       );
     } else {
-      EditText = "Edit"
+      EditText = <FormattedMessage id="ui-rs.settings.edit"/>
       return (
         <Button
           onClick={(e) => {
+            e.preventDefault()
             console.log("Switching to edit mode")
             return (
               this.handleEditClick(i, submit, false)
@@ -124,7 +128,7 @@ class EditableSettingsList extends React.Component {
       else {
         renderFunction = this.renderSettingValue(setting, i)
       }
-      //console.log(this.props)
+
       return (
         <Form onSubmit={this.props.onSubmit}>
           {({handleSubmit, submitting}) => (
@@ -135,7 +139,7 @@ class EditableSettingsList extends React.Component {
                   return (
                     <Card
                       headerStart={settingName}
-                      headerEnd={this.renderEditButton(i, submitting, handleSubmit)}
+                      headerEnd={this.renderEditButton(i, submitting, this.props.onSubmit)}
                       hasMargin
                       roundedBorder
                     >
@@ -158,7 +162,9 @@ class EditableSettingsList extends React.Component {
 
 
   render() {
-    console.log(this.state.editing)
+    console.log("Editing: %o", this.state.editing)
+    console.log("Props: %o", this.props)
+
     return (
       this.renderSettingList()
     );

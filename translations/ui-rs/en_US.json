@@ -9,6 +9,9 @@
 
   "settings.name": "Name",
   "settings.value": "Value",
+  "settings.no-current-value": "There is no current value for this setting",
+  "settings.edit": "Edit",
+  "settings.finish-editing": "Finish Editing",
 
   "settings.z3950": "Z3950 settings",
   "settings.z3950.singular": "Z3950 setting",

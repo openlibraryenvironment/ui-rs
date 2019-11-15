@@ -27,9 +27,10 @@ class RequesterValidationSettings extends React.Component {
     stripes: PropTypes.object.isRequired,
   };
 
+
   handleSubmit = (setting) => {
-    this.props.mutator.selectedRecordId.replace(setting.id);
-    return this.props.mutator.selectedRecord.PUT(setting);
+    console.log("Setting: %o", setting)
+    return this.props.mutator.settings.PUT(setting);
   }
 
 
