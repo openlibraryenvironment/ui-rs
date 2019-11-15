@@ -64,7 +64,7 @@ class EditableSettingsList extends React.Component {
       return { editing: editingNew };
     });
 
-    
+
     if (isSubmitClick === true) {
       return submit;
     } else {
@@ -72,21 +72,22 @@ class EditableSettingsList extends React.Component {
     }
   }
 
-  renderEditButton(i, submit) {
+  renderEditButton(i, submitting, submit) {
     const { editing } = this.state;
     let EditText
 
     if ( editing[i] === true ) {
       EditText = "Finish Editing"
       return (
-        <Button 
-          type="submit"
+        <Button
+          type="submit" 
           onClick={(e) => {
             console.log("Form filled, submitting")
             return (
               this.handleEditClick(i, submit, true)
             );
           }}
+          disabled={submitting}
         >
           {EditText}
         </Button>
@@ -101,6 +102,7 @@ class EditableSettingsList extends React.Component {
               this.handleEditClick(i, submit, false)
             );
           }}
+          disabled={submitting}
         >
           {EditText}
         </Button>
