@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Field, Form } from 'react-final-form';
+import setFieldData from 'final-form-set-field-data';
+
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
   Button,
@@ -144,7 +147,7 @@ class EditableSettingsList extends React.Component {
                       roundedBorder
                     >
                       <Row>
-                        <Col xs={12} md={6}>
+                        <Col xs={12}>
                           {renderFunction}
                         </Col>
                       </Row>
@@ -162,18 +165,12 @@ class EditableSettingsList extends React.Component {
 
 
   render() {
-    console.log("Editing: %o", this.state.editing)
     console.log("Props: %o", this.props)
 
     return (
       this.renderSettingList()
     );
   }
-
-
-
 }
-
-
 
 export default EditableSettingsList;

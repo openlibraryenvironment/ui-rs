@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStripes } from '@folio/stripes/core';
+import { withStripes, stripesConnect } from '@folio/stripes/core';
 
 import {
   Paneset,
@@ -33,8 +33,6 @@ class RequesterValidationSettings extends React.Component {
     return this.props.mutator.settings.PUT(setting);
   }
 
-
-
   render() {
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
     const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : [])
@@ -60,4 +58,4 @@ class RequesterValidationSettings extends React.Component {
   }
 }
 
-export default RequesterValidationSettings;
+export default stripesConnect(RequesterValidationSettings);
