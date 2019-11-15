@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStripes } from '@folio/stripes/core';
 
-import { Form } from 'react-final-form';
-
 import {
   Paneset,
   Pane,
@@ -39,25 +37,21 @@ class RequesterValidationSettings extends React.Component {
   render() {
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
     const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : [])
+    const initialValues = rows.map((row) => ({key: row.key, value: row.value}))
     return (
       <Paneset>
         <Pane
           defaultWidth='fill'
           paneTitle={<FormattedMessage id="ui-rs.settings.requester-validation" />}
         >
-          <Form onSubmit={this.handleSubmit}>
-            {(...props) => (
-              <form id="requester-validation-settings" >
-                <EditableSettingsList 
-                  data={{
-                    settings: rows,
-                    refdatavalues
-                  }}
-                  onSubmit={this.handleSubmit}
-                />
-              </form>
-            )}
-          </Form>
+          <EditableSettingsList 
+            data={{
+              settings: rows,
+              refdatavalues
+            }}
+            initialValues={initialValues}
+            onSubmit={this.handleSubmit}
+            />
         </Pane>
       </Paneset>
       

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Field } from 'react-final-form';
+import { Field, Form } from 'react-final-form';
 
 import {
   Button,
@@ -21,25 +21,92 @@ class EditableSettingsList extends React.Component {
   };
 
   renderSettingValue = (setting, i) => {
-    return <p>{setting.value}</p>;
+    return <p> {setting.value} </p>;
   }
 
   renderEditSettingValue = (setting, i) => {
     const { editing } = this.state;
+    const { initialValues, data } = this.props;
+
+    // Grab the initial value of the setting
+    const currentValue = initialValues.filter((obj) => {
+      return (obj.key === setting.key);
+    })[0].value;
+
+    
+
+    // We need to check if we are working with a String Setting or witha  refdata one
+    if (setting.settingType === "String") {
+      return < TextField value={currentValue} />
+    } else {
+      // Grab refdata values corresponding to setting
+      const selectRefValues = data.refdatavalues.filter((obj) => { 
+        return obj.desc === setting.vocab
+      })[0].values
+      return (
+        <Select dataOptions={selectRefValues}/>
+      );
+    }
   }
   
 
 
-  handleEditClick(i) {
+  handleEditClick(i, submit, isSubmitClick) {
+    const { editing } = this.state;
+
     this.setState(prevState => {
-      const editing = [...prevState.editing];
-      if ( editing[i] ) {
-        editing[i] = !editing[i];
+      const editingNew = [...prevState.editing];
+      if ( editingNew[i] ) {
+        editingNew[i] = !editingNew[i];
       } else {
-        editing[i] = true;
+        editingNew[i] = true;
       }
-      return { editing };
+      return { editing: editingNew };
     });
+
+    
+    if (isSubmitClick === true) {
+      return submit;
+    } else {
+      return null;
+    }
+  }
+
+  renderEditButton(i, submit) {
+    const { editing } = this.state;
+    let EditText
+
+    if ( editing[i] === true ) {
+      EditText = "Finish Editing"
+      return (
+        <Button 
+          type="submit"
+          onClick={(e) => {
+            console.log("Form filled, submitting")
+            return (
+              this.handleEditClick(i, submit, true)
+            );
+          }}
+        >
+          {EditText}
+        </Button>
+      );
+    } else {
+      EditText = "Edit"
+      return (
+        <Button
+          onClick={(e) => {
+            console.log("Switching to edit mode")
+            return (
+              this.handleEditClick(i, submit, false)
+            );
+          }}
+        >
+          {EditText}
+        </Button>
+      );
+    }
+    
   }
 
 
@@ -47,58 +114,51 @@ class EditableSettingsList extends React.Component {
     const { editing } = this.state;
     const settingList = this.props.data.settings.map((setting, i) => {
       const settingName = setting.key;
-      let EditText
-      if ( editing[i] ) {
-        if ( editing[i] === true ) {
-          EditText = "Finish Editing"
-        } else {
-          EditText = "Edit"
-        }
-      } else {
-        EditText = "Edit"
-      }
 
       let renderFunction;
-      if (editing[i] == true) {
-        renderFunction = <p>Editing value {i}</p>
+      if (editing[i] === true) {
+        renderFunction = this.renderEditSettingValue(setting, i);
       }
       else {
         renderFunction = this.renderSettingValue(setting, i)
       }
-
+      //console.log(this.props)
       return (
-        <Card
-        headerStart={settingName}
-        headerEnd={<Button onClick={(e) => this.handleEditClick(i)}>{EditText}</Button>}
-        hasMargin
-        roundedBorder
-        >
-          <Row>
-            <Col xs={12} md={6}>
-              {renderFunction}
-            </Col>
-          </Row>
-        </Card>
-      );
-    });
+        <Form onSubmit={this.props.onSubmit}>
+          {({handleSubmit, submitting}) => (
+            <form id={`editable-setting-${settingName}`}>
+              <Field
+                name="value"
+                render={props => {
+                  return (
+                    <Card
+                      headerStart={settingName}
+                      headerEnd={this.renderEditButton(i, submitting, handleSubmit)}
+                      hasMargin
+                      roundedBorder
+                    >
+                      <Row>
+                        <Col xs={12} md={6}>
+                          {renderFunction}
+                        </Col>
+                      </Row>
+                    </Card>
+                  );
+                }}
+              />
+          </form>
+        )}
+      </Form>
+        );
+      })
     return settingList;
   }
 
 
   render() {
-    console.log("EditableSettingsList props: %o", this.props)
-    console.log("EditableSettingsList state: %o", this.state)
-
+    console.log(this.state.editing)
     return (
-      <Field
-        name="value"
-        render={props => {
-          return (
-            this.renderSettingList()
-          );
-        }}
-        onSubmit={this.props.onSubmit}
-      />
+      this.renderSettingList()
     );
   }
 
