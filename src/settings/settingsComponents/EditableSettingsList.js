@@ -18,7 +18,8 @@ class EditableSettingsList extends React.Component {
 
   render() {
     const {
-      form: { mutators }
+      form: { mutators },
+      data
     } = this.props;
     return (
       <Pane
@@ -32,6 +33,11 @@ class EditableSettingsList extends React.Component {
             name="appSettings"
             onSave={this.handleSave}
             mutators={mutators}
+            data={{
+              settings: data.settings,
+              refdatavalues: data.refdatavalues
+            }}
+            initialValues={this.props.initialValues}
           />
         </form>
       </Pane>
