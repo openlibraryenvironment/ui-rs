@@ -12,6 +12,7 @@ import EditableSettingsListFieldArray from './EditableSettingsListFieldArray';
 class EditableSettingsList extends React.Component {
 
   handleSave = (...rest) => {
+    console.log("handSave called in Editable Settings List")
     return this.props.onSave(...rest)
   }
 
@@ -30,7 +31,7 @@ class EditableSettingsList extends React.Component {
         <form>
           <FieldArray
             component={EditableSettingsListFieldArray}
-            name="appSettings"
+            name="settings"
             onSave={this.handleSave}
             mutators={mutators}
             data={{
@@ -52,6 +53,9 @@ export default stripesFinalForm({
     setSettingValue: (args, state, tools) => {
       tools.changeValue(state, args[0], () => args[1]);
     },
+  },
+  subscription: {
+    value: true
   },
   navigationCheck: true,
 })(EditableSettingsList);
