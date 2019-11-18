@@ -6,6 +6,8 @@ import { injectIntl } from 'react-intl';
 import barCodeString from './BarCodeString';
 import template from './design/pullslip.handlebars';
 // eslint-disable-next-line import/no-webpack-loader-syntax
+import reset from '!!style-loader?injectType=lazyStyleTag!css-loader!reset-css/reset.css';
+// eslint-disable-next-line import/no-webpack-loader-syntax
 import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
 import logoUrl from './design/images/palci-logo.png';
 
@@ -24,33 +26,44 @@ function styledBarCodeString(text) {
 
 function recordToData(intl, record) {
   const now = new Date();
+  const id = record.hrid || record.id;
+  let name;
+  if (record.patronSurname) {
+    name = record.patronSurname;
+    if (record.patronGivenName) name = `${name}, ${record.patronGivenName}`;
+  } else {
+    // Better than nothing
+    name = record.patronReference;
+  }
 
   return {
-    borrower: record.patronReference, // XXX Should be "Last Name, First Name"
+    borrower: name,
     pickupLocation: record.pickShelvingLocation,
-    requestBarcode: styledBarCodeString(record.id.substring(0, 18)),
-    requestId: record.id,
+    requestBarcode: styledBarCodeString(id.substring(0, 18)),
+    requestId: id,
     title: record.title,
     author: record.author,
     volume: record.volume,
-    phoneNumber: 'XXX phoneNumber',
-    emailAddress: 'XXX emailAddress',
+    phoneNumber: 'XXX phoneNumber', // Not yet available
+    emailAddress: 'XXX emailAddress', // Not yet available
     callNumber: record.localCallNumber,
     location: get(record, 'pickLocation.name'),
-    fromSlug: 'XXX fromSlug',
-    toSlug: record.requestingInstitutionSymbol, // XXX Should be slug from directory entry
+    fromSlug: get(record, 'resolvedSupplier.owner.slug'),
+    toSlug: get(record, 'resolvedRequester.owner.slug') || record.requestingInstitutionSymbol,
     now: `${intl.formatDate(now)} ${intl.formatTime(now)}`,
     logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
-    itemBarcode: 'XXX itemBarcode', // styledBarCodeString(itemId)
-    itemId: 'XXX itemId',
+    itemBarcode: styledBarCodeString(record.systemInstanceIdentifier || 12345),
+    itemId: record.systemInstanceIdentifier, // XXX can this really be right?
   };
 }
 
 const PullSlip = (props) => {
   useEffect(() => {
+    reset.use();
     style.use();
     return () => {
       style.unuse();
+      reset.unuse();
     };
   }, []);
 
