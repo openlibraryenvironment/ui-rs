@@ -29,14 +29,17 @@ class RequesterValidationSettings extends React.Component {
 
 
   handleSubmit = (setting) => {
-    console.log("Setting: %o", setting)
-    return this.props.mutator.settings.PUT(setting);
+    const mutator = this.props.mutator.settings;
+    const promise = mutator.PUT(setting)
+
+    return promise;
   }
 
   render() {
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
     const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : [])
     const initialValues = rows.map((row) => ({key: row.key, value: row.value}))
+    console.log("Setting Props: %o", this.props)
     return (
       <Paneset>
         <Pane
@@ -49,6 +52,7 @@ class RequesterValidationSettings extends React.Component {
               refdatavalues
             }}
             initialValues={initialValues}
+            onSave={this.handleSubmit}
             onSubmit={this.handleSubmit}
             />
         </Pane>

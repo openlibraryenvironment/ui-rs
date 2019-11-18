@@ -173,4 +173,8 @@ class EditableSettingsList extends React.Component {
   }
 }
 
-export default EditableSettingsList;
+export default stripesFinalForm({
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: false,
+  navigationCheck: true,
+})(EditableSettingsList);
