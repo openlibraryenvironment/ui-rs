@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStripes, stripesConnect } from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core'
 
-import {
-  Paneset,
-  Pane,
-} from '@folio/stripes/components';
-
-import EditableSettingsList from './settingsComponents';
+import { EditableSettingsList } from './settingsComponents';
 import { FormattedMessage } from 'react-intl';
 
 class RequesterValidationSettings extends React.Component {
@@ -29,6 +24,8 @@ class RequesterValidationSettings extends React.Component {
 
 
   handleSubmit = (setting) => {
+    console.log("handleSubmit called in RequesterValidationSettings")
+    console.log("Setting to sumbit: %o", setting)
     const mutator = this.props.mutator.settings;
     const promise = mutator.PUT(setting)
 
@@ -41,23 +38,16 @@ class RequesterValidationSettings extends React.Component {
     const initialValues = rows.map((row) => ({key: row.key, value: row.value}))
     console.log("Setting Props: %o", this.props)
     return (
-      <Paneset>
-        <Pane
-          defaultWidth='fill'
-          paneTitle={<FormattedMessage id="ui-rs.settings.requester-validation" />}
-        >
-          <EditableSettingsList 
-            data={{
-              settings: rows,
-              refdatavalues
-            }}
-            initialValues={initialValues}
-            onSave={this.handleSubmit}
-            onSubmit={this.handleSubmit}
-            />
-        </Pane>
-      </Paneset>
-      
+      <EditableSettingsList 
+        data={{
+          settings: rows,
+          refdatavalues
+        }}
+        settingSection="requester-validation"
+        initialValues={initialValues}
+        onSave={this.handleSubmit}
+        onSubmit={this.handleSubmit}
+      />
     );
   }
 }
