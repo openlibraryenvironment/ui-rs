@@ -34,16 +34,17 @@ class RequesterValidationSettings extends React.Component {
 
   render() {
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
+
+    const settings = {"settings": rows}
+
     const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : [])
-    const initialValues = rows.map((row) => ({key: row.key, value: row.value}))
     return (
       <EditableSettingsList 
         data={{
-          settings: rows,
           refdatavalues
         }}
         settingSection="requester-validation"
-        initialValues={initialValues}
+        initialValues={settings}
         onSave={this.handleSubmit}
         onSubmit={this.handleSubmit}
       />

@@ -31,7 +31,6 @@ class Z3950Settings extends React.Component {
         }}
         rowFilterFunction={(row) => {
           return (
-            console.log("Row: %o", row),
             row.section === "z3950"
           );
         }

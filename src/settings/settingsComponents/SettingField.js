@@ -30,22 +30,30 @@ export default class SettingField extends React.Component {
 
   renderEditSettingValue = (setting) => {
     const { initialValues, data } = this.props;
-
     // Grab the initial value of the setting
-    const currentValue = initialValues.filter((obj) => {
+    const currentValue = initialValues.settings.filter((obj) => {
       return (obj.key === setting.key);
     })[0].value;
 
     // We need to check if we are working with a String Setting or witha  refdata one
     if (setting.settingType === "String") {
-      return < TextField value={currentValue} />
+      return (
+        <Field
+          name={`${this.props.input.name}`}
+          component={TextField}
+        />
+      );
     } else {
       // Grab refdata values corresponding to setting
       const selectRefValues = data.refdatavalues.filter((obj) => { 
         return obj.desc === setting.vocab
       })[0].values
       return (
-        <Select dataOptions={selectRefValues}/>
+        <Field 
+          name={`${this.props.input.name}`}
+          component={Select}
+          dataOptions={selectRefValues}
+        />
       );
     }
   }

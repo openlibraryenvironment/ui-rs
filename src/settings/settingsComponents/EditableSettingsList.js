@@ -35,7 +35,6 @@ class EditableSettingsList extends React.Component {
             onSave={this.handleSave}
             mutators={mutators}
             data={{
-              settings: data.settings,
               refdatavalues: data.refdatavalues
             }}
             initialValues={this.props.initialValues}

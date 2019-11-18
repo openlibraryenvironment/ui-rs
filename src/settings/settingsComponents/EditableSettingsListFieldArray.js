@@ -10,9 +10,9 @@ export default class EditableSettingsListFieldArray extends React.Component {
 
   handleSave = (index) => {
     console.log("handleSave called in Editable Settings List Field Array")
-    console.log("Props handleSave in ESLFA has access to %o", this.props)
+    console.log("Props handleSave in ESLFA has access to %o", this.props, "index called: ", index)
 
-    const setting = this.props.data.settings[index]
+    const setting = this.props.fields.value[index]
     console.log("handleSave Setting: %o", setting)
     return this.props.onSave(setting)
   }
@@ -20,11 +20,13 @@ export default class EditableSettingsListFieldArray extends React.Component {
 
   render() {
     const { data, fields, mutators } = this.props;
+    let name;
     return (
-      data.settings.map((setting, i) => (
+      (fields.value || []).map((setting, i) => (
+        name = `${fields.name}[${i}]`,
         <Field
           component={SettingField}
-          name={`${fields.name}[${i}]`}
+          name={`${fields.name}[${i}].value`}
           mutators={mutators}
           onSave={() => this.handleSave(i)}
           data={{

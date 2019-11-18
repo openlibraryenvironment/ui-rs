@@ -31,7 +31,6 @@ class LocalNCIPSettings extends React.Component {
         }}
         rowFilterFunction={(row) => {
           return (
-            console.log("Row: %o", row),
             row.section === "Local NCIP"
           );
         }
