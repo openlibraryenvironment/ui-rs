@@ -20,7 +20,6 @@ class SettingPage extends React.Component {
     }
   });
 
-
   static propTypes = {
     mutator: PropTypes.shape({
       settings: PropTypes.object
@@ -28,10 +27,10 @@ class SettingPage extends React.Component {
     sectionName: PropTypes.string,
     resources: PropTypes.shape({
       settings: PropTypes.shape({
-        records: PropTypes.object
+        records: PropTypes.array
       }),
       refdatavalues: PropTypes.shape({
-        records: PropTypes.object
+        records: PropTypes.array
       })
     })
   };
