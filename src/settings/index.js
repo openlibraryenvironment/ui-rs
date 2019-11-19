@@ -20,17 +20,19 @@ class ResourceSharingSettings extends React.Component {
   }
 
   customComponentMaker(section_name) {
-    const custComp = <SettingPage section_name={section_name} />
-    return (custComp);
+    return (props) => <SettingPage section_name={section_name} />;
   }
 
   pageList() {
     let sections = this.getSectionsList();
     const pages = sections.map(section => {
+      const route = section.replace(' ', '_').toLowerCase()
+      let label = section.replace('_', ' ').toLowerCase()
+      label = label.charAt(0).toUpperCase() + label.substring(1) + " settings";
       return (
         {
-          "route": section.replace(' ', '_').toLowerCase(),
-          "label": section,
+          "route": route,
+          "label": label,
           "component": this.customComponentMaker(section)
         }
       );
@@ -38,33 +40,27 @@ class ResourceSharingSettings extends React.Component {
     return ( pages );
   }
 
-  settingsSections = [
-    {
-      label: 'General',
-      pages: [
-        {
-          route: 'requester-validation',
-          label: <FormattedMessage id="ui-rs.settings.requester-validation" />,
-          component: SettingPage,
-        },
-      ],
-    },
-    {
-      label: 'Request',
-      pages: [],
-    },
-    {
-      label: 'Supply',
-      pages: [
-        
-      ],
-    },
-  ];
 
   render() {
-    console.log("Pages: %o", this.pageList())
+
+    // Doing this in render to force update once it's grabbed the sections lists
+    const settingsSections = [
+      {
+        label: 'General',
+        pages: this.pageList(),
+      },
+      {
+        label: 'Request',
+        pages: [],
+      },
+      {
+        label: 'Supply',
+        pages: [],
+      },
+    ];
+
     return (
-      <Settings {...this.props} sections={this.settingsSections} paneTitle="Resource Sharing" />
+      <Settings {...this.props} sections={settingsSections} paneTitle="Resource Sharing" />
     );
   }
 }

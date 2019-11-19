@@ -41,6 +41,7 @@ export default class SettingField extends React.Component {
         <Field
           name={`${this.props.input.name}`}
           component={TextField}
+          parse={v => v} // Lets us send an empty string instead of 'undefined'
         />
       );
     } else {
