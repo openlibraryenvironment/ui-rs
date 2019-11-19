@@ -42,12 +42,11 @@ class ResourceSharingSettings extends React.Component {
 
 
   render() {
-
     // Doing this in render to force update once it's grabbed the sections lists
     const settingsSections = [
       {
         label: 'General',
-        pages: this.pageList(),
+        pages: pageList,
       },
       {
         label: 'Request',
