@@ -34,16 +34,20 @@ class ResourceSharingSettings extends React.Component {
   pageList() {
     const sections = this.getSectionsList();
     const pages = sections.map(section => {
-      const route = section.replace(' ', '_').toLowerCase();
-      let label = section.replace('_', ' ').toLowerCase();
-      label = label.charAt(0).toUpperCase() + label.substring(1) + ' settings';
-      return (
-        {
-          'route': route,
-          'label': label,
-          'component': this.customComponentMaker(section)
-        }
-      );
+      if (section) {
+        const route = section.replace(' ', '_').toLowerCase();
+        let label = section.replace('_', ' ').toLowerCase();
+        label = label.charAt(0).toUpperCase() + label.substring(1) + ' settings';
+        return (
+          {
+            'route': route,
+            'label': label,
+            'component': this.customComponentMaker(section)
+          }
+        );
+      } else {
+        return (undefined);
+      }
     });
     return (pages);
   }
