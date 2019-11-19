@@ -18,7 +18,8 @@ export default class EditableSettingsListFieldArray extends React.Component {
     const { data, fields, mutators } = this.props;
     let name;
     return (
-      (fields.value || []).map((setting, i) => (
+      // Returns the settings in alphabetical order
+      (fields.value || []).sort((a,b) => (a.key > b.key) ? 1 : ((b.key > a.key) ? -1 : 0)).map((setting, i) => (
         name = `${fields.name}[${i}]`,
         <Field
           component={SettingField}
