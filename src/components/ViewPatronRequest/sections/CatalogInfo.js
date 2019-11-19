@@ -37,9 +37,7 @@ class CatalogInfo extends React.Component {
         closedByDefault={this.props.closedByDefault}
       >
         <Card
-          id={
-            `${this.props.id}-card`
-          }
+          id={`${this.props.id}-card`}
           headerStart="Catalog"
           roundedBorder
           cardClass={css.catalogCard}
@@ -50,9 +48,7 @@ class CatalogInfo extends React.Component {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href={
-                  `${stripes.config.sharedIndexUI}/inventory/view/${id}`
-                }
+                href={`${stripes.config.sharedIndexUI}/inventory/view/${id}`}
               >
                 [Link to Shared Index]
               </a>
