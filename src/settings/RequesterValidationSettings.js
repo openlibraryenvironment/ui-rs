@@ -12,7 +12,7 @@ class RequesterValidationSettings extends React.Component {
       path: 'rs/settings/appSettings',
       params: {
         stats: true,
-        filters: "&section=Z3950"
+        //filters: "section=z3950"
       },
       records: 'results',
     },
@@ -39,6 +39,7 @@ class RequesterValidationSettings extends React.Component {
     const settings = {"settings": rows}
     const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : [])
 
+    console.log(rows)
     return (
       <EditableSettingsList 
         data={{
