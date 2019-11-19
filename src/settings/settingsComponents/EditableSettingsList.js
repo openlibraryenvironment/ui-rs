@@ -10,11 +10,17 @@ import { FormattedMessage } from 'react-intl';
 import EditableSettingsListFieldArray from './EditableSettingsListFieldArray';
 
 class EditableSettingsList extends React.Component {
+  static propTypes = {
+    onSave: PropTypes.func,
+    form: PropTypes.object,
+    data: PropTypes.shape({
+      refdatavalues: PropTypes.object
+    })
+  };
 
   handleSave = (...rest) => {
     return this.props.onSave(...rest)
   }
-
 
   render() {
     const {
