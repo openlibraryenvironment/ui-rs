@@ -2,9 +2,10 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
-import RequesterValidationSettings from './RequesterValidationSettings';
+import SettingPage from './SettingPage';
+import SettingsPages from './SettingsPages';
 
-class ResourceSharingSettings extends React.Component {
+class ResourceSharingSettings extends React.Component { 
   settingsSections = [
     {
       label: 'General',
@@ -12,7 +13,7 @@ class ResourceSharingSettings extends React.Component {
         {
           route: 'requester-validation',
           label: <FormattedMessage id="ui-rs.settings.requester-validation" />,
-          component: RequesterValidationSettings,
+          component: SettingPage,
         },
       ],
     },
@@ -30,7 +31,10 @@ class ResourceSharingSettings extends React.Component {
 
   render() {
     return (
+      <React.Fragment>
+        <SettingsPages />
       <Settings {...this.props} sections={this.settingsSections} paneTitle="Resource Sharing" />
+      </React.Fragment>
     );
   }
 }
