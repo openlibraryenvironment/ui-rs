@@ -1,17 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 import SettingPage from './SettingPage';
 
-class ResourceSharingSettings extends React.Component { 
+class ResourceSharingSettings extends React.Component {
   static manifest = Object.freeze({
     settings: {
       type: 'okapi',
       path: 'rs/settings/appSettings',
-      //records: 'results',
     },
   });
+
+  static propTypes = {
+    resources: PropTypes.shape({
+      settings: PropTypes.shape({
+        records: PropTypes.array
+      })
+    }),
+  };
 
   getSectionsList() {
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
@@ -40,10 +48,55 @@ class ResourceSharingSettings extends React.Component {
     return ( pages );
   }
 
+  // Backup sections for initial render (Settings doesn't render dynamically properly at first).
+  // Whenever new sections are added, they won't show up on first render unless added here.
+  staticSettingsSections = [
+    {
+      label: 'General',
+      pages: [
+        {
+          route: 'shared_index',
+          label: 'Shared index settings',
+          component: this.customComponentMaker('shared_index')
+        },
+        {
+          route: 'z3950',
+          label: 'Z3950 settings',
+          component: this.customComponentMaker('z3950')
+        },
+        {
+          route: 'requests',
+          label: 'Requests settings',
+          component: this.customComponentMaker('requests')
+        },
+        {
+          route: 'requester_validation',
+          label: 'Requester validation settings',
+          component: this.customComponentMaker('Requester Validation')
+        },
+        {
+          route: 'local_ncip',
+          label: 'Local ncip settings',
+          component: this.customComponentMaker('Local NCIP')
+        },
+      ],
+    },
+    {
+      label: 'Request',
+      pages: [],
+    },
+    {
+      label: 'Supply',
+      pages: [],
+    },
+  ];
 
   render() {
+    const pageList = this.pageList();
+
     // Doing this in render to force update once it's grabbed the sections lists
-    const settingsSections = [
+    
+    const dynamicSettingsSections = [
       {
         label: 'General',
         pages: pageList,
@@ -58,9 +111,16 @@ class ResourceSharingSettings extends React.Component {
       },
     ];
 
-    return (
-      <Settings {...this.props} sections={settingsSections} paneTitle="Resource Sharing" />
-    );
+    if (pageList[0]) {
+      return (
+        <Settings {...this.props} sections={dynamicSettingsSections} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
+      );
+    } else {
+      return (
+        <Settings {...this.props} sections={this.staticSettingsSections} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
+      );
+    }
+    
   }
 }
 
