@@ -1,25 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Field, Form } from 'react-final-form';
-import setFieldData from 'final-form-set-field-data';
-
-import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
   Button,
   Card,
   Col,
-  Pane,
   Row,
   Select,
-  TextArea,
   TextField,
 } from '@folio/stripes/components';
 
 import { FormattedMessage } from 'react-intl';
 
 export default class SettingField extends React.Component {
+
+  static propTypes = {
+    initialValues: PropTypes.object,
+    data: PropTypes.shape({
+      refdatavalues: PropTypes.arrayOf(PropTypes.object),
+      currentSetting: PropTypes.object
+    }),
+    input: PropTypes.object
+  };
+
   state = {
     editing: false
   };
@@ -106,8 +110,8 @@ export default class SettingField extends React.Component {
   render() {
     const { currentSetting } = this.props.data
     let setting;
-    if (currentSetting[0]) {
-      setting = currentSetting[0];
+    if (currentSetting) {
+      setting = currentSetting;
     } else {
       setting = {};
     }
@@ -120,7 +124,7 @@ export default class SettingField extends React.Component {
     }
     return (
       <Card
-        headerStart={currentSetting[0] ? currentSetting[0].key : "Setting Name Loading"}
+        headerStart={currentSetting ? currentSetting.key : "Setting Name Loading"}
         headerEnd={this.renderEditButton()}
         hasMargin
         roundedBorder

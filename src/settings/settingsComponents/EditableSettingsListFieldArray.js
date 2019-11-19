@@ -33,7 +33,7 @@ export default class EditableSettingsListFieldArray extends React.Component {
           mutators={mutators}
           onSave={() => this.handleSave(i)}
           data={{
-            currentSetting: [setting, i],
+            currentSetting: setting,
             refdatavalues: data.refdatavalues
           }}
           initialValues={this.props.initialValues}
