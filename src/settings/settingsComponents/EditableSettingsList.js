@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { Pane } from '@folio/stripes/components';
@@ -14,12 +13,14 @@ class EditableSettingsList extends React.Component {
     onSave: PropTypes.func,
     form: PropTypes.object,
     data: PropTypes.shape({
-      refdatavalues: PropTypes.object
-    })
+      refdatavalues: PropTypes.arrayOf(PropTypes.object)
+    }),
+    settingSection: PropTypes.string,
+    initialValues: PropTypes.object
   };
 
   handleSave = (...rest) => {
-    return this.props.onSave(...rest)
+    return this.props.onSave(...rest);
   }
 
   render() {
@@ -29,7 +30,7 @@ class EditableSettingsList extends React.Component {
     } = this.props;
     return (
       <Pane
-        defaultWidth='fill'
+        defaultWidth="fill"
         id={`settings-${this.props.settingSection}`}
         paneTitle={<FormattedMessage id="ui-rs.settings.requester-validation" />}
       >
