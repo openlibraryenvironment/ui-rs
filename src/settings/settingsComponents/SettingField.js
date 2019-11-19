@@ -71,7 +71,6 @@ export default class SettingField extends React.Component {
           type="submit" 
           onClick={(e) => {
             e.preventDefault()
-            console.log("Form filled, submitting")
             return (
               this.handleSave()
             );
@@ -86,7 +85,6 @@ export default class SettingField extends React.Component {
         <Button
           onClick={(e) => {
             e.preventDefault()
-            console.log("Switching to edit mode")
             return (
               this.setState({editing: true})
             );

@@ -1,22 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
-import setFieldData from 'final-form-set-field-data';
-import { FormattedMessage } from 'react-intl';
 
 import SettingField from './SettingField';
 
 export default class EditableSettingsListFieldArray extends React.Component {
+  static propTypes = {
+    fields: PropTypes.object
+  };
 
   handleSave = (index) => {
     const setting = this.props.fields.value[index]
     return this.props.onSave(setting)
   }
 
-
   render() {
     const { data, fields, mutators } = this.props;
-    let name;
     return (
       // Returns the settings in alphabetical order
       (fields.value || []).sort((a,b) => (a.key > b.key) ? 1 : ((b.key > a.key) ? -1 : 0)).map((setting, i) => (
