@@ -6,27 +6,34 @@ import SettingField from './SettingField';
 
 export default class EditableSettingsListFieldArray extends React.Component {
   static propTypes = {
-    fields: PropTypes.object
+    fields: PropTypes.object,
+    onSave: PropTypes.func,
+    data: PropTypes.shape({
+      refdatavalues: PropTypes.arrayOf(PropTypes.object)
+    }),
+    mutators: PropTypes.object,
+    initialValues: PropTypes.object
   };
 
   handleSave = (index) => {
-    const setting = this.props.fields.value[index]
-    return this.props.onSave(setting)
+    const setting = this.props.fields.value[index];
+    return this.props.onSave(setting);
   }
 
   render() {
     const { data, fields, mutators } = this.props;
     return (
       // Returns the settings in alphabetical order
-      (fields.value || []).sort((a,b) => (a.key > b.key) ? 1 : ((b.key > a.key) ? -1 : 0)).map((setting, i) => (
-        name = `${fields.name}[${i}]`,
+      (fields.value || []).sort((a, b) => {
+        return (a.key > b.key ? 1 : (b.key > a.key) ? -1 : 0);
+      }).map((setting, i) => (
         <Field
           component={SettingField}
           name={`${fields.name}[${i}].value`}
           mutators={mutators}
           onSave={() => this.handleSave(i)}
           data={{
-            currentSetting: [setting, i], 
+            currentSetting: [setting, i],
             refdatavalues: data.refdatavalues
           }}
           initialValues={this.props.initialValues}
