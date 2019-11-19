@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, Form } from 'react-final-form';
+import { Field } from 'react-final-form';
 
 import {
   Button,
@@ -14,7 +14,6 @@ import {
 import { FormattedMessage } from 'react-intl';
 
 export default class SettingField extends React.Component {
-
   static propTypes = {
     initialValues: PropTypes.object,
     data: PropTypes.shape({
@@ -29,15 +28,15 @@ export default class SettingField extends React.Component {
   };
 
   renderSettingValue = (setting) => {
-    return <p> {setting.value ? setting.value : <FormattedMessage id="ui-rs.settings.no-current-value" />} </p>;
+    return (
+      <p>
+        {setting.value ? setting.value : <FormattedMessage id="ui-rs.settings.no-current-value" />}
+      </p>
+    );
   }
 
   renderEditSettingValue = (setting) => {
     const { initialValues, data } = this.props;
-    // Grab the initial value of the setting
-    const currentValue = initialValues.settings.filter((obj) => {
-      return (obj.key === setting.key);
-    })[0].value;
 
     // We need to check if we are working with a String Setting or witha  refdata one
     if (setting.settingType === "String") {
