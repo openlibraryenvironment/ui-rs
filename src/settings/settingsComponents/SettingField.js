@@ -15,12 +15,12 @@ import { FormattedMessage } from 'react-intl';
 
 export default class SettingField extends React.Component {
   static propTypes = {
-    initialValues: PropTypes.object,
     data: PropTypes.shape({
       refdatavalues: PropTypes.arrayOf(PropTypes.object),
       currentSetting: PropTypes.object
     }),
-    input: PropTypes.object
+    input: PropTypes.object,
+    onSave: PropTypes.func
   };
 
   state = {
@@ -36,10 +36,10 @@ export default class SettingField extends React.Component {
   }
 
   renderEditSettingValue = (setting) => {
-    const { initialValues, data } = this.props;
+    const { data } = this.props;
 
     // We need to check if we are working with a String Setting or witha  refdata one
-    if (setting.settingType === "String") {
+    if (setting.settingType === 'String') {
       return (
         <Field
           name={`${this.props.input.name}`}
@@ -49,11 +49,11 @@ export default class SettingField extends React.Component {
       );
     } else {
       // Grab refdata values corresponding to setting
-      const selectRefValues = data.refdatavalues.filter((obj) => { 
-        return obj.desc === setting.vocab
-      })[0].values
+      const selectRefValues = data.refdatavalues.filter((obj) => {
+        return obj.desc === setting.vocab;
+      })[0].values;
       return (
-        <Field 
+        <Field
           name={`${this.props.input.name}`}
           component={Select}
           dataOptions={selectRefValues}
@@ -65,15 +65,15 @@ export default class SettingField extends React.Component {
 
   renderEditButton() {
     const { editing } = this.state;
-    let EditText
+    let EditText;
 
-    if ( editing === true ) {
-      EditText = <FormattedMessage id="ui-rs.settings.finish-editing"/>
+    if (editing === true) {
+      EditText = <FormattedMessage id="ui-rs.settings.finish-editing" />;
       return (
         <Button
-          type="submit" 
+          type="submit"
           onClick={(e) => {
-            e.preventDefault()
+            e.preventDefault();
             return (
               this.handleSave()
             );
@@ -83,13 +83,13 @@ export default class SettingField extends React.Component {
         </Button>
       );
     } else {
-      EditText = <FormattedMessage id="ui-rs.settings.edit"/>
+      EditText = <FormattedMessage id="ui-rs.settings.edit" />;
       return (
         <Button
           onClick={(e) => {
-            e.preventDefault()
+            e.preventDefault();
             return (
-              this.setState({editing: true})
+              this.setState({ editing: true })
             );
           }}
         >
@@ -97,17 +97,16 @@ export default class SettingField extends React.Component {
         </Button>
       );
     }
-    
   }
 
   handleSave = () => {
     this.props.onSave()
-      .then(() => this.setState({ editing: false }))
+      .then(() => this.setState({ editing: false }));
   }
 
 
   render() {
-    const { currentSetting } = this.props.data
+    const { currentSetting } = this.props.data;
     let setting;
     if (currentSetting) {
       setting = currentSetting;
@@ -123,7 +122,7 @@ export default class SettingField extends React.Component {
     }
     return (
       <Card
-        headerStart={currentSetting ? currentSetting.key : "Setting Name Loading"}
+        headerStart={currentSetting ? currentSetting.key : 'Setting Name Loading'}
         headerEnd={this.renderEditButton()}
         hasMargin
         roundedBorder
@@ -137,4 +136,3 @@ export default class SettingField extends React.Component {
     );
   }
 }
-

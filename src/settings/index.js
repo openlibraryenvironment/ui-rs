@@ -28,7 +28,7 @@ class ResourceSharingSettings extends React.Component {
   }
 
   customComponentMaker(sectionName) {
-    return (props) => <SettingPage sectionName={sectionName} />;
+    return (props) => <SettingPage sectionName={sectionName} {...props} />;
   }
 
   pageList() {
