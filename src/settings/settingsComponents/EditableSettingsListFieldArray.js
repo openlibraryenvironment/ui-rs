@@ -9,11 +9,7 @@ import SettingField from './SettingField';
 export default class EditableSettingsListFieldArray extends React.Component {
 
   handleSave = (index) => {
-    console.log("handleSave called in Editable Settings List Field Array")
-    console.log("Props handleSave in ESLFA has access to %o", this.props, "index called: ", index)
-
     const setting = this.props.fields.value[index]
-    console.log("handleSave Setting: %o", setting)
     return this.props.onSave(setting)
   }
 

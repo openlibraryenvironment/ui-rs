@@ -99,7 +99,6 @@ export default class SettingField extends React.Component {
   }
 
   handleSave = () => {
-    console.log("handleSave called in SettingField")
     this.props.onSave()
       .then(() => this.setState({ editing: false }))
   }

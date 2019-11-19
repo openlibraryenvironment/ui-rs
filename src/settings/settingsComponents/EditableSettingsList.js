@@ -12,7 +12,6 @@ import EditableSettingsListFieldArray from './EditableSettingsListFieldArray';
 class EditableSettingsList extends React.Component {
 
   handleSave = (...rest) => {
-    console.log("handSave called in Editable Settings List")
     return this.props.onSave(...rest)
   }
 

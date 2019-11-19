@@ -9,7 +9,11 @@ class RequesterValidationSettings extends React.Component {
   static manifest = Object.freeze({
     settings: {
       type: 'okapi',
-      path: 'rs/settings/appSettings?stats=true',
+      path: 'rs/settings/appSettings',
+      params: {
+        stats: true,
+        filters: "&section=Z3950"
+      },
       records: 'results',
     },
     refdatavalues: {
@@ -24,8 +28,6 @@ class RequesterValidationSettings extends React.Component {
 
 
   handleSubmit = (setting) => {
-    console.log("handleSubmit called in RequesterValidationSettings")
-    console.log("Setting to sumbit: %o", setting)
     const mutator = this.props.mutator.settings;
     const promise = mutator.PUT(setting)
 
@@ -34,10 +36,9 @@ class RequesterValidationSettings extends React.Component {
 
   render() {
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
-
     const settings = {"settings": rows}
-
     const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : [])
+
     return (
       <EditableSettingsList 
         data={{
