@@ -12,7 +12,6 @@ class SettingPage extends React.Component {
       path: 'rs/settings/appSettings',
       params: {
         stats: true,
-        //filters: 'section=z3950'
       },
       records: 'results',
     },
@@ -35,12 +34,12 @@ class SettingPage extends React.Component {
   }
 
   render() {
-    const { section_name } = this.props;
+    const { sectionName } = this.props;
 
     // We grab the rows and check for a valid filter
-    
+
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
-    const filteredRows = section_name ? rows.filter(obj => obj.section === section_name) : rows;
+    const filteredRows = sectionName ? rows.filter(obj => obj.section === sectionName) : rows;
 
     const settings = {"settings": filteredRows}
     const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : [])

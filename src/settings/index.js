@@ -23,29 +23,29 @@ class ResourceSharingSettings extends React.Component {
 
   getSectionsList() {
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
-    const sections = Array.from(new Set(rows.map(obj => obj.section)))
-    return(sections);
+    const sections = Array.from(new Set(rows.map(obj => obj.section)));
+    return (sections);
   }
 
-  customComponentMaker(section_name) {
-    return (props) => <SettingPage section_name={section_name} />;
+  customComponentMaker(sectionName) {
+    return (props) => <SettingPage sectionName={sectionName} />;
   }
 
   pageList() {
-    let sections = this.getSectionsList();
+    const sections = this.getSectionsList();
     const pages = sections.map(section => {
-      const route = section.replace(' ', '_').toLowerCase()
-      let label = section.replace('_', ' ').toLowerCase()
-      label = label.charAt(0).toUpperCase() + label.substring(1) + " settings";
+      const route = section.replace(' ', '_').toLowerCase();
+      let label = section.replace('_', ' ').toLowerCase();
+      label = label.charAt(0).toUpperCase() + label.substring(1) + ' settings';
       return (
         {
-          "route": route,
-          "label": label,
-          "component": this.customComponentMaker(section)
+          'route': route,
+          'label': label,
+          'component': this.customComponentMaker(section)
         }
       );
     });
-    return ( pages );
+    return (pages);
   }
 
   // Backup sections for initial render (Settings doesn't render dynamically properly at first).
@@ -95,7 +95,6 @@ class ResourceSharingSettings extends React.Component {
     const pageList = this.pageList();
 
     // Doing this in render to force update once it's grabbed the sections lists
-    
     const dynamicSettingsSections = [
       {
         label: 'General',
@@ -120,7 +119,6 @@ class ResourceSharingSettings extends React.Component {
         <Settings {...this.props} sections={this.staticSettingsSections} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
       );
     }
-    
   }
 }
 
