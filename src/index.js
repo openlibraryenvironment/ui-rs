@@ -52,20 +52,20 @@ class ResourceSharing extends React.Component {
           />
           <Route path={`${path}/requests/create`} component={CreateEditRoute} />
           <Route path={`${path}/requests/edit/:id`} component={CreateEditRoute} />
+          <Redirect
+            exact
+            from={`${path}/requests/view/:id`}
+            to={`${path}/requests/view/:id/details`}
+          />
+          <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
+          <NestedRoute path={`${path}/requests/view/:id`} component={ViewRoute}>
+            <NestedRoute path={`${path}/requests/view/:id/details`} component={DetailsRoute} />
+            <NestedRoute path={`${path}/requests/view/:id/flow`} component={FlowRoute} />
+          </NestedRoute>
           <Route
             path={`${path}/requests`}
             render={() => <this.connectedPatronRequests {...this.props} appName={appName} />}
           />
-          <Route path={`${path}/view/:id/pullslip`} component={PullSlipRoute} />
-          <Redirect
-            exact
-            from={`${path}/view/:id`}
-            to={`${path}/view/:id/details`}
-          />
-          <NestedRoute path={`${path}/view/:id`} component={ViewRoute}>
-            <NestedRoute path={`${path}/view/:id/details`} component={DetailsRoute} />
-            <NestedRoute path={`${path}/view/:id/flow`} component={FlowRoute} />
-          </NestedRoute>
         </Switch>
       </AppNameContext.Provider>
     );
