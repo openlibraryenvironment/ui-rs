@@ -38,11 +38,18 @@ const ViewRoute = ({ children, history, location: { pathname }, match: { url, pa
           </Layout>
         }
         actionMenu={() => (
-          <Button buttonStyle="dropdownItem" to={`../../requests/edit/${params.id}`} id="clickable-edit-patronrequest">
-            <Icon icon="edit">
-              <FormattedMessage id="ui-rs.edit" />
-            </Icon>
-          </Button>
+          <React.Fragment>
+            <Button buttonStyle="dropdownItem" to={`../../requests/edit/${params.id}`} id="clickable-edit-patronrequest">
+              <Icon icon="edit">
+                <FormattedMessage id="ui-rs.edit" />
+              </Icon>
+            </Button>
+            <Button buttonStyle="dropdownItem" to="pullslip" id="clickable-pullslip">
+              <Icon icon="print">
+                <FormattedMessage id="ui-rs.printPullslip" />
+              </Icon>
+            </Button>
+          </React.Fragment>
         )}
       >
         {children}
