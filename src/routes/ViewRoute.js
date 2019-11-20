@@ -55,9 +55,9 @@ ViewRoute.propTypes = {
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
   match: PropTypes.shape({
     params: PropTypes.object,
-    url: PropTypes.object,
+    url: PropTypes.string,
   }).isRequired,
-  location: PropTypes.shape({ pathname: PropTypes.object }).isRequired,
+  location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
   history: PropTypes.object.isRequired,
 };
 
