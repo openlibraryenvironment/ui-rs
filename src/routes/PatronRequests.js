@@ -86,7 +86,7 @@ export default class PatronRequests extends React.Component {
   }
 
   render() {
-    const { mutator, resources, appName } = this.props;
+    const { mutator, resources, appName, match: { path } } = this.props;
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
       name: `@folio/${appName}`,
       stripes: Object.assign({}, packageInfo.stripes, {
@@ -124,8 +124,8 @@ export default class PatronRequests extends React.Component {
           filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={PatronRequestDetailPane}
-          editRecordComponent={EditPatronRequest}
+          createRecordPath={`${path}/requests/create`}
+          viewRecordPathById={id => `${path}/view/${id}`}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms="module.rs.enabled"
           onCreate={this.createPatronRequest}
