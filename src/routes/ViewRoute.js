@@ -39,7 +39,7 @@ const ViewRoute = ({ children, history, location: { pathname }, match: { url, pa
         }
         actionMenu={() => (
           <React.Fragment>
-            <Button buttonStyle="dropdownItem" to={`../../requests/edit/${params.id}`} id="clickable-edit-patronrequest">
+            <Button buttonStyle="dropdownItem" to={`../../edit/${params.id}`} id="clickable-edit-patronrequest">
               <Icon icon="edit">
                 <FormattedMessage id="ui-rs.edit" />
               </Icon>
