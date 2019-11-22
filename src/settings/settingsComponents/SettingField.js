@@ -30,7 +30,7 @@ export default class SettingField extends React.Component {
   renderSettingValue = (setting) => {
     return (
       <p>
-        {setting.value ? setting.value : <FormattedMessage id="ui-rs.settings.no-current-value" />}
+        {setting.value ? setting.value : (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
       </p>
     );
   }
