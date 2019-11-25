@@ -80,7 +80,7 @@ class DirectoryEntryForm extends React.Component {
 
     const selectedRecord = this.props.resources ? this.props.resources.selectedRecord : {};
     let name;
-    if (selectedRecord){
+    if (selectedRecord) {
       if (selectedRecord.records) {
         if (selectedRecord.records[0]) {
           name = selectedRecord.records[0].fullyQualifiedName;
