@@ -28,11 +28,19 @@ export default class SettingField extends React.Component {
   };
 
   renderSettingValue = (setting) => {
-    return (
-      <p>
-        {setting.value ? setting.value : (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
-      </p>
-    );
+    if (setting.settingType !== 'Password') {
+      return (
+        <p>
+          {setting.value ? setting.value : (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
+        </p>
+      );
+    } else {
+      return (
+        <p>
+          {setting.value ? '********' : (setting.defValue ? '[default] ********' : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
+        </p>
+      );
+    }
   }
 
   renderEditSettingValue = (setting) => {
@@ -49,14 +57,12 @@ export default class SettingField extends React.Component {
       );
     } else if (setting.settingType === 'Password') {
       return (
-        <React.Fragment>
-        <p>This is a password field</p>
         <Field
           name={`${this.props.input.name}`}
+          type="password"
           component={TextField}
           parse={v => v} // Lets us send an empty string instead of 'undefined'
         />
-        </React.Fragment>
       );
     } else {
       // Grab refdata values corresponding to setting
