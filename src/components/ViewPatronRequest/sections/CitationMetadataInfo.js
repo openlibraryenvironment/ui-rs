@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
-  Accordion,
   Card,
   Col,
   KeyValue,
@@ -15,7 +14,6 @@ class CitationMetadataInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
-    closedByDefault: PropTypes.bool,
   };
 
   render() {
@@ -31,62 +29,56 @@ class CitationMetadataInfo extends React.Component {
     const idValue = record[hasISSN ? 'issn' : 'isbn'];
 
     return (
-      <Accordion
-        id={this.props.id}
-        label={<FormattedMessage id="ui-rs.information.heading.citationMetadata" />}
-        closedByDefault={this.props.closedByDefault}
+      <Card
+        id={`${this.props.id}-card`}
+        headerStart={summary}
+        roundedBorder
+        cardClass={css.citationMetadataCard}
+        headerClass={css.citationMetadataCardHeader}
       >
-        <Card
-          id={`${this.props.id}-card`}
-          headerStart={summary}
-          roundedBorder
-          cardClass={css.citationMetadataCard}
-          headerClass={css.citationMetadataCardHeader}
-        >
-          <Row>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.title" />}
-                value={record.title}
-              />
-            </Col>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.author" />}
-                value={record.author}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id={idKey} />}
-                value={idValue}
-              />
-            </Col>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.date" />}
-                value={record.publicationDate}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.publisher" />}
-                value={record.publisher}
-              />
-            </Col>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.edition" />}
-                value={record.edition}
-              />
-            </Col>
-          </Row>
-        </Card>
-      </Accordion>
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.title" />}
+              value={record.title}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.author" />}
+              value={record.author}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id={idKey} />}
+              value={idValue}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.date" />}
+              value={record.publicationDate}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.publisher" />}
+              value={record.publisher}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.edition" />}
+              value={record.edition}
+            />
+          </Col>
+        </Row>
+      </Card>
     );
   }
 }

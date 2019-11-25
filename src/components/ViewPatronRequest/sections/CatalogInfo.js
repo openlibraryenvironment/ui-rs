@@ -3,10 +3,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { withStripes } from '@folio/stripes/core';
 import {
-  Accordion,
   Card,
   Col,
   Row,
@@ -18,7 +16,6 @@ class CatalogInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
-    closedByDefault: PropTypes.bool,
     stripes: PropTypes.shape({
       config: PropTypes.shape({
         sharedIndexUI: PropTypes.string.isRequired,
@@ -31,31 +28,25 @@ class CatalogInfo extends React.Component {
     const id = record.systemInstanceIdentifier;
 
     return (
-      <Accordion
-        id={this.props.id}
-        label={<FormattedMessage id="ui-rs.information.heading.catalogInfo" />}
-        closedByDefault={this.props.closedByDefault}
+      <Card
+        id={`${this.props.id}-card`}
+        headerStart="Catalog"
+        roundedBorder
+        cardClass={css.catalogCard}
+        headerClass={css.catalogCardHeader}
       >
-        <Card
-          id={`${this.props.id}-card`}
-          headerStart="Catalog"
-          roundedBorder
-          cardClass={css.catalogCard}
-          headerClass={css.catalogCardHeader}
-        >
-          <Row>
-            <Col xs={12}>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`${stripes.config.sharedIndexUI}/inventory/view/${id}`}
-              >
-                [Link to Shared Index]
-              </a>
-            </Col>
-          </Row>
-        </Card>
-      </Accordion>
+        <Row>
+          <Col xs={12}>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`${stripes.config.sharedIndexUI}/inventory/view/${id}`}
+            >
+              [Link to Shared Index]
+            </a>
+          </Col>
+        </Row>
+      </Card>
     );
   }
 }
