@@ -38,7 +38,7 @@ export default class SettingField extends React.Component {
   renderEditSettingValue = (setting) => {
     const { data } = this.props;
 
-    // We need to check if we are working with a String Setting or witha  refdata one
+    // We need to check if we are working with a String Setting or with a refdata one
     if (setting.settingType === 'String') {
       return (
         <Field
@@ -46,6 +46,17 @@ export default class SettingField extends React.Component {
           component={TextField}
           parse={v => v} // Lets us send an empty string instead of 'undefined'
         />
+      );
+    } else if (setting.settingType === 'Password') {
+      return (
+        <React.Fragment>
+        <p>This is a password field</p>
+        <Field
+          name={`${this.props.input.name}`}
+          component={TextField}
+          parse={v => v} // Lets us send an empty string instead of 'undefined'
+        />
+        </React.Fragment>
       );
     } else {
       // Grab refdata values corresponding to setting
