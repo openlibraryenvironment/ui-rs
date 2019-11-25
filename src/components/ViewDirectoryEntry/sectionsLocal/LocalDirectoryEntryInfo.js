@@ -27,32 +27,35 @@ class LocalDirectoryEntryInfo extends React.Component {
         onToggle={this.props.onToggle}
       >
         <Row>
+          {custprops.local_patronAccountId ?
           <Col xs={6}>
             <KeyValue
-              label={custprops.local_patronAccountBarcode.label}
-              value={record.customProperties.local_patronAccountBarcode ? record.customProperties.local_patronAccountBarcode[0].value : '-'}
+              label={custprops.local_patronAccountId.label}
+              value={record.customProperties.local_patronAccountId ? record.customProperties.local_patronAccountId[0].value : '-'}
             />
-          </Col>
-          <Col xs={6}>
-            <KeyValue
-              label={custprops.local_institutionalPatronAccount.label}
-              value={record.customProperties.local_institutionalPatronAccount ? record.customProperties.local_institutionalPatronAccount[0].value : '-'}
-            />
-          </Col>
-        </Row>
-        <Row>
+          </Col> 
+          : null
+          }
+          {custprops.local_widget_2 ?
           <Col xs={6}>
             <KeyValue
               label={custprops.local_widget_2.label}
               value={record.customProperties.local_widget_2 ? record.customProperties.local_widget_2[0].value : '-'}
             />
           </Col>
+          : null
+          }
+        </Row>
+        <Row>
+          {custprops.local_widget_3 ?
           <Col xs={6}>
             <KeyValue
               label={custprops.local_widget_3.label}
               value={record.customProperties.local_widget_3 ? record.customProperties.local_widget_3[0].value : '-'}
             />
           </Col>
+          : null
+          }
         </Row>
       </Accordion>
     );
