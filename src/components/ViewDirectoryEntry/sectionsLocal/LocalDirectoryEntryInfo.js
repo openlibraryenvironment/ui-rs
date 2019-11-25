@@ -27,11 +27,11 @@ class LocalDirectoryEntryInfo extends React.Component {
         onToggle={this.props.onToggle}
       >
         <Row>
-          {custprops.local_patronAccountId ?
+          {custprops.local_institutionalPatronId ?
           <Col xs={6}>
             <KeyValue
-              label={custprops.local_patronAccountId.label}
-              value={record.customProperties.local_patronAccountId ? record.customProperties.local_patronAccountId[0].value : '-'}
+              label={custprops.local_institutionalPatronId.label}
+              value={record.customProperties.local_institutionalPatronId ? record.customProperties.local_institutionalPatronId[0].value : '-'}
             />
           </Col> 
           : null
