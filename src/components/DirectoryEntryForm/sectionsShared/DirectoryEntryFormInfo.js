@@ -159,7 +159,7 @@ class DirectoryEntryFormInfo extends React.Component {
               />
             </Col>
             <Col xs={4}>
-            <Field
+              <Field
                 id="edit-directory-entry-email-address"
                 name="emailAddress"
                 component={TextField}
@@ -169,7 +169,7 @@ class DirectoryEntryFormInfo extends React.Component {
               />
             </Col>
             <Col xs={4}>
-            <Field
+              <Field
                 id="edit-directory-entry-contact-name"
                 name="contactName"
                 component={TextField}
