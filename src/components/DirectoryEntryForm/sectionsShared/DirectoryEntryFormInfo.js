@@ -147,6 +147,38 @@ class DirectoryEntryFormInfo extends React.Component {
               </Field>
             </Col>
           </Row>
+          <Row>
+            <Col xs={4}>
+              <Field
+                id="edit-directory-entry-phone-number"
+                name="phoneNumber"
+                component={TextField}
+                label={<FormattedMessage id="ui-directory.information.phoneNumber" />}
+                validate={required}
+                required
+              />
+            </Col>
+            <Col xs={4}>
+            <Field
+                id="edit-directory-entry-email-address"
+                name="emailAddress"
+                component={TextField}
+                label={<FormattedMessage id="ui-directory.information.emailAddress" />}
+                validate={required}
+                required
+              />
+            </Col>
+            <Col xs={4}>
+            <Field
+                id="edit-directory-entry-contact-name"
+                name="contactName"
+                component={TextField}
+                label={<FormattedMessage id="ui-directory.information.contactName" />}
+                validate={required}
+                required
+              />
+            </Col>
+          </Row>
           {warning ? <MessageBanner type="warning"> {warning} </MessageBanner> : null}
         </React.Fragment>
       </Accordion>
