@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import stringify from 'json-stable-stringify';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
 
 import {
@@ -33,7 +34,7 @@ const ViewPatronRequest = ({ record }) => (
       label={<FormattedMessage id="ui-rs.information.heading.developer" />}
       displayWhenClosed={<FormattedMessage id="ui-rs.information.heading.developer.help" />}
     >
-      <pre>{JSON.stringify(record, null, 2)}</pre>
+      <pre>{stringify(record, { space: 2 })}</pre>
     </Accordion>
   </AccordionSet>
 );
