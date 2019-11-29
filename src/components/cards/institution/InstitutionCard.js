@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import stringify from 'json-stable-stringify';
 import {
   Accordion,
   Card,
@@ -94,7 +95,7 @@ class InstitutionCard extends React.Component {
               closedByDefault
             >
               <pre>
-                {JSON.stringify(institution, null, 2)}
+                {stringify(institution, { space: 2 })}
               </pre>
             </Accordion>
           </Col>
