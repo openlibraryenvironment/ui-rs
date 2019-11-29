@@ -101,5 +101,8 @@
   "flow.itemFound": "Item found - ready to ship",
   "flow.shippedToRequester": "Item shipped to requester",
   "printPullslip": "Print pull slip",
-  "button.print": "Print"
+  "button.print": "Print",
+  "printAllPullSlips": "Print pull-slips for all records in list",
+  "printPullSlips": "Print pull-slips",
+  "SENTINEL": "SENTINEL"
 }
