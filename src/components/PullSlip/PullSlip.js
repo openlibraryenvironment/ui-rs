@@ -44,8 +44,8 @@ function recordToData(intl, record) {
     title: record.title,
     author: record.author,
     volume: record.volume,
-    phoneNumber: 'XXX phoneNumber', // Not yet available
-    emailAddress: 'XXX emailAddress', // Not yet available
+    phoneNumber: get(record, 'resolvedRequester.owner.phoneNumber'),
+    emailAddress: get(record, 'resolvedRequester.owner.emailAddress'),
     callNumber: record.localCallNumber,
     location: get(record, 'pickLocation.name'),
     fromSlug: get(record, 'resolvedSupplier.owner.slug'),
