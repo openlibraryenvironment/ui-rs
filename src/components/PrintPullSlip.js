@@ -16,6 +16,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import ReactToPrint from 'react-to-print';
+import stringify from 'json-stable-stringify';
 import { Button, AccordionSet, Accordion } from '@folio/stripes/components';
 import PullSlip from './PullSlip';
 
@@ -56,7 +57,7 @@ class PrintPullSlip extends React.Component {
             label={<FormattedMessage id="ui-rs.information.heading.developer" />}
             displayWhenClosed={<FormattedMessage id="ui-rs.information.heading.developer.help" />}
           >
-            <pre>{JSON.stringify(this.props.record, null, 2)}</pre>
+            <pre>{stringify(this.props.record, { space: 2 })}</pre>
           </Accordion>
         </AccordionSet>
       </div>

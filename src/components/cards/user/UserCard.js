@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import stringify from 'json-stable-stringify';
 import {
   Accordion,
   Card,
@@ -93,7 +94,7 @@ class UserCard extends React.Component {
               closedByDefault
             >
               <pre>
-                {JSON.stringify(user, null, 2)}
+                {stringify(user, { space: 2 })}
               </pre>
             </Accordion>
           </Col>

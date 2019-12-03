@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { Button } from '@folio/stripes/components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 
@@ -83,6 +85,25 @@ export default class PatronRequests extends React.Component {
     return this.props.mutator.selectedRecord.PUT(record);
   }
 
+  renderPullSlipsButton() {
+    return (
+      <Link to="requests/printslips">
+        <FormattedMessage id="ui-rs.printAllPullSlips">
+          {ariaLabel => (
+            <Button
+              id="clickable-print-pull-slips"
+              aria-label={ariaLabel}
+              buttonStyle="primary"
+              marginBottom0
+            >
+              <FormattedMessage id="ui-rs.printPullSlips" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </Link>
+    );
+  }
+
   render() {
     const { mutator, resources, appName } = this.props;
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
@@ -112,8 +133,12 @@ export default class PatronRequests extends React.Component {
         // can't happen
     }
 
+    // Once we have broken up our use of <SearchAndSort> into
+    // <SearchAndSortQuery>, we can nove the pull-slips button into a
+    // more elegant position. For now, we just shove it in the top.
     return (
       <React.Fragment>
+        {this.renderPullSlipsButton()}
         <SearchAndSort
           key="patronrequests"
           title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
