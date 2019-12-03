@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes/components';
+import { ActionMessageBanner, ActionMessageProvider } from '../components/Flow/ActionMessage';
 import css from './ViewRoute.css';
 
 const ViewRoute = ({ children, history, location: { pathname }, match: { url, params } }) => (
-  <React.Fragment>
+  <ActionMessageProvider>
     <Paneset>
       <Pane
         paneTitle={`Request ${params.id}`}
@@ -52,10 +53,11 @@ const ViewRoute = ({ children, history, location: { pathname }, match: { url, pa
           </React.Fragment>
         )}
       >
-        {children}
+        <ActionMessageBanner />
+        <div>{children}</div>
       </Pane>
     </Paneset>
-  </React.Fragment>
+  </ActionMessageProvider>
 );
 
 ViewRoute.propTypes = {
