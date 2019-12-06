@@ -1,15 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import _ from 'lodash';
+import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes/components';
 import { ActionMessageBanner, ActionMessageProvider } from '../components/Flow/ActionMessage';
 import css from './ViewRoute.css';
 
-const ViewRoute = ({ children, history, location: { pathname }, match: { url, params } }) => (
+const subheading = req => {
+  const title = _.get(req, 'title');
+  if (!title) return undefined;
+  const requester = _.get(req, 'resolvedRequester.owner.slug', '');
+  if (!requester) return title;
+  const supplier = _.get(req, 'resolvedSupplier.owner.slug', '');
+  return `${title} · ${requester} → ${supplier}`;
+
+};
+
+const ViewRoute = ({ children, history, resources, location: { pathname }, match: { url, params } }) => (
   <ActionMessageProvider>
     <Paneset>
       <Pane
-        paneTitle={`Request ${params.id}`}
+        paneTitle={`Request ${params.id.replace(/-/g, '·')}`}
+        paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'))}
         padContent={false}
         onClose={history.goBack}
         dismissible
@@ -68,6 +81,15 @@ ViewRoute.propTypes = {
   }).isRequired,
   location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
   history: PropTypes.object.isRequired,
+  resources: PropTypes.object.isRequired,
 };
 
-export default ViewRoute;
+ViewRoute.manifest = {
+  selectedRecord: {
+    type: 'okapi',
+    path: 'rs/patronrequests/:{id}', // eslint-disable-line no-template-curly-in-string,
+    fetch: false,
+  },
+};
+
+export default stripesConnect(ViewRoute);
