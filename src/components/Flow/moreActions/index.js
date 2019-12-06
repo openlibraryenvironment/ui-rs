@@ -5,8 +5,8 @@ import ActionButton from '../ActionButton';
 export const SupplierMarkPullSlipPrinted = props => <ActionButton
   action="supplierPrintPullSlip"
   label="Mark pull slip as printed"
-  successMessage="Pull slip marked as printed."
-  errorMessage="Error marking pull slip as printed."
+  successMessage="actions.markSlipPrinted.success"
+  errorMessage="actions.markSlipPrinted.error"
   {...props}
 />;
 

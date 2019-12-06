@@ -15,5 +15,9 @@ export default {
     primaryAction: ['PrintPullSlip'],
     moreActions: ['SupplierMarkPullSlipPrinted'],
   },
-  // 'RES_AWAIT_PICKING': {}
+  'RES_AWAIT_PICKING': {
+    cards: ['Citation'],
+    primaryAction: ['SupplierCheckInToReshare'],
+    moreActions: ['PrintPullSlip'],
+  },
 };

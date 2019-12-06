@@ -3,11 +3,12 @@
  *
  *  ActionMessageProvider: A context provider that stores the current messge.
  *  ActionMessageBanner: A MessageBanner displaying the contents of that provider.
- *  useActionMessage: A hook that offers a [message, setMessage(content, type)] tuple
+ *  useActionMessage: A hook that offers a [message, setMessage(translationKey, type)] tuple
  */
 
 import React, { createContext, useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { MessageBanner } from '@folio/stripes/components';
 
 // actions
@@ -15,7 +16,9 @@ const SET_MESSAGE = 'SET_MESSAGE';
 
 export const ActionMessageContext = createContext();
 
-// Message shape is: { message, type } (type corresponds to the MessageBanner prop)
+// Message shape is: { key, type }
+// * key is the translation key for the message,
+// * type corresponds to the MessageBanner prop
 const initialState = {
   message: null
 };
@@ -48,10 +51,10 @@ ActionMessageProvider.propTypes = {
 export const useActionMessage = () => {
   const [state, dispatch] = useContext(ActionMessageContext);
 
-  const setMessage = (content, type) => {
+  const setMessage = (key, type) => {
     dispatch({
       type: SET_MESSAGE,
-      payload: { content, type },
+      payload: { key, type },
     });
   };
 
@@ -61,5 +64,5 @@ export const useActionMessage = () => {
 export const ActionMessageBanner = () => {
   const [{ message: msg }] = useContext(ActionMessageContext);
   if (!msg) return null;
-  return <MessageBanner type={msg.type} show dismissable>{msg.content}</MessageBanner>;
+  return <MessageBanner type={msg.type} show dismissable><FormattedMessage id={msg.key} /></MessageBanner>;
 };
