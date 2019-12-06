@@ -12,12 +12,12 @@
 export default {
   'RES_NEW_AWAIT_PULL_SLIP': {
     cards: ['Citation'],
-    primaryAction: ['PrintPullSlip'],
+    primaryAction: 'PrintPullSlip',
     moreActions: ['SupplierMarkPullSlipPrinted'],
   },
   'RES_AWAIT_PICKING': {
     cards: ['Citation'],
-    primaryAction: ['SupplierCheckInToReshare'],
+    primaryAction: 'SupplierCheckInToReshare',
     moreActions: ['PrintPullSlip'],
   },
 };
