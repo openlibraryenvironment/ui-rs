@@ -17,11 +17,11 @@ const renderNamedWithProps = (names, components, props) => names.map(
 const FlowRoute = props => {
   const [, setMessage] = useActionMessage();
 
-  const performAction = (action, payload, successMessage, errorMessage) => {
+  const performAction = (action, payload, successMessage, errorMessage) => (
     props.mutator.action.POST({ action, actionParams: payload || {} })
       .then(() => setMessage(successMessage, 'success'))
-      .catch(() => setMessage(errorMessage, 'error'));
-  };
+      .catch(() => setMessage(errorMessage, 'error'))
+  );
 
   const resource = props.resources.selectedRecord;
   if (!_.get(resource, 'hasLoaded')) return null;
