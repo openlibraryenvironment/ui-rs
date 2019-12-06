@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
-import { Headline } from '@folio/stripes/components';
+import { Headline, Layout } from '@folio/stripes/components';
 import css from './FlowRoute.css';
 import { useActionMessage } from '../components/Flow/ActionMessage';
 import actionsByState from '../components/Flow/actionsByState';
@@ -39,13 +39,13 @@ const FlowRoute = props => {
       {byCurrent &&
         <div className={css.context}>
           {renderNamedWithProps(byCurrent.cards, cards, { request })}
-          <p>
+          <Layout className="padding-top-gutter">
             {PrimaryAction && <PrimaryAction request={request} performAction={performAction} /> }
-          </p>
-          <p>
+          </Layout>
+          <Layout className="padding-top-gutter">
             <strong>More options:</strong>
             {renderNamedWithProps(byCurrent.moreActions, moreActions, { request, performAction })}
-          </p>
+          </Layout>
         </div>
       }
       {!byCurrent &&
