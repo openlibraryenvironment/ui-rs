@@ -4,4 +4,4 @@ import CitationMetadataInfo from '../../ViewPatronRequest/sections/CitationMetad
 import CatalogInfo from '../../ViewPatronRequest/sections/CatalogInfo';
 
 export const Citation = ({ request }) => <CitationMetadataInfo record={request} id="citation" />;
-export const Item = ({ request }) => <CatalogInfo record={request} id="citation" />;
+export const Bibliographic = ({ request }) => <CatalogInfo record={request} id="citation" />;
