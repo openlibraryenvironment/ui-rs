@@ -7,7 +7,8 @@ import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes
 import { ActionMessageBanner, ActionMessageProvider } from '../components/Flow/ActionMessage';
 import css from './ViewRoute.css';
 
-const subheading = req => {
+const subheading = (req, params) => {
+  if (!req || params.id !== req.id) return undefined;
   const title = _.get(req, 'title');
   if (!title) return undefined;
   const requester = _.get(req, 'resolvedRequester.owner.slug', '');
@@ -22,7 +23,7 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
     <Paneset>
       <Pane
         paneTitle={`Request ${params.id.replace(/-/g, '·')}`}
-        paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'))}
+        paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), params)}
         padContent={false}
         onClose={history.goBack}
         dismissible
