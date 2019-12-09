@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import get from 'lodash/get';
+import find from 'lodash/find';
 import { withStripes } from '@folio/stripes/core';
 import {
   Accordion,
@@ -13,8 +14,17 @@ import {
   Row,
   KeyValue,
 } from '@folio/stripes/components';
+import { isbnTypeId, issnTypeId } from './ui-inventory/typeIds';
 
 import css from './CatalogInfo.css';
+
+
+function identifierValue(bibRecord, typeId) {
+  const ids = bibRecord.identifiers || [];
+  const entry = find(ids, (v) => v.identifierTypeId === typeId);
+  return entry ? entry.value : undefined;
+}
+
 
 class CatalogInfo extends React.Component {
   static propTypes = {
@@ -50,10 +60,11 @@ class CatalogInfo extends React.Component {
     const author = get(bibRecord, 'contributors[0].name');
     const date = get(bibRecord, 'publication[0].dateOfPublication');
 
-    // XXX I have not seen either of these fields in the wild
-    const hasISSN = !!bibRecord.issn;
+    const isbn = identifierValue(bibRecord, isbnTypeId);
+    const issn = identifierValue(bibRecord, issnTypeId);
+    const hasISSN = !!issn;
     const idKey = `ui-rs.information.${hasISSN ? 'issn' : 'isbn'}`;
-    const idValue = bibRecord[hasISSN ? 'issn' : 'isbn'];
+    const idValue = hasISSN ? issn : isbn;
 
     return (
       <Accordion
