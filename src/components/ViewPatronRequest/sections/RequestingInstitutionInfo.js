@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import get from 'lodash/get';
 import { Accordion } from '@folio/stripes/components';
-import SmartInstitutionCard from '../../cards/institution/SmartInstitutionCard';
+import InstitutionCard from '../../cards/institution/InstitutionCard';
 
 import css from './RequestingInstitutionInfo.css';
 
@@ -22,9 +23,8 @@ class RequestingInstitutionInfo extends React.Component {
         label={<FormattedMessage id="ui-rs.information.heading.requestinginstitution" />}
         closedByDefault={this.props.closedByDefault}
       >
-        <SmartInstitutionCard
-          id="requestingInstitutionInfo-card"
-          institutionSymbol={(record.requestingInstitutionSymbol || '').replace(/^RESHARE:/, '')}
+        <InstitutionCard
+          institution={get(record, 'resolvedRequester.owner')}
           cardClass={css.institutionCard}
           headerClass={css.institutionCardHeader}
         />
