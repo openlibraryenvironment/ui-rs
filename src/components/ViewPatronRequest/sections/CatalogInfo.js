@@ -8,7 +8,6 @@ import get from 'lodash/get';
 import find from 'lodash/find';
 import { withStripes } from '@folio/stripes/core';
 import {
-  Accordion,
   Card,
   Col,
   Row,
@@ -30,7 +29,6 @@ class CatalogInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
-    closedByDefault: PropTypes.bool,
     stripes: PropTypes.shape({
       config: PropTypes.shape({
         sharedIndexUI: PropTypes.string.isRequired,
@@ -67,59 +65,53 @@ class CatalogInfo extends React.Component {
     const idValue = hasISSN ? issn : isbn;
 
     return (
-      <Accordion
-        id={this.props.id}
-        label={<FormattedMessage id="ui-rs.information.heading.catalogInfo" />}
-        closedByDefault={this.props.closedByDefault}
+      <Card
+        id={`${this.props.id}-card`}
+        headerStart="Catalog"
+        roundedBorder
+        cardClass={css.catalogCard}
+        headerClass={css.catalogCardHeader}
       >
-        <Card
-          id={`${this.props.id}-card`}
-          headerStart="Catalog"
-          roundedBorder
-          cardClass={css.catalogCard}
-          headerClass={css.catalogCardHeader}
-        >
-          <Row>
-            <Col xs={12} style={{ textAlign: 'right' }}>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`${stripes.config.sharedIndexUI}/inventory/view/${id}`}
-              >
-                View Record
-              </a>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.title" />}
-                value={title}
-              />
-            </Col>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.author" />}
-                value={author}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id={idKey} />}
-                value={idValue}
-              />
-            </Col>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.information.date" />}
-                value={date}
-              />
-            </Col>
-          </Row>
-        </Card>
-      </Accordion>
+        <Row>
+          <Col xs={12} style={{ textAlign: 'right' }}>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`${stripes.config.sharedIndexUI}/inventory/view/${id}`}
+            >
+              View Record
+            </a>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.title" />}
+              value={title}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.author" />}
+              value={author}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id={idKey} />}
+              value={idValue}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.date" />}
+              value={date}
+            />
+          </Col>
+        </Row>
+      </Card>
     );
   }
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
-  Accordion,
   Col,
   KeyValue,
   Row,
@@ -12,19 +11,13 @@ import {
 class RequestInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
-    id: PropTypes.string,
-    closedByDefault: PropTypes.bool,
   };
 
   render() {
     const { record } = this.props;
 
     return (
-      <Accordion
-        id={this.props.id}
-        label={<FormattedMessage id="ui-rs.information.heading.request" />}
-        closedByDefault={this.props.closedByDefault}
-      >
+      <React.Fragment>
         <Row>
           <Col xs={3}>
             <KeyValue
@@ -53,7 +46,7 @@ class RequestInfo extends React.Component {
             />
           </Col>
         </Row>
-      </Accordion>
+      </React.Fragment>
     );
   }
 }

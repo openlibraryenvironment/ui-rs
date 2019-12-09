@@ -79,6 +79,7 @@
   "information.slug": "Slug",
   "information.symbols": "Symbols",
   "information.tags": "Tags",
+
   "flow.flow": "Flow",
   "flow.details": "Details",
   "flow.unknown": "Request is in unknown state, please see details.",
@@ -100,8 +101,17 @@
   "flow.stacksSearching": "Pullslip printed - stacks searching",
   "flow.itemFound": "Item found - ready to ship",
   "flow.shippedToRequester": "Item shipped to requester",
+
+  "actions.markSlipPrinted.success": "Error marking pull slip as printed.",
+  "actions.markSlipPrinted.error": "Pull slip marked as printed.",
+  "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
+  "actions.checkIn.success": "Item successfully checked into ReShare",
+  "actions.checkIn.error": "Error checking item into ReShare",
+  "actions.markShipped.prompt": "Scan request barcode to <strong>mark item shipped</strong>",
+
   "printPullslip": "Print pull slip",
   "button.print": "Print",
+  "button.scan": "Scan",
   "printAllPullSlips": "Print pull-slips for all records in list",
   "printPullSlips": "Print pull-slips",
   "SENTINEL": "SENTINEL"
