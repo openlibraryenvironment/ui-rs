@@ -15,7 +15,6 @@ const subheading = (req, params) => {
   if (!requester) return title;
   const supplier = _.get(req, 'resolvedSupplier.owner.slug', '');
   return `${title} · ${requester} → ${supplier}`;
-
 };
 
 const ViewRoute = ({ children, history, resources, location: { pathname }, match: { url, params } }) => (
