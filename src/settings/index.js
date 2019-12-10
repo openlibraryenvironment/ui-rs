@@ -45,7 +45,7 @@ class ResourceSharingSettings extends React.Component {
     const pages = sections.map(section => {
       if (section) {
         const route = section;
-        let label = <FormattedMessage id={`ui-rs.settingsSection.${section}`} />;
+        const label = <FormattedMessage id={`ui-rs.settingsSection.${section}`} />;
         return (
           {
             'route': route,
@@ -57,7 +57,7 @@ class ResourceSharingSettings extends React.Component {
         return (undefined);
       }
     });
-    return (pages.sort((a,b) => routeAlphaSort(a,b)));
+    return (pages.sort((a, b) => routeAlphaSort(a, b)));
   }
 
   // Backup pages for initial render (Settings doesn't render dynamically properly at first).

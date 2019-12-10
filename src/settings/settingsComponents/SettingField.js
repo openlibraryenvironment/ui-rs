@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, Form } from 'react-final-form';
+import { Field } from 'react-final-form';
 
 import {
   Button,
@@ -125,8 +125,8 @@ export default class SettingField extends React.Component {
     const camelStr = snakeStr.replace(
       /([-_][a-z])/g,
       (group) => group.toUpperCase()
-                      .replace('-', '')
-                      .replace('_', '')
+        .replace('-', '')
+        .replace('_', '')
     );
     return (camelStr);
   }
@@ -147,8 +147,6 @@ export default class SettingField extends React.Component {
     } else {
       renderFunction = this.renderEditSettingValue(setting);
     }
-
-
 
     return (
       <Card
