@@ -52,8 +52,8 @@ function recordToData(intl, record) {
     toSlug: get(record, 'resolvedRequester.owner.slug') || record.requestingInstitutionSymbol,
     now: `${intl.formatDate(now)} ${intl.formatTime(now)}`,
     logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
-    itemBarcode: styledBarCodeString(record.systemInstanceIdentifier || 12345),
-    itemId: record.systemInstanceIdentifier, // XXX can this really be right?
+    itemBarcode: styledBarCodeString(record.selectedItemBarcode),
+    itemId: record.selectedItemBarcode,
   };
 }
 
