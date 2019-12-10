@@ -87,20 +87,22 @@ export default class PatronRequests extends React.Component {
 
   renderPullSlipsButton() {
     return (
-      <Link to="requests/printslips">
-        <FormattedMessage id="ui-rs.printAllPullSlips">
-          {ariaLabel => (
-            <Button
-              id="clickable-print-pull-slips"
-              aria-label={ariaLabel}
-              buttonStyle="primary"
-              marginBottom0
-            >
-              <FormattedMessage id="ui-rs.printPullSlips" />
-            </Button>
-          )}
-        </FormattedMessage>
-      </Link>
+      <div style={{ textAlign: 'right' }}>
+        <Link to="requests/printslips">
+          <FormattedMessage id="ui-rs.printAllPullSlips">
+            {ariaLabel => (
+              <Button
+                id="clickable-print-pull-slips"
+                aria-label={ariaLabel}
+                buttonStyle="primary"
+                marginBottom0
+              >
+                <FormattedMessage id="ui-rs.printPullSlips" />
+              </Button>
+            )}
+          </FormattedMessage>
+        </Link>
+      </div>
     );
   }
 
