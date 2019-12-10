@@ -12,18 +12,6 @@
   "settings.no-current-value": "There is no current value for this setting",
   "settings.edit": "Edit",
   "settings.finish-editing": "Finish Editing",
-
-  "settings.z3950": "Z3950 settings",
-  "settings.z3950.singular": "Z3950 setting",
-  "settings.z3950.objectLabel": "Z3950 object label",
-
-  "settings.local-ncip": "Local NCIP settings",
-  "settings.local-ncip.singular": "Local NCIP setting",
-  "settings.local-ncip.objectLabel": "Local NCIP object label",
-
-  "settings.requester-validation": "Requester validation settings",
-  "settings.requester-validation.singular": "Requester validation setting",
-  "settings.requester-validation.singular": "Requester validation object label",
  
   "patronrequests.id": "Request Id",
   "patronrequests.role": "Role",

@@ -34,6 +34,15 @@ class ResourceSharingSettings extends React.Component {
   }
 
   pageList() {
+    const routeAlphaSort = (a,b) => {
+      if (a.route < b.route ) {
+        return -1;
+      }
+      if (a.route > b.route ) {
+        return 1;
+      }
+      return 0;
+    };
     const sections = this.getSectionsList();
     const pages = sections.map(section => {
       if (section) {
@@ -52,12 +61,28 @@ class ResourceSharingSettings extends React.Component {
         return (undefined);
       }
     });
-    return (pages);
+    return (pages.sort((a,b) => routeAlphaSort(a,b)));
   }
 
   // Backup pages for initial render (Settings doesn't render dynamically properly at first).
   // Whenever new sections are added, they won't show up on first render unless added here.
+  // They should be in alphabetical order (by route) here, to match the sorted dynamic list.
   staticSettingsPages = [
+    {
+      route: 'localNCIP',
+      label: 'Local NCIP settings',
+      component: this.customComponentMaker('localNCIP')
+    },
+    {
+      route: 'requesterValidation',
+      label: 'Requester validation',
+      component: this.customComponentMaker('requesterValidation')
+    },
+    {
+      route: 'requests',
+      label: 'Request defaults',
+      component: this.customComponentMaker('requests')
+    },
     {
       route: 'sharedIndex',
       label: 'Shared index settings',
@@ -67,21 +92,6 @@ class ResourceSharingSettings extends React.Component {
       route: 'z3950',
       label: 'Z39.50 settings',
       component: this.customComponentMaker('z3950')
-    },
-    {
-      route: 'requests',
-      label: 'Request defaults',
-      component: this.customComponentMaker('requests')
-    },
-    {
-      route: 'requesterValidation',
-      label: 'Requester validation',
-      component: this.customComponentMaker('requesterValidation')
-    },
-    {
-      route: 'localNCIP',
-      label: 'Local NCIP settings',
-      component: this.customComponentMaker('localNCIP')
     }
   ];
 
