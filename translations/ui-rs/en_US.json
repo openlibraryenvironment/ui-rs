@@ -122,5 +122,18 @@
   "settingsSection.requests": "Request defaults",
   "settingsSection.requesterValidation": "Requester validation",
 
-  "settingName.settingLoading": "Setting Name Loading"
+  "settingName.settingLoading": "Setting Name Loading",
+  "settingName.sharedIndexBaseUrl": "Shared index base url",
+  "settingName.sharedIndexPass": "Shared index password",
+  "settingName.sharedIndexUser": "Shared index username",
+
+  "settingName.z3950ServerAddress": "Z39.50 Server Address",
+
+  "settingName.defaultRequestSymbol": "Default request symbol",
+  "settingName.lastResortLenders": "Lenders of last resort (Comma-separated list of symbols)",
+  "settingName.requestIdPrefix": "Request ID prefix",
+
+  "settingName.borrowerCheck": "Borrower check",
+
+  "settingName.ncipServerAddress": "NCIP server address"
 }
