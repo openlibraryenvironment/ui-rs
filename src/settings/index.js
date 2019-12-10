@@ -32,12 +32,20 @@ class ResourceSharingSettings extends React.Component {
   }
 
   pageList() {
+    const routeAlphaSort = (a, b) => {
+      if (a.route < b.route) {
+        return -1;
+      }
+      if (a.route > b.route) {
+        return 1;
+      }
+      return 0;
+    };
     const sections = this.getSectionsList();
     const pages = sections.map(section => {
       if (section) {
-        const route = section.replace(' ', '_').toLowerCase();
-        let label = section.replace('_', ' ').toLowerCase();
-        label = label.charAt(0).toUpperCase() + label.substring(1) + ' settings';
+        const route = section;
+        const label = <FormattedMessage id={`ui-rs.settingsSection.${section}`} />;
         return (
           {
             'route': route,
@@ -49,78 +57,53 @@ class ResourceSharingSettings extends React.Component {
         return (undefined);
       }
     });
-    return (pages);
+    return (pages.sort((a, b) => routeAlphaSort(a, b)));
   }
 
-  // Backup sections for initial render (Settings doesn't render dynamically properly at first).
+  // Backup pages for initial render (Settings doesn't render dynamically properly at first).
   // Whenever new sections are added, they won't show up on first render unless added here.
-  staticSettingsSections = [
+  // They should be in alphabetical order (by route) here, to match the sorted dynamic list.
+  staticSettingsPages = [
     {
-      label: 'General',
-      pages: [
-        {
-          route: 'shared_index',
-          label: 'Shared index settings',
-          component: this.customComponentMaker('shared_index')
-        },
-        {
-          route: 'z3950',
-          label: 'Z3950 settings',
-          component: this.customComponentMaker('z3950')
-        },
-        {
-          route: 'requests',
-          label: 'Requests settings',
-          component: this.customComponentMaker('requests')
-        },
-        {
-          route: 'requester_validation',
-          label: 'Requester validation settings',
-          component: this.customComponentMaker('Requester Validation')
-        },
-        {
-          route: 'local_ncip',
-          label: 'Local ncip settings',
-          component: this.customComponentMaker('Local NCIP')
-        },
-      ],
+      route: 'localNCIP',
+      label: 'Local NCIP settings',
+      component: this.customComponentMaker('localNCIP')
     },
     {
-      label: 'Request',
-      pages: [],
+      route: 'requesterValidation',
+      label: 'Requester validation',
+      component: this.customComponentMaker('requesterValidation')
     },
     {
-      label: 'Supply',
-      pages: [],
+      route: 'requests',
+      label: 'Request defaults',
+      component: this.customComponentMaker('requests')
     },
+    {
+      route: 'sharedIndex',
+      label: 'Shared index settings',
+      component: this.customComponentMaker('sharedIndex')
+    },
+    {
+      route: 'z3950',
+      label: 'Z39.50 settings',
+      component: this.customComponentMaker('z3950')
+    }
   ];
 
   render() {
     const pageList = this.pageList();
 
-    // Doing this in render to force update once it's grabbed the sections lists
-    const dynamicSettingsSections = [
-      {
-        label: 'General',
-        pages: pageList,
-      },
-      {
-        label: 'Request',
-        pages: [],
-      },
-      {
-        label: 'Supply',
-        pages: [],
-      },
-    ];
+    // Doing this in render to force update once it's grabbed the page list
+    const dynamicSettingsPages = pageList;
 
     if (pageList[0]) {
       return (
-        <Settings {...this.props} sections={dynamicSettingsSections} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
+        <Settings {...this.props} pages={dynamicSettingsPages} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
       );
     } else {
       return (
-        <Settings {...this.props} sections={this.staticSettingsSections} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
+        <Settings {...this.props} pages={this.staticSettingsPages} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
       );
     }
   }

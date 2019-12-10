@@ -12,18 +12,6 @@
   "settings.no-current-value": "There is no current value for this setting",
   "settings.edit": "Edit",
   "settings.finish-editing": "Finish Editing",
-
-  "settings.z3950": "Z3950 settings",
-  "settings.z3950.singular": "Z3950 setting",
-  "settings.z3950.objectLabel": "Z3950 object label",
-
-  "settings.local-ncip": "Local NCIP settings",
-  "settings.local-ncip.singular": "Local NCIP setting",
-  "settings.local-ncip.objectLabel": "Local NCIP object label",
-
-  "settings.requester-validation": "Requester validation settings",
-  "settings.requester-validation.singular": "Requester validation setting",
-  "settings.requester-validation.singular": "Requester validation object label",
  
   "patronrequests.id": "Request Id",
   "patronrequests.role": "Role",
@@ -114,5 +102,26 @@
   "button.scan": "Scan",
   "printAllPullSlips": "Print pull-slips for all records in list",
   "printPullSlips": "Print pull-slips",
-  "SENTINEL": "SENTINEL"
+  "SENTINEL": "SENTINEL",
+
+  "settingsSection.z3950": "Z39.50 settings",
+  "settingsSection.sharedIndex": "Shared index settings",
+  "settingsSection.localNCIP": "Local NCIP settings",
+  "settingsSection.requests": "Request defaults",
+  "settingsSection.requesterValidation": "Requester validation",
+
+  "settingName.settingLoading": "Setting Name Loading",
+  "settingName.sharedIndexBaseUrl": "Shared index base url",
+  "settingName.sharedIndexPass": "Shared index password",
+  "settingName.sharedIndexUser": "Shared index username",
+
+  "settingName.z3950ServerAddress": "Z39.50 Server Address",
+
+  "settingName.defaultRequestSymbol": "Default request symbol",
+  "settingName.lastResortLenders": "Lenders of last resort (Comma-separated list of symbols)",
+  "settingName.requestIdPrefix": "Request ID prefix",
+
+  "settingName.borrowerCheck": "Borrower check",
+
+  "settingName.ncipServerAddress": "NCIP server address"
 }
