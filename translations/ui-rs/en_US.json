@@ -114,5 +114,11 @@
   "button.scan": "Scan",
   "printAllPullSlips": "Print pull-slips for all records in list",
   "printPullSlips": "Print pull-slips",
-  "SENTINEL": "SENTINEL"
+  "SENTINEL": "SENTINEL",
+
+  "settingsSection.z3950": "Z39.50 settings",
+  "settingsSection.sharedIndex": "Shared index settings",
+  "settingsSection.localNCIP": "Local NCIP settings",
+  "settingsSection.requests": "Request defaults",
+  "settingsSection.requesterValidation": "Requester validation"
 }

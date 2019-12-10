@@ -37,16 +37,10 @@ class ResourceSharingSettings extends React.Component {
     const sections = this.getSectionsList();
     const pages = sections.map(section => {
       if (section) {
-        const key = `settingsSection.${section}`
-        console.log("Translation for section: ", key)
-        if (key in translations) {
-          console.log(`${key} found in translations!`)
-        } else {
-          console.log(`${key} not found in translations.`)
-        }
-        const route = section.replace(' ', '_').toLowerCase();
-        let label = section.replace('_', ' ').toLowerCase();
-        label = label.charAt(0).toUpperCase() + label.substring(1) + ' settings';
+        const intlKey = `settingsSection.${section}`
+
+        const route = intlKey;
+        let label = <FormattedMessage id={`ui-rs.${intlKey}`} />;
         return (
           {
             'route': route,
@@ -61,49 +55,49 @@ class ResourceSharingSettings extends React.Component {
     return (pages);
   }
 
-  // Backup sections for initial render (Settings doesn't render dynamically properly at first).
+  // Backup pages for initial render (Settings doesn't render dynamically properly at first).
   // Whenever new sections are added, they won't show up on first render unless added here.
-  staticSettingsSections = [
+  staticSettingsPages = [
     {
-      route: 'shared_index',
+      route: 'sharedIndex',
       label: 'Shared index settings',
-      component: this.customComponentMaker('shared_index')
+      component: this.customComponentMaker('sharedIndex')
     },
     {
       route: 'z3950',
-      label: 'Z3950 settings',
+      label: 'Z39.50 settings',
       component: this.customComponentMaker('z3950')
     },
     {
       route: 'requests',
-      label: 'Requests settings',
+      label: 'Request defaults',
       component: this.customComponentMaker('requests')
     },
     {
-      route: 'requester_validation',
-      label: 'Requester validation settings',
-      component: this.customComponentMaker('Requester Validation')
+      route: 'requesterValidation',
+      label: 'Requester validation',
+      component: this.customComponentMaker('requesterValidation')
     },
     {
-      route: 'local_ncip',
-      label: 'Local ncip settings',
-      component: this.customComponentMaker('Local NCIP')
+      route: 'localNCIP',
+      label: 'Local NCIP settings',
+      component: this.customComponentMaker('localNCIP')
     }
   ];
 
   render() {
     const pageList = this.pageList();
 
-    // Doing this in render to force update once it's grabbed the sections lists
-    const dynamicSettingsSections = pageList;
+    // Doing this in render to force update once it's grabbed the page list
+    const dynamicSettingsPages = pageList;
 
     if (pageList[0]) {
       return (
-        <Settings {...this.props} pages={dynamicSettingsSections} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
+        <Settings {...this.props} pages={dynamicSettingsPages} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
       );
     } else {
       return (
-        <Settings {...this.props} pages={this.staticSettingsSections} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
+        <Settings {...this.props} pages={this.staticSettingsPages} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
       );
     }
   }
