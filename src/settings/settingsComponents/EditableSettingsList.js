@@ -32,7 +32,7 @@ class EditableSettingsList extends React.Component {
       <Pane
         defaultWidth="fill"
         id={`settings-${this.props.settingSection}`}
-        paneTitle={<FormattedMessage id="ui-rs.settings.requester-validation" />}
+        paneTitle={<FormattedMessage id={`ui-rs.settingsSection.${this.props.settingSection}`} />}
       >
         <form>
           <FieldArray

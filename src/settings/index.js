@@ -4,8 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 import SettingPage from './SettingPage';
-import { FormattedUTCDate } from '@folio/stripes-components';
-import translations from '../../translations/ui-rs/en_US.json'
 
 class ResourceSharingSettings extends React.Component {
   static manifest = Object.freeze({
@@ -34,11 +32,11 @@ class ResourceSharingSettings extends React.Component {
   }
 
   pageList() {
-    const routeAlphaSort = (a,b) => {
-      if (a.route < b.route ) {
+    const routeAlphaSort = (a, b) => {
+      if (a.route < b.route) {
         return -1;
       }
-      if (a.route > b.route ) {
+      if (a.route > b.route) {
         return 1;
       }
       return 0;
@@ -46,10 +44,8 @@ class ResourceSharingSettings extends React.Component {
     const sections = this.getSectionsList();
     const pages = sections.map(section => {
       if (section) {
-        const intlKey = `settingsSection.${section}`
-
         const route = section;
-        let label = <FormattedMessage id={`ui-rs.${intlKey}`} />;
+        let label = <FormattedMessage id={`ui-rs.settingsSection.${section}`} />;
         return (
           {
             'route': route,
