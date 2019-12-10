@@ -120,5 +120,7 @@
   "settingsSection.sharedIndex": "Shared index settings",
   "settingsSection.localNCIP": "Local NCIP settings",
   "settingsSection.requests": "Request defaults",
-  "settingsSection.requesterValidation": "Requester validation"
+  "settingsSection.requesterValidation": "Requester validation",
+
+  "settingName.settingLoading": "Setting Name Loading"
 }

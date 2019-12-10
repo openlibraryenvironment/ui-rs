@@ -39,7 +39,7 @@ class ResourceSharingSettings extends React.Component {
       if (section) {
         const intlKey = `settingsSection.${section}`
 
-        const route = intlKey;
+        const route = section;
         let label = <FormattedMessage id={`ui-rs.${intlKey}`} />;
         return (
           {
