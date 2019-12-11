@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { stripesConnect } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
@@ -27,7 +28,7 @@ function queryModifiedForApp(resources, props) {
 }
 
 
-export default class PatronRequestsRoute extends React.Component {
+class PatronRequestsRoute extends React.Component {
   static manifest = Object.freeze({
     patronrequests: {
       type: 'okapi',
@@ -200,3 +201,6 @@ export default class PatronRequestsRoute extends React.Component {
     );
   }
 }
+
+
+export default stripesConnect(PatronRequestsRoute);

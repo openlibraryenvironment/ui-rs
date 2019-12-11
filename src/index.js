@@ -16,17 +16,11 @@ class ResourceSharing extends React.Component {
     match: PropTypes.object.isRequired,
     actAs: PropTypes.string.isRequired,
     stripes: PropTypes.shape({
-      connect: PropTypes.func,
       logger: PropTypes.shape({
         log: PropTypes.func,
       }),
     }),
   };
-
-  constructor(props) {
-    super(props);
-    this.connectedPatronRequestsRoute = props.stripes.connect(PatronRequestsRoute);
-  }
 
   render() {
     const {
@@ -64,7 +58,7 @@ class ResourceSharing extends React.Component {
           </NestedRoute>
           <Route
             path={`${path}/requests`}
-            render={() => <this.connectedPatronRequestsRoute {...this.props} appName={appName} />}
+            render={() => <PatronRequestsRoute {...this.props} appName={appName} />}
           />
         </Switch>
       </AppNameContext.Provider>
