@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Route as NestedRoute } from '@folio/stripes/core';
-import PatronRequests from './routes/PatronRequests';
+import PatronRequestsRoute from './routes/PatronRequestsRoute';
 import CreateEditRoute from './routes/CreateEditRoute';
 import ViewRoute from './routes/ViewRoute';
 import DetailsRoute from './routes/DetailsRoute';
@@ -25,7 +25,7 @@ class ResourceSharing extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedPatronRequests = props.stripes.connect(PatronRequests);
+    this.connectedPatronRequestsRoute = props.stripes.connect(PatronRequestsRoute);
   }
 
   render() {
@@ -64,7 +64,7 @@ class ResourceSharing extends React.Component {
           </NestedRoute>
           <Route
             path={`${path}/requests`}
-            render={() => <this.connectedPatronRequests {...this.props} appName={appName} />}
+            render={() => <this.connectedPatronRequestsRoute {...this.props} appName={appName} />}
           />
         </Switch>
       </AppNameContext.Provider>

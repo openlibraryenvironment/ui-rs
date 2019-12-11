@@ -27,7 +27,7 @@ function queryModifiedForApp(resources, props) {
 }
 
 
-export default class PatronRequests extends React.Component {
+export default class PatronRequestsRoute extends React.Component {
   static manifest = Object.freeze({
     patronrequests: {
       type: 'okapi',
