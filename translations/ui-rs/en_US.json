@@ -115,7 +115,7 @@
   "settingName.sharedIndexPass": "Shared index password",
   "settingName.sharedIndexUser": "Shared index username",
 
-  "settingName.z3950ServerAddress": "Z39.50 Server Address",
+  "settingName.z3950ServerAddress": "Z39.50 server address",
 
   "settingName.defaultRequestSymbol": "Default request symbol",
   "settingName.lastResortLenders": "Lenders of last resort (Comma-separated list of symbols)",
