@@ -34,10 +34,7 @@ class PrintPullSlip extends React.Component {
       <div>
         <ReactToPrint
           trigger={() => (
-            <Button
-              data-test-print-pull-slip
-              marginBottom0
-            >
+            <Button data-test-print-pull-slip marginBottom0>
               <FormattedMessage id="ui-rs.button.print" />
             </Button>
           )}
