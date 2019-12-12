@@ -6,6 +6,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
+import PrintAllPullSlips from '../components/PrintAllPullSlips';
 
 import packageInfo from '../../package';
 
@@ -61,6 +62,11 @@ class PatronRequestsRoute extends React.Component {
 
   static propTypes = {
     appName: PropTypes.string.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        action: PropTypes.string,
+      }).isRequired,
+    }).isRequired,
     resources: PropTypes.object,
     mutator: PropTypes.object,
   }
@@ -108,6 +114,10 @@ class PatronRequestsRoute extends React.Component {
   }
 
   render() {
+    if (this.props.match.params.action === 'printslips') {
+      return <PrintAllPullSlips records={this.props.resources.patronrequests} />;
+    }
+
     const { mutator, resources, appName } = this.props;
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
       name: `@folio/${appName}`,
