@@ -27,7 +27,7 @@ class PrintPullSlip extends React.Component {
 
   constructor(props) {
     super(props);
-    this.editorRef = React.createRef();
+    this.printableRef = React.createRef();
   }
 
   render() {
@@ -42,9 +42,9 @@ class PrintPullSlip extends React.Component {
               <FormattedMessage id="ui-rs.button.print" />
             </Button>
           )}
-          content={() => this.editorRef.current}
+          content={() => this.printableRef.current}
         />
-        <div ref={this.editorRef}>
+        <div ref={this.printableRef}>
           <PullSlip record={this.props.record} />
         </div>
 
