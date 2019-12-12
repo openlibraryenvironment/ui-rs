@@ -86,10 +86,10 @@ class PatronRequestsRoute extends React.Component {
     return this.props.mutator.selectedRecord.PUT(record);
   }
 
-  renderPullSlipsButton() {
+  renderPullSlipsButton(route) {
     return (
       <div style={{ textAlign: 'right' }}>
-        <Link to="requests/printslips">
+        <Link to={`${route}/printslips`}>
           <FormattedMessage id="ui-rs.printAllPullSlips">
             {ariaLabel => (
               <Button
@@ -141,7 +141,7 @@ class PatronRequestsRoute extends React.Component {
     // more elegant position. For now, we just shove it in the top.
     return (
       <React.Fragment>
-        {this.renderPullSlipsButton()}
+        {this.renderPullSlipsButton(tweakedPackageInfo.stripes.route)}
         <SearchAndSort
           key="patronrequests"
           title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
