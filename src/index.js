@@ -57,8 +57,8 @@ class ResourceSharing extends React.Component {
             <NestedRoute path={`${path}/requests/view/:id/flow`} component={FlowRoute} />
           </NestedRoute>
           <Route
-            path={`${path}/requests`}
-            render={() => <PatronRequestsRoute {...this.props} appName={appName} />}
+            path={`${path}/requests/:action?`}
+            render={(props) => <PatronRequestsRoute {...props} appName={appName} />}
           />
         </Switch>
       </AppNameContext.Provider>
