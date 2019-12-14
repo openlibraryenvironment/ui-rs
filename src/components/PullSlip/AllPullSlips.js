@@ -4,18 +4,21 @@ import { Parser } from 'html-to-react';
 import { injectIntl } from 'react-intl';
 import Handlebars from 'handlebars';
 import slipTemplate from './design/slip.handlebars';
-import wrapperTemplate from './design/singleslipwrapper.handlebars';
+import wrapperTemplate from './design/allslipswrapper.handlebars';
 import { establishStylesHook, recordToPullSlipData } from './util';
 
-const PullSlip = (props) => {
+const AllPullSlips = (props) => {
   useEffect(establishStylesHook, []);
   Handlebars.registerPartial('slip', slipTemplate);
-  const s = wrapperTemplate(recordToPullSlipData(props.intl, props.record));
+  const records = props.records.map(r => recordToPullSlipData(props.intl, r));
+  const s = wrapperTemplate({ records });
   return (new Parser()).parse(s);
 };
 
-PullSlip.propTypes = {
-  record: PropTypes.object.isRequired,
+AllPullSlips.propTypes = {
+  records: PropTypes.arrayOf(
+    PropTypes.object.isRequired,
+  ).isRequired,
 };
 
-export default injectIntl(PullSlip);
+export default injectIntl(AllPullSlips);

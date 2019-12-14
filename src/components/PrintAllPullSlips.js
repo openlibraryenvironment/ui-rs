@@ -1,15 +1,58 @@
-export default (props) => {
-  const { hasLoaded, other, records } = props.records;
+// See comment on security issues in PrintPullSlip.js
 
-  if (!hasLoaded) {
-    return 'Record not yet loaded for printing';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import ReactToPrint from 'react-to-print';
+import { Button } from '@folio/stripes/components';
+import AllPullSlips from './PullSlip/AllPullSlips';
+
+class PrintAllPullSlips extends React.Component {
+  static propTypes = {
+    records: PropTypes.shape({
+      hasLoaded: PropTypes.bool.isRequired,
+      other: PropTypes.shape({
+        totalRecords: PropTypes.number,
+      }),
+      records: PropTypes.arrayOf(
+        PropTypes.object.isRequired,
+      ),
+    }).isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
   }
 
-  const totalRecords = other.totalRecords;
-  if (records.length < totalRecords) {
-    return `Not enough records loaded for printing (${records.length} of ${totalRecords})`;
-  }
+  render() {
+    const { hasLoaded, other, records } = this.props.records;
 
-  // records.record[0]
-  return 'printing all pull-slips';
-};
+    if (!hasLoaded) {
+      return 'Record not yet loaded for printing';
+    }
+
+    const totalRecords = other.totalRecords;
+    if (records.length < totalRecords) {
+      return `Not enough records loaded for printing (${records.length} of ${totalRecords})`;
+    }
+
+    return (
+      <div>
+        <ReactToPrint
+          trigger={() => (
+            <Button data-test-print-pull-slip marginBottom0>
+              <FormattedMessage id="ui-rs.button.print" />
+            </Button>
+          )}
+          content={() => this.ref.current}
+        />
+        <div ref={this.ref}>
+          <AllPullSlips records={records} />
+        </div>
+      </div>
+    );
+  }
+}
+
+export default PrintAllPullSlips;
