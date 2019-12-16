@@ -69,6 +69,7 @@ class PatronRequestsRoute extends React.Component {
     }).isRequired,
     resources: PropTypes.object,
     mutator: PropTypes.object,
+    location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
   }
 
   constructor(props) {
@@ -92,10 +93,11 @@ class PatronRequestsRoute extends React.Component {
     return this.props.mutator.selectedRecord.PUT(record);
   }
 
-  renderPullSlipsButton(route) {
+  renderPullSlipsButton(route, location) {
+    console.log('location =', location);
     return (
       <div style={{ textAlign: 'right' }}>
-        <Link to={`${route}/printslips`}>
+        <Link to={`${route}/printslips${location.search}`}>
           <FormattedMessage id="ui-rs.printAllPullSlips">
             {ariaLabel => (
               <Button
@@ -118,7 +120,7 @@ class PatronRequestsRoute extends React.Component {
       return <PrintAllPullSlips records={this.props.resources.patronrequests} />;
     }
 
-    const { mutator, resources, appName } = this.props;
+    const { mutator, resources, appName, location } = this.props;
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
       name: `@folio/${appName}`,
       stripes: Object.assign({}, packageInfo.stripes, {
@@ -151,7 +153,7 @@ class PatronRequestsRoute extends React.Component {
     // more elegant position. For now, we just shove it in the top.
     return (
       <React.Fragment>
-        {this.renderPullSlipsButton(tweakedPackageInfo.stripes.route)}
+        {this.renderPullSlipsButton(tweakedPackageInfo.stripes.route, location)}
         <SearchAndSort
           key="patronrequests"
           title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
