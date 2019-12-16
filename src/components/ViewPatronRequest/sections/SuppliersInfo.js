@@ -11,7 +11,7 @@ import {
 import css from './SuppliersInfo.css';
 
 
-function supplierState(state) {
+function stateString(state) {
   if (!state) return '';
   const s = state.code.replace(/^REQ_/, '').replace(/_/g, ' ');
   return s[0].toUpperCase() + s.substring(1).toLowerCase();
@@ -48,7 +48,7 @@ class SuppliersInfo extends React.Component {
             <Col xs={6}>
               <KeyValue
                 label="Status"
-                value={supplierState(supplier.state)}
+                value={stateString(supplier.state)}
               />
             </Col>
           </Row>
