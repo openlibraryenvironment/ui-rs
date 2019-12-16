@@ -16,6 +16,11 @@ const filterConfig = [
 ];
 
 
+function stateString(a) {
+  const s = (a.state.code || '').replace(/^RE[QS]_/, '');
+  return (s[0].toUpperCase() + s.slice(1).toLowerCase().replace(/_/g, ' ').replace('reshare', 'ReShare'));
+}
+
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
   const res = Object.assign({}, resources.query);
@@ -94,7 +99,6 @@ class PatronRequestsRoute extends React.Component {
   }
 
   renderPullSlipsButton(route, location) {
-    console.log('location =', location);
     return (
       <div style={{ textAlign: 'right' }}>
         <Link to={`${route}/printslips${location.search}`}>
@@ -198,13 +202,13 @@ class PatronRequestsRoute extends React.Component {
             dateCreated: 140,
             title: 200,
             patronReference: 120,
-            state: 120,
+            state: 180,
             serviceType: 120,
           }}
           resultsFormatter={{
             id: a => a.id.substring(0, 8),
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
-            state: a => a.state && a.state.code,
+            state: a => stateString(a),
             serviceType: a => a.serviceType && a.serviceType.value,
             pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}
