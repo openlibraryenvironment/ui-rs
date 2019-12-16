@@ -9,6 +9,7 @@ class SmartInstitutionCard extends React.Component {
     institution: {
       type: 'okapi',
       path: 'directory/entry?stats=true&filters=symbols.symbol=!{institutionSymbol}',
+      // XXX To refine this search, see: https://github.com/openlibraryenvironment/mod-directory/blob/master/doc/entry.md#searching-and-filtering-directoryentry-records
       throwErrors: false,
     },
   };

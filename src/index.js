@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Route as NestedRoute } from '@folio/stripes/core';
-import PatronRequests from './routes/PatronRequests';
+import PatronRequestsRoute from './routes/PatronRequestsRoute';
 import CreateEditRoute from './routes/CreateEditRoute';
 import ViewRoute from './routes/ViewRoute';
 import DetailsRoute from './routes/DetailsRoute';
@@ -16,17 +16,11 @@ class ResourceSharing extends React.Component {
     match: PropTypes.object.isRequired,
     actAs: PropTypes.string.isRequired,
     stripes: PropTypes.shape({
-      connect: PropTypes.func,
       logger: PropTypes.shape({
         log: PropTypes.func,
       }),
     }),
   };
-
-  constructor(props) {
-    super(props);
-    this.connectedPatronRequests = props.stripes.connect(PatronRequests);
-  }
 
   render() {
     const {
@@ -63,8 +57,8 @@ class ResourceSharing extends React.Component {
             <NestedRoute path={`${path}/requests/view/:id/flow`} component={FlowRoute} />
           </NestedRoute>
           <Route
-            path={`${path}/requests`}
-            render={() => <this.connectedPatronRequests {...this.props} appName={appName} />}
+            path={`${path}/requests/:action?`}
+            render={(props) => <PatronRequestsRoute {...props} appName={appName} />}
           />
         </Switch>
       </AppNameContext.Provider>

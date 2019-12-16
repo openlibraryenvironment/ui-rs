@@ -87,7 +87,7 @@ ViewRoute.propTypes = {
 ViewRoute.manifest = {
   selectedRecord: {
     type: 'okapi',
-    path: 'rs/patronrequests/:{id}', // eslint-disable-line no-template-curly-in-string,
+    path: 'rs/patronrequests/:{id}',
     fetch: false,
   },
 };

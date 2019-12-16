@@ -16,8 +16,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import ReactToPrint from 'react-to-print';
-import stringify from 'json-stable-stringify';
-import { Button, AccordionSet, Accordion } from '@folio/stripes/components';
+import { Button } from '@folio/stripes/components';
 import PullSlip from './PullSlip';
 
 class PrintPullSlip extends React.Component {
@@ -27,7 +26,7 @@ class PrintPullSlip extends React.Component {
 
   constructor(props) {
     super(props);
-    this.editorRef = React.createRef();
+    this.ref = React.createRef();
   }
 
   render() {
@@ -35,31 +34,15 @@ class PrintPullSlip extends React.Component {
       <div>
         <ReactToPrint
           trigger={() => (
-            <Button
-              data-test-print-pull-slip
-              marginBottom0
-            >
+            <Button data-test-print-pull-slip marginBottom0>
               <FormattedMessage id="ui-rs.button.print" />
             </Button>
           )}
-          content={() => this.editorRef.current}
+          content={() => this.ref.current}
         />
-        <div ref={this.editorRef}>
+        <div ref={this.ref}>
           <PullSlip record={this.props.record} />
         </div>
-
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <AccordionSet>
-          <Accordion
-            id="callslip-developerInfo"
-            closedByDefault
-            label={<FormattedMessage id="ui-rs.information.heading.developer" />}
-            displayWhenClosed={<FormattedMessage id="ui-rs.information.heading.developer.help" />}
-          >
-            <pre>{stringify(this.props.record, { space: 2 })}</pre>
-          </Accordion>
-        </AccordionSet>
       </div>
     );
   }

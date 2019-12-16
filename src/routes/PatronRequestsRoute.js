@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { stripesConnect } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
+import PrintAllPullSlips from '../components/PrintAllPullSlips';
 
 import packageInfo from '../../package';
 
@@ -27,7 +29,7 @@ function queryModifiedForApp(resources, props) {
 }
 
 
-export default class PatronRequests extends React.Component {
+class PatronRequestsRoute extends React.Component {
   static manifest = Object.freeze({
     patronrequests: {
       type: 'okapi',
@@ -60,6 +62,11 @@ export default class PatronRequests extends React.Component {
 
   static propTypes = {
     appName: PropTypes.string.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        action: PropTypes.string,
+      }).isRequired,
+    }).isRequired,
     resources: PropTypes.object,
     mutator: PropTypes.object,
   }
@@ -85,10 +92,10 @@ export default class PatronRequests extends React.Component {
     return this.props.mutator.selectedRecord.PUT(record);
   }
 
-  renderPullSlipsButton() {
+  renderPullSlipsButton(route) {
     return (
       <div style={{ textAlign: 'right' }}>
-        <Link to="requests/printslips">
+        <Link to={`${route}/printslips`}>
           <FormattedMessage id="ui-rs.printAllPullSlips">
             {ariaLabel => (
               <Button
@@ -107,6 +114,10 @@ export default class PatronRequests extends React.Component {
   }
 
   render() {
+    if (this.props.match.params.action === 'printslips') {
+      return <PrintAllPullSlips records={this.props.resources.patronrequests} />;
+    }
+
     const { mutator, resources, appName } = this.props;
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
       name: `@folio/${appName}`,
@@ -140,7 +151,7 @@ export default class PatronRequests extends React.Component {
     // more elegant position. For now, we just shove it in the top.
     return (
       <React.Fragment>
-        {this.renderPullSlipsButton()}
+        {this.renderPullSlipsButton(tweakedPackageInfo.stripes.route)}
         <SearchAndSort
           key="patronrequests"
           title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
@@ -200,3 +211,6 @@ export default class PatronRequests extends React.Component {
     );
   }
 }
+
+
+export default stripesConnect(PatronRequestsRoute);
