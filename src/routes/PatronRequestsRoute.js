@@ -6,6 +6,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
+import stateString from '../util/stateString';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
 
 import packageInfo from '../../package';
@@ -15,11 +16,6 @@ const INITIAL_RESULT_COUNT = 100;
 const filterConfig = [
 ];
 
-
-function stateString(a) {
-  const s = (a.state.code || '').replace(/^RE[QS]_/, '');
-  return (s[0].toUpperCase() + s.slice(1).toLowerCase().replace(/_/g, ' ').replace('reshare', 'ReShare'));
-}
 
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
@@ -208,7 +204,7 @@ class PatronRequestsRoute extends React.Component {
           resultsFormatter={{
             id: a => a.id.substring(0, 8),
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
-            state: a => stateString(a),
+            state: a => stateString(a.state),
             serviceType: a => a.serviceType && a.serviceType.value,
             pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}
