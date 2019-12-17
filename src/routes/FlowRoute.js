@@ -4,18 +4,19 @@ import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { Headline, Layout } from '@folio/stripes/components';
 import css from './FlowRoute.css';
-import { useActionMessage } from '../components/Flow/ActionMessage';
+import { useMessage } from '../components/MessageModalState';
 import actionsByState from '../components/Flow/actionsByState';
 import * as cards from '../components/Flow/cardsByRequest';
 import * as primaryActions from '../components/Flow/primaryActions';
 import * as moreActions from '../components/Flow/moreActions';
+import * as modals from '../components/Flow/modals';
 
 const renderNamedWithProps = (names, components, props) => names.map(
-  name => React.createElement(components[name], { key: name, ...props })
+  name => (components[name] ? React.createElement(components[name], { key: name, ...props }) : null)
 );
 
 const FlowRoute = props => {
-  const [, setMessage] = useActionMessage();
+  const [, setMessage] = useMessage();
 
   const performAction = (action, payload, successMessage, errorMessage) => (
     props.mutator.action.POST({ action, actionParams: payload || {} })
@@ -46,6 +47,8 @@ const FlowRoute = props => {
             <strong>More options:</strong>
             {renderNamedWithProps(byCurrent.moreActions, moreActions, { request, performAction })}
           </Layout>
+          {/* Render modals that correspond to available actions */}
+          {renderNamedWithProps([byCurrent.primaryAction, ...byCurrent.moreActions], modals, { request, performAction })}
         </div>
       }
       {!byCurrent &&

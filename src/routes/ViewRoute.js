@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes/components';
-import { ActionMessageBanner, ActionMessageProvider } from '../components/Flow/ActionMessage';
+import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
 import css from './ViewRoute.css';
 
 const subheading = (req, params) => {
@@ -18,7 +18,7 @@ const subheading = (req, params) => {
 };
 
 const ViewRoute = ({ children, history, resources, location: { pathname }, match: { url, params } }) => (
-  <ActionMessageProvider>
+  <MessageModalProvider>
     <Paneset>
       <Pane
         paneTitle={`Request ${params.id.replace(/-/g, '·')}`}
@@ -66,11 +66,11 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
           </React.Fragment>
         )}
       >
-        <ActionMessageBanner />
+        <ContextualMessageBanner />
         <div>{children}</div>
       </Pane>
     </Paneset>
-  </ActionMessageProvider>
+  </MessageModalProvider>
 );
 
 ViewRoute.propTypes = {

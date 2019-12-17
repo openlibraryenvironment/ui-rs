@@ -13,11 +13,11 @@ export default {
   'RES_NEW_AWAIT_PULL_SLIP': {
     cards: ['Bibliographic'],
     primaryAction: 'PrintPullSlip',
-    moreActions: ['SupplierMarkPullSlipPrinted'],
+    moreActions: ['SupplierMarkPullSlipPrinted', 'CannotSupply'],
   },
   'RES_AWAIT_PICKING': {
     cards: ['Bibliographic'],
     primaryAction: 'SupplierCheckInToReshare',
-    moreActions: ['PrintPullSlip'],
+    moreActions: ['PrintPullSlip', 'CannotSupply'],
   },
 };
