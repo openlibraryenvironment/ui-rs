@@ -16,6 +16,11 @@ const filterConfig = [
 ];
 
 
+function stateString(a) {
+  const s = (a.state.code || '').replace(/^RE[QS]_/, '');
+  return (s[0].toUpperCase() + s.slice(1).toLowerCase().replace(/_/g, ' ').replace('reshare', 'ReShare'));
+}
+
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
   const res = Object.assign({}, resources.query);
@@ -69,6 +74,7 @@ class PatronRequestsRoute extends React.Component {
     }).isRequired,
     resources: PropTypes.object,
     mutator: PropTypes.object,
+    location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
   }
 
   constructor(props) {
@@ -92,10 +98,10 @@ class PatronRequestsRoute extends React.Component {
     return this.props.mutator.selectedRecord.PUT(record);
   }
 
-  renderPullSlipsButton(route) {
+  renderPullSlipsButton(route, location) {
     return (
       <div style={{ textAlign: 'right' }}>
-        <Link to={`${route}/printslips`}>
+        <Link to={`${route}/printslips${location.search}`}>
           <FormattedMessage id="ui-rs.printAllPullSlips">
             {ariaLabel => (
               <Button
@@ -118,7 +124,7 @@ class PatronRequestsRoute extends React.Component {
       return <PrintAllPullSlips records={this.props.resources.patronrequests} />;
     }
 
-    const { mutator, resources, appName } = this.props;
+    const { mutator, resources, appName, location } = this.props;
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
       name: `@folio/${appName}`,
       stripes: Object.assign({}, packageInfo.stripes, {
@@ -151,7 +157,7 @@ class PatronRequestsRoute extends React.Component {
     // more elegant position. For now, we just shove it in the top.
     return (
       <React.Fragment>
-        {this.renderPullSlipsButton(tweakedPackageInfo.stripes.route)}
+        {this.renderPullSlipsButton(tweakedPackageInfo.stripes.route, location)}
         <SearchAndSort
           key="patronrequests"
           title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
@@ -196,13 +202,13 @@ class PatronRequestsRoute extends React.Component {
             dateCreated: 140,
             title: 200,
             patronReference: 120,
-            state: 120,
+            state: 180,
             serviceType: 120,
           }}
           resultsFormatter={{
             id: a => a.id.substring(0, 8),
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
-            state: a => a.state && a.state.code,
+            state: a => stateString(a),
             serviceType: a => a.serviceType && a.serviceType.value,
             pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}

@@ -11,6 +11,7 @@ import {
   CitationMetadataInfo,
   CatalogInfo,
   SuppliersInfo,
+  AuditInfo
 } from './sections';
 
 const ViewPatronRequest = ({ record }) => (
@@ -38,6 +39,10 @@ const ViewPatronRequest = ({ record }) => (
     {/* Green card */}
     <Accordion id="suppliersInfo" label={<FormattedMessage id="ui-rs.information.heading.suppliers" />}>
       <SuppliersInfo id="suppliersInfo" record={record} />
+    </Accordion>
+    {/* Purple card */}
+    <Accordion id="auditInfo" label={<FormattedMessage id="ui-rs.information.heading.audit" />}>
+      <AuditInfo id="auditInfo" record={record} />
     </Accordion>
     {/* No card */}
     <Accordion
