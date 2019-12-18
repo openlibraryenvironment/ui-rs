@@ -6,6 +6,8 @@
   "new-app.greeting": "Congratulations!",
   "new-app.message": "Your Stripes app is running.",
   "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
+  "requester": "Requester",
+  "supplier": "Supplier",
 
   "settings.name": "Name",
   "settings.value": "Value",
@@ -107,10 +109,13 @@
   "actions.checkIn.error": "Error checking item into ReShare",
   "actions.markShipped.prompt": "Scan request barcode to <strong>mark item shipped</strong>",
 
+  "cards.reqSup.searching": "Searching for supplier.",
+
   "printPullslip": "Print pull slip",
   "button.goBack": "Go back",
   "button.print": "Print",
   "button.scan": "Scan",
+  "button.view": "View",
   "printAllPullSlips": "Print pull-slips for all records in list",
   "printPullSlips": "Print pull-slips",
   "SENTINEL": "SENTINEL",

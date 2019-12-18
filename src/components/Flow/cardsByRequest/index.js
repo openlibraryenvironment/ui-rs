@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import CitationMetadataInfo from '../../ViewPatronRequest/sections/CitationMetadataInfo';
 import CatalogInfo from '../../ViewPatronRequest/sections/CatalogInfo';
+import CitationMetadataInfo from '../../ViewPatronRequest/sections/CitationMetadataInfo';
 
-export const Citation = ({ request }) => <CitationMetadataInfo record={request} id="citation" />;
+export { default as RequesterSupplier } from './RequesterSupplier';
+
 export const Bibliographic = ({ request }) => <CatalogInfo record={request} id="citation" />;
+export const Citation = ({ request }) => <CitationMetadataInfo record={request} id="citation" />;

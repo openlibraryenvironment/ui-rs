@@ -11,7 +11,7 @@
 */
 export default {
   'RES_NEW_AWAIT_PULL_SLIP': {
-    cards: ['Bibliographic'],
+    cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'PrintPullSlip',
     moreActions: ['SupplierMarkPullSlipPrinted', 'CannotSupply'],
   },
