@@ -94,24 +94,21 @@ class PatronRequestsRoute extends React.Component {
     return this.props.mutator.selectedRecord.PUT(record);
   }
 
-  renderPullSlipsButton(route, location) {
+  getActionMenu(route, location) {
     return (
-      <div style={{ textAlign: 'right' }}>
-        <Link to={`${route}/printslips${location.search}`}>
-          <FormattedMessage id="ui-rs.printAllPullSlips">
-            {ariaLabel => (
-              <Button
-                id="clickable-print-pull-slips"
-                aria-label={ariaLabel}
-                buttonStyle="primary"
-                marginBottom0
-              >
-                <FormattedMessage id="ui-rs.printPullSlips" />
-              </Button>
-            )}
-          </FormattedMessage>
-        </Link>
-      </div>
+      <Link to={`${route}/printslips${location.search}`}>
+        <FormattedMessage id="ui-rs.printAllPullSlips">
+          {ariaLabel => (
+            <Button
+              id="clickable-print-pull-slips"
+              aria-label={ariaLabel}
+              buttonStyle="dropdownItem"
+            >
+              <FormattedMessage id="ui-rs.printPullSlips" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </Link>
     );
   }
 
@@ -153,10 +150,10 @@ class PatronRequestsRoute extends React.Component {
     // more elegant position. For now, we just shove it in the top.
     return (
       <React.Fragment>
-        {this.renderPullSlipsButton(tweakedPackageInfo.stripes.route, location)}
         <SearchAndSort
           key="patronrequests"
           title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
+          actionMenu={() => this.getActionMenu(tweakedPackageInfo.stripes.route, location)}
           objectName="patronrequest"
           packageInfo={tweakedPackageInfo}
           filterConfig={filterConfig}
