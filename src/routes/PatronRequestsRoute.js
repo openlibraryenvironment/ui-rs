@@ -6,6 +6,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
+import stateString from '../util/stateString';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
 
 import packageInfo from '../../package';
@@ -15,11 +16,6 @@ const INITIAL_RESULT_COUNT = 100;
 const filterConfig = [
 ];
 
-
-function stateString(a) {
-  const s = (a.state.code || '').replace(/^RE[QS]_/, '');
-  return (s[0].toUpperCase() + s.slice(1).toLowerCase().replace(/_/g, ' ').replace('reshare', 'ReShare'));
-}
 
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
@@ -98,24 +94,21 @@ class PatronRequestsRoute extends React.Component {
     return this.props.mutator.selectedRecord.PUT(record);
   }
 
-  renderPullSlipsButton(route, location) {
+  getActionMenu(route, location) {
     return (
-      <div style={{ textAlign: 'right' }}>
-        <Link to={`${route}/printslips${location.search}`}>
-          <FormattedMessage id="ui-rs.printAllPullSlips">
-            {ariaLabel => (
-              <Button
-                id="clickable-print-pull-slips"
-                aria-label={ariaLabel}
-                buttonStyle="primary"
-                marginBottom0
-              >
-                <FormattedMessage id="ui-rs.printPullSlips" />
-              </Button>
-            )}
-          </FormattedMessage>
-        </Link>
-      </div>
+      <Link to={`${route}/printslips${location.search}`}>
+        <FormattedMessage id="ui-rs.printAllPullSlips">
+          {ariaLabel => (
+            <Button
+              id="clickable-print-pull-slips"
+              aria-label={ariaLabel}
+              buttonStyle="dropdownItem"
+            >
+              <FormattedMessage id="ui-rs.printPullSlips" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </Link>
     );
   }
 
@@ -157,10 +150,10 @@ class PatronRequestsRoute extends React.Component {
     // more elegant position. For now, we just shove it in the top.
     return (
       <React.Fragment>
-        {this.renderPullSlipsButton(tweakedPackageInfo.stripes.route, location)}
         <SearchAndSort
           key="patronrequests"
           title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
+          actionMenu={() => this.getActionMenu(tweakedPackageInfo.stripes.route, location)}
           objectName="patronrequest"
           packageInfo={tweakedPackageInfo}
           filterConfig={filterConfig}
@@ -208,7 +201,7 @@ class PatronRequestsRoute extends React.Component {
           resultsFormatter={{
             id: a => a.id.substring(0, 8),
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
-            state: a => stateString(a),
+            state: a => stateString(a.state),
             serviceType: a => a.serviceType && a.serviceType.value,
             pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}
