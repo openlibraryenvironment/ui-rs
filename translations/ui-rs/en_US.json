@@ -27,7 +27,7 @@
   "patronrequests.requestingInstitutionSymbol": "Peer Symbol",
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)",
-  "information.heading.request": "Request metadata",
+  "information.heading.request": "Request information",
   "information.heading.catalogInfo": "Catalog record",
   "information.title": "Title",
   "information.date": "Date",
