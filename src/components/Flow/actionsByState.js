@@ -20,4 +20,9 @@ export default {
     primaryAction: 'SupplierCheckInToReshare',
     moreActions: ['PrintPullSlip', 'CannotSupply'],
   },
+  'RES_CHECKED_IN_TO_RESHARE': {
+    cards: ['Bibliographic'],
+    primaryAction: 'SupplierMarkShipped',
+    moreActions: ['PrintPullSlip', 'CannotSupply'],
+  },
 };
