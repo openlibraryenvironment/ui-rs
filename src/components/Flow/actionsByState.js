@@ -16,12 +16,12 @@ export default {
     moreActions: ['SupplierMarkPullSlipPrinted', 'CannotSupply'],
   },
   'RES_AWAIT_PICKING': {
-    cards: ['Bibliographic'],
+    cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'SupplierCheckInToReshare',
     moreActions: ['PrintPullSlip', 'CannotSupply'],
   },
   'RES_CHECKED_IN_TO_RESHARE': {
-    cards: ['Bibliographic'],
+    cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'SupplierMarkShipped',
     moreActions: ['PrintPullSlip', 'CannotSupply'],
   },
