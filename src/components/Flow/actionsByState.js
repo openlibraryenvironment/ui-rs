@@ -23,6 +23,6 @@ export default {
   'RES_CHECKED_IN_TO_RESHARE': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'SupplierMarkShipped',
-    moreActions: ['PrintPullSlip', 'CannotSupply'],
+    moreActions: ['SupplierMarkShippedWithoutScan', 'PrintPullSlip', 'CannotSupply'],
   },
 };
