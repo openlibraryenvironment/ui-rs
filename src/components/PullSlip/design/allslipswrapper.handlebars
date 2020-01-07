@@ -1,10 +1,15 @@
 <div class="site">
   <div class="site__body page-size-is-letter slips-have-phone-number slips-have-email slips-have-due-date slips-have-local-item-barcode">
-    <div class="page">
-      {{#each records}}
-        {{> slip}}
-      {{/each}}
-    </div>
+    {{#each pairs}}
+      <div class="page">
+        {{#with first}}
+          {{> slip}}
+        {{/with}}
+        {{#with second}}
+          {{> slip}}
+        {{/with}}
+      </div>
+    {{/each}}
     <div class="end-of-content">❧ End of content</div>
   </div>
 </div>

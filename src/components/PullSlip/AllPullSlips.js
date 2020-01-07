@@ -7,11 +7,22 @@ import slipTemplate from './design/slip.handlebars';
 import wrapperTemplate from './design/allslipswrapper.handlebars';
 import { establishStylesHook, recordToPullSlipData } from './util';
 
+function makePairs(singles, fallback) {
+  const pairs = [];
+  for (let i = 0; i < singles.length; i += 2) {
+    pairs.push({
+      first: singles[i],
+      second: singles[i + 1] || fallback,
+    });
+  }
+  return pairs;
+}
+
 const AllPullSlips = (props) => {
   useEffect(establishStylesHook, []);
   Handlebars.registerPartial('slip', slipTemplate);
   const records = props.records.map(r => recordToPullSlipData(props.intl, r));
-  const s = wrapperTemplate({ records });
+  const s = wrapperTemplate({ pairs: makePairs(records, {}) });
   return (new Parser()).parse(s);
 };
 
