@@ -96,6 +96,7 @@
   "flow.itemFound": "Item found - ready to ship",
   "flow.shippedToRequester": "Item shipped to requester",
 
+  "actions.wrongId": "No action performed, scanned request does not match",
   "actions.cannotSupply": "Respond \"Cannot Supply\"",
   "actions.cannotSupply.confirm": "Are you sure you want to <strong>respond \"Cannot Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
   "actions.cannotSupply.reason": "Reason item cannot be supplied:",
@@ -105,11 +106,15 @@
   "actions.cannotSupply.reasons.other": "Other",
   "actions.cannotSupply.success": "Responded \"Cannot supply\".",
   "actions.cannotSupply.error": "Error, could not respond \"Cannot supply\".",
+  "actions.markSlipPrinted": "Mark pull slip as printed",
   "actions.markSlipPrinted.success": "Pull slip marked as printed.",
   "actions.markSlipPrinted.error": "Error marking pull slip as printed.",
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
   "actions.checkIn.success": "Item successfully checked into ReShare",
   "actions.checkIn.error": "Error checking item into ReShare",
+  "actions.markShippedWithoutScan": "Mark item shipped without scanning",
+  "actions.markShipped.success": "Pull slip marked as shipped.",
+  "actions.markShipped.error": "Error marking pull slip as shipped.",
   "actions.markShipped.prompt": "Scan request barcode to <strong>mark item shipped</strong>",
 
   "cards.reqSup.searching": "Searching for supplier.",

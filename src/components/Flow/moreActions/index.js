@@ -6,9 +6,17 @@ import ActionButton from '../ActionButton';
 
 export const SupplierMarkPullSlipPrinted = props => <ActionButton
   action="supplierPrintPullSlip"
-  label="Mark pull slip as printed"
-  successMessage="ui-rs.actions.markSlipPrinted.success"
-  errorMessage="ui-rs.actions.markSlipPrinted.error"
+  label="ui-rs.actions.markSlipPrinted"
+  success="ui-rs.actions.markSlipPrinted.success"
+  error="ui-rs.actions.markSlipPrinted.error"
+  {...props}
+/>;
+
+export const SupplierMarkShippedWithoutScan = props => <ActionButton
+  action="supplierMarkShipped"
+  label="ui-rs.actions.markShippedWithoutScan"
+  success="ui-rs.actions.markShipped.success"
+  error="ui-rs.actions.markShipped.error"
   {...props}
 />;
 

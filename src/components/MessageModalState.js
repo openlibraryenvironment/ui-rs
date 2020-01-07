@@ -63,7 +63,7 @@ export const useMessage = () => {
   const setMessage = (key, type) => {
     dispatch({
       type: SET_MESSAGE,
-      payload: { key, type },
+      payload: typeof key === 'string' ? { key, type } : null,
     });
   };
   return [state.message, setMessage];
@@ -76,7 +76,7 @@ export const useModal = () => {
 };
 
 export const ContextualMessageBanner = () => {
-  const [{ message: msg }] = useContext(MessageModalContext);
+  const [msg, setMsg] = useMessage();
   if (!msg) return null;
-  return <MessageBanner type={msg.type} show dismissable><FormattedMessage id={msg.key} /></MessageBanner>;
+  return <MessageBanner type={msg.type} onExited={() => setMsg(null)} dismissable><FormattedMessage id={msg.key} /></MessageBanner>;
 };
