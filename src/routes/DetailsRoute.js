@@ -24,7 +24,11 @@ DetailsRoute.manifest = {
 
 DetailsRoute.propTypes = {
   resources: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default stripesConnect(DetailsRoute);
