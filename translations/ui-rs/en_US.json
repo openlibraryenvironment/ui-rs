@@ -123,6 +123,7 @@
   "button.print": "Print",
   "button.scan": "Scan",
   "button.view": "View",
+  "button.cancel-print": "Cancel print",
   "printAllPullSlips": "Print pull-slips for all records in list",
   "printPullSlips": "Print pull-slips",
   "SENTINEL": "SENTINEL",
