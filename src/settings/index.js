@@ -10,6 +10,9 @@ class ResourceSharingSettings extends React.Component {
     settings: {
       type: 'okapi',
       path: 'rs/settings/appSettings',
+      params: {
+        max: '500',
+      },
     },
   });
 
