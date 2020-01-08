@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import stringify from 'json-stable-stringify';
+import { withStripes } from '@folio/stripes/core';
 import {
   Accordion,
   Card,
@@ -16,6 +17,11 @@ class UserCard extends React.Component {
       id: PropTypes.string,
       // Maybe other properties
     }),
+    stripes: PropTypes.shape({
+      config: PropTypes.shape({
+        showDevInfo: PropTypes.bool,
+      }).isRequired,
+    }).isRequired,
   };
 
   render() {
@@ -86,6 +92,7 @@ class UserCard extends React.Component {
             />
           </Col>
         </Row>
+        {!props.stripes.config.showDevInfo ? '' :
         <Row>
           <Col xs={12}>
             <Accordion
@@ -99,9 +106,10 @@ class UserCard extends React.Component {
             </Accordion>
           </Col>
         </Row>
+        }
       </Card>
     );
   }
 }
 
-export default UserCard;
+export default withStripes(UserCard);

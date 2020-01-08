@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import stringify from 'json-stable-stringify';
+import { withStripes } from '@folio/stripes/core';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
 
 import {
@@ -14,7 +15,7 @@ import {
   AuditInfo
 } from './sections';
 
-const ViewPatronRequest = ({ record }) => (
+const ViewPatronRequest = ({ record, stripes }) => (
   <AccordionSet>
     {/* No card */}
     <Accordion label={<FormattedMessage id="ui-rs.information.heading.request" />}>
@@ -45,6 +46,7 @@ const ViewPatronRequest = ({ record }) => (
       <AuditInfo id="auditInfo" record={record} />
     </Accordion>
     {/* No card */}
+    {!stripes.config.showDevInfo ? '' :
     <Accordion
       id="developerInfo"
       closedByDefault
@@ -53,11 +55,17 @@ const ViewPatronRequest = ({ record }) => (
     >
       <pre>{stringify(record, { space: 2 })}</pre>
     </Accordion>
+    }
   </AccordionSet>
 );
 
 ViewPatronRequest.propTypes = {
   record: PropTypes.object,
+  stripes: PropTypes.shape({
+    config: PropTypes.shape({
+      showDevInfo: PropTypes.bool,
+    }).isRequired,
+  }).isRequired,
 };
 
-export default ViewPatronRequest;
+export default withStripes(ViewPatronRequest);
