@@ -16,3 +16,13 @@
   padding: var(--gutter-static);
   max-width: 80em;
 }
+
+.optionList button, .optionList a {
+  border-radius: 0;
+  &:nth-child(even) {
+    background-color: var(--color-fill-table-row-even);
+  }
+  &:nth-child(odd) {
+    background-color: var(--color-fill-table-row-odd);
+  }
+}
