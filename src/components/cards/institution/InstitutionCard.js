@@ -91,7 +91,7 @@ class InstitutionCard extends React.Component {
           <Col xs={12}>
             <Accordion
               id="requestingInstitutionInfo-card-dev"
-              label={<FormattedMessage id="ui-rs.information.devInfo" />}
+              label={<FormattedMessage id="ui-rs.information.heading.developer" />}
               closedByDefault
             >
               <pre>

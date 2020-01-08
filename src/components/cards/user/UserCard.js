@@ -90,7 +90,7 @@ class UserCard extends React.Component {
           <Col xs={12}>
             <Accordion
               id="requestingUserInfo-card-dev"
-              label={<FormattedMessage id="ui-rs.information.devInfo" />}
+              label={<FormattedMessage id="ui-rs.information.heading.developer" />}
               closedByDefault
             >
               <pre>
