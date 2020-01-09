@@ -25,6 +25,7 @@ class PrintOrCancel extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    destUrl: PropTypes.string.isRequired,
     children: PropTypes.element.isRequired,
   };
 
@@ -45,7 +46,7 @@ class PrintOrCancel extends React.Component {
               {ariaLabel => (
                 <PaneHeaderIconButton
                   icon="times"
-                  to="details"
+                  to={this.props.destUrl}
                   aria-label={ariaLabel}
                 />
               )}

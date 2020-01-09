@@ -28,7 +28,11 @@ class PrintAllPullSlips extends React.Component {
       return `Not enough records loaded for printing (${records.length} of ${totalRecords})`;
     }
 
-    return <PrintOrCancel><AllPullSlips records={records} /></PrintOrCancel>;
+    return (
+      <PrintOrCancel destUrl="..">
+        <AllPullSlips records={records} />
+      </PrintOrCancel>
+    );
   }
 }
 

@@ -9,7 +9,11 @@ class PrintPullSlip extends React.Component {
   };
 
   render() {
-    return <PrintOrCancel><PullSlip record={this.props.record} /></PrintOrCancel>;
+    return (
+      <PrintOrCancel destUrl="details">
+        <PullSlip record={this.props.record} />
+      </PrintOrCancel>
+    );
   }
 }
 
