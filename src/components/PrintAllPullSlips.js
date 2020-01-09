@@ -3,9 +3,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router';
 import ReactToPrint from 'react-to-print';
-import { Button } from '@folio/stripes/components';
+import { Button, PaneHeaderIconButton, HotKeys } from '@folio/stripes/components';
 import AllPullSlips from './PullSlip/AllPullSlips';
+import css from './PrintPullSlip.css';
 
 class PrintAllPullSlips extends React.Component {
   static propTypes = {
@@ -18,6 +20,9 @@ class PrintAllPullSlips extends React.Component {
         PropTypes.object.isRequired,
       ),
     }).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   constructor(props) {
@@ -26,6 +31,8 @@ class PrintAllPullSlips extends React.Component {
   }
 
   render() {
+    const keys = { cancel: ['escape'] };
+    const handlers = { cancel: () => this.props.history.push('details') };
     const { hasLoaded, other, records } = this.props.records;
 
     if (!hasLoaded) {
@@ -38,21 +45,34 @@ class PrintAllPullSlips extends React.Component {
     }
 
     return (
-      <div>
-        <ReactToPrint
-          trigger={() => (
-            <Button data-test-print-pull-slip marginBottom0>
-              <FormattedMessage id="ui-rs.button.print" />
-            </Button>
-          )}
-          content={() => this.ref.current}
-        />
+      <HotKeys keyMap={keys} handlers={handlers}>
+        <div className={css.buttonBar}>
+          <div className={css.cancelIcon}>
+            <FormattedMessage id="ui-rs.button.cancel-print">
+              {ariaLabel => (
+                <PaneHeaderIconButton
+                  icon="times"
+                  to="details"
+                  aria-label={ariaLabel}
+                />
+              )}
+            </FormattedMessage>
+          </div>
+          <ReactToPrint
+            trigger={() => (
+              <Button data-test-print-pull-slip marginBottom0>
+                <FormattedMessage id="ui-rs.button.print" />
+              </Button>
+            )}
+            content={() => this.ref.current}
+          />
+        </div>
         <div ref={this.ref}>
           <AllPullSlips records={records} />
         </div>
-      </div>
+      </HotKeys>
     );
   }
 }
 
-export default PrintAllPullSlips;
+export default withRouter(PrintAllPullSlips);
