@@ -58,9 +58,6 @@ class SettingPage extends React.Component {
 
     const settings = { 'settings': filteredRows };
     const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : []);
-    
-    console.log("Settings: %o", settings)
-    console.log("RefDataValues: %o", refdatavalues)
 
     return (
       <EditableSettingsList
