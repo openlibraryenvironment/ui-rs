@@ -15,14 +15,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router';
 import ReactToPrint from 'react-to-print';
-import { Button, PaneHeaderIconButton } from '@folio/stripes/components';
+import { Button, PaneHeaderIconButton, HotKeys } from '@folio/stripes/components';
 import PullSlip from './PullSlip';
 import css from './PrintPullSlip.css';
 
 class PrintPullSlip extends React.Component {
   static propTypes = {
     record: PropTypes.object.isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   constructor(props) {
@@ -31,8 +35,11 @@ class PrintPullSlip extends React.Component {
   }
 
   render() {
+    const keys = { cancel: ['escape'] };
+    const handlers = { cancel: () => this.props.history.push('details') };
+
     return (
-      <React.Fragment>
+      <HotKeys keyMap={keys} handlers={handlers}>
         <div className={css.buttonBar}>
           <div className={css.cancelIcon}>
             <FormattedMessage id="ui-rs.button.cancel-print">
@@ -57,9 +64,9 @@ class PrintPullSlip extends React.Component {
         <div ref={this.ref}>
           <PullSlip record={this.props.record} />
         </div>
-      </React.Fragment>
+      </HotKeys>
     );
   }
 }
 
-export default PrintPullSlip;
+export default withRouter(PrintPullSlip);
