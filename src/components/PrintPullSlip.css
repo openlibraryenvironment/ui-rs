@@ -1,0 +1,11 @@
+.buttonBar {
+    background: #f0f0f0;
+    text-align: center;
+    padding: 0.25em;
+}
+
+.cancelIcon {
+    margin-top: -0.5em;
+    float: left;
+    vertical-align: center;
+}

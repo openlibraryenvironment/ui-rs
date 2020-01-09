@@ -57,6 +57,7 @@
     "@folio/stripes-connect": "^5.2.3",
     "@folio/stripes-core": "^3.11.1000620",
     "react": "*",
+    "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1"
   },
   "stripes": {
