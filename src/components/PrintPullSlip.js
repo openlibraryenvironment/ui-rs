@@ -18,6 +18,7 @@ import { FormattedMessage } from 'react-intl';
 import ReactToPrint from 'react-to-print';
 import { Button, PaneHeaderIconButton } from '@folio/stripes/components';
 import PullSlip from './PullSlip';
+import css from './PrintPullSlip.css';
 
 class PrintPullSlip extends React.Component {
   static propTypes = {
@@ -31,20 +32,19 @@ class PrintPullSlip extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <FormattedMessage id="ui-rs.button.cancel-print">
-            {ariaLabel => (
-              <PaneHeaderIconButton
-                icon="times"
-                to="details"
-                aria-label={ariaLabel}
-                style={{ background: 'white' }}
-              />
-            )}
-          </FormattedMessage>
-        </div>
-        <div align="center">
+      <React.Fragment>
+        <div className={css.buttonBar}>
+          <div className={css.cancelIcon}>
+            <FormattedMessage id="ui-rs.button.cancel-print">
+              {ariaLabel => (
+                <PaneHeaderIconButton
+                  icon="times"
+                  to="details"
+                  aria-label={ariaLabel}
+                />
+              )}
+            </FormattedMessage>
+          </div>
           <ReactToPrint
             trigger={() => (
               <Button data-test-print-pull-slip marginBottom0>
@@ -57,7 +57,7 @@ class PrintPullSlip extends React.Component {
         <div ref={this.ref}>
           <PullSlip record={this.props.record} />
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
