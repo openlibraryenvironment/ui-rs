@@ -13,10 +13,16 @@ class SettingPage extends React.Component {
         stats: true,
       },
       records: 'results',
+      params: {
+        max: '500',
+      },
     },
     refdatavalues: {
       type: 'okapi',
       path: 'rs/refdata',
+      params: {
+        max: '500',
+      },
     }
   });
 
@@ -52,6 +58,9 @@ class SettingPage extends React.Component {
 
     const settings = { 'settings': filteredRows };
     const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : []);
+    
+    console.log("Settings: %o", settings)
+    console.log("RefDataValues: %o", refdatavalues)
 
     return (
       <EditableSettingsList

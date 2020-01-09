@@ -68,6 +68,11 @@ class ResourceSharingSettings extends React.Component {
   // They should be in alphabetical order (by route) here, to match the sorted dynamic list.
   staticSettingsPages = [
     {
+      route: 'HostLMSIntegration',
+      label: 'Host LMS integration',
+      component: this.customComponentMaker('hostLMSIntegration')
+    },
+    {
       route: 'localNCIP',
       label: 'Local NCIP settings',
       component: this.customComponentMaker('localNCIP')
