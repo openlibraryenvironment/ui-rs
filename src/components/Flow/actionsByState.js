@@ -25,9 +25,4 @@ export default {
     primaryAction: 'SupplierMarkShipped',
     moreActions: ['SupplierMarkShippedWithoutScan', 'PrintPullSlip', 'CannotSupply'],
   },
-  'REQ_EXPECTS_TO_SUPPLY': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
-    primaryAction: '',
-    moreActions: ['SendMessage'],
-  },
 };
