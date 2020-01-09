@@ -133,6 +133,7 @@
   "settingsSection.localNCIP": "Local NCIP settings",
   "settingsSection.requests": "Request defaults",
   "settingsSection.requesterValidation": "Requester validation",
+  "settingsSection.hostLMSIntegration": "Host LMS integration settings",
 
   "settingName.settingLoading": "Setting Name Loading",
   "settingName.sharedIndexBaseUrl": "Shared index base url",
@@ -147,5 +148,9 @@
 
   "settingName.borrowerCheck": "Borrower check",
 
-  "settingName.ncipServerAddress": "NCIP server address"
+  "settingName.ncipServerAddress": "NCIP server address",
+  "settingName.ncipAppProfile": "NCIP app profile",
+  "settingName.ncipFromAgency": "NCIP from agency",
+
+  "settingName.hostLmsIntegration": "Host LMS integration"
 }

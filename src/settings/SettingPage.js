@@ -13,10 +13,16 @@ class SettingPage extends React.Component {
         stats: true,
       },
       records: 'results',
+      params: {
+        max: '500',
+      },
     },
     refdatavalues: {
       type: 'okapi',
       path: 'rs/refdata',
+      params: {
+        max: '500',
+      },
     }
   });
 
