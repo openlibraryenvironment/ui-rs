@@ -36,7 +36,7 @@ class PrintOrCancel extends React.Component {
 
   render() {
     const keys = { cancel: ['escape'] };
-    const handlers = { cancel: () => this.props.history.push('details') };
+    const handlers = { cancel: () => this.props.history.push(this.props.destUrl) };
 
     return (
       <HotKeys keyMap={keys} handlers={handlers} attach={document.body} focused>
