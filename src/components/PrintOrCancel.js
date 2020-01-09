@@ -39,7 +39,7 @@ class PrintOrCancel extends React.Component {
     const handlers = { cancel: () => this.props.history.push('details') };
 
     return (
-      <HotKeys keyMap={keys} handlers={handlers}>
+      <HotKeys keyMap={keys} handlers={handlers} attach={document.body} focused>
         <div className={css.buttonBar}>
           <div className={css.cancelIcon}>
             <FormattedMessage id="ui-rs.button.cancel-print">
