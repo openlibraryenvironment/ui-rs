@@ -10,13 +10,18 @@ class SettingPage extends React.Component {
       type: 'okapi',
       path: 'rs/settings/appSettings',
       params: {
+        max: '500',
         stats: true,
       },
       records: 'results',
+      
     },
     refdatavalues: {
       type: 'okapi',
       path: 'rs/refdata',
+      params: {
+        max: '500',
+      },
     }
   });
 
