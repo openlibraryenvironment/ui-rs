@@ -43,7 +43,7 @@ const FlowRoute = props => {
           <Layout className="padding-top-gutter">
             {PrimaryAction && <PrimaryAction request={request} performAction={performAction} /> }
           </Layout>
-          <Layout className="padding-top-gutter">
+          <Layout className={`padding-top-gutter ${css.optionList}`}>
             <strong>More options:</strong>
             {renderNamedWithProps(byCurrent.moreActions, moreActions, { request, performAction })}
           </Layout>
