@@ -14,7 +14,6 @@ class SettingPage extends React.Component {
         stats: true,
       },
       records: 'results',
-      
     },
     refdatavalues: {
       type: 'okapi',

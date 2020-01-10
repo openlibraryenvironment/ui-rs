@@ -1,11 +1,7 @@
-// See comment on security issues in PrintPullSlip.js
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import ReactToPrint from 'react-to-print';
-import { Button } from '@folio/stripes/components';
 import AllPullSlips from './PullSlip/AllPullSlips';
+import PrintOrCancel from './PrintOrCancel';
 
 class PrintAllPullSlips extends React.Component {
   static propTypes = {
@@ -20,11 +16,6 @@ class PrintAllPullSlips extends React.Component {
     }).isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.ref = React.createRef();
-  }
-
   render() {
     const { hasLoaded, other, records } = this.props.records;
 
@@ -38,19 +29,9 @@ class PrintAllPullSlips extends React.Component {
     }
 
     return (
-      <div>
-        <ReactToPrint
-          trigger={() => (
-            <Button data-test-print-pull-slip marginBottom0>
-              <FormattedMessage id="ui-rs.button.print" />
-            </Button>
-          )}
-          content={() => this.ref.current}
-        />
-        <div ref={this.ref}>
-          <AllPullSlips records={records} />
-        </div>
-      </div>
+      <PrintOrCancel destUrl="..">
+        <AllPullSlips records={records} />
+      </PrintOrCancel>
     );
   }
 }
