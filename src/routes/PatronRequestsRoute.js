@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
-import { SearchAndSort } from '@folio/stripes/smart-components';
+import { SearchAndSort, withTags } from '@folio/stripes/smart-components';
+import { Tags } from '@folio/stripes-erm-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 import stateString from '../util/stateString';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
@@ -71,6 +72,7 @@ class PatronRequestsRoute extends React.Component {
     resources: PropTypes.object,
     mutator: PropTypes.object,
     location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
+    tagsEnabled: PropTypes.bool,
   }
 
   constructor(props) {

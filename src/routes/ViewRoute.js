@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import compose from 'compose-function';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes/components';
+
+import { withTags } from '@folio/stripes/smart-components';
+
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
 import css from './ViewRoute.css';
 
@@ -92,4 +96,8 @@ ViewRoute.manifest = {
   },
 };
 
-export default stripesConnect(ViewRoute);
+// export default stripesConnect(ViewRoute);
+export default compose(
+  stripesConnect,
+  withTags,
+)(ViewRoute);
