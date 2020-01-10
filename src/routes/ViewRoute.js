@@ -7,6 +7,8 @@ import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
 import css from './ViewRoute.css';
+import packageInfo from '../../package';
+
 
 const subheading = (req, params) => {
   if (!req || params.id !== req.id) return undefined;
@@ -18,14 +20,14 @@ const subheading = (req, params) => {
   return `${title} · ${requester} → ${supplier}`;
 };
 
-const ViewRoute = ({ children, history, resources, location: { pathname }, match: { url, params } }) => (
+const ViewRoute = ({ children, history, resources, location: { pathname, search }, match: { url, params } }) => (
   <MessageModalProvider>
     <Paneset>
       <Pane
         paneTitle={`Request ${params.id.replace(/-/g, '·')}`}
         paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), params)}
         padContent={false}
-        onClose={() => history.push('../../..')}
+        onClose={() => history.push(`${packageInfo.stripes.route}/requests${search}`)}
         dismissible
         defaultWidth="fill"
         subheader={
@@ -80,7 +82,10 @@ ViewRoute.propTypes = {
     params: PropTypes.object,
     url: PropTypes.string,
   }).isRequired,
-  location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+    search: PropTypes.string.isRequired,
+  }).isRequired,
   history: PropTypes.object.isRequired,
   resources: PropTypes.object.isRequired,
 };

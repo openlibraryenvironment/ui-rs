@@ -171,7 +171,7 @@ class PatronRequestsRoute extends React.Component {
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           createRecordPath="requests/create"
-          viewRecordPathById={id => `requests/view/${id}`}
+          viewRecordPathById={id => `requests/view/${id}${location.search}`}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms="module.rs.enabled"
           onCreate={this.createPatronRequest}
@@ -210,7 +210,7 @@ class PatronRequestsRoute extends React.Component {
             serviceType: 120,
           }}
           resultsFormatter={{
-            id: a => a.id.substring(0, 8),
+            id: a => a.hrid,
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             state: a => stateString(a.state),
             serviceType: a => a.serviceType && a.serviceType.value,
