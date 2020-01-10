@@ -68,6 +68,11 @@ class ResourceSharingSettings extends React.Component {
   // They should be in alphabetical order (by route) here, to match the sorted dynamic list.
   staticSettingsPages = [
     {
+      route: 'AutoResponder',
+      label: 'Auto responder settings',
+      component: this.customComponentMaker('autoResponder')
+    },
+    {
       route: 'HostLMSIntegration',
       label: 'Host LMS integration',
       component: this.customComponentMaker('hostLMSIntegration')

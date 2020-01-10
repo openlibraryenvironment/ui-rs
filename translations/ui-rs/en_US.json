@@ -133,7 +133,8 @@
   "settingsSection.localNCIP": "Local NCIP settings",
   "settingsSection.requests": "Request defaults",
   "settingsSection.requesterValidation": "Requester validation",
-  "settingsSection.hostLMSIntegration": "Host LMS integration settings",
+  "settingsSection.hostLmsIntegration": "Host LMS integration settings",
+  "settingsSection.autoResponder": "Auto responder settings",
 
   "settingName.settingLoading": "Setting Name Loading",
   "settingName.sharedIndexBaseUrl": "Shared index base url",
@@ -152,5 +153,7 @@
   "settingName.ncipAppProfile": "NCIP app profile",
   "settingName.ncipFromAgency": "NCIP from agency",
 
-  "settingName.hostLmsIntegration": "Host LMS integration"
+  "settingName.hostLmsIntegration": "Host LMS integration",
+
+  "settingName.autoResponderStatus": "Auto responder status"
 }
