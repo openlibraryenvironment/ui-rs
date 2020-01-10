@@ -42,7 +42,7 @@
   "createPatronRequest": "Create patron request",
   "updatePatronRequest": "Update patron request",
   "closeNewPatronRequest": "Close new patron request",
-  "information.hrid": "HRID",
+  "information.hrid": "Request ID",
   "information.fullId": "Full ID",
   "information.lastUpdated": "Last updated",
   "information.pickupLocation": "Pick-up location",
