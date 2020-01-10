@@ -63,11 +63,11 @@ const FlowRoute = props => {
 FlowRoute.manifest = {
   selectedRecord: {
     type: 'okapi',
-    path: 'rs/patronrequests/:{id}', // eslint-disable-line no-template-curly-in-string,
+    path: 'rs/patronrequests/:{id}',
   },
   action: {
     type: 'okapi',
-    path: 'rs/patronrequests/:{id}/performAction', // eslint-disable-line no-template-curly-in-string,
+    path: 'rs/patronrequests/:{id}/performAction',
     fetch: false,
     clientGeneratePk: false,
   },
