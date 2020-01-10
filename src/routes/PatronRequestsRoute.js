@@ -160,7 +160,7 @@ class PatronRequestsRoute extends React.Component {
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           createRecordPath="requests/create"
-          viewRecordPathById={id => `requests/view/${id}`}
+          viewRecordPathById={id => `requests/view/${id}${location.search}`}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms="module.rs.enabled"
           onCreate={this.createPatronRequest}

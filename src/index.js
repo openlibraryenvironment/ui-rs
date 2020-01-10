@@ -13,7 +13,12 @@ import AppNameContext from './AppNameContext';
 
 class ResourceSharing extends React.Component {
   static propTypes = {
-    match: PropTypes.object.isRequired,
+    match: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+    }).isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
+    }).isRequired,
     actAs: PropTypes.string.isRequired,
     stripes: PropTypes.shape({
       logger: PropTypes.shape({
@@ -25,9 +30,8 @@ class ResourceSharing extends React.Component {
   render() {
     const {
       actAs,
-      match: {
-        path
-      }
+      match: { path },
+      location: { search }
     } = this.props;
 
     const appName = path.substring(1).replace(/\/.*/, '');
@@ -49,7 +53,7 @@ class ResourceSharing extends React.Component {
           <Redirect
             exact
             from={`${path}/requests/view/:id`}
-            to={`${path}/requests/view/:id/details`}
+            to={`${path}/requests/view/:id/details${search}`}
           />
           <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
           <NestedRoute path={`${path}/requests/view/:id`} component={ViewRoute}>
