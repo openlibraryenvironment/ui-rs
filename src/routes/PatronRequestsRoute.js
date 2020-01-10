@@ -190,9 +190,9 @@ class PatronRequestsRoute extends React.Component {
             pickShelvingLocation: <FormattedMessage id="ui-rs.patronrequests.pickShelvingLocation" />,
           }}
           columnWidths={{
-            id: 80,
+            id: 100,
             isRequester: 80,
-            dateCreated: 140,
+            dateCreated: 160,
             title: 200,
             patronReference: 120,
             state: 180,
