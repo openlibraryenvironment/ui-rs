@@ -109,11 +109,11 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
           <Tags
             mutator={{mutator: {
               entities: mutator.selectedRecord,
-              tags: mutator.tagsSettings
+              tags: mutator.tagsValues
             }}}
             resources={{resources: {
               entities: resources.selectedRecord,
-              tags: resources.tagValues,
+              tags: resources.tagsValues,
             }}}
             onToggle={() => setTags(!tags)}
           />
