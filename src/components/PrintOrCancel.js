@@ -26,6 +26,7 @@ class PrintOrCancel extends React.Component {
       push: PropTypes.func.isRequired,
     }).isRequired,
     destUrl: PropTypes.string.isRequired,
+    onPrint: PropTypes.func,
     children: PropTypes.element.isRequired,
   };
 
@@ -54,7 +55,7 @@ class PrintOrCancel extends React.Component {
           </div>
           <ReactToPrint
             trigger={() => (
-              <Button data-test-print-pull-slip marginBottom0>
+              <Button data-test-print-pull-slip marginBottom0 onClick={this.props.onPrint}>
                 <FormattedMessage id="ui-rs.button.print" />
               </Button>
             )}
