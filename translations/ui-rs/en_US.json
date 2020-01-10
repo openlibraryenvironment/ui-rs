@@ -95,6 +95,8 @@
   "flow.itemFound": "Item found - ready to ship",
   "flow.shippedToRequester": "Item shipped to requester",
 
+  "view.showTags": "Show tags",
+
   "actions.wrongId": "No action performed, scanned request does not match",
   "actions.cannotSupply": "Respond \"Cannot Supply\"",
   "actions.cannotSupply.confirm": "Are you sure you want to <strong>respond \"Cannot Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
