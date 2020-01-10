@@ -7,7 +7,7 @@ import { Button, Modal, ModalFooter, Row, Col, TextArea } from '@folio/stripes/c
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
-const SendChatMessage = ({ request, performAction }) => {
+const SendChatMessage = ({ performAction }) => {
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
@@ -18,11 +18,11 @@ const SendChatMessage = ({ request, performAction }) => {
         'ui-rs.actions.sendChatMessage.success',
         'ui-rs.actions.sendChatMessage.error',
       )
-      .then(() => setModal(null))
-      // Currently displaying errors with this via the route-level MessageBanner rather than within the modal
-      .catch(() => setModal(null))
+        .then(() => setModal(null))
+        // Currently displaying errors with this via the route-level MessageBanner rather than within the modal
+        .catch(() => setModal(null))
     );
-  }
+  };
 
   const Footer = ({ disableSubmit, submit }) => (
     <ModalFooter>
