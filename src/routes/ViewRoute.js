@@ -6,8 +6,8 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes/components';
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
+import AppNameContext from '../AppNameContext';
 import css from './ViewRoute.css';
-import packageInfo from '../../package';
 
 
 const subheading = (req, params) => {
@@ -21,13 +21,14 @@ const subheading = (req, params) => {
 };
 
 const ViewRoute = ({ children, history, resources, location: { pathname, search }, match: { url, params } }) => (
-  <MessageModalProvider>
+  <AppNameContext.Consumer>
+    { appName => <MessageModalProvider>
     <Paneset>
       <Pane
         paneTitle={`Request ${params.id.replace(/-/g, '·')}`}
         paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), params)}
         padContent={false}
-        onClose={() => history.push(`${packageInfo.stripes.route}/requests${search}`)}
+        onClose={() => history.push(`/${appName}/requests${search}`)}
         dismissible
         defaultWidth="fill"
         subheader={
@@ -74,6 +75,8 @@ const ViewRoute = ({ children, history, resources, location: { pathname, search 
       </Pane>
     </Paneset>
   </MessageModalProvider>
+    }
+  </AppNameContext.Consumer>
 );
 
 ViewRoute.propTypes = {
