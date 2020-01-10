@@ -41,7 +41,6 @@ class PatronRequestsRoute extends React.Component {
           'r': 'isRequester',
         },
         queryGetter: queryModifiedForApp,
-        tags: 'tags.value',
       }),
       records: 'results',
       recordsRequired: '%{resultCount}',
@@ -60,16 +59,6 @@ class PatronRequestsRoute extends React.Component {
     query: {},
 
     selectedRecordId: { initialValue: '' },
-
-    tagsValues: {
-      type: 'okapi',
-      path: 'tags',
-      params: {
-        limit: '1000',
-        query: 'cql.allRecords=1 sortby label',
-      },
-      records: 'tags',
-    },
   });
 
   static propTypes = {
