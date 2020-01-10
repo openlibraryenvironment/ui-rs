@@ -45,11 +45,11 @@ const tagButton = (tags, setTags, tagLength) => {
   );
 };
 
-
 const ViewRoute = ({ children, history, resources, location: { pathname }, match: { url, params }, mutator }) => {
   const [tags, setTags] = useState(false);
   console.log("Resources: %o", resources)
   console.log("Mutator %o", mutator)
+  console.log("Match %o", params)
   //tagLength = _.get(selectedRecord, 'tags.length', 0);
   return (
     <MessageModalProvider>

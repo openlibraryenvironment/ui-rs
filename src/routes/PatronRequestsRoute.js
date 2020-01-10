@@ -112,7 +112,40 @@ class PatronRequestsRoute extends React.Component {
     );
   }
 
+getHelperApp = () => {
+  const { match, resources } = this.props;
+  const helper = resources.query.helper;
+  if (!helper) return null;
+
+  let HelperComponent = null;
+
+  if (helper === 'tags') HelperComponent = Tags;
+
+  if (!HelperComponent) return null;
+
+  return (
+    <HelperComponent
+    //TODO This LINK is wrong
+      link={`supply/requests/view/${match.params.id}`}
+      onToggle={() => this.handleToggleHelper(helper)}
+    />
+  );
+}
+  
+handleToggleHelper = (helper) => {
+  const { mutator, resources } = this.props;
+  const currentHelper = resources.query.helper;
+  const nextHelper = currentHelper !== helper ? helper : null;
+
+  mutator.query.update({ helper: nextHelper });
+}
+
+handleToggleTags = () => {
+  handleToggleHelper('tags');
+}
+
   render() {
+    console.log("Patron Requests Route Props: %o", this.props)
     if (this.props.match.params.action === 'printslips') {
       return <PrintAllPullSlips records={this.props.resources.patronrequests} />;
     }
