@@ -47,7 +47,7 @@ const CreateEditRoute = props => {
   if (isEditing) {
     if (!resource || !resource.hasLoaded) return null;
     const record = resource.records[0];
-    initialValues = Object.assign({}, record, { shortId: record.id && record.id.substring(0, 8) });
+    initialValues = Object.assign({}, record);
   }
 
   const submit = newRecord => {

@@ -27,8 +27,8 @@ class RequestInfo extends React.Component {
         <Row>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-rs.information.shortId" />}
-              value={record.id && record.id.substring(0, 8)}
+              label={<FormattedMessage id="ui-rs.information.hrid" />}
+              value={record.hrid}
             />
           </Col>
           <Col xs={6}>

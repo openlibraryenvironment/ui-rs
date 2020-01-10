@@ -199,7 +199,7 @@ class PatronRequestsRoute extends React.Component {
             serviceType: 120,
           }}
           resultsFormatter={{
-            id: a => a.id.substring(0, 8),
+            id: a => a.hrid,
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             state: a => stateString(a.state),
             serviceType: a => a.serviceType && a.serviceType.value,
