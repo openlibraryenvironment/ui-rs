@@ -30,4 +30,9 @@ export default {
     primaryAction: '',
     moreActions: ['SendChatMessage'],
   },
+  'RES_IDLE': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: '',
+    moreActions: ['SendChatMessage'],
+  },
 };
