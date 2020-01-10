@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import compose from 'compose-function';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes/components';
-
-import { withTags } from '@folio/stripes/smart-components';
-import { Tags } from '@folio/stripes-erm-components';
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
 import css from './ViewRoute.css';
@@ -21,24 +17,6 @@ const subheading = (req, params) => {
   const supplier = _.get(req, 'resolvedSupplier.owner.slug', '');
   return `${title} · ${requester} → ${supplier}`;
 };
-
-const TagsButton = () => (
-  <PaneMenu>
-    {handlers.onToggleTags &&
-      <FormattedMessage id="ui-agreements.agreements.showTags">
-        {ariaLabel => (
-          <IconButton
-            icon="tag"
-            id="clickable-show-tags"
-            badgeCount={get(agreement, 'tags.length', 0)}
-            onClick={handlers.onToggleTags}
-            ariaLabel={ariaLabel}
-          />
-        )}
-      </FormattedMessage>
-    }
-  </PaneMenu>
-);
 
 const ViewRoute = ({ children, history, resources, location: { pathname }, match: { url, params } }) => (
   <MessageModalProvider>
@@ -115,8 +93,4 @@ ViewRoute.manifest = {
   },
 };
 
-//export default stripesConnect(ViewRoute);
-export default compose(
-  stripesConnect,
-  withTags,
-)(ViewRoute);
+export default stripesConnect(ViewRoute);

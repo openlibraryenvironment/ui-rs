@@ -82,7 +82,6 @@ class PatronRequestsRoute extends React.Component {
     resources: PropTypes.object,
     mutator: PropTypes.object,
     location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
-    tagsEnabled: PropTypes.bool,
   }
 
   constructor(props) {
