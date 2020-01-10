@@ -24,7 +24,7 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
         paneTitle={`Request ${params.id.replace(/-/g, '·')}`}
         paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), params)}
         padContent={false}
-        onClose={history.goBack}
+        onClose={() => history.push('../../..')}
         dismissible
         defaultWidth="fill"
         subheader={
