@@ -50,7 +50,7 @@ class PatronRequestsRoute extends React.Component {
     },
     selectedRecord: {
       type: 'okapi',
-      path: 'rs/patronrequests/${selectedRecordId}', // eslint-disable-line no-template-curly-in-string
+      path: 'rs/patronrequests/%{selectedRecordId}',
       fetch: false,
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
