@@ -48,8 +48,8 @@ const tagButton = (tags, setTags, tagLength) => {
 
 const ViewRoute = ({ children, history, resources, location: { pathname }, match: { url, params }, mutator }) => {
   const [tags, setTags] = useState(false);
-  console.log("Tags: %o", tags)
-  console.log("Mutator: %o", mutator)
+  console.log("Resources: %o", resources)
+  console.log("Mutator %o", mutator)
   //tagLength = _.get(selectedRecord, 'tags.length', 0);
   return (
     <MessageModalProvider>
@@ -107,8 +107,14 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
 
         {tags &&
           <Tags
-            mutator={mutator.selectedRecord.PUT}
-            resources={resources}
+            mutator={{mutator: {
+              entities: mutator.selectedRecord,
+              tags: mutator.tagsSettings
+            }}}
+            resources={{resources: {
+              entities: resources.selectedRecord,
+              tags: resources.tagValues,
+            }}}
             onToggle={() => setTags(!tags)}
           />
         } 
