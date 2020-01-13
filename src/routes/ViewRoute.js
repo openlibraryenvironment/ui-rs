@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import compose from 'compose-function';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 
-import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
@@ -24,45 +22,71 @@ const subheading = (req, params) => {
   return `${title} · ${requester} → ${supplier}`;
 };
 
-const tagButton = (tags, setTags, tagLength) => {
+const tagButton = (mutator, resources) => {
   return(
     <PaneMenu>
+      {handleToggleTags &&      
       <FormattedMessage id="ui-rs.view.showTags">
         {ariaLabel => (
           <IconButton
             icon="tag"
             id="clickable-show-tags"
-            badgeCount={tagLength}
+            badgeCount={_.get(resources, 'selectedRecord.records[0].tags.length', 0)}
             onClick={
-              ()=> {
-                //window.alert('This will open the tags pane')
-                setTags(!tags)
-              }
+              ()=> { handleToggleTags(mutator, resources)}
             }
             ariaLabel={ariaLabel}
           />
         )}
       </FormattedMessage>
+      }
     </PaneMenu>
   );
 };
 
-const ViewRoute = ({ children, history, resources, location: { pathname }, match: { url, params }, mutator }) => {
-  const [tags, setTags] = useState(false);
+const getHelperApp = ( match, resources, mutator ) => {
+  const helper = _.get(resources, 'query.helper', null);
+  if (!helper) return null;
+
+  let HelperComponent = null;
+
+  if (helper === 'tags') HelperComponent = Tags;
+
+  if (!HelperComponent) return null;
+  return (
+    <Tags
+      link={`rs/patronrequests/${match.params.id}`}
+      onToggle={() => handleToggleHelper(helper, mutator, resources)}
+    />
+  );
+}
+
+const handleToggleHelper = (helper, mutator, resources ) => {
+  const currentHelper = _.get(resources, 'query.helper', null);
+  const nextHelper = currentHelper !== helper ? helper : null;
+
+  mutator.query.update({ helper: nextHelper });
+}
+
+const handleToggleTags = (mutator, resources) => {
+  handleToggleHelper('tags', mutator, resources);
+}
+
+const ViewRoute = ({ children, history, resources, location: { pathname }, match, mutator }) => {
   console.log("Resources: %o", resources)
   console.log("Mutator %o", mutator)
-  console.log("Match %o", params)
+  console.log("Match %o", match)
   //tagLength = _.get(selectedRecord, 'tags.length', 0);
   return (
     <MessageModalProvider>
       <Paneset>
         <Pane
-          paneTitle={`Request ${params.id.replace(/-/g, '·')}`}
-          paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), params)}
+          paneTitle={`Request ${match.params.id.replace(/-/g, '·')}`}
+          paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), match.params)}
           padContent={false}
           onClose={() => history.push('../../..')}
           dismissible
-          lastMenu={tagButton(tags, setTags, 0)}
+          lastMenu={tagButton(mutator, resources)}
           defaultWidth="fill"
           subheader={
             <Layout
@@ -71,7 +95,7 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
               <ButtonGroup>
                 <Button
                   marginBottom0
-                  to={`${url}/flow`}
+                  to={`${match.url}/flow`}
                   buttonStyle={pathname.includes('/flow') ? 'primary' : 'default'}
                   replace
                 >
@@ -79,7 +103,7 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
                 </Button>
                 <Button
                   marginBottom0
-                  to={`${url}/details`}
+                  to={`${match.url}/details`}
                   buttonStyle={pathname.includes('/details') ? 'primary' : 'default'}
                   replace
                 >
@@ -90,7 +114,7 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
           }
           actionMenu={() => (
             <React.Fragment>
-              <Button buttonStyle="dropdownItem" to={`../../edit/${params.id}`} id="clickable-edit-patronrequest">
+              <Button buttonStyle="dropdownItem" to={`../../edit/${match.params.id}`} id="clickable-edit-patronrequest">
                 <Icon icon="edit">
                   <FormattedMessage id="ui-rs.edit" />
                 </Icon>
@@ -106,21 +130,7 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
           <ContextualMessageBanner />
           <div>{children}</div>
         </Pane>
-
-        {tags &&
-          <Tags
-            mutator={{mutator: {
-              entities: mutator.selectedRecord,
-              tags: mutator.tagsValues
-            }}}
-            resources={{resources: {
-              entities: resources.selectedRecord,
-              tags: resources.tagsValues,
-            }}}
-            onToggle={() => setTags(!tags)}
-          />
-        } 
-
+        {getHelperApp(match, resources, mutator)}
       </Paneset>
     </MessageModalProvider>
   );
@@ -153,11 +163,8 @@ ViewRoute.manifest = {
       limit: '1000',
       query: 'cql.allRecords=1 sortby label',
     },
-  }
-
+  },
+  query: {},
 };
 
-export default compose(
-  stripesConnect,
-  withTags,
-)(ViewRoute);
+export default stripesConnect(ViewRoute);

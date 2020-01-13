@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
+import compose from 'compose-function';
+import { withTags } from '@folio/stripes/smart-components';
 import { Button } from '@folio/stripes/components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
@@ -145,7 +147,6 @@ handleToggleTags = () => {
 }
 
   render() {
-    console.log("Patron Requests Route Props: %o", this.props)
     if (this.props.match.params.action === 'printslips') {
       return <PrintAllPullSlips records={this.props.resources.patronrequests} />;
     }
@@ -245,4 +246,7 @@ handleToggleTags = () => {
 }
 
 
-export default stripesConnect(PatronRequestsRoute);
+export default compose(
+  stripesConnect,
+  withTags,
+)(PatronRequestsRoute);
