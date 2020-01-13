@@ -21,23 +21,6 @@ const subheading = (req, params) => {
   return `${title} · ${requester} → ${supplier}`;
 };
 
-const getHelperApp = ( match, resources, mutator ) => {
-  const helper = _.get(resources, 'query.helper', null);
-  if (!helper) return null;
-
-  let HelperComponent = null;
-
-  if (helper === 'tags') HelperComponent = Tags;
-
-  if (!HelperComponent) return null;
-  return (
-    <HelperComponent
-      link={`rs/patronrequests/${match.params.id}`}
-      onToggle={() => handleToggleHelper(helper, mutator, resources)}
-    />
-  );
-}
-
 const handleToggleHelper = (helper, mutator, resources ) => {
   const currentHelper = _.get(resources, 'query.helper', null);
   const nextHelper = currentHelper !== helper ? helper : null;
@@ -70,6 +53,23 @@ const tagButton = (mutator, resources) => {
     </PaneMenu>
   );
 };
+
+const getHelperApp = (match, resources, mutator) => {
+  const helper = _.get(resources, 'query.helper', null);
+  if (!helper) return null;
+
+  let HelperComponent = null;
+
+  if (helper === 'tags') HelperComponent = Tags;
+
+  if (!HelperComponent) return null;
+  return (
+    <HelperComponent
+      link={`rs/patronrequests/${match.params.id}`}
+      onToggle={() => handleToggleHelper(helper, mutator, resources)}
+    />
+  );
+}
 
 const ViewRoute = ({ children, history, resources, location: { pathname }, match, mutator }) => {
   return (
