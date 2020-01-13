@@ -53,7 +53,7 @@ const getHelperApp = ( match, resources, mutator ) => {
 
   if (!HelperComponent) return null;
   return (
-    <Tags
+    <HelperComponent
       link={`rs/patronrequests/${match.params.id}`}
       onToggle={() => handleToggleHelper(helper, mutator, resources)}
     />

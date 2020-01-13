@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
-import { withTags } from '@folio/stripes/smart-components';
 import { Button } from '@folio/stripes/components';
-import { SearchAndSort } from '@folio/stripes/smart-components';
+import { SearchAndSort, withTags } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 import stateString from '../util/stateString';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
@@ -113,38 +112,6 @@ class PatronRequestsRoute extends React.Component {
       </Link>
     );
   }
-
-getHelperApp = () => {
-  const { match, resources } = this.props;
-  const helper = resources.query.helper;
-  if (!helper) return null;
-
-  let HelperComponent = null;
-
-  if (helper === 'tags') HelperComponent = Tags;
-
-  if (!HelperComponent) return null;
-
-  return (
-    <HelperComponent
-    //TODO This LINK is wrong
-      link={`supply/requests/view/${match.params.id}`}
-      onToggle={() => this.handleToggleHelper(helper)}
-    />
-  );
-}
-  
-handleToggleHelper = (helper) => {
-  const { mutator, resources } = this.props;
-  const currentHelper = resources.query.helper;
-  const nextHelper = currentHelper !== helper ? helper : null;
-
-  mutator.query.update({ helper: nextHelper });
-}
-
-handleToggleTags = () => {
-  handleToggleHelper('tags');
-}
 
   render() {
     if (this.props.match.params.action === 'printslips') {
