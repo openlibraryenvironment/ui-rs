@@ -50,7 +50,7 @@ class PatronRequestsRoute extends React.Component {
     },
     selectedRecord: {
       type: 'okapi',
-      path: 'rs/patronrequests/${selectedRecordId}', // eslint-disable-line no-template-curly-in-string
+      path: 'rs/patronrequests/%{selectedRecordId}',
       fetch: false,
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -190,9 +190,9 @@ class PatronRequestsRoute extends React.Component {
             pickShelvingLocation: <FormattedMessage id="ui-rs.patronrequests.pickShelvingLocation" />,
           }}
           columnWidths={{
-            id: 80,
+            id: 100,
             isRequester: 80,
-            dateCreated: 140,
+            dateCreated: 160,
             title: 200,
             patronReference: 120,
             state: 180,

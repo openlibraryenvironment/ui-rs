@@ -6,8 +6,8 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, Paneset } from '@folio/stripes/components';
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
+import AppNameContext from '../AppNameContext';
 import css from './ViewRoute.css';
-import packageInfo from '../../package';
 
 
 const subheading = (req, params) => {
@@ -21,59 +21,63 @@ const subheading = (req, params) => {
 };
 
 const ViewRoute = ({ children, history, resources, location: { pathname, search }, match: { url, params } }) => (
-  <MessageModalProvider>
-    <Paneset>
-      <Pane
-        paneTitle={`Request ${params.id.replace(/-/g, '·')}`}
-        paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), params)}
-        padContent={false}
-        onClose={() => history.push(`${packageInfo.stripes.route}/requests${search}`)}
-        dismissible
-        defaultWidth="fill"
-        subheader={
-          <Layout
-            className={`${css.tabContainer} flex centerContent flex-align-items-center full padding-start-gutter padding-end-gutter`}
+  <AppNameContext.Consumer>
+    { appName => (
+      <MessageModalProvider>
+        <Paneset>
+          <Pane
+            paneTitle={`Request ${params.id.replace(/-/g, '·')}`}
+            paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), params)}
+            padContent={false}
+            onClose={() => history.push(`/${appName}/requests${search}`)}
+            dismissible
+            defaultWidth="fill"
+            subheader={
+              <Layout
+                className={`${css.tabContainer} flex centerContent flex-align-items-center full padding-start-gutter padding-end-gutter`}
+              >
+                <ButtonGroup>
+                  <Button
+                    marginBottom0
+                    to={`${url}/flow`}
+                    buttonStyle={pathname.includes('/flow') ? 'primary' : 'default'}
+                    replace
+                  >
+                    <FormattedMessage id="ui-rs.flow.flow" />
+                  </Button>
+                  <Button
+                    marginBottom0
+                    to={`${url}/details`}
+                    buttonStyle={pathname.includes('/details') ? 'primary' : 'default'}
+                    replace
+                  >
+                    <FormattedMessage id="ui-rs.flow.details" />
+                  </Button>
+                </ButtonGroup>
+              </Layout>
+            }
+            actionMenu={() => (
+              <React.Fragment>
+                <Button buttonStyle="dropdownItem" to={`../../edit/${params.id}`} id="clickable-edit-patronrequest">
+                  <Icon icon="edit">
+                    <FormattedMessage id="ui-rs.edit" />
+                  </Icon>
+                </Button>
+                <Button buttonStyle="dropdownItem" to="pullslip" id="clickable-pullslip">
+                  <Icon icon="print">
+                    <FormattedMessage id="ui-rs.printPullslip" />
+                  </Icon>
+                </Button>
+              </React.Fragment>
+            )}
           >
-            <ButtonGroup>
-              <Button
-                marginBottom0
-                to={`${url}/flow`}
-                buttonStyle={pathname.includes('/flow') ? 'primary' : 'default'}
-                replace
-              >
-                <FormattedMessage id="ui-rs.flow.flow" />
-              </Button>
-              <Button
-                marginBottom0
-                to={`${url}/details`}
-                buttonStyle={pathname.includes('/details') ? 'primary' : 'default'}
-                replace
-              >
-                <FormattedMessage id="ui-rs.flow.details" />
-              </Button>
-            </ButtonGroup>
-          </Layout>
-        }
-        actionMenu={() => (
-          <React.Fragment>
-            <Button buttonStyle="dropdownItem" to={`../../edit/${params.id}`} id="clickable-edit-patronrequest">
-              <Icon icon="edit">
-                <FormattedMessage id="ui-rs.edit" />
-              </Icon>
-            </Button>
-            <Button buttonStyle="dropdownItem" to="pullslip" id="clickable-pullslip">
-              <Icon icon="print">
-                <FormattedMessage id="ui-rs.printPullslip" />
-              </Icon>
-            </Button>
-          </React.Fragment>
-        )}
-      >
-        <ContextualMessageBanner />
-        <div>{children}</div>
-      </Pane>
-    </Paneset>
-  </MessageModalProvider>
+            <ContextualMessageBanner />
+            <div>{children}</div>
+          </Pane>
+        </Paneset>
+      </MessageModalProvider>
+    )}
+  </AppNameContext.Consumer>
 );
 
 ViewRoute.propTypes = {
