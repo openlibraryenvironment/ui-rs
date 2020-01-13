@@ -6,6 +6,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 
 import { Tags } from '@folio/stripes-erm-components';
+import { ChatPane } from '../components/Flow/chat';
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
 import css from './ViewRoute.css';
@@ -32,10 +33,27 @@ const handleToggleTags = (mutator, resources) => {
   handleToggleHelper('tags', mutator, resources);
 };
 
-const tagButton = (mutator, resources) => {
+const handleToggleChat = (mutator, resources) => {
+  handleToggleHelper('chat', mutator, resources);
+};
+
+const paneButtons = (mutator, resources) => {
   return (
     <PaneMenu>
       {handleToggleTags &&
+      <FormattedMessage id="ui-rs.view.showChat">
+        {ariaLabel => (
+          <IconButton
+            icon="comment"
+            id="clickable-show-chat"
+            badgeCount={0}
+            onClick={() => handleToggleChat(mutator, resources)}
+            ariaLabel={ariaLabel}
+          />
+        )}
+      </FormattedMessage>
+      }
+      {handleToggleChat &&
       <FormattedMessage id="ui-rs.view.showTags">
         {ariaLabel => (
           <IconButton
@@ -59,12 +77,16 @@ const getHelperApp = (match, resources, mutator) => {
   let HelperComponent = null;
 
   if (helper === 'tags') HelperComponent = Tags;
+  if (helper === 'chat') HelperComponent = ChatPane;
 
   if (!HelperComponent) return null;
+
+  const extraProps = { mutator, resources };
   return (
     <HelperComponent
       link={`rs/patronrequests/${match.params.id}`}
       onToggle={() => handleToggleHelper(helper, mutator, resources)}
+      {... extraProps}
     />
   );
 };
@@ -79,7 +101,7 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
           padContent={false}
           onClose={() => history.push('../../..')}
           dismissible
-          lastMenu={tagButton(mutator, resources)}
+          lastMenu={paneButtons(mutator, resources)}
           defaultWidth="fill"
           subheader={
             <Layout

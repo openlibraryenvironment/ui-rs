@@ -96,6 +96,9 @@
   "flow.shippedToRequester": "Item shipped to requester",
 
   "view.showTags": "Show tags",
+  "view.showChat": "Show chat",
+
+  "view.chatPane": "Chat with {chatOtherParty}",
 
   "actions.wrongId": "No action performed, scanned request does not match",
   "actions.cannotSupply": "Respond \"Cannot Supply\"",
