@@ -29,15 +29,14 @@ class RequestMetadataForm extends React.Component {
         <React.Fragment>
           <Row>
             <Col xs={3}>
-              <FormattedMessage id="ui-rs.information.shortId">
+              <FormattedMessage id="ui-rs.information.hrid">
                 {placeholder => (
                   <Field
-                    id="edit-request-metadata-shortId"
-                    name="shortId"
+                    id="edit-request-metadata-hrid"
+                    name="hrid"
                     label={placeholder}
                     component={TextField}
                     placeholder={placeholder}
-                    disabled
                   />
                 )}
               </FormattedMessage>

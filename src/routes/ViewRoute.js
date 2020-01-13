@@ -10,7 +10,9 @@ import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
+import AppNameContext from '../AppNameContext';
 import css from './ViewRoute.css';
+
 
 const subheading = (req, params) => {
   if (!req || params.id !== req.id) return undefined;
@@ -130,7 +132,10 @@ ViewRoute.propTypes = {
     params: PropTypes.object,
     url: PropTypes.string,
   }).isRequired,
-  location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+    search: PropTypes.string.isRequired,
+  }).isRequired,
   history: PropTypes.object.isRequired,
   resources: PropTypes.object.isRequired,
 };

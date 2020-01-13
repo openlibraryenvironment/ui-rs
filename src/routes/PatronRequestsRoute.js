@@ -50,7 +50,7 @@ class PatronRequestsRoute extends React.Component {
     },
     selectedRecord: {
       type: 'okapi',
-      path: 'rs/patronrequests/${selectedRecordId}', // eslint-disable-line no-template-curly-in-string
+      path: 'rs/patronrequests/%{selectedRecordId}',
       fetch: false,
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -193,7 +193,7 @@ handleToggleTags = () => {
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           createRecordPath="requests/create"
-          viewRecordPathById={id => `requests/view/${id}`}
+          viewRecordPathById={id => `requests/view/${id}${location.search}`}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms="module.rs.enabled"
           onCreate={this.createPatronRequest}
@@ -223,16 +223,16 @@ handleToggleTags = () => {
             pickShelvingLocation: <FormattedMessage id="ui-rs.patronrequests.pickShelvingLocation" />,
           }}
           columnWidths={{
-            id: 80,
+            id: 100,
             isRequester: 80,
-            dateCreated: 140,
+            dateCreated: 160,
             title: 200,
             patronReference: 120,
             state: 180,
             serviceType: 120,
           }}
           resultsFormatter={{
-            id: a => a.id.substring(0, 8),
+            id: a => a.hrid,
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             state: a => stateString(a.state),
             serviceType: a => a.serviceType && a.serviceType.value,

@@ -42,7 +42,7 @@
   "createPatronRequest": "Create patron request",
   "updatePatronRequest": "Update patron request",
   "closeNewPatronRequest": "Close new patron request",
-  "information.shortId": "Short ID",
+  "information.hrid": "Request ID",
   "information.fullId": "Full ID",
   "information.lastUpdated": "Last updated",
   "information.pickupLocation": "Pick-up location",
@@ -140,7 +140,7 @@
   "settingsSection.localNCIP": "Local NCIP settings",
   "settingsSection.requests": "Request defaults",
   "settingsSection.requesterValidation": "Requester validation",
-  "settingsSection.hostLmsIntegration": "Host LMS integration settings",
+  "settingsSection.hostLMSIntegration": "Host LMS integration settings",
   "settingsSection.autoResponder": "Auto responder settings",
 
   "settingName.settingLoading": "Setting Name Loading",

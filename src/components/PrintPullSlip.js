@@ -8,9 +8,13 @@ class PrintPullSlip extends React.Component {
     record: PropTypes.object.isRequired,
   };
 
+  markPrinted() {
+    console.log('it was printed');
+  }
+
   render() {
     return (
-      <PrintOrCancel destUrl="details">
+      <PrintOrCancel destUrl="details" onPrint={this.markPrinted}>
         <PullSlip record={this.props.record} />
       </PrintOrCancel>
     );
