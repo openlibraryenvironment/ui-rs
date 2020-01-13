@@ -6,14 +6,20 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 
 
-const ChatPane = (mutator, resources) => {
+class ChatPane extends React.Component {
+  
+render () {
+ const { mutator, resources, onToggle } = this.props;
   return (
     <Pane
       defaultWidth="20%"
+      dismissible
+      onClick={onToggle}
     >
       <p> This will contain all the chat window stuff. </p>
     </Pane>
   );
 };
+}
 
 export default stripesConnect(ChatPane);
