@@ -42,7 +42,7 @@
   "createPatronRequest": "Create patron request",
   "updatePatronRequest": "Update patron request",
   "closeNewPatronRequest": "Close new patron request",
-  "information.hrid": "HRID",
+  "information.shortId": "Short ID",
   "information.fullId": "Full ID",
   "information.lastUpdated": "Last updated",
   "information.pickupLocation": "Pick-up location",
@@ -95,6 +95,8 @@
   "flow.itemFound": "Item found - ready to ship",
   "flow.shippedToRequester": "Item shipped to requester",
 
+  "view.showTags": "Show tags",
+
   "actions.wrongId": "No action performed, scanned request does not match",
   "actions.cannotSupply": "Respond \"Cannot Supply\"",
   "actions.cannotSupply.confirm": "Are you sure you want to <strong>respond \"Cannot Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
@@ -138,7 +140,7 @@
   "settingsSection.localNCIP": "Local NCIP settings",
   "settingsSection.requests": "Request defaults",
   "settingsSection.requesterValidation": "Requester validation",
-  "settingsSection.hostLmsIntegration": "Host LMS integration settings",
+  "settingsSection.hostLMSIntegration": "Host LMS integration settings",
   "settingsSection.autoResponder": "Auto responder settings",
 
   "settingName.settingLoading": "Setting Name Loading",
