@@ -42,7 +42,7 @@ const tagButton = (mutator, resources) => {
             icon="tag"
             id="clickable-show-tags"
             badgeCount={_.get(resources, 'selectedRecord.records[0].tags.length', 0)}
-            onClick={() => { handleToggleTags(mutator, resources) }}
+            onClick={() => handleToggleTags(mutator, resources)}
             ariaLabel={ariaLabel}
           />
         )}
