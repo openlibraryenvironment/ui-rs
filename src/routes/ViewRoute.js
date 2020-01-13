@@ -41,7 +41,7 @@ const paneButtons = (mutator, resources) => {
   return (
     <PaneMenu>
       {handleToggleTags &&
-      <FormattedMessage id="ui-rs.view.showTags">
+      <FormattedMessage id="ui-rs.view.showChat">
         {ariaLabel => (
           <IconButton
             icon="comment"
@@ -54,7 +54,7 @@ const paneButtons = (mutator, resources) => {
       </FormattedMessage>
       }
       {handleToggleChat &&
-      <FormattedMessage id="ui-rs.view.showChat">
+      <FormattedMessage id="ui-rs.view.showTags">
         {ariaLabel => (
           <IconButton
             icon="tag"
@@ -77,13 +77,16 @@ const getHelperApp = (match, resources, mutator) => {
   let HelperComponent = null;
 
   if (helper === 'tags') HelperComponent = Tags;
-  if(helper === 'chat') HelperComponent = ChatPane;
+  if (helper === 'chat') HelperComponent = ChatPane;
 
   if (!HelperComponent) return null;
+
+  const extraProps = { mutator, resources };
   return (
     <HelperComponent
       link={`rs/patronrequests/${match.params.id}`}
       onToggle={() => handleToggleHelper(helper, mutator, resources)}
+      {... extraProps}
     />
   );
 };
