@@ -21,21 +21,21 @@ const subheading = (req, params) => {
   return `${title} · ${requester} → ${supplier}`;
 };
 
-const handleToggleHelper = (helper, mutator, resources ) => {
+const handleToggleHelper = (helper, mutator, resources) => {
   const currentHelper = _.get(resources, 'query.helper', null);
   const nextHelper = currentHelper !== helper ? helper : null;
 
   mutator.query.update({ helper: nextHelper });
-}
+};
 
 const handleToggleTags = (mutator, resources) => {
   handleToggleHelper('tags', mutator, resources);
-}
+};
 
 const tagButton = (mutator, resources) => {
   return (
     <PaneMenu>
-      {handleToggleTags &&      
+      {handleToggleTags &&
       <FormattedMessage id="ui-rs.view.showTags">
         {ariaLabel => (
           <IconButton
@@ -43,7 +43,7 @@ const tagButton = (mutator, resources) => {
             id="clickable-show-tags"
             badgeCount={_.get(resources, 'selectedRecord.records[0].tags.length', 0)}
             onClick={
-              ()=> { handleToggleTags(mutator, resources)}
+              () => { handleToggleTags(mutator, resources) }
             }
             ariaLabel={ariaLabel}
           />
@@ -69,7 +69,7 @@ const getHelperApp = (match, resources, mutator) => {
       onToggle={() => handleToggleHelper(helper, mutator, resources)}
     />
   );
-}
+};
 
 const ViewRoute = ({ children, history, resources, location: { pathname }, match, mutator }) => {
   return (
@@ -143,6 +143,7 @@ ViewRoute.propTypes = {
   }).isRequired,
   history: PropTypes.object.isRequired,
   resources: PropTypes.object.isRequired,
+  mutator: PropTypes.object.isRequired,
 };
 
 ViewRoute.manifest = {
