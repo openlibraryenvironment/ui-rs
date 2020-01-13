@@ -37,14 +37,23 @@ class PrintPullSlip extends React.Component {
     window.onafterprint = this.oldOnafterPrint;
   }
 
+  showCallout(type, message) {
+    this.callout.current.sendCallout({ type, message });
+  }
+
   afterPrint = (_event) => {
     // Infuriatingly, it seems that no part of `_event` tells us if the print was cancelled
     this.props.mutator.action.POST({ action: 'supplierPrintPullSlip' })
-      .then(() => {
-        this.callout.current.sendCallout({ type: 'success', message: 'Slip marked as printed.' });
+      .then((json) => {
+        if (json.status) {
+          this.showCallout('success', 'Slip marked as printed.');
+        } else {
+          // eslint-disable-next-line react/jsx-one-expression-per-line
+          this.showCallout('error', <span>Slip <i>not</i> marked as printed: incorrect status?</span>);
+        }
       })
-      .catch(() => {
-        this.callout.current.sendCallout({ type: 'error', message: 'Cannot mark marked slip as printed.' });
+      .catch((exception) => {
+        this.showCallout('error', `Protocol failure in marking slip as printed: ${exception}`);
       });
   }
 
