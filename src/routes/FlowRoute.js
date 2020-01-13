@@ -10,7 +10,6 @@ import * as cards from '../components/Flow/cardsByRequest';
 import * as primaryActions from '../components/Flow/primaryActions';
 import * as moreActions from '../components/Flow/moreActions';
 import * as modals from '../components/Flow/modals';
-import { actionManifestEntry, postAction } from '../util/action';
 
 const renderNamedWithProps = (names, components, props) => names.map(
   name => (components[name] ? React.createElement(components[name], { key: name, ...props }) : null)
@@ -20,7 +19,7 @@ const FlowRoute = props => {
   const [, setMessage] = useMessage();
 
   const performAction = (action, payload, successMessage, errorMessage) => (
-    postAction(props.mutator.action, action, payload)
+    props.mutator.action.POST({ action, actionParams: payload || {} })
       .then(() => setMessage(successMessage, 'success'))
       .catch(() => setMessage(errorMessage, 'error'))
   );
@@ -66,7 +65,12 @@ FlowRoute.manifest = {
     type: 'okapi',
     path: 'rs/patronrequests/:{id}',
   },
-  action: actionManifestEntry,
+  action: {
+    type: 'okapi',
+    path: 'rs/patronrequests/:{id}/performAction',
+    fetch: false,
+    clientGeneratePk: false,
+  },
 };
 
 FlowRoute.propTypes = {
