@@ -21,28 +21,6 @@ const subheading = (req, params) => {
   return `${title} · ${requester} → ${supplier}`;
 };
 
-const tagButton = (mutator, resources) => {
-  return(
-    <PaneMenu>
-      {handleToggleTags &&      
-      <FormattedMessage id="ui-rs.view.showTags">
-        {ariaLabel => (
-          <IconButton
-            icon="tag"
-            id="clickable-show-tags"
-            badgeCount={_.get(resources, 'selectedRecord.records[0].tags.length', 0)}
-            onClick={
-              ()=> { handleToggleTags(mutator, resources)}
-            }
-            ariaLabel={ariaLabel}
-          />
-        )}
-      </FormattedMessage>
-      }
-    </PaneMenu>
-  );
-};
-
 const getHelperApp = ( match, resources, mutator ) => {
   const helper = _.get(resources, 'query.helper', null);
   if (!helper) return null;
@@ -70,6 +48,28 @@ const handleToggleHelper = (helper, mutator, resources ) => {
 const handleToggleTags = (mutator, resources) => {
   handleToggleHelper('tags', mutator, resources);
 }
+
+const tagButton = (mutator, resources) => {
+  return (
+    <PaneMenu>
+      {handleToggleTags &&      
+      <FormattedMessage id="ui-rs.view.showTags">
+        {ariaLabel => (
+          <IconButton
+            icon="tag"
+            id="clickable-show-tags"
+            badgeCount={_.get(resources, 'selectedRecord.records[0].tags.length', 0)}
+            onClick={
+              ()=> { handleToggleTags(mutator, resources)}
+            }
+            ariaLabel={ariaLabel}
+          />
+        )}
+      </FormattedMessage>
+      }
+    </PaneMenu>
+  );
+};
 
 const ViewRoute = ({ children, history, resources, location: { pathname }, match, mutator }) => {
   return (
