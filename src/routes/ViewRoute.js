@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
@@ -8,7 +8,6 @@ import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset 
 import { Tags } from '@folio/stripes-erm-components';
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
-import AppNameContext from '../AppNameContext';
 import css from './ViewRoute.css';
 
 
@@ -73,10 +72,6 @@ const handleToggleTags = (mutator, resources) => {
 }
 
 const ViewRoute = ({ children, history, resources, location: { pathname }, match, mutator }) => {
-  console.log("Resources: %o", resources)
-  console.log("Mutator %o", mutator)
-  console.log("Match %o", match)
-  //tagLength = _.get(selectedRecord, 'tags.length', 0);
   return (
     <MessageModalProvider>
       <Paneset>
