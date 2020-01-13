@@ -42,11 +42,7 @@
   "createPatronRequest": "Create patron request",
   "updatePatronRequest": "Update patron request",
   "closeNewPatronRequest": "Close new patron request",
-<<<<<<< HEAD
-  "information.shortId": "Short ID",
-=======
   "information.hrid": "Request ID",
->>>>>>> 65d6ef0842189f62fc834703b0b1e382482151dd
   "information.fullId": "Full ID",
   "information.lastUpdated": "Last updated",
   "information.pickupLocation": "Pick-up location",
