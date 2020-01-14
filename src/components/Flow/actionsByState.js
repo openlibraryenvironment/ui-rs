@@ -23,12 +23,32 @@ export default {
   'RES_CHECKED_IN_TO_RESHARE': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'SupplierMarkShipped',
-    moreActions: ['SupplierMarkShippedWithoutScan', 'PrintPullSlip', 'CannotSupply'],
+    moreActions: ['SupplierMarkShipped', 'PrintPullSlip', 'CannotSupply'],
+  },
+  'RES_ITEM_RETURNED': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: 'SupplierCheckOutOfReshare',
+    moreActions: ['SupplierCheckOutOfReshare'],
   },
   'REQ_EXPECTS_TO_SUPPLY': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: '',
     moreActions: ['SendChatMessage'],
+  },
+  'REQ_SHIPPED': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: 'RequesterReceived',
+    moreActions: ['RequesterReceived', 'PrintPullSlip'],
+  },
+  'REQ_CHECKED_IN': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: 'PatronReturnedItem',
+    moreActions: ['PatronReturnedItem', 'ShippedReturn', 'PrintPullSlip'],
+  },
+  'REQ_AWAIT_RETURN_SHIPPING': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: 'ShippedReturn',
+    moreActions: ['ShippedReturn', 'PrintPullSlip'],
   },
   'RES_IDLE': {
     cards: ['Bibliographic', 'RequesterSupplier'],

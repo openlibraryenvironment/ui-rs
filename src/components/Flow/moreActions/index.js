@@ -4,6 +4,39 @@ import { Button, Icon } from '@folio/stripes/components';
 import { ShowModalButton } from '../../ModalButtons';
 import ActionButton from '../ActionButton';
 
+export const RequesterReceived = props => <ActionButton
+  action="requesterReceived"
+  label="ui-rs.actions.markReceivedWithoutScan"
+  success="ui-rs.actions.markReceived.success"
+  error="ui-rs.actions.markReceived.error"
+  {...props}
+/>;
+
+export const PatronReturnedItem = props => <ActionButton
+  action="patronReturnedItem"
+  label="ui-rs.actions.markReturnedWithoutScan"
+  success="ui-rs.actions.markReturned.success"
+  error="ui-rs.actions.markReturned.error"
+  {...props}
+/>;
+
+export const ShippedReturn = props => <ActionButton
+  action="shippedReturn"
+  label="ui-rs.actions.markShippedReturnWithoutScan"
+  success="ui-rs.actions.markShippedReturn.success"
+  error="ui-rs.actions.markShippedReturn.error"
+  {...props}
+/>;
+
+export const SupplierCheckOutOfReshare = props => <ActionButton
+  action="supplierCheckOutOfReshare"
+  label="ui-rs.actions.checkOutWithoutScan"
+  icon="print"
+  success="ui-rs.actions.checkOut.success"
+  error="ui-rs.actions.checkOut.error"
+  {...props}
+/>;
+
 export const SupplierMarkPullSlipPrinted = props => <ActionButton
   action="supplierPrintPullSlip"
   label="ui-rs.actions.markSlipPrinted"
@@ -13,7 +46,7 @@ export const SupplierMarkPullSlipPrinted = props => <ActionButton
   {...props}
 />;
 
-export const SupplierMarkShippedWithoutScan = props => <ActionButton
+export const SupplierMarkShipped = props => <ActionButton
   action="supplierMarkShipped"
   label="ui-rs.actions.markShippedWithoutScan"
   icon="archive"
