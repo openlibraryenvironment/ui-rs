@@ -78,6 +78,14 @@ class CitationMetadataInfo extends React.Component {
             />
           </Col>
         </Row>
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.volume" />}
+              value={record.volume}
+            />
+          </Col>
+        </Row>
       </Card>
     );
   }
