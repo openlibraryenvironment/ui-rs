@@ -10,6 +10,11 @@
  * }
 */
 export default {
+  'RES_IDLE':{
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: 'RespondYes',
+    moreActions: ['CannotSupply', 'SendChatMessage'],
+  },
   'RES_NEW_AWAIT_PULL_SLIP': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'PrintPullSlip',
