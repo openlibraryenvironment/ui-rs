@@ -54,10 +54,5 @@ export default {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'ShippedReturn',
     moreActions: ['ShippedReturn', 'PrintPullSlip'],
-  },
-  'RES_IDLE': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
-    primaryAction: '',
-    moreActions: ['SendChatMessage'],
-  },
+  }
 };
