@@ -6,7 +6,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 
 import { Tags } from '@folio/stripes-erm-components';
-import { ChatPane } from '../components/Flow/chat';
+import { ChatPane } from '../components/chat';
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
 import css from './ViewRoute.css';
