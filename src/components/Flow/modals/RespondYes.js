@@ -60,7 +60,7 @@ const RespondYes = ({ request, performAction }) => {
                   <Field name="pickLocation" component={TextArea} autoFocus />
                 </Col>
               </Row>
-              <SafeHTMLMessage id="ui-rs.actions.respondYes.pickShevingLocation" />
+              <SafeHTMLMessage id="ui-rs.actions.respondYes.pickShelvingLocation" />
               <Row>
                 <Col xs={11}>
                   <Field name="pickShelvingLocation" component={TextArea} autoFocus />
