@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { Button, Layout, Modal, ModalFooter, RadioButton } from '@folio/stripes/components';
+import { Layout, Button, Modal, ModalFooter, Row, Col, TextArea } from '@folio/stripes/components';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
@@ -46,10 +46,27 @@ const RespondYes = ({ request, performAction }) => {
             open={currentModal === 'RespondYes'}
             footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
           >
-            <SafeHTMLMessage id="ui-rs.actions.respondYes.confirm" values={{ id: request.id, item: request.title }} />
-            <Layout className="padding-top-gutter">
-              <strong><FormattedMessage id="ui-rs.actions.respondYes.reason" /></strong>
-            </Layout>
+
+            <form onSubmit={handleSubmit}>
+              <SafeHTMLMessage id="ui-rs.actions.respondYes.callNumber" />
+              <Row>
+                <Col xs={11}>
+                  <Field name="callnumber" component={TextArea} autoFocus />
+                </Col>
+              </Row>
+              <SafeHTMLMessage id="ui-rs.actions.respondYes.pickLocation" />
+              <Row>
+                <Col xs={11}>
+                  <Field name="pickLocation" component={TextArea} autoFocus />
+                </Col>
+              </Row>
+              <SafeHTMLMessage id="ui-rs.actions.respondYes.pickShelvingLocation" />
+              <Row>
+                <Col xs={11}>
+                  <Field name="pickShelvingLocation" component={TextArea} autoFocus />
+                </Col>
+              </Row>
+            </form>
           </Modal>
         </form>
       )}
