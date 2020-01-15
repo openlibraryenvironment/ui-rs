@@ -57,5 +57,10 @@ export default {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'ShippedReturn',
     moreActions: ['ShippedReturn', 'PrintPullSlip'],
+  },
+  'REQ_REQUEST_SENT_TO_SUPPLIER': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: '',
+    moreActions: ['SendChatMessage'],
   }
 };
