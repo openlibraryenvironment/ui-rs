@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { Card, Col, Pane, Row } from '@folio/stripes/components';
@@ -14,9 +14,17 @@ class ChatPane extends React.Component {
   }
 
   renderMessageCard(notification, isSender) {
+    console.log("Notification Timestamp: " + notification.timestamp);
     return (
       <React.Fragment>
-        {notification.timestamp}
+        {<FormattedDate
+          value={notification.timestamp}
+          day="numeric"
+          month="numeric"
+          year="numeric"
+          hour="numeric"
+          minute="numeric"
+        />}
         <Card
           cardClass={isSender ? css.sentMessageCard : css.receivedMessageCard}
           headerComponent={() => null}
@@ -78,9 +86,6 @@ class ChatPane extends React.Component {
     const { resources, onToggle } = this.props;
     const isRequester = _.get(resources, 'selectedRecord.records[0].isRequester');
     const chatOtherParty = isRequester ? 'supplier' : 'requester';
-
-    console.log('Resources %o', resources);
-    console.log('Notifications %o', _.get(resources, 'selectedRecord.records[0].notifications'));
     return (
       <Pane
         defaultWidth="20%"
