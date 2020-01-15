@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { Card, Col, Pane, Row } from '@folio/stripes/components';
+import css from './ChatPane.css';
 
 
 class ChatPane extends React.Component {
@@ -14,21 +15,25 @@ class ChatPane extends React.Component {
 
 
 
-  renderMessageCard(notification) {
+  renderMessageCard(notification, isSender) {
     return (
-      <Card>
+      <Card
+        cardClass={isSender ? css.sentMessageCard : css.receivedMessageCard}
+        headerComponent={() => null}
+        roundedBorder
+      >
         {notification.messageContent}
       </Card>
     );
   }
 
   displayMessage(notification) {
-    if (notification.isSender == true) {
+    if (notification.isSender === true) {
       return (
         <Row>
           <Col xs={6}/>
           <Col xs={6}>
-            {this.renderMessageCard(notification)}
+            {this.renderMessageCard(notification, true)}
           </Col>
         </Row>
       );
@@ -36,7 +41,7 @@ class ChatPane extends React.Component {
       return (
         <Row>
           <Col xs={6}>
-            {this.renderMessageCard(notification)}
+            {this.renderMessageCard(notification, false)}
           </Col>
           <Col xs={6}/>
         </Row>
