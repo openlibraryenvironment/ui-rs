@@ -14,7 +14,6 @@ class ChatPane extends React.Component {
   }
 
   renderMessageCard(notification, isSender) {
-    console.log("Notification Timestamp: " + notification.timestamp);
     return (
       <React.Fragment>
         {<FormattedDate
