@@ -62,7 +62,7 @@ export const CannotSupply = () => (
 );
 
 export const RespondYes = () => (
-  <ShowModalButton buttonStyle="dropdownItem" modal="SupplierRespondYes">
+  <ShowModalButton buttonStyle="dropdownItem" modal="RespondYes">
     <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.respondYes" /></Icon>
   </ShowModalButton>
 );

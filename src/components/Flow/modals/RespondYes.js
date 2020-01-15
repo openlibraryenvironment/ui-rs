@@ -7,7 +7,7 @@ import { Button, Layout, Modal, ModalFooter, RadioButton } from '@folio/stripes/
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
-const SupplierRespondYes = ({ request, performAction }) => {
+const RespondYes = ({ request, performAction }) => {
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
@@ -43,7 +43,7 @@ const SupplierRespondYes = ({ request, performAction }) => {
         <form onSubmit={handleSubmit}>
           <Modal
             label={<FormattedMessage id="ui-rs.actions.respondYes" />}
-            open={currentModal === 'SupplierRespondYes'}
+            open={currentModal === 'RespondYes'}
             footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
           >
             <SafeHTMLMessage id="ui-rs.actions.respondYes.confirm" values={{ id: request.id, item: request.title }} />
@@ -57,9 +57,9 @@ const SupplierRespondYes = ({ request, performAction }) => {
   );
 };
 
-SupplierRespondYes.propTypes = {
+RespondYes.propTypes = {
   request: PropTypes.object.isRequired,
   performAction: PropTypes.func.isRequired,
 };
 
-export default SupplierRespondYes;
+export default RespondYes;
