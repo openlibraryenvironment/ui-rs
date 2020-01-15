@@ -180,6 +180,12 @@ ViewRoute.manifest = {
       query: 'cql.allRecords=1 sortby label',
     },
   },
+  action: {
+    type: 'okapi',
+    path: 'rs/patronrequests/:{id}/performAction',
+    fetch: false,
+    clientGeneratePk: false,
+  },
   query: {},
 };
 

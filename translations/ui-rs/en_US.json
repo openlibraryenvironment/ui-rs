@@ -99,6 +99,7 @@
   "view.showChat": "Show chat",
 
   "view.chatPane": "Chat with {chatOtherParty}",
+  "view.chatPane.sendMessage": "Send",
 
   "actions.wrongId": "No action performed, scanned request does not match",
   "actions.respondYes": "Respond \"Will Supply\"",
