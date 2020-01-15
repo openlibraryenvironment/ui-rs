@@ -13,17 +13,18 @@ class ChatPane extends React.Component {
     onToggle: PropTypes.func.isRequired,
   }
 
-
-
   renderMessageCard(notification, isSender) {
     return (
-      <Card
-        cardClass={isSender ? css.sentMessageCard : css.receivedMessageCard}
-        headerComponent={() => null}
-        roundedBorder
-      >
-        {notification.messageContent}
-      </Card>
+      <React.Fragment>
+        {notification.timestamp}
+        <Card
+          cardClass={isSender ? css.sentMessageCard : css.receivedMessageCard}
+          headerComponent={() => null}
+          roundedBorder
+        >
+          {notification.messageContent}
+        </Card>
+      </React.Fragment>
     );
   }
 
@@ -31,7 +32,7 @@ class ChatPane extends React.Component {
     if (notification.isSender === true) {
       return (
         <Row>
-          <Col xs={6}/>
+          <Col xs={6} />
           <Col xs={6}>
             {this.renderMessageCard(notification, true)}
           </Col>
@@ -43,21 +44,19 @@ class ChatPane extends React.Component {
           <Col xs={6}>
             {this.renderMessageCard(notification, false)}
           </Col>
-          <Col xs={6}/>
+          <Col xs={6} />
         </Row>
       );
     }
   }
 
 
-
   displayMessages() {
     const { resources } = this.props;
     const notifications = _.get(resources, 'selectedRecord.records[0].notifications');
     if (notifications) {
-
       // Sort the notifications into order by time recieved/sent
-      notifications.sort((a,b) => {
+      notifications.sort((a, b) => {
         if (a.timestamp > b.timestamp) {
           return 1;
         }
@@ -80,8 +79,8 @@ class ChatPane extends React.Component {
     const isRequester = _.get(resources, 'selectedRecord.records[0].isRequester');
     const chatOtherParty = isRequester ? 'supplier' : 'requester';
 
-    console.log("Resources %o", resources)
-    console.log("Notifications %o", _.get(resources, 'selectedRecord.records[0].notifications'))
+    console.log('Resources %o', resources);
+    console.log('Notifications %o', _.get(resources, 'selectedRecord.records[0].notifications'));
     return (
       <Pane
         defaultWidth="20%"
