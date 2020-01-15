@@ -8,12 +8,15 @@
  *   secondHeadline: <array of names of components exported from the secondHeadlines directory>
  *   excludeFromMore: <array of moreActions to only display in the dropdown>
  * }
+ *
+ * In order to add a new action to moreActions - extend src/components/Flow/moreActions/index.js and add
+ * your action. 
 */
 export default {
   'RES_IDLE':{
     cards: ['Bibliographic', 'RequesterSupplier'],
-    primaryAction: 'RespondYes',
-    moreActions: ['CannotSupply', 'SendChatMessage'],
+    primaryAction: '',
+    moreActions: ['RespondYes', 'CannotSupply', 'SendChatMessage'],
   },
   'RES_NEW_AWAIT_PULL_SLIP': {
     cards: ['Bibliographic', 'RequesterSupplier'],

@@ -101,6 +101,9 @@
   "view.chatPane": "Chat with {chatOtherParty}",
 
   "actions.wrongId": "No action performed, scanned request does not match",
+  "actions.respondYes": "Respond \"Will Supply\"",
+  "actions.respondYes.success": "Responded \"Will Supply\"",
+  "actions.respondYes.error": "Cannot respond \"Will Supply\"",
   "actions.cannotSupply": "Respond \"Cannot Supply\"",
   "actions.cannotSupply.confirm": "Are you sure you want to <strong>respond \"Cannot Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
   "actions.cannotSupply.reason": "Reason item cannot be supplied:",
