@@ -61,15 +61,11 @@ export const CannotSupply = () => (
   </ShowModalButton>
 );
 
-export const RespondYes = props => <ActionButton
-  action="respondYes"
-  label="ui-rs.actions.respondyes"
-  icon="archive"
-  success="ui-rs.actions.respondYes.success"
-  error="ui-rs.actions.respondYes.error"
-  {...props}
-/>;
-
+export const RespondYes = () => (
+  <ShowModalButton buttonStyle="dropdownItem" modal="SupplierRespondYes">
+    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.respondYes" /></Icon>
+  </ShowModalButton>
+);
 
 export const SendChatMessage = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="SendChatMessage">
