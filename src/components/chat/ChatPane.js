@@ -2,13 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedDate, FormattedMessage } from 'react-intl';
-import ScrollToBottom from 'react-scroll-to-bottom';
-import { useMessage } from '../MessageModalState';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, Card, Col, IconButton, Pane, Row, TextField } from '@folio/stripes/components';
+import { Button, Card, Col, IconButton, Pane, Row, TextField, Tooltip } from '@folio/stripes/components';
 import css from './ChatPane.css';
-import { submit } from 'redux-form';
 
 
 class ChatPane extends React.Component {
@@ -20,44 +17,40 @@ class ChatPane extends React.Component {
     onToggle: PropTypes.func.isRequired,
   }
 
-  sendMessage(payload, successMessage, errorMessage) {
-    this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} })
-  };
+  sendMessage(payload) {
+    this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} });
+  }
 
   messageSeen(payload) {
-    this.props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} })
-  };
+    this.props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} });
+  }
 
   onSubmitMessage = values => {
     return (
       this.sendMessage(
-        values,
-        'ui-rs.actions.sendChatMessage.success',
-        'ui-rs.actions.sendChatMessage.error',
+        values
       )
     );
   }
 
 
   onSubmitSeen = (values) => {
-    console.log("Values: %o", values)
-    const payload = { id: values.id, seenStatus: values.seen }
-    console.log("Payload: %o", payload)
     return (
       this.messageSeen(
-        payload
+        values
       )
     );
   }
 
   renderPaneFooter() {
-    return(
+    return (
       <Form
         onSubmit={this.onSubmitMessage}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Row>
-              <Col xs={8}>
+              <Col xs={1} />
+              <Col xs={7}>
                 <Field
                   name="note"
                   component={TextField}
@@ -67,7 +60,7 @@ class ChatPane extends React.Component {
                 <Button
                   onClick={handleSubmit}
                 >
-                  <FormattedMessage id="ui-rs.view.chatPane.sendMessage"/>
+                  <FormattedMessage id="ui-rs.view.chatPane.sendMessage" />
                 </Button>
               </Col>
             </Row>
@@ -84,35 +77,48 @@ class ChatPane extends React.Component {
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Field
-              name="seen"
+              name="seenStatus"
               type="checkbox"
               initialValue={notification.seen}
               component={({ input }) => {
                 return (
-                  <IconButton
-                    icon={notification.seen ? "eye-open" : "eye-closed"}
-                    onClick={(event) => {
-                      input.onChange({
-                        target: {
-                          type: "checkbox",
-                          checked: !input.checked
-                        }
-                      });
-                      handleSubmit(event);
-                    }}
-                  />
+                  <Tooltip
+                    id={`seen-button-${notification.id}-tooltip`}
+                    text={
+                      notification.seen ?
+                        <FormattedMessage id="ui-rs.view.chatPane.markUnseen" /> :
+                        <FormattedMessage id="ui-rs.view.chatPane.markSeen" />
+                    }
+                  >
+                    {({ ref, ariaIds }) => (
+                      <IconButton
+                        ref={ref}
+                        icon={notification.seen ? 'eye-open' : 'eye-closed'}
+                        aria-labelledby={ariaIds.text}
+                        onClick={(event) => {
+                          input.onChange({
+                            target: {
+                              type: 'checkbox',
+                              checked: !input.checked
+                            }
+                          });
+                          handleSubmit(event);
+                        }}
+                      />
+                    )}
+                  </Tooltip>
                 );
               }
               }
             />
-            <Field 
+            <Field
               name="id"
               type="hidden"
-              component={({input}) => {
+              component={({ input }) => {
                 return (
                   input.onChange({
                     target: {
-                      type: "hidden",
+                      type: 'hidden',
                       value: notification.id
                     }
                   }),
@@ -163,8 +169,8 @@ class ChatPane extends React.Component {
             </Row>
             {!isSender &&
               <Row>
-                <Col xs={8}/>
-                <Col xs={2} >
+                <Col xs={8} />
+                <Col xs={2}>
                   {this.renderSeenButton(notification)}
                 </Col>
                 <Col xs={2} />
@@ -172,7 +178,6 @@ class ChatPane extends React.Component {
             }
           </Card>
         </Row>
-        
       </React.Fragment>
     );
   }
@@ -219,7 +224,7 @@ class ChatPane extends React.Component {
 
       return (
         <React.Fragment>
-          {notifications.map((notification, index) => this.displayMessage(notification))}
+          {notifications.map((notification) => this.displayMessage(notification))}
         </React.Fragment>
       );
     }
@@ -231,7 +236,6 @@ class ChatPane extends React.Component {
     const { resources, onToggle } = this.props;
     const isRequester = _.get(resources, 'selectedRecord.records[0].isRequester');
     const chatOtherParty = isRequester ? 'supplier' : 'requester';
-    console.log("Notifications: %o", _.get(resources, 'selectedRecord.records[0].notifications'));
     return (
       <Pane
         defaultWidth="20%"

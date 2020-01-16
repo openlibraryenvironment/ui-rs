@@ -16,12 +16,12 @@ export default {
   'RES_IDLE':{
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: '',
-    moreActions: ['RespondYes', 'CannotSupply', 'SendChatMessage'],
+    moreActions: ['RespondYes', 'CannotSupply'],
   },
   'RES_NEW_AWAIT_PULL_SLIP': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'PrintPullSlip',
-    moreActions: ['SupplierMarkPullSlipPrinted', 'CannotSupply', 'SendChatMessage'],
+    moreActions: ['SupplierMarkPullSlipPrinted', 'CannotSupply'],
   },
   'RES_AWAIT_PICKING': {
     cards: ['Bibliographic', 'RequesterSupplier'],
@@ -48,11 +48,6 @@ export default {
     primaryAction: 'SupplierMarkShipped',
     moreActions: ['SupplierMarkShipped'],
   },
-  'REQ_EXPECTS_TO_SUPPLY': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
-    primaryAction: '',
-    moreActions: ['SendChatMessage'],
-  },
   'REQ_SHIPPED': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'RequesterReceived',
@@ -71,6 +66,6 @@ export default {
   'REQ_REQUEST_SENT_TO_SUPPLIER': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: '',
-    moreActions: ['SendChatMessage'],
+    moreActions: ['RequesterReceived'],
   }
 };

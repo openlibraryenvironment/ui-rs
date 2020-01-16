@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { Layout, Button, Modal, ModalFooter, Row, Col, TextArea } from '@folio/stripes/components';
+import { Button, Modal, ModalFooter, Row, Col, TextArea } from '@folio/stripes/components';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
-const RespondYes = ({ request, performAction }) => {
+const RespondYes = ({ performAction }) => {
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {

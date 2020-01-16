@@ -38,7 +38,7 @@ const handleToggleChat = (mutator, resources) => {
 };
 
 const paneButtons = (mutator, resources) => {
-  let listOfUnseenNotifications = _.get(resources, "selectedRecord.records[0].notifications")
+  let listOfUnseenNotifications = _.get(resources, 'selectedRecord.records[0].notifications');
   listOfUnseenNotifications = listOfUnseenNotifications ? listOfUnseenNotifications.filter(notification => notification.seen === false && notification.isSender === false) : null;
   return (
     <PaneMenu>

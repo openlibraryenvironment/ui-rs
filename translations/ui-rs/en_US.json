@@ -100,6 +100,8 @@
 
   "view.chatPane": "Chat with {chatOtherParty}",
   "view.chatPane.sendMessage": "Send",
+  "view.chatPane.markSeen": "Mark message as seen",
+  "view.chatPane.markUnseen": "Mark message as unseen",
 
   "actions.wrongId": "No action performed, scanned request does not match",
   "actions.respondYes": "Respond \"Will Supply\"",
