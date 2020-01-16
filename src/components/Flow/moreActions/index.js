@@ -55,6 +55,20 @@ export const SupplierMarkShipped = props => <ActionButton
   {...props}
 />;
 
+
+// We can't automate the process of checking out the item from the host institution LMS,
+// this action allows a user to manually mark the item as checked out (Probably by manually
+// issuing the item). It also allows developers to progress the request even if they don't really
+// have a host LMS to talk NCIP to
+export const ManualCheckout = props => <ActionButton
+  action="supplierManualCheckout"
+  label="ui-rs.actions.supplierManualCheckout"
+  icon="archive"
+  success="ui-rs.actions.supplierManualCheckout.success"
+  error="ui-rs.actions.supplierManualCheckout.error"
+  {...props}
+/>;
+
 export const CannotSupply = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="CannotSupply">
     <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.cannotSupply" /></Icon>

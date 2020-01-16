@@ -33,10 +33,20 @@ export default {
     primaryAction: 'SupplierMarkShipped',
     moreActions: ['SupplierMarkShipped', 'PrintPullSlip', 'CannotSupply'],
   },
+  'RES_AWAIT_PROXY_BORROWER': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: 'ManualCheckout',
+    moreActions: ['ManualCheckout'],
+  },
   'RES_ITEM_RETURNED': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'SupplierCheckOutOfReshare',
     moreActions: ['SupplierCheckOutOfReshare'],
+  },
+  'RES_AWAIT_SHIP': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: 'SupplierMarkShipped',
+    moreActions: ['SupplierMarkShipped'],
   },
   'REQ_EXPECTS_TO_SUPPLY': {
     cards: ['Bibliographic', 'RequesterSupplier'],
