@@ -10,7 +10,7 @@
  * }
  *
  * In order to add a new action to moreActions - extend src/components/Flow/moreActions/index.js and add
- * your action. 
+ * your action.
 */
 export default {
   'RES_IDLE':{

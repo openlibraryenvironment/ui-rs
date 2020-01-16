@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Form, Field} from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import { FormattedDate, FormattedMessage } from 'react-intl';
+import ScrollToBottom from 'react-scroll-to-bottom';
 import { useMessage } from '../MessageModalState';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
@@ -12,6 +13,9 @@ import css from './ChatPane.css';
 class ChatPane extends React.Component {
   static propTypes = {
     resources: PropTypes.object,
+    mutator:PropTypes.shape({
+      action: PropTypes.object,
+    }),
     onToggle: PropTypes.func.isRequired,
   }
 
@@ -20,8 +24,6 @@ class ChatPane extends React.Component {
     this.state = {latestMessage: (_.get(this.props, 'resources.selectedRecord.records[0].notifications')) ? (_.get(this.props, 'resources.selectedRecord.records[0].notifications')).sort((a, b) => this.sortByTimestamp(a,b))[-1] : {}};
   }
 
-
-  state
   sendMessage(payload, successMessage, errorMessage) {
     this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} })
   };
@@ -94,7 +96,6 @@ class ChatPane extends React.Component {
             headerComponent={() => null}
             headerStart="Text to stop proptypes getting annoyed"
             roundedBorder
-            autoFocus={notification === this.state.latestMessage}
           >
             {notification.messageContent}
           </Card>
@@ -139,7 +140,7 @@ class ChatPane extends React.Component {
   displayMessages() {
     const { resources } = this.props;
     const notifications = _.get(resources, 'selectedRecord.records[0].notifications');
-    //console.log("Notifications: %o", _.get(resources, 'selectedRecord.records[0].notifications'))
+    console.log("Notifications: %o", _.get(resources, 'selectedRecord.records[0].notifications'))
     if (notifications) {
       // Sort the notifications into order by time recieved/sent
       notifications.sort((a, b) => this.sortByTimestamp(a, b));
@@ -157,7 +158,8 @@ class ChatPane extends React.Component {
   render() {
     const { resources, onToggle } = this.props;
     const isRequester = _.get(resources, 'selectedRecord.records[0].isRequester');
-    const chatOtherParty = isRequester ? 'supplier' : 'requester';
+    const chatOtherParty = isRequester ? 'supplier' : 'requester'
+    console.log("State: %o", this.state)
     return (
       <Pane
         defaultWidth="20%"
@@ -166,7 +168,9 @@ class ChatPane extends React.Component {
         paneTitle={<FormattedMessage id="ui-rs.view.chatPane" values={{ chatOtherParty }} />}
         footer={this.renderPaneFooter()}
       >
-        {this.displayMessages()}
+        <ScrollToBottom>
+          {this.displayMessages()}
+        </ScrollToBottom>
       </Pane>
     );
   }
