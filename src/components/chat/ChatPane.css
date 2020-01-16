@@ -2,9 +2,11 @@
 
 .sentMessageCard {
   background-color: var(--primary);
-  color: #fff
+  color: #fff;
+  word-wrap: break-word;
 }
 
 .receivedMessageCard {
   background-color: var(--color-fill-table-row-odd);
+  word-wrap: break-word;
 }

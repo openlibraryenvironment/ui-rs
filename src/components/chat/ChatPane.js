@@ -38,13 +38,13 @@ class ChatPane extends React.Component {
 
   renderPaneFooter() {
     return(
-      <Row>
-        <Form
-          onSubmit={this.onSubmit}
-          render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
+      <Form
+        onSubmit={this.onSubmit}
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Row>
               <Col xs={8}>
-                <Field 
+                <Field
                   name="note"
                   component={TextField}
                 />
@@ -56,10 +56,10 @@ class ChatPane extends React.Component {
                   <FormattedMessage id="ui-rs.view.chatPane.sendMessage"/>
                 </Button>
               </Col>
-            </form>
-          )}
-        />
-      </Row>
+            </Row>
+          </form>
+        )}
+      />
     );
   }
 
