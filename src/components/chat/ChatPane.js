@@ -168,9 +168,7 @@ class ChatPane extends React.Component {
         paneTitle={<FormattedMessage id="ui-rs.view.chatPane" values={{ chatOtherParty }} />}
         footer={this.renderPaneFooter()}
       >
-        <ScrollToBottom>
-          {this.displayMessages()}
-        </ScrollToBottom>
+        {this.displayMessages()}
       </Pane>
     );
   }
