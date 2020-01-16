@@ -38,6 +38,8 @@ const handleToggleChat = (mutator, resources) => {
 };
 
 const paneButtons = (mutator, resources) => {
+  let listOfUnseenNotifications = _.get(resources, "selectedRecord.records[0].notifications")
+  listOfUnseenNotifications = listOfUnseenNotifications ? listOfUnseenNotifications.filter(notification => notification.seen === false && notification.isSender === false) : null;
   return (
     <PaneMenu>
       {handleToggleTags &&
@@ -46,7 +48,7 @@ const paneButtons = (mutator, resources) => {
           <IconButton
             icon="comment"
             id="clickable-show-chat"
-            badgeCount={0}
+            badgeCount={listOfUnseenNotifications ? listOfUnseenNotifications.length : 0}
             onClick={() => handleToggleChat(mutator, resources)}
             ariaLabel={ariaLabel}
           />

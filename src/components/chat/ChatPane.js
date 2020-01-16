@@ -6,8 +6,9 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { useMessage } from '../MessageModalState';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, Card, Col, Pane, Row, TextField } from '@folio/stripes/components';
+import { Button, Card, Col, IconButton, Pane, Row, TextField } from '@folio/stripes/components';
 import css from './ChatPane.css';
+import { submit } from 'redux-form';
 
 
 class ChatPane extends React.Component {
@@ -19,16 +20,15 @@ class ChatPane extends React.Component {
     onToggle: PropTypes.func.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {latestMessage: (_.get(this.props, 'resources.selectedRecord.records[0].notifications')) ? (_.get(this.props, 'resources.selectedRecord.records[0].notifications')).sort((a, b) => this.sortByTimestamp(a,b))[-1] : {}};
-  }
-
   sendMessage(payload, successMessage, errorMessage) {
     this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} })
   };
 
-  onSubmit = values => {
+  messageSeen(payload) {
+    this.props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} })
+  };
+
+  onSubmitMessage = values => {
     return (
       this.sendMessage(
         values,
@@ -38,10 +38,22 @@ class ChatPane extends React.Component {
     );
   }
 
+
+  onSubmitSeen = (values) => {
+    console.log("Values: %o", values)
+    const payload = { id: values.id, seenStatus: values.seen }
+    console.log("Payload: %o", payload)
+    return (
+      this.messageSeen(
+        payload
+      )
+    );
+  }
+
   renderPaneFooter() {
     return(
       <Form
-        onSubmit={this.onSubmit}
+        onSubmit={this.onSubmitMessage}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Row>
@@ -59,6 +71,55 @@ class ChatPane extends React.Component {
                 </Button>
               </Col>
             </Row>
+          </form>
+        )}
+      />
+    );
+  }
+
+  renderSeenButton(notification) {
+    return (
+      <Form
+        onSubmit={this.onSubmitSeen}
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Field
+              name="seen"
+              type="checkbox"
+              initialValue={notification.seen}
+              component={({ input }) => {
+                return (
+                  <IconButton
+                    icon={notification.seen ? "eye-open" : "eye-closed"}
+                    onClick={(event) => {
+                      input.onChange({
+                        target: {
+                          type: "checkbox",
+                          checked: !input.checked
+                        }
+                      });
+                      handleSubmit(event);
+                    }}
+                  />
+                );
+              }
+              }
+            />
+            <Field 
+              name="id"
+              type="hidden"
+              component={({input}) => {
+                return (
+                  input.onChange({
+                    target: {
+                      type: "hidden",
+                      value: notification.id
+                    }
+                  }),
+                  null
+                );
+              }}
+            />
           </form>
         )}
       />
@@ -97,9 +158,21 @@ class ChatPane extends React.Component {
             headerStart="Text to stop proptypes getting annoyed"
             roundedBorder
           >
-            {notification.messageContent}
+            <Row>
+              {notification.messageContent}
+            </Row>
+            {!isSender &&
+              <Row>
+                <Col xs={8}/>
+                <Col xs={2} >
+                  {this.renderSeenButton(notification)}
+                </Col>
+                <Col xs={2} />
+              </Row>
+            }
           </Card>
         </Row>
+        
       </React.Fragment>
     );
   }
@@ -140,14 +213,13 @@ class ChatPane extends React.Component {
   displayMessages() {
     const { resources } = this.props;
     const notifications = _.get(resources, 'selectedRecord.records[0].notifications');
-    console.log("Notifications: %o", _.get(resources, 'selectedRecord.records[0].notifications'))
     if (notifications) {
       // Sort the notifications into order by time recieved/sent
       notifications.sort((a, b) => this.sortByTimestamp(a, b));
 
       return (
         <React.Fragment>
-          {notifications.map(notification => this.displayMessage(notification))}
+          {notifications.map((notification, index) => this.displayMessage(notification))}
         </React.Fragment>
       );
     }
@@ -158,8 +230,8 @@ class ChatPane extends React.Component {
   render() {
     const { resources, onToggle } = this.props;
     const isRequester = _.get(resources, 'selectedRecord.records[0].isRequester');
-    const chatOtherParty = isRequester ? 'supplier' : 'requester'
-    console.log("State: %o", this.state)
+    const chatOtherParty = isRequester ? 'supplier' : 'requester';
+    console.log("Notifications: %o", _.get(resources, 'selectedRecord.records[0].notifications'));
     return (
       <Pane
         defaultWidth="20%"
