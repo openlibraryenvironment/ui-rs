@@ -75,7 +75,6 @@ const RespondYes = ({ performAction }) => {
 };
 
 RespondYes.propTypes = {
-  request: PropTypes.object.isRequired,
   performAction: PropTypes.func.isRequired,
 };
 
