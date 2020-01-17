@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import stringify from 'json-stable-stringify';
 import { withStripes } from '@folio/stripes/core';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
+import AppNameContext from '../../AppNameContext';
 
 import {
   RequestInfo,
@@ -38,9 +39,14 @@ const ViewPatronRequest = ({ record, stripes }) => (
       <CatalogInfo id="catalogInfo" record={record} />
     </Accordion>
     {/* Green card */}
-    <Accordion id="suppliersInfo" label={<FormattedMessage id="ui-rs.information.heading.suppliers" />}>
-      <SuppliersInfo id="suppliersInfo" record={record} />
-    </Accordion>
+    <AppNameContext.Consumer>
+      {appName => (
+        appName === 'supply' ? '' :
+        <Accordion id="suppliersInfo" label={<FormattedMessage id="ui-rs.information.heading.suppliers" />}>
+          <SuppliersInfo id="suppliersInfo" record={record} />
+        </Accordion>
+      )}
+    </AppNameContext.Consumer>
     {/* Purple card */}
     <Accordion id="auditInfo" label={<FormattedMessage id="ui-rs.information.heading.audit" />}>
       <AuditInfo id="auditInfo" record={record} />
