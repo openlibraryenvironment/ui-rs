@@ -42,10 +42,10 @@ class ChatPane extends React.Component {
   }
 
   renderPaneFooter() {
-    const patronRequest = _.get(this.props, 'resources.selectedRecord.records[0]');
+    // const patronRequest = _.get(this.props, 'resources.selectedRecord.records[0]');
 
-    const validActions = _.get(patronRequest, 'validActions');
-    const messageValid = validActions ? validActions.includes('message') : false;
+    // const validActions = _.get(patronRequest, 'validActions');
+    // const messageValid = validActions ? validActions.includes('message') : false;
     return (
       <Form
         onSubmit={this.onSubmitMessage}
