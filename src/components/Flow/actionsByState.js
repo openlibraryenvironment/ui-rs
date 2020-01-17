@@ -66,6 +66,16 @@ export default {
   'REQ_REQUEST_SENT_TO_SUPPLIER': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: '',
+    moreActions: [],
+  },
+  'REQ_EXPECTS_TO_SUPPLY': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: '',
+    moreActions: [],
+  },
+  'REQ_SHIPPED': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: '',
     moreActions: ['RequesterReceived'],
   }
 };

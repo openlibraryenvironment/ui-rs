@@ -54,6 +54,7 @@ class ChatPane extends React.Component {
                 <Field
                   name="note"
                   component={TextField}
+                  autoFocus
                 />
               </Col>
               <Col xs={4}>
