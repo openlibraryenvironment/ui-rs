@@ -146,9 +146,6 @@ class PatronRequestsRoute extends React.Component {
         // can't happen
     }
 
-    // Once we have broken up our use of <SearchAndSort> into
-    // <SearchAndSortQuery>, we can nove the pull-slips button into a
-    // more elegant position. For now, we just shove it in the top.
     return (
       <React.Fragment>
         <SearchAndSort
