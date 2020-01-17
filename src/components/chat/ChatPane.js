@@ -255,6 +255,7 @@ class ChatPane extends React.Component {
         onClose={onToggle}
         paneTitle={<FormattedMessage id="ui-rs.view.chatPane" values={{ chatOtherParty }} />}
         footer={this.renderPaneFooter()}
+        id="chat-pane"
       >
         {this.displayMessages()}
       </Pane>
