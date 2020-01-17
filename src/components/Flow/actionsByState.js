@@ -72,10 +72,5 @@ export default {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: '',
     moreActions: [],
-  },
-  'REQ_SHIPPED': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
-    primaryAction: '',
-    moreActions: ['RequesterReceived'],
   }
 };
