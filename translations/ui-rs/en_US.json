@@ -147,6 +147,9 @@
   "actions.markShippedReturn.success": "Item marked as return shipped.",
   "actions.markShippedReturn.error": "Error marking item as return shipped.",
   "actions.markShippedReturn.prompt": "Scan request barcode to mark it <strong>return shipped</strong>",
+  "actions.supplierManualCheckout": "Mark as checked out from ILS",
+  "actions.supplierManualCheckout.success": "Error marking as checked out from ILS",
+  "actions.supplierManualCheckout.error": "Sucessfully marked as checked out from ILS",
 
   "cards.reqSup.searching": "Searching for supplier.",
 
