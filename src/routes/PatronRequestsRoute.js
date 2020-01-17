@@ -7,7 +7,6 @@ import compose from 'compose-function';
 import { Button } from '@folio/stripes/components';
 import { SearchAndSort, withTags } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
-import stateString from '../util/stateString';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
 
 import packageInfo from '../../package';
@@ -199,7 +198,7 @@ class PatronRequestsRoute extends React.Component {
           resultsFormatter={{
             id: a => a.hrid,
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
-            state: a => stateString(a.state),
+            state: a => <FormattedMessage id={`ui-rs.states.${a.state.code}`} />,
             serviceType: a => a.serviceType && a.serviceType.value,
             pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}
