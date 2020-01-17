@@ -4,13 +4,13 @@ import { Button, Icon } from '@folio/stripes/components';
 import { ShowModalButton } from '../../ModalButtons';
 import ActionButton from '../ActionButton';
 
-/* export const RequesterReceived = props => <ActionButton
+export const RequesterReceived = props => <ActionButton
   action="requesterReceived"
   label="ui-rs.actions.markReceivedWithoutScan"
   success="ui-rs.actions.markReceived.success"
   error="ui-rs.actions.markReceived.error"
   {...props}
-/>; */
+/>;
 
 export const PatronReturnedItem = props => <ActionButton
   action="patronReturnedItem"
@@ -84,12 +84,6 @@ export const RespondYes = () => (
 export const SendChatMessage = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="SendChatMessage">
     <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.sendChatMessage" /></Icon>
-  </ShowModalButton>
-);
-
-export const RequesterReceived = () => (
-  <ShowModalButton buttonStyle="dropdownItem" modal="RequesterReceived">
-    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.markReceivedWithoutScan" /></Icon>
   </ShowModalButton>
 );
 
