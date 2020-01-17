@@ -47,7 +47,7 @@ class ChatPane extends React.Component {
       <Form
         onSubmit={this.onSubmitMessage}
         render={({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} autoComplete="off">
             <Row>
               <Col xs={1} />
               <Col xs={7}>
