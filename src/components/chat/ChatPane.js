@@ -33,7 +33,6 @@ class ChatPane extends React.Component {
     );
   }
 
-
   onSubmitSeen = (values) => {
     return (
       this.messageSeen(
@@ -43,11 +42,18 @@ class ChatPane extends React.Component {
   }
 
   renderPaneFooter() {
+    const patronRequest = _.get(this.props, 'resources.selectedRecord.records[0]');
+
+    const validActions = _.get(patronRequest, 'validActions');
+    const messageValid = validActions ? validActions.includes('message') : false;
     return (
       <Form
         onSubmit={this.onSubmitMessage}
-        render={({ handleSubmit }) => (
-          <form onSubmit={handleSubmit} autoComplete="off">
+        render={({ handleSubmit, pristine }) => (
+          <form
+            onSubmit={handleSubmit}
+            autoComplete="off"
+          >
             <Row>
               <Col xs={1} />
               <Col xs={7}>
@@ -60,6 +66,11 @@ class ChatPane extends React.Component {
               <Col xs={4}>
                 <Button
                   onClick={handleSubmit}
+                  disabled={
+                    pristine
+                    // TODO State model not complete, eventaully implement this check to see if sending message is valid
+                    // !messageValid
+                  }
                 >
                   <FormattedMessage id="ui-rs.view.chatPane.sendMessage" />
                 </Button>

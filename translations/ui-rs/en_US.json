@@ -102,6 +102,7 @@
   "view.chatPane.sendMessage": "Send",
   "view.chatPane.markSeen": "Mark message as seen",
   "view.chatPane.markUnseen": "Mark message as unseen",
+  "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
 
   "actions.wrongId": "No action performed, scanned request does not match",
   "actions.respondYes": "Respond \"Will Supply\"",
