@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GraphQLUserCard from '../../cards/user/GraphQLUserCard';
+import UserCard from '../../cards/user/UserCard';
 
 import css from './RequestingUserInfo.css';
 
@@ -13,10 +13,24 @@ class RequestingUserInfo extends React.Component {
   render() {
     const { record } = this.props;
 
+    const user = {
+      id: record.patronReference,
+      username: undefined,
+      personal: {
+        lastName: record.patronSurname,
+        firstName: record.patronGivenName,
+        email: undefined, // XXX
+      },
+      patronGroupRecord: {
+        group: undefined, // XXX
+        desc: undefined, // XXX
+      }
+    };
+
     return (
-      <GraphQLUserCard
+      <UserCard
         id={`${this.props.id}-card`}
-        userId={record.patronReference}
+        user={user}
         cardClass={css.userCard}
         headerClass={css.userCardHeader}
       />
