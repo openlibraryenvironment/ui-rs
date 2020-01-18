@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { Headline, Layout } from '@folio/stripes/components';
@@ -35,7 +36,7 @@ const FlowRoute = props => {
     <div className={css.container}>
       <div className={css.flow}>
         <strong>Request status</strong>
-        <Headline size="large" faded>{request.state.code}</Headline>
+        <Headline size="large" faded><FormattedMessage id={`ui-rs.states.${request.state.code}`} /></Headline>
       </div>
       {byCurrent &&
         <div className={css.context}>

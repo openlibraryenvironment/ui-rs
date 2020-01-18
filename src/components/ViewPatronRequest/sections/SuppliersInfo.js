@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import {
   Card,
   Col,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
-import stateString from '../../../util/stateString';
 import css from './SuppliersInfo.css';
 
 
@@ -39,10 +39,9 @@ class SuppliersInfo extends React.Component {
               />
             </Col>
             <Col xs={6}>
-              <KeyValue
-                label="Status"
-                value={stateString(supplier.state)}
-              />
+              <KeyValue label="Status">
+                {supplier.state && <FormattedMessage id={`ui-rs.states.${supplier.state.code}`} />}
+              </KeyValue>
             </Col>
           </Row>
         </Card>
