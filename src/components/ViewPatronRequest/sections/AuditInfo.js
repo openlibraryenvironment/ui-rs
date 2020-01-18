@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import {
   Card,
   Col,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
-import stateString from '../../../util/stateString';
 import css from './AuditInfo.css';
 
 
@@ -45,16 +45,18 @@ class AuditInfo extends React.Component {
           </Row>
           <Row>
             <Col xs={6}>
-              <KeyValue
-                label="From state"
-                value={stateString(entry.fromStatus)}
-              />
+              {entry.fromStatus && (
+                <KeyValue label="From state">
+                  <FormattedMessage id={`ui-rs.states.${entry.fromStatus.code}`} />
+                </KeyValue>
+              )}
             </Col>
             <Col xs={6}>
-              <KeyValue
-                label="To state"
-                value={stateString(entry.toStatus)}
-              />
+              {entry.toStatus && (
+                <KeyValue label="To state">
+                  <FormattedMessage id={`ui-rs.states.${entry.toStatus.code}`} />
+                </KeyValue>
+              )}
             </Col>
           </Row>
         </Card>
