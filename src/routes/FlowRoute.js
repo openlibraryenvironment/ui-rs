@@ -33,13 +33,13 @@ const FlowRoute = props => {
   if (byCurrent) PrimaryAction = _.get(primaryActions, byCurrent.primaryAction);
 
   return (
-    <div className={css.container}>
-      <div className={css.flow}>
-        <strong>Request status</strong>
-        <Headline size="large" faded><FormattedMessage id={`ui-rs.states.${request.state.code}`} /></Headline>
-      </div>
+    <React.Fragment>
       {byCurrent &&
-        <div className={css.context}>
+        <Layout className="centered" style={{ maxWidth: '80em' }}>
+          <div>
+            <strong>Request status</strong>
+            <Headline size="large" faded><FormattedMessage id={`ui-rs.states.${request.state.code}`} /></Headline>
+          </div>
           <div className={css.cards}>
             {renderNamedWithProps(byCurrent.cards, cards, { request })}
           </div>
@@ -52,14 +52,15 @@ const FlowRoute = props => {
           </Layout>
           {/* Render modals that correspond to available actions */}
           {renderNamedWithProps([byCurrent.primaryAction, ...byCurrent.moreActions], modals, { request, performAction })}
-        </div>
+        </Layout>
       }
       {!byCurrent &&
-        <div className={css.context}>
-          No content for this state.
-        </div>
+        <Layout className="centered" style={{ maxWidth: '80em' }}>
+          <FormattedMessage id="ui-rs.flow.unknown" />
+          <FormattedMessage id={`ui-rs.states.${request.state.code}`} />
+        </Layout>
       }
-    </div>
+    </React.Fragment>
   );
 };
 

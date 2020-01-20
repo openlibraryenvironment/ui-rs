@@ -75,7 +75,7 @@
 
   "flow.flow": "Flow",
   "flow.details": "Details",
-  "flow.unknown": "Request is in unknown state, please see details.",
+  "flow.unknown": "No content for current state:",
   "flow.created": "Request created",
   "flow.validated": "Request validated",
   "flow.sourcing": "Sourcing item",
