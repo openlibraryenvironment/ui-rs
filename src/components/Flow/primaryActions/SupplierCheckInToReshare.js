@@ -16,7 +16,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
     <Form
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, form }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <SafeHTMLMessage id="ui-rs.actions.checkIn.prompt" />
           <Row>
             <Col xs={11}>
