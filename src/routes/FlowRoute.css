@@ -17,6 +17,13 @@
   max-width: 80em;
 }
 
+.cards > * {
+  margin-top: var(--gutter-static);
+}
+.cards > *:first-child {
+  margin-top: 0;
+}
+
 .optionList button, .optionList a {
   border-radius: 0;
   &:nth-child(even) {
