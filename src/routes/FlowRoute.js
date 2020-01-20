@@ -40,7 +40,9 @@ const FlowRoute = props => {
       </div>
       {byCurrent &&
         <div className={css.context}>
-          {renderNamedWithProps(byCurrent.cards, cards, { request })}
+          <div className={css.cards}>
+            {renderNamedWithProps(byCurrent.cards, cards, { request })}
+          </div>
           <Layout className="padding-top-gutter">
             {PrimaryAction && <PrimaryAction request={request} performAction={performAction} /> }
           </Layout>
