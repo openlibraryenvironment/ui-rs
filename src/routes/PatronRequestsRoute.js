@@ -36,7 +36,7 @@ class PatronRequestsRoute extends React.Component {
       type: 'okapi',
       path: 'rs/patronrequests',
       params: getSASParams({
-        searchKey: 'title',
+        searchKey: 'title,hrid,patronIdentifier',
         filterKeys: {
           'r': 'isRequester',
         },
