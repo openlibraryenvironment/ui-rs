@@ -129,7 +129,7 @@ class PatronRequestsRoute extends React.Component {
       'id',
       'dateCreated',
       'title',
-      'patronReference',
+      'patronIdentifier',
       'state',
       'serviceType',
     ];
@@ -179,7 +179,7 @@ class PatronRequestsRoute extends React.Component {
             isRequester: <FormattedMessage id="ui-rs.patronrequests.isRequester" />,
             dateCreated: <FormattedMessage id="ui-rs.patronrequests.dateCreated" />,
             title: <FormattedMessage id="ui-rs.patronrequests.title" />,
-            patronReference: <FormattedMessage id="ui-rs.patronrequests.patronReference" />,
+            patronIdentifier: <FormattedMessage id="ui-rs.patronrequests.patronIdentifier" />,
             state: <FormattedMessage id="ui-rs.patronrequests.state" />,
             serviceType: <FormattedMessage id="ui-rs.patronrequests.serviceType" />,
             pickLocation: <FormattedMessage id="ui-rs.patronrequests.pickLocation" />,
@@ -191,7 +191,7 @@ class PatronRequestsRoute extends React.Component {
             isRequester: 80,
             dateCreated: 160,
             title: 200,
-            patronReference: 120,
+            patronIdentifier: 120,
             state: 180,
             serviceType: 120,
           }}

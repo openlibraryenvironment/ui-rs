@@ -20,7 +20,7 @@
   "patronrequests.isRequester": "Requester?",
   "patronrequests.dateCreated": "Date Created",
   "patronrequests.title": "Title",
-  "patronrequests.patronReference": "Patron",
+  "patronrequests.patronIdentifier": "Patron",
   "patronrequests.state": "State",
   "patronrequests.serviceType": "Service Type",
   "patronrequests.localCallNumber": "Call Number",

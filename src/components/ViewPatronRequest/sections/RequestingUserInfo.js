@@ -14,7 +14,7 @@ class RequestingUserInfo extends React.Component {
     const { record } = this.props;
 
     const user = {
-      id: record.patronReference,
+      id: record.patronIdentifier,
       username: undefined,
       personal: {
         lastName: record.patronSurname,

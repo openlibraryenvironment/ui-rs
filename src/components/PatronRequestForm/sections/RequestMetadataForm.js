@@ -62,7 +62,7 @@ class RequestMetadataForm extends React.Component {
                 {placeholder => (
                   <Field
                     id="edit-request-metadata-requestingUser"
-                    name="patronReference"
+                    name="patronIdentifier"
                     label={placeholder}
                     component={TextField}
                     placeholder={placeholder}

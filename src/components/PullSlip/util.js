@@ -37,7 +37,7 @@ function recordToPullSlipData(intl, record) {
     if (record.patronGivenName) name = `${name}, ${record.patronGivenName}`;
   } else {
     // Better than nothing
-    name = record.patronReference;
+    name = record.patronIdentifier;
   }
 
   return {
