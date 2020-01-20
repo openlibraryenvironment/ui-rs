@@ -19,7 +19,7 @@ class RequestingUserInfo extends React.Component {
       personal: {
         lastName: record.patronSurname,
         firstName: record.patronGivenName,
-        email: undefined, // XXX
+        email: record.patronEmail,
       },
       patronGroupRecord: {
         group: undefined, // XXX
