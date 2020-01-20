@@ -168,7 +168,7 @@
   "printPullSlips": "Print pull-slips",
   "SENTINEL": "SENTINEL",
 
-  "states.REQ_IDLE":"Request created",
+  "states.REQ_IDLE":"New request",
   "states.REQ_VALIDATED":"Request validated",
   "states.REQ_SOURCING_ITEM":"Sourcing item",
   "states.REQ_SUPPLIER_IDENTIFIED":"Supplier identified",
@@ -179,6 +179,7 @@
   "states.REQ_SHIPPED":"Return shipped to supplier",
   "states.REQ_REQUEST_COMPLETE":"Request complete",
 
+  "states.RES_IDLE":"New request",
   "states.RES_NEW_AWAIT_PULL_SLIP":"New - awaiting pull slip printing",
   "states.RES_AWAIT_PICKING":"Pullslip printed - stacks searching",
   "states.RES_AWAIT_SHIP":"Item found - ready to ship",
