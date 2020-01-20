@@ -19,7 +19,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
     <Form
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, form }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <SafeHTMLMessage id={prompt} />
           <Row>
             <Col xs={11}>
