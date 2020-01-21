@@ -250,7 +250,7 @@ class ChatPane extends React.Component {
     const chatOtherParty = isRequester ? 'supplier' : 'requester';
     return (
       <Pane
-        defaultWidth="20%"
+        defaultWidth="30%"
         dismissible
         onClose={onToggle}
         paneTitle={<FormattedMessage id="ui-rs.view.chatPane" values={{ chatOtherParty }} />}
