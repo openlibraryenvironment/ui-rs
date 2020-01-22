@@ -32,7 +32,8 @@ class UserCard extends React.Component {
     delete props.userId;
 
     let user = props.user;
-    if (user) {
+    const p = user.personal || {};
+    if (user && p.email) {
       props.cardStyle = 'positive';
     } else {
       props.cardStyle = 'negative';
@@ -40,8 +41,6 @@ class UserCard extends React.Component {
       delete props.cardClass;
       user = {};
     }
-    const p = user.personal || {};
-    const g = user.patronGroupRecord || {};
 
     return (
       <Card
@@ -59,8 +58,8 @@ class UserCard extends React.Component {
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-rs.information.userName" />}
-              value={user.username}
+              label={<FormattedMessage id="ui-rs.information.emailAddress" />}
+              value={p.email}
             />
           </Col>
         </Row>
@@ -75,20 +74,6 @@ class UserCard extends React.Component {
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.firstName" />}
               value={p.firstName}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={6}>
-            <KeyValue
-              label={<FormattedMessage id="ui-rs.information.patronGroup" />}
-              value={`${g.group} (${g.desc})`}
-            />
-          </Col>
-          <Col xs={6}>
-            <KeyValue
-              label={<FormattedMessage id="ui-rs.information.emailAddress" />}
-              value={p.email}
             />
           </Col>
         </Row>
