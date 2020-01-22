@@ -178,6 +178,9 @@
   "states.REQ_AWAITING_RETURN_SHIPPING":"Awaiting return shipping",
   "states.REQ_SHIPPED":"Shipped to requester",
   "states.REQ_REQUEST_COMPLETE":"Request complete",
+  "states.REQ_ERROR": "Error",
+  "states.REQ_END_OF_ROTA": "End of rota",
+  "states.REQ_INVALID_PATRON": "Invalid patron",
 
   "states.RES_IDLE":"New request",
   "states.RES_NEW_AWAIT_PULL_SLIP":"New - awaiting pull slip printing",
@@ -185,9 +188,6 @@
   "states.RES_AWAIT_SHIP":"Item found - ready to ship",
   "states.RES_ITEM_SHIPPED":"Item shipped to requester",
   "states.RES_ITEM_RETURNED":"Return shipped to supplier",
-  "states.REQ_ERROR": "Error",
-  "states.REQ_END_OF_ROTA": "End of rota",
-  "states.REQ_INVALID_PATRON": "Invalid patron",
 
   "settingsSection.z3950": "Z39.50 settings",
   "settingsSection.sharedIndex": "Shared index settings",
