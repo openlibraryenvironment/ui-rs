@@ -97,6 +97,7 @@
 
   "view.showTags": "Show tags",
   "view.showChat": "Show chat",
+  "view.title": "Request {id}",
 
   "view.chatPane": "Chat with {chatOtherParty}",
   "view.chatPane.sendMessage": "Send",

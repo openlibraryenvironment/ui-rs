@@ -97,8 +97,9 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
   return (
     <MessageModalProvider>
       <Paneset>
+        {/* TODO: The "Request" string is translated as ui-rs.view.title which we can use conveniently with a hook once react-intl is upgraded */}
         <Pane
-          paneTitle={`Request ${match.params.id.replace(/-/g, '·')}`}
+          paneTitle={`Request ${_.get(resources, 'selectedRecord.records[0].hrid')}`}
           paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), match.params)}
           padContent={false}
           onClose={() => history.push('../../..')}
