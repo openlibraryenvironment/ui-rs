@@ -39,7 +39,7 @@ class UserCard extends React.Component {
       props.cardStyle = 'negative';
       delete props.headerClass;
       delete props.cardClass;
-      user = {};
+      if (!user) user = {};
     }
 
     return (
