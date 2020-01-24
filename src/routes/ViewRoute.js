@@ -7,6 +7,7 @@ import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset 
 
 import { Tags } from '@folio/stripes-erm-components';
 import { ChatPane } from '../components/chat';
+import upNLevels from '../util/upNLevels';
 
 import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
 import css from './ViewRoute.css';
@@ -92,16 +93,6 @@ const getHelperApp = (match, resources, mutator) => {
     />
   );
 };
-
-// Return a location n levels higher than the present one, incuding
-// the search part of the present URL. (We can't just use '../../..',
-// because that discards the search even if it's explicitly added.)
-//
-function upNLevels(location, n) {
-  const segment = '/[^/]*'.repeat(n);
-  const re = new RegExp(`${segment}$`);
-  return `${location.pathname.replace(re, '')}${location.search}`;
-}
 
 const ViewRoute = ({ children, history, resources, location, location: { pathname }, match, mutator }) => {
   return (
