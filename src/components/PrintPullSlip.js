@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { stripesConnect } from '@folio/stripes/core';
 import { Callout } from '@folio/stripes/components';
 import PullSlip from './PullSlip';
@@ -12,6 +13,7 @@ class PrintPullSlip extends React.Component {
     mutator: PropTypes.shape({
       action: PropTypes.object,
     }).isRequired,
+    location: PropTypes.object,
   };
 
   static manifest = {
@@ -60,7 +62,7 @@ class PrintPullSlip extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <PrintOrCancel destUrl="details">
+        <PrintOrCancel destUrl={`details${this.props.location.search}`}>
           <PullSlip record={this.props.record} />
         </PrintOrCancel>
         <Callout ref={this.callout} />
@@ -70,4 +72,4 @@ class PrintPullSlip extends React.Component {
 }
 
 
-export default stripesConnect(PrintPullSlip);
+export default withRouter(stripesConnect(PrintPullSlip));

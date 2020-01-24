@@ -147,7 +147,7 @@ const ViewRoute = ({ children, history, resources, location, location: { pathnam
                   <FormattedMessage id="ui-rs.edit" />
                 </Icon>
               </Button>
-              <Button buttonStyle="dropdownItem" to="pullslip" id="clickable-pullslip">
+              <Button buttonStyle="dropdownItem" to={`pullslip${location.search}`} id="clickable-pullslip">
                 <Icon icon="print">
                   <FormattedMessage id="ui-rs.printPullslip" />
                 </Icon>
