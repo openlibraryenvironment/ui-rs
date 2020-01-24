@@ -93,7 +93,17 @@ const getHelperApp = (match, resources, mutator) => {
   );
 };
 
-const ViewRoute = ({ children, history, resources, location: { pathname }, match, mutator }) => {
+// Return a location n levels higher than the present one, incuding
+// the search part of the present URL. (We can't just use '../../..',
+// because that discards the search even if it's explicitly added.)
+//
+function upNLevels(location, n) {
+  const segment = '/[^/]*'.repeat(n);
+  const re = new RegExp(`${segment}$`);
+  return `${location.pathname.replace(re, '')}${location.search}`;
+}
+
+const ViewRoute = ({ children, history, resources, location, location: { pathname }, match, mutator }) => {
   return (
     <MessageModalProvider>
       <Paneset>
@@ -102,7 +112,7 @@ const ViewRoute = ({ children, history, resources, location: { pathname }, match
           paneTitle={`Request ${_.get(resources, 'selectedRecord.records[0].hrid')}`}
           paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), match.params)}
           padContent={false}
-          onClose={() => history.push('../../..')}
+          onClose={() => history.push(upNLevels(location, 3))}
           dismissible
           lastMenu={paneButtons(mutator, resources)}
           defaultWidth="fill"
