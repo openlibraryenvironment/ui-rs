@@ -33,23 +33,12 @@ class RequestingInstitutionInfo extends React.Component {
   render() {
     const { record, stripes } = this.props;
     let institution = get(record, 'resolvedRequester.owner');
-    const cardClass = css.institutionCard;
-    const headerClass = css.institutionCardHeader;
-    const rawProps = { stripes, institution, cardClass, headerClass };
 
-    const props = Object.assign({}, rawProps);
-    // React complains if any of these props are passed in <Card>
-    delete props.refreshRemote;
-    delete props.dataKey;
-    const institutionSymbol = props.institutionSymbol;
-    delete props.institutionSymbol;
-
+    let cardStyle;
     if (institution) {
-      props.cardStyle = 'positive';
+      cardStyle = 'positive';
     } else {
-      props.cardStyle = 'negative';
-      delete props.headerClass;
-      delete props.cardClass;
+      cardStyle = 'negative';
       institution = {};
     }
 
@@ -58,13 +47,15 @@ class RequestingInstitutionInfo extends React.Component {
         id="requestingInstitutionInfo-card"
         headerStart="Institution"
         roundedBorder
-        {...props}
+        cardStyle={cardStyle}
+        cardClass={css.institutionCard}
+        headerClass={css.institutionCardHeader}
       >
         <Row>
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.institutionId" />}
-              value={institution.id || institutionSymbol}
+              value={institution.id}
             />
           </Col>
           <Col xs={6}>
@@ -104,7 +95,7 @@ class RequestingInstitutionInfo extends React.Component {
             />
           </Col>
         </Row>
-        {!props.stripes.config.showDevInfo ? '' :
+        {!stripes.config.showDevInfo ? '' :
         <Row>
           <Col xs={12}>
             <Accordion
