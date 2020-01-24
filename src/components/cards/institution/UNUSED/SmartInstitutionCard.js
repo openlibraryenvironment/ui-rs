@@ -2,7 +2,7 @@ import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
-import InstitutionCard from './InstitutionCard';
+import InstitutionCard from '../../../ViewPatronRequest/sections/InstitutionCard';
 
 class SmartInstitutionCard extends React.Component {
   static manifest = {
