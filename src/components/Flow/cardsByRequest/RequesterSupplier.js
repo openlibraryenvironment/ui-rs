@@ -9,7 +9,6 @@ const RequesterSupplier = ({ request: req }) => {
   const requester = _.get(req, 'resolvedRequester.owner');
   if (!requester) return null;
   const supplier = _.get(req, 'resolvedSupplier.owner');
-console.log(supplier)
   return (
     <Row>
       <Col xs={6}>
