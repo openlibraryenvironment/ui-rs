@@ -14,10 +14,14 @@ import {
 
 import css from './RequestingInstitutionInfo.css';
 
-class InstitutionCard extends React.Component {
+class RequestingInstitutionInfo extends React.Component {
   static propTypes = {
-    institution: PropTypes.shape({
-      id: PropTypes.string,
+    record: PropTypes.shape({
+      resolvedRequester: PropTypes.shape({
+        owner: PropTypes.shape({
+          id: PropTypes.string.isRequired,
+        }).isRequired,
+      }),
     }),
     stripes: PropTypes.shape({
       config: PropTypes.shape({
@@ -26,8 +30,8 @@ class InstitutionCard extends React.Component {
     }).isRequired,
   };
 
-  render() {
-    const props = Object.assign({}, this.props);
+  renderCard(rawProps) {
+    const props = Object.assign({}, rawProps);
     // React complains if any of these props are passed in <Card>
     delete props.refreshRemote;
     delete props.dataKey;
@@ -113,25 +117,18 @@ class InstitutionCard extends React.Component {
       </Card>
     );
   }
-}
-
-// eslint-disable-next-line react/no-multi-comp
-class RequestingInstitutionInfo extends React.Component {
-  static propTypes = {
-    record: PropTypes.object,
-    stripes: PropTypes.object,
-  };
 
   render() {
     const { record, stripes } = this.props;
+    const institution = get(record, 'resolvedRequester.owner');
 
     return (
-      <InstitutionCard
-        stripes={stripes}
-        institution={get(record, 'resolvedRequester.owner')}
-        cardClass={css.institutionCard}
-        headerClass={css.institutionCardHeader}
-      />
+      this.renderCard({
+        stripes,
+        institution,
+        cardClass: css.institutionCard,
+        headerClass: css.institutionCardHeader,
+      })
     );
   }
 }
