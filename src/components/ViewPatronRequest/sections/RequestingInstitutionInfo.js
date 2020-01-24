@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import stringify from 'json-stable-stringify';
 import { withStripes } from '@folio/stripes/core';
 import get from 'lodash/get';
@@ -46,6 +47,7 @@ class RequestingInstitutionInfo extends React.Component {
       <Card
         id="requestingInstitutionInfo-card"
         headerStart="Institution"
+        headerEnd={<Link to={`/directory/entries/view/${institution.id}`}>View in directory</Link>}
         roundedBorder
         cardStyle={cardStyle}
         cardClass={css.institutionCard}
