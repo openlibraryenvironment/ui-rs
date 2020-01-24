@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import InstitutionCard from '../../cards/institution/InstitutionCard';
+import InstitutionCard from './InstitutionCard';
 
 import css from './RequestingInstitutionInfo.css';
 
