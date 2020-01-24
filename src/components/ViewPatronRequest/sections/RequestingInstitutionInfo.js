@@ -121,15 +121,9 @@ class RequestingInstitutionInfo extends React.Component {
   render() {
     const { record, stripes } = this.props;
     const institution = get(record, 'resolvedRequester.owner');
-
-    return (
-      this.renderCard({
-        stripes,
-        institution,
-        cardClass: css.institutionCard,
-        headerClass: css.institutionCardHeader,
-      })
-    );
+    const cardClass = css.institutionCard;
+    const headerClass = css.institutionCardHeader;
+    return this.renderCard({ stripes, institution, cardClass, headerClass });
   }
 }
 
