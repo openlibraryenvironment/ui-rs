@@ -30,7 +30,13 @@ class RequestingInstitutionInfo extends React.Component {
     }).isRequired,
   };
 
-  renderCard(rawProps) {
+  render() {
+    const { record, stripes } = this.props;
+    let institution = get(record, 'resolvedRequester.owner');
+    const cardClass = css.institutionCard;
+    const headerClass = css.institutionCardHeader;
+    const rawProps = { stripes, institution, cardClass, headerClass };
+
     const props = Object.assign({}, rawProps);
     // React complains if any of these props are passed in <Card>
     delete props.refreshRemote;
@@ -38,7 +44,6 @@ class RequestingInstitutionInfo extends React.Component {
     const institutionSymbol = props.institutionSymbol;
     delete props.institutionSymbol;
 
-    let institution = props.institution;
     if (institution) {
       props.cardStyle = 'positive';
     } else {
@@ -116,14 +121,6 @@ class RequestingInstitutionInfo extends React.Component {
         }
       </Card>
     );
-  }
-
-  render() {
-    const { record, stripes } = this.props;
-    const institution = get(record, 'resolvedRequester.owner');
-    const cardClass = css.institutionCard;
-    const headerClass = css.institutionCardHeader;
-    return this.renderCard({ stripes, institution, cardClass, headerClass });
   }
 }
 
