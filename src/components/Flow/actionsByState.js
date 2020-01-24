@@ -53,6 +53,11 @@ export default {
     primaryAction: 'RequesterReceived',
     moreActions: ['RequesterReceived', 'PrintPullSlip'],
   },
+  'REQ_BORROWING_LIBRARY_RECEIVED': {
+    cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: 'RequesterManualCheckIn',
+    moreActions: [],
+  },
   'REQ_CHECKED_IN': {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: 'PatronReturnedItem',

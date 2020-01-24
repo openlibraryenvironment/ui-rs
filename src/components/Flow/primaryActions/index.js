@@ -1,6 +1,23 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Button } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
 import ScanConfirmAction from '../ScanConfirmAction';
+
+export const RequesterManualCheckIn = ({ performAction }) => (
+  <Button
+    onClick={() => performAction(
+      'requesterManualCheckIn',
+      false,
+      'ui-rs.actions.manualCheckIn.success',
+      'ui-rs.actions.manualCheckIn.error'
+    )}
+    buttonStyle="primary mega"
+    fullWidth
+  >
+    <FormattedMessage id="ui-rs.actions.manualCheckIn" />
+  </Button>
+);
 
 export const RequesterReceived = props => <ScanConfirmAction
   action="requesterReceived"
