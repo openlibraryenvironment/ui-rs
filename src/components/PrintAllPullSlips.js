@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import AllPullSlips from './PullSlip/AllPullSlips';
 import PrintOrCancel from './PrintOrCancel';
+import upNLevels from '../util/upNLevels';
 
 class PrintAllPullSlips extends React.Component {
   static propTypes = {
@@ -13,6 +15,9 @@ class PrintAllPullSlips extends React.Component {
       records: PropTypes.arrayOf(
         PropTypes.object.isRequired,
       ),
+    }).isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
     }).isRequired,
   };
 
@@ -29,11 +34,11 @@ class PrintAllPullSlips extends React.Component {
     }
 
     return (
-      <PrintOrCancel destUrl="..">
+      <PrintOrCancel destUrl={upNLevels(this.props.location, 1)}>
         <AllPullSlips records={records} />
       </PrintOrCancel>
     );
   }
 }
 
-export default PrintAllPullSlips;
+export default withRouter(PrintAllPullSlips);
