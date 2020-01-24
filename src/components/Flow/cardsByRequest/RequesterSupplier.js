@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 import { Card, Row, Col } from '@folio/stripes/components';
 
 const RequesterSupplier = ({ request: req }) => {
-  const requester = _.get(req, 'resolvedRequester');
+  const requester = _.get(req, 'resolvedRequester.owner');
   if (!requester) return null;
-  const supplier = _.get(req, 'resolvedSupplier');
+  const supplier = _.get(req, 'resolvedSupplier.owner');
   return (
     <Row>
       <Col xs={6}>
@@ -18,17 +18,17 @@ const RequesterSupplier = ({ request: req }) => {
           headerStart={<FormattedMessage id="ui-rs.requester" />}
           roundedBorder
         >
-          {requester.owner.name}
+          {requester.name}
         </Card>
       </Col>
       <Col xs={6}>
         <Card
           id="supplier-card"
-          headerEnd={supplier && <Link to={`/directory/entries/view/${requester.id}`}>View</Link>}
+          headerEnd={supplier && <Link to={`/directory/entries/view/${supplier.id}`}>View</Link>}
           headerStart={<FormattedMessage id="ui-rs.supplier" />}
           roundedBorder
         >
-          {supplier ? supplier.owner.name : <FormattedMessage id="ui-rs.cards.reqSup.searching" />}
+          {supplier ? supplier.name : <FormattedMessage id="ui-rs.cards.reqSup.searching" />}
         </Card>
       </Col>
     </Row>

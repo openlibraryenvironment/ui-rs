@@ -9,7 +9,7 @@ import { useMessage } from '../MessageModalState';
 const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
   const [, setMessage] = useMessage();
   const onSubmit = async values => {
-    if (values.reqId.trim() !== request.id) {
+    if (values.reqId.trim() !== request.hrid) {
       setMessage('ui-rs.actions.wrongId', 'error');
       return { FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' }) };
     }
