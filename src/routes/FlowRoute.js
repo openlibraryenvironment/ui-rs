@@ -28,38 +28,32 @@ const FlowRoute = props => {
   const resource = props.resources.selectedRecord;
   if (!_.get(resource, 'hasLoaded')) return null;
   const request = _.get(resource, 'records[0]');
-  const byCurrent = actionsByState[request.state.code];
+  const byCurrent = Object.assign({}, actionsByState.default, actionsByState[request.state.code] || {});
   let PrimaryAction;
   if (byCurrent) PrimaryAction = _.get(primaryActions, byCurrent.primaryAction);
 
   return (
     <React.Fragment>
-      {byCurrent &&
-        <Layout className="centered" style={{ maxWidth: '80em' }}>
-          <div>
-            <strong>Request status</strong>
-            <Headline size="large" faded><FormattedMessage id={`ui-rs.states.${request.state.code}`} /></Headline>
-          </div>
-          <div className={css.cards}>
-            {renderNamedWithProps(byCurrent.cards, cards, { request })}
-          </div>
-          <Layout className="padding-top-gutter">
-            {PrimaryAction && <PrimaryAction request={request} performAction={performAction} /> }
-          </Layout>
+      <Layout className="centered" style={{ maxWidth: '80em' }}>
+        <div>
+          <strong>Request status</strong>
+          <Headline size="large" faded><FormattedMessage id={`ui-rs.states.${request.state.code}`} /></Headline>
+        </div>
+        <div className={css.cards}>
+          {renderNamedWithProps(byCurrent.cards, cards, { request })}
+        </div>
+        <Layout className="padding-top-gutter">
+          {PrimaryAction && <PrimaryAction request={request} performAction={performAction} /> }
+        </Layout>
+        {byCurrent.moreActions.length > 0 &&
           <Layout className={`padding-top-gutter ${css.optionList}`}>
             <strong>More options:</strong>
             {renderNamedWithProps(byCurrent.moreActions, moreActions, { request, performAction })}
           </Layout>
-          {/* Render modals that correspond to available actions */}
-          {renderNamedWithProps([byCurrent.primaryAction, ...byCurrent.moreActions], modals, { request, performAction })}
-        </Layout>
-      }
-      {!byCurrent &&
-        <Layout className="centered" style={{ maxWidth: '80em' }}>
-          <FormattedMessage id="ui-rs.flow.unknown" />
-          <FormattedMessage id={`ui-rs.states.${request.state.code}`} />
-        </Layout>
-      }
+        }
+        {/* Render modals that correspond to available actions */}
+        {renderNamedWithProps([byCurrent.primaryAction, ...byCurrent.moreActions], modals, { request, performAction })}
+      </Layout>
     </React.Fragment>
   );
 };

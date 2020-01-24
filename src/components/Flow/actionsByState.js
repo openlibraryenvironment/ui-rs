@@ -1,7 +1,7 @@
 /*
  * This object describes what to render for a request given its state:
  *
- * 'SOME_STATE': {
+ * SOME_STATE: {
  *   cards: <array of names of components exported from the cardsByRequest directory>
  *   primaryAction: <name of component exported from the primaryActions directory>
  *   moreActions: <array of names of components exported from the moreActions directory>
@@ -13,69 +13,52 @@
  * your action.
 */
 export default {
-  'RES_IDLE':{
+  default: {
     cards: ['Bibliographic', 'RequesterSupplier'],
+    primaryAction: null,
+    moreActions: [],
+  },
+  RES_IDLE:{
     primaryAction: '',
     moreActions: ['RespondYes', 'CannotSupply'],
   },
-  'RES_NEW_AWAIT_PULL_SLIP': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  RES_NEW_AWAIT_PULL_SLIP: {
     primaryAction: 'PrintPullSlip',
     moreActions: ['SupplierMarkPullSlipPrinted', 'CannotSupply'],
   },
-  'RES_AWAIT_PICKING': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  RES_AWAIT_PICKING: {
     primaryAction: 'SupplierCheckInToReshare',
     moreActions: ['PrintPullSlip', 'CannotSupply'],
   },
-  'RES_CHECKED_IN_TO_RESHARE': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  RES_CHECKED_IN_TO_RESHARE: {
     primaryAction: 'SupplierMarkShipped',
     moreActions: ['SupplierMarkShipped', 'PrintPullSlip', 'CannotSupply'],
   },
-  'RES_AWAIT_PROXY_BORROWER': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  RES_AWAIT_PROXY_BORROWER: {
     primaryAction: 'ManualCheckout',
     moreActions: ['ManualCheckout'],
   },
-  'RES_ITEM_RETURNED': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  RES_ITEM_RETURNED: {
     primaryAction: 'SupplierCheckOutOfReshare',
     moreActions: ['SupplierCheckOutOfReshare'],
   },
-  'RES_AWAIT_SHIP': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  RES_AWAIT_SHIP: {
     primaryAction: 'SupplierMarkShipped',
     moreActions: ['SupplierMarkShipped'],
   },
-  'REQ_SHIPPED': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  REQ_SHIPPED: {
     primaryAction: 'RequesterReceived',
     moreActions: ['RequesterReceived', 'PrintPullSlip'],
   },
-  'REQ_BORROWING_LIBRARY_RECEIVED': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  REQ_BORROWING_LIBRARY_RECEIVED: {
     primaryAction: 'RequesterManualCheckIn',
-    moreActions: [],
   },
-  'REQ_CHECKED_IN': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  REQ_CHECKED_IN: {
     primaryAction: 'PatronReturnedItem',
     moreActions: ['PatronReturnedItem', 'ShippedReturn', 'PrintPullSlip'],
   },
-  'REQ_AWAIT_RETURN_SHIPPING': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+  REQ_AWAIT_RETURN_SHIPPING: {
     primaryAction: 'ShippedReturn',
     moreActions: ['ShippedReturn', 'PrintPullSlip'],
-  },
-  'REQ_REQUEST_SENT_TO_SUPPLIER': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
-    primaryAction: '',
-    moreActions: [],
-  },
-  'REQ_EXPECTS_TO_SUPPLY': {
-    cards: ['Bibliographic', 'RequesterSupplier'],
-    primaryAction: '',
-    moreActions: [],
   }
 };
