@@ -13,7 +13,9 @@ class PrintPullSlip extends React.Component {
     mutator: PropTypes.shape({
       action: PropTypes.object,
     }).isRequired,
-    location: PropTypes.object,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
+    }).isRequired,
   };
 
   static manifest = {
