@@ -146,7 +146,9 @@ const ViewRoute = ({ children, history, resources, location, location: { pathnam
             </React.Fragment>
           )}
         >
-          <ContextualMessageBanner />
+          <Layout className="centered" style={{ maxWidth: '80em' }}>
+            <ContextualMessageBanner />
+          </Layout>
           <div>{children}</div>
         </Pane>
         {getHelperApp(match, resources, mutator)}

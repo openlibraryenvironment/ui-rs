@@ -11,7 +11,7 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { MessageBanner } from '@folio/stripes/components';
+import { Layout, MessageBanner } from '@folio/stripes/components';
 
 export const MessageModalContext = createContext();
 // Message shape is: { key, type }
@@ -78,5 +78,15 @@ export const useModal = () => {
 export const ContextualMessageBanner = () => {
   const [msg, setMsg] = useMessage();
   if (!msg) return null;
-  return <MessageBanner type={msg.type} onExited={() => setMsg(null)} dismissable><FormattedMessage id={msg.key} /></MessageBanner>;
+  return (
+    <Layout className="padding-top-gutter padding-bottom-gutter">
+      <MessageBanner
+        type={msg.type}
+        onExited={() => setMsg(null)}
+        dismissable
+      >
+        <FormattedMessage id={msg.key} />
+      </MessageBanner>
+    </Layout>
+  );
 };
