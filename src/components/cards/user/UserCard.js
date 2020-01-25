@@ -33,7 +33,7 @@ class UserCard extends React.Component {
 
     let user = props.user;
     const p = user.personal || {};
-    if (user && p.email) {
+    if (user && (p.email || p.lastName || p.firstName)) {
       props.cardStyle = 'positive';
     } else {
       props.cardStyle = 'negative';
