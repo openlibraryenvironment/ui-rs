@@ -173,7 +173,7 @@
   "states.REQ_SOURCING_ITEM":"Sourcing item",
   "states.REQ_SUPPLIER_IDENTIFIED":"Supplier identified",
   "states.REQ_REQUEST_SENT_TO_SUPPLIER":"Request sent to supplier",
-  "states.REQ_BORROWER_RETURNED":"Return shipped to supplier",
+  "states.REQ_BORROWER_RETURNED":"Borrower returned item",
   "states.REQ_BORROWING_LIBRARY_RECEIVED":"Requester received",
   "states.REQ_CHECKED_IN":"Ready to circulate",
   "states.REQ_AWAITING_RETURN_SHIPPING":"Awaiting return shipping",
@@ -183,6 +183,7 @@
   "states.REQ_END_OF_ROTA": "End of rota",
   "states.REQ_INVALID_PATRON": "Invalid patron",
   "states.REQ_EXPECTS_TO_SUPPLY": "Expects to supply",
+  "states.REQ_SHIPPED_TO_SUPPLIER":"Return shipped to supplier",
 
   "states.RES_IDLE":"New request",
   "states.RES_NEW_AWAIT_PULL_SLIP":"Awaiting pull slip printing",
