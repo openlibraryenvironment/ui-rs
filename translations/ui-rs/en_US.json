@@ -132,7 +132,6 @@
   "actions.manualCheckIn.success": "Local record creation successfully bypassed.",
   "actions.manualCheckIn.error": "Error bypassing local record creation.",
   "actions.markReceivedWithoutScan": "Mark received without scanning",
-  "actions.markReceivedWithoutScan.note": "Would you like to mark this as received with a human readable note?",
   "actions.markReceived.success": "Item marked as received.",
   "actions.markReceived.error": "Error marking item as received.",
   "actions.markReceived.prompt": "Scan request barcode to mark it <strong>received</strong>",
