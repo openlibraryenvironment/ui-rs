@@ -57,7 +57,7 @@ export default {
     primaryAction: 'PatronReturnedItem',
     moreActions: ['PatronReturnedItem', 'ShippedReturn', 'PrintPullSlip'],
   },
-  REQ_AWAIT_RETURN_SHIPPING: {
+  REQ_AWAITING_RETURN_SHIPPING: {
     primaryAction: 'ShippedReturn',
     moreActions: ['ShippedReturn', 'PrintPullSlip'],
   }
