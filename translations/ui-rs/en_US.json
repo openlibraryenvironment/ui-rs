@@ -176,7 +176,7 @@
   "states.REQ_REQUEST_SENT_TO_SUPPLIER":"Request sent to supplier",
   "states.REQ_BORROWER_RETURNED":"Return shipped to supplier",
   "states.REQ_BORROWING_LIBRARY_RECEIVED":"Requester received",
-  "states.REQ_CHECKED_IN":"Requester received",
+  "states.REQ_CHECKED_IN":"Ready to circulate",
   "states.REQ_AWAITING_RETURN_SHIPPING":"Awaiting return shipping",
   "states.REQ_SHIPPED":"Item shipped to requester",
   "states.REQ_REQUEST_COMPLETE":"Request complete",
