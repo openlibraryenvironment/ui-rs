@@ -12,7 +12,7 @@
  * In order to add a new action to moreActions - extend src/components/Flow/moreActions/index.js and add
  * your action.
 */
-export default {
+export const actionsByState = {
   default: {
     cards: ['Bibliographic', 'RequesterSupplier'],
     primaryAction: null,
@@ -62,3 +62,8 @@ export default {
     moreActions: ['ShippedReturn', 'PrintPullSlip'],
   }
 };
+
+/* This function returns the contextual actions for a provided request,
+ * falling back to the default for unknown states.
+ */
+export const actionsForRequest = request => Object.assign({}, actionsByState.default, actionsByState[request.state.code] || {});

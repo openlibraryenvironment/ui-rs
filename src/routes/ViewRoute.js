@@ -2,16 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
+import { Route, Switch } from 'react-router-dom';
+
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
-
 import { Tags } from '@folio/stripes-erm-components';
+
 import { ChatPane } from '../components/chat';
 import upNLevels from '../util/upNLevels';
-
-import { ContextualMessageBanner, MessageModalProvider } from '../components/MessageModalState';
+import renderNamedWithProps from '../util/renderNamedWithProps';
+import { ContextualMessageBanner, useMessage } from '../components/MessageModalState';
+import * as modals from '../components/Flow/modals';
+import { actionsForRequest } from '../components/Flow/actionsByState';
+import FlowRoute from './FlowRoute';
+import DetailsRoute from './DetailsRoute';
 import css from './ViewRoute.css';
-
 
 const subheading = (req, params) => {
   if (!req || params.id !== req.id) return undefined;
@@ -94,9 +99,22 @@ const getHelperApp = (match, resources, mutator) => {
   );
 };
 
-const ViewRoute = ({ children, history, resources, location, location: { pathname }, match, mutator }) => {
+const ViewRoute = ({ history, resources, location, location: { pathname }, match, mutator }) => {
+  const [, setMessage] = useMessage();
+  const performAction = (action, payload, successMessage, errorMessage) => (
+    mutator.action.POST({ action, actionParams: payload || {} })
+      .then(() => setMessage(successMessage, 'success'))
+      .catch(() => setMessage(errorMessage, 'error'))
+  );
+
+  const resource = resources.selectedRecord;
+  if (!_.get(resource, 'hasLoaded')) return null;
+  const request = _.get(resource, 'records[0]');
+
+  const forCurrent = actionsForRequest(request);
+
   return (
-    <MessageModalProvider>
+    <React.Fragment>
       <Paneset>
         {/* TODO: The "Request" string is translated as ui-rs.view.title which we can use conveniently with a hook once react-intl is upgraded */}
         <Pane
@@ -149,16 +167,20 @@ const ViewRoute = ({ children, history, resources, location, location: { pathnam
           <Layout className="centered" style={{ maxWidth: '80em' }}>
             <ContextualMessageBanner />
           </Layout>
-          <div>{children}</div>
+          <Switch>
+            <Route path={`${match.path}/details`} render={() => <DetailsRoute request={request} />} />
+            <Route path={`${match.path}/flow`} render={() => <FlowRoute request={request} performAction={performAction} />} />
+          </Switch>
         </Pane>
         {getHelperApp(match, resources, mutator)}
       </Paneset>
-    </MessageModalProvider>
+      {/* Render modals that correspond to available actions */}
+      {renderNamedWithProps([forCurrent.primaryAction, ...forCurrent.moreActions], modals, { request, performAction })}
+    </React.Fragment>
   );
 };
 
 ViewRoute.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.object).isRequired,
   match: PropTypes.shape({
     params: PropTypes.object,
     url: PropTypes.string,
@@ -176,7 +198,6 @@ ViewRoute.manifest = {
   selectedRecord: {
     type: 'okapi',
     path: 'rs/patronrequests/:{id}',
-    fetch: false,
   },
   tagsValues: {
     type: 'okapi',
