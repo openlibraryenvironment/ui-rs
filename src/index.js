@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Route as NestedRoute } from '@folio/stripes/core';
 import PatronRequestsRoute from './routes/PatronRequestsRoute';
 import CreateEditRoute from './routes/CreateEditRoute';
 import ViewRoute from './routes/ViewRoute';
-import DetailsRoute from './routes/DetailsRoute';
-import FlowRoute from './routes/FlowRoute';
 import PullSlipRoute from './routes/PullSlipRoute';
 import Settings from './settings';
 import AppNameContext from './AppNameContext';
+import { MessageModalProvider } from './components/MessageModalState';
 
 class ResourceSharing extends React.Component {
   static propTypes = {
@@ -42,29 +40,31 @@ class ResourceSharing extends React.Component {
     }
     return (
       <AppNameContext.Provider value={appName}>
-        <Switch>
-          <Redirect
-            exact
-            from={path}
-            to={`${path}/requests`}
-          />
-          <Route path={`${path}/requests/create`} component={CreateEditRoute} />
-          <Route path={`${path}/requests/edit/:id`} component={CreateEditRoute} />
-          <Redirect
-            exact
-            from={`${path}/requests/view/:id`}
-            to={`${path}/requests/view/:id/details${search}`}
-          />
-          <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
-          <NestedRoute path={`${path}/requests/view/:id`} component={ViewRoute}>
-            <NestedRoute path={`${path}/requests/view/:id/details`} component={DetailsRoute} />
-            <NestedRoute path={`${path}/requests/view/:id/flow`} component={FlowRoute} />
-          </NestedRoute>
-          <Route
-            path={`${path}/requests/:action?`}
-            render={(props) => <PatronRequestsRoute {...props} appName={appName} />}
-          />
-        </Switch>
+        <MessageModalProvider>
+          <Switch>
+            <Redirect
+              exact
+              from={path}
+              to={`${path}/requests`}
+            />
+            <Route path={`${path}/requests/create`} component={CreateEditRoute} />
+            <Route path={`${path}/requests/edit/:id`} component={CreateEditRoute} />
+            <Redirect
+              exact
+              from={`${path}/requests/view/:id`}
+              to={`${path}/requests/view/:id/details${search}`}
+            />
+            <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
+
+            {/* Contains nested routes: ./details and ./flow */}
+            <Route path={`${path}/requests/view/:id`} component={ViewRoute} />
+
+            <Route
+              path={`${path}/requests/:action?`}
+              render={(props) => <PatronRequestsRoute {...props} appName={appName} />}
+            />
+          </Switch>
+        </MessageModalProvider>
       </AppNameContext.Provider>
     );
   }
