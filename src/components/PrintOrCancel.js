@@ -62,7 +62,7 @@ class PrintOrCancel extends React.Component {
           />
         </div>
         <div ref={this.ref}>
-          {...this.props.children}
+          {this.props.children}
         </div>
       </HotKeys>
     );
