@@ -133,7 +133,8 @@ export default class SettingField extends React.Component {
 
 
   render() {
-    const { currentSetting } = this.props.data;
+    const { data } = this.props;
+    const currentSetting = data?.currentSetting;
     let setting;
     if (currentSetting) {
       setting = currentSetting;
