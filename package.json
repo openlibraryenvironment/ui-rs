@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^1.0.0",
-    "@folio/stripes-erm-components": "^1.4.1",
+    "@folio/stripes-erm-components": "^2.0.0",
     "@folio/stripes-util": "^1.5.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
