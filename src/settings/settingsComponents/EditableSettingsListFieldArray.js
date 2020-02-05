@@ -32,7 +32,7 @@ export default class EditableSettingsListFieldArray extends React.Component {
           name={`${fields.name}[${i}].value`}
           mutators={mutators}
           onSave={() => this.handleSave(i)}
-          data={{
+          settingData={{
             currentSetting: setting,
             refdatavalues: data?.refdatavalues
           }}

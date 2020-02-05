@@ -15,7 +15,7 @@ import { FormattedMessage } from 'react-intl';
 
 export default class SettingField extends React.Component {
   static propTypes = {
-    data: PropTypes.shape({
+    settingData: PropTypes.shape({
       refdatavalues: PropTypes.arrayOf(PropTypes.object),
       currentSetting: PropTypes.object
     }),
@@ -44,7 +44,7 @@ export default class SettingField extends React.Component {
   }
 
   renderEditSettingValue = (setting) => {
-    const { data } = this.props;
+    const { settingData } = this.props;
 
     // We need to check if we are working with a String Setting or with a refdata one
     if (setting.settingType === 'String') {
@@ -66,7 +66,7 @@ export default class SettingField extends React.Component {
       );
     } else {
       // Grab refdata values corresponding to setting
-      const selectRefValues = data.refdatavalues.filter((obj) => {
+      const selectRefValues = settingData?.refdatavalues.filter((obj) => {
         return obj.desc === setting.vocab;
       })[0].values;
       return (
@@ -133,8 +133,8 @@ export default class SettingField extends React.Component {
 
 
   render() {
-    const { data } = this.props;
-    const currentSetting = data?.currentSetting;
+    const { settingData } = this.props;
+    const currentSetting = settingData?.currentSetting;
     let setting;
     if (currentSetting) {
       setting = currentSetting;

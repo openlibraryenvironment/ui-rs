@@ -55,7 +55,7 @@ class SettingPage extends React.Component {
     const filteredRows = sectionName ? rows.filter(obj => obj.section === sectionName) : rows;
 
     const settings = { 'settings': filteredRows };
-    const refdatavalues = (this.props.resources.refdatavalues ? this.props.resources.refdatavalues.records : []);
+    const refdatavalues = this.props?.resources?.refdatavalues?.records ? this.props?.resources?.refdatavalues?.records : [];
 
     return (
       <EditableSettingsList
