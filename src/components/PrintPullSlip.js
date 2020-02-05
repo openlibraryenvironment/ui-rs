@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import includes from 'lodash/includes';
 import { stripesConnect } from '@folio/stripes/core';
 import { Callout } from '@folio/stripes/components';
 import PullSlip from './PullSlip';
@@ -33,27 +34,23 @@ class PrintPullSlip extends React.Component {
   }
 
   componentDidMount() {
-    this.oldOnafterprint = onafterprint;
-    window.onafterprint = this.afterPrint;
-  }
-
-  componentWillUnmount() {
-    window.onafterprint = this.oldOnafterPrint;
+    if (includes(this.props.record.validActions, 'supplierPrintPullSlip')) {
+      this.markAsPrinted();
+    }
   }
 
   showCallout(type, message) {
     this.callout.current.sendCallout({ type, message });
   }
 
-  afterPrint = (_event) => {
-    // Infuriatingly, it seems that no part of `_event` tells us if the print was cancelled
+  markAsPrinted = () => {
     this.props.mutator.action.POST({ action: 'supplierPrintPullSlip' })
       .then((json) => {
         if (json.status) {
           this.showCallout('success', 'Slip marked as printed.');
         } else {
           // eslint-disable-next-line react/jsx-one-expression-per-line
-          this.showCallout('error', <span>Slip <i>not</i> marked as printed: incorrect status?</span>);
+          this.showCallout('error', <span>Slip <b>not</b> marked as printed: {json.message}</span>);
         }
       })
       .catch((exception) => {
