@@ -3,22 +3,6 @@ import PropTypes from 'prop-types';
 import ky from 'ky';
 import { withStripes } from '@folio/stripes/core';
 
-function createOkapiKy(stripes) {
-  const { tenant, token, url } = stripes.okapi;
-
-  return ky.create({
-    prefixUrl: url,
-    hooks: {
-      beforeRequest: [
-        request => {
-          request.headers.set('X-Okapi-Tenant', tenant);
-          request.headers.set('X-Okapi-Token', token);
-        }
-      ]
-    }
-  });
-}
-
 const withOkapiKy = (WrappedComponent) => {
   class HOC extends React.Component {
     static propTypes = {
@@ -33,7 +17,18 @@ const withOkapiKy = (WrappedComponent) => {
 
     constructor(props) {
       super();
-      this.okapiKy = createOkapiKy(props.stripes);
+      const { tenant, token, url } = props.stripes.okapi;
+      this.okapiKy = ky.create({
+        prefixUrl: url,
+        hooks: {
+          beforeRequest: [
+            request => {
+              request.headers.set('X-Okapi-Tenant', tenant);
+              request.headers.set('X-Okapi-Token', token);
+            }
+          ]
+        }
+      });
     }
 
     render() {
