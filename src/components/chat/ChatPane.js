@@ -21,7 +21,7 @@ class ChatPane extends React.Component {
     this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} });
   }
 
-  messageSeen(payload) {
+  messageRead(payload) {
     this.props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} });
   }
 
@@ -33,9 +33,9 @@ class ChatPane extends React.Component {
     );
   }
 
-  onSubmitSeen = (values) => {
+  onSubmitRead = (values) => {
     return (
-      this.messageSeen(
+      this.messageRead(
         values
       )
     );
@@ -82,10 +82,10 @@ class ChatPane extends React.Component {
     );
   }
 
-  renderSeenButton(notification) {
+  renderReadButton(notification) {
     return (
       <Form
-        onSubmit={this.onSubmitSeen}
+        onSubmit={this.onSubmitRead}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Field
@@ -98,8 +98,8 @@ class ChatPane extends React.Component {
                     id={`seen-button-${notification.id}-tooltip`}
                     text={
                       notification.seen ?
-                        <FormattedMessage id="ui-rs.view.chatPane.markUnseen" /> :
-                        <FormattedMessage id="ui-rs.view.chatPane.markSeen" />
+                        <FormattedMessage id="ui-rs.view.chatPane.markUnread" /> :
+                        <FormattedMessage id="ui-rs.view.chatPane.markRead" />
                     }
                   >
                     {({ ref, ariaIds }) => (
@@ -160,6 +160,8 @@ class ChatPane extends React.Component {
 
   renderMessageCard(notification, isSender) {
     // TODO Eventually Card should probably be replaced by a dedicated chat message component
+    const action = notification?.attachedAction;
+    const actionKey = action.charAt(0).toLowerCase() + action.substring(1);
     return (
       <React.Fragment>
         <Row>
@@ -170,12 +172,20 @@ class ChatPane extends React.Component {
         </Row>
         <Row>
           <Card
-            cardClass={isSender ? css.sentMessageCard : css.receivedMessageCard}
+            cardClass={action !== 'Notification' ? css.actionMessageCard : (isSender ? css.sentMessageCard : css.receivedMessageCard)}
             id={`chat-pane-message-card-${notification.id}`}
             headerComponent={() => null}
             headerStart="Text to stop proptypes getting annoyed"
             roundedBorder
           >
+            {notification?.attachedAction ? notification?.attachedAction !== 'Notification' &&
+              <span
+                className={css.actionText}
+              >
+                <FormattedMessage id={`ui-rs.view.withAction.${actionKey}`} />
+              </span> :
+              null
+            }
             <Row>
               {notification.messageContent}
             </Row>
@@ -183,7 +193,7 @@ class ChatPane extends React.Component {
               <Row>
                 <Col xs={8} />
                 <Col xs={2}>
-                  {this.renderSeenButton(notification)}
+                  {this.renderReadButton(notification)}
                 </Col>
                 <Col xs={2} />
               </Row>
@@ -230,6 +240,7 @@ class ChatPane extends React.Component {
   displayMessages() {
     const { resources } = this.props;
     const notifications = _.get(resources, 'selectedRecord.records[0].notifications');
+
     if (notifications) {
       // Sort the notifications into order by time recieved/sent
       notifications.sort((a, b) => this.sortByTimestamp(a, b));

@@ -98,9 +98,12 @@
 
   "view.chatPane": "Chat with {chatOtherParty}",
   "view.chatPane.sendMessage": "Send",
-  "view.chatPane.markSeen": "Mark message as seen",
-  "view.chatPane.markUnseen": "Mark message as unseen",
+  "view.chatPane.markRead": "Mark message as read",
+  "view.chatPane.markUnread": "Mark message as unread",
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
+
+  "view.withAction.requestResponse": "The supplier has responded to this request with a note:",
+  "view.withAction.received": "The requester has received this shipment with a note:",
 
   "actions.wrongId": "No action performed, scanned request does not match",
   "actions.respondYes": "Respond \"Will Supply\"",

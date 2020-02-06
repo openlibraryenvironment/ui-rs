@@ -34,6 +34,7 @@ class AddNoteForm extends React.Component {
           <form
             id="form-add-note-modal-button"
             onSubmit={handleSubmit}
+            autoComplete="off"
           >
             <Row>
               <Col xs={8}>

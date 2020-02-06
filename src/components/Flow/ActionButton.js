@@ -14,6 +14,7 @@ class ActionButton extends React.Component {
     success: PropTypes.string,
     error: PropTypes.string,
     performAction: PropTypes.func.isRequired,
+    withoutNote: PropTypes.bool,
   };
 
   constructor(props) {
@@ -31,7 +32,7 @@ class ActionButton extends React.Component {
   }
 
   render() {
-    const { label, icon, action, payload, success, error, performAction } = this.props;
+    const { label, icon, action, payload, success, error, performAction, withoutNote } = this.props;
     return (
       <Row>
         <Col xs={8}>
@@ -43,7 +44,9 @@ class ActionButton extends React.Component {
           </Button>
         </Col>
         <Col xs={4}>
-          <AddNoteForm onSubmit={this.onSubmitNote} />
+          { !withoutNote &&
+            <AddNoteForm onSubmit={this.onSubmitNote} />
+          }
         </Col>
       </Row>
     );
