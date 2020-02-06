@@ -2,31 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { includes, filter } from 'lodash';
-import ky from 'ky';
-import { withStripes } from '@folio/stripes/core';
 import { Callout } from '@folio/stripes/components';
 import AllPullSlips from './PullSlip/AllPullSlips';
 import PrintOrCancel from './PrintOrCancel';
 import upNLevels from '../util/upNLevels';
-
-
-// Should be a utility
-function createOkapiKy(stripes) {
-  const { tenant, token, url } = stripes.okapi;
-
-  return ky.create({
-    prefixUrl: url,
-    hooks: {
-      beforeRequest: [
-        request => {
-          request.headers.set('X-Okapi-Tenant', tenant);
-          request.headers.set('X-Okapi-Token', token);
-        }
-      ]
-    }
-  });
-}
-
+import withOkapiKy from '../util/withOkapiKy';
 
 class PrintAllPullSlips extends React.Component {
   static propTypes = {
@@ -40,13 +20,12 @@ class PrintAllPullSlips extends React.Component {
       ),
     }).isRequired,
     location: PropTypes.object.isRequired,
-    stripes: PropTypes.object,
+    okapiKy: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
+  constructor() {
     super();
     this.callout = React.createRef();
-    this.ky = createOkapiKy(props.stripes);
   }
 
   componentDidMount() {
@@ -58,7 +37,7 @@ class PrintAllPullSlips extends React.Component {
 
     this.props.records.records.forEach(record => {
       if (includes(record.validActions, 'supplierPrintPullSlip')) {
-        promises.push(this.ky(`rs/patronrequests/${record.id}/performAction`, {
+        promises.push(this.props.okapiKy(`rs/patronrequests/${record.id}/performAction`, {
           method: 'POST',
           json: { action: 'supplierPrintPullSlip' },
         }).json());
@@ -108,4 +87,4 @@ class PrintAllPullSlips extends React.Component {
   }
 }
 
-export default withStripes(withRouter(PrintAllPullSlips));
+export default withOkapiKy(withRouter(PrintAllPullSlips));
