@@ -11,15 +11,20 @@ import upNLevels from '../util/upNLevels';
 
 
 // Should be a utility
-function okapiKy(stripes, path, options) {
+function createOkapiKy(stripes) {
   const { tenant, token, url } = stripes.okapi;
 
-  return ky(`${url}/${path}`, Object.assign({}, {
-    headers: {
-      'X-Okapi-Tenant': tenant,
-      'X-Okapi-Token': token,
-    },
-  }, options)).json();
+  return ky.create({
+    prefixUrl: url,
+    hooks: {
+      beforeRequest: [
+        request => {
+          request.headers.set('X-Okapi-Tenant', tenant);
+          request.headers.set('X-Okapi-Token', token);
+        }
+      ]
+    }
+  });
 }
 
 
@@ -38,9 +43,10 @@ class PrintAllPullSlips extends React.Component {
     stripes: PropTypes.object,
   };
 
-  constructor() {
+  constructor(props) {
     super();
     this.callout = React.createRef();
+    this.ky = createOkapiKy(props.stripes);
   }
 
   componentDidMount() {
@@ -52,11 +58,10 @@ class PrintAllPullSlips extends React.Component {
 
     this.props.records.records.forEach(record => {
       if (includes(record.validActions, 'supplierPrintPullSlip')) {
-        const path = `rs/patronrequests/${record.id}/performAction`;
-        promises.push(okapiKy(this.props.stripes, path, {
+        promises.push(this.ky(`rs/patronrequests/${record.id}/performAction`, {
           method: 'POST',
           json: { action: 'supplierPrintPullSlip' },
-        }));
+        }).json());
       }
     });
 
