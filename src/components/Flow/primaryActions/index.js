@@ -49,6 +49,7 @@ export const SupplierCheckOutOfReshare = props => <ScanConfirmAction
   prompt="ui-rs.actions.checkOut.prompt"
   success="ui-rs.actions.checkOut.success"
   error="ui-rs.actions.checkOut.error"
+  withoutNote
   {...props}
 />;
 

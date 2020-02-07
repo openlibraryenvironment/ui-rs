@@ -35,6 +35,7 @@ export const SupplierCheckOutOfReshare = props => <ActionButton
   icon="print"
   success="ui-rs.actions.checkOut.success"
   error="ui-rs.actions.checkOut.error"
+  wihtoutNote
   {...props}
 />;
 
