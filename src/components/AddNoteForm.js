@@ -3,8 +3,13 @@ import { Form, Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 import { Button, Col, Row, TextField } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
+import { FormattedMessage } from 'react-intl';
 
 class AddNoteForm extends React.Component {
+  static propTypes = {
+    onSubmit: PropTypes.func,
+    onLeft: PropTypes.bool,
+  };
 
   constructor(props) {
     super(props);
@@ -48,7 +53,7 @@ class AddNoteForm extends React.Component {
                   }
                 }}
                 >
-                  {noteFieldOpen ? 'Send' : 'Add note'}
+                  {noteFieldOpen ? <FormattedMessage id="ui-rs.actions.send" /> : <FormattedMessage id="ui-rs.actions.addNote" />}
                 </Button>
               </Col>
             </Row>

@@ -32,6 +32,7 @@ export const PatronReturnedItem = props => <ScanConfirmAction
   prompt="ui-rs.actions.markReturned.prompt"
   success="ui-rs.actions.markReturned.success"
   error="ui-rs.actions.markReturned.error"
+  withoutNote
   {...props}
 />;
 

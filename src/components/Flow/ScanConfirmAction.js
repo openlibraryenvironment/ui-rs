@@ -1,19 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import compose from 'compose-function';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form, Field } from 'react-final-form';
+import setFieldData from 'final-form-set-field-data';
+
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
+
+import stripesForm from '@folio/stripes/form';
+
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { useMessage } from '../MessageModalState';
+import AddNoteField from '../AddNoteField';
 
-const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
+const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl, withoutNote }) => {
   const [, setMessage] = useMessage();
   const onSubmit = async values => {
     if (values.reqId.trim() !== request.hrid) {
       setMessage('ui-rs.actions.wrongId', 'error');
       return { FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' }) };
     }
-    return performAction(action, {}, success, error);
+    return performAction(action, { note: values.note }, success, error);
   };
   return (
     <Form
@@ -31,6 +38,13 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
               </Button>
             </Col>
           </Row>
+          { !withoutNote &&
+            <Row>
+              <Col>
+                <AddNoteField />
+              </Col>
+            </Row>
+          }
         </form>
       )}
     />
@@ -44,5 +58,6 @@ ScanConfirmAction.propTypes = {
   error: PropTypes.string.isRequired,
   success: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
+  withoutNote: PropTypes.bool,
 };
 export default injectIntl(ScanConfirmAction);

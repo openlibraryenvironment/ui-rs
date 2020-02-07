@@ -25,7 +25,7 @@ class ActionButton extends React.Component {
 
   onSubmitNote(values) {
     const { action, success, error, performAction } = this.props;
-    const payload = { note: values.note }
+    const payload = { note: values.note };
 
     performAction(action, payload, success, error);
     return null;
@@ -35,7 +35,7 @@ class ActionButton extends React.Component {
     const { label, icon, action, payload, success, error, performAction, withoutNote } = this.props;
     return (
       <Row>
-        <Col xs={8}>
+        <Col xs={withoutNote ? 12 : 8}>
           <Button
             buttonStyle="dropdownItem"
             onClick={() => performAction(action, payload, success, error)}
@@ -43,11 +43,11 @@ class ActionButton extends React.Component {
             <Icon icon={icon || 'default'}><FormattedMessage id={label} /></Icon>
           </Button>
         </Col>
-        <Col xs={4}>
-          { !withoutNote &&
+        { !withoutNote &&
+          <Col xs={4}>
             <AddNoteForm onSubmit={this.onSubmitNote} />
-          }
-        </Col>
+          </Col>
+        }
       </Row>
     );
   }
