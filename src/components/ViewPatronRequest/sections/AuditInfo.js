@@ -7,7 +7,7 @@ import {
   KeyValue,
   Row,
 } from '@folio/stripes/components';
-import formattedDateTime from './formattedDateTime';
+import formattedDateTime from '../../../util/formattedDateTime';
 import css from './AuditInfo.css';
 
 
