@@ -9,12 +9,6 @@
   "requester": "Requester",
   "supplier": "Supplier",
 
-  "settings.name": "Name",
-  "settings.value": "Value",
-  "settings.no-current-value": "There is no current value for this setting",
-  "settings.edit": "Edit",
-  "settings.finish-editing": "Finish Editing",
- 
   "patronrequests.id": "Request Id",
   "patronrequests.role": "Role",
   "patronrequests.isRequester": "Requester?",
@@ -193,6 +187,17 @@
   "states.RES_ITEM_SHIPPED":"Shipped to requester",
   "states.RES_ITEM_RETURNED":"Return shipped to supplier",
   "states.RES_COMPLETE":"Request complete",
+
+  "settings.name": "Name",
+  "settings.value": "Value",
+  "settings.no-current-value": "There is no current value for this setting",
+  "settings.edit": "Edit",
+  "settings.finish-editing": "Finish Editing",
+  "settings.customiseList": "ISO18626 custom options",
+  "settings.customiseListSelect": "Select an option to customize",
+  "settings.customISO18626": "Custom ISO18626 settings",
+  "settings.values": "Values",
+  "settings.actions": "Actions",
 
   "settingsSection.z3950": "Z39.50 settings",
   "settingsSection.sharedIndex": "Shared index settings",
