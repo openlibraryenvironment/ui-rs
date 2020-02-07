@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { Button, Layout, Modal, ModalFooter, RadioButton } from '@folio/stripes/components';
+import { Button, Col, Layout, Modal, ModalFooter, RadioButton, Row, TextArea } from '@folio/stripes/components';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
@@ -47,6 +47,14 @@ const CannotSupply = ({ request, performAction }) => {
             footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
           >
             <SafeHTMLMessage id="ui-rs.actions.cannotSupply.confirm" values={{ id: request.id, item: request.title }} />
+            <Layout className="padding-top-gutter">
+              <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
+            </Layout>
+            <Row>
+              <Col xs={11}>
+                <Field name="note" component={TextArea} autoFocus />
+              </Col>
+            </Row>
             <Layout className="padding-top-gutter">
               <strong><FormattedMessage id="ui-rs.actions.cannotSupply.reason" /></strong>
             </Layout>

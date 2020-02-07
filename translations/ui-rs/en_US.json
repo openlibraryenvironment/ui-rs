@@ -103,6 +103,9 @@
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
 
   "view.withAction.requestResponse": "The supplier has responded to this request with a note:",
+  "view.withAction.requestResponseUnfilled": "The supplier has responded 'Cannot supply' to this request with a note:",
+  "view.withAction.requestResponseExpectToSupply": "The supplier has responded 'Expects to supply' to this request with a note:",
+  "view.withAction.requestResponseLoaned": "The supplier has shipped this request with a note:",
   "view.withAction.received": "The requester has received this shipment with a note:",
   "view.withAction.shippedReturn": "The requester shipped this back with a note:",
 
