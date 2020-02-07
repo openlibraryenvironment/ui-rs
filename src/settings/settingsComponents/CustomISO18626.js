@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
@@ -17,6 +16,25 @@ class CustomISO18626 extends React.Component {
     }
   });
 
+  static propTypes = {
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+    }).isRequired,
+    resources: PropTypes.shape({
+      refdatavalues: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.shape({
+          id: PropTypes.string,
+          desc: PropTypes.string,
+          values: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.string,
+            value: PropTypes.string,
+            label: PropTypes.string,
+          })),
+        })),
+      }),
+    })
+  };
+
   constructor(props) {
     super(props);
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
@@ -31,11 +49,15 @@ class CustomISO18626 extends React.Component {
   }
 
   renderRowFilter(intl) {
+    const custOptions = ['cannotSupplyReasons'];
+    const refdataValues = this.props?.resources?.refdatavalues?.records;
+    const filteredList = refdataValues ? refdataValues.filter(obj => custOptions.includes(obj.desc)) : [];
+
     return (
       <Select
         dataOptions={[
           { value: 'empty', label: intl.formatMessage({ id: 'ui-rs.settings.customiseListSelect' }) },
-          { value: 'cannotSupplyReasons', label: 'Custom cannot supply reasons' }
+          ...filteredList.map(c => ({ value: c.id, label: c.desc })),
         ]}
         id="categorySelect"
         label={<FormattedMessage id="ui-rs.settings.customiseList" />}
