@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedDate } from 'react-intl';
 import {
   Card,
   Col,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
+import formattedDateTime from './formattedDateTime';
 
 
 class RequestInfo extends React.Component {
@@ -42,13 +43,13 @@ class RequestInfo extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.dateSubmitted" />}
-              value={record.dateCreated}
+              value={formattedDateTime(record.dateCreated)}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.lastUpdated" />}
-              value={record.lastUpdated}
+              value={formattedDateTime(record.lastUpdated)}
             />
           </Col>
         </Row>
@@ -56,7 +57,7 @@ class RequestInfo extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.dateNeeded" />}
-              value={record.neededBy}
+              value={<FormattedDate value={record.neededBy} />}
             />
           </Col>
           <Col xs={6}>
