@@ -1,13 +1,9 @@
 import React from 'react';
 import { Field } from 'react-final-form';
-import PropTypes from 'prop-types';
 import { Button, Col, Row, TextField } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
 class AddNoteForm extends React.Component {
-  static propTypes = {
-  };
-
   constructor(props) {
     super(props);
     this.state = { noteFieldOpen: false };

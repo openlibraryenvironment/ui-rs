@@ -8,7 +8,6 @@ import { FormattedMessage } from 'react-intl';
 class AddNoteForm extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func,
-    onLeft: PropTypes.bool,
   };
 
   constructor(props) {

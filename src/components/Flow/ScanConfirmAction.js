@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import compose from 'compose-function';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form, Field } from 'react-final-form';
-import setFieldData from 'final-form-set-field-data';
-
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
-
-import stripesForm from '@folio/stripes/form';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { useMessage } from '../MessageModalState';
