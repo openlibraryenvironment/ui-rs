@@ -157,7 +157,8 @@ class ChatPane extends React.Component {
     );
   }
 
-  renderMessageData(notification, isSender) {
+  renderMessageData(notification) {
+    const isSender = notification?.isSender;
     if (isSender) {
       return (
         <React.Fragment>
@@ -191,13 +192,14 @@ class ChatPane extends React.Component {
     }
   }
 
-  renderMessageCard(notification, isSender) {
+  renderMessageCard(notification) {
+    const isSender = notification?.isSender;
     // TODO Eventually Card should probably be replaced by a dedicated chat message component
     const action = notification?.attachedAction;
     const actionKey = action.charAt(0).toLowerCase() + action.substring(1);
     return (
       <React.Fragment>
-        {this.renderMessageData(notification, isSender)}
+        {this.renderMessageData(notification)}
         <Row>
           <Card
             cardClass={action !== 'Notification' ? css.actionMessageCard : (isSender ? css.sentMessageCard : css.receivedMessageCard)}
@@ -233,25 +235,19 @@ class ChatPane extends React.Component {
   }
 
   displayMessage(notification) {
-    if (notification.isSender === true) {
-      return (
-        <Row>
+    return (
+      <Row>
+        {notification.isSender &&
           <Col xs={2} />
-          <Col xs={10}>
-            {this.renderMessageCard(notification, true)}
-          </Col>
-        </Row>
-      );
-    } else {
-      return (
-        <Row>
-          <Col xs={10}>
-            {this.renderMessageCard(notification, false)}
-          </Col>
+        }
+        <Col xs={10}>
+          {this.renderMessageCard(notification)}
+        </Col>
+        {!notification.isSender &&
           <Col xs={2} />
-        </Row>
-      );
-    }
+        }
+      </Row>
+    );
   }
 
 
