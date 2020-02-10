@@ -46,10 +46,10 @@ class AddNoteForm extends React.Component {
               </Col>
               <Col xs={4}>
                 <Button onClick={() => {
-                  this.setState({ noteFieldOpen: !noteFieldOpen });
                   if (noteFieldOpen) {
                     handleSubmit();
                   }
+                  this.setState({ noteFieldOpen: !noteFieldOpen });
                 }}
                 >
                   {noteFieldOpen ? <FormattedMessage id="ui-rs.actions.send" /> : <FormattedMessage id="ui-rs.actions.addNote" />}

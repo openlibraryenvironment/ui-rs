@@ -38,6 +38,10 @@ export const actionsByState = {
     primaryAction: 'ManualCheckout',
     moreActions: ['ManualCheckout'],
   },
+  RES_AWAIT_LMS_CHECKOUT: {
+    primaryAction: 'ManualCheckout',
+    moreActions: ['ManualCheckout'],
+  },
   RES_ITEM_RETURNED: {
     primaryAction: 'SupplierCheckOutOfReshare',
     moreActions: ['SupplierCheckOutOfReshare'],

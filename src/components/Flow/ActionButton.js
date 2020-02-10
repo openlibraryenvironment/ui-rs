@@ -5,52 +5,44 @@ import { Button, Col, Icon, Row } from '@folio/stripes/components';
 
 import AddNoteForm from '../AddNoteForm';
 
-class ActionButton extends React.Component {
-  static propTypes = {
-    label: PropTypes.string.isRequired,
-    icon: PropTypes.string,
-    action: PropTypes.string.isRequired,
-    payload: PropTypes.object,
-    success: PropTypes.string,
-    error: PropTypes.string,
-    performAction: PropTypes.func.isRequired,
-    withoutNote: PropTypes.bool,
-  };
+const onSubmitNote = (values, props) => {
+  const { action, success, error, performAction } = props;
+  const payload = { note: values.note };
 
-  constructor(props) {
-    super(props);
+  performAction(action, payload, success, error);
+  return null;
+};
 
-    this.onSubmitNote = this.onSubmitNote.bind(this);
-  }
+const ActionButton = ({ label, icon, action, payload, success, error, performAction, withoutNote }) => (
+  <Row>
+    <Col xs={withoutNote ? 12 : 8}>
+      <Button
+        buttonStyle="dropdownItem"
+        onClick={() => performAction(action, payload, success, error)}
+      >
+        <Icon icon={icon || 'default'}>
+          <FormattedMessage id={label} />
+        </Icon>
+      </Button>
+    </Col>
+    { !withoutNote &&
+      <Col xs={4}>
+        <AddNoteForm onSubmit={onSubmitNote} />
+      </Col>
+    }
+  </Row>
+);
 
-  onSubmitNote(values) {
-    const { action, success, error, performAction } = this.props;
-    const payload = { note: values.note };
+ActionButton.propTypes = {
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+  action: PropTypes.string.isRequired,
+  payload: PropTypes.object,
+  success: PropTypes.string,
+  error: PropTypes.string,
+  performAction: PropTypes.func.isRequired,
+  withoutNote: PropTypes.bool,
+};
 
-    performAction(action, payload, success, error);
-    return null;
-  }
-
-  render() {
-    const { label, icon, action, payload, success, error, performAction, withoutNote } = this.props;
-    return (
-      <Row>
-        <Col xs={withoutNote ? 12 : 8}>
-          <Button
-            buttonStyle="dropdownItem"
-            onClick={() => performAction(action, payload, success, error)}
-          >
-            <Icon icon={icon || 'default'}><FormattedMessage id={label} /></Icon>
-          </Button>
-        </Col>
-        { !withoutNote &&
-          <Col xs={4}>
-            <AddNoteForm onSubmit={this.onSubmitNote} />
-          </Col>
-        }
-      </Row>
-    );
-  }
-}
 
 export default ActionButton;
