@@ -6,7 +6,6 @@ import { Button, Col, Icon, Row } from '@folio/stripes/components';
 import AddNoteForm from '../AddNoteForm';
 
 const ActionButton = props => {
-
   const onSubmitNote = (values) => {
     const { action, success, error, performAction } = props;
     const payload = { note: values.note };
