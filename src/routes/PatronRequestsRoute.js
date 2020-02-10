@@ -8,6 +8,7 @@ import { Button } from '@folio/stripes/components';
 import { SearchAndSort, withTags } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
+import formattedDateTime from '../util/formattedDateTime';
 
 import packageInfo from '../../package';
 
@@ -198,6 +199,7 @@ class PatronRequestsRoute extends React.Component {
           resultsFormatter={{
             id: a => a.hrid,
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
+            dateCreated: a => formattedDateTime(a.dateCreated),
             state: a => <FormattedMessage id={`ui-rs.states.${a.state.code}`} />,
             serviceType: a => a.serviceType && a.serviceType.value,
             pickLocation: a => a.pickLocation && a.pickLocation.name,

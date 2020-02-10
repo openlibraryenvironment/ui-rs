@@ -7,6 +7,7 @@ import {
   KeyValue,
   Row,
 } from '@folio/stripes/components';
+import formattedDateTime from '../../../util/formattedDateTime';
 import css from './AuditInfo.css';
 
 
@@ -33,7 +34,7 @@ class AuditInfo extends React.Component {
             <Col xs={6}>
               <KeyValue
                 label="Date"
-                value={entry.dateCreated}
+                value={formattedDateTime(entry.dateCreated)}
               />
             </Col>
             <Col xs={6}>
