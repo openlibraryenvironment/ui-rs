@@ -5,33 +5,35 @@ import { Button, Col, Icon, Row } from '@folio/stripes/components';
 
 import AddNoteForm from '../AddNoteForm';
 
-const onSubmitNote = (values, props) => {
-  const { action, success, error, performAction } = props;
-  const payload = { note: values.note };
+const ActionButton = props => {
 
-  performAction(action, payload, success, error);
-  return null;
-};
+  const onSubmitNote = (values) => {
+    const { action, success, error, performAction } = props;
+    const payload = { note: values.note };
+    performAction(action, payload, success, error);
+    return null;
+  };
 
-const ActionButton = ({ label, icon, action, payload, success, error, performAction, withoutNote }) => (
-  <Row>
-    <Col xs={withoutNote ? 12 : 8}>
-      <Button
-        buttonStyle="dropdownItem"
-        onClick={() => performAction(action, payload, success, error)}
-      >
-        <Icon icon={icon || 'default'}>
-          <FormattedMessage id={label} />
-        </Icon>
-      </Button>
-    </Col>
-    { !withoutNote &&
-      <Col xs={4}>
-        <AddNoteForm onSubmit={onSubmitNote} />
+  return (
+    <Row>
+      <Col xs={props.withoutNote ? 12 : 8}>
+        <Button
+          buttonStyle="dropdownItem"
+          onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
+        >
+          <Icon icon={props.icon || 'default'}>
+            <FormattedMessage id={props.label} />
+          </Icon>
+        </Button>
       </Col>
-    }
-  </Row>
-);
+      { !props.withoutNote &&
+        <Col xs={4}>
+          <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props} />
+        </Col>
+      }
+    </Row>
+  );
+};
 
 ActionButton.propTypes = {
   label: PropTypes.string.isRequired,
