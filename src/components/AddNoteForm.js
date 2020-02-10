@@ -19,10 +19,7 @@ class AddNoteForm extends React.Component {
     const { noteFieldOpen } = this.state;
     if (noteFieldOpen === true) {
       return (
-        <Field
-          name="note"
-          component={TextField}
-        />
+        <Field name="note" component={TextField} />
       );
     }
     return null;
