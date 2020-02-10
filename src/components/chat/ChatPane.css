@@ -10,3 +10,16 @@
   background-color: var(--color-fill-table-row-odd);
   word-wrap: break-word;
 }
+
+.actionMessageCard {
+  background-color: #fffbd9;
+  word-wrap: break-word;
+}
+
+.actionText {
+  color: #9ea4aa;
+}
+
+.senderData {
+  flexDirection: 'row-reverse';
+}

@@ -66,6 +66,12 @@ const RespondYes = ({ performAction }) => {
                   <Field name="pickShelvingLocation" component={TextArea} autoFocus />
                 </Col>
               </Row>
+              <SafeHTMLMessage id="ui-rs.actions.addNote" />
+              <Row>
+                <Col xs={11}>
+                  <Field name="note" component={TextArea} autoFocus />
+                </Col>
+              </Row>
             </form>
           </Modal>
         </form>

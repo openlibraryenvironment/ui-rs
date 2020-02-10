@@ -92,9 +92,21 @@
 
   "view.chatPane": "Chat with {chatOtherParty}",
   "view.chatPane.sendMessage": "Send",
-  "view.chatPane.markSeen": "Mark message as seen",
-  "view.chatPane.markUnseen": "Mark message as unseen",
+  "view.chatPane.markRead": "Mark message as read",
+  "view.chatPane.markUnread": "Mark message as unread",
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
+
+  "view.withAction.requestResponse": "The supplier has responded to this request with a note:",
+  "view.withAction.requestResponseUnfilled": "The supplier has responded 'Cannot supply' to this request with a note:",
+  "view.withAction.requestResponseExpectToSupply": "The supplier has responded 'Expects to supply' to this request with a note:",
+  "view.withAction.requestResponseLoaned": "The supplier has shipped this request with a note:",
+  "view.withAction.received": "The requester has received this shipment with a note:",
+  "view.withAction.shippedReturn": "The requester shipped this back with a note:",
+
+  "actions.addNote": "Add note",
+  "actions.hideNoteField": "Hide note",
+  "actions.hideNoteFieldWarning": "Hiding the note field does not prevent the contents from being sent",
+  "actions.send": "Send",
 
   "actions.wrongId": "No action performed, scanned request does not match",
   "actions.respondYes": "Respond \"Will Supply\"",

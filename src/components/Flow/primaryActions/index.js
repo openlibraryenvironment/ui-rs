@@ -32,6 +32,7 @@ export const PatronReturnedItem = props => <ScanConfirmAction
   prompt="ui-rs.actions.markReturned.prompt"
   success="ui-rs.actions.markReturned.success"
   error="ui-rs.actions.markReturned.error"
+  withoutNote
   {...props}
 />;
 
@@ -48,6 +49,7 @@ export const SupplierCheckOutOfReshare = props => <ScanConfirmAction
   prompt="ui-rs.actions.checkOut.prompt"
   success="ui-rs.actions.checkOut.success"
   error="ui-rs.actions.checkOut.error"
+  withoutNote
   {...props}
 />;
 
