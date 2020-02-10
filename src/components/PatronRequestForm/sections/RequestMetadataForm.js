@@ -75,7 +75,7 @@ class RequestMetadataForm extends React.Component {
                 {placeholder => (
                   <Field
                     id="edit-request-metadata-dateSubmitted"
-                    name="dateCreated"
+                    name="formattedDateCreated"
                     label={placeholder}
                     component={TextField}
                     placeholder={placeholder}
