@@ -8,7 +8,8 @@ import { Button, Col, Layout, Modal, ModalFooter, RadioButton, Row, TextArea } f
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
-const CannotSupply = ({ request, performAction, resources: { refdatavalues } }) => {
+const CannotSupply = props => {
+  const { request, performAction, resources: { refdatavalues } } = props;
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
@@ -64,7 +65,11 @@ const CannotSupply = ({ request, performAction, resources: { refdatavalues } }) 
                 name="reason"
                 component={RadioButton}
                 type="radio"
-                label={<FormattedMessage id={`ui-rs.actions.cannotSupply.reasons.${reason}`} />}
+                label={
+                  props?.okapi?.translations[`ui-rs.actions.cannotSupply.reasons.${reason}`] ?
+                    <FormattedMessage id={`ui-rs.actions.cannotSupply.reasons.${reason}`} /> :
+                    reason
+                }
                 key={reason}
                 value={reason}
               />
