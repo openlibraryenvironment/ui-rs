@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedDate, FormattedMessage } from 'react-intl';
-import _ from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Card, Col, IconButton, Pane, Row, TextField, Tooltip } from '@folio/stripes/components';
 import css from './ChatPane.css';
@@ -42,9 +41,9 @@ class ChatPane extends React.Component {
   }
 
   renderPaneFooter() {
-    // const patronRequest = _.get(this.props, 'resources.selectedRecord.records[0]');
+    // const patronRequest = this.props?.resources?.selectedRecord?.records[0];
 
-    // const validActions = _.get(patronRequest, 'validActions');
+    // const validActions = patronRequest?.validActions;
     // const messageValid = validActions ? validActions.includes('message') : false;
     return (
       <Form
@@ -158,18 +157,47 @@ class ChatPane extends React.Component {
     );
   }
 
+  renderMessageData(notification, isSender) {
+    if (isSender) {
+      return (
+        <React.Fragment>
+          <Row end="xs">
+            <Col>
+              <b>{notification?.messageSender?.owner?.name}</b>
+            </Col>
+          </Row>
+          <Row end="xs">
+            <Col>
+              {this.renderDateTime(notification?.timestamp)}
+            </Col>
+          </Row>
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <Row>
+            <Col>
+              <b>{notification?.messageSender?.owner?.name}</b>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {this.renderDateTime(notification?.timestamp)}
+            </Col>
+          </Row>
+        </React.Fragment>
+      );
+    }
+  }
+
   renderMessageCard(notification, isSender) {
     // TODO Eventually Card should probably be replaced by a dedicated chat message component
     const action = notification?.attachedAction;
     const actionKey = action.charAt(0).toLowerCase() + action.substring(1);
     return (
       <React.Fragment>
-        <Row>
-          <b>{_.get(notification, 'messageSender.owner.name')}</b>
-        </Row>
-        <Row>
-          {this.renderDateTime(notification.timestamp)}
-        </Row>
+        {this.renderMessageData(notification, isSender)}
         <Row>
           <Card
             cardClass={action !== 'Notification' ? css.actionMessageCard : (isSender ? css.sentMessageCard : css.receivedMessageCard)}
@@ -208,8 +236,8 @@ class ChatPane extends React.Component {
     if (notification.isSender === true) {
       return (
         <Row>
-          <Col xs={6} />
-          <Col xs={6}>
+          <Col xs={2} />
+          <Col xs={10}>
             {this.renderMessageCard(notification, true)}
           </Col>
         </Row>
@@ -217,10 +245,10 @@ class ChatPane extends React.Component {
     } else {
       return (
         <Row>
-          <Col xs={6}>
+          <Col xs={10}>
             {this.renderMessageCard(notification, false)}
           </Col>
-          <Col xs={6} />
+          <Col xs={2} />
         </Row>
       );
     }
@@ -239,7 +267,7 @@ class ChatPane extends React.Component {
 
   displayMessages() {
     const { resources } = this.props;
-    const notifications = _.get(resources, 'selectedRecord.records[0].notifications');
+    const notifications = resources?.selectedRecord?.records[0]?.notifications;
 
     if (notifications) {
       // Sort the notifications into order by time recieved/sent
@@ -257,7 +285,7 @@ class ChatPane extends React.Component {
 
   render() {
     const { resources, onToggle } = this.props;
-    const isRequester = _.get(resources, 'selectedRecord.records[0].isRequester');
+    const isRequester = resources?.selectedRecord?.records[0]?.isRequester;
     const chatOtherParty = isRequester ? 'supplier' : 'requester';
     return (
       <Pane
