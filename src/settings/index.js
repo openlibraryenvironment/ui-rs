@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 import SettingPage from './SettingPage';
+import { CustomISO18626 } from './settingsComponents';
 
 class ResourceSharingSettings extends React.Component {
   static manifest = Object.freeze({
@@ -34,16 +35,17 @@ class ResourceSharingSettings extends React.Component {
     return (props) => <SettingPage sectionName={sectionName} {...props} />;
   }
 
+  routeAlphaSort = (a, b) => {
+    if (a.route < b.route) {
+      return -1;
+    }
+    if (a.route > b.route) {
+      return 1;
+    }
+    return 0;
+  };
+
   pageList() {
-    const routeAlphaSort = (a, b) => {
-      if (a.route < b.route) {
-        return -1;
-      }
-      if (a.route > b.route) {
-        return 1;
-      }
-      return 0;
-    };
     const sections = this.getSectionsList();
     const pages = sections.map(section => {
       if (section) {
@@ -60,7 +62,7 @@ class ResourceSharingSettings extends React.Component {
         return (undefined);
       }
     });
-    return (pages.sort((a, b) => routeAlphaSort(a, b)));
+    return (pages.sort((a, b) => this.routeAlphaSort(a, b)));
   }
 
   // Backup pages for initial render (Settings doesn't render dynamically properly at first).
@@ -104,21 +106,30 @@ class ResourceSharingSettings extends React.Component {
     }
   ];
 
+  persistentPages = [
+    {
+      route: 'CustomISO18626Settings',
+      label: 'Custom ISO18626 settings',
+      component: CustomISO18626
+    }
+  ];
+
   render() {
     const pageList = this.pageList();
 
     // Doing this in render to force update once it's grabbed the page list
     const dynamicSettingsPages = pageList;
+    let settingsToRender = [];
 
     if (pageList[0]) {
-      return (
-        <Settings {...this.props} pages={dynamicSettingsPages} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
-      );
+      settingsToRender = this.persistentPages.concat(dynamicSettingsPages).sort((a, b) => this.routeAlphaSort(a, b));
     } else {
-      return (
-        <Settings {...this.props} pages={this.staticSettingsPages} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
-      );
+      settingsToRender = this.persistentPages.concat(this.staticSettingsPages).sort((a, b) => this.routeAlphaSort(a, b));
     }
+
+    return (
+      <Settings {...this.props} pages={settingsToRender} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
+    );
   }
 }
 
