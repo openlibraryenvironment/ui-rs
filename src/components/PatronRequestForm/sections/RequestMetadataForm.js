@@ -99,6 +99,34 @@ class RequestMetadataForm extends React.Component {
               </FormattedMessage>
             </Col>
           </Row>
+          <Row>
+            <Col xs={6}>
+              <FormattedMessage id="ui-rs.information.pickupLocation">
+                {placeholder => (
+                  <Field
+                    id="edit-request-metadata-pickupLocation"
+                    name="pickupLocation"
+                    label={placeholder}
+                    component={TextField}
+                    placeholder={placeholder}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+            <Col xs={6}>
+              <FormattedMessage id="ui-rs.information.notes">
+                {placeholder => (
+                  <Field
+                    id="edit-request-metadata-patronNote"
+                    name="patronNote"
+                    label={placeholder}
+                    component={TextField}
+                    placeholder={placeholder}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+          </Row>
         </React.Fragment>
       </Accordion>
     );
