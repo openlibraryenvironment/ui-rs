@@ -98,7 +98,17 @@ class DirectoryEntryFormInfo extends React.Component {
               </Field>
             </Col>
             <Col xs={2}>
-             (Status)
+              <FormattedMessage id="ui-directory.information.status">
+                {placeholder => (
+                  <Field
+                    id="edit-directory-entry-status"
+                    name="status"
+                    label={placeholder}
+                    component={TextField}
+                    placeholder={placeholder}
+                  />
+                )}
+              </FormattedMessage>
             </Col>
             <Col xs={5}>
               <FormattedMessage id="ui-directory.information.slug">
