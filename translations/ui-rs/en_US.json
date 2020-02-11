@@ -193,12 +193,14 @@
 
   "states.RES_IDLE":"New request",
   "states.RES_NEW_AWAIT_PULL_SLIP":"Awaiting pull slip printing",
-  "states.RES_AWAIT_PROXY_BORROWER":"Awaiting institutional check out",
+  "states.RES_AWAIT_PROXY_BORROWER":"No institutional borrower account available for check out",
+  "states.RES_AWAIT_LMS_CHECKOUT":"Could not connect to local library management system",
   "states.RES_AWAIT_PICKING":"Searching",
   "states.RES_AWAIT_SHIP":"Ready to ship",
   "states.RES_ITEM_SHIPPED":"Shipped to requester",
   "states.RES_ITEM_RETURNED":"Return shipped to supplier",
   "states.RES_COMPLETE":"Request complete",
+  "states.RES_UNFILLED":"Request not suppliled",
 
   "settings.name": "Name",
   "settings.value": "Value",
