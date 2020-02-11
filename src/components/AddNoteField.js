@@ -30,6 +30,6 @@ const AddNoteForm = () => {
       </Col>
     </Row>
   );
-}
+};
 
 export default AddNoteForm;
