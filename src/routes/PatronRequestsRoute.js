@@ -113,6 +113,11 @@ class PatronRequestsRoute extends React.Component {
     );
   }
 
+  renderFilters = (_onChange) => {
+    return <div>(Filters go here)</div>;
+    // For an example, see ui-inventory/src/views/InstancesView.js
+  };
+
   render() {
     if (this.props.match.params.action === 'printslips') {
       return <PrintAllPullSlips records={this.props.resources.patronrequests} />;
@@ -204,6 +209,7 @@ class PatronRequestsRoute extends React.Component {
             serviceType: a => a.serviceType && a.serviceType.value,
             pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}
+          renderFilters={this.renderFilters}
         />
       </React.Fragment>
     );
