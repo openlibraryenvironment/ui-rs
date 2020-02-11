@@ -199,6 +199,8 @@
   "states.RES_ITEM_SHIPPED":"Shipped to requester",
   "states.RES_ITEM_RETURNED":"Return shipped to supplier",
   "states.RES_COMPLETE":"Request complete",
+  "states.RES_AWAIT_LMS_CHECKOUT": "Awaiting LMS checkout",
+  "states.RES_UNFILLED": "Unfilled",
 
   "settings.name": "Name",
   "settings.value": "Value",
