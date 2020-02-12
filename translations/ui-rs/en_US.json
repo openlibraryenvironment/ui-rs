@@ -121,6 +121,7 @@
   "actions.cannotSupply.reasons.unavailable": "No longer available",
   "actions.cannotSupply.reasons.missing": "Missing",
   "actions.cannotSupply.reasons.incorrect": "Incorrect item",
+  "actions.cannotSupply.reasons.on_reserve": "On reserve",
   "actions.cannotSupply.reasons.other": "Other",
   "actions.cannotSupply.success": "Responded \"Cannot supply\".",
   "actions.cannotSupply.error": "Error, could not respond \"Cannot supply\".",
