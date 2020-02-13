@@ -27,6 +27,17 @@ function queryModifiedForApp(resources, props) {
     res.filters = 'r.false';
   }
 
+  // Special case: `refresh=1` can be added to the UI URL to force the
+  // addition of a meaningless (and ignored) additional sort
+  // criterion. This defeats stripes-connect's caching of the result
+  // from (what would otherwise be) the same URL the last time this
+  // resource was needed. We set this when returning from
+  // PrintAllPullSlips so that status changes are reflected.
+  if (res.refresh) {
+    delete res.refresh;
+    res.sort = `${res.sort},_refresh`;
+  }
+
   return res;
 }
 

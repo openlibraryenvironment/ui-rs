@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { withRouter } from 'react-router';
 import { includes, filter } from 'lodash';
 import { Callout } from '@folio/stripes/components';
@@ -76,9 +77,31 @@ class PrintAllPullSlips extends React.Component {
       return `Not enough records loaded for printing (${records.length} of ${totalRecords})`;
     }
 
+    // In order to force a refresh of the underlying stripes-connect
+    // result-list when we go back to the main record list, we need to
+    // include refresh=1 if it was not included, but remove it if it
+    // was. This is trickier than it looks: render gets called
+    // multiple times, so if we just toggle in render then we will end
+    // up with no change if we get called an even number of times. And
+    // we can't do the toggle in componentDidMount because `location`
+    // is not available there. So we have to reset location.search
+    // after having used the modified version to calculate our desired
+    // destination URL for the close button.
+    const { location } = this.props;
+    const oldSearch = location.search;
+    const query = queryString.parse(location.search);
+    if (query.refresh) {
+      delete query.refresh;
+    } else {
+      query.refresh = 1;
+    }
+    location.search = '?' + queryString.stringify(query);
+    const destUrl = upNLevels(location, 1);
+    location.search = oldSearch;
+
     return (
       <React.Fragment>
-        <PrintOrCancel destUrl={upNLevels(this.props.location, 1)}>
+        <PrintOrCancel destUrl={destUrl}>
           <AllPullSlips records={records} />
         </PrintOrCancel>
         <Callout ref={this.callout} />
