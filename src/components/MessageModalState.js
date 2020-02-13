@@ -80,12 +80,15 @@ export const useModal = () => {
 const ContextualMessageBanner = ({ intl }) => {
   const [msg, setMsg] = useMessage();
   if (!msg) return null;
-  const values = Object.fromEntries(Object.entries(msg.values).map(ent => {
-    if (Array.isArray(msg.valuesToTranslate) && msg.valuesToTranslate.includes(ent[0])) {
-      return [ent[0], intl.formatMessage({ id: ent[1] })];
-    }
-    return ent;
-  }));
+  let values;
+  if (msg.values) {
+    values = Object.fromEntries(Object.entries(msg.values).map(ent => {
+      if (Array.isArray(msg.valuesToTranslate) && msg.valuesToTranslate.includes(ent[0])) {
+        return [ent[0], intl.formatMessage({ id: ent[1] })];
+      }
+      return ent;
+    }));
+  }
   return (
     <Layout className="padding-top-gutter padding-bottom-gutter">
       <MessageBanner
