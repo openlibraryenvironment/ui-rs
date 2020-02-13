@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Form } from 'react-final-form';
 import { Prompt } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu } from '@folio/stripes/components';
@@ -40,6 +40,7 @@ const CreateEditRoute = props => {
     match,
     mutator,
     resources: { selectedRecord: resource },
+    intl,
   } = props;
 
   const isEditing = typeof match.params.id === 'string';
@@ -47,7 +48,11 @@ const CreateEditRoute = props => {
   if (isEditing) {
     if (!resource || !resource.hasLoaded) return null;
     const record = resource.records[0];
-    initialValues = Object.assign({}, record);
+    initialValues = Object.assign({}, record, {
+      formattedDateCreated: (
+        intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
+      )
+    });
   }
 
   const submit = newRecord => {
@@ -113,5 +118,6 @@ CreateEditRoute.propTypes = {
   resources: PropTypes.shape({
     selectedRecord: PropTypes.object,
   }).isRequired,
+  intl: intlShape.isRequired,
 };
-export default stripesConnect(CreateEditRoute);
+export default stripesConnect(injectIntl(CreateEditRoute));

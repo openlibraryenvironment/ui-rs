@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { Button, Layout, Modal, ModalFooter, RadioButton } from '@folio/stripes/components';
+import { stripesConnect } from '@folio/stripes/core';
+import { Button, Col, Layout, Modal, ModalFooter, RadioButton, Row, TextArea } from '@folio/stripes/components';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
-const CannotSupply = ({ request, performAction }) => {
+const CannotSupply = props => {
+  const { request, performAction, resources: { refdatavalues } } = props;
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
@@ -35,7 +37,7 @@ const CannotSupply = ({ request, performAction }) => {
     disableSubmit: PropTypes.bool,
     submit: PropTypes.func.isRequired,
   };
-
+  const listOfReasons = refdatavalues ? refdatavalues.records.filter(obj => obj.desc === 'cannotSupplyReasons').map(obj => obj.values.map(o => o.value))[0] : [];
   return (
     <Form
       onSubmit={onSubmit}
@@ -48,14 +50,26 @@ const CannotSupply = ({ request, performAction }) => {
           >
             <SafeHTMLMessage id="ui-rs.actions.cannotSupply.confirm" values={{ id: request.id, item: request.title }} />
             <Layout className="padding-top-gutter">
+              <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
+            </Layout>
+            <Row>
+              <Col xs={11}>
+                <Field name="note" component={TextArea} autoFocus />
+              </Col>
+            </Row>
+            <Layout className="padding-top-gutter">
               <strong><FormattedMessage id="ui-rs.actions.cannotSupply.reason" /></strong>
             </Layout>
-            {['unavailable', 'missing', 'incorrect', 'other'].map(reason => (
+            {listOfReasons?.map(reason => (
               <Field
                 name="reason"
                 component={RadioButton}
                 type="radio"
-                label={<FormattedMessage id={`ui-rs.actions.cannotSupply.reasons.${reason}`} />}
+                label={
+                  props?.okapi?.translations[`ui-rs.actions.cannotSupply.reasons.${reason}`] ?
+                    <FormattedMessage id={`ui-rs.actions.cannotSupply.reasons.${reason}`} /> :
+                    reason
+                }
                 key={reason}
                 value={reason}
               />
@@ -67,9 +81,32 @@ const CannotSupply = ({ request, performAction }) => {
   );
 };
 
+CannotSupply.manifest = {
+  refdatavalues: {
+    type: 'okapi',
+    path: 'rs/refdata',
+    params: {
+      max: '500',
+    },
+  }
+};
+
 CannotSupply.propTypes = {
   request: PropTypes.object.isRequired,
   performAction: PropTypes.func.isRequired,
+  resources: PropTypes.shape({
+    refdatavalues: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        desc: PropTypes.string,
+        values: PropTypes.arrayOf(PropTypes.shape({
+          id: PropTypes.string,
+          value: PropTypes.string,
+          label: PropTypes.string,
+        })),
+      })),
+    }),
+  })
 };
 
-export default CannotSupply;
+export default stripesConnect(CannotSupply);
