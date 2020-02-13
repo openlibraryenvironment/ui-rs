@@ -52,7 +52,7 @@ class ResourceSharing extends React.Component {
             <Redirect
               exact
               from={`${path}/requests/view/:id`}
-              to={`${path}/requests/view/:id/details${search}`}
+              to={`${path}/requests/view/:id/flow${search}`}
             />
             <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
 
