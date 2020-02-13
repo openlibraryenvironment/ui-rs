@@ -11,7 +11,7 @@ import AddNoteField from '../AddNoteField';
 const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl, withoutNote }) => {
   const [, setMessage] = useMessage();
   const onSubmit = async values => {
-    if (values.reqId.trim() !== request.hrid) {
+    if (values?.reqId?.trim() !== request.hrid) {
       setMessage('ui-rs.actions.wrongId', 'error');
       return { FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' }) };
     }
