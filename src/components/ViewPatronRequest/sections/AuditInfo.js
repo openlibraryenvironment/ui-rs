@@ -24,25 +24,29 @@ class AuditInfo extends React.Component {
         cardClass={css.auditCard}
         headerClass={css.auditCardHeader}
       >
-        <table cellPadding="4">
-          <tr>
-            <th align="left">#</th>
-            <th align="left">Date</th>
-            <th align="left">From state</th>
-            <th align="left">To state</th>
-            <th align="left">Message</th>
-          </tr>
-          {
-            audit.map((entry, i) => (
-              <tr>
-                <td>{audit.length - i}</td>
-                <td>{formattedDateTime(entry.dateCreated)}</td>
-                <td>{entry.fromStatus && <FormattedMessage id={`ui-rs.states.${entry.fromStatus.code}`} />}</td>
-                <td>{entry.toStatus && <FormattedMessage id={`ui-rs.states.${entry.toStatus.code}`} />}</td>
-                <td>{entry.message}</td>
-              </tr>
-            ))
-          }
+        <table className={css.auditEntryList}>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date</th>
+              <th>From state</th>
+              <th>To state</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              audit.map((entry, i) => (
+                <tr>
+                  <td>{audit.length - i}</td>
+                  <td>{formattedDateTime(entry.dateCreated)}</td>
+                  <td>{entry.fromStatus && <FormattedMessage id={`ui-rs.states.${entry.fromStatus.code}`} />}</td>
+                  <td>{entry.toStatus && <FormattedMessage id={`ui-rs.states.${entry.toStatus.code}`} />}</td>
+                  <td>{entry.message}</td>
+                </tr>
+              ))
+            }
+          </tbody>
         </table>
       </Card>
     );
