@@ -6,3 +6,21 @@
     background-color: #f4cdf4;
     font-weight: bold;
 }
+
+table.auditEntryList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.auditEntryList tbody tr:nth-child(odd) {
+    background-color: #fff4ff;
+}
+
+table.auditEntryList th {
+    text-align: left;
+}
+
+table.auditEntryList th, table.auditEntryList td {
+    padding: 0.25em 1em;
+    vertical-align: top;
+}
