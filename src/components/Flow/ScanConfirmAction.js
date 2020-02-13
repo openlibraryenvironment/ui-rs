@@ -22,7 +22,12 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, form }) => (
         <form onSubmit={handleSubmit} autoComplete="off">
-          <SafeHTMLMessage id={prompt} />
+          {prompt && <SafeHTMLMessage id={prompt} />}
+          {!prompt &&
+            <FormattedMessage id={`ui-rs.actions.${action}`}>
+              {dispAction => <SafeHTMLMessage id="ui-rs.actions.generic.prompt" values={{ action: dispAction }} />}
+            </FormattedMessage>
+          }
           <Row>
             <Col xs={11}>
               <Field name="reqId" component={TextField} autoFocus />
@@ -49,7 +54,7 @@ ScanConfirmAction.propTypes = {
   performAction: PropTypes.func.isRequired,
   request: PropTypes.object.isRequired,
   action: PropTypes.string.isRequired,
-  prompt: PropTypes.string.isRequired,
+  prompt: PropTypes.string,
   error: PropTypes.string.isRequired,
   success: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,

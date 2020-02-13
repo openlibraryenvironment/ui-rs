@@ -10,13 +10,15 @@
 
 import React, { createContext, useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Layout, MessageBanner } from '@folio/stripes/components';
 
 export const MessageModalContext = createContext();
-// Message shape is: { key, type }
+// Message shape is: { key, type, values, valuesToTranslate }
 // * key is the translation key for the message,
 // * type corresponds to the MessageBanner prop
+// * values (optional) is a values object to pass to FormattedMessage
+// * valuesToTranslate (optional) is an array of keys in values which themselves need translation
 
 const initialState = {
   message: null,
@@ -60,10 +62,10 @@ MessageModalProvider.propTypes = {
 
 export const useMessage = () => {
   const [state, dispatch] = useContext(MessageModalContext);
-  const setMessage = (key, type) => {
+  const setMessage = (key, type, values, valuesToTranslate) => {
     dispatch({
       type: SET_MESSAGE,
-      payload: typeof key === 'string' ? { key, type } : null,
+      payload: typeof key === 'string' ? { key, type, values, valuesToTranslate } : null,
     });
   };
   return [state.message, setMessage];
@@ -75,9 +77,15 @@ export const useModal = () => {
   return [state.modal, setModal];
 };
 
-export const ContextualMessageBanner = () => {
+const ContextualMessageBanner = ({ intl }) => {
   const [msg, setMsg] = useMessage();
   if (!msg) return null;
+  const values = Object.fromEntries(Object.entries(msg.values).map(ent => {
+    if (Array.isArray(msg.valuesToTranslate) && msg.valuesToTranslate.includes(ent[0])) {
+      return [ent[0], intl.formatMessage({ id: ent[1] })];
+    }
+    return ent;
+  }));
   return (
     <Layout className="padding-top-gutter padding-bottom-gutter">
       <MessageBanner
@@ -85,8 +93,13 @@ export const ContextualMessageBanner = () => {
         onExited={() => setMsg(null)}
         dismissable
       >
-        <FormattedMessage id={msg.key} />
+        <FormattedMessage id={msg.key} values={values} />
       </MessageBanner>
     </Layout>
   );
 };
+ContextualMessageBanner.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+const IntlContextualMessageBanner = injectIntl(ContextualMessageBanner);
+export { IntlContextualMessageBanner as ContextualMessageBanner };
