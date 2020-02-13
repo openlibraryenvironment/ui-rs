@@ -1,16 +1,34 @@
+import initialToUpper from '../../util/initialToUpper';
 /*
- * This object describes what to render for a request given its state:
+ * This object describes what to render for a request given its state (directories
+ * relative to src/components/Flow).
  *
  * SOME_STATE: {
  *   cards: <array of names of components exported from the cardsByRequest directory>
  *   primaryAction: <name of component exported from the primaryActions directory>
  *   moreActions: <array of names of components exported from the moreActions directory>
  *   secondHeadline: <array of names of components exported from the secondHeadlines directory>
- *   excludeFromMore: <array of moreActions to only display in the dropdown>
  * }
  *
- * In order to add a new action to moreActions - extend src/components/Flow/moreActions/index.js and add
- * your action.
+ * moreActions will appear after any validActions provided on the request record. Custom
+ * components will be used for validActions if available (eg. named after the action).
+ * If no primaryAction is specified the first entry in validActions will be used, specify
+ * a null primaryAction for states to suppress this.
+ *
+ * validActions without a component named for them will be rendered with the component
+ * "Generic" which is roughly the ActionButton for moreActions and the ScanConfirmAction
+ * for a primaryAction with accomodations for missing translations.
+ *
+ * Translations for generic components:
+ *
+ * ui-rs.actions.<action name> - name of action
+ * ui-rs.actions.<action name>.success - message banner when action succeeds
+ * ui-rs.actions.<action name>.error - message banner when action fails
+ * ui-rs.actions.<action name>.prompt - prompt for scanning request barcode to exec
+ *
+ * Where the above are missing, ui-rs.actions.<action name> will be substituted into
+ * ui-rs.actions.generic.* to provide generic success/error/prompt messages.
+ *
 */
 export const actionsByState = {
   default: {
@@ -20,23 +38,19 @@ export const actionsByState = {
   },
   RES_IDLE:{
     primaryAction: '',
-    moreActions: ['RespondYes', 'CannotSupply'],
+    moreActions: ['RespondYes', 'SupplierCannotSupply'],
   },
   RES_NEW_AWAIT_PULL_SLIP: {
     primaryAction: 'PrintPullSlip',
-    moreActions: ['SupplierMarkPullSlipPrinted', 'CannotSupply'],
+    moreActions: ['SupplierCannotSupply'],
   },
   RES_AWAIT_PICKING: {
     primaryAction: 'SupplierCheckInToReshare',
-    moreActions: ['PrintPullSlip', 'CannotSupply'],
+    moreActions: ['PrintPullSlip', 'SupplierCannotSupply'],
   },
   RES_CHECKED_IN_TO_RESHARE: {
     primaryAction: 'SupplierMarkShipped',
-    moreActions: ['SupplierMarkShipped', 'PrintPullSlip', 'CannotSupply'],
-  },
-  RES_AWAIT_PROXY_BORROWER: {
-    primaryAction: 'ManualCheckout',
-    moreActions: ['ManualCheckout'],
+    moreActions: ['SupplierMarkShipped', 'PrintPullSlip', 'SupplierCannotSupply'],
   },
   RES_AWAIT_LMS_CHECKOUT: {
     primaryAction: 'ManualCheckout',
@@ -67,7 +81,23 @@ export const actionsByState = {
   }
 };
 
+/* Actions from request.validActions to exclude from all states when using the below function */
+const excludeRemote = ['message'];
+
 /* This function returns the contextual actions for a provided request,
  * falling back to the default for unknown states.
  */
-export const actionsForRequest = request => Object.assign({}, actionsByState.default, actionsByState[request.state.code] || {});
+export const actionsForRequest = request => {
+  const actions = Object.assign({}, actionsByState.default, actionsByState[request.state.code] || {});
+  if (Array.isArray(request.validActions)) {
+    const remote = request.validActions.filter(
+      action => actions.primaryAction !== initialToUpper(action) && !(excludeRemote.includes(action))
+    );
+    const client = actions.moreActions.filter(
+      action => !(remote.includes(`${action.charAt(0).toLowerCase()}${action.substring(1)}`))
+    );
+    actions.moreActions = remote.concat(client);
+    if (remote.length > 0 && actionsByState?.[request.state.code]?.primaryAction === undefined) actions.primaryAction = remote[0];
+  }
+  return actions;
+};

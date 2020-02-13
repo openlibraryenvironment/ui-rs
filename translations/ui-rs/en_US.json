@@ -108,6 +108,10 @@
   "actions.hideNoteFieldWarning": "Hiding the note field does not prevent the contents from being sent",
   "actions.send": "Send",
 
+  "actions.generic.success": "Sucess: {action}",
+  "actions.generic.error": "Error: {action}",
+  "actions.generic.prompt": "Scan request barcode to <strong>{action}</strong>",
+
   "actions.wrongId": "No action performed, scanned request does not match",
   "actions.respondYes": "Respond \"Will Supply\"",
   "actions.respondYes.success": "Responded \"Will Supply\"",
@@ -125,9 +129,6 @@
   "actions.cannotSupply.reasons.other": "Other",
   "actions.cannotSupply.success": "Responded \"Cannot supply\".",
   "actions.cannotSupply.error": "Error, could not respond \"Cannot supply\".",
-  "actions.markSlipPrinted": "Mark pull slip as printed",
-  "actions.markSlipPrinted.success": "Pull slip marked as printed.",
-  "actions.markSlipPrinted.error": "Error marking pull slip as printed.",
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
   "actions.checkIn.success": "Item successfully checked into ReShare",
   "actions.checkIn.error": "Error checking item into ReShare",
@@ -138,6 +139,7 @@
   "actions.manualCheckIn": "Bypass local record creation",
   "actions.manualCheckIn.success": "Local record creation successfully bypassed.",
   "actions.manualCheckIn.error": "Error bypassing local record creation.",
+  "actions.requesterReceived": "Mark received",
   "actions.markReceivedWithoutScan": "Mark received without scanning",
   "actions.markReceived.success": "Item marked as received.",
   "actions.markReceived.error": "Error marking item as received.",
@@ -154,9 +156,13 @@
   "actions.markShippedReturn.success": "Item marked as return shipped.",
   "actions.markShippedReturn.error": "Error marking item as return shipped.",
   "actions.markShippedReturn.prompt": "Scan request barcode to mark it <strong>return shipped</strong>",
+
   "actions.supplierManualCheckout": "Mark as checked out from ILS",
   "actions.supplierManualCheckout.error": "Error marking as checked out from ILS",
   "actions.supplierManualCheckout.success": "Sucessfully marked as checked out from ILS",
+  "actions.supplierPrintPullSlip": "Mark pull slip as printed",
+  "actions.supplierPrintPullSlip.success": "Pull slip marked as printed.",
+  "actions.supplierPrintPullSlip.error": "Error marking pull slip as printed.",
 
   "cards.reqSup.searching": "Searching for supplier.",
 

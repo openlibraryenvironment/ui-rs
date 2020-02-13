@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { Headline, Layout } from '@folio/stripes/components';
+import initialToUpper from '../util/initialToUpper';
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { actionsForRequest } from '../components/Flow/actionsByState';
 import * as cards from '../components/Flow/cardsByRequest';
@@ -12,8 +13,11 @@ import css from './FlowRoute.css';
 
 const FlowRoute = ({ request, performAction }) => {
   const forCurrent = actionsForRequest(request);
-  const PrimaryAction = _.get(primaryActions, forCurrent.primaryAction);
-
+  let PrimaryAction;
+  if (forCurrent.primaryAction) {
+    PrimaryAction = _.get(primaryActions, initialToUpper(forCurrent.primaryAction))
+      || primaryActions.Generic;
+  }
   return (
     <React.Fragment>
       <Layout className="centered" style={{ maxWidth: '80em' }}>
@@ -25,12 +29,12 @@ const FlowRoute = ({ request, performAction }) => {
           {renderNamedWithProps(forCurrent.cards, cards, { request })}
         </div>
         <Layout className="padding-top-gutter">
-          {PrimaryAction && <PrimaryAction request={request} performAction={performAction} /> }
+          {PrimaryAction && <PrimaryAction request={request} action={forCurrent.primaryAction} performAction={performAction} /> }
         </Layout>
         {forCurrent.moreActions.length > 0 &&
           <Layout className={`padding-top-gutter ${css.optionList}`}>
             <strong>More options:</strong>
-            {renderNamedWithProps(forCurrent.moreActions, moreActions, { request, performAction })}
+            {renderNamedWithProps(forCurrent.moreActions, moreActions, { request, performAction }, moreActions.Generic)}
           </Layout>
         }
       </Layout>

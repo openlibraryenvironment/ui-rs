@@ -103,8 +103,14 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
   const [, setMessage] = useMessage();
   const performAction = (action, payload, successMessage, errorMessage) => (
     mutator.action.POST({ action, actionParams: payload || {} })
-      .then(() => setMessage(successMessage, 'success'))
-      .catch(() => setMessage(errorMessage, 'error'))
+      .then(() => {
+        if (successMessage) setMessage(successMessage, 'success');
+        else setMessage('ui-rs.actions.generic.success', 'success', { action }, ['action']);
+      })
+      .catch(() => {
+        if (errorMessage) setMessage(errorMessage, 'error');
+        else setMessage('ui-rs.actions.generic.error', 'error', { action }, ['action']);
+      })
   );
 
   const resource = resources.selectedRecord;
@@ -175,7 +181,13 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
         {getHelperApp(match, resources, mutator)}
       </Paneset>
       {/* Render modals that correspond to available actions */}
-      {renderNamedWithProps([forCurrent.primaryAction, ...forCurrent.moreActions], modals, { request, performAction })}
+      {renderNamedWithProps(
+        forCurrent.primaryAction && !forCurrent.moreActions.includes(forCurrent.primaryAction)
+          ? [forCurrent.primaryAction, ...forCurrent.moreActions]
+          : forCurrent.moreActions,
+        modals,
+        { request, performAction }
+      )}
     </React.Fragment>
   );
 };
