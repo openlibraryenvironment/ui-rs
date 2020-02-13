@@ -4,6 +4,8 @@ import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import ScanConfirmAction from '../ScanConfirmAction';
 
+export { default as Generic } from './Generic';
+
 export const RequesterManualCheckIn = ({ performAction }) => (
   <Button
     onClick={() => performAction(

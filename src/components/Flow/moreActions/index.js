@@ -4,6 +4,8 @@ import { Button, Icon } from '@folio/stripes/components';
 import { ShowModalButton } from '../../ModalButtons';
 import ActionButton from '../ActionButton';
 
+export { default as Generic } from './Generic';
+
 export const RequesterReceived = props => <ActionButton
   action="requesterReceived"
   label="ui-rs.actions.markReceivedWithoutScan"
@@ -37,15 +39,6 @@ export const SupplierCheckOutOfReshare = props => <ActionButton
   {...props}
 />;
 
-export const SupplierMarkPullSlipPrinted = props => <ActionButton
-  action="supplierPrintPullSlip"
-  label="ui-rs.actions.markSlipPrinted"
-  icon="print"
-  success="ui-rs.actions.markSlipPrinted.success"
-  error="ui-rs.actions.markSlipPrinted.error"
-  {...props}
-/>;
-
 export const SupplierMarkShipped = props => <ActionButton
   action="supplierMarkShipped"
   label="ui-rs.actions.markShippedWithoutScan"
@@ -69,7 +62,7 @@ export const ManualCheckout = props => <ActionButton
   {...props}
 />;
 
-export const CannotSupply = () => (
+export const SupplierCannotSupply = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="CannotSupply">
     <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.cannotSupply" /></Icon>
   </ShowModalButton>
