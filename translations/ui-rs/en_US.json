@@ -92,8 +92,6 @@
 
   "view.chatPane": "Chat with {chatOtherParty}",
   "view.chatPane.sendMessage": "Send",
-  "view.chatPane.markRead": "Mark message as read",
-  "view.chatPane.markUnread": "Mark message as unread",
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
 
   "view.chatMessage.justNow": "Just now",
@@ -104,6 +102,8 @@
   "view.chatMessage.actions": "Actions",
   "view.chatMessage.actions.markAsRead": "Mark as read",
   "view.chatMessage.actions.markAsUnread": "Mark as unread",
+  "view.chatMessage.actions.Read": "Read",
+  "view.chatMessage.actions.Unread": "Unread",
   
 
   "view.withAction.requestResponse": "The supplier has responded to this request with a note:",

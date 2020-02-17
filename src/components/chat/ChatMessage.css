@@ -19,11 +19,17 @@
 
 .unread {
   background-color: rgba(43, 117, 187, 0.15);
-  color: #000
 }
 .read {
   background-color: #fff;
-  color: #000
+}
+.action {
+  background-color: #fffbd9;
+}
+
+
+.actionText {
+  color: #9ea4aa;
 }
 
 hr {

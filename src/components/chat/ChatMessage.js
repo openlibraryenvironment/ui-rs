@@ -90,10 +90,33 @@ class ChatMessage extends React.Component {
           {this.renderDateTime()}
         </span>
         <span className={css.headerTime}>&nbsp; &#183; &nbsp;</span>
-        <span className={css.headerTime}>
-          {notification?.seen ? 'Read' : <b>Unread</b>}
-        </span>
+        {notification?.isSender &&
+          <span className={css.headerTime}>
+            {notification?.seen ? <FormattedMessage id="ui-rs.view.chatMessage.actions.Read" /> : <b><FormattedMessage id="ui-rs.view.chatMessage.actions.Unread" /></b>}
+          </span>
+        }
       </div>
+    );
+  }
+
+  renderActionContents() {
+    const notification = this.props?.notification;
+    const action = notification?.attachedAction;
+    const actionKey = action.charAt(0).toLowerCase() + action.substring(1);
+
+    return (
+      <>
+        {
+          action ? action !== 'Notification' &&
+          <span
+            className={css.actionText}
+          >
+            <FormattedMessage id={`ui-rs.view.withAction.${actionKey}`} />
+          </span> :
+          null
+        }
+        <span>&nbsp;</span>
+      </>
     );
   }
 
@@ -104,6 +127,7 @@ class ChatMessage extends React.Component {
         className={css.contents}
       >
         {this.renderDropdownButton()}
+        {this.renderActionContents()}
         {notification.messageContent}
       </div>
     );
@@ -163,13 +187,31 @@ class ChatMessage extends React.Component {
     );
   }
 
-
-  render() {
+  classOfMessageCard() {
     const notification = this.props?.notification;
     const read = notification?.seen;
+
+    const action = notification?.attachedAction;
+
+    let messageClassName = read ? css.read : css.unread;
+
+    if (notification?.isSender) {
+      messageClassName = null;
+    }
+
+    if (action && action !== 'Notification') {
+      messageClassName = css.action;
+    }
+
+    return messageClassName;
+  }
+
+
+  render() {
+    const messageClassName = this.classOfMessageCard();
     return (
       <div
-        className={read ? css.read : css.unread}
+        className={messageClassName}
       >
         {this.renderHeader()}
         {this.renderContents()}
