@@ -1,21 +1,31 @@
 @import "@folio/stripes-components/lib/variables";
 
-.sentMessageCard {
-  background-color: var(--primary);
-  color: #fff;
-  word-wrap: break-word;
-}
-
-.receivedMessageCard {
-  background-color: var(--color-fill-table-row-odd);
-  word-wrap: break-word;
-}
-
-.actionMessageCard {
-  background-color: #fffbd9;
-  word-wrap: break-word;
-}
-
-.actionText {
+.headerTime {
   color: #9ea4aa;
+  font-size: 75%;
+}
+
+.header {
+  font-size: 125%;
+}
+
+.contents {
+  word-wrap: break-word;
+}
+
+.dropdownMenu {
+  float: right;
+}
+
+.unread {
+  background-color: rgba(43, 117, 187, 0.15);
+  color: #000
+}
+.read {
+  background-color: #fff;
+  color: #000
+}
+
+hr {
+  margin-bottom:0px;
 }

@@ -97,10 +97,14 @@
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
 
   "view.chatMessage.justNow": "Just now",
-  "view.chatMessage.hour": "1 hour ago",
-  "view.chatMessage.hours": "{hours} hours ago",
-  "view.chatMessage.minute": "1 minute ago",
-  "view.chatMessage.minutes": "{minutes} minutes ago",
+  "view.chatMessage.hour": "1 hr ago",
+  "view.chatMessage.hours": "{hours} hrs ago",
+  "view.chatMessage.minute": "1 min ago",
+  "view.chatMessage.minutes": "{minutes} mins ago",
+  "view.chatMessage.actions": "Actions",
+  "view.chatMessage.actions.markAsRead": "Mark as read",
+  "view.chatMessage.actions.markAsUnread": "Mark as unread",
+  
 
   "view.withAction.requestResponse": "The supplier has responded to this request with a note:",
   "view.withAction.requestResponseUnfilled": "The supplier has responded 'Cannot supply' to this request with a note:",
