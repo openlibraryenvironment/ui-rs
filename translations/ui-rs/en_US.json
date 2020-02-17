@@ -96,6 +96,10 @@
   "view.chatPane.markUnread": "Mark message as unread",
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
 
+  "view.chatMessage.justNow": "Just now",
+  "view.chatMessage.minutes": "1 minute ago",
+  "view.chatMessage.minutes": "{minutes} minutes ago",
+
   "view.withAction.requestResponse": "The supplier has responded to this request with a note:",
   "view.withAction.requestResponseUnfilled": "The supplier has responded 'Cannot supply' to this request with a note:",
   "view.withAction.requestResponseExpectToSupply": "The supplier has responded 'Expects to supply' to this request with a note:",
