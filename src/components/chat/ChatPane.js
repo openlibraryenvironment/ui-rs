@@ -16,17 +16,13 @@ class ChatPane extends React.Component {
     onToggle: PropTypes.func.isRequired,
   }
 
+  sendMessage(payload) {
+    this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} });
+  }
+
   onSubmitMessage = values => {
     return (
       this.sendMessage(
-        values
-      )
-    );
-  }
-
-  onSubmitRead = (values) => {
-    return (
-      this.messageRead(
         values
       )
     );
