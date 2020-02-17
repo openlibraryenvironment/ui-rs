@@ -38,21 +38,27 @@ class ChatMessage extends React.Component {
     const currentTime = moment();
     const timestampDate = moment(timestamp);
 
-    const duration = moment.duration(currentTime.diff(timestamp));
+    const duration = moment.duration(currentTime.diff(timestampDate));
 
     const days = duration?._data.days;
+    const hours = duration?._data.hours;
     const minutes = duration?._data.minutes;
-    const seconds = duration?._data.seconds;
 
     console.log(duration)
 
     if (days === 0) {
-      if (minutes === 0) {
-        return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />
-      } else if (minutes === 1) {
-        return <FormattedMessage id="ui-rs.view.chatMessage.minute" />;
+      if (hours === 0) {
+        if (minutes === 0) {
+          return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />
+        } else if (minutes === 1) {
+          return <FormattedMessage id="ui-rs.view.chatMessage.minute" />;
+        } else {
+          return <FormattedMessage id="ui-rs.view.chatMessage.minutes" values={{ minutes }} />;
+        }
+      } else if (hours === 1) {
+        return <FormattedMessage id="ui-rs.view.chatMessage.hour" />;
       } else {
-        return <FormattedMessage id="ui-rs.view.chatMessage.minutes" values={{ minutes }} />;
+        return <FormattedMessage id="ui-rs.view.chatMessage.hours" values={{ hours }} />;
       }
     } else {
       return (

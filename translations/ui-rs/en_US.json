@@ -97,7 +97,9 @@
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
 
   "view.chatMessage.justNow": "Just now",
-  "view.chatMessage.minutes": "1 minute ago",
+  "view.chatMessage.hour": "1 hour ago",
+  "view.chatMessage.hours": "{hours} hours ago",
+  "view.chatMessage.minute": "1 minute ago",
   "view.chatMessage.minutes": "{minutes} minutes ago",
 
   "view.withAction.requestResponse": "The supplier has responded to this request with a note:",
