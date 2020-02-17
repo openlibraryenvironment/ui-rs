@@ -43,6 +43,7 @@
     "json-stable-stringify": "^1.0.1",
     "ky": "^0.17.0",
     "lodash": "^4.17.4",
+    "moment": "^2.24.0",
     "postcss-nested": "^4.1.2",
     "prop-types": "^15.6.0",
     "query-string": "^6.10.1",

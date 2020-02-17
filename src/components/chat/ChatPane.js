@@ -4,6 +4,7 @@ import { Form, Field } from 'react-final-form';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Card, Col, IconButton, Pane, Row, TextField, Tooltip } from '@folio/stripes/components';
+import { ChatMessage } from '.';
 import css from './ChatPane.css';
 
 
@@ -242,6 +243,7 @@ class ChatPane extends React.Component {
         }
         <Col xs={10}>
           {this.renderMessageCard(notification)}
+          <ChatMessage notification={notification} />
         </Col>
         {!notification.isSender &&
           <Col xs={2} />
