@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDateParts, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Button, Dropdown, DropdownMenu, IconButton } from '@folio/stripes/components';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import css from './ChatMessage.css';
 
 
