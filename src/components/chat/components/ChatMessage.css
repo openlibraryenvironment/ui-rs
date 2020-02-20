@@ -33,6 +33,22 @@
   color: #9ea4aa;
 }
 
+.messageContainerSender {
+  border-left: 5px;
+  border-left-style: solid;
+  border-color: var(--primary);
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.messageContainer {
+  border-left: 5px;
+  border-left-style: solid;
+  border-color: coral;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
 hr {
   margin-bottom:0px;
 }

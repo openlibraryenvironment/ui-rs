@@ -216,14 +216,18 @@ class ChatMessage extends React.Component {
 
 
   render() {
+    const notification = this.props?.notification;
     const messageClassName = this.classOfMessageCard();
+
     return (
-      <div
-        className={messageClassName}
-      >
-        {this.renderHeader()}
-        {this.renderContents()}
-        <hr />
+      <div className={notification?.isSender ? css.messageContainerSender : css.messageContainer}>
+        <div
+          className={messageClassName}
+        >
+          {this.renderHeader()}
+          {this.renderContents()}
+          <hr />
+        </div>
       </div>
     );
   }

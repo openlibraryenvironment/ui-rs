@@ -4,8 +4,8 @@ import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Pane, Row, TextField } from '@folio/stripes/components';
-import { ChatMessage } from '.';
-
+import { ChatMessage } from './components';
+import css from './ChatPane.css';
 
 class ChatPane extends React.Component {
   static propTypes = {
@@ -96,9 +96,9 @@ class ChatPane extends React.Component {
       notifications.sort((a, b) => this.sortByTimestamp(a, b));
 
       return (
-        <React.Fragment>
+        <div className={css.noTopMargin}>
           {notifications.map((notification) => this.displayMessage(notification))}
-        </React.Fragment>
+        </div>
       );
     }
     return null;
