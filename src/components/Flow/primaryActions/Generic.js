@@ -12,7 +12,7 @@ export const ShippedReturn = props => <ScanConfirmAction
 />;
 
 const Generic = props => {
-  const { action, intl } = props;
+  const { name:action, intl } = props;
   const promptKey = `ui-rs.actions.${action}.prompt`;
   const successKey = `ui-rs.actions.${action}.success`;
   const errorKey = `ui-rs.actions.${action}.error`;
@@ -33,7 +33,7 @@ const Generic = props => {
 };
 
 Generic.propTypes = {
-  action: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
 };
 
