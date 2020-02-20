@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedDateParts, FormattedMessage } from 'react-intl';
 import { Button, Dropdown, DropdownMenu, IconButton } from '@folio/stripes/components';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import css from './ChatMessage.css';
 
 
@@ -11,7 +11,7 @@ class ChatMessage extends React.Component {
     notification: PropTypes.shape({
       id: PropTypes.string,
       messageContent: PropTypes.string,
-      timestamp: PropTypes.string,
+      timestamp: PropTypes.number,
       seen: PropTypes.bool,
       isSender: PropTypes.bool,
       attachedAction: PropTypes.string,
@@ -35,8 +35,14 @@ class ChatMessage extends React.Component {
     }),
   }
 
+  longDateFormatter = (timestamp) => {
+    // This takes a moment timestamp
+    return `${timestamp.format('MMM. D, YYYY ')} at ${timestamp.format(' h:mm a')}`;
+  }
+
   renderDateTime() {
     const timestamp = this.props?.notification?.timestamp;
+
     const currentTime = moment();
     const timestampDate = moment(timestamp);
 
@@ -46,8 +52,6 @@ class ChatMessage extends React.Component {
     const hours = duration?._data.hours;
     const minutes = duration?._data.minutes;
     const seconds = duration?._data.seconds;
-
-    // This could potentially cause problems when we have messages crossing timezones, unsure how to test
 
     if (days === 0) {
       if (hours === 0) {
@@ -68,16 +72,7 @@ class ChatMessage extends React.Component {
         return <FormattedMessage id="ui-rs.view.chatMessage.hours" values={{ hours }} />;
       }
     } else {
-      return (
-        <FormattedDate
-          value={timestamp}
-          day="numeric"
-          month="numeric"
-          year="numeric"
-          hour="numeric"
-          minute="numeric"
-        />
-      );
+      return (this.longDateFormatter(timestampDate));
     }
   }
 

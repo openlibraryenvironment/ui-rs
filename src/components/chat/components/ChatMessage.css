@@ -39,6 +39,8 @@
   border-color: var(--primary);
   margin-right: -15px;
   margin-left: -15px;
+  padding-left: 5px;
+  padding-right: 10px;
 }
 
 .messageContainer {
@@ -47,6 +49,8 @@
   border-color: coral;
   margin-right: -15px;
   margin-left: -15px;
+  padding-left: 5px;
+  padding-right: 10px;
 }
 
 hr {
