@@ -45,13 +45,18 @@ class ChatMessage extends React.Component {
     const days = duration?._data.days;
     const hours = duration?._data.hours;
     const minutes = duration?._data.minutes;
+    const seconds = duration?._data.seconds;
 
     // This could potentially cause problems when we have messages crossing timezones, unsure how to test
 
     if (days === 0) {
       if (hours === 0) {
         if (minutes === 0) {
-          return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />;
+          if (seconds < 30) {
+            return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />;
+          } else {
+            return <FormattedMessage id="ui-rs.view.chatMessage.seconds" values={{ seconds }} />;
+          }
         } else if (minutes === 1) {
           return <FormattedMessage id="ui-rs.view.chatMessage.minute" />;
         } else {
@@ -89,11 +94,13 @@ class ChatMessage extends React.Component {
         <span className={css.headerTime}>
           {this.renderDateTime()}
         </span>
-        <span className={css.headerTime}>&nbsp; &#183; &nbsp;</span>
-        {notification?.isSender &&
-          <span className={css.headerTime}>
-            {notification?.seen ? <FormattedMessage id="ui-rs.view.chatMessage.actions.Read" /> : <b><FormattedMessage id="ui-rs.view.chatMessage.actions.Unread" /></b>}
-          </span>
+        {!notification?.isSender &&
+          <>
+            <span className={css.headerTime}>&nbsp; &#183; &nbsp;</span>
+            <span className={css.headerTime}>
+              {notification?.seen ? <FormattedMessage id="ui-rs.view.chatMessage.actions.Read" /> : <b><FormattedMessage id="ui-rs.view.chatMessage.actions.Unread" /></b>}
+            </span>
+          </>
         }
       </div>
     );
@@ -113,7 +120,7 @@ class ChatMessage extends React.Component {
           >
             <FormattedMessage id={`ui-rs.view.withAction.${actionKey}`} />
           </span> :
-          null
+            null
         }
         <span>&nbsp;</span>
       </>
@@ -143,18 +150,19 @@ class ChatMessage extends React.Component {
       >
         <FormattedMessage id="ui-rs.view.chatMessage.actions">
           {ariaLabel => (
-            <Button
-              aria-label={ariaLabel}
-              buttonStyle="dropdownItem"
-              id="clickable-mark-message-read"
-              marginBottom0
-              onClick={() => this.handleMessageRead(notification.seen)}
-            >
-              {notification?.seen ?
-                <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsUnread" /> :
-                <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsRead" />
-              }
-            </Button>
+            !notification?.isSender ?
+              <Button
+                aria-label={ariaLabel}
+                buttonStyle="dropdownItem"
+                id="clickable-mark-message-read"
+                marginBottom0
+                onClick={() => this.handleMessageRead(notification.seen)}
+              >
+                {notification?.seen ?
+                  <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsUnread" /> :
+                  <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsRead" />
+                }
+              </Button> : <FormattedMessage id="ui-rs.view.chatMessage.actions.noAvailableActions" />
           )}
         </FormattedMessage>
       </DropdownMenu>
@@ -199,7 +207,7 @@ class ChatMessage extends React.Component {
       messageClassName = null;
     }
 
-    if (action && action !== 'Notification') {
+    if (action && action !== 'Notification' && !read) {
       messageClassName = css.action;
     }
 

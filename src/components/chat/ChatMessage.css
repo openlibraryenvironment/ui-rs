@@ -20,13 +20,14 @@
 .unread {
   background-color: rgba(43, 117, 187, 0.15);
 }
+
 .read {
   background-color: #fff;
 }
+
 .action {
   background-color: #fffbd9;
 }
-
 
 .actionText {
   color: #9ea4aa;
