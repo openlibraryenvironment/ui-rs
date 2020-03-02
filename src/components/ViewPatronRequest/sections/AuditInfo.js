@@ -37,7 +37,7 @@ class AuditInfo extends React.Component {
           <tbody>
             {
               audit.map((entry, i) => (
-                  <tr key={i}>
+                <tr key={i}>
                   <td>{audit.length - i}</td>
                   <td>{formattedDateTime(entry.dateCreated)}</td>
                   <td>{entry.fromStatus && <FormattedMessage id={`ui-rs.states.${entry.fromStatus.code}`} />}</td>
