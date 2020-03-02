@@ -33,6 +33,16 @@ class ChatPane extends React.Component {
     }
   }
 
+  handleMessageRead = (notification, currentReadStatus) => {
+    const id = notification?.id;
+
+    const payload = { id, seenStatus: false };
+    if (!currentReadStatus) {
+      payload.seenStatus = true;
+    }
+    this.props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} });
+  };
+
   sendMessage(payload) {
     this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} });
   }
@@ -108,7 +118,7 @@ class ChatPane extends React.Component {
   displayMessage(notification, isLatest = false) {
     const { mutator } = this.props;
     return (
-      <ChatMessage notification={notification} mutator={mutator} isLatest={isLatest} ref={isLatest ? this.latestMessage : null} />
+      <ChatMessage notification={notification} mutator={mutator} isLatest={isLatest} ref={isLatest ? this.latestMessage : null} handleMessageRead={this.handleMessageRead} />
     );
   }
 

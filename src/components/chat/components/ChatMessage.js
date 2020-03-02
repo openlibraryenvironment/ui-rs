@@ -92,15 +92,6 @@ const ChatMessage = React.forwardRef((props, ref) => {
     );
   };
 
-  const handleMessageRead = (currentReadStatus) => {
-    const id = notification?.id;
-
-    const payload = { id, seenStatus: false };
-    if (!currentReadStatus) {
-      payload.seenStatus = true;
-    }
-    props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} });
-  };
 
   const renderDropdownButtonContents = () => {
     const { onToggle } = props;
@@ -118,7 +109,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
                 buttonStyle="dropdownItem"
                 id="clickable-mark-message-read"
                 marginBottom0
-                onClick={() => handleMessageRead(notification.seen)}
+                onClick={() => props.handleMessageRead(notification, notification.seen)}
               >
                 {notification?.seen ?
                   <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsUnread" /> :
@@ -194,6 +185,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
 // For some reason eslint complains when the onToggle prop is here AND when it isn't, so I'm putting it here to be safe, and shushing lint.
 
 ChatMessage.propTypes = {
+  handleMessageRead: PropTypes.func.isRequired,
   mutator:PropTypes.shape({
     action: PropTypes.object,
   }),
