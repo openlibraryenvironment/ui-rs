@@ -36,18 +36,22 @@ class ChatPane extends React.Component {
     return (
       <Form
         onSubmit={this.onSubmitMessage}
-        render={({ handleSubmit, pristine }) => {
-
+        render={({ form, handleSubmit, pristine }) => {
           const onEnterPress = (e) => {
             if (e.keyCode === 13 && e.shiftKey === false) {
               e.preventDefault();
               handleSubmit();
+              form.reset();
             }
           };
 
           return (
             <form
-              onSubmit={handleSubmit}
+              id="chatPaneMessageForm"
+              onSubmit={async event => {
+                await handleSubmit(event);
+                form.reset();
+              }}
               autoComplete="off"
             >
               <Row>
@@ -62,7 +66,10 @@ class ChatPane extends React.Component {
                 </Col>
                 <Col xs={4}>
                   <Button
-                    onClick={handleSubmit}
+                    onClick={async event => {
+                      await handleSubmit(event);
+                      form.reset();
+                    }}
                     disabled={
                       pristine
                       // TODO State model not complete, eventaully implement this check to see if sending message is valid
