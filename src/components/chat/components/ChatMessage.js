@@ -5,7 +5,6 @@ import { Button, Dropdown, DropdownMenu, IconButton } from '@folio/stripes/compo
 import moment from 'moment';
 import css from './ChatMessage.css';
 
-
 const ChatMessage = React.forwardRef((props, ref) => {
   const { notification } = props;
   const longDateFormatter = (timestamp) => {
@@ -103,7 +102,8 @@ const ChatMessage = React.forwardRef((props, ref) => {
     props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} });
   };
 
-  const renderDropdownButtonContents = ({ onToggle }) => {
+  const renderDropdownButtonContents = () => {
+    const { onToggle } = props;
     return (
       <DropdownMenu
         data-role="menu"
@@ -190,7 +190,13 @@ const ChatMessage = React.forwardRef((props, ref) => {
   );
 });
 
+/* eslint-disable react/no-unused-prop-types */
+// For some reason eslint complains when the onToggle prop is here AND when it isn't, so I'm putting it here to be safe, and shushing lint.
+
 ChatMessage.propTypes = {
+  mutator:PropTypes.shape({
+    action: PropTypes.object,
+  }),
   notification: PropTypes.shape({
     id: PropTypes.string,
     messageContent: PropTypes.string,
@@ -211,11 +217,9 @@ ChatMessage.propTypes = {
         id: PropTypes.string,
         name: PropTypes.string,
       })
-    })
+    }),
   }),
-  mutator:PropTypes.shape({
-    action: PropTypes.object,
-  }),
+  onToggle: PropTypes.func.isRequired,
 };
 
 export default ChatMessage;
