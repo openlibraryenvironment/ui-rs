@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Pane, Row, TextField } from '@folio/stripes/components';
+import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
 import { ChatMessage } from './components';
 import css from './ChatPane.css';
 
@@ -36,35 +36,46 @@ class ChatPane extends React.Component {
     return (
       <Form
         onSubmit={this.onSubmitMessage}
-        render={({ handleSubmit, pristine }) => (
-          <form
-            onSubmit={handleSubmit}
-            autoComplete="off"
-          >
-            <Row>
-              <Col xs={1} />
-              <Col xs={7}>
-                <Field
-                  name="note"
-                  component={TextField}
-                  autoFocus
-                />
-              </Col>
-              <Col xs={4}>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={
-                    pristine
-                    // TODO State model not complete, eventaully implement this check to see if sending message is valid
-                    // !messageValid
-                  }
-                >
-                  <FormattedMessage id="ui-rs.view.chatPane.sendMessage" />
-                </Button>
-              </Col>
-            </Row>
-          </form>
-        )}
+        render={({ handleSubmit, pristine }) => {
+
+          const onEnterPress = (e) => {
+            if (e.keyCode === 13 && e.shiftKey === false) {
+              e.preventDefault();
+              handleSubmit();
+            }
+          };
+
+          return (
+            <form
+              onSubmit={handleSubmit}
+              autoComplete="off"
+            >
+              <Row>
+                <Col xs={1} />
+                <Col xs={7}>
+                  <Field
+                    name="note"
+                    component={TextArea}
+                    onKeyDown={onEnterPress}
+                    autoFocus
+                  />
+                </Col>
+                <Col xs={4}>
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={
+                      pristine
+                      // TODO State model not complete, eventaully implement this check to see if sending message is valid
+                      // !messageValid
+                    }
+                  >
+                    <FormattedMessage id="ui-rs.view.chatPane.sendMessage" />
+                  </Button>
+                </Col>
+              </Row>
+            </form>
+          );
+        }}
       />
     );
   }
