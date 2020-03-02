@@ -5,43 +5,15 @@ import { Button, Dropdown, DropdownMenu, IconButton } from '@folio/stripes/compo
 import moment from 'moment';
 import css from './ChatMessage.css';
 
-
-class ChatMessage extends React.Component {
-  static propTypes = {
-    notification: PropTypes.shape({
-      id: PropTypes.string,
-      messageContent: PropTypes.string,
-      timestamp: PropTypes.number,
-      seen: PropTypes.bool,
-      isSender: PropTypes.bool,
-      attachedAction: PropTypes.string,
-      messageReceiver: PropTypes.shape({
-        id: PropTypes.string,
-        owner: PropTypes.shape({
-          id: PropTypes.string,
-          name: PropTypes.string,
-        })
-      }),
-      messageSender: PropTypes.shape({
-        id: PropTypes.string,
-        owner: PropTypes.shape({
-          id: PropTypes.string,
-          name: PropTypes.string,
-        })
-      })
-    }),
-    mutator:PropTypes.shape({
-      action: PropTypes.object,
-    }),
-  }
-
-  longDateFormatter = (timestamp) => {
+const ChatMessage = React.forwardRef((props, ref) => {
+  const { notification } = props;
+  const longDateFormatter = (timestamp) => {
     // This takes a moment timestamp
     return `${timestamp.format('MMM. D, YYYY ')} at ${timestamp.format(' h:mm a')}`;
-  }
+  };
 
-  renderDateTime() {
-    const timestamp = this.props?.notification?.timestamp;
+  const renderDateTime = () => {
+    const timestamp = notification?.timestamp;
 
     const currentTime = moment();
     const timestampDate = moment(timestamp);
@@ -72,12 +44,11 @@ class ChatMessage extends React.Component {
         return <FormattedMessage id="ui-rs.view.chatMessage.hours" values={{ hours }} />;
       }
     } else {
-      return (this.longDateFormatter(timestampDate));
+      return (longDateFormatter(timestampDate));
     }
-  }
+  };
 
-  renderHeader() {
-    const notification = this.props?.notification;
+  const renderHeader = () => {
     return (
       <div
         className={css.header}
@@ -87,7 +58,7 @@ class ChatMessage extends React.Component {
         </b>
         <span className={css.headerTime}>&nbsp;</span>
         <span className={css.headerTime}>
-          {this.renderDateTime()}
+          {renderDateTime()}
         </span>
         {!notification?.isSender &&
           <>
@@ -99,10 +70,9 @@ class ChatMessage extends React.Component {
         }
       </div>
     );
-  }
+  };
 
-  renderActionContents() {
-    const notification = this.props?.notification;
+  const renderActionContents = () => {
     const action = notification?.attachedAction;
     const actionKey = action.charAt(0).toLowerCase() + action.substring(1);
 
@@ -120,23 +90,11 @@ class ChatMessage extends React.Component {
         <span>&nbsp;</span>
       </>
     );
-  }
+  };
 
-  renderContents() {
-    const notification = this.props?.notification;
-    return (
-      <div
-        className={css.contents}
-      >
-        {this.renderDropdownButton()}
-        {this.renderActionContents()}
-        {notification.messageContent}
-      </div>
-    );
-  }
 
-  renderDropdownButtonContents = ({ onToggle }) => {
-    const notification = this.props?.notification;
+  const renderDropdownButtonContents = () => {
+    const { onToggle } = props;
     return (
       <DropdownMenu
         data-role="menu"
@@ -151,7 +109,7 @@ class ChatMessage extends React.Component {
                 buttonStyle="dropdownItem"
                 id="clickable-mark-message-read"
                 marginBottom0
-                onClick={() => this.handleMessageRead(notification.seen)}
+                onClick={() => props.handleMessageRead(notification, notification.seen)}
               >
                 {notification?.seen ?
                   <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsUnread" /> :
@@ -162,25 +120,14 @@ class ChatMessage extends React.Component {
         </FormattedMessage>
       </DropdownMenu>
     );
-  }
+  };
 
-  handleMessageRead(currentReadStatus) {
-    const notification = this.props?.notification;
-    const id = notification?.id;
-
-    const payload = { id, seenStatus: false };
-    if (!currentReadStatus) {
-      payload.seenStatus = true;
-    }
-    this.props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} });
-  }
-
-  renderDropdownButton() {
+  const renderDropdownButton = () => {
     return (
       <Dropdown
         className={css.dropdownMenu}
         label={<FormattedMessage id="ui-rs.view.chatMessage.actions" />}
-        renderMenu={this.renderDropdownButtonContents}
+        renderMenu={renderDropdownButtonContents}
       >
         <IconButton
           data-role="toggle"
@@ -188,10 +135,21 @@ class ChatMessage extends React.Component {
         />
       </Dropdown>
     );
-  }
+  };
 
-  classOfMessageCard() {
-    const notification = this.props?.notification;
+  const renderContents = () => {
+    return (
+      <div
+        className={css.contents}
+      >
+        {renderDropdownButton()}
+        {renderActionContents()}
+        {notification.messageContent}
+      </div>
+    );
+  };
+
+  const classOfMessageCard = () => {
     const read = notification?.seen;
 
     const action = notification?.attachedAction;
@@ -207,25 +165,53 @@ class ChatMessage extends React.Component {
     }
 
     return messageClassName;
-  }
+  };
 
-
-  render() {
-    const notification = this.props?.notification;
-    const messageClassName = this.classOfMessageCard();
-
-    return (
-      <div className={notification?.isSender ? css.messageContainerSender : css.messageContainer}>
-        <div
-          className={messageClassName}
-        >
-          {this.renderHeader()}
-          {this.renderContents()}
-          <hr />
-        </div>
+  const messageClassName = classOfMessageCard();
+  return (
+    <div className={notification?.isSender ? css.messageContainerSender : css.messageContainer} ref={ref}>
+      <div
+        className={messageClassName}
+      >
+        {renderHeader()}
+        {renderContents()}
+        <hr />
       </div>
-    );
-  }
-}
+    </div>
+  );
+});
+
+/* eslint-disable react/no-unused-prop-types */
+// For some reason eslint complains when the onToggle prop is here AND when it isn't, so I'm putting it here to be safe, and shushing lint.
+
+ChatMessage.propTypes = {
+  handleMessageRead: PropTypes.func.isRequired,
+  mutator:PropTypes.shape({
+    action: PropTypes.object,
+  }),
+  notification: PropTypes.shape({
+    id: PropTypes.string,
+    messageContent: PropTypes.string,
+    timestamp: PropTypes.number,
+    seen: PropTypes.bool,
+    isSender: PropTypes.bool,
+    attachedAction: PropTypes.string,
+    messageReceiver: PropTypes.shape({
+      id: PropTypes.string,
+      owner: PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+      })
+    }),
+    messageSender: PropTypes.shape({
+      id: PropTypes.string,
+      owner: PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+      })
+    }),
+  }),
+  onToggle: PropTypes.func.isRequired,
+};
 
 export default ChatMessage;

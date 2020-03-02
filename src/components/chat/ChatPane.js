@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Pane, Row, TextField } from '@folio/stripes/components';
+import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
 import { ChatMessage } from './components';
 import css from './ChatPane.css';
 
@@ -16,9 +16,37 @@ class ChatPane extends React.Component {
     onToggle: PropTypes.func.isRequired,
   }
 
+  constructor(props) {
+    super(props);
+    this.latestMessage = React.createRef();
+  }
+
+  componentDidMount() {
+    this.scrollToLatestMessage();
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const currentNotifications = this.props?.resources?.selectedRecord?.records[0]?.notifications;
+    const prevNotifications = prevProps?.resources?.selectedRecord?.records[0]?.notifications;
+    if (currentNotifications.length !== prevNotifications.length) {
+      this.scrollToLatestMessage();
+    }
+  }
+
+  handleMessageRead = (notification, currentReadStatus) => {
+    const id = notification?.id;
+
+    const payload = { id, seenStatus: false };
+    if (!currentReadStatus) {
+      payload.seenStatus = true;
+    }
+    this.props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} });
+  };
+
   sendMessage(payload) {
     this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} });
   }
+
 
   onSubmitMessage = values => {
     return (
@@ -36,43 +64,61 @@ class ChatPane extends React.Component {
     return (
       <Form
         onSubmit={this.onSubmitMessage}
-        render={({ handleSubmit, pristine }) => (
-          <form
-            onSubmit={handleSubmit}
-            autoComplete="off"
-          >
-            <Row>
-              <Col xs={1} />
-              <Col xs={7}>
-                <Field
-                  name="note"
-                  component={TextField}
-                  autoFocus
-                />
-              </Col>
-              <Col xs={4}>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={
-                    pristine
-                    // TODO State model not complete, eventaully implement this check to see if sending message is valid
-                    // !messageValid
-                  }
-                >
-                  <FormattedMessage id="ui-rs.view.chatPane.sendMessage" />
-                </Button>
-              </Col>
-            </Row>
-          </form>
-        )}
+        render={({ form, handleSubmit, pristine }) => {
+          const onEnterPress = async (e) => {
+            if (e.keyCode === 13 && e.shiftKey === false) {
+              e.preventDefault();
+              await handleSubmit();
+              form.reset();
+            }
+          };
+
+          return (
+            <form
+              id="chatPaneMessageForm"
+              onSubmit={async event => {
+                await handleSubmit(event);
+                form.reset();
+              }}
+              autoComplete="off"
+            >
+              <Row>
+                <Col xs={1} />
+                <Col xs={7}>
+                  <Field
+                    name="note"
+                    component={TextArea}
+                    onKeyDown={onEnterPress}
+                    autoFocus
+                  />
+                </Col>
+                <Col xs={4}>
+                  <Button
+                    onClick={async event => {
+                      await handleSubmit(event);
+                      form.reset();
+                    }}
+                    disabled={
+                      pristine
+                      // TODO State model not complete, eventaully implement this check to see if sending message is valid
+                      // !messageValid
+                    }
+                  >
+                    <FormattedMessage id="ui-rs.view.chatPane.sendMessage" />
+                  </Button>
+                </Col>
+              </Row>
+            </form>
+          );
+        }}
       />
     );
   }
 
-  displayMessage(notification) {
+  displayMessage(notification, isLatest = false) {
     const { mutator } = this.props;
     return (
-      <ChatMessage notification={notification} mutator={mutator} />
+      <ChatMessage notification={notification} mutator={mutator} isLatest={isLatest} ref={isLatest ? this.latestMessage : null} handleMessageRead={this.handleMessageRead} />
     );
   }
 
@@ -87,6 +133,10 @@ class ChatPane extends React.Component {
     return 0;
   };
 
+  last(array) {
+    return array[array.length - 1];
+  }
+
   displayMessages() {
     const { resources } = this.props;
     const notifications = resources?.selectedRecord?.records[0]?.notifications;
@@ -94,21 +144,26 @@ class ChatPane extends React.Component {
     if (notifications) {
       // Sort the notifications into order by time recieved/sent
       notifications.sort((a, b) => this.sortByTimestamp(a, b));
+      const latestMessage = this.last(notifications);
 
       return (
         <div className={css.noTopMargin}>
-          {notifications.map((notification) => this.displayMessage(notification))}
+          {notifications.map((notification) => this.displayMessage(notification, latestMessage.id === notification.id))}
         </div>
       );
     }
     return null;
   }
 
+  scrollToLatestMessage() {
+    this.latestMessage.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
   render() {
     const { resources, onToggle } = this.props;
     const isRequester = resources?.selectedRecord?.records[0]?.isRequester;
     const chatOtherParty = isRequester ? 'supplier' : 'requester';
+
     return (
       <Pane
         defaultWidth="30%"
