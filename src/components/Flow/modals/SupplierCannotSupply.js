@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Layout, Modal, ModalFooter, RadioButton, Row, TextArea } from '@folio/stripes/components';
@@ -37,7 +37,9 @@ const CannotSupply = props => {
     disableSubmit: PropTypes.bool,
     submit: PropTypes.func.isRequired,
   };
-  const listOfReasons = refdatavalues ? refdatavalues.records.filter(obj => obj.desc === 'cannotSupplyReasons').map(obj => obj.values.map(o => o.value))[0] : [];
+  const listOfReasons = refdatavalues ? refdatavalues.records.filter(obj => obj.desc === 'cannotSupplyReasons').map(obj => obj.values)[0] : [];
+
+  const { formatMessage } = props.intl;
   return (
     <Form
       onSubmit={onSubmit}
@@ -66,9 +68,7 @@ const CannotSupply = props => {
                 component={RadioButton}
                 type="radio"
                 label={
-                  props?.okapi?.translations[`ui-rs.actions.cannotSupply.reasons.${reason}`] ?
-                    <FormattedMessage id={`ui-rs.actions.cannotSupply.reasons.${reason}`} /> :
-                    reason
+                  formatMessage({ id: `ui-rs.actions.cannotSupply.reasons.${reason.value}`, defaultMessage: reason.label })
                 }
                 key={reason}
                 value={reason}
@@ -92,6 +92,9 @@ CannotSupply.manifest = {
 };
 
 CannotSupply.propTypes = {
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.func.isRequired
+  }),
   request: PropTypes.object.isRequired,
   performAction: PropTypes.func.isRequired,
   resources: PropTypes.shape({
@@ -109,4 +112,4 @@ CannotSupply.propTypes = {
   })
 };
 
-export default stripesConnect(CannotSupply);
+export default stripesConnect(injectIntl(CannotSupply));

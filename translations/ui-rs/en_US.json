@@ -139,6 +139,8 @@
   "actions.cannotSupply.reasons.incorrect": "Incorrect item",
   "actions.cannotSupply.reasons.on_reserve": "On reserve",
   "actions.cannotSupply.reasons.other": "Other",
+  "actions.cannotSupply.reasons.test1": "1tset",
+  "actions.cannotSupply.reasons.this_is_a_test_with_spaces": "secaps htiw tset a si siht",
   "actions.cannotSupply.success": "Responded \"Cannot supply\".",
   "actions.cannotSupply.error": "Error, could not respond \"Cannot supply\".",
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
