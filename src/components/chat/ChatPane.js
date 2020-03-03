@@ -22,7 +22,7 @@ class ChatPane extends React.Component {
   }
 
   componentDidMount() {
-    this.scrollToLatestMessage();
+    this.jumpToLatestMessage();
   }
 
   componentDidUpdate = (prevProps) => {
@@ -157,6 +157,10 @@ class ChatPane extends React.Component {
 
   scrollToLatestMessage() {
     return this.latestMessage?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  jumpToLatestMessage() {
+    return this.latestMessage?.current?.scrollIntoView({ block: 'end' });
   }
 
   render() {
