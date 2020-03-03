@@ -70,8 +70,8 @@ const CannotSupply = props => {
                 label={
                   formatMessage({ id: `ui-rs.actions.cannotSupply.reasons.${reason.value}`, defaultMessage: reason.label })
                 }
-                key={reason}
-                value={reason}
+                key={reason.value}
+                value={reason.value}
               />
             ))}
           </Modal>

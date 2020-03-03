@@ -93,6 +93,8 @@
   "view.chatPane": "Chat with {chatOtherParty}",
   "view.chatPane.sendMessage": "Send",
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
+  "view.chatPane.actions.markAllAsRead": "Mark all as read",
+  "view.chatPane.actions.markAllAsUnread": "Mark all as unread",
 
   "view.chatMessage.justNow": "Just now",
   "view.chatMessage.hour": "1 hr ago",
