@@ -93,6 +93,7 @@
   "view.chatPane": "Chat with {chatOtherParty}",
   "view.chatPane.sendMessage": "Send",
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
+  "view.chatPane.actions": "Actions",
   "view.chatPane.actions.markAllAsRead": "Mark all as read",
   "view.chatPane.actions.markAllAsUnread": "Mark all as unread",
 
@@ -243,6 +244,7 @@
   "settingsSection.requesterValidation": "Requester validation",
   "settingsSection.hostLMSIntegration": "Host LMS integration settings",
   "settingsSection.autoResponder": "Auto responder settings",
+  "settingsSection.chat": "Chat settings",
 
   "settingName.settingLoading": "Setting Name Loading",
   "settingName.sharedIndexBaseUrl": "Shared index base url",
@@ -264,5 +266,7 @@
 
   "settingName.hostLmsIntegration": "Host LMS integration",
 
-  "settingName.autoResponderStatus": "Auto responder status"
+  "settingName.autoResponderStatus": "Auto responder status",
+
+  "settingName.chatAutoRead": "Auto mark as read"
 }

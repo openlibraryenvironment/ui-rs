@@ -23,7 +23,7 @@ class ChatPane extends React.Component {
 
   componentDidMount() {
     this.jumpToLatestMessage();
-    this.handleMarkAllRead(true);
+    this.handleMarkAllRead(true, true);
   }
 
   componentDidUpdate = (prevProps) => {
@@ -34,8 +34,8 @@ class ChatPane extends React.Component {
     }
   }
 
-  handleMarkAllRead(readStatus) {
-    this.props.mutator.action.POST({ action: 'messagesAllSeen', actionParams: { seenStatus: readStatus } });
+  handleMarkAllRead(readStatus, excluding = false) {
+    this.props.mutator.action.POST({ action: 'messagesAllSeen', actionParams: { seenStatus: readStatus, excludes: excluding } });
   }
 
   handleMessageRead = (notification, currentReadStatus) => {

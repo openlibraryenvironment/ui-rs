@@ -75,6 +75,11 @@ class ResourceSharingSettings extends React.Component {
       component: this.customComponentMaker('autoResponder')
     },
     {
+      route: 'Chat',
+      label: 'Chat settings',
+      component: this.customComponentMaker('chat')
+    },
+    {
       route: 'HostLMSIntegration',
       label: 'Host LMS integration',
       component: this.customComponentMaker('hostLMSIntegration')
