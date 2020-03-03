@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
+import { Button, Col, Dropdown, DropdownMenu, IconButton, Pane, Row, TextArea } from '@folio/stripes/components';
 import { ChatMessage } from './components';
 import css from './ChatPane.css';
 
@@ -23,6 +23,7 @@ class ChatPane extends React.Component {
 
   componentDidMount() {
     this.jumpToLatestMessage();
+    this.handleMarkAllRead(true);
   }
 
   componentDidUpdate = (prevProps) => {
@@ -31,6 +32,10 @@ class ChatPane extends React.Component {
     if (currentNotifications.length !== prevNotifications.length) {
       this.scrollToLatestMessage();
     }
+  }
+
+  handleMarkAllRead(readStatus) {
+    this.props.mutator.action.POST({ action: 'messagesAllSeen', actionParams: { seenStatus: readStatus } });
   }
 
   handleMessageRead = (notification, currentReadStatus) => {
@@ -163,6 +168,59 @@ class ChatPane extends React.Component {
     return this.latestMessage?.current?.scrollIntoView({ block: 'end' });
   }
 
+  renderDropdownButtonContents = () => {
+    const { onToggle } = this.props;
+    const notifications = this.props?.resources?.selectedRecord?.records[0]?.notifications;
+    return (
+      <DropdownMenu
+        data-role="menu"
+        aria-label="actions-for-message"
+        onToggle={onToggle}
+      >
+        <FormattedMessage id="ui-rs.view.chatPane.actions">
+          {ariaLabel => (
+            notifications?.length > 0 ?
+              <>
+                <Button
+                  aria-label={ariaLabel}
+                  buttonStyle="dropdownItem"
+                  id="clickable-mark-all-message-read"
+                  marginBottom0
+                  onClick={() => this.handleMarkAllRead(true)}
+                >
+                  <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsRead" />
+                </Button>
+                <Button
+                  aria-label={ariaLabel}
+                  buttonStyle="dropdownItem"
+                  id="clickable-mark-all-message-unread"
+                  marginBottom0
+                  onClick={() => this.handleMarkAllRead(false)}
+                >
+                  <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsUnread" />
+                </Button>
+              </> : <FormattedMessage id="ui-rs.view.chatMessage.actions.noAvailableActions" />
+          )}
+        </FormattedMessage>
+      </DropdownMenu>
+    );
+  };
+
+  renderDropdownButton = () => {
+    return (
+      <Dropdown
+        className={css.dropdownMenu}
+        label={<FormattedMessage id="ui-rs.view.chatPane.actions" />}
+        renderMenu={this.renderDropdownButtonContents}
+      >
+        <IconButton
+          data-role="toggle"
+          icon="ellipsis"
+        />
+      </Dropdown>
+    );
+  };
+
   render() {
     const { resources, onToggle } = this.props;
     const isRequester = resources?.selectedRecord?.records[0]?.isRequester;
@@ -174,6 +232,7 @@ class ChatPane extends React.Component {
         dismissible
         onClose={onToggle}
         paneTitle={<FormattedMessage id="ui-rs.view.chatPane" values={{ chatOtherParty }} />}
+        lastMenu={this.renderDropdownButton()}
         footer={this.renderPaneFooter()}
         id="chat-pane"
       >
