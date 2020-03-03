@@ -35,6 +35,7 @@
   "dependencies": {
     "@folio/react-intl-safe-html": "^1.0.0",
     "@folio/stripes-erm-components": "^2.0.0",
+    "@folio/stripes-reshare": "^1.0.0",
     "@folio/stripes-util": "^1.5.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
@@ -72,6 +73,7 @@
     "displayName": "ui-rs.meta.title",
     "route": "/rs",
     "queryResource": "query",
+    "stripesDeps": ["@folio/stripes-erm-components", "@folio/stripes-reshare"],
     "icons": [
       {
         "name": "app",

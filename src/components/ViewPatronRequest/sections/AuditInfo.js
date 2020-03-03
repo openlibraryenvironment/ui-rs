@@ -40,8 +40,8 @@ class AuditInfo extends React.Component {
                 <tr key={i}>
                   <td>{audit.length - i}</td>
                   <td>{formattedDateTime(entry.dateCreated)}</td>
-                  <td>{entry.fromStatus && <FormattedMessage id={`ui-rs.states.${entry.fromStatus.code}`} />}</td>
-                  <td>{entry.toStatus && <FormattedMessage id={`ui-rs.states.${entry.toStatus.code}`} />}</td>
+                  <td>{entry.fromStatus && <FormattedMessage id={`stripes-reshare.states.${entry.fromStatus.code}`} />}</td>
+                  <td>{entry.toStatus && <FormattedMessage id={`stripes-reshare.states.${entry.toStatus.code}`} />}</td>
                   <td>{entry.message}</td>
                 </tr>
               ))
