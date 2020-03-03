@@ -158,9 +158,10 @@ const ChatMessage = React.forwardRef((props, ref) => {
 
     if (notification?.isSender) {
       messageClassName = null;
-    }
-
-    if (action && action !== 'Notification' && !read) {
+      if (action && action !== 'Notification') {
+        messageClassName = css.action;
+      }
+    } else if (action && action !== 'Notification' && !read) {
       messageClassName = css.action;
     }
 
