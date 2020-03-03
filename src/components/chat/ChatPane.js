@@ -156,7 +156,7 @@ class ChatPane extends React.Component {
   }
 
   scrollToLatestMessage() {
-    this.latestMessage.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return this.latestMessage?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   render() {
