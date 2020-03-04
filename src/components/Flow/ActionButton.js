@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Button, Col, Icon, Row } from '@folio/stripes/components';
+import { Button, Icon } from '@folio/stripes/components';
 
 import AddNoteForm from '../AddNoteForm';
 import { includesNote } from './actionsByState';
@@ -18,23 +18,20 @@ const ActionButton = props => {
 
   const withNote = includesNote[props?.action] ?? includesNote.default;
   return (
-    <span className={css.container}>
-      <div className={css.button}>
-        <Button
-          buttonStyle="dropdownItem"
-          onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
-        >
-          <Icon icon={props.icon || 'default'}>
-            <FormattedMessage id={props.label} />
-          </Icon>
-        </Button>
-      </div>
-      <div className={css.addNoteForm}>
-        { withNote &&
-          <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props}  />
-        }
-      </div>
-    </span>
+    <div className={css.container}>
+      <Button
+        buttonStyle="dropdownItem"
+        onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
+        className={css.button}
+      >
+        <Icon icon={props.icon || 'default'} className={css.button}>
+          <FormattedMessage id={props.label} />
+        </Icon>
+      </Button>
+      { withNote &&
+        <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props} className={css.addNoteForm} />
+      }
+    </div>
   );
 };
 
