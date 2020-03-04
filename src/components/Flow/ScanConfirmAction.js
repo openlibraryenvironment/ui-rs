@@ -7,8 +7,9 @@ import { Button, Row, Col, TextField } from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { useMessage } from '../MessageModalState';
 import AddNoteField from '../AddNoteField';
+import { includesNote } from './actionsByState';
 
-const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl, withoutNote }) => {
+const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
   const [, setMessage] = useMessage();
   const onSubmit = async values => {
     if (values?.reqId?.trim() !== request.hrid) {
@@ -17,6 +18,8 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
     }
     return performAction(action, { note: values.note }, success, error);
   };
+
+  const withNote = includesNote[action] ?? includesNote.default;
   return (
     <Form
       onSubmit={onSubmit}
@@ -38,7 +41,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
               </Button>
             </Col>
           </Row>
-          { !withoutNote &&
+          { withNote &&
             <Row>
               <Col>
                 <AddNoteField />
@@ -58,6 +61,5 @@ ScanConfirmAction.propTypes = {
   error: PropTypes.string.isRequired,
   success: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
-  withoutNote: PropTypes.bool,
 };
 export default injectIntl(ScanConfirmAction);

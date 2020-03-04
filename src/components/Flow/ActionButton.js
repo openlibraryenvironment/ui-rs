@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Button, Col, Icon, Row } from '@folio/stripes/components';
 
 import AddNoteForm from '../AddNoteForm';
+import { includesNote } from './actionsByState';
 
 const ActionButton = props => {
   const onSubmitNote = (values) => {
@@ -12,10 +13,11 @@ const ActionButton = props => {
     performAction(action, payload, success, error);
     return null;
   };
+  const withNote = includesNote[props?.action] ?? includesNote.default;
 
   return (
     <Row>
-      <Col xs={props.withoutNote ? 12 : 8}>
+      <Col xs={withNote ? 8 : 12}>
         <Button
           buttonStyle="dropdownItem"
           onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
@@ -25,7 +27,7 @@ const ActionButton = props => {
           </Icon>
         </Button>
       </Col>
-      { !props.withoutNote &&
+      { withNote &&
         <Col xs={4}>
           <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props} />
         </Col>
@@ -42,7 +44,6 @@ ActionButton.propTypes = {
   success: PropTypes.string,
   error: PropTypes.string,
   performAction: PropTypes.func.isRequired,
-  withoutNote: PropTypes.bool,
 };
 
 

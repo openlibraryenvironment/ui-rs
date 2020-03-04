@@ -19,7 +19,6 @@ export const PatronReturnedItem = props => <ActionButton
   label="ui-rs.actions.markReturnedWithoutScan"
   success="ui-rs.actions.markReturned.success"
   error="ui-rs.actions.markReturned.error"
-  withoutNote
   {...props}
 />;
 
@@ -37,7 +36,6 @@ export const SupplierCheckOutOfReshare = props => <ActionButton
   icon="print"
   success="ui-rs.actions.checkOut.success"
   error="ui-rs.actions.checkOut.error"
-  withoutNote
   {...props}
 />;
 
@@ -60,7 +58,6 @@ export const SupplierManualCheckout = props => <ActionButton
   icon="archive"
   success="ui-rs.actions.supplierManualCheckout.success"
   error="ui-rs.actions.supplierManualCheckout.error"
-  withoutNote
   {...props}
 />;
 

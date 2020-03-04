@@ -30,21 +30,6 @@ import initialToUpper from '../../util/initialToUpper';
  * ui-rs.actions.generic.* to provide generic success/error/prompt messages.
  *
 */
-export const includesNote = {
-  default: false,
-  RespondYes: true,
-  PrintPullSlip: false,
-  SupplierCheckInToReshare: false,
-  SupplierCannotSupply: true,
-  // Supplier mark checked out of ILS?
-  SupplierMarkShipped: true,
-  RequesterReceived: true,
-  PatronReturnedItem: false,
-  ShippedReturn: true,
-  SupplierCheckOutOfReshare: true,
-
-};
-
 
 export const actionsByState = {
   default: {
@@ -91,6 +76,23 @@ export const actionsByState = {
     primaryAction: 'ShippedReturn',
     moreActions: ['ShippedReturn', 'PrintPullSlip'],
   }
+};
+
+/* The idea behind this object is that we can use it to lookup whether or not any given action needs the ability to add a note or not,
+   freeing us from having to change multiple places when any changes/additions are made.
+*/
+export const includesNote = {
+  default: true,
+  RespondYes: true,
+  PrintPullSlip: false,
+  SupplierCheckInToReshare: false,
+  SupplierCannotSupply: true,
+  SupplierManualCheckout: false,
+  SupplierMarkShipped: true,
+  RequesterReceived: true,
+  PatronReturnedItem: false,
+  ShippedReturn: true,
+  SupplierCheckOutOfReshare: true
 };
 
 /* Actions from request.validActions to exclude from all states when using the below function */
