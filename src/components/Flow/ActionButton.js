@@ -13,9 +13,8 @@ const ActionButton = props => {
     performAction(action, payload, success, error);
     return null;
   };
-  const withNote = includesNote[props?.action] ?? includesNote.default;
-  console.log(props?.action)
 
+  const withNote = includesNote[props?.action] ?? includesNote.default;
   return (
     <Row>
       <Col xs={withNote ? 8 : 12}>
