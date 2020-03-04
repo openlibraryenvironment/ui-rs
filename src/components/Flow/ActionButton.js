@@ -6,6 +6,8 @@ import { Button, Col, Icon, Row } from '@folio/stripes/components';
 import AddNoteForm from '../AddNoteForm';
 import { includesNote } from './actionsByState';
 
+import css from './ActionButton.css';
+
 const ActionButton = props => {
   const onSubmitNote = (values) => {
     const { action, success, error, performAction } = props;
@@ -16,8 +18,8 @@ const ActionButton = props => {
 
   const withNote = includesNote[props?.action] ?? includesNote.default;
   return (
-    <Row>
-      <Col xs={withNote ? 8 : 12}>
+    <span className={css.container}>
+      <div className={css.button}>
         <Button
           buttonStyle="dropdownItem"
           onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
@@ -26,13 +28,13 @@ const ActionButton = props => {
             <FormattedMessage id={props.label} />
           </Icon>
         </Button>
-      </Col>
-      { withNote &&
-        <Col xs={4}>
-          <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props} />
-        </Col>
-      }
-    </Row>
+      </div>
+      <div className={css.addNoteForm}>
+        { withNote &&
+          <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props}  />
+        }
+      </div>
+    </span>
   );
 };
 

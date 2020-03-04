@@ -5,6 +5,8 @@ import { Button, Col, Row, TextField } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 import { FormattedMessage } from 'react-intl';
 
+import css from './AddNoteForm.css';
+
 class AddNoteForm extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func,
@@ -37,22 +39,23 @@ class AddNoteForm extends React.Component {
             onSubmit={handleSubmit}
             autoComplete="off"
           >
-            <Row>
-              <Col xs={8}>
+            <span className={css.container}>
+              <div className={css.field}>
                 {this.renderMessageField()}
-              </Col>
-              <Col xs={4}>
-                <Button onClick={() => {
-                  if (noteFieldOpen) {
-                    handleSubmit();
-                  }
-                  this.setState({ noteFieldOpen: !noteFieldOpen });
-                }}
+              </div>
+              <div className={css.button}>
+                <Button
+                  onClick={() => {
+                    if (noteFieldOpen) {
+                      handleSubmit();
+                    }
+                    this.setState({ noteFieldOpen: !noteFieldOpen });
+                  }}
                 >
                   {noteFieldOpen ? <FormattedMessage id="ui-rs.actions.send" /> : <FormattedMessage id="ui-rs.actions.addNote" />}
                 </Button>
-              </Col>
-            </Row>
+              </div>
+            </span>
           </form>
         )}
       />
