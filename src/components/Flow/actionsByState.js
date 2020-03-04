@@ -83,16 +83,20 @@ export const actionsByState = {
 */
 export const includesNote = {
   default: true,
+  supplierPrintPullSlip: false,
+  supplierManualCheckout: false,
+  supplierMarkShipped: true,
+  requesterReceived: true,
+  patronReturnedItem: false,
+  shippedReturn: true,
+  supplierCheckOutOfReshare: true,
+  // Special cases, where this file isn't drawn from at the moment:
+  // modals
   RespondYes: true,
-  PrintPullSlip: false,
-  SupplierCheckInToReshare: false,
   SupplierCannotSupply: true,
-  SupplierManualCheckout: false,
-  SupplierMarkShipped: true,
-  RequesterReceived: true,
-  PatronReturnedItem: false,
-  ShippedReturn: true,
-  SupplierCheckOutOfReshare: true
+  // others, triggered by other means
+  SupplierCheckInToReshare: false,
+  PrintPullSlip: false,
 };
 
 /* Actions from request.validActions to exclude from all states when using the below function */

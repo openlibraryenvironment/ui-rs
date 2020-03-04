@@ -14,6 +14,7 @@ const ActionButton = props => {
     return null;
   };
   const withNote = includesNote[props?.action] ?? includesNote.default;
+  console.log(props?.action)
 
   return (
     <Row>

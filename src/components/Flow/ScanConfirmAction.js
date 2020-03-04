@@ -18,6 +18,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
     }
     return performAction(action, { note: values.note }, success, error);
   };
+  console.log(action)
 
   const withNote = includesNote[action] ?? includesNote.default;
   return (
