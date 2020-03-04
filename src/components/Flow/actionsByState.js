@@ -30,6 +30,22 @@ import initialToUpper from '../../util/initialToUpper';
  * ui-rs.actions.generic.* to provide generic success/error/prompt messages.
  *
 */
+export const includesNote = {
+  default: false,
+  RespondYes: true,
+  PrintPullSlip: false,
+  SupplierCheckInToReshare: false,
+  SupplierCannotSupply: true,
+  // Supplier mark checked out of ILS?
+  SupplierMarkShipped: true,
+  RequesterReceived: true,
+  PatronReturnedItem: false,
+  ShippedReturn: true,
+  SupplierCheckOutOfReshare: true,
+
+};
+
+
 export const actionsByState = {
   default: {
     cards: ['Bibliographic', 'RequesterSupplier'],

@@ -183,11 +183,6 @@
 
   "cards.reqSup.searching": "Searching for supplier.",
 
-  "actions.sendChatMessage": "Send chat message",
-  "actions.sendChatMessage.confirm": "This will send a chat message to the other party.",
-  "actions.sendChatMessage.success": "Chat message successfully sent.",
-  "actions.sendChatMessage.error": "There was an error sending your message.",
-
   "printPullslip": "Print pull slip",
   "button.goBack": "Go back",
   "button.print": "Print",
