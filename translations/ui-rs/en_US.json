@@ -220,6 +220,7 @@
   "settings.customiseListSelect.loanConditions.signaturerequired": "Signature required",
   "settings.customiseListSelect.loanConditions.speccollsupervreq": "Special collections supervision required",
   "settings.customiseListSelect.loanConditions.watchlibraryuseonly": "Watch over use in library only",
+  "settings.customiseListSelect.loanConditions.other": "Other",
 
   "settings.customISO18626": "Custom ISO18626 settings",
   "settings.values": "Values",
