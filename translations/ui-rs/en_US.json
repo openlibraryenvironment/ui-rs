@@ -130,24 +130,26 @@
   "actions.generic.prompt": "Scan request barcode to <strong>{action}</strong>",
 
   "actions.wrongId": "No action performed, scanned request does not match",
+  
   "actions.respondYes": "Respond \"Will Supply\"",
   "actions.respondYes.success": "Responded \"Will Supply\"",
   "actions.respondYes.error": "Cannot respond \"Will Supply\"",
   "actions.respondYes.callNumber": "Call Number",
   "actions.respondYes.pickLocation": "Pick Location",
   "actions.respondYes.pickShelvingLocation": "Shelving Location",
+
   "actions.cannotSupply": "Respond \"Cannot Supply\"",
   "actions.cannotSupply.confirm": "Are you sure you want to <strong>respond \"Cannot Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
   "actions.cannotSupply.reason": "Reason item cannot be supplied:",
-  "actions.cannotSupply.reasons.unavailable": "No longer available",
-  "actions.cannotSupply.reasons.missing": "Missing",
-  "actions.cannotSupply.reasons.incorrect": "Incorrect item",
-  "actions.cannotSupply.reasons.on_reserve": "On reserve",
-  "actions.cannotSupply.reasons.other": "Other",
-  "actions.cannotSupply.reasons.test1": "1tset",
-  "actions.cannotSupply.reasons.this_is_a_test_with_spaces": "secaps htiw tset a si siht",
   "actions.cannotSupply.success": "Responded \"Cannot supply\".",
   "actions.cannotSupply.error": "Error, could not respond \"Cannot supply\".",
+
+  "actions.conditionalSupply": "Respond \"Conditional Supply\"",
+  "actions.conditionalSupply.confirm": "Are you sure you want to <strong>respond \"Conditional Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
+  "actions.conditionalSupply.condition": "Condition for item supply:",
+  "actions.conditionalSupply.success": "Responded \"Conditional supply\".",
+  "actions.conditionalSupply.error": "Error, could not respond \"Conditional supply\".",
+
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
   "actions.checkIn.success": "Item successfully checked into ReShare",
   "actions.checkIn.error": "Error checking item into ReShare",
@@ -209,10 +211,11 @@
   "settings.customiseListSelect": "Select an option to customize",
 
   "settings.customiseListSelect.cannotSupplyReasons": "Cannot supply reasons",
-  "settings.customiseListSelect.cannotSupplyReasons.incorrect": "Incorrect",
+  "settings.customiseListSelect.cannotSupplyReasons.incorrect": "Incorrect item",
   "settings.customiseListSelect.cannotSupplyReasons.missing": "Missing",
   "settings.customiseListSelect.cannotSupplyReasons.other": "Other",
-  "settings.customiseListSelect.cannotSupplyReasons.unavailable": "Unavailable",
+  "settings.customiseListSelect.cannotSupplyReasons.unavailable": "No longer available",
+  "settings.customiseListSelect.cannotSupplyReasons.on_reserve": "On reserve",
 
   "settings.customiseListSelect.loanConditions": "Loan conditions",
   "settings.customiseListSelect.loanConditions.libraryuseonly": "Use in library only",
