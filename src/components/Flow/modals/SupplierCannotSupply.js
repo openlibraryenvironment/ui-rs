@@ -68,7 +68,7 @@ const CannotSupply = props => {
                 component={RadioButton}
                 type="radio"
                 label={
-                  formatMessage({ id: `ui-rs.settings.customiseListSelect.cannotSupply.cannotSupplyReasons.${reason.value}`, defaultMessage: reason.label })
+                  formatMessage({ id: `ui-rs.settings.customiseListSelect.cannotSupplyReasons.${reason.value}`, defaultMessage: reason.label })
                 }
                 key={reason.value}
                 value={reason.value}

@@ -62,16 +62,16 @@ const ConditionalSupply = props => {
             <Layout className="padding-top-gutter">
               <strong><FormattedMessage id="ui-rs.actions.conditionalSupply.condition" /></strong>
             </Layout>
-            {listOfConditions?.map(reason => (
+            {listOfConditions?.map(condition => (
               <Field
                 name="loanCondition"
                 component={RadioButton}
                 type="radio"
                 label={
-                  formatMessage({ id: `ui-rs.settings.customiseListSelect.loanConditions.${reason.value}`, defaultMessage: reason.label })
+                  formatMessage({ id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.value}`, defaultMessage: condition.label })
                 }
-                key={reason.value}
-                value={reason.value}
+                key={condition.value}
+                value={condition.value}
               />
             ))}
           </Modal>
