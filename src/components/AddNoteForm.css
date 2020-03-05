@@ -1,0 +1,20 @@
+@import "@folio/stripes-components/lib/variables";
+
+.field {
+  display: flex;
+  flex-grow: 2;
+}
+
+.button {
+  display: flex;
+}
+
+.container {
+  display: flex;
+  position: absolute;
+  flex-direction: row-reverse;
+}
+
+.form {
+  margin-bottom: 0;
+}
