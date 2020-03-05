@@ -97,6 +97,8 @@
   "view.chatPane.actions.markAllAsRead": "Mark all as read",
   "view.chatPane.actions.markAllAsUnread": "Mark all as unread",
 
+  "view.chatPane.stateInvalidMessage": "A chat message cannot be sent from this state",
+
   "view.chatMessage.justNow": "Just now",
   "view.chatMessage.hour": "1 hr ago",
   "view.chatMessage.hours": "{hours} hrs ago",
