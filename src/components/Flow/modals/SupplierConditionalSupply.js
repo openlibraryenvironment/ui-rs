@@ -64,7 +64,7 @@ const ConditionalSupply = props => {
             </Layout>
             {listOfConditions?.map(reason => (
               <Field
-                name="reason"
+                name="loanCondition"
                 component={RadioButton}
                 type="radio"
                 label={
