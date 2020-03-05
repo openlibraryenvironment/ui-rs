@@ -207,6 +207,20 @@
   "settings.finish-editing": "Finish Editing",
   "settings.customiseList": "ISO18626 custom options",
   "settings.customiseListSelect": "Select an option to customize",
+
+  "settings.customiseListSelect.cannotSupplyReasons": "Cannot supply reasons",
+  "settings.customiseListSelect.cannotSupplyReasons.incorrect": "Incorrect",
+  "settings.customiseListSelect.cannotSupplyReasons.missing": "Missing",
+  "settings.customiseListSelect.cannotSupplyReasons.other": "Other",
+  "settings.customiseListSelect.cannotSupplyReasons.unavaliable": "Unavailable",
+
+  "settings.customiseListSelect.loanConditions": "Loan conditions",
+  "settings.customiseListSelect.loanConditions.libraryuseonly": "Use in library only",
+  "settings.customiseListSelect.loanConditions.noreproduction": "No reproduction",
+  "settings.customiseListSelect.loanConditions.signaturerequired": "Signature required",
+  "settings.customiseListSelect.loanConditions.speccollsupervreq": "Special collections supervision required",
+  "settings.customiseListSelect.loanConditions.watchlibraryuseonly": "Watch over use in library only",
+
   "settings.customISO18626": "Custom ISO18626 settings",
   "settings.values": "Values",
   "settings.actions": "Actions",

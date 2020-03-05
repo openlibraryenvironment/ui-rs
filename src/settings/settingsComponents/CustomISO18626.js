@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
@@ -45,19 +45,20 @@ class CustomISO18626 extends React.Component {
   }
 
   onChangeCategory = (e) => {
-    this.setState({ categoryId: e.target.value });
+    const refdataValues = this.props?.resources?.refdatavalues?.records;
+    const categoryName = refdataValues ? refdataValues.filter(obj => obj.id === e.target.value)[0]?.desc : '';
+    this.setState({ categoryId: e.target.value, categoryName });
   }
 
   renderRowFilter(intl) {
-    const custOptions = ['cannotSupplyReasons'];
+    const custOptions = ['cannotSupplyReasons', 'loanConditions'];
     const refdataValues = this.props?.resources?.refdatavalues?.records;
     const filteredList = refdataValues ? refdataValues.filter(obj => custOptions.includes(obj.desc)) : [];
-
     return (
       <Select
         dataOptions={[
           { value: 'empty', label: intl.formatMessage({ id: 'ui-rs.settings.customiseListSelect' }) },
-          ...filteredList.map(c => ({ value: c.id, label: c.desc })),
+          ...filteredList.map(c => ({ value: c.id, label: intl.formatMessage({ id: `ui-rs.settings.customiseListSelect.${c.desc}`, defaultMessage: c.desc }) })),
         ]}
         id="categorySelect"
         label={<FormattedMessage id="ui-rs.settings.customiseList" />}
@@ -81,6 +82,15 @@ class CustomISO18626 extends React.Component {
             }}
             // We have to unset the dataKey to prevent the props.resources in
             // <ControlledVocab> from being overwritten by the props.resources here.
+            /* parseRow={row => {
+              console.log(row);
+              return row;
+            }} */
+            parseRow={row => {
+              const newRow = row;
+              newRow.label = intl.formatMessage({ id: `ui-rs.settings.customiseListSelect.${this.state.categoryName}.${row.value}`, defaultMessage: row.value });
+              return newRow;
+            }}
             dataKey={undefined}
             hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="custom-iso18626"
@@ -101,4 +111,4 @@ class CustomISO18626 extends React.Component {
   }
 }
 
-export default CustomISO18626;
+export default injectIntl(CustomISO18626);
