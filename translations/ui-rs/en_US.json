@@ -212,7 +212,7 @@
   "settings.customiseListSelect.cannotSupplyReasons.incorrect": "Incorrect",
   "settings.customiseListSelect.cannotSupplyReasons.missing": "Missing",
   "settings.customiseListSelect.cannotSupplyReasons.other": "Other",
-  "settings.customiseListSelect.cannotSupplyReasons.unavaliable": "Unavailable",
+  "settings.customiseListSelect.cannotSupplyReasons.unavailable": "Unavailable",
 
   "settings.customiseListSelect.loanConditions": "Loan conditions",
   "settings.customiseListSelect.loanConditions.libraryuseonly": "Use in library only",
