@@ -14,10 +14,12 @@ export const CancelModalButton = props => {
 export const ShowModalButton = ({ modal, ...rest }) => {
   const [, setModal] = useModal();
   return (
-    <Button
-      onClick={() => setModal(modal)}
-      {...rest}
-    />
+    <div>
+      <Button
+        onClick={() => setModal(modal)}
+        {...rest}
+      />
+    </div>
   );
 };
 ShowModalButton.propTypes = {
