@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
+import { actionIcons } from '../actionsByState';
 import ActionButton from '../ActionButton';
-
-const actionIcons = {
-  supplierMarkShipped: 'archive',
-  supplierPrintPullSlip: 'print',
-};
 
 const Generic = props => {
   const { name:action, intl } = props;

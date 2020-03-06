@@ -60,6 +60,12 @@ export const actionsByState = {
   }
 };
 
+/* Icons for generic more actions */
+export const actionIcons = {
+  supplierMarkShipped: 'archive',
+  supplierPrintPullSlip: 'print',
+};
+
 /* Actions from request.validActions to exclude from all states when using the below function */
 const excludeRemote = ['message'];
 
