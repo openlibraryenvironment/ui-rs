@@ -4,7 +4,8 @@ import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Layout, Modal, ModalFooter, RadioButton, Row, TextArea } from '@folio/stripes/components';
+import { Button, Col, Layout, Modal, ModalFooter, RadioButton, Row, Select, TextArea } from '@folio/stripes/components';
+import { required } from '@folio/stripes-util';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
@@ -74,6 +75,19 @@ const ConditionalSupply = props => {
                 value={condition.value}
               />
             ))}
+            <Layout className="padding-top-gutter">
+              <strong><FormattedMessage id="ui-rs.actions.conditionalSupply.holdingState" /></strong>
+            </Layout>
+            <Field
+              name="holdingState"
+              component={Select}
+              dataOptions={[
+                { value: 'yes', label: formatMessage({ id: 'ui-rs.actions.conditionalSupply.holdingState.yes', defaultMessage: 'yes' }) },
+                { value: 'no', label: formatMessage({ id: 'ui-rs.actions.conditionalSupply.holdingState.no', defaultMessage: 'no' }) }
+              ]}
+              required
+              validate={required}
+            />
           </Modal>
         </form>
       )}

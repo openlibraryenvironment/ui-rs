@@ -151,6 +151,10 @@
   "actions.conditionalSupply.success": "Responded \"Conditional supply\".",
   "actions.conditionalSupply.error": "Error, could not respond \"Conditional supply\".",
 
+  "actions.conditionalSupply.holdingState": "Send request to \"holding state\" and await reply?",
+  "actions.conditionalSupply.holdingState.yes": "Yes",
+  "actions.conditionalSupply.holdingState.no": "No",
+
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
   "actions.checkIn.success": "Item successfully checked into ReShare",
   "actions.checkIn.error": "Error checking item into ReShare",
