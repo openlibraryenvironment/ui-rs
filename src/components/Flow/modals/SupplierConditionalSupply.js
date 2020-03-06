@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Layout, Modal, ModalFooter, RadioButton, Row, Select, TextArea } from '@folio/stripes/components';
+import { Button, Col, Layout, Modal, ModalFooter, RadioButton, RadioButtonGroup, Row, Select, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes-util';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
@@ -63,18 +63,22 @@ const ConditionalSupply = props => {
             <Layout className="padding-top-gutter">
               <strong><FormattedMessage id="ui-rs.actions.conditionalSupply.condition" /></strong>
             </Layout>
-            {listOfConditions?.map(condition => (
-              <Field
-                name="loanCondition"
-                component={RadioButton}
-                type="radio"
-                label={
-                  formatMessage({ id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.value}`, defaultMessage: condition.label })
-                }
-                key={condition.value}
-                value={condition.value}
-              />
-            ))}
+            <Field
+              name="loanCondition"
+              component={RadioButtonGroup}
+              required
+              validate={required}
+            >
+              {listOfConditions?.map(condition => (
+                <RadioButton
+                  label={
+                    formatMessage({ id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.value}`, defaultMessage: condition.label })
+                  }
+                  key={condition.value}
+                  value={condition.value}
+                />
+              ))}
+            </Field>
             <Layout className="padding-top-gutter">
               <strong><FormattedMessage id="ui-rs.actions.conditionalSupply.holdingState" /></strong>
             </Layout>
