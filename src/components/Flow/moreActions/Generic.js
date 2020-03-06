@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import ActionButton from '../ActionButton';
 
 const actionIcons = {
+  supplierMarkShipped: 'archive',
   supplierPrintPullSlip: 'print',
 };
 
