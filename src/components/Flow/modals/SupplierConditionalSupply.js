@@ -52,6 +52,51 @@ const ConditionalSupply = props => {
             footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
           >
             <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: request.id, item: request.title }} />
+            <Row>
+              <Col xs={6}>
+                <Layout className="padding-top-gutter">
+                  <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.callNumber" />
+                </Layout>
+                <Row>
+                  <Col xs={11}>
+                    <Field name="callnumber" component={TextArea} autoFocus />
+                  </Col>
+                </Row>
+                <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.pickLocation" />
+                <Row>
+                  <Col xs={11}>
+                    <Field name="pickLocation" component={TextArea} autoFocus />
+                  </Col>
+                </Row>
+                <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.pickShelvingLocation" />
+                <Row>
+                  <Col xs={11}>
+                    <Field name="pickShelvingLocation" component={TextArea} autoFocus />
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs={6}>
+                <Layout className="padding-top-gutter">
+                  <strong><FormattedMessage id="ui-rs.actions.conditionalSupply.condition" /></strong>
+                </Layout>
+                <Field
+                  name="loanCondition"
+                  component={RadioButtonGroup}
+                  required
+                  validate={required}
+                >
+                  {listOfConditions?.map(condition => (
+                    <RadioButton
+                      label={
+                        formatMessage({ id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.value}`, defaultMessage: condition.label })
+                      }
+                      key={condition.value}
+                      value={condition.value}
+                    />
+                  ))}
+                </Field>
+              </Col>
+            </Row>
             <Layout className="padding-top-gutter">
               <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
             </Layout>
@@ -60,25 +105,6 @@ const ConditionalSupply = props => {
                 <Field name="note" component={TextArea} autoFocus />
               </Col>
             </Row>
-            <Layout className="padding-top-gutter">
-              <strong><FormattedMessage id="ui-rs.actions.conditionalSupply.condition" /></strong>
-            </Layout>
-            <Field
-              name="loanCondition"
-              component={RadioButtonGroup}
-              required
-              validate={required}
-            >
-              {listOfConditions?.map(condition => (
-                <RadioButton
-                  label={
-                    formatMessage({ id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.value}`, defaultMessage: condition.label })
-                  }
-                  key={condition.value}
-                  value={condition.value}
-                />
-              ))}
-            </Field>
             <Layout className="padding-top-gutter">
               <strong><FormattedMessage id="ui-rs.actions.conditionalSupply.holdingState" /></strong>
             </Layout>

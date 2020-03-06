@@ -53,14 +53,6 @@ const CannotSupply = props => {
           >
             <SafeHTMLMessage id="ui-rs.actions.cannotSupply.confirm" values={{ id: request.id, item: request.title }} />
             <Layout className="padding-top-gutter">
-              <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
-            </Layout>
-            <Row>
-              <Col xs={11}>
-                <Field name="note" component={TextArea} autoFocus />
-              </Col>
-            </Row>
-            <Layout className="padding-top-gutter">
               <strong><FormattedMessage id="ui-rs.actions.cannotSupply.reason" /></strong>
             </Layout>
             <Field
@@ -79,6 +71,14 @@ const CannotSupply = props => {
                 />
               ))}
             </Field>
+            <Layout className="padding-top-gutter">
+              <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
+            </Layout>
+            <Row>
+              <Col xs={11}>
+                <Field name="note" component={TextArea} autoFocus />
+              </Col>
+            </Row>
           </Modal>
         </form>
       )}
