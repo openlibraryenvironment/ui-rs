@@ -150,7 +150,7 @@ class ChatPane extends React.Component {
   displayMessages() {
     const { resources } = this.props;
     const notifications = resources?.selectedRecord?.records[0]?.notifications;
-
+    console.log("Notifications: %o", notifications)
     if (notifications) {
       // Sort the notifications into order by time recieved/sent
       notifications.sort((a, b) => this.sortByTimestamp(a, b));

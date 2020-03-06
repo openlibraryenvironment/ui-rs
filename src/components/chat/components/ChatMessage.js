@@ -73,13 +73,24 @@ const ChatMessage = React.forwardRef((props, ref) => {
   };
 
   const renderActionContents = () => {
-    const action = notification?.attachedAction;
-    const actionKey = action.charAt(0).toLowerCase() + action.substring(1);
+    const action = notification?.attachedAction ? notification?.attachedAction.charAt(0).toLowerCase() + notification?.attachedAction.substring(1) : undefined;
+    const actionStatus = notification?.actionStatus ? notification?.actionStatus?.charAt(0).toLowerCase() + notification?.actionStatus?.substring(1) : undefined;
+    const actionData = notification?.actionData ? notification?.actionData?.charAt(0).toLowerCase() + notification?.actionData?.substring(1) : undefined;
+
+
+    let actionKey = action;
+    if (actionStatus) {
+      actionKey = `${actionKey}.${actionStatus}`;
+    }
+    // For now we're not displaying this information in the message
+    /* if (actionData) {
+      actionKey = `${actionKey}.${actionData}`;
+    } */
 
     return (
       <>
         {
-          action ? action !== 'Notification' &&
+          action ? action !== 'notification' &&
           <span
             className={css.actionText}
           >
