@@ -65,7 +65,7 @@ export const actionsByState = {
    freeing us from having to change multiple places when any changes/additions are made.
 */
 export const includesNote = {
-  default: true,
+  default: false,
   supplierPrintPullSlip: false,
   supplierManualCheckout: false,
   supplierMarkShipped: true,
@@ -77,6 +77,7 @@ export const includesNote = {
   // modals
   RespondYes: true,
   SupplierCannotSupply: true,
+  SupplierConditionalSupply: true,
   // others, triggered by other means
   SupplierCheckInToReshare: false,
   PrintPullSlip: false,
