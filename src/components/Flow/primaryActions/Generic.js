@@ -3,14 +3,6 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import ScanConfirmAction from '../ScanConfirmAction';
 
-export const ShippedReturn = props => <ScanConfirmAction
-  action="shippedReturn"
-  prompt="ui-rs.actions.markShippedReturn.prompt"
-  success="ui-rs.actions.markShippedReturn.success"
-  error="ui-rs.actions.markShippedReturn.error"
-  {...props}
-/>;
-
 const Generic = props => {
   const { name:action, intl } = props;
   const promptKey = `ui-rs.actions.${action}.prompt`;
