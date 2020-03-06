@@ -30,6 +30,7 @@ import initialToUpper from '../../util/initialToUpper';
  * ui-rs.actions.generic.* to provide generic success/error/prompt messages.
  *
 */
+
 export const actionsByState = {
   default: {
     cards: ['Bibliographic', 'RequesterSupplier'],
@@ -58,6 +59,28 @@ export const actionsByState = {
   REQ_AWAITING_RETURN_SHIPPING: {
     moreActions: ['PrintPullSlip'],
   }
+};
+
+/* The idea behind this object is that we can use it to lookup whether or not any given action needs the ability to add a note or not,
+   freeing us from having to change multiple places when any changes/additions are made.
+*/
+export const includesNote = {
+  default: false,
+  supplierPrintPullSlip: false,
+  supplierManualCheckout: false,
+  supplierMarkShipped: true,
+  requesterReceived: true,
+  patronReturnedItem: false,
+  shippedReturn: true,
+  supplierCheckOutOfReshare: true,
+  // Special cases, where this file isn't drawn from at the moment:
+  // modals
+  RespondYes: true,
+  SupplierCannotSupply: true,
+  SupplierConditionalSupply: true,
+  // others, triggered by other means
+  SupplierCheckInToReshare: false,
+  PrintPullSlip: false,
 };
 
 /* Icons for generic more actions */

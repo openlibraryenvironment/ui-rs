@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Button, Col, Icon, Row } from '@folio/stripes/components';
+import { Button, Icon } from '@folio/stripes/components';
 
 import AddNoteForm from '../AddNoteForm';
+import { includesNote } from './actionsByState';
+
+import css from './ActionButton.css';
 
 const ActionButton = props => {
   const onSubmitNote = (values) => {
@@ -13,24 +16,22 @@ const ActionButton = props => {
     return null;
   };
 
+  const withNote = includesNote[props?.action] ?? includesNote.default;
   return (
-    <Row>
-      <Col xs={props.withoutNote ? 12 : 8}>
-        <Button
-          buttonStyle="dropdownItem"
-          onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
-        >
-          <Icon icon={props.icon || 'default'}>
-            <FormattedMessage id={props.label} />
-          </Icon>
-        </Button>
-      </Col>
-      { !props.withoutNote &&
-        <Col xs={4}>
-          <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props} />
-        </Col>
+    <div className={css.container}>
+      <Button
+        buttonStyle="dropdownItem"
+        onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
+        className={css.button}
+      >
+        <Icon icon={props.icon || 'default'} className={css.button}>
+          <FormattedMessage id={props.label} />
+        </Icon>
+      </Button>
+      { withNote &&
+        <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props} className={css.addNoteForm} />
       }
-    </Row>
+    </div>
   );
 };
 
@@ -42,7 +43,6 @@ ActionButton.propTypes = {
   success: PropTypes.string,
   error: PropTypes.string,
   performAction: PropTypes.func.isRequired,
-  withoutNote: PropTypes.bool,
 };
 
 

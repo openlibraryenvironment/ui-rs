@@ -24,11 +24,5 @@ export const RespondYes = () => (
   </ShowModalButton>
 );
 
-export const SendChatMessage = () => (
-  <ShowModalButton buttonStyle="dropdownItem" modal="SendChatMessage">
-    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.sendChatMessage" /></Icon>
-  </ShowModalButton>
-);
-
 // Client only, component names do not correspond to actions
 export const PrintPullSlip = () => <Button buttonStyle="dropdownItem" to="pullslip"><Icon icon="print">Print pull slip</Icon></Button>;

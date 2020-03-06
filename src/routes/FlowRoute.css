@@ -24,7 +24,7 @@
   margin-top: 0;
 }
 
-.optionList button, .optionList a {
+.optionList div, .optionList a {
   border-radius: 0;
   &:nth-child(even) {
     background-color: var(--color-fill-table-row-even);
