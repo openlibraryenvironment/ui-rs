@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
-import { stripesConnect } from '@folio/stripes/core';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Dropdown, DropdownMenu, IconButton, Pane, Row, TextArea } from '@folio/stripes/components';
 import { ChatMessage } from './components';
 import css from './ChatPane.css';
@@ -15,6 +15,8 @@ class ChatPane extends React.Component {
     }),
     onToggle: PropTypes.func.isRequired,
   }
+
+  static contextType = CalloutContext;
 
   constructor(props) {
     super(props);
@@ -62,18 +64,25 @@ class ChatPane extends React.Component {
   }
 
   renderPaneFooter() {
-    // const patronRequest = this.props?.resources?.selectedRecord?.records[0];
+    const validActions = this.props?.resources?.selectedRecord?.records[0]?.validActions;
+    const messageValid = validActions ? validActions.includes('message') : false;
 
-    // const validActions = patronRequest?.validActions;
-    // const messageValid = validActions ? validActions.includes('message') : false;
     return (
       <Form
         onSubmit={this.onSubmitMessage}
         render={({ form, handleSubmit, pristine }) => {
           const onEnterPress = async (e) => {
-            if (e.keyCode === 13 && e.shiftKey === false) {
+            if (e.keyCode === 13 && e.shiftKey === false && !pristine) {
               e.preventDefault();
-              await handleSubmit();
+              if (messageValid) {
+                await handleSubmit();
+                form.reset();
+              } else {
+                this.context.sendCallout({ type: 'error', message: <FormattedMessage id="ui-rs.view.chatPane.stateInvalidMessage" /> });
+                form.reset();
+              }
+            } else if (e.keyCode === 13 && e.shiftKey === false) {
+              e.preventDefault();
               form.reset();
             }
           };
@@ -103,11 +112,7 @@ class ChatPane extends React.Component {
                       await handleSubmit(event);
                       form.reset();
                     }}
-                    disabled={
-                      pristine
-                      // TODO State model not complete, eventaully implement this check to see if sending message is valid
-                      // !messageValid
-                    }
+                    disabled={pristine || !messageValid}
                   >
                     <FormattedMessage id="ui-rs.view.chatPane.sendMessage" />
                   </Button>

@@ -38,43 +38,26 @@ export const actionsByState = {
     moreActions: [],
   },
   RES_IDLE:{
-    primaryAction: '',
-    moreActions: ['RespondYes', 'SupplierCannotSupply'],
+    primaryAction: null,
   },
   RES_NEW_AWAIT_PULL_SLIP: {
     primaryAction: 'PrintPullSlip',
-    moreActions: ['SupplierCannotSupply'],
   },
   RES_AWAIT_PICKING: {
     primaryAction: 'SupplierCheckInToReshare',
-    moreActions: ['PrintPullSlip', 'SupplierCannotSupply'],
-  },
-  RES_CHECKED_IN_TO_RESHARE: {
-    primaryAction: 'SupplierMarkShipped',
-    moreActions: ['SupplierMarkShipped', 'PrintPullSlip', 'SupplierCannotSupply'],
-  },
-  RES_ITEM_RETURNED: {
-    primaryAction: 'SupplierCheckOutOfReshare',
-    moreActions: ['SupplierCheckOutOfReshare'],
-  },
-  RES_AWAIT_SHIP: {
-    primaryAction: 'SupplierMarkShipped',
-    moreActions: ['SupplierMarkShipped'],
+    moreActions: ['PrintPullSlip'],
   },
   REQ_SHIPPED: {
-    primaryAction: 'RequesterReceived',
-    moreActions: ['RequesterReceived', 'PrintPullSlip'],
+    moreActions: ['PrintPullSlip'],
   },
   REQ_BORROWING_LIBRARY_RECEIVED: {
     primaryAction: 'RequesterManualCheckIn',
   },
   REQ_CHECKED_IN: {
-    primaryAction: 'PatronReturnedItem',
-    moreActions: ['PatronReturnedItem', 'ShippedReturn', 'PrintPullSlip'],
+    moreActions: ['PrintPullSlip'],
   },
   REQ_AWAITING_RETURN_SHIPPING: {
-    primaryAction: 'ShippedReturn',
-    moreActions: ['ShippedReturn', 'PrintPullSlip'],
+    moreActions: ['PrintPullSlip'],
   }
 };
 
@@ -97,6 +80,12 @@ export const includesNote = {
   // others, triggered by other means
   SupplierCheckInToReshare: false,
   PrintPullSlip: false,
+};
+
+/* Icons for generic more actions */
+export const actionIcons = {
+  supplierMarkShipped: 'archive',
+  supplierPrintPullSlip: 'print',
 };
 
 /* Actions from request.validActions to exclude from all states when using the below function */
