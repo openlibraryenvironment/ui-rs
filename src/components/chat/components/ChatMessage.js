@@ -7,6 +7,13 @@ import css from './ChatMessage.css';
 
 const ChatMessage = React.forwardRef((props, ref) => {
   const { notification } = props;
+
+  const systemMessageKeys = [
+    '#ReShareLoanConditionAgreeResponse#',
+    '#ReShareSupplierConditionsAssumedAgreed#',
+    '#ReShareSupplierAwaitingConditionConfirmation#'
+  ];
+
   const longDateFormatter = (timestamp) => {
     // This takes a moment timestamp
     return `${timestamp.format('MMM. D, YYYY ')} at ${timestamp.format(' h:mm a')}`;
@@ -88,9 +95,10 @@ const ChatMessage = React.forwardRef((props, ref) => {
       actionKey = `${actionKey}.${actionData}`;
     } */
 
-    // If the message is a loan condition agreement then it will be prefaced by #ReShareLoanConditionAgreeResponse#. We want to display an action message in its place
-    if (notification?.messageContent?.startsWith('#ReShareLoanConditionAgreeResponse#')) {
-      actionKey = 'ReShareLoanConditionAgreeResponse';
+    // If the message is a loan condition agreement then it will be prefaced by one of the keys in systemMessageKeys above. We want to display an action message in its place
+    const systemKey = systemMessageKeys.find(key => notification?.messageContent?.startsWith(key));
+    if (systemKey) {
+      actionKey = systemKey.substring(1, systemKey.length - 1);
       loanNotification = true;
     }
 
@@ -143,9 +151,10 @@ const ChatMessage = React.forwardRef((props, ref) => {
   const renderMessageContents = () => {
     let contents = notification.messageContent;
 
-    // If the message is a loan condition agreement then it will be prefaced by #ReShareLoanConditionAgreeResponse#. We want to remove this from our reshare display
-    if (notification?.messageContent?.startsWith('#ReShareLoanConditionAgreeResponse#')) {
-      contents = contents.replace('#ReShareLoanConditionAgreeResponse#', '');
+    // If the message is a loan condition agreement then it will be prefaced by some system key in hashes. We want to remove this from our reshare display
+    if (systemMessageKeys.some(key => notification?.messageContent?.startsWith(key))) {
+      const re = new RegExp('#[\\s\\S]*?#');
+      contents = contents.replace(re, '');
     }
     return contents;
   };

@@ -123,7 +123,11 @@
   "view.withAction.requestResponse.loaned": "The supplier has shipped this request with a note:",
   "view.withAction.received": "The requester has received this shipment with a note:",
   "view.withAction.shippedReturn": "The requester shipped this back with a note:",
+
+
   "view.withAction.ReShareLoanConditionAgreeResponse": "The requester has agreed to the loan condition",
+  "view.withAction.ReShareSupplierAwaitingConditionConfirmation": "The supplier has placed this request into a holding state, pending agreement of the loan condition(s)",
+  "view.withAction.ReShareSupplierConditionsAssumedAgreed": "The supplier has continued along their workflow of this request. The loan conditions are assumed to have hbeen read and agreed to",
 
   "actions.addNote": "Add note",
   "actions.hideNoteField": "Hide note",
