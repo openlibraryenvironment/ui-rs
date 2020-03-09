@@ -56,6 +56,10 @@ export const actionsByState = {
   REQ_CHECKED_IN: {
     moreActions: ['PrintPullSlip'],
   },
+  REQ_CONDITIONAL_ANSWER_RECEIVED: {
+    cards: ['RequesterSupplier', 'LoanConditions'],
+    primaryAction: null,
+  },
   REQ_AWAITING_RETURN_SHIPPING: {
     moreActions: ['PrintPullSlip'],
   }

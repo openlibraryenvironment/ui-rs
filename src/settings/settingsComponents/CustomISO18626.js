@@ -82,7 +82,7 @@ class CustomISO18626 extends React.Component {
             }}
             // We have to unset the dataKey to prevent the props.resources in
             // <ControlledVocab> from being overwritten by the props.resources here.
-            formatter={{ label: r => intl.formatMessage({ id: `ui-rs.settings.customiseListSelect.${this.state.categoryName}.${r.value}`, defaultMessage: r.value }) }}
+            formatter={{ label: r => intl.formatMessage({ id: `ui-rs.settings.customiseListSelect.${this.state.categoryName}.${r.value}`, defaultMessage: r.label }) }}
             dataKey={undefined}
             hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="custom-iso18626"

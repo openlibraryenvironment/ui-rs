@@ -77,6 +77,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
     const actionStatus = notification?.actionStatus ? notification?.actionStatus?.charAt(0).toLowerCase() + notification?.actionStatus?.substring(1) : undefined;
     const actionData = notification?.actionData ? notification?.actionData?.charAt(0).toLowerCase() + notification?.actionData?.substring(1) : undefined;
 
+    let loanNotification = false;
 
     let actionKey = action;
     if (actionStatus) {
@@ -87,10 +88,16 @@ const ChatMessage = React.forwardRef((props, ref) => {
       actionKey = `${actionKey}.${actionData}`;
     } */
 
+    // If the message is a loan condition agreement then it will be prefaced by #ReShareLoanConditionAgreeResponse#. We want to display an action message in its place
+    if (notification?.messageContent?.startsWith('#ReShareLoanConditionAgreeResponse#')) {
+      actionKey = 'ReShareLoanConditionAgreeResponse';
+      loanNotification = true;
+    }
+
     return (
       <>
         {
-          action ? action !== 'notification' &&
+          action ? (action !== 'notification' || loanNotification) &&
           <span
             className={css.actionText}
           >
@@ -133,6 +140,16 @@ const ChatMessage = React.forwardRef((props, ref) => {
     );
   };
 
+  const renderMessageContents = () => {
+    let contents = notification.messageContent;
+
+    // If the message is a loan condition agreement then it will be prefaced by #ReShareLoanConditionAgreeResponse#. We want to remove this from our reshare display
+    if (notification?.messageContent?.startsWith('#ReShareLoanConditionAgreeResponse#')) {
+      contents = contents.replace('#ReShareLoanConditionAgreeResponse#', '');
+    }
+    return contents;
+  };
+
   const renderDropdownButton = () => {
     return (
       <Dropdown
@@ -155,7 +172,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
       >
         {renderDropdownButton()}
         {renderActionContents()}
-        {notification.messageContent}
+        {renderMessageContents()}
       </div>
     );
   };
