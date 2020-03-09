@@ -31,7 +31,7 @@ const LoanConditions = (props) => {
     );
   };
 
-  const currentSupplier = request.resolvedSupplier.id
+  const currentSupplier = request.resolvedSupplier.id;
 
   return (
     <Row>

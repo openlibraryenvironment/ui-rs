@@ -75,7 +75,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
   const renderActionContents = () => {
     const action = notification?.attachedAction ? notification?.attachedAction.charAt(0).toLowerCase() + notification?.attachedAction.substring(1) : undefined;
     const actionStatus = notification?.actionStatus ? notification?.actionStatus?.charAt(0).toLowerCase() + notification?.actionStatus?.substring(1) : undefined;
-    const actionData = notification?.actionData ? notification?.actionData?.charAt(0).toLowerCase() + notification?.actionData?.substring(1) : undefined;
+    // const actionData = notification?.actionData ? notification?.actionData?.charAt(0).toLowerCase() + notification?.actionData?.substring(1) : undefined;
 
     let loanNotification = false;
 
