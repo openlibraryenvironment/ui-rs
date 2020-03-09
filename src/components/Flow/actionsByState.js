@@ -40,6 +40,10 @@ export const actionsByState = {
   RES_IDLE:{
     primaryAction: null,
   },
+  RES_PENDING_CONDITIONAL_ANSWER: {
+    cards: ['RequesterSupplier', 'LoanConditions'],
+    primaryAction: null,
+  },
   RES_NEW_AWAIT_PULL_SLIP: {
     primaryAction: 'PrintPullSlip',
   },

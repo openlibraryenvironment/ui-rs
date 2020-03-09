@@ -1,31 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Card, Row, Col } from '@folio/stripes/components';
 
 
-const displayCondition = (condition) => {
-  return (
-    <Row>
-      <Col xs={5}>
-        <strong>
-          <FormattedMessage id="ui-rs.loanConditions.condition" />
-        </strong>
-        {condition.code}
-      </Col>
-      <Col xs={2} />
-      <Col xs={5}>
-        <strong>
-          <FormattedMessage id="ui-rs.loanConditions.note" />
-        </strong>
-        {condition.note}
-      </Col>
-    </Row>
-  );
-};
+const LoanConditions = (props) => {
+  const request = props?.request;
+  const { conditions } = request;
 
-const LoanConditions = ({ request: req }) => {
-  const { conditions } = req;
+  const displayCondition = (condition) => {
+    const { formatMessage } = props.intl;
+    return (
+      <Row>
+        <Col xs={5}>
+          <strong>
+            <FormattedMessage id="ui-rs.loanConditions.condition" />
+          </strong>
+          {formatMessage({ id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.code}`, defaultMessage: condition.code })}
+        </Col>
+        <Col xs={2} />
+        {condition.note &&
+          <Col xs={5}>
+            <strong>
+              <FormattedMessage id="ui-rs.loanConditions.note" />
+            </strong>
+            {condition.note}
+          </Col>
+        }
+      </Row>
+    );
+  };
+
+  const currentSupplier = request.resolvedSupplier.id
+
   return (
     <Row>
       <Col xs={6}>
@@ -34,7 +41,14 @@ const LoanConditions = ({ request: req }) => {
           headerStart={<FormattedMessage id="ui-rs.loanConditions" />}
           roundedBorder
         >
-          {conditions.map(condition => displayCondition(condition))}
+          {conditions.map(condition => {
+            // We only want to display the conditions relevant to the current supplier
+            const conditionSupplier = condition.relevantSupplier?.id;
+            if (conditionSupplier === currentSupplier) {
+              return displayCondition(condition);
+            }
+            return null;
+          })}
         </Card>
       </Col>
     </Row>
@@ -42,7 +56,21 @@ const LoanConditions = ({ request: req }) => {
 };
 
 LoanConditions.propTypes = {
-  request: PropTypes.object.isRequired,
+  request: PropTypes.shape({
+    conditions: PropTypes.arrayOf({
+      id: PropTypes.string,
+      code: PropTypes.string,
+      relevantSupplier: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }),
+    resolvedSupplier: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.func.isRequired
+  })
 };
 
-export default LoanConditions;
+export default injectIntl(LoanConditions);
