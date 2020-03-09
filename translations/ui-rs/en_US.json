@@ -140,7 +140,8 @@
 
   "actions.wrongId": "No action performed, scanned request does not match",
 
-  "actions.sendLoanConditionResponse": "Agree to loan conditions",
+  "actions.requesterAgreeConditions": "Agree to loan conditions",
+  "actions.requesterRejectConditions": "Reject loan conditions",
   "actions.supplierMarkConditionsAgreed": "Mark loan conditions as agreed",
   
   "actions.respondYes": "Respond \"Will Supply\"",
