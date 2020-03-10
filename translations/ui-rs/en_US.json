@@ -124,6 +124,7 @@
   "view.withAction.received": "The requester has received this shipment with a note:",
   "view.withAction.shippedReturn": "The requester shipped this back with a note:",
 
+  "view.withAction.cancelResponse.cancelled": "The supplier cancelled of this request with a note:",
 
   "view.withAction.ReShareLoanConditionAgreeResponse": "The requester has agreed to the loan condition",
   "view.withAction.ReShareSupplierAwaitingConditionConfirmation": "The supplier has placed this request into a holding state, pending agreement of the loan condition(s)",
@@ -139,6 +140,8 @@
   "actions.generic.prompt": "Scan request barcode to <strong>{action}</strong>",
 
   "actions.wrongId": "No action performed, scanned request does not match",
+
+  "actions.requesterRequestedCancellation": "The requester has requested cancellation of this request. Please respond.",
 
   "actions.requesterAgreeConditions": "Agree to loan conditions",
   "actions.requesterRejectConditions": "Reject loan conditions",

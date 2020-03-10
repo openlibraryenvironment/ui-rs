@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
+import { Button, ButtonGroup, Icon, IconButton, Layout, MessageBanner, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 import { Tags } from '@folio/stripes-erm-components';
 
 import { ChatPane } from '../components/chat';
@@ -118,9 +118,17 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
   const request = _.get(resource, 'records[0]');
 
   const forCurrent = actionsForRequest(request);
-      console.log(resources)
+  const requesterRequestedCancellation = resources?.selectedRecord?.records[0]?.requesterRequestedCancellation;
+
   return (
     <React.Fragment>
+      {requesterRequestedCancellation ?
+        <MessageBanner
+          type="warning"
+        >
+          <FormattedMessage id="ui-rs.actions.requesterRequestedCancellation" />
+        </MessageBanner> : null
+      }
       <Paneset>
         {/* TODO: The "Request" string is translated as ui-rs.view.title which we can use conveniently with a hook once react-intl is upgraded */}
         <Pane
