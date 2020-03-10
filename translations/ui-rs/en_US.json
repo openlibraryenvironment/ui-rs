@@ -124,6 +124,8 @@
   "view.withAction.received": "The requester has received this shipment with a note:",
   "view.withAction.shippedReturn": "The requester shipped this back with a note:",
 
+
+  "view.withAction.cancelResponse": "The supplier denied the cancellation of this request with a note:",
   "view.withAction.cancelResponse.cancelled": "The supplier cancelled of this request with a note:",
 
   "view.withAction.ReShareLoanConditionAgreeResponse": "The requester has agreed to the loan condition",
