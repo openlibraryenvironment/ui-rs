@@ -151,6 +151,7 @@
   "actions.respondToCancel.confirm": "Do you wish to allow the cancellation of this request?",
   "actions.respondToCancel.yes": "Agree to cancellation",
   "actions.respondToCancel.no": "Deny cancellation",
+  "actions.respondToCancel.cancelResponse": "Cancellation response",
   "actions.respondToCancel.note": "Add note",
   "actions.respondToCancel.success": "Successfully sent cancellation response",
   "actions.respondToCancel.failure": "Failed to send cancellation response",
