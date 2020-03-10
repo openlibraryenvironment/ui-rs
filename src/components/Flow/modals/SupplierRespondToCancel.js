@@ -52,10 +52,12 @@ const RespondToCancel = props => {
             <SafeHTMLMessage id="ui-rs.actions.respondToCancel.confirm" values={{ id: request.id, item: request.title }} />
             <Row>
               <Col xs={6}>
+                <Layout className="padding-top-gutter">
+                  <SafeHTMLMessage id="ui-rs.actions.respondToCancel.cancelResponse" />
+                </Layout>
                 <Field
                   name="cancelResponse"
                   component={RadioButtonGroup}
-                  label={<FormattedMessage id="ui-rs.actions.respondToCancel.cancelResponse" />}
                   required
                   validate={required}
                 >
@@ -72,10 +74,12 @@ const RespondToCancel = props => {
                 </Field>
               </Col>
               <Col xs={6}>
+                <Layout className="padding-top-gutter">
+                  <SafeHTMLMessage id="ui-rs.actions.respondToCancel.note" />
+                </Layout>
                 <Field
                   name="note"
                   component={TextArea}
-                  label={<FormattedMessage id="ui-rs.actions.respondToCancel.note" />}
                 />
               </Col>
             </Row>
