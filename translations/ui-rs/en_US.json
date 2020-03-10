@@ -9,6 +9,10 @@
   "requester": "Requester",
   "supplier": "Supplier",
 
+  "loanConditions": "Loan Conditions",
+  "loanConditions.condition": "Condition: ",
+  "loanConditions.note": "Note: ",
+
   "patronrequests.id": "Request Id",
   "patronrequests.role": "Role",
   "patronrequests.isRequester": "Requester?",
@@ -111,14 +115,22 @@
   "view.chatMessage.actions.noAvailableActions": "There are no available actions",
   "view.chatMessage.actions.Read": "Read",
   "view.chatMessage.actions.Unread": "Unread",
-  
 
   "view.withAction.requestResponse": "The supplier has responded to this request with a note:",
-  "view.withAction.requestResponseUnfilled": "The supplier has responded 'Cannot supply' to this request with a note:",
-  "view.withAction.requestResponseExpectToSupply": "The supplier has responded 'Expects to supply' to this request with a note:",
-  "view.withAction.requestResponseLoaned": "The supplier has shipped this request with a note:",
+  "view.withAction.requestResponse.unfilled": "The supplier has responded 'Cannot supply' to this request with a note:",
+  "view.withAction.requestResponse.expectToSupply": "The supplier has responded 'Expects to supply' to this request with a note:",
+  "view.withAction.requestResponse.conditional": "The supplier has responded conditionally with a note:",
+  "view.withAction.requestResponse.loaned": "The supplier has shipped this request with a note:",
   "view.withAction.received": "The requester has received this shipment with a note:",
   "view.withAction.shippedReturn": "The requester shipped this back with a note:",
+
+
+  "view.withAction.cancelResponse": "The supplier denied the cancellation of this request with a note:",
+  "view.withAction.cancelResponse.cancelled": "The supplier cancelled of this request with a note:",
+
+  "view.withAction.ReShareLoanConditionAgreeResponse": "The requester has agreed to the loan condition",
+  "view.withAction.ReShareSupplierAwaitingConditionConfirmation": "The supplier has placed this request into a holding state, pending agreement of the loan condition(s)",
+  "view.withAction.ReShareSupplierConditionsAssumedAgreed": "The supplier has continued along their workflow of this request. The loan conditions are assumed to have hbeen read and agreed to",
 
   "actions.addNote": "Add note",
   "actions.hideNoteField": "Hide note",
@@ -130,24 +142,54 @@
   "actions.generic.prompt": "Scan request barcode to <strong>{action}</strong>",
 
   "actions.wrongId": "No action performed, scanned request does not match",
+
+  "actions.requesterRequestedCancellation": "The requester has requested cancellation of this request. Please respond.",
+
+  "actions.requesterAgreeConditions": "Agree to loan conditions",
+  "actions.requesterRejectConditions": "Reject loan conditions",
+  "actions.supplierMarkConditionsAgreed": "Mark loan conditions as agreed",
+
+  "actions.requesterCancel": "Cancel request",
+
+  "actions.supplierRespondToCancel": "Respond to cancellation",
+  "actions.respondToCancel": "Send response",
+  "actions.respondToCancel.confirm": "Do you wish to allow the cancellation of this request?",
+  "actions.respondToCancel.yes": "Agree to cancellation",
+  "actions.respondToCancel.no": "Deny cancellation",
+  "actions.respondToCancel.cancelResponse": "Cancellation response",
+  "actions.respondToCancel.note": "Add note",
+  "actions.respondToCancel.success": "Successfully sent cancellation response",
+  "actions.respondToCancel.failure": "Failed to send cancellation response",
+
+  
   "actions.respondYes": "Respond \"Will Supply\"",
   "actions.respondYes.success": "Responded \"Will Supply\"",
   "actions.respondYes.error": "Cannot respond \"Will Supply\"",
   "actions.respondYes.callNumber": "Call Number",
   "actions.respondYes.pickLocation": "Pick Location",
   "actions.respondYes.pickShelvingLocation": "Shelving Location",
+
   "actions.cannotSupply": "Respond \"Cannot Supply\"",
   "actions.cannotSupply.confirm": "Are you sure you want to <strong>respond \"Cannot Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
   "actions.cannotSupply.reason": "Reason item cannot be supplied:",
-  "actions.cannotSupply.reasons.unavailable": "No longer available",
-  "actions.cannotSupply.reasons.missing": "Missing",
-  "actions.cannotSupply.reasons.incorrect": "Incorrect item",
-  "actions.cannotSupply.reasons.on_reserve": "On reserve",
-  "actions.cannotSupply.reasons.other": "Other",
-  "actions.cannotSupply.reasons.test1": "1tset",
-  "actions.cannotSupply.reasons.this_is_a_test_with_spaces": "secaps htiw tset a si siht",
   "actions.cannotSupply.success": "Responded \"Cannot supply\".",
   "actions.cannotSupply.error": "Error, could not respond \"Cannot supply\".",
+
+  "actions.conditionalSupply": "Respond \"Conditional Supply\"",
+  "actions.conditionalSupply.confirm": "Are you sure you want to <strong>respond \"Conditional Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
+  "actions.conditionalSupply.condition": "Condition for item supply:",
+  "actions.conditionalSupply.success": "Responded \"Conditional supply\".",
+  "actions.conditionalSupply.error": "Error, could not respond \"Conditional supply\".",
+
+  "actions.conditionalSupply.holdingState": "Send request to \"holding state\" and await reply?",
+  "actions.conditionalSupply.holdingState.select": "Select \"Yes\" or \"No\"",
+  "actions.conditionalSupply.holdingState.yes": "Yes",
+  "actions.conditionalSupply.holdingState.no": "No",
+
+  "actions.conditionalSupply.callNumber": "<strong>Call number</strong>",
+  "actions.conditionalSupply.pickLocation": "<strong>Pick location</strong>",
+  "actions.conditionalSupply.pickShelvingLocation": "<strong>Shelving location</strong>",
+
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
   "actions.checkIn.success": "Item successfully checked into ReShare",
   "actions.checkIn.error": "Error checking item into ReShare",
@@ -200,6 +242,22 @@
   "settings.finish-editing": "Finish Editing",
   "settings.customiseList": "ISO18626 custom options",
   "settings.customiseListSelect": "Select an option to customize",
+
+  "settings.customiseListSelect.cannotSupplyReasons": "Cannot supply reasons",
+  "settings.customiseListSelect.cannotSupplyReasons.incorrect": "Incorrect item",
+  "settings.customiseListSelect.cannotSupplyReasons.missing": "Missing",
+  "settings.customiseListSelect.cannotSupplyReasons.other": "Other",
+  "settings.customiseListSelect.cannotSupplyReasons.unavailable": "No longer available",
+  "settings.customiseListSelect.cannotSupplyReasons.on_reserve": "On reserve",
+
+  "settings.customiseListSelect.loanConditions": "Loan conditions",
+  "settings.customiseListSelect.loanConditions.libraryuseonly": "Use in library only",
+  "settings.customiseListSelect.loanConditions.noreproduction": "No reproduction",
+  "settings.customiseListSelect.loanConditions.signaturerequired": "Signature required",
+  "settings.customiseListSelect.loanConditions.speccollsupervreq": "Special collections supervision required",
+  "settings.customiseListSelect.loanConditions.watchlibraryuseonly": "Watch over use in library only",
+  "settings.customiseListSelect.loanConditions.other": "Other",
+
   "settings.customISO18626": "Custom ISO18626 settings",
   "settings.values": "Values",
   "settings.actions": "Actions",

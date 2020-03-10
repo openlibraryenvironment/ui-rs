@@ -9,16 +9,16 @@ import { required } from '@folio/stripes-util';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
-const CannotSupply = props => {
-  const { request, performAction, resources: { refdatavalues } } = props;
+const RespondToCancel = props => {
+  const { request, performAction } = props;
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
     return performAction(
-      'supplierCannotSupply',
+      'supplierRespondToCancel',
       values,
-      'ui-rs.actions.cannotSupply.success',
-      'ui-rs.actions.cannotSupply.error',
+      'ui-rs.actions.respondToCancel.success',
+      'ui-rs.actions.respondToCancel.error',
     )
       .then(() => setModal(null))
       // Currently displaying errors with this via the route-level MessageBanner rather than within the modal
@@ -29,7 +29,7 @@ const CannotSupply = props => {
     <ModalFooter>
       {/* These appear in the reverse order? */}
       <Button buttonStyle="danger" onClick={submit} disabled={disableSubmit}>
-        <FormattedMessage id="ui-rs.actions.cannotSupply" />
+        <FormattedMessage id="ui-rs.actions.respondToCancel" />
       </Button>
       <CancelModalButton><FormattedMessage id="ui-rs.button.goBack" /></CancelModalButton>
     </ModalFooter>
@@ -38,45 +38,49 @@ const CannotSupply = props => {
     disableSubmit: PropTypes.bool,
     submit: PropTypes.func.isRequired,
   };
-  const listOfReasons = refdatavalues ? refdatavalues.records.filter(obj => obj.desc === 'cannotSupplyReasons').map(obj => obj.values)[0] : [];
 
-  const { formatMessage } = props.intl;
   return (
     <Form
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, pristine, form }) => (
         <form onSubmit={handleSubmit}>
           <Modal
-            label={<FormattedMessage id="ui-rs.actions.cannotSupply" />}
-            open={currentModal === 'CannotSupply'}
+            label={<FormattedMessage id="ui-rs.actions.respondToCancel" />}
+            open={currentModal === 'RespondToCancel'}
             footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
           >
-            <SafeHTMLMessage id="ui-rs.actions.cannotSupply.confirm" values={{ id: request.id, item: request.title }} />
-            <Layout className="padding-top-gutter">
-              <strong><FormattedMessage id="ui-rs.actions.cannotSupply.reason" /></strong>
-            </Layout>
-            <Field
-              name="reason"
-              component={RadioButtonGroup}
-              required
-              validate={required}
-            >
-              {listOfReasons?.map(reason => (
-                <RadioButton
-                  label={
-                    formatMessage({ id: `ui-rs.settings.customiseListSelect.cannotSupplyReasons.${reason.value}`, defaultMessage: reason.label })
-                  }
-                  key={reason.value}
-                  value={reason.value}
-                />
-              ))}
-            </Field>
-            <Layout className="padding-top-gutter">
-              <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
-            </Layout>
+            <SafeHTMLMessage id="ui-rs.actions.respondToCancel.confirm" values={{ id: request.id, item: request.title }} />
             <Row>
-              <Col xs={11}>
-                <Field name="note" component={TextArea} autoFocus />
+              <Col xs={6}>
+                <Layout className="padding-top-gutter">
+                  <strong><SafeHTMLMessage id="ui-rs.actions.respondToCancel.cancelResponse" /></strong>
+                </Layout>
+                <Field
+                  name="cancelResponse"
+                  component={RadioButtonGroup}
+                  required
+                  validate={required}
+                >
+                  <RadioButton
+                    label={<FormattedMessage id="ui-rs.actions.respondToCancel.yes" />}
+                    value="yes"
+                    key="yes"
+                  />
+                  <RadioButton
+                    label={<FormattedMessage id="ui-rs.actions.respondToCancel.no" />}
+                    value="no"
+                    key="no"
+                  />
+                </Field>
+              </Col>
+              <Col xs={6}>
+                <Layout className="padding-top-gutter">
+                  <strong><SafeHTMLMessage id="ui-rs.actions.respondToCancel.note" /></strong>
+                </Layout>
+                <Field
+                  name="note"
+                  component={TextArea}
+                />
               </Col>
             </Row>
           </Modal>
@@ -86,7 +90,7 @@ const CannotSupply = props => {
   );
 };
 
-CannotSupply.manifest = {
+RespondToCancel.manifest = {
   refdatavalues: {
     type: 'okapi',
     path: 'rs/refdata',
@@ -96,7 +100,7 @@ CannotSupply.manifest = {
   }
 };
 
-CannotSupply.propTypes = {
+RespondToCancel.propTypes = {
   intl: PropTypes.shape({
     formatMessage: PropTypes.func.isRequired
   }),
@@ -117,4 +121,4 @@ CannotSupply.propTypes = {
   })
 };
 
-export default stripesConnect(injectIntl(CannotSupply));
+export default stripesConnect(injectIntl(RespondToCancel));

@@ -12,6 +12,18 @@ export const SupplierCannotSupply = () => (
   </ShowModalButton>
 );
 
+export const SupplierConditionalSupply = () => (
+  <ShowModalButton buttonStyle="dropdownItem" modal="ConditionalSupply">
+    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.conditionalSupply" /></Icon>
+  </ShowModalButton>
+);
+
+export const SupplierRespondToCancel = () => (
+  <ShowModalButton buttonStyle="dropdownItem" modal="RespondToCancel">
+    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.supplierRespondToCancel" /></Icon>
+  </ShowModalButton>
+);
+
 export const RespondYes = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="RespondYes">
     <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.respondYes" /></Icon>

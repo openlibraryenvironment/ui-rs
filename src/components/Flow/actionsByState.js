@@ -40,6 +40,10 @@ export const actionsByState = {
   RES_IDLE:{
     primaryAction: null,
   },
+  RES_PENDING_CONDITIONAL_ANSWER: {
+    cards: ['RequesterSupplier', 'LoanConditions'],
+    primaryAction: null,
+  },
   RES_NEW_AWAIT_PULL_SLIP: {
     primaryAction: 'PrintPullSlip',
   },
@@ -50,11 +54,21 @@ export const actionsByState = {
   REQ_SHIPPED: {
     moreActions: ['PrintPullSlip'],
   },
+  REQ_REQUEST_SENT_TO_SUPPLIER: {
+    primaryAction: null,
+  },
+  REQ_EXPECTS_TO_SUPPLY: {
+    primaryAction: null,
+  },
   REQ_BORROWING_LIBRARY_RECEIVED: {
     primaryAction: 'RequesterManualCheckIn',
   },
   REQ_CHECKED_IN: {
     moreActions: ['PrintPullSlip'],
+  },
+  REQ_CONDITIONAL_ANSWER_RECEIVED: {
+    cards: ['RequesterSupplier', 'LoanConditions'],
+    primaryAction: null,
   },
   REQ_AWAITING_RETURN_SHIPPING: {
     moreActions: ['PrintPullSlip'],

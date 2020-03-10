@@ -7,6 +7,13 @@ import css from './ChatMessage.css';
 
 const ChatMessage = React.forwardRef((props, ref) => {
   const { notification } = props;
+
+  const systemMessageKeys = [
+    '#ReShareLoanConditionAgreeResponse#',
+    '#ReShareSupplierConditionsAssumedAgreed#',
+    '#ReShareSupplierAwaitingConditionConfirmation#'
+  ];
+
   const longDateFormatter = (timestamp) => {
     // This takes a moment timestamp
     return `${timestamp.format('MMM. D, YYYY ')} at ${timestamp.format(' h:mm a')}`;
@@ -73,13 +80,32 @@ const ChatMessage = React.forwardRef((props, ref) => {
   };
 
   const renderActionContents = () => {
-    const action = notification?.attachedAction;
-    const actionKey = action.charAt(0).toLowerCase() + action.substring(1);
+    const action = notification?.attachedAction ? notification?.attachedAction.charAt(0).toLowerCase() + notification?.attachedAction.substring(1) : undefined;
+    const actionStatus = notification?.actionStatus ? notification?.actionStatus?.charAt(0).toLowerCase() + notification?.actionStatus?.substring(1) : undefined;
+    // const actionData = notification?.actionData ? notification?.actionData?.charAt(0).toLowerCase() + notification?.actionData?.substring(1) : undefined;
+
+    let loanNotification = false;
+
+    let actionKey = action;
+    if (actionStatus) {
+      actionKey = `${actionKey}.${actionStatus}`;
+    }
+    // For now we're not displaying this information in the message
+    /* if (actionData) {
+      actionKey = `${actionKey}.${actionData}`;
+    } */
+
+    // If the message is a loan condition agreement then it will be prefaced by one of the keys in systemMessageKeys above. We want to display an action message in its place
+    const systemKey = systemMessageKeys.find(key => notification?.messageContent?.startsWith(key));
+    if (systemKey) {
+      actionKey = systemKey.substring(1, systemKey.length - 1);
+      loanNotification = true;
+    }
 
     return (
       <>
         {
-          action ? action !== 'Notification' &&
+          action ? (action !== 'notification' || loanNotification) &&
           <span
             className={css.actionText}
           >
@@ -122,6 +148,17 @@ const ChatMessage = React.forwardRef((props, ref) => {
     );
   };
 
+  const renderMessageContents = () => {
+    let contents = notification.messageContent;
+
+    // If the message is a loan condition agreement then it will be prefaced by some system key in hashes. We want to remove this from our reshare display
+    if (systemMessageKeys.some(key => notification?.messageContent?.startsWith(key))) {
+      const re = new RegExp('#[\\s\\S]*?#');
+      contents = contents.replace(re, '');
+    }
+    return contents;
+  };
+
   const renderDropdownButton = () => {
     return (
       <Dropdown
@@ -144,7 +181,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
       >
         {renderDropdownButton()}
         {renderActionContents()}
-        {notification.messageContent}
+        {renderMessageContents()}
       </div>
     );
   };
