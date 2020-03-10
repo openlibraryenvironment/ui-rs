@@ -54,6 +54,12 @@ export const actionsByState = {
   REQ_SHIPPED: {
     moreActions: ['PrintPullSlip'],
   },
+  REQ_REQUEST_SENT_TO_SUPPLIER: {
+    primaryAction: null,
+  },
+  REQ_EXPECTS_TO_SUPPLY: {
+    primaryAction: null,
+  },
   REQ_BORROWING_LIBRARY_RECEIVED: {
     primaryAction: 'RequesterManualCheckIn',
   },

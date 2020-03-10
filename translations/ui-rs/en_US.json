@@ -143,6 +143,18 @@
   "actions.requesterAgreeConditions": "Agree to loan conditions",
   "actions.requesterRejectConditions": "Reject loan conditions",
   "actions.supplierMarkConditionsAgreed": "Mark loan conditions as agreed",
+
+  "actions.requesterCancel": "Cancel request",
+
+  "actions.supplierRespondToCancel": "Respond to cancellation",
+  "actions.respondToCancel": "Cancel request",
+  "actions.respondToCancel.confirm": "Do you wish to allow the cancellation of this request?",
+  "actions.respondToCancel.yes": "Agree to cancellation",
+  "actions.respondToCancel.no": "Deny cancellation",
+  "actions.respondToCancel.note": "Add note",
+  "actions.respondToCancel.success": "Successfully sent cancellation response",
+  "actions.respondToCancel.failure": "Failed to send cancellation response",
+
   
   "actions.respondYes": "Respond \"Will Supply\"",
   "actions.respondYes.success": "Responded \"Will Supply\"",

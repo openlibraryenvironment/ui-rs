@@ -118,7 +118,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
   const request = _.get(resource, 'records[0]');
 
   const forCurrent = actionsForRequest(request);
-
+      console.log(resources)
   return (
     <React.Fragment>
       <Paneset>
