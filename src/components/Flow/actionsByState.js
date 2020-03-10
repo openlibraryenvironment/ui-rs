@@ -54,6 +54,9 @@ export const actionsByState = {
   REQ_SHIPPED: {
     moreActions: ['PrintPullSlip'],
   },
+  RES_CANCEL_REQUEST_RECEIVED:{
+    primaryAction: null,
+  },
   REQ_REQUEST_SENT_TO_SUPPLIER: {
     primaryAction: null,
   },
