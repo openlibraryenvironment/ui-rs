@@ -53,7 +53,7 @@ const RespondToCancel = props => {
             <Row>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
-                  <SafeHTMLMessage id="ui-rs.actions.respondToCancel.cancelResponse" />
+                  <strong><SafeHTMLMessage id="ui-rs.actions.respondToCancel.cancelResponse" /></strong>
                 </Layout>
                 <Field
                   name="cancelResponse"
@@ -75,7 +75,7 @@ const RespondToCancel = props => {
               </Col>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
-                  <SafeHTMLMessage id="ui-rs.actions.respondToCancel.note" />
+                  <strong><SafeHTMLMessage id="ui-rs.actions.respondToCancel.note" /></strong>
                 </Layout>
                 <Field
                   name="note"
