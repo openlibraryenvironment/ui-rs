@@ -17,8 +17,8 @@ const AddCondition = props => {
     return performAction(
       'supplierAddCondition',
       values,
-      'ui-rs.actions.supplierAddCondition.success',
-      'ui-rs.actions.supplierAddCondition.error',
+      'ui-rs.actions.addCondition.success',
+      'ui-rs.actions.addCondition.error',
     )
       .then(() => setModal(null))
       // Currently displaying errors with this via the route-level MessageBanner rather than within the modal
@@ -29,7 +29,7 @@ const AddCondition = props => {
     <ModalFooter>
       {/* These appear in the reverse order? */}
       <Button buttonStyle="danger" onClick={submit} disabled={disableSubmit}>
-        <FormattedMessage id="ui-rs.actions.conditionalSupply" />
+        <FormattedMessage id="ui-rs.actions.addCondition" />
       </Button>
       <CancelModalButton><FormattedMessage id="ui-rs.button.goBack" /></CancelModalButton>
     </ModalFooter>
@@ -48,7 +48,7 @@ const AddCondition = props => {
         <form onSubmit={handleSubmit}>
           <Modal
             label={<FormattedMessage id="ui-rs.actions.conditionalSupply" />}
-            open={currentModal === 'ConditionalSupply'}
+            open={currentModal === 'AddCondition'}
             footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
           >
             <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: request.id, item: request.title }} />

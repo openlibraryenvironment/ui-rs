@@ -190,6 +190,11 @@
   "actions.conditionalSupply.pickLocation": "<strong>Pick location</strong>",
   "actions.conditionalSupply.pickShelvingLocation": "<strong>Shelving location</strong>",
 
+  "actions.addCondition": "Add condition",
+  "actions.addCondition.success": "Condition successfully added",
+  "actions.addCondition.failure": "Failed to add condition",
+
+
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
   "actions.checkIn.success": "Item successfully checked into ReShare",
   "actions.checkIn.error": "Error checking item into ReShare",
