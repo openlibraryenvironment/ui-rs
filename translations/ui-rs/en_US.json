@@ -126,11 +126,12 @@
 
 
   "view.withAction.cancelResponse": "The supplier denied the cancellation of this request with a note:",
-  "view.withAction.cancelResponse.cancelled": "The supplier cancelled of this request with a note:",
+  "view.withAction.cancelResponse.cancelled": "The supplier cancelled this request with a note:",
 
-  "view.withAction.ReShareLoanConditionAgreeResponse": "The requester has agreed to the loan condition",
+  "view.withAction.ReShareLoanConditionAgreeResponse": "The requester has agreed to the loan condition(s)",
   "view.withAction.ReShareSupplierAwaitingConditionConfirmation": "The supplier has placed this request into a holding state, pending agreement of the loan condition(s)",
-  "view.withAction.ReShareSupplierConditionsAssumedAgreed": "The supplier has continued along their workflow of this request. The loan conditions are assumed to have hbeen read and agreed to",
+  "view.withAction.ReShareSupplierConditionsAssumedAgreed": "The supplier has continued along their workflow of this request. The loan conditions are assumed to have been read and agreed to",
+  "view.withAction.ReShareAddLoanCondition": "The supplier has added a loan condition",
 
   "actions.addNote": "Add note",
   "actions.hideNoteField": "Hide note",
@@ -189,6 +190,11 @@
   "actions.conditionalSupply.callNumber": "<strong>Call number</strong>",
   "actions.conditionalSupply.pickLocation": "<strong>Pick location</strong>",
   "actions.conditionalSupply.pickShelvingLocation": "<strong>Shelving location</strong>",
+
+  "actions.addCondition": "Add condition",
+  "actions.addCondition.success": "Condition successfully added",
+  "actions.addCondition.failure": "Failed to add condition",
+
 
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
   "actions.checkIn.success": "Item successfully checked into ReShare",

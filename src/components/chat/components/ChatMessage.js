@@ -11,7 +11,8 @@ const ChatMessage = React.forwardRef((props, ref) => {
   const systemMessageKeys = [
     '#ReShareLoanConditionAgreeResponse#',
     '#ReShareSupplierConditionsAssumedAgreed#',
-    '#ReShareSupplierAwaitingConditionConfirmation#'
+    '#ReShareSupplierAwaitingConditionConfirmation#',
+    '#ReShareAddLoanCondition#'
   ];
 
   const longDateFormatter = (timestamp) => {
@@ -206,6 +207,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
   };
 
   const messageClassName = classOfMessageCard();
+  console.log(notification)
   return (
     <div className={notification?.isSender ? css.messageContainerSender : css.messageContainer} ref={ref}>
       <div

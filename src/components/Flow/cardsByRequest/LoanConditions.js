@@ -8,6 +8,15 @@ const LoanConditions = (props) => {
   const request = props?.request;
   const { conditions } = request;
 
+  const stripOutSystemKey = (note) => {
+    let returnedNote = note;
+    if (note.startsWith('#ReShareAddLoanCondition#')) {
+      const re = new RegExp('#[\\s\\S]*?#');
+      returnedNote = note.replace(re, '');
+    }
+    return returnedNote;
+  };
+
   const displayCondition = (condition) => {
     const { formatMessage } = props.intl;
     return (
@@ -24,7 +33,7 @@ const LoanConditions = (props) => {
             <strong>
               <FormattedMessage id="ui-rs.loanConditions.note" />
             </strong>
-            {condition.note}
+            {stripOutSystemKey(condition.note)}
           </Col>
         }
       </Row>
