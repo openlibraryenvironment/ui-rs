@@ -51,6 +51,12 @@ export const actionsByState = {
     primaryAction: 'SupplierCheckInToReshare',
     moreActions: ['PrintPullSlip'],
   },
+  RES_AWAIT_LMS_CHECKOUT: {
+    primaryAction: 'supplierManualCheckout',
+  },
+  RES_AWAIT_SHIP: {
+    primaryAction: 'supplierMarkShipped'
+  },
   REQ_SHIPPED: {
     moreActions: ['PrintPullSlip'],
   },
