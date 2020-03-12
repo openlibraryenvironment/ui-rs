@@ -23,7 +23,7 @@ const FlowRoute = ({ request, performAction }) => {
       <Layout className="centered" style={{ maxWidth: '80em' }}>
         <div>
           <strong>Request status</strong>
-          <Headline size="large" faded><FormattedMessage id={`stripes-reshare.states.${request.state.code}`} /></Headline>
+          <Headline size="large" faded><FormattedMessage id={`stripes-reshare.states.${request.state?.code}`} /></Headline>
         </div>
         <div className={css.cards}>
           {renderNamedWithProps(forCurrent.cards, cards, { request })}

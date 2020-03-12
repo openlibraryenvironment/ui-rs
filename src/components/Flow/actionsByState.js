@@ -119,7 +119,7 @@ const excludeRemote = ['message'];
  * falling back to the default for unknown states.
  */
 export const actionsForRequest = request => {
-  const actions = Object.assign({}, actionsByState.default, actionsByState[request.state.code] || {});
+  const actions = Object.assign({}, actionsByState.default, actionsByState[request.state?.code] || {});
   if (Array.isArray(request.validActions)) {
     const remote = request.validActions.filter(
       action => actions.primaryAction !== initialToUpper(action) && !(excludeRemote.includes(action))
@@ -128,7 +128,7 @@ export const actionsForRequest = request => {
       action => !(remote.includes(`${action.charAt(0).toLowerCase()}${action.substring(1)}`))
     );
     actions.moreActions = remote.concat(client);
-    if (remote.length > 0 && actionsByState?.[request.state.code]?.primaryAction === undefined) actions.primaryAction = remote[0];
+    if (remote.length > 0 && actionsByState?.[request.state?.code]?.primaryAction === undefined) actions.primaryAction = remote[0];
   }
   return actions;
 };

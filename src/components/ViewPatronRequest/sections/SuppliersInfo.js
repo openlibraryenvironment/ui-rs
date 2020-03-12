@@ -40,7 +40,7 @@ class SuppliersInfo extends React.Component {
             </Col>
             <Col xs={6}>
               <KeyValue label="Status">
-                {supplier.state && <FormattedMessage id={`stripes-reshare.states.${supplier.state.code}`} />}
+                {supplier.state && <FormattedMessage id={`stripes-reshare.states.${supplier.state?.code}`} />}
               </KeyValue>
             </Col>
           </Row>
