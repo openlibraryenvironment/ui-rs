@@ -26,7 +26,7 @@ export const SupplierAddCondition = () => (
 
 export const SupplierRespondToCancel = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="RespondToCancel">
-    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.supplierRespondToCancel" /></Icon>
+    <Icon icon="times-circle-solid"><FormattedMessage id="stripes-reshare.actions.supplierRespondToCancel" /></Icon>
   </ShowModalButton>
 );
 

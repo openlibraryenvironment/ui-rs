@@ -21,12 +21,12 @@ import initialToUpper from '../../util/initialToUpper';
  *
  * Translations for generic components:
  *
- * ui-rs.actions.<action name> - name of action
- * ui-rs.actions.<action name>.success - message banner when action succeeds
- * ui-rs.actions.<action name>.error - message banner when action fails
+ * stripes-reshare.actions.<action name> - name of action
+ * stripes-reshare.actions.<action name>.success - message banner when action succeeds
+ * stripes-reshare.actions.<action name>.error - message banner when action fails
  * ui-rs.actions.<action name>.prompt - prompt for scanning request barcode to exec
  *
- * Where the above are missing, ui-rs.actions.<action name> will be substituted into
+ * Where the above are missing, stripes-reshare.actions.<action name> will be substituted into
  * ui-rs.actions.generic.* to provide generic success/error/prompt messages.
  *
 */

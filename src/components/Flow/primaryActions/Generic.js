@@ -6,8 +6,8 @@ import ScanConfirmAction from '../ScanConfirmAction';
 const Generic = props => {
   const { name:action, intl } = props;
   const promptKey = `ui-rs.actions.${action}.prompt`;
-  const successKey = `ui-rs.actions.${action}.success`;
-  const errorKey = `ui-rs.actions.${action}.error`;
+  const successKey = `stripes-reshare.actions.${action}.success`;
+  const errorKey = `stripes-reshare.actions.${action}.error`;
   if (promptKey in intl.messages && successKey in intl.messages && errorKey in intl.messages) {
     return <ScanConfirmAction
       action={action}
@@ -19,7 +19,7 @@ const Generic = props => {
   }
   return <ScanConfirmAction
     action={action}
-    label={`ui-rs.actions.${action}`}
+    label={`stripes-reshare.actions.${action}`}
     {...props}
   />;
 };

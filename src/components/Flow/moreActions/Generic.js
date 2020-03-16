@@ -6,12 +6,12 @@ import ActionButton from '../ActionButton';
 
 const Generic = props => {
   const { name:action, intl } = props;
-  const successKey = `ui-rs.actions.${action}.success`;
-  const errorKey = `ui-rs.actions.${action}.error`;
+  const successKey = `stripes-reshare.actions.${action}.success`;
+  const errorKey = `stripes-reshare.actions.${action}.error`;
   if (successKey in intl.messages && errorKey in intl.messages) {
     return <ActionButton
       action={action}
-      label={`ui-rs.actions.${action}`}
+      label={`stripes-reshare.actions.${action}`}
       icon={actionIcons[action]}
       success={successKey}
       error={errorKey}
@@ -20,7 +20,7 @@ const Generic = props => {
   }
   return <ActionButton
     action={action}
-    label={`ui-rs.actions.${action}`}
+    label={`stripes-reshare.actions.${action}`}
     icon={actionIcons[action]}
     {...props}
   />;
