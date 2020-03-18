@@ -222,6 +222,13 @@ class PatronRequestsRoute extends React.Component {
             id: a => a.hrid,
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             dateCreated: a => formattedDateTime(a.dateCreated),
+            patronIdentifier: a => {
+              const { patronGivenName, patronSurname } = a;
+              if (patronGivenName && patronSurname) return `${patronSurname}, ${patronGivenName}`;
+              if (patronSurname) return patronSurname;
+              if (patronGivenName) return patronGivenName;
+              return a.patronIdentifier;
+            },
             state: a => <FormattedMessage id={`stripes-reshare.states.${a.state.code}`} />,
             serviceType: a => a.serviceType && a.serviceType.value,
             pickLocation: a => a.pickLocation && a.pickLocation.name,
