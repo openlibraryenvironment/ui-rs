@@ -5,7 +5,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Layout, Modal, ModalFooter, RadioButton, RadioButtonGroup, Row, Select, TextArea } from '@folio/stripes/components';
-import { required } from '@folio/stripes-util';
+import { required } from '@folio/stripes/util';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 

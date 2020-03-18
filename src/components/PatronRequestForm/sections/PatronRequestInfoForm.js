@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { required } from '@folio/stripes-util';
+import { required } from '@folio/stripes/util';
 
 class PatronRequestInfoForm extends React.Component {
   static propTypes = {
