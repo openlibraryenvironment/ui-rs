@@ -199,18 +199,24 @@ class PatronRequestsRoute extends React.Component {
             patronIdentifier: <FormattedMessage id="ui-rs.patronrequests.patronIdentifier" />,
             state: <FormattedMessage id="ui-rs.patronrequests.state" />,
             serviceType: <FormattedMessage id="ui-rs.patronrequests.serviceType" />,
-            pickLocation: <FormattedMessage id="ui-rs.patronrequests.pickLocation" />,
+            requestingInstitutionSymbol: <FormattedMessage id="ui-rs.patronrequests.requestingInstitutionSymbol" />,
             localCallNumber: <FormattedMessage id="ui-rs.patronrequests.localCallNumber" />,
+            pickLocation: <FormattedMessage id="ui-rs.patronrequests.pickLocation" />,
             pickShelvingLocation: <FormattedMessage id="ui-rs.patronrequests.pickShelvingLocation" />,
           }}
           columnWidths={{
-            id: 100,
+            id: 110,
             isRequester: 80,
             dateCreated: 160,
             title: 200,
             patronIdentifier: 120,
             state: 180,
-            serviceType: 120,
+            serviceType: 130,
+            requestingInstitutionSymbol: 130,
+            localCallNumber: 200,
+            pickLocation: 150,
+            pickShelvingLocation: 200,
+
           }}
           resultsFormatter={{
             id: a => a.hrid,
