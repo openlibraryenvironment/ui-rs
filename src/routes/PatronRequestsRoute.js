@@ -159,7 +159,7 @@ class PatronRequestsRoute extends React.Component {
         visibleColumns.push('requestingInstitutionSymbol', 'localCallNumber', 'pickLocation', 'pickShelvingLocation');
         break;
       default:
-        // can't happen
+        // 'request' or can't-happen values
     }
 
     return (
@@ -216,7 +216,7 @@ class PatronRequestsRoute extends React.Component {
             id: a => a.hrid,
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             dateCreated: a => formattedDateTime(a.dateCreated),
-            state: a => <FormattedMessage id={`stripes-reshare.states.${a.state?.code}`} />,
+            state: a => <FormattedMessage id={`stripes-reshare.states.${a.state.code}`} />,
             serviceType: a => a.serviceType && a.serviceType.value,
             pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}
