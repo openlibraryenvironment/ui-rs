@@ -207,7 +207,7 @@ class PatronRequestsRoute extends React.Component {
           columnWidths={{
             id: 110,
             isRequester: 80,
-            dateCreated: 160,
+            dateCreated: 170,
             title: 200,
             patronIdentifier: 120,
             state: 180,
