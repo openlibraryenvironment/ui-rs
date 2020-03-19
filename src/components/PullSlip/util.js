@@ -40,9 +40,13 @@ function recordToPullSlipData(intl, record) {
     name = record.patronIdentifier;
   }
 
+  const pul = get(record, 'pickLocation.name');
+  const psl = record.pickShelvingLocation;
+  const fullLocation = (pul && psl) ? `${pul} — ${psl}` : (pul || psl);
+
   return {
     borrower: name,
-    pickupLocation: record.pickShelvingLocation,
+    pickupLocation: record.pickupLocation,
     requestBarcode: styledBarCodeString(id.substring(0, 18)),
     requestId: id,
     title: record.title,
@@ -51,7 +55,7 @@ function recordToPullSlipData(intl, record) {
     phoneNumber: get(record, 'resolvedRequester.owner.phoneNumber'),
     emailAddress: get(record, 'resolvedRequester.owner.emailAddress'),
     callNumber: record.localCallNumber,
-    location: get(record, 'pickLocation.name'),
+    location: fullLocation,
     fromSlug: get(record, 'resolvedSupplier.owner.slug'),
     toSlug: get(record, 'resolvedRequester.owner.slug') || record.requestingInstitutionSymbol,
     now: `${intl.formatDate(now)} ${intl.formatTime(now)}`,
