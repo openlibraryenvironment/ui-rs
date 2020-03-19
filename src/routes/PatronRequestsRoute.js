@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import get from 'lodash/get';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
@@ -48,7 +49,7 @@ class PatronRequestsRoute extends React.Component {
       type: 'okapi',
       path: 'rs/patronrequests',
       params: getSASParams({
-        searchKey: 'title,hrid,patronIdentifier',
+        searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn',
         filterKeys: {
           'r': 'isRequester',
         },
@@ -80,9 +81,32 @@ class PatronRequestsRoute extends React.Component {
         action: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    resources: PropTypes.object,
-    mutator: PropTypes.object,
+    resources: PropTypes.shape({
+      query: PropTypes.shape({
+        qindex: PropTypes.string,
+      }),
+      patronrequests: PropTypes.object,
+    }).isRequired,
+    mutator: PropTypes.shape({
+      query: PropTypes.shape({
+        update: PropTypes.func.isRequired,
+      }).isRequired,
+      patronrequests: PropTypes.shape({
+        POST: PropTypes.func.isRequired,
+      }).isRequired,
+      selectedRecordId: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }).isRequired,
+      selectedRecord: PropTypes.shape({
+        PUT: PropTypes.func.isRequired,
+      }).isRequired,
+    }),
     location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
+    stripes: PropTypes.shape({
+      logger: PropTypes.shape({
+        log: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired
   }
 
   constructor(props) {
@@ -94,6 +118,12 @@ class PatronRequestsRoute extends React.Component {
   onClose() {
     this.toggleModal(false);
   }
+
+  onChangeIndex = (e) => {
+    const qindex = e.target.value;
+    this.props.stripes.logger.log('action', `changed query-index to '${qindex}'`);
+    this.props.mutator.query.update({ qindex });
+  };
 
   createPatronRequest = (record) => {
     this.props.mutator.patronrequests.POST(record).then(() => {
@@ -151,6 +181,18 @@ class PatronRequestsRoute extends React.Component {
       'serviceType',
     ];
 
+    const searchableIndexes = [
+      { label: 'All fields', value: '' },
+      { label: 'UUID', value: 'id' },
+      { label: 'HRID', value: 'hrid' },
+      { label: 'Requested first name', value: 'patronGivenName' },
+      { label: 'Requester last name', value: 'patronSurname' },
+      { label: 'Title', value: 'title' },
+      { label: 'Author', value: 'author' },
+      { label: 'ISSN', value: 'issn' },
+      { label: 'ISBN', value: 'isbn' },
+    ];
+
     switch (appName) {
       case 'rs':
         visibleColumns.splice(1, 0, 'isRequester');
@@ -168,6 +210,9 @@ class PatronRequestsRoute extends React.Component {
           key="patronrequests"
           title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
           actionMenu={() => this.getActionMenu(tweakedPackageInfo.stripes.route, location)}
+          searchableIndexes={searchableIndexes}
+          selectedIndex={get(resources.query, 'qindex')}
+          onChangeIndex={this.onChangeIndex}
           objectName="patronrequest"
           packageInfo={tweakedPackageInfo}
           filterConfig={filterConfig}
