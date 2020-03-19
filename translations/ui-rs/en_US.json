@@ -20,7 +20,7 @@
   "patronrequests.patronIdentifier": "Patron",
   "patronrequests.state": "State",
   "patronrequests.serviceType": "Service Type",
-  "patronrequests.requestingInstitutionSymbol": "Peer Symbol",
+  "patronrequests.requestingInstitutionSymbol": "Requester",
   "patronrequests.localCallNumber": "Call Number",
   "patronrequests.pickLocation": "Location",
   "patronrequests.pickShelvingLocation": "Shelving Location",
