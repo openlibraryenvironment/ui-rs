@@ -156,7 +156,7 @@ class PatronRequestsRoute extends React.Component {
 
   renderFilters = (_onChange) => {
     return <div>(Filters go here)</div>;
-    // For an example, see ui-inventory/src/views/InstancesView.js
+    // For an example, see ui-inventory/src/components/InstanceFilters/InstanceFilters.js
   };
 
   render() {
