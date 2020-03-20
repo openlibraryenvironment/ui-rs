@@ -274,5 +274,6 @@
 
   "settingName.autoResponderStatus": "Auto responder status",
 
-  "settingName.chatAutoRead": "Auto mark as read"
+  "settingName.chatAutoRead": "Auto mark as read",
+  "SENTINEL": "SENTINEL"
 }
