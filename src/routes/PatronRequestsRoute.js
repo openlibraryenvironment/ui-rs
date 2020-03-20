@@ -199,6 +199,7 @@ class PatronRequestsRoute extends React.Component {
         break;
       case 'supply':
         visibleColumns.push('requestingInstitutionSymbol', 'localCallNumber', 'pickLocation', 'pickShelvingLocation');
+        searchableIndexes.splice(3, 2);
         break;
       default:
         // 'request' or can't-happen values
