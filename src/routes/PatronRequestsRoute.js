@@ -30,18 +30,15 @@ const filterConfig = [{
 // and deparseFilters performs the opposite operation
 
 function parseFilters(filters) {
-  console.log('filters =', filters);
   if (!filters) return {};
-  const parsed = filters.split(',');
-  console.log(' parsed =', parsed);
   const byName = {};
-  parsed.forEach(string => {
-    const a = string.split('.');
-    const [name, value] = a;
-    console.log(`  name=${name}, value=${value}`);
+
+  filters.split(',').forEach(string => {
+    const [name, value] = string.split('.');
     if (!byName[name]) byName[name] = [];
     byName[name].push(value);
   });
+
   return byName;
 }
 
@@ -62,7 +59,6 @@ function deparseFilters(byName) {
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
   const res = Object.assign({}, resources.query);
-  console.log('res =', res);
   const extraFilter = { request: 'r.true', supply: 'r.false' }[appName];
   if (extraFilter) {
     res.filters = !res.filters ? extraFilter : `${res.filters},${extraFilter}`;
@@ -204,18 +200,12 @@ class PatronRequestsRoute extends React.Component {
       { label: 'other', value: '4' },
     ];
 
-    const filters = get(this.props.resources.query, 'filters');
-    const byName = parseFilters(filters);
-    console.log('   byName =', byName);
+    const byName = parseFilters(get(this.props.resources.query, 'filters'));
     const status = byName.status || [];
-    console.log('    status =', status);
 
     const setFilterState = (group) => {
       byName[group.name] = group.values;
-      console.log('filter state is now', byName);
-      const newFilters = deparseFilters(byName);
-      console.log(' rendered:', newFilters);
-      this.props.mutator.query.update({ filters: newFilters });
+      this.props.mutator.query.update({ filters: deparseFilters(byName) });
     };
     const clearGroup = (name) => setFilterState({ name, values: [] });
 
