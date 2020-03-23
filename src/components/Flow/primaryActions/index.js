@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
+import { ShowModalButton } from '../../ModalButtons';
 
 export { default as Generic } from './Generic';
 
@@ -19,6 +20,16 @@ export const RequesterManualCheckIn = ({ performAction }) => (
   >
     <FormattedMessage id="ui-rs.actions.manualCheckIn" />
   </Button>
+);
+
+export const RespondToCancellation = () => (
+  <ShowModalButton
+    modal="RespondToCancel"
+    buttonStyle="primary mega"
+    fullWidth
+  >
+    <FormattedMessage id="stripes-reshare.actions.supplierRespondToCancel" />
+  </ShowModalButton>
 );
 
 export { default as SupplierCheckInToReshare } from './SupplierCheckInToReshare';

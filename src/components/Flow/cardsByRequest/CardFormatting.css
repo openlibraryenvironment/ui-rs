@@ -1,0 +1,14 @@
+@import "@folio/stripes-components/lib/variables";
+
+.loanConditionCard {
+  width: 100%;
+  border: 1px solid rgb(222, 143, 135);
+  margin-bottom: var(--gutter);
+  overflow: hidden;
+  background-color: var(--error-fill);
+  border-radius: var(--radius);
+}
+
+.loanConditionHeader {
+  background-color: rgb(222, 143, 135);
+}
