@@ -96,6 +96,7 @@ const AddCondition = props => {
                 { value: 'yes', label: formatMessage({ id: 'ui-rs.actions.conditionalSupply.holdingState.yes', defaultMessage: 'yes' }) },
                 { value: 'no', label: formatMessage({ id: 'ui-rs.actions.conditionalSupply.holdingState.no', defaultMessage: 'no' }) }
               ]}
+              initialValue="yes"
               required
               validate={required}
             />

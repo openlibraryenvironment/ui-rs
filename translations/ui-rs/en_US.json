@@ -178,7 +178,7 @@
   "actions.conditionalSupply.success": "Responded \"Conditional supply\".",
   "actions.conditionalSupply.error": "Error, could not respond \"Conditional supply\".",
 
-  "actions.conditionalSupply.holdingState": "Send request to \"holding state\" and await reply?",
+  "actions.conditionalSupply.holdingState": "Would you like to pause processing while waiting for the requester to reply?",
   "actions.conditionalSupply.holdingState.select": "Select \"Yes\" or \"No\"",
   "actions.conditionalSupply.holdingState.yes": "Yes",
   "actions.conditionalSupply.holdingState.no": "No",
