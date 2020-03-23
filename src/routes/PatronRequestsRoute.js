@@ -62,10 +62,10 @@ function deparseFilters(byName) {
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
   const res = Object.assign({}, resources.query);
-  if (appName === 'request') {
-    res.filters = 'r.true';
-  } else if (appName === 'supply') {
-    res.filters = 'r.false';
+  console.log('res =', res);
+  const extraFilter = { request: 'r.true', supply: 'r.false' }[appName];
+  if (extraFilter) {
+    res.filters = !res.filters ? extraFilter : `${res.filters},${extraFilter}`;
   }
 
   // Special case: `refresh=1` can be added to the UI URL to force the
