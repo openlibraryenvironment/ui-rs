@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
-import { Button } from '@folio/stripes/components';
-import { SearchAndSort, withTags } from '@folio/stripes/smart-components';
+import { Button, Accordion, FilterAccordionHeader } from '@folio/stripes/components';
+import { SearchAndSort, withTags, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
 import formattedDateTime from '../util/formattedDateTime';
@@ -15,8 +15,48 @@ import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
 
-const filterConfig = [
-];
+
+const filterConfig = [{
+  label: 'Status',
+  name: 'status',
+  cql: 'status',
+  values: [],
+}];
+
+
+// parseFilters parses a string like
+//    departments.123,coursetypes.abc,coursetypes.def
+// into an object mapping filter-name to lists of values;
+// and deparseFilters performs the opposite operation
+
+function parseFilters(filters) {
+  console.log('filters =', filters);
+  if (!filters) return {};
+  const parsed = filters.split(',');
+  console.log(' parsed =', parsed);
+  const byName = {};
+  parsed.forEach(string => {
+    const a = string.split('.');
+    const [name, value] = a;
+    console.log(`  name=${name}, value=${value}`);
+    if (!byName[name]) byName[name] = [];
+    byName[name].push(value);
+  });
+  return byName;
+}
+
+function deparseFilters(byName) {
+  const a = [];
+
+  Object.keys(byName).sort().forEach(name => {
+    const values = byName[name];
+    values.forEach(value => {
+      a.push(`${name}.${value}`);
+    });
+  });
+
+  return a.join(',');
+}
 
 
 function queryModifiedForApp(resources, props) {
@@ -84,6 +124,7 @@ class PatronRequestsRoute extends React.Component {
     resources: PropTypes.shape({
       query: PropTypes.shape({
         qindex: PropTypes.string,
+        filters: PropTypes.string,
       }),
       patronrequests: PropTypes.object,
     }).isRequired,
@@ -154,9 +195,51 @@ class PatronRequestsRoute extends React.Component {
     );
   }
 
-  renderFilters = (_onChange) => {
-    return <div>(Filters go here)</div>;
-    // For an example, see ui-inventory/src/components/InstanceFilters/InstanceFilters.js
+  // For an example, see ui-inventory/src/components/InstanceFilters/InstanceFilters.js
+  renderFilters = () => {
+    const statuses = [
+      { label: 'dead', value: '1' },
+      { label: 'dying', value: '2' },
+      { label: 'alive', value: '3' },
+      { label: 'other', value: '4' },
+    ];
+
+    const filters = get(this.props.resources.query, 'filters');
+    const byName = parseFilters(filters);
+    console.log('   byName =', byName);
+    const status = byName.status || [];
+    console.log('    status =', status);
+
+    const setFilterState = (group) => {
+      byName[group.name] = group.values;
+      console.log('filter state is now', byName);
+      const newFilters = deparseFilters(byName);
+      console.log(' rendered:', newFilters);
+      this.props.mutator.query.update({ filters: newFilters });
+    };
+    const clearGroup = (name) => setFilterState({ name, values: [] });
+
+    return (
+      <React.Fragment>
+        <Accordion
+          label={<FormattedMessage id="ui-rs.filter.status" />}
+          id="status"
+          name="status"
+          separator={false}
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={status.length > 0}
+          onClearFilter={() => clearGroup('status')}
+        >
+          <MultiSelectionFilter
+            name="status"
+            dataOptions={statuses}
+            selectedValues={status}
+            onChange={setFilterState}
+          />
+        </Accordion>
+      </React.Fragment>
+    );
   };
 
   render() {
