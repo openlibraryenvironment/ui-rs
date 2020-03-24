@@ -195,9 +195,10 @@ class PatronRequestsRoute extends React.Component {
   }
 
   renderFilters = () => {
+    const prefix = { request: 'REQ', supply: 'RES' }[this.props.appName];
     const messages = this.props.intl.messages;
     const keys = filter(Object.keys(messages),
-      key => key.startsWith('stripes-reshare.states.RES_'));
+      key => key.startsWith(`stripes-reshare.states.${prefix}_`));
     const statuses = keys.map(key => ({ label: messages[key], value: key.replace('stripes-reshare.states.', '') }))
       .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0));
 
