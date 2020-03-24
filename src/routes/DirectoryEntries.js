@@ -61,6 +61,7 @@ export default class DirectoryEntries extends React.Component {
     tags: {
       type: 'okapi',
       path: 'directory/tags',
+      params: { perPage: '100' },
     },
     custprops: {
       type: 'okapi',
