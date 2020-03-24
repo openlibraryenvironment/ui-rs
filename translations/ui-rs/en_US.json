@@ -146,8 +146,12 @@
   "actions.requesterRequestedCancellation": "The requester has requested cancellation of this request. Please respond.",
 
   "actions.requesterAgreeConditions": "Agree to loan conditions",
+  "actions.requesterAgreeConditions.success": "Successfully sent agreement to loan conditions",
+  "actions.requesterAgreeConditions.failure": "Failed to send agreement to loan conditions",
   "actions.requesterRejectConditions": "Reject loan conditions",
   "actions.supplierMarkConditionsAgreed": "Mark loan conditions as agreed",
+  "actions.supplierMarkConditionsAgreed.success": "Successfully marked loan conditions as agreed",
+  "actions.supplierMarkConditionsAgreed.failure": "Failed to mark loan conditions as agreed",
 
   "actions.respondToCancel": "Send response",
   "actions.respondToCancel.confirm": "Do you wish to allow the cancellation of this request?",

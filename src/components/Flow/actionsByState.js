@@ -41,7 +41,7 @@ export const actionsByState = {
     primaryAction: null,
   },
   RES_PENDING_CONDITIONAL_ANSWER: {
-    primaryAction: null,
+    primaryAction: 'SupplierMarkConditionsAgreed',
   },
   RES_NEW_AWAIT_PULL_SLIP: {
     primaryAction: 'PrintPullSlip',
@@ -75,7 +75,7 @@ export const actionsByState = {
     moreActions: ['PrintPullSlip'],
   },
   REQ_CONDITIONAL_ANSWER_RECEIVED: {
-    primaryAction: null,
+    primaryAction: 'RequesterAgreeConditions',
   },
   REQ_AWAITING_RETURN_SHIPPING: {
     moreActions: ['PrintPullSlip'],

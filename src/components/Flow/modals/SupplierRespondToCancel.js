@@ -58,6 +58,7 @@ const RespondToCancel = props => {
                 <Field
                   name="cancelResponse"
                   component={RadioButtonGroup}
+                  type="radio"
                   required
                   validate={required}
                 >
