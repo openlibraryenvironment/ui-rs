@@ -171,13 +171,13 @@
   "actions.respondYes.pickShelvingLocation": "Shelving Location",
 
   "actions.cannotSupply": "Respond \"Cannot Supply\"",
-  "actions.cannotSupply.confirm": "Are you sure you want to <strong>respond \"Cannot Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
+  "actions.cannotSupply.confirm": "Are you sure you want to <strong>respond \"Cannot Supply\"</strong> to request {id} for the item <strong>\"{item}\"</strong>?",
   "actions.cannotSupply.reason": "Reason item cannot be supplied:",
   "actions.cannotSupply.success": "Responded \"Cannot supply\".",
   "actions.cannotSupply.error": "Error, could not respond \"Cannot supply\".",
 
   "actions.conditionalSupply": "Respond \"Conditional Supply\"",
-  "actions.conditionalSupply.confirm": "Are you sure you want to <strong>respond \"Conditional Supply\"</strong> for request {id} for the item <strong>\"{item}\"</strong>?",
+  "actions.conditionalSupply.confirm": "Are you sure you want to <strong>respond \"Conditional Supply\"</strong> to request {id} for the item <strong>\"{item}\"</strong>?",
   "actions.conditionalSupply.condition": "Condition for item supply:",
   "actions.conditionalSupply.success": "Responded \"Conditional supply\".",
   "actions.conditionalSupply.error": "Error, could not respond \"Conditional supply\".",

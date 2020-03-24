@@ -41,6 +41,7 @@ const AddCondition = props => {
   const listOfConditions = refdatavalues ? refdatavalues.records.filter(obj => obj.desc === 'loanConditions').map(obj => obj.values)[0] : [];
 
   const { formatMessage } = props.intl;
+  const displayId = request.hrid ? request.hrid : request.id;
   return (
     <Form
       onSubmit={onSubmit}
@@ -51,7 +52,7 @@ const AddCondition = props => {
             open={currentModal === 'AddCondition'}
             footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
           >
-            <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: request.id, item: request.title }} />
+            <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: displayId, item: request.title }} />
             <Row>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
