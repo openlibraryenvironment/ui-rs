@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Card, Row, Col } from '@folio/stripes/components';
+import css from './CardFormatting.css';
 
 
 const LoanConditions = (props) => {
@@ -41,27 +42,26 @@ const LoanConditions = (props) => {
   };
 
   const currentSupplier = request.resolvedSupplier.id;
-
-  return (
-    <Row>
-      <Col xs={6}>
-        <Card
-          id="conditions-card"
-          headerStart={<FormattedMessage id="ui-rs.loanConditions" />}
-          roundedBorder
-        >
-          {conditions.map(condition => {
-            // We only want to display the conditions relevant to the current supplier
-            const conditionSupplier = condition.relevantSupplier?.id;
-            if (conditionSupplier === currentSupplier) {
-              return displayCondition(condition);
-            }
-            return null;
-          })}
-        </Card>
-      </Col>
-    </Row>
-  );
+  if (conditions.length > 0) {
+    return (
+      <Card
+        id="conditions-card"
+        headerStart={<FormattedMessage id="ui-rs.loanConditions" />}
+        headerClass={css.loanConditionHeader}
+        className={css.loanConditionCard}
+      >
+        {conditions.map(condition => {
+          // We only want to display the conditions relevant to the current supplier
+          const conditionSupplier = condition.relevantSupplier?.id;
+          if (conditionSupplier === currentSupplier) {
+            return displayCondition(condition);
+          }
+          return null;
+        })}
+      </Card>
+    );
+  }
+  return null;
 };
 
 LoanConditions.propTypes = {

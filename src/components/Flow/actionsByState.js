@@ -33,7 +33,7 @@ import initialToUpper from '../../util/initialToUpper';
 
 export const actionsByState = {
   default: {
-    cards: ['Bibliographic', 'RequesterSupplier'],
+    cards: ['LoanConditions', 'Bibliographic', 'RequesterSupplier'],
     primaryAction: null,
     moreActions: [],
   },
@@ -41,8 +41,7 @@ export const actionsByState = {
     primaryAction: null,
   },
   RES_PENDING_CONDITIONAL_ANSWER: {
-    cards: ['RequesterSupplier', 'LoanConditions'],
-    primaryAction: null,
+    primaryAction: 'SupplierMarkConditionsAgreed',
   },
   RES_NEW_AWAIT_PULL_SLIP: {
     primaryAction: 'PrintPullSlip',
@@ -61,7 +60,7 @@ export const actionsByState = {
     moreActions: ['PrintPullSlip'],
   },
   RES_CANCEL_REQUEST_RECEIVED:{
-    primaryAction: null,
+    primaryAction: 'SupplierRespondToCancel',
   },
   REQ_REQUEST_SENT_TO_SUPPLIER: {
     primaryAction: null,
@@ -76,8 +75,7 @@ export const actionsByState = {
     moreActions: ['PrintPullSlip'],
   },
   REQ_CONDITIONAL_ANSWER_RECEIVED: {
-    cards: ['RequesterSupplier', 'LoanConditions'],
-    primaryAction: null,
+    primaryAction: 'RequesterAgreeConditions',
   },
   REQ_AWAITING_RETURN_SHIPPING: {
     moreActions: ['PrintPullSlip'],
