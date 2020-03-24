@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
+import { ShowModalButton } from '../../ModalButtons';
 
 export { default as Generic } from './Generic';
 
@@ -18,6 +19,46 @@ export const RequesterManualCheckIn = ({ performAction }) => (
     fullWidth
   >
     <FormattedMessage id="ui-rs.actions.manualCheckIn" />
+  </Button>
+);
+
+export const SupplierRespondToCancel = () => (
+  <ShowModalButton
+    modal="RespondToCancel"
+    buttonStyle="primary mega"
+    fullWidth
+  >
+    <FormattedMessage id="stripes-reshare.actions.supplierRespondToCancel" />
+  </ShowModalButton>
+);
+
+export const SupplierMarkConditionsAgreed = ({ performAction }) => (
+  <Button
+    onClick={() => performAction(
+      'supplierMarkConditionsAgreed',
+      false,
+      'ui-rs.actions.supplierMarkConditionsAgreed.success',
+      'ui-rs.actions.supplierMarkConditionsAgreed.error'
+    )}
+    buttonStyle="primary mega"
+    fullWidth
+  >
+    <FormattedMessage id="ui-rs.actions.supplierMarkConditionsAgreed" />
+  </Button>
+);
+
+export const RequesterAgreeConditions = ({ performAction }) => (
+  <Button
+    onClick={() => performAction(
+      'requesterAgreeConditions',
+      false,
+      'ui-rs.actions.requesterAgreeConditions.success',
+      'ui-rs.actions.requesterAgreeConditions.error'
+    )}
+    buttonStyle="primary mega"
+    fullWidth
+  >
+    <FormattedMessage id="ui-rs.actions.requesterAgreeConditions" />
   </Button>
 );
 

@@ -4,14 +4,13 @@ import { FormattedMessage } from 'react-intl';
 import stringify from 'json-stable-stringify';
 import { withStripes } from '@folio/stripes/core';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
+import CatalogInfo from '@folio/stripes-reshare/cards/CatalogInfo';
 import AppNameContext from '../../AppNameContext';
-
 import {
   RequestInfo,
   RequestingInstitutionInfo,
   RequestingUserInfo,
   CitationMetadataInfo,
-  CatalogInfo,
   SuppliersInfo,
   AuditInfo
 } from './sections';
@@ -36,7 +35,7 @@ const ViewPatronRequest = ({ record, stripes }) => (
     </Accordion>
     {/* Pale green card */}
     <Accordion id="catalogInfo" label={<FormattedMessage id="ui-rs.information.heading.catalogInfo" />}>
-      <CatalogInfo id="catalogInfo" record={record} />
+      <CatalogInfo id="catalogInfo" request={record} />
     </Accordion>
     {/* Green card */}
     <AppNameContext.Consumer>
