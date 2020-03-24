@@ -194,16 +194,11 @@ class PatronRequestsRoute extends React.Component {
     );
   }
 
-  renderFilters = () => {
-    const prefix = { request: 'REQ', supply: 'RES' }[this.props.appName];
-    const messages = this.props.intl.messages;
-    const keys = filter(Object.keys(messages),
-      key => key.startsWith(`stripes-reshare.states.${prefix}_`));
-    const states = keys.map(key => ({ label: messages[key], value: key.replace('stripes-reshare.states.', '') }))
-      .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0));
-
+  renderFiltersFromData = (options) => {
     const byName = parseFilters(get(this.props.resources.query, 'filters'));
-    const state = byName.s || [];
+    const values = {
+      state: byName.s || [],
+    };
 
     const setFilterState = (group) => {
       byName[group.name] = group.values;
@@ -220,18 +215,31 @@ class PatronRequestsRoute extends React.Component {
           separator={false}
           closedByDefault
           header={FilterAccordionHeader}
-          displayClearButton={state.length > 0}
+          displayClearButton={values.state.length > 0}
           onClearFilter={() => clearGroup('state')}
         >
           <MultiSelectionFilter
             name="s"
-            dataOptions={states}
-            selectedValues={state}
+            dataOptions={options.state}
+            selectedValues={values.state}
             onChange={setFilterState}
           />
         </Accordion>
       </React.Fragment>
     );
+  }
+
+  renderFilters = () => {
+    const prefix = { request: 'REQ', supply: 'RES' }[this.props.appName];
+    const messages = this.props.intl.messages;
+    const keys = filter(Object.keys(messages),
+      key => key.startsWith(`stripes-reshare.states.${prefix}_`));
+    const states = keys.map(key => ({ label: messages[key], value: key.replace('stripes-reshare.states.', '') }))
+      .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0));
+
+    return this.renderFiltersFromData({
+      state: states,
+    });
   };
 
   render() {
