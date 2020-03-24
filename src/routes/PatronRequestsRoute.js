@@ -199,11 +199,11 @@ class PatronRequestsRoute extends React.Component {
     const messages = this.props.intl.messages;
     const keys = filter(Object.keys(messages),
       key => key.startsWith(`stripes-reshare.states.${prefix}_`));
-    const statuses = keys.map(key => ({ label: messages[key], value: key.replace('stripes-reshare.states.', '') }))
+    const states = keys.map(key => ({ label: messages[key], value: key.replace('stripes-reshare.states.', '') }))
       .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0));
 
     const byName = parseFilters(get(this.props.resources.query, 'filters'));
-    const status = byName.s || [];
+    const state = byName.s || [];
 
     const setFilterState = (group) => {
       byName[group.name] = group.values;
@@ -214,19 +214,19 @@ class PatronRequestsRoute extends React.Component {
     return (
       <React.Fragment>
         <Accordion
-          label={<FormattedMessage id="ui-rs.filter.status" />}
-          id="status"
-          name="status"
+          label={<FormattedMessage id="ui-rs.filter.state" />}
+          id="state"
+          name="state"
           separator={false}
           closedByDefault
           header={FilterAccordionHeader}
-          displayClearButton={status.length > 0}
-          onClearFilter={() => clearGroup('status')}
+          displayClearButton={state.length > 0}
+          onClearFilter={() => clearGroup('state')}
         >
           <MultiSelectionFilter
             name="s"
-            dataOptions={statuses}
-            selectedValues={status}
+            dataOptions={states}
+            selectedValues={state}
             onChange={setFilterState}
           />
         </Accordion>
