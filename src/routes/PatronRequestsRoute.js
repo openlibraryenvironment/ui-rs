@@ -88,7 +88,7 @@ class PatronRequestsRoute extends React.Component {
         searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn',
         filterKeys: {
           'r': 'isRequester',
-          's': 'status',
+          's': 'state.code',
         },
         queryGetter: queryModifiedForApp,
       }),
@@ -195,10 +195,11 @@ class PatronRequestsRoute extends React.Component {
   // For an example, see ui-inventory/src/components/InstanceFilters/InstanceFilters.js
   renderFilters = () => {
     const statuses = [
-      { label: 'dead', value: '1' },
-      { label: 'dying', value: '2' },
-      { label: 'alive', value: '3' },
-      { label: 'other', value: '4' },
+      { label: 'Awaiting pull slip printing', value: 'RES_NEW_AWAIT_PULL_SLIP' },
+      { label: 'Request not supplied', value: 'RES_UNFILLED' },
+      { label: 'Searching', value: 'RES_AWAIT_PICKING' },
+      { label: 'Shipped to requester', value: 'RES_ITEM_SHIPPED' },
+      // XXX This list is incomplete and should be generated dynamically
     ];
 
     const byName = parseFilters(get(this.props.resources.query, 'filters'));
