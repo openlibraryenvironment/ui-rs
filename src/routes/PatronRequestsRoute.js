@@ -105,7 +105,15 @@ class PatronRequestsRoute extends React.Component {
       fetch: false,
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
-
+    institutions: {
+      type: 'okapi',
+      path: 'directory/entry',
+      params: {
+        filters: 'tags.value==INSTITUTION',
+        perPage: '100',
+        stats: 'true',
+      },
+    },
     // If this (query) isn't here, then we get this.props.parentMutator.query is undefined in the UI
     query: {},
 
