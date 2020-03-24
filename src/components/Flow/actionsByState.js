@@ -60,7 +60,7 @@ export const actionsByState = {
     moreActions: ['PrintPullSlip'],
   },
   RES_CANCEL_REQUEST_RECEIVED:{
-    primaryAction: 'RespondToCancellation',
+    primaryAction: 'SupplierRespondToCancel',
   },
   REQ_REQUEST_SENT_TO_SUPPLIER: {
     primaryAction: null,

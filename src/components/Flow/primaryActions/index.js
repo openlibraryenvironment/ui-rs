@@ -22,7 +22,7 @@ export const RequesterManualCheckIn = ({ performAction }) => (
   </Button>
 );
 
-export const RespondToCancellation = () => (
+export const SupplierRespondToCancel = () => (
   <ShowModalButton
     modal="RespondToCancel"
     buttonStyle="primary mega"
