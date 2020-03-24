@@ -35,10 +35,10 @@ export const SupplierRespondToCancel = () => (
 export const SupplierMarkConditionsAgreed = ({ performAction }) => (
   <Button
     onClick={() => performAction(
-    'supplierMarkConditionsAgreed',
-    false,
-    'ui-rs.actions.supplierMarkConditionsAgreed.success',
-    'ui-rs.actions.supplierMarkConditionsAgreed.error'
+      'supplierMarkConditionsAgreed',
+      false,
+      'ui-rs.actions.supplierMarkConditionsAgreed.success',
+      'ui-rs.actions.supplierMarkConditionsAgreed.error'
     )}
     buttonStyle="primary mega"
     fullWidth
@@ -50,10 +50,10 @@ export const SupplierMarkConditionsAgreed = ({ performAction }) => (
 export const RequesterAgreeConditions = ({ performAction }) => (
   <Button
     onClick={() => performAction(
-    'requesterAgreeConditions',
-    false,
-    'ui-rs.actions.requesterAgreeConditions.success',
-    'ui-rs.actions.requesterAgreeConditions.error'
+      'requesterAgreeConditions',
+      false,
+      'ui-rs.actions.requesterAgreeConditions.success',
+      'ui-rs.actions.requesterAgreeConditions.error'
     )}
     buttonStyle="primary mega"
     fullWidth
