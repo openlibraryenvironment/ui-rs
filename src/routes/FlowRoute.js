@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
-import { Headline, Layout } from '@folio/stripes/components';
+import { Headline, KeyValue, Layout } from '@folio/stripes/components';
 import initialToUpper from '../util/initialToUpper';
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { actionsForRequest } from '../components/Flow/actionsByState';
@@ -21,10 +21,9 @@ const FlowRoute = ({ request, performAction }) => {
   return (
     <React.Fragment>
       <Layout className="centered" style={{ maxWidth: '80em' }}>
-        <div>
-          <strong>Request status</strong>
+        <KeyValue label={<FormattedMessage id="stripes-reshare.requestStatus" />}>
           <Headline size="large" faded><FormattedMessage id={`stripes-reshare.states.${request.state?.code}`} /></Headline>
-        </div>
+        </KeyValue>
         <div className={css.cards}>
           {renderNamedWithProps(forCurrent.cards, cards, { request })}
         </div>
