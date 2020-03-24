@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import filter from 'lodash/filter';
 import { Link } from 'react-router-dom';
-import { injectIntl, IntlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
 import { Button, Accordion, FilterAccordionHeader } from '@folio/stripes/components';
@@ -146,7 +146,7 @@ class PatronRequestsRoute extends React.Component {
         log: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
-    intl: IntlShape,
+    intl: intlShape.isRequired,
   }
 
   constructor(props) {
