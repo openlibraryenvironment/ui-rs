@@ -88,6 +88,7 @@ class PatronRequestsRoute extends React.Component {
         searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn',
         filterKeys: {
           'r': 'isRequester',
+          's': 'status',
         },
         queryGetter: queryModifiedForApp,
       }),
@@ -201,7 +202,7 @@ class PatronRequestsRoute extends React.Component {
     ];
 
     const byName = parseFilters(get(this.props.resources.query, 'filters'));
-    const status = byName.status || [];
+    const status = byName.s || [];
 
     const setFilterState = (group) => {
       byName[group.name] = group.values;
@@ -222,7 +223,7 @@ class PatronRequestsRoute extends React.Component {
           onClearFilter={() => clearGroup('status')}
         >
           <MultiSelectionFilter
-            name="status"
+            name="s"
             dataOptions={statuses}
             selectedValues={status}
             onChange={setFilterState}
