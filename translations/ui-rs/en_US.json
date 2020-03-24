@@ -279,5 +279,11 @@
   "settingName.autoResponderStatus": "Auto responder status",
 
   "settingName.chatAutoRead": "Auto mark as read",
+  "filter.state": "State",
+  "filter.pullSlip": "Pull slip",
+  "filter.supplier": "Supplier",
+  "filter.requester": "Requester",
+  "filter.dateSubmitted": "Date submitted",
+  "filter.dateNeeded": "Date needed",
   "SENTINEL": "SENTINEL"
 }
