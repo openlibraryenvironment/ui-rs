@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import filter from 'lodash/filter';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, IntlShape, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
 import { Button, Accordion, FilterAccordionHeader } from '@folio/stripes/components';
@@ -144,7 +145,8 @@ class PatronRequestsRoute extends React.Component {
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,
       }).isRequired,
-    }).isRequired
+    }).isRequired,
+    intl: IntlShape,
   }
 
   constructor(props) {
@@ -192,15 +194,12 @@ class PatronRequestsRoute extends React.Component {
     );
   }
 
-  // For an example, see ui-inventory/src/components/InstanceFilters/InstanceFilters.js
   renderFilters = () => {
-    const statuses = [
-      { label: 'Awaiting pull slip printing', value: 'RES_NEW_AWAIT_PULL_SLIP' },
-      { label: 'Request not supplied', value: 'RES_UNFILLED' },
-      { label: 'Searching', value: 'RES_AWAIT_PICKING' },
-      { label: 'Shipped to requester', value: 'RES_ITEM_SHIPPED' },
-      // XXX This list is incomplete and should be generated dynamically
-    ];
+    const messages = this.props.intl.messages;
+    const keys = filter(Object.keys(messages),
+      key => key.startsWith('stripes-reshare.states.RES_'));
+    const statuses = keys.map(key => ({ label: messages[key], value: key.replace('stripes-reshare.states.', '') }))
+      .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0));
 
     const byName = parseFilters(get(this.props.resources.query, 'filters'));
     const status = byName.s || [];
@@ -363,6 +362,7 @@ class PatronRequestsRoute extends React.Component {
 
 
 export default compose(
+  injectIntl,
   stripesConnect,
   withTags,
 )(PatronRequestsRoute);
