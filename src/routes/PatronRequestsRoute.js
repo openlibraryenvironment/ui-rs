@@ -294,7 +294,7 @@ class PatronRequestsRoute extends React.Component {
       { label: 'All fields', value: '' },
       { label: 'UUID', value: 'id' },
       { label: 'HRID', value: 'hrid' },
-      { label: 'Requested first name', value: 'patronGivenName' },
+      { label: 'Requester first name', value: 'patronGivenName' },
       { label: 'Requester last name', value: 'patronSurname' },
       { label: 'Title', value: 'title' },
       { label: 'Author', value: 'author' },
