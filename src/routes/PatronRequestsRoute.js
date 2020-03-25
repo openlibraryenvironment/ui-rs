@@ -281,7 +281,7 @@ class PatronRequestsRoute extends React.Component {
       return <PrintAllPullSlips records={this.props.resources.patronrequests} />;
     }
 
-    const { mutator, resources, appName, location } = this.props;
+    const { mutator, resources, appName, location, intl } = this.props;
     const { title, visibleColumns } = appDetails[appName];
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
       name: `@folio/${appName}`,
@@ -291,16 +291,19 @@ class PatronRequestsRoute extends React.Component {
     });
 
     const searchableIndexes = [
-      { label: 'All fields', value: '' },
-      { label: 'Full ID', value: 'id' },
-      { label: 'Request ID', value: 'hrid' },
-      { label: 'Requester first name', value: 'patronGivenName' },
-      { label: 'Requester last name', value: 'patronSurname' },
-      { label: 'Title', value: 'title' },
-      { label: 'Author', value: 'author' },
-      { label: 'ISSN', value: 'issn' },
-      { label: 'ISBN', value: 'isbn' },
-    ];
+      { label: 'allFields', value: '' },
+      { label: 'id', value: 'id' },
+      { label: 'hrid', value: 'hrid' },
+      { label: 'requesterGivenName', value: 'patronGivenName' },
+      { label: 'requesterSurname', value: 'patronSurname' },
+      { label: 'title', value: 'title' },
+      { label: 'author', value: 'author' },
+      { label: 'issn', value: 'issn' },
+      { label: 'isbn', value: 'isbn' },
+    ].map(x => ({
+      label: intl.formatMessage({ id: `ui-rs.index.${x.label}` }),
+      value: x.value,
+    }));
     if (appName === 'supply') searchableIndexes.splice(3, 2);
 
     return (

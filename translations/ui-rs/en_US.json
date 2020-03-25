@@ -285,5 +285,16 @@
   "filter.requester": "Requester",
   "filter.dateSubmitted": "Date submitted",
   "filter.dateNeeded": "Date needed",
+
+  "index.allFields": "All fields",
+  "index.id": "Full ID",
+  "index.hrid": "Request ID",
+  "index.requesterGivenName": "Requester first name",
+  "index.requesterSurname": "Requester last name",
+  "index.title": "Title",
+  "index.author": "Author",
+  "index.issn": "ISSN",
+  "index.isbn": "ISBN",
+
   "SENTINEL": "SENTINEL"
 }
