@@ -17,14 +17,6 @@ import packageInfo from '../../package';
 const INITIAL_RESULT_COUNT = 100;
 
 
-const filterConfig = [{
-  label: 'Status',
-  name: 'status',
-  cql: 'status',
-  values: [],
-}];
-
-
 // parseFilters parses a string like
 //    departments.123,coursetypes.abc,coursetypes.def
 // into an object mapping filter-name to lists of values;
@@ -341,7 +333,6 @@ class PatronRequestsRoute extends React.Component {
           onChangeIndex={this.onChangeIndex}
           objectName="patronrequest"
           packageInfo={tweakedPackageInfo}
-          filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           createRecordPath="requests/create"
