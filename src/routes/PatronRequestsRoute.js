@@ -11,42 +11,10 @@ import { SearchAndSort, withTags, MultiSelectionFilter } from '@folio/stripes/sm
 import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
 import formattedDateTime from '../util/formattedDateTime';
-
+import { parseFilters, deparseFilters } from '../util/parseFilters';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
-
-
-// parseFilters parses a string like
-//    departments.123,coursetypes.abc,coursetypes.def
-// into an object mapping filter-name to lists of values;
-// and deparseFilters performs the opposite operation
-
-function parseFilters(filters) {
-  if (!filters) return {};
-  const byName = {};
-
-  filters.split(',').forEach(string => {
-    const [name, value] = string.split('.');
-    if (!byName[name]) byName[name] = [];
-    byName[name].push(value);
-  });
-
-  return byName;
-}
-
-function deparseFilters(byName) {
-  const a = [];
-
-  Object.keys(byName).sort().forEach(name => {
-    const values = byName[name];
-    values.forEach(value => {
-      a.push(`${name}.${value}`);
-    });
-  });
-
-  return a.join(',');
-}
 
 
 function queryModifiedForApp(resources, props) {
