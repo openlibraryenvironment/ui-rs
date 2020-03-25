@@ -90,6 +90,7 @@ class PatronRequestsRoute extends React.Component {
         filterKeys: {
           'r': 'isRequester',
           's': 'state.code',
+          'i': 'resolvedRequester.owner.id',
         },
         queryGetter: queryModifiedForApp,
       }),
@@ -206,6 +207,7 @@ class PatronRequestsRoute extends React.Component {
     const byName = parseFilters(get(this.props.resources.query, 'filters'));
     const values = {
       state: byName.s || [],
+      institution: byName.i || [],
     };
 
     const setFilterState = (group) => {
@@ -233,20 +235,45 @@ class PatronRequestsRoute extends React.Component {
             onChange={setFilterState}
           />
         </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-rs.filter.requester" />}
+          id="institution"
+          name="institution"
+          separator={false}
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={values.institution.length > 0}
+          onClearFilter={() => clearGroup('institution')}
+        >
+          <MultiSelectionFilter
+            name="i"
+            dataOptions={options.institution}
+            selectedValues={values.institution}
+            onChange={setFilterState}
+          />
+        </Accordion>
       </React.Fragment>
     );
   }
 
   renderFilters = () => {
-    const prefix = { request: 'REQ', supply: 'RES' }[this.props.appName];
-    const messages = this.props.intl.messages;
-    const keys = filter(Object.keys(messages),
+    const { appName, intl, resources } = this.props;
+    const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
+
+    const prefix = { request: 'REQ', supply: 'RES' }[appName];
+    const keys = filter(Object.keys(intl.messages),
       key => key.startsWith(`stripes-reshare.states.${prefix}_`));
-    const states = keys.map(key => ({ label: messages[key], value: key.replace('stripes-reshare.states.', '') }))
-      .sort((a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0));
+    const states = keys.map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
+      .sort(compareLabel);
+
+    const records = get(resources, 'institutions.records');
+    const institutions = (records && records[0] ? records[0].results : [])
+      .map(x => ({ label: x.name, value: x.id }))
+      .sort(compareLabel);
 
     return this.renderFiltersFromData({
       state: states,
+      institution: institutions,
     });
   };
 
