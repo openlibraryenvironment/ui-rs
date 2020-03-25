@@ -292,8 +292,8 @@ class PatronRequestsRoute extends React.Component {
 
     const searchableIndexes = [
       { label: 'All fields', value: '' },
-      { label: 'UUID', value: 'id' },
-      { label: 'HRID', value: 'hrid' },
+      { label: 'Full ID', value: 'id' },
+      { label: 'Request ID', value: 'hrid' },
       { label: 'Requester first name', value: 'patronGivenName' },
       { label: 'Requester last name', value: 'patronSurname' },
       { label: 'Title', value: 'title' },
