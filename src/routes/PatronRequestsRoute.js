@@ -17,10 +17,26 @@ import packageInfo from '../../package';
 const INITIAL_RESULT_COUNT = 100;
 
 
+const appDetails = {
+  request: {
+    extraFilter: 'r.true',
+    intlId: 'supplier',
+    institutionFilterId: 'supplier',
+    statePrefix: 'REQ',
+  },
+  supply: {
+    extraFilter: 'r.false',
+    intlId: 'requester',
+    institutionFilterId: 'requester',
+    statePrefix: 'RES',
+  },
+};
+
+
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
   const res = Object.assign({}, resources.query);
-  const extraFilter = { request: 'r.true', supply: 'r.false' }[appName];
+  const { extraFilter } = appDetails[appName];
   if (extraFilter) {
     res.filters = !res.filters ? extraFilter : `${res.filters},${extraFilter}`;
   }
@@ -166,8 +182,7 @@ class PatronRequestsRoute extends React.Component {
 
   renderFiltersFromData = (options) => {
     const { appName, resources, mutator } = this.props;
-    const intlId = { request: 'supplier', supply: 'requester' }[appName];
-    const institutionFilterId = { request: 'supplier', supply: 'requester' }[appName];
+    const { intlId, institutionFilterId } = appDetails[appName];
     const byName = parseFilters(get(resources.query, 'filters'));
     const values = {
       state: byName.state || [],
@@ -224,9 +239,9 @@ class PatronRequestsRoute extends React.Component {
     const { appName, intl, resources } = this.props;
     const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 
-    const prefix = { request: 'REQ', supply: 'RES' }[appName];
+    const { statePrefix } = appDetails[appName];
     const keys = filter(Object.keys(intl.messages),
-      key => key.startsWith(`stripes-reshare.states.${prefix}_`));
+      key => key.startsWith(`stripes-reshare.states.${statePrefix}_`));
     const states = keys.map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
       .sort(compareLabel);
 
