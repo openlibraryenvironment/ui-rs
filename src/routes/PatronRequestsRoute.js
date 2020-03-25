@@ -319,8 +319,11 @@ class PatronRequestsRoute extends React.Component {
         visibleColumns.push('requestingInstitutionSymbol', 'localCallNumber', 'pickLocation', 'pickShelvingLocation');
         searchableIndexes.splice(3, 2);
         break;
+      case 'request':
+        visibleColumns.push('supplyingInstitutionSymbol');
+        break;
       default:
-        // 'request' or can't-happen values
+        // Can't happen
     }
 
     return (
@@ -364,6 +367,7 @@ class PatronRequestsRoute extends React.Component {
             state: <FormattedMessage id="ui-rs.patronrequests.state" />,
             serviceType: <FormattedMessage id="ui-rs.patronrequests.serviceType" />,
             requestingInstitutionSymbol: <FormattedMessage id="ui-rs.patronrequests.requestingInstitutionSymbol" />,
+            supplyingInstitutionSymbol: <FormattedMessage id="ui-rs.patronrequests.supplyingInstitutionSymbol" />,
             localCallNumber: <FormattedMessage id="ui-rs.patronrequests.localCallNumber" />,
             pickLocation: <FormattedMessage id="ui-rs.patronrequests.pickLocation" />,
             pickShelvingLocation: <FormattedMessage id="ui-rs.patronrequests.pickShelvingLocation" />,
@@ -377,6 +381,7 @@ class PatronRequestsRoute extends React.Component {
             state: 180,
             serviceType: 130,
             requestingInstitutionSymbol: 130,
+            supplyingInstitutionSymbol: 130,
             localCallNumber: 200,
             pickLocation: 150,
             pickShelvingLocation: 200,
@@ -395,6 +400,7 @@ class PatronRequestsRoute extends React.Component {
             },
             state: a => <FormattedMessage id={`stripes-reshare.states.${a.state.code}`} />,
             serviceType: a => a.serviceType && a.serviceType.value,
+            supplyingInstitutionSymbol: a => get(a, 'resolvedSupplier.owner.symbolSummary', '').replace(/,.*/, ''),
             pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}
           renderFilters={this.renderFilters}
