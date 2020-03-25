@@ -89,7 +89,7 @@ class PatronRequestsRoute extends React.Component {
         searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn',
         filterKeys: {
           'r': 'isRequester',
-          's': 'state.code',
+          'state': 'state.code',
           'requester': 'resolvedRequester.owner.id',
           'supplier': 'resolvedSupplier.owner.id',
         },
@@ -210,7 +210,7 @@ class PatronRequestsRoute extends React.Component {
     const institutionFilterId = { request: 'supplier', supply: 'requester' }[appName];
     const byName = parseFilters(get(resources.query, 'filters'));
     const values = {
-      state: byName.s || [],
+      state: byName.state || [],
       institution: byName[institutionFilterId] || [],
     };
 
@@ -233,7 +233,7 @@ class PatronRequestsRoute extends React.Component {
           onClearFilter={() => clearGroup('state')}
         >
           <MultiSelectionFilter
-            name="s"
+            name="state"
             dataOptions={options.state}
             selectedValues={values.state}
             onChange={setFilterState}
