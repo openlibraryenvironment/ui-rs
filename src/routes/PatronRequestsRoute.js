@@ -90,7 +90,8 @@ class PatronRequestsRoute extends React.Component {
         filterKeys: {
           'r': 'isRequester',
           's': 'state.code',
-          'i': 'resolvedRequester.owner.id',
+          'requester': 'resolvedRequester.owner.id',
+          'supplier': 'resolvedSupplier.owner.id',
         },
         queryGetter: queryModifiedForApp,
       }),
@@ -204,15 +205,18 @@ class PatronRequestsRoute extends React.Component {
   }
 
   renderFiltersFromData = (options) => {
-    const byName = parseFilters(get(this.props.resources.query, 'filters'));
+    const { appName, resources, mutator } = this.props;
+    const intlId = { request: 'supplier', supply: 'requester' }[appName];
+    const institutionFilterId = { request: 'supplier', supply: 'requester' }[appName];
+    const byName = parseFilters(get(resources.query, 'filters'));
     const values = {
       state: byName.s || [],
-      institution: byName.i || [],
+      institution: byName[institutionFilterId] || [],
     };
 
     const setFilterState = (group) => {
       byName[group.name] = group.values;
-      this.props.mutator.query.update({ filters: deparseFilters(byName) });
+      mutator.query.update({ filters: deparseFilters(byName) });
     };
     const clearGroup = (name) => setFilterState({ name, values: [] });
 
@@ -236,7 +240,7 @@ class PatronRequestsRoute extends React.Component {
           />
         </Accordion>
         <Accordion
-          label={<FormattedMessage id="ui-rs.filter.requester" />}
+          label={<FormattedMessage id={`ui-rs.filter.${intlId}`} />}
           id="institution"
           name="institution"
           separator={false}
@@ -246,7 +250,7 @@ class PatronRequestsRoute extends React.Component {
           onClearFilter={() => clearGroup('institution')}
         >
           <MultiSelectionFilter
-            name="i"
+            name={institutionFilterId}
             dataOptions={options.institution}
             selectedValues={values.institution}
             onChange={setFilterState}
