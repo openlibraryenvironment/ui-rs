@@ -17,10 +17,46 @@ import packageInfo from '../../package';
 const INITIAL_RESULT_COUNT = 100;
 
 
+const appDetails = {
+  rs: {
+    title: 'Resource Sharing',
+    visibleColumns: [
+      'id',
+      'isRequester',
+      'dateCreated', 'title', 'patronIdentifier', 'state', 'serviceType',
+    ],
+  },
+  request: {
+    title: 'Requests',
+    visibleColumns: [
+      'id',
+      'dateCreated', 'title', 'patronIdentifier', 'state', 'serviceType',
+      'supplyingInstitutionSymbol',
+    ],
+    extraFilter: 'r.true',
+    intlId: 'supplier',
+    institutionFilterId: 'supplier',
+    statePrefix: 'REQ',
+  },
+  supply: {
+    title: 'Supply',
+    visibleColumns: [
+      'id',
+      'dateCreated', 'title', 'patronIdentifier', 'state', 'serviceType',
+      'requestingInstitutionSymbol', 'localCallNumber', 'pickLocation', 'pickShelvingLocation',
+    ],
+    extraFilter: 'r.false',
+    intlId: 'requester',
+    institutionFilterId: 'requester',
+    statePrefix: 'RES',
+  },
+};
+
+
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
   const res = Object.assign({}, resources.query);
-  const extraFilter = { request: 'r.true', supply: 'r.false' }[appName];
+  const { extraFilter } = appDetails[appName];
   if (extraFilter) {
     res.filters = !res.filters ? extraFilter : `${res.filters},${extraFilter}`;
   }
@@ -166,8 +202,7 @@ class PatronRequestsRoute extends React.Component {
 
   renderFiltersFromData = (options) => {
     const { appName, resources, mutator } = this.props;
-    const intlId = { request: 'supplier', supply: 'requester' }[appName];
-    const institutionFilterId = { request: 'supplier', supply: 'requester' }[appName];
+    const { intlId, institutionFilterId } = appDetails[appName];
     const byName = parseFilters(get(resources.query, 'filters'));
     const values = {
       state: byName.state || [],
@@ -224,9 +259,9 @@ class PatronRequestsRoute extends React.Component {
     const { appName, intl, resources } = this.props;
     const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 
-    const prefix = { request: 'REQ', supply: 'RES' }[appName];
+    const { statePrefix } = appDetails[appName];
     const keys = filter(Object.keys(intl.messages),
-      key => key.startsWith(`stripes-reshare.states.${prefix}_`));
+      key => key.startsWith(`stripes-reshare.states.${statePrefix}_`));
     const states = keys.map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
       .sort(compareLabel);
 
@@ -247,21 +282,13 @@ class PatronRequestsRoute extends React.Component {
     }
 
     const { mutator, resources, appName, location } = this.props;
+    const { title, visibleColumns } = appDetails[appName];
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
       name: `@folio/${appName}`,
       stripes: Object.assign({}, packageInfo.stripes, {
         route: `/${appName}/requests`,
       }),
     });
-
-    const visibleColumns = [
-      'id',
-      'dateCreated',
-      'title',
-      'patronIdentifier',
-      'state',
-      'serviceType',
-    ];
 
     const searchableIndexes = [
       { label: 'All fields', value: '' },
@@ -274,27 +301,13 @@ class PatronRequestsRoute extends React.Component {
       { label: 'ISSN', value: 'issn' },
       { label: 'ISBN', value: 'isbn' },
     ];
-
-    switch (appName) {
-      case 'rs':
-        visibleColumns.splice(1, 0, 'isRequester');
-        break;
-      case 'supply':
-        visibleColumns.push('requestingInstitutionSymbol', 'localCallNumber', 'pickLocation', 'pickShelvingLocation');
-        searchableIndexes.splice(3, 2);
-        break;
-      case 'request':
-        visibleColumns.push('supplyingInstitutionSymbol');
-        break;
-      default:
-        // Can't happen
-    }
+    if (appName === 'supply') searchableIndexes.splice(3, 2);
 
     return (
       <React.Fragment>
         <SearchAndSort
           key="patronrequests"
-          title={appName === 'request' ? 'Requests' : appName === 'supply' ? 'Supply' : ''}
+          title={title}
           actionMenu={() => this.getActionMenu(tweakedPackageInfo.stripes.route, location)}
           searchableIndexes={searchableIndexes}
           selectedIndex={get(resources.query, 'qindex')}
