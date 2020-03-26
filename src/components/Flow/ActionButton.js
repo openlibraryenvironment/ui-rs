@@ -18,11 +18,11 @@ const ActionButton = props => {
 
   const withNote = includesNote[props?.action] ?? includesNote.default;
   return (
-    <div className={css.container}>
+    <div classNames={css.container}>
       <Button
         buttonStyle="dropdownItem"
         onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
-        className={css.button}
+      	buttonClass={ css.actionButton }
       >
         <Icon icon={props.icon || 'default'} className={css.button}>
           <FormattedMessage id={props.label} />
