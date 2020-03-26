@@ -36,8 +36,8 @@
     }
   }
   
-  & button,
-  & a[role="button"] {
+  & > div > button,
+  & > div > a[role="button"] {
     &::before {
       /* SO: I hate the use of important, but modular CSS leaves us little choice here,
          short of forcing every button/link to specify the removal of the radius manually which is frankly awful.
