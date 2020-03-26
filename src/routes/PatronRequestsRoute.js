@@ -8,7 +8,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
 import { Button, Accordion, FilterAccordionHeader } from '@folio/stripes/components';
 import { SearchAndSort, withTags, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { getSASParams } from '@folio/stripes-erm-components';
+import { generateQueryParams } from '@folio/stripes-erm-components';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
 import formattedDateTime from '../util/formattedDateTime';
 import { parseFilters, deparseFilters } from '../util/parseFilters';
@@ -81,7 +81,7 @@ class PatronRequestsRoute extends React.Component {
     patronrequests: {
       type: 'okapi',
       path: 'rs/patronrequests',
-      params: getSASParams({
+      params: generateQueryParams({
         searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn',
         filterKeys: {
           'r': 'isRequester',
