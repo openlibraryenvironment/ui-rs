@@ -22,14 +22,13 @@ const ActionButton = props => {
       <Button
         buttonStyle="dropdownItem"
         onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
-      	buttonClass={ css.actionButton }
       >
         <Icon icon={props.icon || 'default'} className={css.button}>
           <FormattedMessage id={props.label} />
         </Icon>
       </Button>
       { withNote &&
-        <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props} className={css.addNoteForm} />
+        <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props} />
       }
     </div>
   );
