@@ -24,12 +24,27 @@
   margin-top: 0;
 }
 
-.optionList div, .optionList a {
-  border-radius: 0;
-  &:nth-child(even) {
-    background-color: var(--color-fill-table-row-even);
+.optionList {
+  & > div,
+  & > a {
+    border-radius: 0;
+    &:nth-child(even) {
+      background-color: var(--color-fill-table-row-even);
+    }
+    &:nth-child(odd) {
+      background-color: var(--color-fill-table-row-odd);
+    }
   }
-  &:nth-child(odd) {
-    background-color: var(--color-fill-table-row-odd);
+  
+  & button,
+  & a[role="button"] {
+    &::before {
+      /* SO: I hate the use of important, but modular CSS leaves us little choice here,
+         short of forcing every button/link to specify the removal of the radius manually which is frankly awful.
+       */ 
+      border-radius: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+    }
   }
 }
