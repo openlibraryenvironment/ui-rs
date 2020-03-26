@@ -23,6 +23,19 @@ function makeUnitList(units) {
 }
 
 
+function makeMemberList(members) {
+  if (!members || members.length === 0) return null;
+
+  return (
+    <ul>
+      {members.map(e => (
+        <li key={e.id}><Link to={e.id}>{e.name}</Link></li>
+      ))}
+    </ul>
+  );
+}
+
+
 class DirectoryEntryInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
@@ -34,6 +47,7 @@ class DirectoryEntryInfo extends React.Component {
   render() {
     const { record } = this.props;
     const unitList = makeUnitList(record.units);
+    const memberList = makeMemberList(record.members);
 
     return (
       <Accordion
@@ -135,6 +149,19 @@ class DirectoryEntryInfo extends React.Component {
               <KeyValue
                 label={<FormattedMessage id="ui-directory.information.units" />}
                 value={unitList}
+              />
+            </Col>
+          </Row>
+        </React.Fragment>
+        }
+
+        {!memberList ? '' :
+        <React.Fragment>
+          <Row>
+            <Col xs={12}>
+              <KeyValue
+                label={<FormattedMessage id="ui-directory.information.members" />}
+                value={memberList}
               />
             </Col>
           </Row>

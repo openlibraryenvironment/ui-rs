@@ -33,6 +33,7 @@
   "information.parent": "Parent institution",
   "information.parent.warning": "It looks like this may create a loop of parent directories. Attempting to submit this form may fail.",
   "information.units": "Units",
+  "information.members": "Members",
   "information.tags": "Tags",
   "information.heading.addresses": "Addresses",
   "information.addressNofM": "Address {index} of {count}",
