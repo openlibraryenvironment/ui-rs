@@ -8,7 +8,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
 import { Button, Accordion, FilterAccordionHeader } from '@folio/stripes/components';
 import { SearchAndSort, withTags, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import getSASParams from '@folio/stripes-erm-components/lib/getSASParams';
+import { getSASParams } from '@folio/stripes-erm-components';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
 import formattedDateTime from '../util/formattedDateTime';
 import { parseFilters, deparseFilters } from '../util/parseFilters';
