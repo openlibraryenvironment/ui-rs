@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
-import { Button, Accordion, FilterAccordionHeader } from '@folio/stripes/components';
+import { Button, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
 import { SearchAndSort, withTags, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { generateQueryParams } from '@folio/stripes-erm-components';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
@@ -214,6 +214,15 @@ class PatronRequestsRoute extends React.Component {
       mutator.query.update({ filters: deparseFilters(byName) });
     };
     const clearGroup = (name) => setFilterState({ name, values: [] });
+    const setFilterDate = (name, relation, value) => {
+      const preposition = relation === '>=' ? 'From' : 'To';
+      console.log(`setFilterDate: ${name} ${preposition} changed to ${value}`);
+      setFilterState({ name: `${name}${preposition}`, values: [`${name}${relation}${value}`] });
+    };
+    const clearDate = (name) => {
+      setFilterDate(name, '>=', null);
+      setFilterDate(name, '<=', null);
+    };
 
     return (
       <React.Fragment>
@@ -249,6 +258,28 @@ class PatronRequestsRoute extends React.Component {
             dataOptions={options.institution}
             selectedValues={values.institution}
             onChange={setFilterState}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-rs.filter.dateSubmitted" />}
+          id="dateCreated"
+          name="dateCreated"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={values.dateCreated}
+          onClearFilter={() => clearDate('dateCreated')}
+        >
+          <Datepicker
+            name="dateCreatedFrom"
+            label="From"
+            value={values.dateCreatedFrom}
+            onChange={(e) => setFilterDate('dateCreated', '>=', e.target.value)}
+          />
+          <Datepicker
+            name="dateCreatedTo"
+            label="To"
+            value={values.dateCreatedTo}
+            onChange={(e) => setFilterDate('dateCreated', '<=', e.target.value)}
           />
         </Accordion>
       </React.Fragment>
