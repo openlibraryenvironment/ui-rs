@@ -230,7 +230,6 @@ class PatronRequestsRoute extends React.Component {
     const clearGroup = (name) => setFilterState({ name, values: [] });
     const setFilterDate = (name, relation, value) => {
       const preposition = relation === '>=' ? 'From' : 'To';
-      console.log(`setFilterDate: ${name} ${preposition} changed to ${value}`);
       setFilterState({ name: `${name}${preposition}`, values: value ? [`${name}${relation}${value}`] : null });
     };
     const clearDate = (name) => {
