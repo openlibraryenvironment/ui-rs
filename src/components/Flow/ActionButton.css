@@ -1,7 +1,7 @@
 @import "@folio/stripes-components/lib/variables";
 
 .addNoteForm {
-  flex-direction: row-reverse;
+  /* flex-direction: row-reverse; */
   display: flex;
   flex-grow: 10;
   margin-bottom: 0;
