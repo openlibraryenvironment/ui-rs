@@ -272,12 +272,14 @@ class PatronRequestsRoute extends React.Component {
           <Datepicker
             name="dateCreatedFrom"
             label="From"
+            dateFormat="YYYY-MM-DD"
             value={values.dateCreatedFrom}
             onChange={(e) => setFilterDate('dateCreated', '>=', e.target.value)}
           />
           <Datepicker
             name="dateCreatedTo"
             label="To"
+            dateFormat="YYYY-MM-DD"
             value={values.dateCreatedTo}
             onChange={(e) => setFilterDate('dateCreated', '<=', e.target.value)}
           />
