@@ -210,14 +210,18 @@ class PatronRequestsRoute extends React.Component {
     };
 
     const setFilterState = (group) => {
-      byName[group.name] = group.values;
+      if (group.values === null) {
+        delete byName[group.name];
+      } else {
+        byName[group.name] = group.values;
+      }
       mutator.query.update({ filters: deparseFilters(byName) });
     };
     const clearGroup = (name) => setFilterState({ name, values: [] });
     const setFilterDate = (name, relation, value) => {
       const preposition = relation === '>=' ? 'From' : 'To';
       console.log(`setFilterDate: ${name} ${preposition} changed to ${value}`);
-      setFilterState({ name: `${name}${preposition}`, values: [`${name}${relation}${value}`] });
+      setFilterState({ name: `${name}${preposition}`, values: value ? [`${name}${relation}${value}`] : null });
     };
     const clearDate = (name) => {
       setFilterDate(name, '>=', null);
