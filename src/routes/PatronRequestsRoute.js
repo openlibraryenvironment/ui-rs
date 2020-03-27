@@ -269,6 +269,7 @@ class PatronRequestsRoute extends React.Component {
           id="dateCreated"
           name="dateCreated"
           separator={false}
+          closedByDefault
           header={FilterAccordionHeader}
           displayClearButton={values.dateCreated}
           onClearFilter={() => clearDate('dateCreated')}
@@ -286,6 +287,30 @@ class PatronRequestsRoute extends React.Component {
             dateFormat="YYYY-MM-DD"
             value={values.dateCreatedTo}
             onChange={(e) => setFilterDate('dateCreated', '<=', e.target.value)}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-rs.filter.dateNeeded" />}
+          id="neededBy"
+          name="neededBy"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={values.neededBy}
+          onClearFilter={() => clearDate('neededBy')}
+        >
+          <Datepicker
+            name="neededByFrom"
+            label="From"
+            dateFormat="YYYY-MM-DD"
+            value={values.neededByFrom}
+            onChange={(e) => setFilterDate('neededBy', '>=', e.target.value)}
+          />
+          <Datepicker
+            name="neededByTo"
+            label="To"
+            dateFormat="YYYY-MM-DD"
+            value={values.neededByTo}
+            onChange={(e) => setFilterDate('neededBy', '<=', e.target.value)}
           />
         </Accordion>
       </React.Fragment>
