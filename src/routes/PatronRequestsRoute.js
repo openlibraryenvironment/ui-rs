@@ -200,6 +200,16 @@ class PatronRequestsRoute extends React.Component {
     );
   }
 
+  // The use of `key=...` in the <Datepicker>s below forces a
+  // reinstantiation rather than a mere re-render, which works around
+  // a bug in Datepicker where the `value` prop is ignored except on
+  // the first render.
+  //
+  // Including these `key` properties causes a benign console error:
+  //    Warning: Can't perform a React state update on an unmounted component
+  // I hope we can make this go away just by removing the `key`
+  // properties once the Datepicker rendering bug has been fixed.
+  //
   renderFiltersFromData = (options) => {
     const { appName, resources, mutator } = this.props;
     const { intlId, institutionFilterId } = appDetails[appName];
@@ -227,6 +237,11 @@ class PatronRequestsRoute extends React.Component {
       setFilterDate(name, '>=', null);
       setFilterDate(name, '<=', null);
     };
+
+    const dateCreatedFrom = get(byName.dateCreatedFrom, 0, '');
+    const dateCreatedTo = get(byName.dateCreatedTo, 0, '');
+    const neededByFrom = get(byName.neededByFrom, 0, '');
+    const neededByTo = get(byName.neededByTo, 0, '');
 
     return (
       <React.Fragment>
@@ -277,14 +292,16 @@ class PatronRequestsRoute extends React.Component {
             name="dateCreatedFrom"
             label="From"
             dateFormat="YYYY-MM-DD"
-            value={get(byName.dateCreatedFrom, 0)}
+            value={dateCreatedFrom}
+            key={`cf${dateCreatedFrom}`}
             onChange={(e) => setFilterDate('dateCreated', '>=', e.target.value)}
           />
           <Datepicker
             name="dateCreatedTo"
             label="To"
             dateFormat="YYYY-MM-DD"
-            value={get(byName.dateCreatedTo, 0)}
+            value={dateCreatedTo}
+            key={`ct${dateCreatedTo}`}
             onChange={(e) => setFilterDate('dateCreated', '<=', e.target.value)}
           />
         </Accordion>
@@ -302,14 +319,16 @@ class PatronRequestsRoute extends React.Component {
             name="neededByFrom"
             label="From"
             dateFormat="YYYY-MM-DD"
-            value={get(byName.neededByFrom, 0)}
+            value={neededByFrom}
+            key={`nf${neededByFrom}`}
             onChange={(e) => setFilterDate('neededBy', '>=', e.target.value)}
           />
           <Datepicker
             name="neededByTo"
             label="To"
             dateFormat="YYYY-MM-DD"
-            value={get(byName.neededByTo, 0)}
+            value={neededByTo}
+            key={`nt${neededByTo}`}
             onChange={(e) => setFilterDate('neededBy', '<=', e.target.value)}
           />
         </Accordion>
