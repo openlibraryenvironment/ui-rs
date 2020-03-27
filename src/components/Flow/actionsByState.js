@@ -96,12 +96,12 @@ export const includesNote = {
   supplierCheckOutOfReshare: true,
   // Special cases, where this file isn't drawn from at the moment:
   // modals
-  respondYes: false,
-  supplierCannotSupply: true,
-  supplierConditionalSupply: true,
+  RespondYes: true,
+  SupplierCannotSupply: true,
+  SupplierConditionalSupply: true,
   // others, triggered by other means
-  supplierCheckInToReshare: false,
-  printPullSlip: false,
+  SupplierCheckInToReshare: false,
+  PrintPullSlip: false,
 };
 
 /* Icons for generic more actions */
