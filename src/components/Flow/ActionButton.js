@@ -18,7 +18,7 @@ const ActionButton = props => {
 
   const withNote = includesNote[props?.action] ?? includesNote.default;
   return (
-    <div classNames={css.container}>
+    <div className={css.container}>
       <Button
         buttonStyle="dropdownItem"
         onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
