@@ -269,7 +269,6 @@ class PatronRequestsRoute extends React.Component {
           id="dateCreated"
           name="dateCreated"
           separator={false}
-          closedByDefault
           header={FilterAccordionHeader}
           displayClearButton={byName.dateCreatedFrom !== undefined || byName.dateCreatedTo !== undefined}
           onClearFilter={() => clearDate('dateCreated')}
@@ -278,14 +277,14 @@ class PatronRequestsRoute extends React.Component {
             name="dateCreatedFrom"
             label="From"
             dateFormat="YYYY-MM-DD"
-            value={values.dateCreatedFrom}
+            value={get(byName.dateCreatedFrom, 0)}
             onChange={(e) => setFilterDate('dateCreated', '>=', e.target.value)}
           />
           <Datepicker
             name="dateCreatedTo"
             label="To"
             dateFormat="YYYY-MM-DD"
-            value={values.dateCreatedTo}
+            value={get(byName.dateCreatedTo, 0)}
             onChange={(e) => setFilterDate('dateCreated', '<=', e.target.value)}
           />
         </Accordion>
@@ -294,6 +293,7 @@ class PatronRequestsRoute extends React.Component {
           id="neededBy"
           name="neededBy"
           separator={false}
+          closedByDefault
           header={FilterAccordionHeader}
           displayClearButton={byName.neededByFrom !== undefined || byName.neededByTo !== undefined}
           onClearFilter={() => clearDate('neededBy')}
@@ -302,14 +302,14 @@ class PatronRequestsRoute extends React.Component {
             name="neededByFrom"
             label="From"
             dateFormat="YYYY-MM-DD"
-            value={values.neededByFrom}
+            value={get(byName.neededByFrom, 0)}
             onChange={(e) => setFilterDate('neededBy', '>=', e.target.value)}
           />
           <Datepicker
             name="neededByTo"
             label="To"
             dateFormat="YYYY-MM-DD"
-            value={values.neededByTo}
+            value={get(byName.neededByTo, 0)}
             onChange={(e) => setFilterDate('neededBy', '<=', e.target.value)}
           />
         </Accordion>
