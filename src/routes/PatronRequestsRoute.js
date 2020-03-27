@@ -271,7 +271,7 @@ class PatronRequestsRoute extends React.Component {
           separator={false}
           closedByDefault
           header={FilterAccordionHeader}
-          displayClearButton={values.dateCreated}
+          displayClearButton={byName.dateCreatedFrom !== undefined || byName.dateCreatedTo !== undefined}
           onClearFilter={() => clearDate('dateCreated')}
         >
           <Datepicker
@@ -295,7 +295,7 @@ class PatronRequestsRoute extends React.Component {
           name="neededBy"
           separator={false}
           header={FilterAccordionHeader}
-          displayClearButton={values.neededBy}
+          displayClearButton={byName.neededByFrom !== undefined || byName.neededByTo !== undefined}
           onClearFilter={() => clearDate('neededBy')}
         >
           <Datepicker
