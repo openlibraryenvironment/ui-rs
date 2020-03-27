@@ -35,9 +35,8 @@
       background-color: var(--color-fill-table-row-odd);
     }
   }
-  
   & > div > button,
-  & > div > a[role="button"] {
+  & > a[role="button"] {
     &::before {
       /* SO: I hate the use of important, but modular CSS leaves us little choice here,
          short of forcing every button/link to specify the removal of the radius manually which is frankly awful.
@@ -46,5 +45,11 @@
       left: 0 !important;
       right: 0 !important;
     }
+  }
+  & > div {
+  
+	  display: flex;
+	  flex-wrap: nowrap;
+	  height: 100%;
   }
 }

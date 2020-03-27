@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Button, TextField } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 import { FormattedMessage } from 'react-intl';
+import classNames from 'classnames';
 
 import css from './AddNoteForm.css';
 
@@ -19,21 +20,21 @@ class AddNoteForm extends React.Component {
 
   render() {
     const { noteFieldOpen } = this.state;
-    const { onSubmit } = this.props;
+    const { onSubmit, className } = this.props;
     return (
       <Form
         onSubmit={onSubmit}
-        className={css.container}
+        className={ css.container }
         render={({ handleSubmit }) => (
           <form
             id="form-add-note-modal-button"
             onSubmit={handleSubmit}
             autoComplete="off"
-            className={css.form}
+            className={classNames( css.form, className ) }
           >
             {noteFieldOpen ? <Field name="note" component={TextField} className={css.field} /> : <div className={css.field} />}
             <Button
-              className={css.button}
+              buttonClass={css.button}
               onClick={() => {
                 if (noteFieldOpen) {
                   handleSubmit();

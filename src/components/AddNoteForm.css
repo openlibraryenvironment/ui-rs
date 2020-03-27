@@ -2,19 +2,23 @@
 
 .field {
   display: flex;
-  flex-grow: 2;
+  flex-grow: 6;
 }
 
 .button {
   display: flex;
+  margin-bottom: 0;
 }
 
 .container {
   display: flex;
   position: absolute;
-  flex-direction: row-reverse;
+/*   flex-direction: row-reverse; */
 }
 
 .form {
   margin-bottom: 0;
+  & * {
+    margin-bottom: 0;
+  }
 }
