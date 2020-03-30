@@ -283,7 +283,7 @@
   "filter.pullSlip": "Pull slip",
   "filter.supplier": "Supplier",
   "filter.requester": "Requester",
-  "filter.dateSubmitted": "Date submitted",
+  "filter.dateSubmitted": "Date created",
   "filter.dateNeeded": "Date needed",
 
   "index.allFields": "All fields",
