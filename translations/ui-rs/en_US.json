@@ -118,15 +118,15 @@
 
   "view.withAction.requestResponse": "The supplier has responded to this request with a note:",
   "view.withAction.requestResponse.unfilled": "The supplier has responded 'Cannot supply' to this request with a note:",
-  "view.withAction.requestResponse.expectToSupply": "The supplier has responded 'Expects to supply' to this request with a note:",
+  "view.withAction.requestResponse.expectToSupply": "The supplier has responded 'Will supply' to this request with a note:",
   "view.withAction.requestResponse.conditional": "The supplier has responded conditionally with a note:",
   "view.withAction.requestResponse.loaned": "The supplier has shipped this request with a note:",
-  "view.withAction.received": "The requester has received this shipment with a note:",
-  "view.withAction.shippedReturn": "The requester shipped this back with a note:",
+  "view.withAction.received": "The requester has received this request with a note:",
+  "view.withAction.shippedReturn": "The requester shipped this request back with a note:",
 
 
   "view.withAction.cancelResponse": "The supplier has denied the cancellation of this request with a note:",
-  "view.withAction.cancelResponse.cancelled": "The supplier has accepted cancellation this request with a note:",
+  "view.withAction.cancelResponse.cancelled": "The supplier has accepted cancellation of this request with a note:",
 
   "view.withAction.ReShareLoanConditionAgreeResponse": "The requester has agreed to the loan condition(s)",
   "view.withAction.ReShareSupplierAwaitingConditionConfirmation": "The supplier has placed this request into a holding state, pending agreement of the loan condition(s)",
