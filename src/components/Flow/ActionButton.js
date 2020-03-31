@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Button, Icon } from '@folio/stripes/components';
 
-import AddNoteForm from '../AddNoteForm';
+import NoteForm from '../NoteForm';
 import { includesNote } from './actionsByState';
 
 import css from './ActionButton.css';
@@ -16,21 +16,19 @@ const ActionButton = props => {
     return null;
   };
 
-  const withNote = includesNote[props?.action] ?? includesNote.default;
+  const withNote = true; //includesNote[props?.action] ?? includesNote.default;
   return (
     <div className={css.container}>
       <Button
         buttonStyle="dropdownItem"
         onClick={() => props.performAction(props.action, props.payload, props.success, props.error)}
-      	buttonClass={ css.actionButton }
+      	buttonClass={{ [`${css.actionButton}`] : true, [`${css.withInlineForm}`]: withNote }}
       >
         <Icon icon={props.icon || 'default'} className={css.button}>
           <FormattedMessage id={props.label} />
         </Icon>
+        { withNote && <NoteForm onSubmit={onSubmitNote} submitNoteProps={props} className={css.addNoteForm} /> }
       </Button>
-      { withNote &&
-        <AddNoteForm onSubmit={onSubmitNote} submitNoteProps={props} className={css.addNoteForm} />
-      }
     </div>
   );
 };

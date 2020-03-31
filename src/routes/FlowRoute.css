@@ -24,32 +24,33 @@
   margin-top: 0;
 }
 
-.optionList {
-  & > div,
-  & > a {
-    border-radius: 0;
-    &:nth-child(even) {
-      background-color: var(--color-fill-table-row-even);
-    }
-    &:nth-child(odd) {
-      background-color: var(--color-fill-table-row-odd);
-    }
-  }
-  & > div > button,
-  & > a[role="button"] {
-    &::before {
-      /* SO: I hate the use of important, but modular CSS leaves us little choice here,
-         short of forcing every button/link to specify the removal of the radius manually which is frankly awful.
-       */ 
-      border-radius: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-    }
-  }
-  & > div {
-  
-	  display: flex;
-	  flex-wrap: nowrap;
-	  height: 100%;
+/**
+ * Be stupidly selective so we can override the default button classes without resorting to !important
+ */
+[dir="rtl"],
+:not([dir="rtl"]) {	
+	& .optionList {
+	  &.noBorderRadius {
+	    & > a[role="button"],
+	    & > * > button {
+	      border-radius: 0;
+	      &::before {
+	        border-radius: 0;
+	        left: 0;
+	        right: 0;
+	      }
+	    }
+	  }
+		& > * {
+      margin-bottom: 0;
+      margin-top: 0;
+      
+		  &:nth-child(even) {
+	      background-color: var(--color-fill-table-row-even);
+	    }
+	    &:nth-child(odd) {
+	      background-color: var(--color-fill-table-row-odd);
+	    }
+		}
   }
 }
