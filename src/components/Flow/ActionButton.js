@@ -31,8 +31,7 @@ class ActionButton extends Component {
     const { action, success, error, performAction } = this.props;
     const payload = this.props.payload || {}
     payload.note = note;
-    //performAction(action, payload, success, error);
-    console.log ("Sending Payload with note %o", payload);
+    performAction(action, payload, success, error);
   };
   
   setNoteFormVisibility = visibility => {
@@ -42,21 +41,18 @@ class ActionButton extends Component {
   handleClick = ( e ) => {
     e.preventDefault();
     e.stopPropagation();
-    const { action, success, error, performAction } = this.props
-    const payload = this.props.payload || {}
+    const { action, success, error, performAction, payload } = this.props
     
     // Stop this event from firing if the notes form is shown.
     if (!this.state.noteFieldOpen) {
-//      performAction(action, payload, success, error);
-      console.log ("Sending Payload without note %o", payload);
+      performAction(action, payload, success, error);
     }
     // else NOOP.
-    else { console.log ('Nothing...') }
   }
   
   render () {
     const { icon, label } = this.props;
-    const withNote = true; //includesNote[props?.action] ?? includesNote.default;
+    const withNote = includesNote[props?.action] ?? includesNote.default;
     const { noteFieldOpen } = this.state;
     
     if (!noteFieldOpen) {
