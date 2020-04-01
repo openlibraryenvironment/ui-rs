@@ -41,13 +41,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
               </Button>
             </Col>
           </Row>
-          { withNote &&
-            <Row>
-              <Col>
-                <AddNoteField />
-              </Col>
-            </Row>
-          }
+          { withNote && <AddNoteField /> }
         </form>
       )}
     />
