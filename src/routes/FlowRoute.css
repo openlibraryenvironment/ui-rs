@@ -30,9 +30,17 @@
 [dir="rtl"],
 :not([dir="rtl"]) {	
 	& .optionList {
+	
+	  & * {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
 	  &.noBorderRadius {
-	    & > a[role="button"],
-	    & > * > button {
+	    & > *,
+	    & > * > button:nth-child(1) {
+	      &::hover {
+	         background: var(--color-fill-hover);
+	      }
 	      border-radius: 0;
 	      &::before {
 	        border-radius: 0;

@@ -1,23 +1,5 @@
 @import "@folio/stripes-components/lib/variables";
 
-/* .field { */
-/*   display: flex; */
-/*   margin-left: var(--gutter); */
-/*   margin-right: var(--gutter); */
-/* } */
-
-/* .button { */
-/*   display: flex; */
-/*   margin-bottom: 0; */
-/* } */
-
-/* .container { */
-/*   display: flex; */
-/* } */
-
-/* .form { */
-/*   margin-bottom: 0; */
-/*   & * { */
-/*     margin-bottom: 0; */
-/*   } */
-/* } */
+.addNoteButton {
+   margin: 0 var(--input-horizontal-padding) 0 var(--input-horizontal-padding);
+}
