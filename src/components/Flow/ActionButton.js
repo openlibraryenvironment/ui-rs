@@ -51,8 +51,8 @@ class ActionButton extends Component {
   }
   
   render () {
-    const { icon, label } = this.props;
-    const withNote = includesNote[props?.action] ?? includesNote.default;
+    const { icon, label, action } = this.props;
+    const withNote = action ? includesNote[action] : includesNote.default;
     const { noteFieldOpen } = this.state;
     
     if (!noteFieldOpen) {
