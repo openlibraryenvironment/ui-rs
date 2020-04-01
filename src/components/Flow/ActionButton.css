@@ -1,20 +1,53 @@
 @import "@folio/stripes-components/lib/variables";
+.actionWrapper {
+  display: flex;
+  justify-content: flex-end;
+  
+  & *:hover,
+  & *.isHover::before {
+    background: transparent;
+  }
+  
+  & *:active::before {
+    background: transparent;
+    border: none;
+    color: inherit;
+  }
+  
+  &:hover {
+    background: var(--color-fill-hover);
+    cursor: default;
+    &::before {
+      cursor: default;
+    }
+  }
+  
+  & > .inlineFormWrapper {
+    display: flex;
+    align-items: center;
+    font-weight: var(--text-weight-button);
+  }
+}
+
+.actionButton {
+  background-color: transparent;
+  flex-grow: 100;
+  flex-shrink: 1;
+  text-align: left;
+  & * {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  
+  &:hover::before {
+    background: none;
+  }
+}
 
 .addNoteForm {
-  float: right;
-  flex-direction: row-reverse;
-  display: flex;
-  flex-grow: 2;
-}
-
-.button {
-  flex-shrink: 4;
-  display: flex;
-  background-color: transparent;
-}
-
-.container {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	flex-grow: 100;
+	& > * {
+	 margin: 0 var(--input-horizontal-padding) 0 var(--input-horizontal-padding);
+	}
 }

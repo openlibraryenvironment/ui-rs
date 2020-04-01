@@ -41,8 +41,8 @@ const LoanConditions = (props) => {
     );
   };
 
-  const currentSupplier = request.resolvedSupplier.id;
-  if (conditions.length > 0) {
+  const currentSupplier = request.resolvedSupplier?.id;
+  if (currentSupplier && conditions.length > 0) {
     return (
       <Card
         id="conditions-card"

@@ -24,12 +24,41 @@
   margin-top: 0;
 }
 
-.optionList div, .optionList a {
-  border-radius: 0;
-  &:nth-child(even) {
-    background-color: var(--color-fill-table-row-even);
-  }
-  &:nth-child(odd) {
-    background-color: var(--color-fill-table-row-odd);
+/**
+ * Be stupidly selective so we can override the default button classes without resorting to !important
+ */
+[dir="rtl"],
+:not([dir="rtl"]) {	
+	& .optionList {
+	
+	  & * {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+	  &.noBorderRadius {
+	    & > *,
+	    & > * > button:nth-child(1) {
+	      &::hover {
+	         background: var(--color-fill-hover);
+	      }
+	      border-radius: 0;
+	      &::before {
+	        border-radius: 0;
+	        left: 0;
+	        right: 0;
+	      }
+	    }
+	  }
+		& > * {
+      margin-bottom: 0;
+      margin-top: 0;
+      
+		  &:nth-child(even) {
+	      background-color: var(--color-fill-table-row-even);
+	    }
+	    &:nth-child(odd) {
+	      background-color: var(--color-fill-table-row-odd);
+	    }
+		}
   }
 }

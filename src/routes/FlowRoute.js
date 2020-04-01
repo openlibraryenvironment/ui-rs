@@ -31,7 +31,7 @@ const FlowRoute = ({ request, performAction }) => {
           {PrimaryAction && <PrimaryAction request={request} name={forCurrent.primaryAction} performAction={performAction} /> }
         </Layout>
         {forCurrent.moreActions.length > 0 &&
-          <Layout className={`padding-top-gutter ${css.optionList}`}>
+          <Layout className={`padding-top-gutter ${css.optionList} ${css.noBorderRadius}`}>
             <strong>More options:</strong>
             {renderNamedWithProps(forCurrent.moreActions, moreActions, { request, performAction }, moreActions.Generic)}
           </Layout>
