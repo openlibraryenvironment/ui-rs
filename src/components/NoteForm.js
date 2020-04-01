@@ -48,11 +48,10 @@ class AddNoteForm extends React.Component {
               onSubmit={ handleSubmit }
               onClick={ this.stopPropagation }
               autoComplete="off"
-              className={classNames( css.noteForm, className ) }
+              className={className}
             >
-              <Field name="note" component={TextField} onBlur={this.handleOnBlur} autoFocus className={css.field} onChange={ (e)=>{this.setState({noteValue : e.target.value}); }} />
+              <Field name="note" component={TextField} onBlur={this.handleOnBlur} autoFocus onChange={ (e)=>{this.setState({noteValue : e.target.value}); }} />
               <Button
-                buttonClass={css.button}
                 onClick={ this.handleSend }
                 onBlur={ this.handleOnBlur }
               >
