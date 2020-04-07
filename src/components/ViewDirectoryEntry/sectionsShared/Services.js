@@ -15,7 +15,7 @@ function renderService(service, index, count) {
       <Card
         headerStart={<Headline margin="none">{header}</Headline>}
         roundedBorder
-        hasMargin
+        marginBottom0
       >
         <Row>
           <Col xs={6}>

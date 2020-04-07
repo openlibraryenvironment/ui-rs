@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
 import { Prompt } from 'react-router-dom';
 
 import {
@@ -24,10 +25,25 @@ class EditDirectoryEntry extends React.Component {
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
     onUpdate: PropTypes.func.isRequired,
+    parentResources:PropTypes.shape({
+      query: PropTypes.shape({
+        layer: PropTypes.string,
+      }),
+    }),
+    resources: PropTypes.shape({
+      query: PropTypes.shape({
+        layer: PropTypes.string,
+      }),
+    }),
   }
 
   static defaultProps = {
     onSubmit: defaultSubmit
+  }
+
+  getCurrentLayer() {
+    const layer = this.props?.resources ? this.props?.resources?.query?.layer : this.props?.parentResources?.query?.layer;
+    return layer;
   }
 
   renderFirstMenu() {
@@ -48,16 +64,16 @@ class EditDirectoryEntry extends React.Component {
   }
 
   renderLastMenu(pristine, submitting, submit) {
-    const { initialValues } = this.props;
-
     let id;
     let label;
-    if (initialValues && initialValues.id) {
+    const layer = this.getCurrentLayer();
+
+    if (layer === 'edit') {
       id = 'clickable-update-directory-entry';
-      label = <FormattedMessage id="ui-directory.updateDirectoryEntry" />;
+      label = <FormattedMessage id="ui-directory.updateDirectoryEntryNoName" />;
     } else {
       id = 'clickable-create-directory-entry';
-      label = <FormattedMessage id="ui-directory.createDirectoryEntry" />;
+      label = <FormattedMessage id="ui-directory.create" />;
     }
 
     return (
@@ -84,24 +100,54 @@ class EditDirectoryEntry extends React.Component {
       if (initialValues.parent) {
         initialValues.parent = initialValues.parent.id;
       }
+      if (initialValues.type) {
+        initialValues.type = initialValues.type.id;
+      }
     }
     // the submit handler passed in from SearchAndSort expects props as provided by redux-form
     const compatSubmit = values => {
       // TODO This could possibly be neatened and sorted before submittal
-      values.parent = { id: values.parent };
 
-      onSubmit(values, null, this.props);
+      // Not submitting values itself because then on failure data changes shape
+      const submitValues = { ...values };
+
+      if (values.parent) {
+        submitValues.parent = { id: values.parent };
+      }
+      submitValues.symbols = values.symbols?.map(obj => (obj?.authority?.id ? obj : ({ ...obj, authority: { id: obj.authority } })));
+      onSubmit(submitValues, null, this.props);
     };
 
-    const paneTitle = initialValues && initialValues.id ?
-      initialValues.name : <FormattedMessage id="ui-directory.createDirectoryEntry" />;
+    const layer = this.getCurrentLayer();
+    let paneTitle = <FormattedMessage id="ui-directory.notSet" />;
+    switch (layer) {
+      case 'edit':
+        if (initialValues && initialValues.id) {
+          paneTitle = <FormattedMessage id="ui-directory.updateDirectoryEntry" values={{ dirent: initialValues.name }} />;
+        } else {
+          paneTitle = <FormattedMessage id="ui-directory.updateDirectoryEntryNoName" />;
+        }
+        break;
+      case 'unit':
+        paneTitle = <FormattedMessage id="ui-directory.createUnitDirectoryEntry" />;
+        break;
+      case 'create':
+        paneTitle = <FormattedMessage id="ui-directory.createDirectoryEntry" />;
+        break;
+      default:
+        break;
+    }
+
     return (
       <Form
         onSubmit={compatSubmit}
         initialValues={initialValues}
         keepDirtyOnReinitialize
+        mutators={{
+          ...arrayMutators,
+        }}
       >
-        {({ handleSubmit, pristine, submitting, submitSucceeded, values }) => (
+        {({ form, handleSubmit, pristine, submitting, submitSucceeded, values }) => (
           <form id="form-directory-entry">
             <Pane
               defaultWidth="100%"
@@ -109,7 +155,7 @@ class EditDirectoryEntry extends React.Component {
               lastMenu={this.renderLastMenu(pristine, submitting, handleSubmit)}
               paneTitle={paneTitle}
             >
-              <DirectoryEntryForm values={values} {...this.props} />
+              <DirectoryEntryForm values={values} form={form} {...this.props} />
               <FormattedMessage id="ui-directory.confirmDirtyNavigate">
                 {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
               </FormattedMessage>

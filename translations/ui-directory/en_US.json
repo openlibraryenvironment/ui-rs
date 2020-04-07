@@ -2,7 +2,21 @@
   "meta.title": "Directory",
 
   "edit": "Edit",
+  "createUnit": "Create unit",
   "notSet": "Not set",
+
+  "create": "Create",
+  "create.callout": "<strong>Directory entry created:</strong> {name}",
+  "create.callout.error": "Error creating <strong>Directory entry</strong> {err}",
+  "update": "Update",
+  "update.callout": "<strong>Directory entry updated:</strong> {name}",
+
+  "createDirectoryEntry": "Create root directory entry",
+  "createUnitDirectoryEntry": "Create unit directory entry",
+  "updateDirectoryEntry": "Update {dirent}",
+  "updateDirectoryEntryNoName": "Update directory entry",
+  "closeNewDirectoryEntry": "Close new directory entry",
+  "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
 
   "editDirectoryEntry": "Edit Directory Entry",
 
@@ -18,17 +32,26 @@
   "headings.normValue": "Normalized Value:",
 
   "entries.name":"Name",
+  "entries.type":"Type",
   "entries.tagSummary":"Tags",
   "entries.symbolSummary":"Symbols",
 
+  "filter.tags": "Tags",
+  "filter.type": "Type",
+
   "information.name": "Name",
   "information.status": "Status",
+  "information.type": "Type",
   "information.slug": "Slug",
   "information.phoneNumber": "Phone number",
   "information.emailAddress": "Email address",
   "information.contactName": "Contact name",
   "information.description": "Description",
   "information.symbols": "Symbols",
+  "information.symbols.authority": "Authority",
+  "information.symbols.symbol": "Symbol",
+  "information.symbols.add": "Add symbol",
+  "information.symbol.index": "Symbol {index}",
   "information.qualifiedName": "Fully qualified name",
   "information.parent": "Parent institution",
   "information.parent.warning": "It looks like this may create a loop of parent directories. Attempting to submit this form may fail.",
@@ -44,6 +67,7 @@
   "information.serviceAddress": "Address",
 
   "information.heading.directoryEntry": "Directory entry info",
+  "information.heading.symbols": "Symbols",
   "information.heading.customProps": "Custom properties",
   "information.heading.developer": "Developer info",
   "information.heading.developer.help": "(JSON dump of raw record)",
@@ -62,10 +86,5 @@
   "information.local.heading.display-text": "The information in this section is managed by your institution, and any data added or edited here will be visible to your institution only.",
   "information.local.custPropValue": "Value",
 
-  "errors.custPropsNoteWithoutValue": "A value must be set for this custom property in order to save a note",
-  
-  "createDirectoryEntry": "Create directory entry",
-  "updateDirectoryEntry": "Update directory entry",
-  "closeNewDirectoryEntry": "Close new directory entry",
-  "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?"
+  "errors.custPropsNoteWithoutValue": "A value must be set for this custom property in order to save a note"
 }

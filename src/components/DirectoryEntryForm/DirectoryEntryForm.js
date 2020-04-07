@@ -24,6 +24,7 @@ import {
 
 class DirectoryEntryForm extends React.Component {
   static propTypes = {
+    form: PropTypes.object,
     parentResources: PropTypes.object,
     resources: PropTypes.shape({
       selectedRecord: PropTypes.shape({
@@ -36,6 +37,7 @@ class DirectoryEntryForm extends React.Component {
   state = {
     sectionsShared: {
       directoryEntryFormInfo: true,
+      directoryEntryFormSymbols: false,
       directoryEntryFormCustProps: false,
     },
     sectionsLocal: {
@@ -45,8 +47,9 @@ class DirectoryEntryForm extends React.Component {
   }
 
   getSectionProps() {
-    const { values = {} } = this.props;
+    const { form, values = {} } = this.props;
     return {
+      form,
       onToggle: this.handleSectionToggle,
       parentResources: this.props.parentResources,
       values,

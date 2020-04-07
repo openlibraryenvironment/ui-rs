@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Accordion,
@@ -12,6 +13,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import { SymbolListField } from '../components';
+
 import { required } from '../../../util/validators';
 
 class DirectoryEntryFormInfo extends React.Component {
@@ -21,6 +24,9 @@ class DirectoryEntryFormInfo extends React.Component {
     open: PropTypes.bool,
     parentResources: PropTypes.shape({
       typeValues: PropTypes.object,
+      query: PropTypes.shape({
+        layer: PropTypes.string,
+      }),
       records: PropTypes.object,
     }),
     values: PropTypes.object,
@@ -58,9 +64,17 @@ class DirectoryEntryFormInfo extends React.Component {
     return null;
   }
 
+  getCurrentLayer() {
+    const layer = this.props?.parentResources?.query?.layer;
+    return layer;
+  }
+
   render() {
     const { directoryEntryValues, selectedParent, warning } = this.state;
     const { values } = this.props;
+    const layer = this.getCurrentLayer();
+    const namingAuthorities = this.props?.parentResources?.namingAuthorities?.records.map(obj => ({ value: obj.id, label: obj.symbol }));
+    const directoryEntryTypes = this.props?.parentResources?.refdata?.records?.filter(obj => obj.desc === 'DirectoryEntry.Type')[0]?.values?.map(obj => ({ value: obj.id, label: obj.label })) || [];
     return (
       <Accordion
         id={this.props.id}
@@ -70,7 +84,7 @@ class DirectoryEntryFormInfo extends React.Component {
       >
         <React.Fragment>
           <Row>
-            <Col xs={5}>
+            <Col xs={4}>
               <Field
                 id="edit-directory-entry-name"
                 name="name"
@@ -97,20 +111,21 @@ class DirectoryEntryFormInfo extends React.Component {
 
               </Field>
             </Col>
-            <Col xs={2}>
-              <FormattedMessage id="ui-directory.information.status">
+            <Col xs={4}>
+              <FormattedMessage id="ui-directory.information.type">
                 {placeholder => (
                   <Field
-                    id="edit-directory-entry-status"
-                    name="status"
+                    id="edit-directory-entry-type"
+                    name="type"
                     label={placeholder}
-                    component={TextField}
+                    component={Select}
+                    dataOptions={directoryEntryTypes}
                     placeholder={placeholder}
                   />
                 )}
               </FormattedMessage>
             </Col>
-            <Col xs={5}>
+            <Col xs={4}>
               <FormattedMessage id="ui-directory.information.slug">
                 {placeholder => (
                   <Field
@@ -119,6 +134,7 @@ class DirectoryEntryFormInfo extends React.Component {
                     label={placeholder}
                     component={TextField}
                     placeholder={placeholder}
+                    disabled={layer === 'edit'}
                     required
                     validate={required}
                   />
@@ -126,6 +142,7 @@ class DirectoryEntryFormInfo extends React.Component {
               </FormattedMessage>
             </Col>
           </Row>
+          {this.props.values?.parent &&
           <Row>
             <Col xs={6}>
               <Field
@@ -152,11 +169,13 @@ class DirectoryEntryFormInfo extends React.Component {
                       this.setState({ warning: warningMessage });
                     }}
                     placeholder=" "
+                    disabled
                   />
                 )}
               </Field>
             </Col>
           </Row>
+          }
           <Row>
             <Col xs={4}>
               <Field
@@ -164,8 +183,6 @@ class DirectoryEntryFormInfo extends React.Component {
                 name="phoneNumber"
                 component={TextField}
                 label={<FormattedMessage id="ui-directory.information.phoneNumber" />}
-                validate={required}
-                required
               />
             </Col>
             <Col xs={4}>
@@ -174,8 +191,6 @@ class DirectoryEntryFormInfo extends React.Component {
                 name="emailAddress"
                 component={TextField}
                 label={<FormattedMessage id="ui-directory.information.emailAddress" />}
-                validate={required}
-                required
               />
             </Col>
             <Col xs={4}>
@@ -184,9 +199,17 @@ class DirectoryEntryFormInfo extends React.Component {
                 name="contactName"
                 component={TextField}
                 label={<FormattedMessage id="ui-directory.information.contactName" />}
-                validate={required}
-                required
               />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <FieldArray
+                name="symbols"
+                label={<FormattedMessage id="ui-directory.information.symbols" />}
+              >
+                {({ fields, input, meta }) => <SymbolListField {... { fields, input, meta, namingAuthorities }} /> }
+              </FieldArray>
             </Col>
           </Row>
           {warning ? <MessageBanner type="warning"> {warning} </MessageBanner> : null}

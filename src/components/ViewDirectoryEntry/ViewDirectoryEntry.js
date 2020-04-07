@@ -9,13 +9,16 @@ import {
   Button,
   Col,
   Icon,
+  IconButton,
   Layer,
   Layout,
   MessageBanner,
   Pane,
+  PaneMenu,
   Row,
   ButtonGroup,
 } from '@folio/stripes/components';
+import { stripesConnect } from '@folio/stripes/core';
 
 import EditDirectoryEntry from '../EditDirectoryEntry';
 
@@ -33,6 +36,11 @@ import {
 
 class ViewDirectoryEntry extends React.Component {
   static manifest = Object.freeze({
+    custprops: {
+      type: 'okapi',
+      path: 'directory/custprops',
+      shouldRefresh: () => false,
+    },
     selectedRecord: {
       type: 'okapi',
       path: 'directory/entry/:{id}',
@@ -41,8 +49,19 @@ class ViewDirectoryEntry extends React.Component {
   });
 
   static propTypes = {
-    stripes: PropTypes.object,
+    editLink: PropTypes.string,
+    mutator: PropTypes.shape({
+      query: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+    }),
+    onClose: PropTypes.func,
+    onCloseEdit: PropTypes.func,
+    onCreate: PropTypes.func,
+    onEdit: PropTypes.func,
+    paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     resources: PropTypes.shape({
+      custprops: PropTypes.array,
       query: PropTypes.shape({
         layer: PropTypes.string,
       }),
@@ -50,14 +69,7 @@ class ViewDirectoryEntry extends React.Component {
         records: PropTypes.array,
       }),
     }),
-    onClose: PropTypes.func,
-    onEdit: PropTypes.func,
-    paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    parentResources: PropTypes.shape({
-      custprops: PropTypes.array,
-    }),
-    editLink: PropTypes.string,
-    onCloseEdit: PropTypes.func,
+    stripes: PropTypes.object,
   };
 
   state = {
@@ -79,8 +91,19 @@ class ViewDirectoryEntry extends React.Component {
     return get(this.props.resources.selectedRecord, ['records', 0], {});
   }
 
+  handleToggleHelper = (helper, mutator, resources) => {
+    const currentHelper = resources?.query?.helper;
+    const nextHelper = currentHelper !== helper ? helper : null;
+    mutator.query.update({ helper: nextHelper });
+  };
+
+  handleToggleTags = (mutator, resources) => {
+    this.handleToggleHelper('tags', mutator, resources);
+  };
+
+
   getCustProps() {
-    const custprops = this.props.parentResources.custprops;
+    const custprops = this.props.resources?.custprops?.records || [];
     const arrayToObject = (array, keyField) => array.reduce((obj, item) => {
       obj[item[keyField]] = item;
       return obj;
@@ -91,6 +114,12 @@ class ViewDirectoryEntry extends React.Component {
   getInitialValues = () => {
     const record = Object.assign({}, this.getRecord());
     return record;
+  }
+
+  getParentValues = () => {
+    const record = Object.assign({}, this.getRecord());
+    const parentRecord = { parent: record };
+    return parentRecord;
   }
 
   getSectionProps() {
@@ -133,25 +162,86 @@ class ViewDirectoryEntry extends React.Component {
     );
   }
 
+  renderUnitLayer() {
+    const { resources: { query } } = this.props;
+
+    return (
+      <FormattedMessage id="ui-directory.editDirectoryEntry">
+        {layerContentLabel => (
+          <Layer
+            isOpen={query.layer === 'unit'}
+            contentLabel={layerContentLabel}
+          >
+            <EditDirectoryEntry
+              {...this.props}
+              onCancel={this.props.onCloseEdit}
+              onSubmit={this.props.onCreate}
+              initialValues={this.getParentValues()}
+            />
+          </Layer>
+        )}
+      </FormattedMessage>
+    );
+  }
+
+  switchLayer(newLayer) {
+    const { mutator } = this.props;
+    mutator.query.replace({ layer: newLayer });
+  }
+
+  paneButtons = (mutator, resources) => {
+    return (
+      <PaneMenu>
+        {this.handleToggleTags &&
+        <FormattedMessage id="ui-rs.view.showTags">
+          {ariaLabel => (
+            <IconButton
+              icon="tag"
+              badgeCount={resources?.selectedRecord.records[0]?.tags?.length || 0}
+              onClick={() => this.handleToggleTags(mutator, resources)}
+              ariaLabel={ariaLabel}
+            />
+          )}
+        </FormattedMessage>
+        }
+      </PaneMenu>
+    );
+  };
+
   getActionMenu = ({ onToggle }) => {
     return (
-      <Button
-        buttonStyle="dropdownItem"
-        href={this.props.editLink}
-        id="clickable-edit-directoryentry"
-        onClick={() => {
-          this.props.onEdit();
-          onToggle();
-        }}
-      >
-        <Icon icon="edit">
-          <FormattedMessage id="ui-directory.edit" />
-        </Icon>
-      </Button>
+      <>
+        <Button
+          buttonStyle="dropdownItem"
+          href={this.props.editLink}
+          id="clickable-edit-directoryentry"
+          onClick={() => {
+            this.props.onEdit();
+            onToggle();
+          }}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-directory.edit" />
+          </Icon>
+        </Button>
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-create-new-unit-directoryentry"
+          onClick={() => {
+            this.switchLayer('unit');
+            onToggle();
+          }}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-directory.createUnit" />
+          </Icon>
+        </Button>
+      </>
     );
   }
 
   render() {
+    const { mutator, resources } = this.props;
     const record = this.getRecord();
     const sectionProps = this.getSectionProps();
     let title = record.name || 'Directory entry details';
@@ -165,6 +255,7 @@ class ViewDirectoryEntry extends React.Component {
         paneTitle={title}
         dismissible
         onClose={this.props.onClose}
+        lastMenu={this.paneButtons(mutator, resources)}
         actionMenu={this.getActionMenu}
       >
         <Layout className="textCentered">
@@ -225,9 +316,10 @@ class ViewDirectoryEntry extends React.Component {
           </React.Fragment>
         }
         { this.renderEditLayer() }
+        { this.renderUnitLayer() }
       </Pane>
     );
   }
 }
 
-export default ViewDirectoryEntry;
+export default stripesConnect(ViewDirectoryEntry);
