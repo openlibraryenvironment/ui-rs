@@ -37,21 +37,22 @@ class TagSettings extends React.Component {
 
     return (
       <this.connectedControlledVocab
-        stripes={stripes}
         baseUrl="directory/tags"
-        label={intl.formatMessage({ id: 'ui-directory.objectName.tags' })}
-        labelSingular={intl.formatMessage({ id: 'ui-directory.objectName.tag' })}
-        objectLabel="Entries"
-        visibleFields={['value', 'normValue']}
+        canCreate={false}
+        clientGeneratePk=""
         columnMapping={{
           value: intl.formatMessage({ id: 'ui-directory.headings.value' }),
           normValue: intl.formatMessage({ id: 'ui-directory.headings.normValue' }),
         }}
-        id="tags"
-        sortby="value"
         hiddenFields={['lastUpdated', 'numberOfObjects']}
-        clientGeneratePk=""
+        id="tags"
+        label={intl.formatMessage({ id: 'ui-directory.objectName.tags' })}
+        labelSingular={intl.formatMessage({ id: 'ui-directory.objectName.tag' })}
         limitParam="perPage"
+        objectLabel="Entries"
+        sortby="value"
+        stripes={stripes}
+        visibleFields={['value', 'normValue']}
       />
     );
   }
