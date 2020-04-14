@@ -7,6 +7,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import {
   Accordion,
   Col,
+  Label,
   MessageBanner,
   Row,
   Select,
@@ -204,9 +205,11 @@ class DirectoryEntryFormInfo extends React.Component {
           </Row>
           <Row>
             <Col xs={12}>
+              <Label>
+                <FormattedMessage id="ui-directory.information.symbols" />
+              </Label>
               <FieldArray
                 name="symbols"
-                label={<FormattedMessage id="ui-directory.information.symbols" />}
               >
                 {({ fields, input, meta }) => <SymbolListField {... { fields, input, meta, namingAuthorities }} /> }
               </FieldArray>
