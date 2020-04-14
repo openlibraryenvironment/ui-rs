@@ -457,7 +457,7 @@ class PatronRequestsRoute extends React.Component {
               if (patronGivenName) return patronGivenName;
               return a.patronIdentifier;
             },
-            state: a => <FormattedMessage id={`stripes-reshare.states.${a.state.code}`} />,
+            state: a => <FormattedMessage id={`stripes-reshare.states.${a.state?.code}`} />,
             serviceType: a => a.serviceType && a.serviceType.value,
             supplyingInstitutionSymbol: a => get(a, 'resolvedSupplier.owner.symbolSummary', '').replace(/,.*/, ''),
             pickLocation: a => a.pickLocation && a.pickLocation.name,
