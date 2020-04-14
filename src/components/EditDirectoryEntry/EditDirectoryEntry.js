@@ -8,6 +8,7 @@ import { Prompt } from 'react-router-dom';
 import {
   Button,
   IconButton,
+  Layout,
   Pane,
   PaneMenu,
 } from '@folio/stripes/components';
@@ -155,10 +156,12 @@ class EditDirectoryEntry extends React.Component {
               lastMenu={this.renderLastMenu(pristine, submitting, handleSubmit)}
               paneTitle={paneTitle}
             >
-              <DirectoryEntryForm values={values} form={form} {...this.props} />
-              <FormattedMessage id="ui-directory.confirmDirtyNavigate">
-                {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
-              </FormattedMessage>
+              <Layout className="centered" style={{ maxWidth: '80em' }}>
+                <DirectoryEntryForm values={values} form={form} {...this.props} />
+                <FormattedMessage id="ui-directory.confirmDirtyNavigate">
+                  {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
+                </FormattedMessage>
+              </Layout>
             </Pane>
           </form>
         )}

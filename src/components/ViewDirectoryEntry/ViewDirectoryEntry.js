@@ -232,7 +232,7 @@ class ViewDirectoryEntry extends React.Component {
             onToggle();
           }}
         >
-          <Icon icon="edit">
+          <Icon icon="plus-sign">
             <FormattedMessage id="ui-directory.createUnit" />
           </Icon>
         </Button>
