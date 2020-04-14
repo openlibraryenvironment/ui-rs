@@ -201,7 +201,7 @@
 
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
   "actions.checkIn.success": "Item successfully checked into ReShare",
-  "actions.checkIn.error": "Error checking item into ReShare",
+  "actions.checkIn.error": "Error checking item into ReShare.",
   "actions.manualCheckIn": "Bypass local record creation",
   "actions.manualCheckIn.success": "Local record creation successfully bypassed.",
   "actions.manualCheckIn.error": "Error bypassing local record creation.",
