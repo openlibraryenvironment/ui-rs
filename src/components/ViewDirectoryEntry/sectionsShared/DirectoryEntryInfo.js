@@ -76,26 +76,6 @@ class DirectoryEntryInfo extends React.Component {
             />
           </Col>
         </Row>
-        <Row>
-          <Col xs={4}>
-            <KeyValue
-              label={<FormattedMessage id="ui-directory.information.phoneNumber" />}
-              value={record.phoneNumber ? record.phoneNumber : '-'}
-            />
-          </Col>
-          <Col xs={4}>
-            <KeyValue
-              label={<FormattedMessage id="ui-directory.information.contactName" />}
-              value={record.contactName ? record.contactName : '-'}
-            />
-          </Col>
-          <Col xs={4}>
-            <KeyValue
-              label={<FormattedMessage id="ui-directory.information.emailAddress" />}
-              value={record.emailAddress ? record.emailAddress : '-'}
-            />
-          </Col>
-        </Row>
 
         {!record.description ? '' :
         <Row>

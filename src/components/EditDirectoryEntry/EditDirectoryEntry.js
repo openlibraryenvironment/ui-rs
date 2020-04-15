@@ -107,8 +107,6 @@ class EditDirectoryEntry extends React.Component {
     }
     // the submit handler passed in from SearchAndSort expects props as provided by redux-form
     const compatSubmit = values => {
-      // TODO This could possibly be neatened and sorted before submittal
-
       // Not submitting values itself because then on failure data changes shape
       const submitValues = { ...values };
 

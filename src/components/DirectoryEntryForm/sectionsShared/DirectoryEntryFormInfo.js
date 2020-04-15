@@ -186,32 +186,6 @@ class DirectoryEntryFormInfo extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs={4}>
-              <Field
-                id="edit-directory-entry-phone-number"
-                name="phoneNumber"
-                component={TextField}
-                label={<FormattedMessage id="ui-directory.information.phoneNumber" />}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                id="edit-directory-entry-email-address"
-                name="emailAddress"
-                component={TextField}
-                label={<FormattedMessage id="ui-directory.information.emailAddress" />}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                id="edit-directory-entry-contact-name"
-                name="contactName"
-                component={TextField}
-                label={<FormattedMessage id="ui-directory.information.contactName" />}
-              />
-            </Col>
-          </Row>
-          <Row>
             <Col xs={12}>
               <Label>
                 <FormattedMessage id="ui-directory.information.symbols" />
