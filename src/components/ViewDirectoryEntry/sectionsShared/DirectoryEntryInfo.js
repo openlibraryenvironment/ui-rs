@@ -110,12 +110,20 @@ class DirectoryEntryInfo extends React.Component {
 
         {!record.symbolSummary ? '' :
         <Row>
-          <Col xs={12}>
+          <Col xs={8}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.symbols" />}
               value={record.symbolSummary}
             />
           </Col>
+          {!record.lmsLocationCode ? '' :
+          <Col xs={4}>
+            <KeyValue
+              label={<FormattedMessage id="ui-directory.information.lmsLocationCode" />}
+              value={record.lmsLocationCode}
+            />
+          </Col>
+          }
         </Row>
         }
 

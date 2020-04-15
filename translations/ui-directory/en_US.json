@@ -48,6 +48,7 @@
   "information.contactName": "Contact name",
   "information.description": "Description",
   "information.symbols": "Symbols",
+  "information.lmsLocationCode": "LMS location code",
   "information.symbols.authority": "Authority",
   "information.symbols.symbol": "Symbol",
   "information.symbols.add": "Add symbol",
