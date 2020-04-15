@@ -143,40 +143,48 @@ class DirectoryEntryFormInfo extends React.Component {
               </FormattedMessage>
             </Col>
           </Row>
-          {this.props.values?.parent &&
           <Row>
-            <Col xs={6}>
+            {this.props.values?.parent ?
+              <Col xs={4}>
+                <Field
+                  id="edit-directory-entry-parent"
+                  name="parent"
+                  label={<FormattedMessage id="ui-directory.information.parent" />}
+                >
+                  {props => (
+                    <Select
+                      {...props}
+                      dataOptions={directoryEntryValues}
+                      onChange={(e) => {
+                        props.input.onChange(e);
+
+                        // The below is finding the selected index and then grabbing the label of that element (saves doing a separate lookup)
+                        const selectedValue = e.target[e.target.selectedIndex].text;
+                        this.setState({ selectedParent: selectedValue });
+
+                        let warningMessage = '';
+
+                        if (values.name != null && selectedValue.includes(values.name)) {
+                          warningMessage = <FormattedMessage id="ui-directory.information.parent.warning" />;
+                        }
+                        this.setState({ warning: warningMessage });
+                      }}
+                      placeholder=" "
+                      disabled
+                    />
+                  )}
+                </Field>
+              </Col> : ''
+            }
+            <Col xs={4}>
               <Field
-                id="edit-directory-entry-parent"
-                name="parent"
-                label={<FormattedMessage id="ui-directory.information.parent" />}
-              >
-                {props => (
-                  <Select
-                    {...props}
-                    dataOptions={directoryEntryValues}
-                    onChange={(e) => {
-                      props.input.onChange(e);
-
-                      // The below is finding the selected index and then grabbing the label of that element (saves doing a separate lookup)
-                      const selectedValue = e.target[e.target.selectedIndex].text;
-                      this.setState({ selectedParent: selectedValue });
-
-                      let warningMessage = '';
-
-                      if (values.name != null && selectedValue.includes(values.name)) {
-                        warningMessage = <FormattedMessage id="ui-directory.information.parent.warning" />;
-                      }
-                      this.setState({ warning: warningMessage });
-                    }}
-                    placeholder=" "
-                    disabled
-                  />
-                )}
-              </Field>
+                id="edit-directory-entry-lms-location-code"
+                name="lmsLocationCode"
+                component={TextField}
+                label={<FormattedMessage id="ui-directory.information.lmsLocationCode" />}
+              />
             </Col>
           </Row>
-          }
           <Row>
             <Col xs={4}>
               <Field
