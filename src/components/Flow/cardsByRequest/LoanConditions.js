@@ -3,28 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Card, Row, Col } from '@folio/stripes/components';
 import css from './CardFormatting.css';
+import { formatConditionCode, formatConditionNote } from '../../../util/formatCondition';
 
 
 const LoanConditions = (props) => {
   const request = props?.request;
   const { conditions } = request;
-
-  const formatConditionNote = (condition) => {
-    const { note } = condition;
-
-    if (note.startsWith('#ReShareAddLoanCondition#')) {
-      return note.replace('#ReShareAddLoanCondition# ', '');
-    } else {
-      return note;
-    }
-  };
-
-  const formatConditionCode = (condition, formatMessage) => {
-    return formatMessage({
-      id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.code}`,
-      defaultMessage: condition.code,
-    });
-  };
 
   const displayCondition = (condition) => {
     const { formatMessage } = props.intl;
