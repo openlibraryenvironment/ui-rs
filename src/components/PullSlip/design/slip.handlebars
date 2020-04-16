@@ -42,6 +42,14 @@
               <h1 class="slip__section__headline">Details for staff</h1>
             </div>
             <div class="slip__section__body">
+              {{#if conditions}}
+                <div class="conditions">
+                  <div class="header">CONDITION APPLIES</div>
+                  {{#each conditions}}
+                    <div class="condition">{{this}}</div>
+                  {{/each}}
+                </div>
+              {{/if}}
               <div class="slot--item-call-number">{{callNumber}}</div>
               <div class="slot--item-location">{{location}}</div>
               <div class="details-row">
