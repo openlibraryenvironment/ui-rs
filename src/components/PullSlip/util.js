@@ -3,6 +3,7 @@ import get from 'lodash/get';
 import reset from '!!style-loader?injectType=lazyStyleTag!css-loader!reset-css/reset.css';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
+import { formatConditionCode, formatConditionNote } from '../../util/formatCondition';
 import barCodeString from './BarCodeString';
 import logoUrl from './design/images/palci-logo.png';
 
@@ -62,6 +63,15 @@ function recordToPullSlipData(intl, record) {
     logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
     itemBarcode: styledBarCodeString(record.selectedItemBarcode),
     itemId: record.selectedItemBarcode,
+    conditions: (record.conditions || []).map(condition => {
+      const code = formatConditionCode(condition, intl.formatMessage);
+      const note = formatConditionNote(condition);
+      if (condition.code === 'other') {
+        return note ? `${code}: ${note}` : code;
+      } else {
+        return note ? `${code} (${note})` : code;
+      }
+    }),
   };
 }
 
