@@ -9,13 +9,14 @@ const LoanConditions = (props) => {
   const request = props?.request;
   const { conditions } = request;
 
-  const stripOutSystemKey = (note) => {
-    let returnedNote = note;
+  const formatConditionNote = (condition) => {
+    const { note } = condition;
+
     if (note.startsWith('#ReShareAddLoanCondition#')) {
-      const re = new RegExp('#[\\s\\S]*?#');
-      returnedNote = note.replace(re, '');
+      return note.replace('#ReShareAddLoanCondition# ', '');
+    } else {
+      return note;
     }
-    return returnedNote;
   };
 
   const formatConditionCode = (condition, formatMessage) => {
@@ -41,7 +42,7 @@ const LoanConditions = (props) => {
             <strong>
               <FormattedMessage id="ui-rs.loanConditions.note" />
             </strong>
-            {stripOutSystemKey(condition.note)}
+            {formatConditionNote(condition)}
           </Col>
         }
       </Row>
