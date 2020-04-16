@@ -18,6 +18,13 @@ const LoanConditions = (props) => {
     return returnedNote;
   };
 
+  const formatConditionCode = (condition, formatMessage) => {
+    return formatMessage({
+      id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.code}`,
+      defaultMessage: condition.code,
+    });
+  };
+
   const displayCondition = (condition) => {
     const { formatMessage } = props.intl;
     return (
@@ -26,7 +33,7 @@ const LoanConditions = (props) => {
           <strong>
             <FormattedMessage id="ui-rs.loanConditions.condition" />
           </strong>
-          {formatMessage({ id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.code}`, defaultMessage: condition.code })}
+          {formatConditionCode(condition, formatMessage)}
         </Col>
         <Col xs={2} />
         {condition.note &&
