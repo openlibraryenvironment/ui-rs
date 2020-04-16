@@ -430,3 +430,18 @@ p.slot--patron-name {
 .select-css[aria-disabled=true] {
   border-color: #aaa;
 }
+
+.conditions {
+  box-sizing: border-box;
+  border-top: 0.5pt dotted #000;
+  padding: 0.15em 5mm;
+  margin: 0 -5mm;
+  line-height: 1.6em;
+}
+.conditions .header {
+  font-weight: 700;
+}
+.conditions .condition {
+  font-size: 10pt;
+  line-height: 1.6em;
+}
