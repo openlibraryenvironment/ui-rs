@@ -107,7 +107,7 @@ class PatronRequestsRoute extends React.Component {
       type: 'okapi',
       path: 'directory/entry',
       params: {
-        filters: 'tags.value==INSTITUTION',
+        filters: 'type.value=institution',
         perPage: '100',
         stats: 'true',
       },
