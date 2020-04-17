@@ -137,7 +137,24 @@
           "rs.timers"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "directory.edit-self",
+        "displayName": "Directory: edit the directory entry of the present institution",
+        "subPermissions": [
+          "module.directory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "directory.edit-all",
+        "displayName": "Directory: edit all directory entries",
+        "subPermissions": [
+          "module.directory.enabled"
+        ],
+        "visible": true
       }
-    ]
+    ],
+    "ignoredComment": "The directory.edit-* permissions are enforced on the UI side only, as there are presently no server-side permissions in mod-directory/service/src/main/okapi/ModuleDescriptor-template.json to include"
   }
 }
