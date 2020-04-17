@@ -58,13 +58,15 @@ const LoanConditions = (props) => {
 
 LoanConditions.propTypes = {
   request: PropTypes.shape({
-    conditions: PropTypes.arrayOf({
-      id: PropTypes.string,
-      code: PropTypes.string,
-      relevantSupplier: PropTypes.shape({
+    conditions: PropTypes.arrayOf(
+      PropTypes.shape({
         id: PropTypes.string,
+        code: PropTypes.string,
+        relevantSupplier: PropTypes.shape({
+          id: PropTypes.string,
+        }),
       }),
-    }),
+    ),
     resolvedSupplier: PropTypes.shape({
       id: PropTypes.string,
     }),
