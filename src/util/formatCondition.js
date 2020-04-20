@@ -2,7 +2,7 @@ export const formatConditionNote = (condition) => {
   const { note } = condition;
 
   if (note.startsWith('#ReShareAddLoanCondition#')) {
-    return note.replace('#ReShareAddLoanCondition# ', '');
+    return note.replace(/^#ReShareAddLoanCondition# ?/, '');
   } else {
     return note;
   }
