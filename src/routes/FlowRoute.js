@@ -21,7 +21,7 @@ const FlowRoute = ({ request, performAction }) => {
   return (
     <React.Fragment>
       <Layout className="centered" style={{ maxWidth: '80em' }}>
-        <KeyValue label={<FormattedMessage id="stripes-reshare.requestStatus" />}>
+        <KeyValue label={<FormattedMessage id="stripes-reshare.requestState" />}>
           <Headline size="large" faded><FormattedMessage id={`stripes-reshare.states.${request.state?.code}`} /></Headline>
         </KeyValue>
         <div className={css.cards}>
