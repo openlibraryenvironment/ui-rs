@@ -48,11 +48,11 @@ const reducer = (state, action) => {
   }
 };
 
-export const MessageModalProvider = ({ children }) => {
+export const MessageModalProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <MessageModalContext.Provider value={[state, dispatch]}>
-      {children}
+      {props.children}
     </MessageModalContext.Provider>
   );
 };

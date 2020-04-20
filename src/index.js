@@ -7,7 +7,6 @@ import ViewRoute from './routes/ViewRoute';
 import PullSlipRoute from './routes/PullSlipRoute';
 import Settings from './settings';
 import AppNameContext from './AppNameContext';
-import { MessageModalProvider } from './components/MessageModalState';
 
 class ResourceSharing extends React.Component {
   static propTypes = {
@@ -40,31 +39,29 @@ class ResourceSharing extends React.Component {
     }
     return (
       <AppNameContext.Provider value={appName}>
-        <MessageModalProvider>
-          <Switch>
-            <Redirect
-              exact
-              from={path}
-              to={`${path}/requests`}
-            />
-            <Route path={`${path}/requests/create`} component={CreateEditRoute} />
-            <Route path={`${path}/requests/edit/:id`} component={CreateEditRoute} />
-            <Redirect
-              exact
-              from={`${path}/requests/view/:id`}
-              to={`${path}/requests/view/:id/flow${search}`}
-            />
-            <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
+        <Switch>
+          <Redirect
+            exact
+            from={path}
+            to={`${path}/requests`}
+          />
+          <Route path={`${path}/requests/create`} component={CreateEditRoute} />
+          <Route path={`${path}/requests/edit/:id`} component={CreateEditRoute} />
+          <Redirect
+            exact
+            from={`${path}/requests/view/:id`}
+            to={`${path}/requests/view/:id/flow${search}`}
+          />
+          <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
 
-            {/* Contains nested routes: ./details and ./flow */}
-            <Route path={`${path}/requests/view/:id`} component={ViewRoute} />
+          {/* Contains nested routes: ./details and ./flow */}
+          <Route path={`${path}/requests/view/:id`} component={ViewRoute} />
 
-            <Route
-              path={`${path}/requests/:action?`}
-              render={(props) => <PatronRequestsRoute {...props} appName={appName} />}
-            />
-          </Switch>
-        </MessageModalProvider>
+          <Route
+            path={`${path}/requests/:action?`}
+            render={(props) => <PatronRequestsRoute {...props} appName={appName} />}
+          />
+        </Switch>
       </AppNameContext.Provider>
     );
   }

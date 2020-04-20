@@ -11,7 +11,7 @@ import { Tags } from '@folio/stripes-erm-components';
 import { ChatPane } from '../components/chat';
 import upNLevels from '../util/upNLevels';
 import renderNamedWithProps from '../util/renderNamedWithProps';
-import { ContextualMessageBanner, useMessage } from '../components/MessageModalState';
+import { ContextualMessageBanner, MessageModalProvider, useMessage } from '../components/MessageModalState';
 import * as modals from '../components/Flow/modals';
 import { actionsForRequest } from '../components/Flow/actionsByState';
 import FlowRoute from './FlowRoute';
@@ -121,7 +121,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
   const requesterRequestedCancellation = resources?.selectedRecord?.records[0]?.requesterRequestedCancellation;
 
   return (
-    <React.Fragment>
+    <>
       {requesterRequestedCancellation ?
         <MessageBanner
           type="warning"
@@ -196,7 +196,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
         modals,
         { request, performAction }
       )}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -236,4 +236,12 @@ ViewRoute.manifest = {
   query: {},
 };
 
-export default stripesConnect(ViewRoute);
+const ConnectedViewRoute = stripesConnect(ViewRoute);
+
+const ViewRouteMMP = props => (
+  <MessageModalProvider>
+    <ConnectedViewRoute {...props} />
+  </MessageModalProvider>
+);
+
+export default ViewRouteMMP;
