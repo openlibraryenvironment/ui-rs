@@ -66,10 +66,7 @@
     "react-router-dom": "^4.1.1 || ^5.0.0"
   },
   "stripes": {
-    "actsAs": [
-      "app",
-      "settings"
-    ],
+    "actsAs": ["settings"],
     "displayName": "ui-rs.meta.title",
     "route": "/rs",
     "queryResource": "query",
