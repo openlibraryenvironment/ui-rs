@@ -146,7 +146,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
               <ButtonGroup>
                 <Button
                   marginBottom0
-                  to={`${match.url}/flow`}
+                  to={`${match.url}/flow${location.search}`}
                   buttonStyle={pathname.includes('/flow') ? 'primary' : 'default'}
                   replace
                 >
@@ -154,7 +154,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
                 </Button>
                 <Button
                   marginBottom0
-                  to={`${match.url}/details`}
+                  to={`${match.url}/details${location.search}`}
                   buttonStyle={pathname.includes('/details') ? 'primary' : 'default'}
                   replace
                 >
