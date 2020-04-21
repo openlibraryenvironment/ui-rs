@@ -4,10 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { Button, Icon } from '@folio/stripes/components';
 import interCss from '@folio/stripes-components/lib/sharedStyles/interactionStyles.css';
 
+import css from './ActionButton.css';
 import NoteForm from '../NoteForm';
 import { includesNote } from './actionsByState';
-
-import css from './ActionButton.css';
 
 class ActionButton extends Component {
   static propTypes = {
