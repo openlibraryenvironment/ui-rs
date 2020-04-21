@@ -34,13 +34,13 @@ class Address extends React.Component {
           <Row>
             <Col xs={4}>
               <KeyValue
-                label={<FormattedMessage id="ui-directory.information.addresses.addressLine1" />}
+                label={<FormattedMessage id="ui-directory.information.addresses.houseName" />}
                 value={address ? address.lines[this.findIndexBySeq(0)]?.value : '-'}
               />
             </Col>
             <Col xs={4}>
               <KeyValue
-                label={<FormattedMessage id="ui-directory.information.addresses.addressLine2" />}
+                label={<FormattedMessage id="ui-directory.information.addresses.street" />}
                 value={address ? address.lines[this.findIndexBySeq(1)]?.value : '-'}
               />
             </Col>
@@ -54,7 +54,7 @@ class Address extends React.Component {
           <Row>
             <Col xs={4}>
               <KeyValue
-                label={<FormattedMessage id="ui-directory.information.addresses.stateProvince" />}
+                label={<FormattedMessage id="ui-directory.information.addresses.administrativeArea" />}
                 value={address ? address.lines[this.findIndexBySeq(3)]?.value : '-'}
               />
             </Col>

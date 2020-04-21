@@ -25,7 +25,7 @@ class AddressListFieldArray extends React.Component {
     const defaultLines = [
       {
         seq: 0,
-        type: { value: 'Thoroughfare' },
+        type: { value: 'Premise' },
       },
       {
         seq: 1,
@@ -37,11 +37,11 @@ class AddressListFieldArray extends React.Component {
       },
       {
         seq: 3,
-        type: { value: 'PostalCode' },
+        type: { value: 'AdministrativeArea' },
       },
       {
         seq: 4,
-        type: { value: 'AdministrativeArea' },
+        type: { value: 'PostalCode' },
       },
     ];
 

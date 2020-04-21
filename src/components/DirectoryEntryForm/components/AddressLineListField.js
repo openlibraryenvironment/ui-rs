@@ -37,7 +37,7 @@ class AddressLineListField extends React.Component {
           <Col xs={4}>
             <Field
               name={`${name}[${this.findIndexBySeq(0)}].value`}
-              label={<FormattedMessage id="ui-directory.information.addresses.addressLine1" />}
+              label={<FormattedMessage id="ui-directory.information.addresses.houseName" />}
               component={TextField}
               required
               validate={required}
@@ -46,7 +46,7 @@ class AddressLineListField extends React.Component {
           <Col xs={4}>
             <Field
               name={`${name}[${this.findIndexBySeq(1)}].value`}
-              label={<FormattedMessage id="ui-directory.information.addresses.addressLine2" />}
+              label={<FormattedMessage id="ui-directory.information.addresses.street" />}
               component={TextField}
               required
               validate={required}
@@ -66,7 +66,7 @@ class AddressLineListField extends React.Component {
           <Col xs={4}>
             <Field
               name={`${name}[${this.findIndexBySeq(3)}].value`}
-              label={<FormattedMessage id="ui-directory.information.addresses.postalCode" />}
+              label={<FormattedMessage id="ui-directory.information.addresses.administrativeArea" />}
               component={TextField}
               required
               validate={required}
@@ -75,7 +75,7 @@ class AddressLineListField extends React.Component {
           <Col xs={4}>
             <Field
               name={`${name}[${this.findIndexBySeq(4)}].value`}
-              label={<FormattedMessage id="ui-directory.information.addresses.stateProvince" />}
+              label={<FormattedMessage id="ui-directory.information.addresses.postalCode" />}
               component={TextField}
               required
               validate={required}
