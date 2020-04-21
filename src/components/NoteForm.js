@@ -45,7 +45,6 @@ class AddNoteForm extends React.Component {
           render={({ handleSubmit }) => (
             <form
               onSubmit={handleSubmit}
-              onClick={this.stopPropagation}
               autoComplete="off"
               className={className}
             >
