@@ -249,7 +249,6 @@ class PatronRequestsRoute extends React.Component {
           id="state"
           name="state"
           separator={false}
-          closedByDefault
           header={FilterAccordionHeader}
           displayClearButton={values.state.length > 0}
           onClearFilter={() => clearGroup('state')}
@@ -283,6 +282,7 @@ class PatronRequestsRoute extends React.Component {
           id="dateCreated"
           name="dateCreated"
           separator={false}
+          closedByDefault
           header={FilterAccordionHeader}
           displayClearButton={byName.dateCreatedFrom !== undefined || byName.dateCreatedTo !== undefined}
           onClearFilter={() => clearDate('dateCreated')}
