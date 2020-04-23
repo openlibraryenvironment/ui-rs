@@ -82,7 +82,7 @@ class PatronRequestsRoute extends React.Component {
       type: 'okapi',
       path: 'rs/patronrequests',
       params: generateQueryParams({
-        searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn',
+        searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,selectedItemBarcode',
         filterKeys: {
           'r': 'isRequester',
           'state': 'state.code',
@@ -380,11 +380,13 @@ class PatronRequestsRoute extends React.Component {
       { label: 'author', value: 'author' },
       { label: 'issn', value: 'issn' },
       { label: 'isbn', value: 'isbn' },
+      { label: 'itemBarcode', value: 'selectedItemBarcode' },
     ].map(x => ({
       label: intl.formatMessage({ id: `ui-rs.index.${x.label}` }),
       value: x.value,
     }));
     if (appName === 'supply') searchableIndexes.splice(3, 2);
+    if (appName === 'request') searchableIndexes.splice(9, 1);
 
     return (
       <React.Fragment>
