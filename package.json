@@ -13,7 +13,7 @@
     "build": "stripes build --output ./output",
     "test-int": "stripes test nightmare --run demo --show",
     "test": "stripes test karma",
-    "lint": "eslint src"
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^4.1.1",
