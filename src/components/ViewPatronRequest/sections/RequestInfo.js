@@ -58,7 +58,7 @@ class RequestInfo extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.dateNeeded" />}
-              value={<FormattedUTCDate value={record.neededBy} />}
+              value={record.neededBy ? <FormattedUTCDate value={record.neededBy} /> : ''}
             />
           </Col>
           <Col xs={6}>
