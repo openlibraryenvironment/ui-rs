@@ -22,6 +22,7 @@
   "patronrequests.serviceType": "Service Type",
   "patronrequests.requestingInstitutionSymbol": "Requester",
   "patronrequests.supplyingInstitutionSymbol": "Supplier",
+  "patronrequests.selectedItemBarcode": "Item barcode",
   "patronrequests.localCallNumber": "Call Number",
   "patronrequests.pickLocation": "Location",
   "patronrequests.pickShelvingLocation": "Shelving Location",
