@@ -29,6 +29,7 @@ export default class EditableSettingsListFieldArray extends React.Component {
       }).map((setting, i) => (
         <Field
           component={SettingField}
+          key={`${fields.name}[${i}]`}
           name={`${fields.name}[${i}].value`}
           mutators={mutators}
           onSave={() => this.handleSave(i)}

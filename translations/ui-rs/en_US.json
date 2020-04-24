@@ -278,7 +278,8 @@
   "settingName.ncipFromAgency": "NCIP from agency",
 
   "settingName.hostLmsIntegration": "Host LMS integration",
-
+  
+  "settingName.autoResponderCancel": "Cancellation auto responder",
   "settingName.autoResponderStatus": "Auto responder status",
 
   "settingName.chatAutoRead": "Auto mark as read",

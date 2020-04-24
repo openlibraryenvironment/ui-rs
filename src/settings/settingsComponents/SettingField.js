@@ -28,7 +28,18 @@ export default class SettingField extends React.Component {
   };
 
   renderSettingValue = (setting) => {
-    if (setting.settingType !== 'Password') {
+    const { settingData } = this.props;
+    if (setting.settingType === 'Refdata') {
+      const refValues = settingData?.refdatavalues?.filter((obj) => {
+        return obj.desc === setting.vocab;
+      })[0]?.values;
+      const settingLabel = setting.value ? refValues?.filter((obj) => obj.value === setting.value)[0]?.label : undefined;
+      return (
+        <p>
+          {settingLabel || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
+        </p>
+      );
+    } else if (setting.settingType !== 'Password') {
       return (
         <p>
           {setting.value ? setting.value : (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
@@ -153,7 +164,6 @@ export default class SettingField extends React.Component {
       <Card
         headerStart={currentSetting ? <FormattedMessage id={`ui-rs.settingName.${this.snakeToCamel(currentSetting.key)}`} /> : <FormattedMessage id="ui-rs.settingName.settingLoading" />}
         headerEnd={this.renderEditButton()}
-        hasMargin
         roundedBorder
       >
         <Row>
