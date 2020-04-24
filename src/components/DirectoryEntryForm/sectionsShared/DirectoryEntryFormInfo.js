@@ -70,12 +70,19 @@ class DirectoryEntryFormInfo extends React.Component {
     return layer;
   }
 
+  getRefdataValuesFromParentResources(refdataCat) {
+    const { parentResources : { refdata } } = this.props;
+    return refdata?.records?.filter(obj => obj.desc === refdataCat)[0]?.values?.map(obj => ({ value: obj.id, label: obj.label })) || [];
+  }
+
   render() {
     const { directoryEntryValues, selectedParent, warning } = this.state;
     const { values } = this.props;
     const layer = this.getCurrentLayer();
     const namingAuthorities = this.props?.parentResources?.namingAuthorities?.records.map(obj => ({ value: obj.id, label: obj.symbol }));
-    const directoryEntryTypes = this.props?.parentResources?.refdata?.records?.filter(obj => obj.desc === 'DirectoryEntry.Type')[0]?.values?.map(obj => ({ value: obj.id, label: obj.label })) || [];
+
+    const directoryEntryTypes = this.getRefdataValuesFromParentResources('DirectoryEntry.Type');
+    const directoryEntryManaged = this.getRefdataValuesFromParentResources('DirectoryEntry.Status');
     return (
       <Accordion
         id={this.props.id}
@@ -182,6 +189,15 @@ class DirectoryEntryFormInfo extends React.Component {
                 name="lmsLocationCode"
                 component={TextField}
                 label={<FormattedMessage id="ui-directory.information.lmsLocationCode" />}
+              />
+            </Col>
+            <Col xs={4}>
+              <Field
+                id="edit-directory-entry-managed"
+                name="status"
+                component={Select}
+                dataOptions={[{ value: '', label: '', disabled: true }, ...directoryEntryManaged]}
+                label={<FormattedMessage id="ui-directory.information.managed" />}
               />
             </Col>
           </Row>

@@ -52,6 +52,7 @@
   "information.description": "Description",
   "information.symbols": "Symbols",
   "information.lmsLocationCode": "LMS location code",
+  "information.managed": "Managed status",
   "information.symbols.authority": "Authority",
   "information.symbols.symbol": "Symbol",
   "information.symbols.add": "Add symbol",
