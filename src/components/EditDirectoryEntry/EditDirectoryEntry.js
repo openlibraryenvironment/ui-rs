@@ -13,6 +13,7 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
+import permissionToEdit from '../../util/permissionToEdit';
 import DirectoryEntryForm from '../DirectoryEntryForm';
 
 const defaultSubmit = (directory, dispatch, props) => {
@@ -36,6 +37,9 @@ class EditDirectoryEntry extends React.Component {
         layer: PropTypes.string,
       }),
     }),
+    stripes: PropTypes.shape({
+      hasPerm: PropTypes.func.isRequired,
+    }).isRequired,
   }
 
   static defaultProps = {
@@ -94,7 +98,12 @@ class EditDirectoryEntry extends React.Component {
   }
 
   render() {
-    const { initialValues, onSubmit } = this.props;
+    const { initialValues, onSubmit, stripes } = this.props;
+
+    if (!permissionToEdit(stripes, initialValues)) {
+      // Users should never see this message, so no need to internationalize
+      return 'no perm';
+    }
 
     // This allows the initial values to hold the current parent value
     if (initialValues) {

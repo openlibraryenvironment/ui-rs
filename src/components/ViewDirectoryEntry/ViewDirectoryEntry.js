@@ -20,6 +20,7 @@ import {
 } from '@folio/stripes/components';
 import { stripesConnect } from '@folio/stripes/core';
 
+import permissionToEdit from '../../util/permissionToEdit';
 import EditDirectoryEntry from '../EditDirectoryEntry';
 
 import {
@@ -208,22 +209,24 @@ class ViewDirectoryEntry extends React.Component {
     );
   };
 
-  getActionMenu = ({ onToggle }) => {
+  getActionMenu = ({ onToggle }, showEditButton) => {
     return (
       <>
-        <Button
-          buttonStyle="dropdownItem"
-          href={this.props.editLink}
-          id="clickable-edit-directoryentry"
-          onClick={() => {
-            this.props.onEdit();
-            onToggle();
-          }}
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-directory.edit" />
-          </Icon>
-        </Button>
+        {showEditButton ? (
+          <Button
+            buttonStyle="dropdownItem"
+            href={this.props.editLink}
+            id="clickable-edit-directoryentry"
+            onClick={() => {
+              this.props.onEdit();
+              onToggle();
+            }}
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-directory.edit" />
+            </Icon>
+          </Button>
+        ) : null}
         <Button
           buttonStyle="dropdownItem"
           id="clickable-create-new-unit-directoryentry"
@@ -241,13 +244,15 @@ class ViewDirectoryEntry extends React.Component {
   }
 
   render() {
-    const { mutator, resources } = this.props;
+    const { mutator, resources, stripes } = this.props;
     const record = this.getRecord();
     const sectionProps = this.getSectionProps();
     let title = record.name || 'Directory entry details';
     if (record.status) title += ` (${record.status.label})`;
     const { tab } = this.state;
     const directoryEntry = record.name || <FormattedMessage id="ui-directory.information.titleNotFound" />;
+    const showEditButton = permissionToEdit(stripes, record);
+
     return (
       <Pane
         id="pane-view-directoryentry"
@@ -256,7 +261,7 @@ class ViewDirectoryEntry extends React.Component {
         dismissible
         onClose={this.props.onClose}
         lastMenu={this.paneButtons(mutator, resources)}
-        actionMenu={this.getActionMenu}
+        actionMenu={(x) => this.getActionMenu(x, showEditButton)}
       >
         <Layout className="textCentered">
           <ButtonGroup>
