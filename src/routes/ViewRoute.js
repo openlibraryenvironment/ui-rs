@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, IconButton, Layout, MessageBanner, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 import { Tags } from '@folio/stripes-erm-components';
+import DirectLink from '@folio/stripes-reshare/components/DirectLink';
 
 import { ChatPane } from '../components/chat';
 import upNLevels from '../util/upNLevels';
@@ -170,11 +171,11 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
                   <FormattedMessage id="ui-rs.edit" />
                 </Icon>
               </Button>
-              <Button buttonStyle="dropdownItem" to={`pullslip${location.search}`} id="clickable-pullslip">
+              <DirectLink component={Button} buttonStyle="dropdownItem" to={{ pathname: 'pullslip', search: location.search }} id="clickable-pullslip">
                 <Icon icon="print">
                   <FormattedMessage id="ui-rs.printPullslip" />
                 </Icon>
-              </Button>
+              </DirectLink>
             </React.Fragment>
           )}
         >

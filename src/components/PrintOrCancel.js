@@ -18,6 +18,7 @@ import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
 import ReactToPrint from 'react-to-print';
 import { Button, PaneHeaderIconButton, HotKeys } from '@folio/stripes/components';
+import onCloseDirect from '@folio/stripes-reshare/util/onCloseDirect';
 import css from './PrintPullSlip.css';
 
 class PrintOrCancel extends React.Component {
@@ -25,6 +26,7 @@ class PrintOrCancel extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    location: PropTypes.object,
     destUrl: PropTypes.string.isRequired,
     children: PropTypes.element.isRequired,
   };
@@ -36,7 +38,7 @@ class PrintOrCancel extends React.Component {
 
   render() {
     const keys = { cancel: ['escape'] };
-    const handlers = { cancel: () => this.props.history.push(this.props.destUrl) };
+    const handlers = { cancel: onCloseDirect(this.props.destUrl, this.props?.history, this.props?.location) };
 
     return (
       <HotKeys keyMap={keys} handlers={handlers} attach={document.body} focused>
@@ -46,7 +48,7 @@ class PrintOrCancel extends React.Component {
               {ariaLabel => (
                 <PaneHeaderIconButton
                   icon="times"
-                  to={this.props.destUrl}
+                  onClick={handlers.cancel}
                   aria-label={ariaLabel}
                 />
               )}

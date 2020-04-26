@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import DirectLink from '@folio/stripes-reshare/components/DirectLink';
 import { Button, Icon } from '@folio/stripes/components';
 import { ShowModalButton } from '../../ModalButtons';
 
@@ -31,4 +32,8 @@ export const RespondYes = () => (
 );
 
 // Client only, component names do not correspond to actions
-export const PrintPullSlip = () => <Button buttonStyle="dropdownItem" to="pullslip"><Icon icon="print">Print pull slip</Icon></Button>;
+export const PrintPullSlip = () => (
+  <DirectLink component={Button} buttonStyle="dropdownItem" to="pullslip">
+    <Icon icon="print"><FormattedMessage id="ui-rs.printPullslip" /></Icon>
+  </DirectLink>
+);
