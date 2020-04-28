@@ -26,9 +26,14 @@ const ViewPatronRequest = ({ record, stripes }) => (
       <RequestingInstitutionInfo id="requestingInstitutionInfo" record={record} />
     </Accordion>
     {/* Gold card */}
-    <Accordion id="requestingUserInfo" label={<FormattedMessage id="ui-rs.information.heading.requester" closedByDefault />}>
-      <RequestingUserInfo id="requestingUserInfo" record={record} />
-    </Accordion>
+    <AppNameContext.Consumer>
+      {appName => (
+        appName === 'supply' ? '' :
+        <Accordion id="requestingUserInfo" label={<FormattedMessage id="ui-rs.information.heading.requester" closedByDefault />}>
+          <RequestingUserInfo id="requestingUserInfo" record={record} />
+        </Accordion>
+      )}
+    </AppNameContext.Consumer>
     {/* Pink card */}
     <Accordion id="citationMetadataInfo" label={<FormattedMessage id="ui-rs.information.heading.citationMetadata" closedByDefault />}>
       <CitationMetadataInfo id="citationMetadataInfo" record={record} />
