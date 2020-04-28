@@ -61,7 +61,7 @@ class PrintPullSlip extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <PrintOrCancel destUrl={`details${this.props.location.search}`}>
+        <PrintOrCancel destUrl={`flow${this.props.location.search}`}>
           <PullSlip record={this.props.record} />
         </PrintOrCancel>
         <Callout ref={this.callout} />
