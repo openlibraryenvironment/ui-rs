@@ -4,10 +4,10 @@ import queryString from 'query-string';
 import { withRouter } from 'react-router';
 import { includes, filter } from 'lodash';
 import { Callout } from '@folio/stripes/components';
+import { withOkapiKy } from '@folio/stripes-reshare';
 import AllPullSlips from './PullSlip/AllPullSlips';
 import PrintOrCancel from './PrintOrCancel';
 import upNLevels from '../util/upNLevels';
-import withOkapiKy from '../util/withOkapiKy';
 
 class PrintAllPullSlips extends React.Component {
   static propTypes = {
