@@ -18,7 +18,7 @@ import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
 import ReactToPrint from 'react-to-print';
 import { Button, PaneHeaderIconButton, HotKeys } from '@folio/stripes/components';
-import onCloseDirect from '@folio/stripes-reshare/util/onCloseDirect';
+import { onCloseDirect } from '@folio/stripes-reshare';
 import css from './PrintPullSlip.css';
 
 class PrintOrCancel extends React.Component {

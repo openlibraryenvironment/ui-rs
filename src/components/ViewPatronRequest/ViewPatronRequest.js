@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import stringify from 'json-stable-stringify';
 import { withStripes } from '@folio/stripes/core';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
-import CatalogInfo from '@folio/stripes-reshare/cards/CatalogInfo';
+import { CatalogInfo } from '@folio/stripes-reshare/cards';
 import AppNameContext from '../../AppNameContext';
 import {
   RequestInfo,
