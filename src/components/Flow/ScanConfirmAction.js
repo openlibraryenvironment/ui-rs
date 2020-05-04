@@ -27,7 +27,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
         <form onSubmit={handleSubmit} autoComplete="off">
           {prompt && <SafeHTMLMessage id={prompt} />}
           {!prompt &&
-            <FormattedMessage id={`ui-rs.actions.${action}`}>
+            <FormattedMessage id={`stripes-reshare.actions.${action}`}>
               {dispAction => <SafeHTMLMessage id="ui-rs.actions.generic.prompt" values={{ action: dispAction }} />}
             </FormattedMessage>
           }
