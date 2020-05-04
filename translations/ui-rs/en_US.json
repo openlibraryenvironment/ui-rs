@@ -201,13 +201,13 @@
 
 
   "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
-  "actions.checkIn.success": "Item successfully checked into ReShare",
+  "actions.checkIn.success": "Item successfully checked into ReShare.",
   "actions.checkIn.error": "Error checking item into ReShare.",
-  "actions.manualCheckIn": "Bypass local record creation",
-  "actions.manualCheckIn.success": "Local record creation successfully bypassed.",
-  "actions.manualCheckIn.error": "Error bypassing local record creation.",
+  "actions.manualCheckIn": "Mark local item created",
+  "actions.manualCheckIn.success": "Successfully marked local item created.",
+  "actions.manualCheckIn.error": "Error marking local item created.",
 
-  "actions.patronReturnedItem.prompt": "Scan request barcode to mark it <strong>returned from patron</strong>",
+  "actions.patronReturnedItem.prompt": "Scan request barcode to mark it <strong>returned by patron</strong>",
   "actions.requesterReceived.prompt": "Scan request barcode to mark it <strong>received</strong>",
   "actions.shippedReturn.prompt": "Scan request barcode to mark it <strong>return shipped</strong>",
   "actions.supplierMarkShipped.prompt": "Scan request barcode to <strong>mark item shipped</strong>",
