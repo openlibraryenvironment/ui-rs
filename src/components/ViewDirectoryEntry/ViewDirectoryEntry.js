@@ -62,7 +62,9 @@ class ViewDirectoryEntry extends React.Component {
     onEdit: PropTypes.func,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     resources: PropTypes.shape({
-      custprops: PropTypes.array,
+      custprops: PropTypes.shape({
+        records: PropTypes.array,
+      }),
       query: PropTypes.shape({
         layer: PropTypes.string,
       }),
