@@ -33,34 +33,22 @@ class ResourceSharingSettings extends React.Component {
     }),
   };
 
-  getSectionsList() {
+  pageList() {
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
     const sections = Array.from(new Set(rows.map(obj => obj.section)));
-    return (sections);
-  }
-
-  customComponentMaker(sectionName) {
-    return (props) => <SettingPage sectionName={sectionName} {...props} />;
-  }
-
-  pageList() {
-    const sections = this.getSectionsList();
-    const pages = sections.map(section => {
+    return sections.map(section => {
       if (section) {
         const route = section;
         const label = <FormattedMessage id={`ui-rs.settingsSection.${section}`} />;
-        return (
-          {
-            'route': route,
-            'label': label,
-            'component': this.customComponentMaker(section)
-          }
-        );
+        return {
+          'route': route,
+          'label': label,
+          'component': (props) => <SettingPage sectionName={section} {...props} />,
+        };
       } else {
         return (undefined);
       }
     });
-    return pages;
   }
 
   persistentPages = [
@@ -73,12 +61,10 @@ class ResourceSharingSettings extends React.Component {
 
   render() {
     const pageList = this.pageList();
-    if (!pageList[0]) return <b>No settings yet</b>;
+    if (!pageList[0]) return null; // XXX Removing this line breaks the render!
 
     const settingsToRender = this.persistentPages.concat(pageList).sort(routeAlphaSort);
-    return (
-      <Settings {...this.props} pages={settingsToRender} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />
-    );
+    return <Settings {...this.props} pages={settingsToRender} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />;
   }
 }
 
