@@ -8,9 +8,9 @@ import { CustomISO18626 } from './settingsComponents';
 
 
 function routeAlphaSort(a, b) {
-  if (a.route < b.route) return -1;
-  if (a.route > b.route) return 1;
-  return 0;
+  const ar = a.route.toLowerCase();
+  const br = b.route.toLowerCase();
+  return (ar < br) ? -1 : (ar > br) ? 1 : 0;
 }
 
 
