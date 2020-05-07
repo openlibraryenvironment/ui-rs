@@ -48,6 +48,7 @@ class ResourceSharingSettings extends React.Component {
     const { intl } = this.props;
     const rows = (this.props.resources.settings || {}).records || [];
     const sections = Array.from(new Set(rows.map(obj => obj.section)));
+    if (sections.length === 0) return [];
 
     const persistent = this.persistentPages.map(page => ({
       route: page.route,
@@ -66,7 +67,7 @@ class ResourceSharingSettings extends React.Component {
 
   render() {
     const pageList = this.pageList();
-    if (pageList.length === this.persistentPages.length) return null; // XXX Removing this line breaks the render!
+    if (pageList.length === 0) return null; // XXX Removing this line breaks the render!
     return <Settings {...this.props} pages={pageList} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />;
   }
 }
