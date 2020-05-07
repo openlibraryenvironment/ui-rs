@@ -46,7 +46,7 @@ class ResourceSharingSettings extends React.Component {
 
   pageList() {
     const { intl } = this.props;
-    const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
+    const rows = (this.props.resources.settings || {}).records || [];
     const sections = Array.from(new Set(rows.map(obj => obj.section)));
 
     const persistent = this.persistentPages.map(page => ({
@@ -55,19 +55,11 @@ class ResourceSharingSettings extends React.Component {
       component: page.component,
     }));
 
-    const dynamic = sections.map(section => {
-      if (section) {
-        const route = section;
-        const label = intl.formatMessage({ id: `ui-rs.settingsSection.${section}` });
-        return {
-          'route': route,
-          'label': label,
-          'component': (props) => <SettingPage sectionName={section} {...props} />,
-        };
-      } else {
-        return (undefined);
-      }
-    });
+    const dynamic = sections.map(section => ({
+      route: section,
+      label: intl.formatMessage({ id: `ui-rs.settingsSection.${section}` }),
+      component: (props) => <SettingPage sectionName={section} {...props} />,
+    }));
 
     return persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
   }
