@@ -259,6 +259,7 @@
   "settingsSection.autoResponder": "Auto responder settings",
   "settingsSection.chat": "Chat settings",
   "settingsSection.iso18626": "Custom ISO18626 settings",
+  "settingsSection.pullslipNotifications": "Pullslip notifications",
 
   "settingName.settingLoading": "Setting Name Loading",
   "settingName.sharedIndexBaseUrl": "Shared index base url",
