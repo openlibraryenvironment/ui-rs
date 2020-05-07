@@ -67,7 +67,13 @@ class ResourceSharingSettings extends React.Component {
 
   render() {
     const pageList = this.pageList();
-    if (pageList.length === 0) return null; // XXX Removing this line breaks the render!
+
+    // XXX DO NOT REMOVE THE NEXT LINE. For reasons we do not
+    // understand, if once this code renders an empty set of pages, it
+    // will not re-render until you navigate away and return. This
+    // apparently unnecessary check prevents that.
+    if (pageList.length === 0) return null;
+
     return <Settings {...this.props} pages={pageList} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />;
   }
 }
