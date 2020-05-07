@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 import SettingPage from './SettingPage';
 import { CustomISO18626 } from './settingsComponents';
 
 
-function routeAlphaSort(a, b) {
-  const ar = a.route.toLowerCase();
-  const br = b.route.toLowerCase();
-  return (ar < br) ? -1 : (ar > br) ? 1 : 0;
+function sortByLabelCaseInsensitive(a, b) {
+  const al = a.label.toLowerCase();
+  const bl = b.label.toLowerCase();
+  return (al < bl) ? -1 : (al > bl) ? 1 : 0;
 }
 
 
@@ -31,15 +31,34 @@ class ResourceSharingSettings extends React.Component {
         records: PropTypes.array
       })
     }),
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
+  persistentPages = [
+    {
+      route: 'CustomISO18626Settings',
+      id: 'iso18626',
+      component: CustomISO18626
+    }
+  ];
+
   pageList() {
+    const { intl } = this.props;
     const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
     const sections = Array.from(new Set(rows.map(obj => obj.section)));
-    return sections.map(section => {
+
+    const persistent = this.persistentPages.map(page => ({
+      route: page.route,
+      label: intl.formatMessage({ id: `ui-rs.settingsSection.${page.id}` }),
+      component: page.component,
+    }));
+
+    const dynamic = sections.map(section => {
       if (section) {
         const route = section;
-        const label = <FormattedMessage id={`ui-rs.settingsSection.${section}`} />;
+        const label = intl.formatMessage({ id: `ui-rs.settingsSection.${section}` });
         return {
           'route': route,
           'label': label,
@@ -49,23 +68,15 @@ class ResourceSharingSettings extends React.Component {
         return (undefined);
       }
     });
-  }
 
-  persistentPages = [
-    {
-      route: 'CustomISO18626Settings',
-      label: 'Custom ISO18626 settings',
-      component: CustomISO18626
-    }
-  ];
+    return persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
+  }
 
   render() {
     const pageList = this.pageList();
-    if (!pageList[0]) return null; // XXX Removing this line breaks the render!
-
-    const settingsToRender = this.persistentPages.concat(pageList).sort(routeAlphaSort);
-    return <Settings {...this.props} pages={settingsToRender} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />;
+    if (pageList.length === this.persistentPages.length) return null; // XXX Removing this line breaks the render!
+    return <Settings {...this.props} pages={pageList} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />;
   }
 }
 
-export default stripesConnect(ResourceSharingSettings);
+export default injectIntl(stripesConnect(ResourceSharingSettings));
