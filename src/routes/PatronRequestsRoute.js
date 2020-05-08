@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
-import { Button, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
+import { Badge, Button, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
 import { SearchAndSort, withTags, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { generateQueryParams } from '@folio/stripes-erm-components';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
@@ -29,7 +29,7 @@ const appDetails = {
   request: {
     title: 'Requests',
     visibleColumns: [
-      'id',
+      'id', 'flags',
       'dateCreated', 'title', 'patronIdentifier', 'state', 'serviceType',
       'supplyingInstitutionSymbol',
     ],
@@ -41,7 +41,7 @@ const appDetails = {
   supply: {
     title: 'Supply',
     visibleColumns: [
-      'id',
+      'id', 'flags',
       'dateCreated', 'title', 'state', 'serviceType',
       'requestingInstitutionSymbol', 'selectedItemBarcode', 'localCallNumber', 'pickLocation', 'pickShelvingLocation',
     ],
@@ -421,6 +421,7 @@ class PatronRequestsRoute extends React.Component {
           visibleColumns={visibleColumns}
           columnMapping={{
             id: <FormattedMessage id="ui-rs.patronrequests.id" />,
+            flags: '',
             isRequester: <FormattedMessage id="ui-rs.patronrequests.isRequester" />,
             dateCreated: <FormattedMessage id="ui-rs.patronrequests.dateCreated" />,
             title: <FormattedMessage id="ui-rs.patronrequests.title" />,
@@ -452,6 +453,11 @@ class PatronRequestsRoute extends React.Component {
           }}
           resultsFormatter={{
             id: a => a.hrid,
+            flags: a => {
+              const unseen = a?.notifications?.filter(note => (note.isSender === false && note.seen === false));
+              if (unseen.length > 0) return <Badge color="primary">{unseen.length}</Badge>;
+              return '';
+            },
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             dateCreated: a => formattedDateTime(a.dateCreated),
             patronIdentifier: a => {
