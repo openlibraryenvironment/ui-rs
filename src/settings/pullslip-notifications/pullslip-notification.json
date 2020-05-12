@@ -18,10 +18,14 @@
       "type": "boolean",
       "description": "Whether the notification is active"
     },
-    "time": {
-      "type": "string",
-      "pattern": "^[0-9][0-9]:[0-9][0-9](:[0-9][0-9])?$",
-      "description": "The time at which notifications are sent, in 24h format"
+    "times": {
+      "type": "array",
+      "description": "The times at which notifications are sent, in 24h format",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9][0-9]:[0-9][0-9](:[0-9][0-9])?$",
+        "description": "A time at which notifications are sent, in 24h format"
+      }
     },
     "days": {
       "type": "array",
@@ -54,7 +58,7 @@
   },
   "required": [
     "id",
-    "time",
+    "times",
     "days",
     "emailAddresses"
   ]

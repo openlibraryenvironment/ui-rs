@@ -2,7 +2,10 @@
   "id": "8f912f63-50ed-42fb-b482-2d64db5fdb91",
   "name": "Weekday report",
   "status": true,
-  "time": "15:00:00",
+  "times": [
+    "06:00:00",
+    "13:00:00"
+  ],
   "days": [
     "M",
     "Tu",
