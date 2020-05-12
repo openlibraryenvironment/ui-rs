@@ -1,0 +1,21 @@
+{
+  "id": "8f912f63-50ed-42fb-b482-2d64db5fdb91",
+  "name": "Weekday report",
+  "status": true,
+  "time": "15:00:00",
+  "days": [
+    "M",
+    "Tu",
+    "W",
+    "Th",
+    "F"
+  ],
+  "locations": [
+    "747c14ba-fcc4-4aae-aed6-627dd8e0c9d9",
+    "71eede4c-c118-4407-ab1e-beee3ed19c6c"
+  ],
+  "emailAddresses": [
+    "mike@indexdata.com",
+    "sauropoda@gmail.com"
+  ]
+}
