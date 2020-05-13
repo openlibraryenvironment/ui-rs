@@ -32,7 +32,7 @@
       "description": "Set of days on which the notification is sent",
       "items": {
         "type": "string",
-        "pattern": "^(M|Tu|W|Th|F|Sa|Su)$",
+        "enum": ["M", "Tu", "W", "Th", "F", "Sa", "Su"],
         "description": "Must be one of: M,Tu,W,Th,F,Sa,Su"
       }
     },
