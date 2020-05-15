@@ -43,7 +43,7 @@ class ResourceSharingSettings extends React.Component {
       component: CustomISO18626
     },
     {
-      route: 'pullslip-notifications',
+      route: 'pullslip-notifications/:id',
       id: 'pullslipNotifications',
       component: PullslipNotifications,
     },
