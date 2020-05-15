@@ -303,5 +303,12 @@
   "index.isbn": "ISBN",
   "index.itemBarcode": "Item barcode",
 
+  "pullslipNotification.column.status": "Status",
+  "pullslipNotification.column.name": "Name",
+  "pullslipNotification.column.days": "Days",
+  "pullslipNotification.column.times": "Times",
+  "pullslipNotification.column.locations": "Locations",
+  "pullslipNotification.column.emailAddresses": "Email addresses",
+
   "SENTINEL": "SENTINEL"
 }
