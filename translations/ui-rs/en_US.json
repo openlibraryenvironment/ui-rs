@@ -293,6 +293,9 @@
   "filter.dateSubmitted": "Date created",
   "filter.dateNeeded": "Date needed",
 
+  "flags.unread": "Unread messages",
+  "flags.needsAttention": "Needs attention",
+
   "index.allFields": "All fields",
   "index.id": "Full ID",
   "index.hrid": "Request ID",

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
-import { Badge, Button, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
+import { Badge, Button, Icon, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
 import { SearchAndSort, withTags, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { generateQueryParams } from '@folio/stripes-erm-components';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
@@ -454,9 +454,11 @@ class PatronRequestsRoute extends React.Component {
           resultsFormatter={{
             id: a => a.hrid,
             flags: a => {
+              const flags = [];
               const unseen = a?.notifications?.filter(note => (note.isSender === false && note.seen === false));
-              if (unseen.length > 0) return <Badge color="primary">{unseen.length}</Badge>;
-              return '';
+              if (a?.state?.needsAttention) flags.push(<Icon icon="exclamation-circle" aria-label={intl.formatMessage({ id: 'ui-rs.flags.needsAttention' })} />);
+              if (unseen.length > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.flags.unread' })}>{unseen.length}</Badge>);
+              return <>{flags}</>;
             },
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             dateCreated: a => formattedDateTime(a.dateCreated),
