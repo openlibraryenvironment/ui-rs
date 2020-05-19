@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { Paneset, Pane, MultiColumnList } from '@folio/stripes/components';
+import find from 'lodash/find';
+import PullslipNotification from './PullslipNotification';
 import hardwiredSampleData from './sample';
 
 
@@ -19,7 +21,6 @@ class PullslipNotifications extends React.Component {
   };
 
   onRowClick = (_event, record) => {
-    console.log('clicked row:', record);
     this.props.history.push(`./${record.id}`);
   }
 
@@ -30,12 +31,12 @@ class PullslipNotifications extends React.Component {
         contentData={hardwiredSampleData}
         visibleColumns={['status', 'name', 'days', 'times', 'locations', 'emailAddresses']}
         columnMapping={{
-          status: <FormattedMessage id="ui-rs.pullslipNotification.column.status" />,
-          name: <FormattedMessage id="ui-rs.pullslipNotification.column.name" />,
-          days: <FormattedMessage id="ui-rs.pullslipNotification.column.days" />,
-          times: <FormattedMessage id="ui-rs.pullslipNotification.column.times" />,
-          locations: <FormattedMessage id="ui-rs.pullslipNotification.column.locations" />,
-          emailAddresses: <FormattedMessage id="ui-rs.pullslipNotification.column.emailAddresses" />,
+          status: <FormattedMessage id="ui-rs.pullslipNotification.status" />,
+          name: <FormattedMessage id="ui-rs.pullslipNotification.name" />,
+          days: <FormattedMessage id="ui-rs.pullslipNotification.days" />,
+          times: <FormattedMessage id="ui-rs.pullslipNotification.times" />,
+          locations: <FormattedMessage id="ui-rs.pullslipNotification.locations" />,
+          emailAddresses: <FormattedMessage id="ui-rs.pullslipNotification.emailAddresses" />,
         }}
         columnWidths={{
           status: 60,
@@ -57,11 +58,11 @@ class PullslipNotifications extends React.Component {
   }
 
   renderRecord(id) {
-    return `Record ${id}`;
+    const record = find(hardwiredSampleData, r => r.id === id);
+    return <PullslipNotification record={record} />;
   }
 
   render() {
-    console.log('match =', this.props.match);
     const { id } = this.props.match.params;
     return (
       <Paneset>

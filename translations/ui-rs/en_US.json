@@ -303,12 +303,12 @@
   "index.isbn": "ISBN",
   "index.itemBarcode": "Item barcode",
 
-  "pullslipNotification.column.status": "Status",
-  "pullslipNotification.column.name": "Name",
-  "pullslipNotification.column.days": "Days",
-  "pullslipNotification.column.times": "Times",
-  "pullslipNotification.column.locations": "Locations",
-  "pullslipNotification.column.emailAddresses": "Email addresses",
+  "pullslipNotification.status": "Status",
+  "pullslipNotification.name": "Name",
+  "pullslipNotification.days": "Days",
+  "pullslipNotification.times": "Times",
+  "pullslipNotification.locations": "Locations",
+  "pullslipNotification.emailAddresses": "Email addresses",
 
   "SENTINEL": "SENTINEL"
 }
