@@ -1,28 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Card, Row, Col, KeyValue } from '@folio/stripes/components';
 
 
 const dayname = {
-  Su: "Sunday",
-  Mo: "Monday",
-  Tu: "Tuesday",
-  We: "Wednesday",
-  Th: "Thursday",
-  Fr: "Friday",
-  Sa: "Saturday",
-  Su: "Sunday",
+  Mo: 'Monday',
+  Tu: 'Tuesday',
+  We: 'Wednesday',
+  Th: 'Thursday',
+  Fr: 'Friday',
+  Sa: 'Saturday',
+  Su: 'Sunday',
 };
 
 
 class PullslipNotification extends React.Component {
   static propTypes = {
     record: PropTypes.shape({}).isRequired,
+    intl: PropTypes.shape({
+      formatTime: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   render() {
-    const { record } = this.props;
+    const { record, intl } = this.props;
+    const formattedTimes = record.times
+      .map(time => intl.formatTime(`1968-03-12T${time}Z`, { timeZone: 'GMT' }))
+      .join(', ');
 
     return (
       <>
@@ -41,7 +46,7 @@ class PullslipNotification extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.pullslipNotification.times" />}
-                value={record.times.join(', ')}
+                value={formattedTimes}
               />
             </Col>
             <Col xs={6}>
@@ -76,4 +81,4 @@ class PullslipNotification extends React.Component {
   }
 }
 
-export default PullslipNotification;
+export default injectIntl(PullslipNotification);
