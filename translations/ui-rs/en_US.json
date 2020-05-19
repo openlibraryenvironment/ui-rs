@@ -195,14 +195,14 @@
   "actions.conditionalSupply.pickLocation": "<strong>Pick location</strong>",
   "actions.conditionalSupply.pickShelvingLocation": "<strong>Shelving location</strong>",
 
-  "actions.addCondition": "Add condition",
+  "actions.addCondition": "Add loan condition",
   "actions.addCondition.success": "Condition successfully added",
   "actions.addCondition.error": "Failed to add condition",
 
 
-  "actions.checkIn.prompt": "Scan item barcode to <strong>check item into ReShare</strong>",
-  "actions.checkIn.success": "Item successfully checked into ReShare.",
-  "actions.checkIn.error": "Error checking item into ReShare.",
+  "actions.checkIn.prompt": "Scan item barcode to <strong>fill this request</strong>",
+  "actions.checkIn.success": "Request successfully filled.",
+  "actions.checkIn.error": "Error filling request.",
   "actions.manualCheckIn": "Mark local item created",
   "actions.manualCheckIn.success": "Successfully marked local item created.",
   "actions.manualCheckIn.error": "Error marking local item created.",
@@ -210,7 +210,9 @@
   "actions.patronReturnedItem.prompt": "Scan request barcode to mark it <strong>returned by patron</strong>",
   "actions.requesterReceived.prompt": "Scan request barcode to mark it <strong>received</strong>",
   "actions.shippedReturn.prompt": "Scan request barcode to mark it <strong>return shipped</strong>",
-  "actions.supplierMarkShipped.prompt": "Scan request barcode to <strong>mark item shipped</strong>",
+  "actions.supplierMarkShipped.prompt": "Scan request barcode to <strong>mark it shipped</strong>",
+  "actions.supplierCheckOutOfReShare.prompt": "Scan request barcode to <strong>complete request</strong>",
+  "actions.supplierManualCheckout.prompt": "Scan request barcode to <strong>mark item checked out of local LMS</strong>",
 
   "cards.reqSup.searching": "Searching for supplier.",
 
@@ -291,6 +293,9 @@
   "filter.requester": "Requester",
   "filter.dateSubmitted": "Date created",
   "filter.dateNeeded": "Date needed",
+
+  "flags.unread": "Unread messages",
+  "flags.needsAttention": "Needs attention",
 
   "index.allFields": "All fields",
   "index.id": "Full ID",
