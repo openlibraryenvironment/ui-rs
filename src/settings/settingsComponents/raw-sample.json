@@ -1,0 +1,18 @@
+[
+  {
+    "id": "8f912f63-50ed-42fb-b482-2d64db5fdb91",
+    "description": "Weekday report",
+    "enabled": true,
+    "taskCode": "PrintPullSlips",
+    "rrule": "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,TU,WE,TH,FR;BYHOUR=6,13",
+    "taskConfig": "{\"locations\":[\"747c14ba-fcc4-4aae-aed6-627dd8e0c9d9\",\"71eede4c-c118-4407-ab1e-beee3ed19c6c\"],\"emailAddresses\":[\"mike@indexdata.com\",\"sauropoda@gmail.com\"]}"
+  },
+  {
+    "id": "324c566b-ed1d-497d-bf02-74b12910d5a0",
+    "description": "Weekend report",
+    "enabled": true,
+    "taskCode": "PrintPullSlips",
+    "rrule": "FREQ=WEEKLY;INTERVAL=1;BYDAY=SA,SU;BYHOUR=6",
+    "taskConfig":"{\"emailAddresses\":[\"mike@indexdata.com\",\"sauropoda@gmail.com\"]}"
+  }
+]
