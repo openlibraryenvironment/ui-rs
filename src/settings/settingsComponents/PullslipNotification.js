@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Card, Row, Col, KeyValue } from '@folio/stripes/components';
+import { Card, IconButton, Row, Col, KeyValue } from '@folio/stripes/components';
 
 
 const dayname = {
@@ -17,11 +18,49 @@ const dayname = {
 
 class PullslipNotification extends React.Component {
   static propTypes = {
-    record: PropTypes.shape({}).isRequired,
+    record: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string,
+      status: PropTypes.string,
+      times: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ).isRequired,
+      days: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ).isRequired,
+      locations: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      emailAddresses: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ).isRequired,
+    }).isRequired,
+    timersMutator: PropTypes.shape({
+      DELETE: PropTypes.func.isRequired,
+    }).isRequired,
     intl: PropTypes.shape({
       formatTime: PropTypes.func.isRequired,
     }).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
   };
+
+  handleDelete(_event, id) {
+    this.props.timersMutator.DELETE({ id })
+      .then(() => {
+        this.props.history.push(':id');
+      });
+  }
+
+  renderActions(id) {
+    return (
+      <>
+        <IconButton icon="edit" onClick={() => alert(1)} />
+        <IconButton icon="trash" onClick={(e) => this.handleDelete(e, id)} />
+      </>
+    );
+  }
 
   render() {
     const { record, intl } = this.props;
@@ -34,7 +73,7 @@ class PullslipNotification extends React.Component {
         <Card
           id="pullslip-notification"
           headerStart={record.name}
-          headerEnd="[buttons go here]"
+          headerEnd={this.renderActions(record.id)}
         >
           <Row>
             <Col xs={3}>
@@ -81,4 +120,4 @@ class PullslipNotification extends React.Component {
   }
 }
 
-export default injectIntl(PullslipNotification);
+export default withRouter(injectIntl(PullslipNotification));

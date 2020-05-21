@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
+import { stripesConnect } from '@folio/stripes/core';
 import { Paneset, Pane, MultiColumnList } from '@folio/stripes/components';
 import find from 'lodash/find';
 import { rrulestr } from 'rrule';
 import PullslipNotification from './PullslipNotification';
-import hardwiredRawSampleData from './raw-sample';
 
 
-const hardwiredSampleData = hardwiredRawSampleData.map(raw => {
+function raw2userData(raw) {
   const daymap = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
   const rrule = rrulestr(raw.rrule);
@@ -25,7 +25,7 @@ const hardwiredSampleData = hardwiredRawSampleData.map(raw => {
     locations,
     emailAddresses,
   };
-});
+}
 
 
 class PullslipNotifications extends React.Component {
@@ -38,17 +38,38 @@ class PullslipNotifications extends React.Component {
         id: PropTypes.string,
       }),
     }).isRequired,
+    resources: PropTypes.shape({
+      timers: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+      }),
+    }).isRequired,
+    mutator: PropTypes.shape({
+      timers: PropTypes.shape({
+        DELETE: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
+  };
+
+  static manifest = {
+    timers: {
+      type: 'okapi',
+      path: 'rs/timers',
+      params: {
+        perPage: '100',
+        stats: 'true',
+      },
+    },
   };
 
   onRowClick = (_event, record) => {
     this.props.history.push(`./${record.id}`);
   }
 
-  renderList() {
+  renderList(records) {
     return (
       <MultiColumnList
         autosize
-        contentData={hardwiredSampleData}
+        contentData={records}
         visibleColumns={['status', 'name', 'days', 'times', 'locations', 'emailAddresses']}
         columnMapping={{
           status: <FormattedMessage id="ui-rs.pullslipNotification.status" />,
@@ -77,21 +98,25 @@ class PullslipNotifications extends React.Component {
     );
   }
 
-  renderRecord(id) {
-    const record = find(hardwiredSampleData, r => r.id === id);
-    return <PullslipNotification record={record} />;
+  renderRecord(records, id) {
+    const record = find(records, r => r.id === id);
+    return <PullslipNotification record={record} timersMutator={this.props.mutator.timers} />;
   }
 
   render() {
+    const { timers } = this.props.resources;
+    if (!timers || !timers.hasLoaded) return null;
+    const records = timers.records[0].results.map(raw2userData);
     const { id } = this.props.match.params;
+
     return (
       <Paneset>
         <Pane defaultWidth="100%">
-          {(!id || id === ':id') ? this.renderList() : this.renderRecord(id)}
+          {(!id || id === ':id') ? this.renderList(records) : this.renderRecord(records, id)}
         </Pane>
       </Paneset>
     );
   }
 }
 
-export default withRouter(PullslipNotifications);
+export default withRouter(stripesConnect(PullslipNotifications));
