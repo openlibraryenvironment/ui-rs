@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
-import { Paneset, Pane, MultiColumnList } from '@folio/stripes/components';
+import { Pane, MultiColumnList } from '@folio/stripes/components';
 import find from 'lodash/find';
 import { rrulestr } from 'rrule';
 import PullslipNotification from './PullslipNotification';
@@ -110,11 +110,9 @@ class PullslipNotifications extends React.Component {
     const { id } = this.props.match.params;
 
     return (
-      <Paneset>
-        <Pane defaultWidth="100%">
-          {(!id || id === ':id') ? this.renderList(records) : this.renderRecord(records, id)}
-        </Pane>
-      </Paneset>
+      <Pane defaultWidth="100%">
+        {(!id || id === ':id') ? this.renderList(records) : this.renderRecord(records, id)}
+      </Pane>
     );
   }
 }
