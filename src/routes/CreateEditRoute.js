@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form } from 'react-final-form';
 import { Prompt } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu } from '@folio/stripes/components';
@@ -118,6 +118,6 @@ CreateEditRoute.propTypes = {
   resources: PropTypes.shape({
     selectedRecord: PropTypes.object,
   }).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.object.isRequired,
 };
 export default stripesConnect(injectIntl(CreateEditRoute));

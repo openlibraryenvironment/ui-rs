@@ -1,8 +1,11 @@
 import get from 'lodash/get';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import reset from '!!style-loader?injectType=lazyStyleTag!css-loader!reset-css/reset.css';
+import reset from '!!style-loader!css-loader!reset-css/reset.css';
+// TODO: we need to get lazyStyleTag working with Stripes 4.x
+// import reset from '!!style-loader?injectType=lazyStyleTag!css-loader!reset-css/reset.css';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
+import style from '!!style-loader!postcss-loader!./design/style.css';
+// import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
 import { formatConditionCode, formatConditionNote } from '../../util/formatCondition';
 import barCodeString from './BarCodeString';
 import logoUrl from './design/images/palci-logo.png';
