@@ -29,7 +29,7 @@ const appDetails = {
   request: {
     title: 'Requests',
     visibleColumns: [
-      'id', 'flags',
+      'flags', 'id',
       'dateCreated', 'title', 'patronIdentifier', 'state', 'serviceType',
       'supplyingInstitutionSymbol',
     ],
@@ -41,7 +41,7 @@ const appDetails = {
   supply: {
     title: 'Supply',
     visibleColumns: [
-      'id', 'flags',
+      'flags', 'id',
       'dateCreated', 'title', 'state', 'serviceType',
       'requestingInstitutionSymbol', 'selectedItemBarcode', 'localCallNumber', 'pickLocation', 'pickShelvingLocation',
     ],
