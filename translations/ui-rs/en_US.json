@@ -8,6 +8,8 @@
   "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
   "requester": "Requester",
   "supplier": "Supplier",
+  "yes": "Yes",
+  "no": "No",
 
   "loanConditions": "Loan Conditions",
   "loanConditions.condition": "Condition: ",
@@ -294,7 +296,7 @@
   "filter.dateNeeded": "Date needed",
 
   "flags.unread": "Unread messages",
-  "flags.needsAttention": "Needs attention",
+  "needsAttention": "Needs attention",
 
   "index.allFields": "All fields",
   "index.id": "Full ID",

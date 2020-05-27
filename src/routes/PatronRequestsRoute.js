@@ -7,7 +7,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
 import { Badge, Button, Icon, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
-import { SearchAndSort, withTags, MultiSelectionFilter } from '@folio/stripes/smart-components';
+import { SearchAndSort, withTags, CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { generateQueryParams } from '@folio/stripes-erm-components';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
 import formattedDateTime from '../util/formattedDateTime';
@@ -85,6 +85,7 @@ class PatronRequestsRoute extends React.Component {
         searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,selectedItemBarcode',
         filterKeys: {
           'r': 'isRequester',
+          'needsAttention': 'state.needsAttention',
           'state': 'state.code',
           'requester': 'resolvedRequester.owner.id',
           'supplier': 'resolvedSupplier.owner.id',
@@ -217,6 +218,7 @@ class PatronRequestsRoute extends React.Component {
     const values = {
       state: byName.state || [],
       institution: byName[institutionFilterId] || [],
+      needsAttention: byName.needsAttention || [],
     };
 
     const setFilterState = (group) => {
@@ -244,6 +246,22 @@ class PatronRequestsRoute extends React.Component {
 
     return (
       <React.Fragment>
+        <Accordion
+          label={<FormattedMessage id="ui-rs.needsAttention" />}
+          id="needsAttention"
+          name="needsAttention"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={values.state.length > 0}
+          onClearFilter={() => clearGroup('needsAttention')}
+        >
+          <CheckboxFilter
+            name="needsAttention"
+            dataOptions={options.needsAttention}
+            selectedValues={values.needsAttention}
+            onChange={setFilterState}
+          />
+        </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-rs.filter.state" />}
           id="state"
@@ -350,9 +368,12 @@ class PatronRequestsRoute extends React.Component {
       .map(x => ({ label: x.name, value: x.id }))
       .sort(compareLabel);
 
+    const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.yes' }), value: 'true' })];
+
     return this.renderFiltersFromData({
       state: states,
       institution: institutions,
+      needsAttention,
     });
   };
 
@@ -456,7 +477,7 @@ class PatronRequestsRoute extends React.Component {
             flags: a => {
               const flags = [];
               const unseen = a?.notifications?.filter(note => (note.isSender === false && note.seen === false));
-              if (a?.state?.needsAttention) flags.push(<Icon icon="exclamation-circle" aria-label={intl.formatMessage({ id: 'ui-rs.flags.needsAttention' })} />);
+              if (a?.state?.needsAttention) flags.push(<Icon icon="exclamation-circle" aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' })} />);
               if (unseen.length > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.flags.unread' })}>{unseen.length}</Badge>);
               return <>{flags}</>;
             },
