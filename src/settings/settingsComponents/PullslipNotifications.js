@@ -110,7 +110,7 @@ class PullslipNotifications extends React.Component {
     const { id } = this.props.match.params;
 
     return (
-      <Pane defaultWidth="100%">
+      <Pane defaultWidth="fill">
         {(!id || id === ':id') ? this.renderList(records) : this.renderRecord(records, id)}
       </Pane>
     );
