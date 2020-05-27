@@ -62,7 +62,7 @@ class PullslipNotifications extends React.Component {
   };
 
   onRowClick = (_event, record) => {
-    this.props.history.push(`./${record.id}`);
+    this.props.history.push(`pullslip-notifications/${record.id}`);
   }
 
   renderList(records) {
