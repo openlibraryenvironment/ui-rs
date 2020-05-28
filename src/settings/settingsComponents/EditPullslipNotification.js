@@ -7,7 +7,7 @@ import raw2userData from './raw2userData';
 import SinglePullslipNotification from './SinglePullslipNotification';
 
 
-class PullslipNotifications extends React.Component {
+class EditPullslipNotification extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -42,7 +42,7 @@ class PullslipNotifications extends React.Component {
   renderRecord(record) {
     return (
       <>
-        edit6
+        edit7
         <SinglePullslipNotification record={record} timersMutator={this.props.mutator.timer} />
       </>
     );
@@ -61,4 +61,4 @@ class PullslipNotifications extends React.Component {
   }
 }
 
-export default withRouter(stripesConnect(PullslipNotifications));
+export default withRouter(stripesConnect(EditPullslipNotification));
