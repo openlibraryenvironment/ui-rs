@@ -22,6 +22,9 @@ class PullslipNotifications extends React.Component {
     resources: PropTypes.shape({
       timers: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(
+          PropTypes.object.isRequired,
+        ),
       }),
     }).isRequired,
     mutator: PropTypes.shape({
