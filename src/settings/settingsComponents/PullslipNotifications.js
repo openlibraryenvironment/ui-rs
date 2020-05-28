@@ -6,7 +6,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Pane, MultiColumnList } from '@folio/stripes/components';
 import find from 'lodash/find';
 import raw2userData from './raw2userData';
-import SinglePullslipNotification from './SinglePullslipNotification';
+import ViewPullslipNotification from './ViewPullslipNotification';
 
 
 class PullslipNotifications extends React.Component {
@@ -84,7 +84,7 @@ class PullslipNotifications extends React.Component {
 
   renderRecord(records, id) {
     const record = find(records, r => r.id === id);
-    return <SinglePullslipNotification record={record} timersMutator={this.props.mutator.timers} />;
+    return <ViewPullslipNotification record={record} timersMutator={this.props.mutator.timers} />;
   }
 
   render() {

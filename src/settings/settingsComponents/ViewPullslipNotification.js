@@ -16,7 +16,7 @@ const dayname = {
 };
 
 
-class SinglePullslipNotification extends React.Component {
+class ViewPullslipNotification extends React.Component {
   static propTypes = {
     record: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -120,4 +120,4 @@ class SinglePullslipNotification extends React.Component {
   }
 }
 
-export default withRouter(injectIntl(SinglePullslipNotification));
+export default withRouter(injectIntl(ViewPullslipNotification));
