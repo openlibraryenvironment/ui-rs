@@ -1,36 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane } from '@folio/stripes/components';
+import raw2userData from './raw2userData';
+import SinglePullslipNotification from './SinglePullslipNotification';
 
-const EditPullslipNotification = (props) => (
-  <Pane defaultWidth="fill">
-    <h1>
-      Edit record
-      &nbsp;
-      {props.match.params.id}
-    </h1>
-    <pre>
-      {props.resources}
-    </pre>
-  </Pane>
-);
 
-EditPullslipNotification.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
+class PullslipNotifications extends React.Component {
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
     }).isRequired,
-  }).isRequired,
-  resources: PropTypes.shape({
-  }).isRequired,
-};
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }).isRequired,
+    resources: PropTypes.shape({
+      timer: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(
+          PropTypes.object.isRequired,
+        ),
+      }),
+    }).isRequired,
+    mutator: PropTypes.shape({
+      timer: PropTypes.shape({
+        DELETE: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
+  };
 
-EditPullslipNotification.xmanifest = {
-  timer: {
-    type: 'okapi',
-    path: 'rs/timers/!{id}',
-  },
-};
+  static manifest = {
+    timer: {
+      type: 'okapi',
+      path: 'rs/timers/:{id}',
+    },
+  };
 
-export default stripesConnect(EditPullslipNotification);
+  renderRecord(record) {
+    return (
+      <>
+        edit6
+        <SinglePullslipNotification record={record} timersMutator={this.props.mutator.timer} />
+      </>
+    );
+  }
+
+  render() {
+    const { timer } = this.props.resources;
+    if (!timer || !timer.hasLoaded) return null;
+    const record = raw2userData(timer.records[0]);
+
+    return (
+      <Pane defaultWidth="fill">
+        {this.renderRecord(record)}
+      </Pane>
+    );
+  }
+}
+
+export default withRouter(stripesConnect(PullslipNotifications));
