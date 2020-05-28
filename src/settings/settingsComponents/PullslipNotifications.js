@@ -5,27 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, MultiColumnList } from '@folio/stripes/components';
 import find from 'lodash/find';
-import { rrulestr } from 'rrule';
+import raw2userData from './raw2userData';
 import SinglePullslipNotification from './SinglePullslipNotification';
-
-
-function raw2userData(raw) {
-  const daymap = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
-
-  const rrule = rrulestr(raw.rrule);
-  const payload = JSON.parse(raw.taskConfig);
-  const { locations, emailAddresses } = payload;
-
-  return {
-    id: raw.id,
-    name: raw.description,
-    status: raw.enabled,
-    times: rrule.options.byhour.map(t => `${`0${t}`.substr(-2)}:00:00`),
-    days: rrule.options.byweekday.map(w => daymap[w]),
-    locations,
-    emailAddresses,
-  };
-}
 
 
 class PullslipNotifications extends React.Component {
