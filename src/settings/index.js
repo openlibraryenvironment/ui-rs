@@ -82,12 +82,12 @@ class ResourceSharingSettings extends React.Component {
       <Route
         key="pullslip-notifications/:id/edit"
         path={`${match.path}/pullslip-notifications/:id/edit`}
-        render={EditPullslipNotification}
+        component={EditPullslipNotification}
       />,
       <Route
         key="pullslip-notifications/:id"
         path={`${match.path}/pullslip-notifications/:id`}
-        render={PullslipNotifications}
+        component={PullslipNotifications}
       />
     ];
 
