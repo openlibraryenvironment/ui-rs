@@ -1,21 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane } from '@folio/stripes/components';
 import raw2userData from './raw2userData';
-import SinglePullslipNotification from './SinglePullslipNotification';
 
 
 class EditPullslipNotification extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string,
-      }),
     }).isRequired,
     resources: PropTypes.shape({
       timer: PropTypes.shape({
@@ -27,7 +20,7 @@ class EditPullslipNotification extends React.Component {
     }).isRequired,
     mutator: PropTypes.shape({
       timer: PropTypes.shape({
-        DELETE: PropTypes.func.isRequired,
+        PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
   };
@@ -39,15 +32,6 @@ class EditPullslipNotification extends React.Component {
     },
   };
 
-  renderRecord(record) {
-    return (
-      <>
-        edit7
-        <SinglePullslipNotification record={record} timersMutator={this.props.mutator.timer} />
-      </>
-    );
-  }
-
   render() {
     const { timer } = this.props.resources;
     if (!timer || !timer.hasLoaded) return null;
@@ -55,10 +39,12 @@ class EditPullslipNotification extends React.Component {
 
     return (
       <Pane defaultWidth="fill">
-        {this.renderRecord(record)}
+        <pre>
+          {JSON.stringify(record, null, 2)}
+        </pre>
       </Pane>
     );
   }
 }
 
-export default withRouter(stripesConnect(EditPullslipNotification));
+export default stripesConnect(EditPullslipNotification);
