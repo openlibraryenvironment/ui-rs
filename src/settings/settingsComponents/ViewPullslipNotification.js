@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { stripesConnect } from '@folio/stripes/core';
 import { Card, IconButton, Row, Col, KeyValue } from '@folio/stripes/components';
 
 
@@ -44,6 +45,13 @@ class ViewPullslipNotification extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+  };
+
+  static manifest = {
+    timer: {
+      type: 'okapi',
+      path: 'rs/timers/:{id}',
+    },
   };
 
   handleDelete(_event, id) {
@@ -120,4 +128,4 @@ class ViewPullslipNotification extends React.Component {
   }
 }
 
-export default withRouter(injectIntl(ViewPullslipNotification));
+export default stripesConnect(withRouter(injectIntl(ViewPullslipNotification)));
