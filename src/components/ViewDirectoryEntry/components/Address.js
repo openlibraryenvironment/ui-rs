@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Card, Col, KeyValue, Row } from '@folio/stripes/components';
+import { Card } from '@folio/stripes/components';
+
+import css from './Address.css';
 
 
 class Address extends React.Component {
@@ -15,10 +17,21 @@ class Address extends React.Component {
     index: PropTypes.number,
   };
 
-  findIndexBySeq(seq) {
-    // This function is in place to ensure that the array getting jumbled up doesn't break the edit order
-    const { address: { lines } } = this.props;
-    return lines.findIndex(item => item.seq === seq);
+  sortBySeq(lineA, lineB) {
+    return lineA.seq - lineB.seq;
+  }
+
+  renderAddress(address) {
+    address.lines.sort((a, b) => this.sortBySeq(a, b));
+    return (
+      <ul className={css.addressList}>
+        {address.lines.map((line) => {
+          return (
+            <li key={`addressLine[${line.seq}]`}>{line.value}</li>
+          );
+        })}
+      </ul>
+    );
   }
 
   render() {
@@ -31,48 +44,7 @@ class Address extends React.Component {
         <Card
           headerStart={header}
         >
-          <Row>
-            <Col xs={4}>
-              <KeyValue
-                label={<FormattedMessage id="ui-directory.information.addresses.houseName" />}
-                value={address ? address.lines[this.findIndexBySeq(0)]?.value : '-'}
-              />
-            </Col>
-            <Col xs={4}>
-              <KeyValue
-                label={<FormattedMessage id="ui-directory.information.addresses.street" />}
-                value={address ? address.lines[this.findIndexBySeq(1)]?.value : '-'}
-              />
-            </Col>
-            <Col xs={4}>
-              <KeyValue
-                label={<FormattedMessage id="ui-directory.information.addresses.city" />}
-                value={address ? address.lines[this.findIndexBySeq(2)]?.value : '-'}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={4}>
-              <KeyValue
-                label={<FormattedMessage id="ui-directory.information.addresses.administrativeArea" />}
-                value={address ? address.lines[this.findIndexBySeq(3)]?.value : '-'}
-              />
-            </Col>
-            <Col xs={4}>
-              <KeyValue
-                label={<FormattedMessage id="ui-directory.information.addresses.postalCode" />}
-                value={address ? address.lines[this.findIndexBySeq(4)]?.value : '-'}
-              />
-            </Col>
-            {address.tags.length > 0 &&
-              <Col xs={4}>
-                <KeyValue
-                  label={<FormattedMessage id="ui-directory.information.tags" />}
-                  value={address.tags.map(t => t.value).sort().join(', ')}
-                />
-              </Col>
-            }
-          </Row>
+          {this.renderAddress(address)}
         </Card>
       </>
     );

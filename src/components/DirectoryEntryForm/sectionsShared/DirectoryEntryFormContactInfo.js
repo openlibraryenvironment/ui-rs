@@ -14,6 +14,7 @@ import {
 
 import { AddressListFieldArray } from '../components';
 
+
 class DirectoryEntryFormContactInfo extends React.Component {
   static propTypes = {
     id: PropTypes.string,
@@ -26,9 +27,7 @@ class DirectoryEntryFormContactInfo extends React.Component {
       }),
       records: PropTypes.object,
     }),
-    values: PropTypes.object,
   };
-
 
   getCurrentLayer() {
     const layer = this.props?.parentResources?.query?.layer;
@@ -37,53 +36,55 @@ class DirectoryEntryFormContactInfo extends React.Component {
 
   render() {
     return (
-      <Accordion
-        id={this.props.id}
-        label={<FormattedMessage id="ui-directory.information.heading.contactInformation" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
-      >
-        <React.Fragment>
-          <Row>
-            <Col xs={4}>
-              <Field
-                id="edit-directory-entry-phone-number"
-                name="phoneNumber"
-                component={TextField}
-                label={<FormattedMessage id="ui-directory.information.mainPhoneNumber" />}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                id="edit-directory-entry-email-address"
-                name="emailAddress"
-                component={TextField}
-                label={<FormattedMessage id="ui-directory.information.mainEmailAddress" />}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                id="edit-directory-entry-contact-name"
-                name="contactName"
-                component={TextField}
-                label={<FormattedMessage id="ui-directory.information.mainContactName" />}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Label>
-                <FormattedMessage id="ui-directory.information.addresses" />
-              </Label>
-              <FieldArray
-                name="addresses"
-              >
-                {({ fields, input, meta }) => <AddressListFieldArray {... { fields, input, meta }} /> }
-              </FieldArray>
-            </Col>
-          </Row>
-        </React.Fragment>
-      </Accordion>
+      <>
+        <Accordion
+          id={this.props.id}
+          label={<FormattedMessage id="ui-directory.information.heading.contactInformation" />}
+          open={this.props.open}
+          onToggle={this.props.onToggle}
+        >
+          <React.Fragment>
+            <Row>
+              <Col xs={4}>
+                <Field
+                  id="edit-directory-entry-phone-number"
+                  name="phoneNumber"
+                  component={TextField}
+                  label={<FormattedMessage id="ui-directory.information.mainPhoneNumber" />}
+                />
+              </Col>
+              <Col xs={4}>
+                <Field
+                  id="edit-directory-entry-email-address"
+                  name="emailAddress"
+                  component={TextField}
+                  label={<FormattedMessage id="ui-directory.information.mainEmailAddress" />}
+                />
+              </Col>
+              <Col xs={4}>
+                <Field
+                  id="edit-directory-entry-contact-name"
+                  name="contactName"
+                  component={TextField}
+                  label={<FormattedMessage id="ui-directory.information.mainContactName" />}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <Label>
+                  <FormattedMessage id="ui-directory.information.addresses" />
+                </Label>
+
+                <FieldArray
+                  name="addresses"
+                  component={AddressListFieldArray}
+                />
+              </Col>
+            </Row>
+          </React.Fragment>
+        </Accordion>
+      </>
     );
   }
 }

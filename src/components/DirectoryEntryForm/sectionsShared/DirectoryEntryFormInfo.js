@@ -82,7 +82,7 @@ class DirectoryEntryFormInfo extends React.Component {
     const namingAuthorities = this.props?.parentResources?.namingAuthorities?.records.map(obj => ({ value: obj.id, label: obj.symbol }));
 
     const directoryEntryTypes = this.getRefdataValuesFromParentResources('DirectoryEntry.Type');
-    const directoryEntryManaged = this.getRefdataValuesFromParentResources('DirectoryEntry.Status');
+    const directoryEntryControl = this.getRefdataValuesFromParentResources('DirectoryEntry.Status');
     return (
       <Accordion
         id={this.props.id}
@@ -193,11 +193,11 @@ class DirectoryEntryFormInfo extends React.Component {
             </Col>
             <Col xs={4}>
               <Field
-                id="edit-directory-entry-managed"
+                id="edit-directory-entry-control"
                 name="status"
                 component={Select}
-                dataOptions={[{ value: '', label: '', disabled: true }, ...directoryEntryManaged]}
-                label={<FormattedMessage id="ui-directory.information.managed" />}
+                dataOptions={[{ value: '', label: '', disabled: true }, ...directoryEntryControl]}
+                label={<FormattedMessage id="ui-directory.information.control" />}
               />
             </Col>
           </Row>

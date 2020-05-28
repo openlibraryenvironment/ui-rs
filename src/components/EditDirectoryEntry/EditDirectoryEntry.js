@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { Prompt } from 'react-router-dom';
@@ -13,6 +13,10 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
+import pluginNA from '@folio/address-plugin-north-america';
+import pluginGeneric from '@folio/address-plugin-generic';
+import pluginGBR from '@folio/address-plugin-british-isles';
+
 import permissionToEdit from '../../util/permissionToEdit';
 import DirectoryEntryForm from '../DirectoryEntryForm';
 
@@ -20,6 +24,15 @@ const defaultSubmit = (directory, dispatch, props) => {
   return props.onUpdate(directory)
     .then(() => props.onCancel());
 };
+
+const plugins = [pluginGeneric, pluginNA, pluginGBR];
+const pluginMap = {};
+plugins.forEach(plugin => {
+  plugin.listOfSupportedCountries.forEach(country => {
+    pluginMap[country] = plugin;
+  });
+});
+
 
 class EditDirectoryEntry extends React.Component {
   static propTypes = {
@@ -39,6 +52,9 @@ class EditDirectoryEntry extends React.Component {
     }),
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
+    }).isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
     }).isRequired,
   }
 
@@ -97,6 +113,16 @@ class EditDirectoryEntry extends React.Component {
     );
   }
 
+  selectPlugin(domain) {
+    const { intl } = this.props;
+    const plugin = domain ? (pluginMap[domain] ? pluginMap[domain] : pluginMap.Generic) : undefined;
+
+    if (!plugin) {
+      throw new Error(intl.formatMessage({ id: 'ui-directory.information.addresses.missingPlugin' }));
+    }
+    return plugin;
+  }
+
   render() {
     const { initialValues, onSubmit, stripes } = this.props;
 
@@ -123,6 +149,28 @@ class EditDirectoryEntry extends React.Component {
         submitValues.parent = { id: values.parent };
       }
       submitValues.symbols = values.symbols?.map(obj => (obj?.authority?.id ? obj : ({ ...obj, authority: { id: obj.authority } })));
+
+      if (submitValues.addresses) {
+        const newAddresses = [];
+        submitValues.addresses.forEach((address) => {
+          if (address._delete === true) {
+            // If we're deleting the address we can just leave it as is
+            newAddresses.push(address);
+          } else {
+            const plugin = this.selectPlugin(address.countryCode);
+            const newAddress = plugin.fieldsToBackend(address);
+            // The plugins do not have the notion of seq
+            // so we obtain their fieldOrder and add that manually
+            const fieldOrder = plugin.fieldOrder;
+            newAddress.lines.forEach(line => {
+              const lineType = line.type?.value;
+              line.seq = fieldOrder[lineType];
+            });
+            newAddresses.push(newAddress);
+          }
+        });
+        submitValues.addresses = newAddresses;
+      }
       onSubmit(submitValues, null, this.props);
     };
 
@@ -177,4 +225,4 @@ class EditDirectoryEntry extends React.Component {
   }
 }
 
-export default EditDirectoryEntry;
+export default injectIntl(EditDirectoryEntry);

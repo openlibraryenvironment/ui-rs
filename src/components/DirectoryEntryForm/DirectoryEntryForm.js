@@ -48,12 +48,11 @@ class DirectoryEntryForm extends React.Component {
   }
 
   getSectionProps() {
-    const { form, values = {} } = this.props;
+    const { form } = this.props;
     return {
       form,
       onToggle: this.handleSectionToggle,
       parentResources: this.props.parentResources,
-      values,
     };
   }
 
@@ -93,7 +92,6 @@ class DirectoryEntryForm extends React.Component {
     } else {
       name = 'this institution';
     }
-
     return (
       <div>
         <Layout className="textCentered">
