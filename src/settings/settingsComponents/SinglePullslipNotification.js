@@ -56,7 +56,7 @@ class SinglePullslipNotification extends React.Component {
   renderActions(id) {
     return (
       <>
-        <IconButton icon="edit" onClick={() => alert(1)} />
+        <IconButton icon="edit" onClick={() => this.props.history.push(`${id}/edit`)} />
         <IconButton icon="trash" onClick={(e) => this.handleDelete(e, id)} />
       </>
     );
