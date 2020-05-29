@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
-import { Card, IconButton, Row, Col, KeyValue } from '@folio/stripes/components';
+import { Pane, Card, IconButton, Row, Col, KeyValue } from '@folio/stripes/components';
+import raw2userData from './raw2userData';
 
 
 const dayname = {
@@ -19,32 +20,40 @@ const dayname = {
 
 class ViewPullslipNotification extends React.Component {
   static propTypes = {
-    record: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string,
-      status: PropTypes.string,
-      times: PropTypes.arrayOf(
-        PropTypes.string.isRequired,
-      ).isRequired,
-      days: PropTypes.arrayOf(
-        PropTypes.string.isRequired,
-      ).isRequired,
-      locations: PropTypes.arrayOf(
-        PropTypes.string.isRequired,
-      ),
-      emailAddresses: PropTypes.arrayOf(
-        PropTypes.string.isRequired,
-      ).isRequired,
-    }).isRequired,
-    timersMutator: PropTypes.shape({
-      DELETE: PropTypes.func.isRequired,
-    }).isRequired,
     intl: PropTypes.shape({
       formatTime: PropTypes.func.isRequired,
     }).isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    resources: PropTypes.shape({
+      timer: PropTypes.shape({
+        records: PropTypes.arrayOf(
+          PropTypes.shape({
+            specificRecord: PropTypes.shape({
+              id: PropTypes.string.isRequired,
+              name: PropTypes.string,
+              status: PropTypes.string,
+              times: PropTypes.arrayOf(
+                PropTypes.string.isRequired,
+              ).isRequired,
+              days: PropTypes.arrayOf(
+                PropTypes.string.isRequired,
+              ).isRequired,
+              locations: PropTypes.arrayOf(
+                PropTypes.string.isRequired,
+              ),
+              emailAddresses: PropTypes.arrayOf(
+                PropTypes.string.isRequired,
+              ).isRequired,
+            }),
+          }).isRequired,
+        ),
+      })
+    }).isRequired,
+    timersMutator: PropTypes.shape({
+      DELETE: PropTypes.func.isRequired,
+    }), // .isRequired,
   };
 
   static manifest = {
@@ -57,7 +66,7 @@ class ViewPullslipNotification extends React.Component {
   handleDelete(_event, id) {
     this.props.timersMutator.DELETE({ id })
       .then(() => {
-        this.props.history.push(':id');
+        this.props.history.push('..');
       });
   }
 
@@ -71,13 +80,16 @@ class ViewPullslipNotification extends React.Component {
   }
 
   render() {
-    const { record, intl } = this.props;
+    const timer = this.props.resources.timer;
+    if (!timer || !timer.hasLoaded) return null;
+
+    const record = raw2userData(timer.records[0]);
     const formattedTimes = record.times
-      .map(time => intl.formatTime(`1968-03-12T${time}Z`, { timeZone: 'GMT' }))
+      .map(time => this.props.intl.formatTime(`1968-03-12T${time}Z`, { timeZone: 'GMT' }))
       .join(', ');
 
     return (
-      <>
+      <Pane defaultWidth="fill">
         <Card
           id="pullslip-notification"
           headerStart={record.name}
@@ -118,9 +130,9 @@ class ViewPullslipNotification extends React.Component {
             </Col>
           </Row>
         </Card>
-      </>
+      </Pane>
     );
   }
 }
 
-export default stripesConnect(withRouter(injectIntl(ViewPullslipNotification)));
+export default withRouter(injectIntl(stripesConnect(ViewPullslipNotification)));
