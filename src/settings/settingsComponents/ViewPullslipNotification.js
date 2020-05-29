@@ -118,11 +118,6 @@ class ViewPullslipNotification extends React.Component {
             </Col>
           </Row>
         </Card>
-
-        <hr />
-        <pre>
-          {JSON.stringify(record, null, 2)}
-        </pre>
       </>
     );
   }
