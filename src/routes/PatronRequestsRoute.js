@@ -166,7 +166,7 @@ class PatronRequestsRoute extends React.Component {
     this.state = {};
 
     const { appName, intl } = props;
-    const { statePrefix } = appDetails[props.appName];
+    const { statePrefix } = appDetails[appName];
     const keys = Object.keys(intl.messages).filter(
       key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
     );
