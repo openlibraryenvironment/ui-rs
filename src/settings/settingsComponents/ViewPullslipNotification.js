@@ -51,9 +51,11 @@ class ViewPullslipNotification extends React.Component {
         ),
       })
     }).isRequired,
-    timersMutator: PropTypes.shape({
-      DELETE: PropTypes.func.isRequired,
-    }), // .isRequired,
+    mutator: PropTypes.shape({
+      timer: PropTypes.shape({
+        DELETE: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
   };
 
   static manifest = {
@@ -64,10 +66,11 @@ class ViewPullslipNotification extends React.Component {
   };
 
   handleDelete(_event, id) {
-    this.props.timersMutator.DELETE({ id })
-      .then(() => {
-        this.props.history.push('..');
-      });
+    this.props.mutator.timer.DELETE({ id });
+    // We do NOT want to wait till the DELETE has finished using
+    // then(), otherwise we get an attempted re-render before we
+    // navigate to the other page.
+    this.props.history.push('.');
   }
 
   renderActions(id) {
