@@ -12,7 +12,7 @@ class EditPullslipNotification extends React.Component {
       push: PropTypes.func.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
-      timer: PropTypes.shape({
+      editTimer: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(
           PropTypes.object.isRequired,
@@ -20,14 +20,14 @@ class EditPullslipNotification extends React.Component {
       }),
     }).isRequired,
     mutator: PropTypes.shape({
-      timer: PropTypes.shape({
+      editTimer: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
   };
 
   static manifest = {
-    timer: {
+    editTimer: {
       type: 'okapi',
       path: 'rs/timers/:{id}',
     },
@@ -44,9 +44,9 @@ class EditPullslipNotification extends React.Component {
   }
 
   render() {
-    const { timer } = this.props.resources;
-    if (!timer || !timer.hasLoaded) return null;
-    const record = raw2userData(timer.records[0]);
+    const { editTimer } = this.props.resources;
+    if (!editTimer || !editTimer.hasLoaded) return null;
+    const record = raw2userData(editTimer.records[0]);
 
     return (
       <Pane defaultWidth="fill">
