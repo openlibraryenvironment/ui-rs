@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane } from '@folio/stripes/components';
 import raw2userData from './raw2userData';
@@ -32,6 +33,16 @@ class EditPullslipNotification extends React.Component {
     },
   };
 
+  onSubmit(values, maybeForm, completeFn) {
+    console.log('submit: values =', values);
+    console.log('submit: maybeForm =', maybeForm);
+    console.log('submit: completeFn =', completeFn);
+  }
+
+  validate(values) {
+    console.log('validate: values =', values);
+  }
+
   render() {
     const { timer } = this.props.resources;
     if (!timer || !timer.hasLoaded) return null;
@@ -39,6 +50,22 @@ class EditPullslipNotification extends React.Component {
 
     return (
       <Pane defaultWidth="fill">
+        <Form
+          onSubmit={this.onSubmit}
+          validate={this.validate}
+          initialValues={record}
+          render={({ handleSubmit }) => (
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="name">Name</label>
+                <Field id="name" name="name" component="input" placeholder="Name of report" />
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+          )}
+        />
+
+        <hr />
         <pre>
           {JSON.stringify(record, null, 2)}
         </pre>
