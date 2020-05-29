@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import filter from 'lodash/filter';
 import { Link } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
@@ -73,6 +72,11 @@ function queryModifiedForApp(resources, props) {
   }
 
   return res;
+}
+
+
+function compareLabel(a, b) {
+  return (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 }
 
 
@@ -160,6 +164,14 @@ class PatronRequestsRoute extends React.Component {
     super(props);
     this.onClose = this.onClose.bind(this);
     this.state = {};
+
+    const { appName, intl } = props;
+    const { statePrefix } = appDetails[props.appName];
+    const keys = Object.keys(intl.messages).filter(
+      key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
+    );
+    this.states = keys.map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
+      .sort(compareLabel);
   }
 
   onClose() {
@@ -354,14 +366,7 @@ class PatronRequestsRoute extends React.Component {
   }
 
   renderFilters = () => {
-    const { appName, intl, resources } = this.props;
-    const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
-
-    const { statePrefix } = appDetails[appName];
-    const keys = filter(Object.keys(intl.messages),
-      key => key.startsWith(`stripes-reshare.states.${statePrefix}_`));
-    const states = keys.map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
-      .sort(compareLabel);
+    const { intl, resources } = this.props;
 
     const records = get(resources, 'institutions.records');
     const institutions = (records && records[0] ? records[0].results : [])
@@ -371,7 +376,7 @@ class PatronRequestsRoute extends React.Component {
     const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.yes' }), value: 'true' })];
 
     return this.renderFiltersFromData({
-      state: states,
+      state: this.states,
       institution: institutions,
       needsAttention,
     });
