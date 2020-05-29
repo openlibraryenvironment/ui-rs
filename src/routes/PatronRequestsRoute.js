@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import filter from 'lodash/filter';
 import { Link } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
 import { Badge, Button, Icon, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
-import { SearchAndSort, withTags, MultiSelectionFilter } from '@folio/stripes/smart-components';
+import { SearchAndSort, withTags, CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { generateQueryParams } from '@folio/stripes-erm-components';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
 import formattedDateTime from '../util/formattedDateTime';
@@ -76,6 +75,11 @@ function queryModifiedForApp(resources, props) {
 }
 
 
+function compareLabel(a, b) {
+  return (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
+}
+
+
 class PatronRequestsRoute extends React.Component {
   static manifest = Object.freeze({
     patronrequests: {
@@ -85,6 +89,7 @@ class PatronRequestsRoute extends React.Component {
         searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,selectedItemBarcode',
         filterKeys: {
           'r': 'isRequester',
+          'needsAttention': 'state.needsAttention',
           'state': 'state.code',
           'requester': 'resolvedRequester.owner.id',
           'supplier': 'resolvedSupplier.owner.id',
@@ -159,6 +164,14 @@ class PatronRequestsRoute extends React.Component {
     super(props);
     this.onClose = this.onClose.bind(this);
     this.state = {};
+
+    const { appName, intl } = props;
+    const { statePrefix } = appDetails[props.appName];
+    const keys = Object.keys(intl.messages).filter(
+      key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
+    );
+    this.states = keys.map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
+      .sort(compareLabel);
   }
 
   onClose() {
@@ -217,6 +230,7 @@ class PatronRequestsRoute extends React.Component {
     const values = {
       state: byName.state || [],
       institution: byName[institutionFilterId] || [],
+      needsAttention: byName.needsAttention || [],
     };
 
     const setFilterState = (group) => {
@@ -244,6 +258,22 @@ class PatronRequestsRoute extends React.Component {
 
     return (
       <React.Fragment>
+        <Accordion
+          label={<FormattedMessage id="ui-rs.needsAttention" />}
+          id="needsAttention"
+          name="needsAttention"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={values.state.length > 0}
+          onClearFilter={() => clearGroup('needsAttention')}
+        >
+          <CheckboxFilter
+            name="needsAttention"
+            dataOptions={options.needsAttention}
+            selectedValues={values.needsAttention}
+            onChange={setFilterState}
+          />
+        </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-rs.filter.state" />}
           id="state"
@@ -336,23 +366,19 @@ class PatronRequestsRoute extends React.Component {
   }
 
   renderFilters = () => {
-    const { appName, intl, resources } = this.props;
-    const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
-
-    const { statePrefix } = appDetails[appName];
-    const keys = filter(Object.keys(intl.messages),
-      key => key.startsWith(`stripes-reshare.states.${statePrefix}_`));
-    const states = keys.map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
-      .sort(compareLabel);
+    const { intl, resources } = this.props;
 
     const records = get(resources, 'institutions.records');
     const institutions = (records && records[0] ? records[0].results : [])
       .map(x => ({ label: x.name, value: x.id }))
       .sort(compareLabel);
 
+    const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.yes' }), value: 'true' })];
+
     return this.renderFiltersFromData({
-      state: states,
+      state: this.states,
       institution: institutions,
+      needsAttention,
     });
   };
 
@@ -456,7 +482,7 @@ class PatronRequestsRoute extends React.Component {
             flags: a => {
               const flags = [];
               const unseen = a?.notifications?.filter(note => (note.isSender === false && note.seen === false));
-              if (a?.state?.needsAttention) flags.push(<Icon icon="exclamation-circle" aria-label={intl.formatMessage({ id: 'ui-rs.flags.needsAttention' })} />);
+              if (a?.state?.needsAttention) flags.push(<Icon icon="exclamation-circle" aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' })} />);
               if (unseen.length > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.flags.unread' })}>{unseen.length}</Badge>);
               return <>{flags}</>;
             },
