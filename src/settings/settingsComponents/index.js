@@ -3,4 +3,5 @@ export { default as EditableSettingsListFieldArray } from './EditableSettingsLis
 export { default as SettingField } from './SettingField';
 export { default as CustomISO18626 } from './CustomISO18626';
 export { default as PullslipNotifications } from './PullslipNotifications';
+export { default as ViewPullslipNotification } from './ViewPullslipNotification';
 export { default as EditPullslipNotification } from './EditPullslipNotification';
