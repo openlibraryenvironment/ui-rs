@@ -7,7 +7,7 @@ import { Address } from '../components';
 
 function renderAddress(address, index, count) {
   return (
-    <Address {...{ address, index, count }} />
+    <Address key={`Address[${index}], ${address.addressLabel}`} {...{ address, index, count }} />
   );
 }
 
@@ -51,7 +51,11 @@ class ContactInformation extends React.Component {
             />
           </Col>
         </Row>
-        {addresses.map((address, i) => renderAddress(address, i + 1, addresses.length))}
+        {addresses.sort((a, b) => {
+          const addressA = a.addressLabel.toUpperCase();
+          const addressB = b.addressLabel.toUpperCase();
+          return (addressA < addressB) ? -1 : (addressA > addressB) ? 1 : 0;
+        }).map((address, i) => renderAddress(address, i + 1, addresses.length))}
       </Accordion>
     );
   }
