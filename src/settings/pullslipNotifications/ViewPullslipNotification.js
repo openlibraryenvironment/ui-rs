@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, IconButton, Row, Col, KeyValue } from '@folio/stripes/components';
-import raw2userData from './raw2userData';
+import { raw2userData } from './util';
 
 
 const dayname = {

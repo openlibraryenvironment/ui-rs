@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, MultiColumnList } from '@folio/stripes/components';
-import raw2userData from './raw2userData';
+import { raw2userData } from './util';
 
 
 class PullslipNotifications extends React.Component {
