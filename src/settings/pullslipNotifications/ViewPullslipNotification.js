@@ -70,14 +70,23 @@ class ViewPullslipNotification extends React.Component {
     // We do NOT want to wait till the DELETE has finished using
     // then(), otherwise we get an attempted re-render before we
     // navigate to the other page.
-    this.props.history.push('.');
+    this.props.history.push('../pullslip-notifications');
   }
 
-  renderActions(id) {
+  headerStart(record) {
     return (
       <>
-        <IconButton icon="edit" onClick={() => this.props.history.push(`${id}/edit`)} />
-        <IconButton icon="trash" onClick={(e) => this.handleDelete(e, id)} />
+        <IconButton icon="times" onClick={() => this.props.history.push('../pullslip-notifications')} />
+        <span>{record.name}</span>
+      </>
+    );
+  }
+
+  headerEnd(record) {
+    return (
+      <>
+        <IconButton icon="edit" onClick={() => this.props.history.push(`${record.id}/edit`)} />
+        <IconButton icon="trash" onClick={(e) => this.handleDelete(e, record.id)} />
       </>
     );
   }
@@ -95,8 +104,8 @@ class ViewPullslipNotification extends React.Component {
       <Pane defaultWidth="fill">
         <Card
           id="pullslip-notification"
-          headerStart={record.name}
-          headerEnd={this.renderActions(record.id)}
+          headerStart={this.headerStart(record)}
+          headerEnd={this.headerEnd(record)}
         >
           <Row>
             <Col xs={3}>
