@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane } from '@folio/stripes/components';
-import raw2userData from './raw2userData';
+import { raw2userData, user2rawData } from './util';
 
 
 class EditPullslipNotification extends React.Component {
@@ -33,14 +33,13 @@ class EditPullslipNotification extends React.Component {
     },
   };
 
-  onSubmit(values, maybeForm, completeFn) {
-    console.log('submit: values =', values);
-    console.log('submit: maybeForm =', maybeForm);
-    console.log('submit: completeFn =', completeFn);
+  validate = (_values) => {
+    // Nothing to do at this stage
+    // console.log('validate: values =', values);
   }
 
-  validate(values) {
-    console.log('validate: values =', values);
+  onSubmit = (values) => {
+    return this.props.mutator.editTimer.PUT(user2rawData(values));
   }
 
   render() {
