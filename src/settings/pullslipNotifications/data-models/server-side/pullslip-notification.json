@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "http://localhost:9130/rs/kiwt/config/schema/Timer",
+  "title": "Timer",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "taskCode": {
+      "type": "string"
+    },
+    "rrule": {
+      "type": "string",
+      "description": "See https://www.kanzaki.com/docs/ical/rrule.html"
+    },
+    "lastExecution": {
+      "type": "integer"
+    },
+    "taskConfig": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "lastExecution",
+    "taskCode",
+    "taskConfig",
+    "rrule"
+  ]
+}
