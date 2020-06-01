@@ -5,7 +5,8 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 import SettingPage from './SettingPage';
-import { CustomISO18626, PullslipNotifications, ViewPullslipNotification, EditPullslipNotification } from './settingsComponents';
+import { CustomISO18626 } from './settingsComponents';
+import { PullslipNotifications, ViewPullslipNotification, EditPullslipNotification } from './pullslipNotifications';
 
 
 function sortByLabelCaseInsensitive(a, b) {
