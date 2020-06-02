@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
-import { Pane } from '@folio/stripes/components';
+import { Pane, Card, Button } from '@folio/stripes/components';
 import { raw2userData, user2rawData } from './util';
 
 
@@ -39,7 +39,17 @@ class EditPullslipNotification extends React.Component {
   }
 
   onSubmit = (values) => {
+    console.log('onSubmit: values =', values);
     return this.props.mutator.editTimer.PUT(user2rawData(values));
+  }
+
+  headerEnd(record, handleSubmit) {
+    return (
+      <>
+        <Button bottomMargin0 buttonStyle="primary" onClick={handleSubmit}>Save</Button>
+        <Button bottomMargin0 onClick={() => this.props.history.push(`../${record.id}`)}>Cancel</Button>
+      </>
+    );
   }
 
   render() {
@@ -54,13 +64,18 @@ class EditPullslipNotification extends React.Component {
           validate={this.validate}
           initialValues={record}
           render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="name">Name</label>
-                <Field id="name" name="name" component="input" placeholder="Name of report" />
-              </div>
-              <button type="submit">Submit</button>
-            </form>
+            <Card
+              id="edit-pullslip-notification"
+              headerStart={record.name}
+              headerEnd={this.headerEnd(record, handleSubmit)}
+            >
+              <form onSubmit={handleSubmit}>
+                <div>
+                  <label htmlFor="name">Name</label>
+                  <Field id="name" name="name" component="input" placeholder="Name of report" />
+                </div>
+              </form>
+            </Card>
           )}
         />
 
