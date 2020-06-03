@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Prompt } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, Button } from '@folio/stripes/components';
@@ -39,7 +41,6 @@ class EditPullslipNotification extends React.Component {
   }
 
   onSubmit = (values) => {
-    console.log('onSubmit: values =', values);
     return this.props.mutator.editTimer.PUT(user2rawData(values))
       .then(() => this.props.history.push(`../${values.id}`));
   }
@@ -64,7 +65,7 @@ class EditPullslipNotification extends React.Component {
           onSubmit={this.onSubmit}
           validate={this.validate}
           initialValues={record}
-          render={({ handleSubmit, pristine, submitting }) => (
+          render={({ handleSubmit, pristine, submitting, submitSucceeded }) => (
             <Card
               id="edit-pullslip-notification"
               headerStart={record.name}
@@ -76,6 +77,9 @@ class EditPullslipNotification extends React.Component {
                   <Field id="name" name="name" component="input" placeholder="Name of report" />
                 </div>
               </form>
+              <FormattedMessage id="ui-rs.confirmDirtyNavigate">
+                {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
+              </FormattedMessage>
             </Card>
           )}
         />
