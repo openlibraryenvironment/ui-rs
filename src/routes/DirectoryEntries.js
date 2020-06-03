@@ -44,6 +44,7 @@ class DirectoryEntries extends React.Component {
     custprops: {
       type: 'okapi',
       path: 'directory/custprops',
+      params: { perPage: '100' },
       shouldRefresh: () => false,
     },
     dirents: {
