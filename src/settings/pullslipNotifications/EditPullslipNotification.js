@@ -40,13 +40,14 @@ class EditPullslipNotification extends React.Component {
 
   onSubmit = (values) => {
     console.log('onSubmit: values =', values);
-    return this.props.mutator.editTimer.PUT(user2rawData(values));
+    return this.props.mutator.editTimer.PUT(user2rawData(values))
+      .then(() => this.props.history.push(`../${values.id}`));
   }
 
-  headerEnd(record, handleSubmit) {
+  headerEnd(record, handleSubmit, disableSave) {
     return (
       <>
-        <Button bottomMargin0 buttonStyle="primary" onClick={handleSubmit}>Save</Button>
+        <Button bottomMargin0 buttonStyle="primary" disabled={disableSave} onClick={handleSubmit}>Save</Button>
         <Button bottomMargin0 onClick={() => this.props.history.push(`../${record.id}`)}>Cancel</Button>
       </>
     );
@@ -63,11 +64,11 @@ class EditPullslipNotification extends React.Component {
           onSubmit={this.onSubmit}
           validate={this.validate}
           initialValues={record}
-          render={({ handleSubmit }) => (
+          render={({ handleSubmit, pristine, submitting }) => (
             <Card
               id="edit-pullslip-notification"
               headerStart={record.name}
-              headerEnd={this.headerEnd(record, handleSubmit)}
+              headerEnd={this.headerEnd(record, handleSubmit, pristine || submitting)}
             >
               <form onSubmit={handleSubmit}>
                 <div>
