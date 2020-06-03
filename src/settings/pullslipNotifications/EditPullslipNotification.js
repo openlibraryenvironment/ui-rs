@@ -4,7 +4,7 @@ import { Prompt } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
-import { Pane, Card, Button, Row, Col } from '@folio/stripes/components';
+import { Pane, Card, Button, Row, Col, TextField, Checkbox } from '@folio/stripes/components';
 import { raw2userData, user2rawData } from './util';
 
 
@@ -59,32 +59,80 @@ class EditPullslipNotification extends React.Component {
       <>
         <Row>
           <Col xs={12}>
-            Name
-            <Field name="name" component="input" placeholder="Name of report" />
+            <FormattedMessage id="ui-rs.pullslipNotification.name">
+              {placeholder => (
+                <Field
+                  name="name"
+                  component={TextField}
+                  label={placeholder}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
           </Col>
         </Row>
         <Row>
           <Col xs={3}>
-            Enabled
-            <Field name="status" component="checkbox" placeholder="Enabled?" />
+            <FormattedMessage id="ui-rs.pullslipNotification.status">
+              {placeholder => (
+                <Field
+                  name="status"
+                  component={Checkbox}
+                  label={placeholder}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
           </Col>
           <Col xs={3}>
-            Times
-            <Field name="times" component="input" placeholder="Times" />
+            <FormattedMessage id="ui-rs.pullslipNotification.times">
+              {placeholder => (
+                <Field
+                  name="times"
+                  component={TextField}
+                  label={placeholder}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
           </Col>
           <Col xs={6}>
-            Days
-            <Field name="days" component="input" placeholder="Days" />
+            <FormattedMessage id="ui-rs.pullslipNotification.days">
+              {placeholder => (
+                <Field
+                  name="days"
+                  component={TextField}
+                  label={placeholder}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
           </Col>
         </Row>
         <Row>
           <Col xs={6}>
-            Item locations
-            <Field name="locations" component="input" placeholder="Item locations" />
+            <FormattedMessage id="ui-rs.pullslipNotification.locations">
+              {placeholder => (
+                <Field
+                  name="locations"
+                  component={TextField}
+                  label={placeholder}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
           </Col>
           <Col xs={6}>
-            Recipient email addresses
-            <Field name="emailAddresses" component="input" placeholder="Email addresses" />
+            <FormattedMessage id="ui-rs.pullslipNotification.emailAddresses">
+              {placeholder => (
+                <Field
+                  name="emailAddresses"
+                  component={TextField}
+                  label={placeholder}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
           </Col>
         </Row>
       </>
