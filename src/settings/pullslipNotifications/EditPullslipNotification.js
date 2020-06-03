@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Prompt } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import arrayMutators from 'final-form-arrays';
 import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, Button, Row, Col, TextField, Checkbox } from '@folio/stripes/components';
 import { raw2userData, user2rawData } from './util';
+import ListOfTime from './ListOfTime';
 
 
 class EditPullslipNotification extends React.Component {
@@ -78,6 +80,7 @@ class EditPullslipNotification extends React.Component {
                 <Field
                   name="status"
                   component={Checkbox}
+                  type="checkbox"
                   label={placeholder}
                   placeholder={placeholder}
                 />
@@ -89,13 +92,14 @@ class EditPullslipNotification extends React.Component {
               {placeholder => (
                 <Field
                   name="times"
-                  component={TextField}
+                  component={ListOfTime}
                   label={placeholder}
                   placeholder={placeholder}
                 />
               )}
             </FormattedMessage>
           </Col>
+          {/*
           <Col xs={6}>
             <FormattedMessage id="ui-rs.pullslipNotification.days">
               {placeholder => (
@@ -108,8 +112,6 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
-        </Row>
-        <Row>
           <Col xs={6}>
             <FormattedMessage id="ui-rs.pullslipNotification.locations">
               {placeholder => (
@@ -134,6 +136,7 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
+          */}
         </Row>
       </>
     );
@@ -150,6 +153,7 @@ class EditPullslipNotification extends React.Component {
           onSubmit={this.onSubmit}
           validate={this.validate}
           initialValues={record}
+          mutators={{ ...arrayMutators }}
           render={({ handleSubmit, pristine, submitting, submitSucceeded }) => (
             <Card
               id="edit-pullslip-notification"
