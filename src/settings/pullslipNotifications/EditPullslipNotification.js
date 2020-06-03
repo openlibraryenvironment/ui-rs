@@ -4,7 +4,7 @@ import { Prompt } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
-import { Pane, Card, Button } from '@folio/stripes/components';
+import { Pane, Card, Button, Row, Col } from '@folio/stripes/components';
 import { raw2userData, user2rawData } from './util';
 
 
@@ -54,6 +54,43 @@ class EditPullslipNotification extends React.Component {
     );
   }
 
+  renderForm() {
+    return (
+      <>
+        <Row>
+          <Col xs={12}>
+            Name
+            <Field name="name" component="input" placeholder="Name of report" />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={3}>
+            Enabled
+            <Field name="status" component="checkbox" placeholder="Enabled?" />
+          </Col>
+          <Col xs={3}>
+            Times
+            <Field name="times" component="input" placeholder="Times" />
+          </Col>
+          <Col xs={6}>
+            Days
+            <Field name="days" component="input" placeholder="Days" />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            Item locations
+            <Field name="locations" component="input" placeholder="Item locations" />
+          </Col>
+          <Col xs={6}>
+            Recipient email addresses
+            <Field name="emailAddresses" component="input" placeholder="Email addresses" />
+          </Col>
+        </Row>
+      </>
+    );
+  }
+
   render() {
     const { editTimer } = this.props.resources;
     if (!editTimer || !editTimer.hasLoaded) return null;
@@ -72,10 +109,7 @@ class EditPullslipNotification extends React.Component {
               headerEnd={this.headerEnd(record, handleSubmit, pristine || submitting)}
             >
               <form onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="name">Name</label>
-                  <Field id="name" name="name" component="input" placeholder="Name of report" />
-                </div>
+                {this.renderForm()}
               </form>
               <FormattedMessage id="ui-rs.confirmDirtyNavigate">
                 {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
