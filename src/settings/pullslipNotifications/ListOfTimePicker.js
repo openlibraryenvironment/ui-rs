@@ -7,16 +7,18 @@ import { RepeatableField, Timepicker } from '@folio/stripes/components';
 
 class ListOfTimePicker extends React.Component {
   render() {
+    const { name, legend, addLabel, timeZone } = this.props;
+
     return (
       <FieldArray
-        addLabel="Add time"
-        legend="Times"
+        name={name}
+        legend={legend}
+        addLabel={addLabel}
         component={RepeatableField}
-        name="times"
         onAdd={fields => fields.push('')}
         renderField={field => (
           <Field
-            component={(props) => <Timepicker {...props} timeZone={this.props.timeZone} />}
+            component={(props) => <Timepicker {...props} timeZone={timeZone} />}
             name={field}
           />
         )}
@@ -26,6 +28,9 @@ class ListOfTimePicker extends React.Component {
 }
 
 ListOfTimePicker.propTypes = {
+  name: PropTypes.string.isRequired,
+  legend: PropTypes.string,
+  addLabel: PropTypes.string,
   timeZone: PropTypes.string,
 };
 

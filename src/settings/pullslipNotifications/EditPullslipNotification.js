@@ -10,7 +10,7 @@ import { raw2userData, user2rawData } from './util';
 import ListOfTimePicker from './ListOfTimePicker';
 
 
-const ListOfUTCTimePicker = (props) => <ListOfTimePicker {...props} timeZone="UTC" />;
+const ListOfConfiguredTimePicker = (props) => <ListOfTimePicker {...props} name="times" addLabel="Add time" timeZone="UTC" />;
 
 
 class EditPullslipNotification extends React.Component {
@@ -95,7 +95,7 @@ class EditPullslipNotification extends React.Component {
               {placeholder => (
                 <Field
                   name="times"
-                  component={ListOfUTCTimePicker}
+                  component={ListOfConfiguredTimePicker}
                   label={placeholder}
                   placeholder={placeholder}
                 />
