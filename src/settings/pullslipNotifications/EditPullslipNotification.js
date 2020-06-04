@@ -97,6 +97,18 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
+          <Col xs={6}>
+            <FormattedMessage id="ui-rs.pullslipNotification.days">
+              {placeholder => (
+                <Field
+                  name="days"
+                  component={TextField}
+                  label={placeholder}
+                  placeholder={placeholder}
+                />
+              )}
+            </FormattedMessage>
+          </Col>
           <Col xs={3}>
             <FormattedMessage id="ui-rs.pullslipNotification.times">
               {placeholder => (
@@ -110,18 +122,6 @@ class EditPullslipNotification extends React.Component {
             </FormattedMessage>
           </Col>
           {/*
-          <Col xs={6}>
-            <FormattedMessage id="ui-rs.pullslipNotification.days">
-              {placeholder => (
-                <Field
-                  name="days"
-                  component={TextField}
-                  label={placeholder}
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
-          </Col>
           <Col xs={6}>
             <FormattedMessage id="ui-rs.pullslipNotification.locations">
               {placeholder => (
