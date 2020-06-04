@@ -10,6 +10,9 @@ import { raw2userData, user2rawData } from './util';
 import ListOfTime from './ListOfTime';
 
 
+const ListOfUTCTime = (props) => <ListOfTime {...props} timeZone="UTC" />;
+
+
 class EditPullslipNotification extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
@@ -92,7 +95,7 @@ class EditPullslipNotification extends React.Component {
               {placeholder => (
                 <Field
                   name="times"
-                  component={ListOfTime}
+                  component={ListOfUTCTime}
                   label={placeholder}
                   placeholder={placeholder}
                 />
