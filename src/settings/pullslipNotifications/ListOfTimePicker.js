@@ -5,7 +5,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { RepeatableField, Timepicker } from '@folio/stripes/components';
 
 
-class ListOfTime extends React.Component {
+class ListOfTimePicker extends React.Component {
   render() {
     return (
       <FieldArray
@@ -25,8 +25,8 @@ class ListOfTime extends React.Component {
   }
 }
 
-ListOfTime.propTypes = {
+ListOfTimePicker.propTypes = {
   timeZone: PropTypes.string,
 };
 
-export default ListOfTime;
+export default ListOfTimePicker;

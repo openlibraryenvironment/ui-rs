@@ -7,10 +7,10 @@ import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, Button, Row, Col, TextField, Checkbox } from '@folio/stripes/components';
 import { raw2userData, user2rawData } from './util';
-import ListOfTime from './ListOfTime';
+import ListOfTimePicker from './ListOfTimePicker';
 
 
-const ListOfUTCTime = (props) => <ListOfTime {...props} timeZone="UTC" />;
+const ListOfUTCTimePicker = (props) => <ListOfTimePicker {...props} timeZone="UTC" />;
 
 
 class EditPullslipNotification extends React.Component {
@@ -95,7 +95,7 @@ class EditPullslipNotification extends React.Component {
               {placeholder => (
                 <Field
                   name="times"
-                  component={ListOfUTCTime}
+                  component={ListOfUTCTimePicker}
                   label={placeholder}
                   placeholder={placeholder}
                 />
