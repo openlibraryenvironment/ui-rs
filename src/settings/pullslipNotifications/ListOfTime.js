@@ -16,7 +16,7 @@ class ListOfTime extends React.Component {
         onAdd={fields => fields.push('')}
         renderField={field => (
           <Field
-            component={Timepicker}
+            component={(props) => <Timepicker {...props} timeZone="UTC" />}
             name={field}
           />
         )}
