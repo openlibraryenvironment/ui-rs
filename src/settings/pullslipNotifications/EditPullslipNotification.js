@@ -10,9 +10,6 @@ import { raw2userData, user2rawData } from './util';
 import ListOfTimePicker from './ListOfTimePicker';
 
 
-const ListOfConfiguredTimePicker = (props) => <ListOfTimePicker {...props} name="times" addLabel="Add time" timeZone="UTC" />;
-
-
 class EditPullslipNotification extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
@@ -39,6 +36,16 @@ class EditPullslipNotification extends React.Component {
       path: 'rs/timers/:{id}',
     },
   };
+
+  constructor(props) {
+    super(props);
+    this.ListOfConfiguredTimePicker = (props2) => <ListOfTimePicker
+      {...props2}
+      name="times"
+      addLabel={<FormattedMessage id="ui-rs.pullslipNotification.addTime" />}
+      timeZone="UTC"
+    />;
+  }
 
   validate = (_values) => {
     // Nothing to do at this stage
@@ -95,7 +102,7 @@ class EditPullslipNotification extends React.Component {
               {placeholder => (
                 <Field
                   name="times"
-                  component={ListOfConfiguredTimePicker}
+                  component={this.ListOfConfiguredTimePicker}
                   label={placeholder}
                   placeholder={placeholder}
                 />
