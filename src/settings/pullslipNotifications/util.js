@@ -15,7 +15,7 @@ export function raw2userData(raw) {
     name: raw.description,
     status: raw.enabled,
     times: rrule.options.byhour.map(t => `${`0${t}`.substr(-2)}:00:00`),
-    days: rrule.options.byweekday.map(w => dayNumber2String[w]),
+    days: rrule.options.byweekday.map(w => dayNumber2String[w]).join(','),
     locations,
     emailAddresses,
   };
@@ -26,7 +26,7 @@ export function user2rawData(values) {
   const { locations, emailAddresses } = values;
   const rrule = new RRule({
     freq: RRule.WEEKLY,
-    byweekday: values.days.map(s => dayString2Number[s]),
+    byweekday: values.days.split(',').map(s => dayString2Number[s]),
     byhour: values.times.map(t => t.replace(/0*([0-9]+):.*/, '$1')),
   });
 

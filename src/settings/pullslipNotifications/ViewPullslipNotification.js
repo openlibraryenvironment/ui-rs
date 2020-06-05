@@ -123,7 +123,7 @@ class ViewPullslipNotification extends React.Component {
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.pullslipNotification.days" />}
-                value={record.days.map(code => dayname[code]).join(', ')}
+                value={record.days.split(',').map(code => dayname[code]).join(', ')}
               />
             </Col>
           </Row>

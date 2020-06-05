@@ -61,7 +61,6 @@ class PullslipNotifications extends React.Component {
             emailAddresses: 400,
           }}
           formatter={{
-            days: r => r.days.join(', '),
             times: r => r.times.join(', '),
             locations: r => (r.locations || []).map(l => l.substr(0, 8)).join(', '),
             emailAddresses: r => r.emailAddresses.join(', '),
