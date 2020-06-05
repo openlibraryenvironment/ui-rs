@@ -8,6 +8,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, Button, Row, Col, TextField, Checkbox } from '@folio/stripes/components';
 import { raw2userData, user2rawData } from './util';
 import ListOfTimePicker from './ListOfTimePicker';
+import DaysOfWeek from './DaysOfWeek';
 
 
 class EditPullslipNotification extends React.Component {
@@ -102,7 +103,7 @@ class EditPullslipNotification extends React.Component {
               {placeholder => (
                 <Field
                   name="days"
-                  component={TextField}
+                  component={DaysOfWeek}
                   label={placeholder}
                   placeholder={placeholder}
                 />
