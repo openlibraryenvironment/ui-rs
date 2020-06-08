@@ -1,13 +1,17 @@
 .days button {
+    width: 30px;
+    height: 30px;
     font-weight: bold;
+    border-radius: 50%;
+    border: 2px solid #2b78e4;
 }
 
 .checked {
     color: white;
-    background: black;
+    background: #2b78e4;
 }
 
 .unchecked {
-    color: black;
-    background: lightgray;
+    color: #2b78e4;
+    background: white;
 }
