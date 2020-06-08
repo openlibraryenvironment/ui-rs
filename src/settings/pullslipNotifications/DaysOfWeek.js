@@ -53,9 +53,9 @@ const DaysOfWeek = (props) => {
       <div>
         {days.map(([code, display], i) => (
           <React.Fragment key={i}>
-            <span onClick={toggleDay} style={{ color: checked[code] ? 'green' : 'red' }}>
+            <button type="button" onClick={toggleDay} style={{ color: checked[code] ? 'green' : 'red' }}>
               {display}
-            </span>
+            </button>
             {' '}
           </React.Fragment>
         ))}
