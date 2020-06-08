@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Label } from '@folio/stripes/components';
+import css from './DaysOfWeek.css';
 
 // See https://final-form.org/docs/react-final-form/api/Field#custom-inputs
 // for the API that custom inputs for final-form must implement.
@@ -50,10 +51,10 @@ const DaysOfWeek = (props) => {
         </Label>
       )}
 
-      <div>
+      <div className={css.days}>
         {days.map(([code, display], i) => (
           <React.Fragment key={i}>
-            <button type="button" onClick={toggleDay} style={{ color: checked[code] ? 'green' : 'red' }}>
+            <button type="button" onClick={toggleDay} className={checked[code] ? css.checked : css.unchecked}>
               {display}
             </button>
             {' '}

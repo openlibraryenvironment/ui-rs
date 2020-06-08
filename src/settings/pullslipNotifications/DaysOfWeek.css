@@ -1,0 +1,13 @@
+.days button {
+    font-weight: bold;
+}
+
+.checked {
+    color: white;
+    background: black;
+}
+
+.unchecked {
+    color: black;
+    background: lightgray;
+}
