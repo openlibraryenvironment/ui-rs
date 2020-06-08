@@ -54,7 +54,12 @@ const DaysOfWeek = (props) => {
       <div className={css.days}>
         {days.map(([code, display], i) => (
           <React.Fragment key={i}>
-            <button type="button" onClick={toggleDay} className={checked[code] ? css.checked : css.unchecked}>
+            <button
+              type="button"
+              onClick={toggleDay}
+              aria-pressed={checked[code]}
+              className={checked[code] ? css.checked : css.unchecked}
+            >
               {display}
             </button>
             {' '}
