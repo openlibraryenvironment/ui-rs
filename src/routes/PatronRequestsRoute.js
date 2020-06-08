@@ -481,9 +481,8 @@ class PatronRequestsRoute extends React.Component {
             id: a => a.hrid,
             flags: a => {
               const flags = [];
-              const unseen = a?.notifications?.filter(note => (note.isSender === false && note.seen === false));
               if (a?.state?.needsAttention) flags.push(<Icon icon="exclamation-circle" aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' })} />);
-              if (unseen.length > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.flags.unread' })}>{unseen.length}</Badge>);
+              if (a?.unreadMessageCount > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.flags.unread' })}>{a.unreadMessageCount}</Badge>);
               return <>{flags}</>;
             },
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
