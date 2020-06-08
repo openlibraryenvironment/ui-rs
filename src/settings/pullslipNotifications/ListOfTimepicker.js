@@ -10,7 +10,7 @@ const unused__TextboxOfTypeNumber = (p2) => {
   return <input type="number" size="3" min="0" max="23" pattern="[0-9]*" {...input} />;
 };
 
-const ListOfTimePicker = (props) => <FieldArray
+const ListOfTimepicker = (props) => <FieldArray
   name={props.name}
   legend={props.legend}
   addLabel={props.addLabel}
@@ -24,7 +24,7 @@ const ListOfTimePicker = (props) => <FieldArray
   )}
 />;
 
-ListOfTimePicker.propTypes = {
+ListOfTimepicker.propTypes = {
   name: PropTypes.string.isRequired,
   legend: PropTypes.string,
   addLabel: PropTypes.oneOfType([
@@ -34,4 +34,4 @@ ListOfTimePicker.propTypes = {
   timeZone: PropTypes.string,
 };
 
-export default ListOfTimePicker;
+export default ListOfTimepicker;

@@ -7,7 +7,7 @@ import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, Button, Row, Col, TextField, Checkbox } from '@folio/stripes/components';
 import { raw2userData, user2rawData } from './util';
-import ListOfTimePicker from './ListOfTimePicker';
+import ListOfTimepicker from './ListOfTimepicker';
 import DaysOfWeek from './DaysOfWeek';
 
 
@@ -40,7 +40,7 @@ class EditPullslipNotification extends React.Component {
 
   constructor(props) {
     super(props);
-    this.ListOfConfiguredTimePicker = (props2) => <ListOfTimePicker
+    this.ListOfConfiguredTimepicker = (props2) => <ListOfTimepicker
       {...props2}
       name="times"
       addLabel={<FormattedMessage id="ui-rs.pullslipNotification.addTime" />}
@@ -115,7 +115,7 @@ class EditPullslipNotification extends React.Component {
               {placeholder => (
                 <Field
                   name="times"
-                  component={this.ListOfConfiguredTimePicker}
+                  component={this.ListOfConfiguredTimepicker}
                   label={placeholder}
                   placeholder={placeholder}
                 />
