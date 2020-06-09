@@ -87,6 +87,9 @@ class PatronRequestsRoute extends React.Component {
       path: 'rs/patronrequests',
       params: generateQueryParams({
         searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,selectedItemBarcode',
+        // Omitting the date and unread filter keys here causes it to include their value verbatim
+        // rather than adding the key name and operator. This way we can store the operator and field
+        // in the value eg. how the hasUnread checkbox sets a value of 'unreadMessageCount>0'.
         filterKeys: {
           'r': 'isRequester',
           'needsAttention': 'state.needsAttention',
@@ -371,6 +374,7 @@ class PatronRequestsRoute extends React.Component {
       .sort(compareLabel);
 
     const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })];
+    // see comment in manifest for explanation of value
     const hasUnread = [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })];
 
     return this.renderFiltersFromData({
