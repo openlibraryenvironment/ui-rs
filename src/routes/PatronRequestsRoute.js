@@ -231,6 +231,7 @@ class PatronRequestsRoute extends React.Component {
       state: byName.state || [],
       institution: byName[institutionFilterId] || [],
       needsAttention: byName.needsAttention || [],
+      hasUnread: byName.hasUnread || [],
     };
 
     const setFilterState = (group) => {
@@ -271,6 +272,22 @@ class PatronRequestsRoute extends React.Component {
             name="needsAttention"
             dataOptions={options.needsAttention}
             selectedValues={values.needsAttention}
+            onChange={setFilterState}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-rs.unread" />}
+          id="hasUnread"
+          name="hasUnread"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={values.state.length > 0}
+          onClearFilter={() => clearGroup('hasUnread')}
+        >
+          <CheckboxFilter
+            name="hasUnread"
+            dataOptions={options.hasUnread}
+            selectedValues={values.hasUnread}
             onChange={setFilterState}
           />
         </Accordion>
@@ -374,11 +391,13 @@ class PatronRequestsRoute extends React.Component {
       .sort(compareLabel);
 
     const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.yes' }), value: 'true' })];
+    const hasUnread = [({ label: intl.formatMessage({ id: 'ui-rs.yes' }), value: 'unreadMessageCount>0' })];
 
     return this.renderFiltersFromData({
       state: this.states,
       institution: institutions,
       needsAttention,
+      hasUnread
     });
   };
 
@@ -482,7 +501,7 @@ class PatronRequestsRoute extends React.Component {
             flags: a => {
               const flags = [];
               if (a?.state?.needsAttention) flags.push(<Icon icon="exclamation-circle" aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' })} />);
-              if (a?.unreadMessageCount > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.flags.unread' })}>{a.unreadMessageCount}</Badge>);
+              if (a?.unreadMessageCount > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.unread' })}>{a.unreadMessageCount}</Badge>);
               return <>{flags}</>;
             },
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),

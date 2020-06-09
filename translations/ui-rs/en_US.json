@@ -295,7 +295,7 @@
   "filter.dateSubmitted": "Date created",
   "filter.dateNeeded": "Date needed",
 
-  "flags.unread": "Unread messages",
+  "unread": "Unread messages",
   "needsAttention": "Needs attention",
 
   "index.allFields": "All fields",
