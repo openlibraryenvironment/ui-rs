@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Prompt } from 'react-router-dom';
+import { Link, Prompt } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import arrayMutators from 'final-form-arrays';
 import { Form, Field } from 'react-final-form';
@@ -55,14 +55,16 @@ class EditPullslipNotification extends React.Component {
 
   onSubmit = (values) => {
     return this.props.mutator.editTimer.PUT(user2rawData(values))
-      .then(() => this.props.history.push(`../${values.id}`));
+      .then(() => this.props.history.push(`/settings/rs/pullslip-notifications/${values.id}`));
   }
 
   headerEnd(record, handleSubmit, disableSave) {
     return (
       <>
         <Button bottomMargin0 buttonStyle="primary" disabled={disableSave} onClick={handleSubmit}>Save</Button>
-        <Button bottomMargin0 onClick={() => this.props.history.push(`../${record.id}`)}>Cancel</Button>
+        <Link to={`/settings/rs/pullslip-notifications/${record.id}`}>
+          <Button bottomMargin0>Cancel</Button>
+        </Link>
       </>
     );
   }

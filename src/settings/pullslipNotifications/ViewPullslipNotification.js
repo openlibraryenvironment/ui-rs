@@ -83,10 +83,13 @@ class ViewPullslipNotification extends React.Component {
   }
 
   headerEnd(record) {
+    const topLevelEdit = `/supply/pullslip-notifications/${record.id}/edit`;
+
     return (
       <>
-        <IconButton icon="edit" onClick={() => this.props.history.push(`${record.id}/edit`)} />
-        <IconButton icon="trash" onClick={(e) => this.handleDelete(e, record.id)} />
+        <IconButton icon="edit" title="Edit in place" onClick={() => this.props.history.push(`${record.id}/edit`)} />
+        <IconButton icon="search" title="Edit full screen" onClick={() => this.props.history.push(topLevelEdit)} />
+        <IconButton icon="trash" title="Delete" onClick={(e) => this.handleDelete(e, record.id)} />
       </>
     );
   }

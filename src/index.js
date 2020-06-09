@@ -5,6 +5,7 @@ import PatronRequestsRoute from './routes/PatronRequestsRoute';
 import CreateEditRoute from './routes/CreateEditRoute';
 import ViewRoute from './routes/ViewRoute';
 import PullSlipRoute from './routes/PullSlipRoute';
+import { EditPullslipNotification } from './settings/pullslipNotifications';
 import Settings from './settings';
 import AppNameContext from './AppNameContext';
 
@@ -61,6 +62,7 @@ class ResourceSharing extends React.Component {
             path={`${path}/requests/:action?`}
             render={(props) => <PatronRequestsRoute {...props} appName={appName} />}
           />
+          <Route path={`${path}/pullslip-notifications/:id/edit`} component={EditPullslipNotification} />
         </Switch>
       </AppNameContext.Provider>
     );
