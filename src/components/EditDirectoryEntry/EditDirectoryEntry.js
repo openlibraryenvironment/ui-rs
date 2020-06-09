@@ -18,6 +18,7 @@ import pluginGeneric from '@folio/address-plugin-generic';
 import pluginGBR from '@folio/address-plugin-british-isles';
 
 import permissionToEdit from '../../util/permissionToEdit';
+import getRefdataValuesFromParentResources from '../../util/getRefdataValuesFromParentResources';
 import DirectoryEntryForm from '../DirectoryEntryForm';
 
 const defaultSubmit = (directory, dispatch, props) => {
@@ -126,6 +127,28 @@ class EditDirectoryEntry extends React.Component {
   render() {
     const { initialValues, onSubmit, stripes } = this.props;
 
+
+    // Grab current layer
+    const layer = this.getCurrentLayer();
+    let paneTitle = <FormattedMessage id="ui-directory.notSet" />;
+    switch (layer) {
+      case 'edit':
+        if (initialValues && initialValues.id) {
+          paneTitle = <FormattedMessage id="ui-directory.updateDirectoryEntry" values={{ dirent: initialValues.name }} />;
+        } else {
+          paneTitle = <FormattedMessage id="ui-directory.updateDirectoryEntryNoName" />;
+        }
+        break;
+      case 'unit':
+        paneTitle = <FormattedMessage id="ui-directory.createUnitDirectoryEntry" />;
+        break;
+      case 'create':
+        paneTitle = <FormattedMessage id="ui-directory.createDirectoryEntry" />;
+        break;
+      default:
+        break;
+    }
+
     if (!permissionToEdit(stripes, initialValues)) {
       // Users should never see this message, so no need to internationalize
       return 'no perm';
@@ -144,6 +167,14 @@ class EditDirectoryEntry extends React.Component {
     const compatSubmit = values => {
       // Not submitting values itself because then on failure data changes shape
       const submitValues = { ...values };
+
+      // When creating a NEW entry we want to set status to managed, but when editing an existing one we want to leave alone
+      if (layer === 'create' || layer === 'unit') {
+        // When creating a root or new entry, the layer is "create" or "unit", else layer is "edit"
+        const managedStatus = getRefdataValuesFromParentResources(this.props.parentResources, 'DirectoryEntry.Status')
+          .filter(obj => obj.label === 'Managed')[0] || {};
+        submitValues.status = managedStatus.value;
+      }
 
       if (values.parent) {
         submitValues.parent = { id: values.parent };
@@ -173,26 +204,6 @@ class EditDirectoryEntry extends React.Component {
       }
       onSubmit(submitValues, null, this.props);
     };
-
-    const layer = this.getCurrentLayer();
-    let paneTitle = <FormattedMessage id="ui-directory.notSet" />;
-    switch (layer) {
-      case 'edit':
-        if (initialValues && initialValues.id) {
-          paneTitle = <FormattedMessage id="ui-directory.updateDirectoryEntry" values={{ dirent: initialValues.name }} />;
-        } else {
-          paneTitle = <FormattedMessage id="ui-directory.updateDirectoryEntryNoName" />;
-        }
-        break;
-      case 'unit':
-        paneTitle = <FormattedMessage id="ui-directory.createUnitDirectoryEntry" />;
-        break;
-      case 'create':
-        paneTitle = <FormattedMessage id="ui-directory.createDirectoryEntry" />;
-        break;
-      default:
-        break;
-    }
 
     return (
       <Form

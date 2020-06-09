@@ -17,6 +17,7 @@ import {
 import { SymbolListField } from '../components';
 
 import { required } from '../../../util/validators';
+import getRefdataValuesFromParentResources from '../../../util/getRefdataValuesFromParentResources';
 
 class DirectoryEntryFormInfo extends React.Component {
   static propTypes = {
@@ -70,19 +71,13 @@ class DirectoryEntryFormInfo extends React.Component {
     return layer;
   }
 
-  getRefdataValuesFromParentResources(refdataCat) {
-    const { parentResources : { refdata } } = this.props;
-    return refdata?.records?.filter(obj => obj.desc === refdataCat)[0]?.values?.map(obj => ({ value: obj.id, label: obj.label })) || [];
-  }
-
   render() {
     const { directoryEntryValues, selectedParent, warning } = this.state;
     const { values } = this.props;
     const layer = this.getCurrentLayer();
     const namingAuthorities = this.props?.parentResources?.namingAuthorities?.records.map(obj => ({ value: obj.id, label: obj.symbol }));
 
-    const directoryEntryTypes = this.getRefdataValuesFromParentResources('DirectoryEntry.Type');
-    const directoryEntryControl = this.getRefdataValuesFromParentResources('DirectoryEntry.Status');
+    const directoryEntryTypes = getRefdataValuesFromParentResources(this.props.parentResources, 'DirectoryEntry.Type');
     return (
       <Accordion
         id={this.props.id}
@@ -189,15 +184,6 @@ class DirectoryEntryFormInfo extends React.Component {
                 name="lmsLocationCode"
                 component={TextField}
                 label={<FormattedMessage id="ui-directory.information.lmsLocationCode" />}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                id="edit-directory-entry-control"
-                name="status"
-                component={Select}
-                dataOptions={[{ value: '', label: '', disabled: true }, ...directoryEntryControl]}
-                label={<FormattedMessage id="ui-directory.information.control" />}
               />
             </Col>
           </Row>
