@@ -263,6 +263,7 @@
   "settingsSection.autoResponder": "Auto responder settings",
   "settingsSection.chat": "Chat settings",
   "settingsSection.iso18626": "Custom ISO18626 settings",
+  "settingsSection.pullslipNotifications": "Pullslip notifications",
 
   "settingName.settingLoading": "Setting Name Loading",
   "settingName.sharedIndexBaseUrl": "Shared index base url",
@@ -308,6 +309,14 @@
   "index.issn": "ISSN",
   "index.isbn": "ISBN",
   "index.itemBarcode": "Item barcode",
+
+  "pullslipNotification.status": "Status",
+  "pullslipNotification.name": "Name",
+  "pullslipNotification.days": "Days",
+  "pullslipNotification.times": "Times",
+  "pullslipNotification.locations": "Locations",
+  "pullslipNotification.emailAddresses": "Email addresses",
+  "pullslipNotification.addTime": "Add time",
 
   "SENTINEL": "SENTINEL"
 }

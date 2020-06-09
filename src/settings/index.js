@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Route from 'react-router-dom/Route';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 import SettingPage from './SettingPage';
 import { CustomISO18626 } from './settingsComponents';
+import { PullslipNotifications, ViewPullslipNotification, EditPullslipNotification } from './pullslipNotifications';
 
 
 function sortByLabelCaseInsensitive(a, b) {
@@ -34,6 +36,9 @@ class ResourceSharingSettings extends React.Component {
     intl: PropTypes.shape({
       formatMessage: PropTypes.func.isRequired,
     }).isRequired,
+    match: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+    }).isRequired,
   };
 
   persistentPages = [
@@ -41,7 +46,12 @@ class ResourceSharingSettings extends React.Component {
       route: 'CustomISO18626Settings',
       id: 'iso18626',
       component: CustomISO18626
-    }
+    },
+    {
+      route: 'pullslip-notifications',
+      id: 'pullslipNotifications',
+      component: PullslipNotifications,
+    },
   ];
 
   pageList() {
@@ -67,6 +77,20 @@ class ResourceSharingSettings extends React.Component {
 
   render() {
     const pageList = this.pageList();
+    const { match } = this.props;
+
+    const additionalRoutes = [
+      <Route
+        key="pullslip-notifications/:id/edit"
+        path={`${match.path}/pullslip-notifications/:id/edit`}
+        component={EditPullslipNotification}
+      />,
+      <Route
+        key="pullslip-notifications/:id"
+        path={`${match.path}/pullslip-notifications/:id`}
+        component={ViewPullslipNotification}
+      />
+    ];
 
     // XXX DO NOT REMOVE THE NEXT LINE. For reasons we do not
     // understand, if once this code renders an empty set of pages, it
@@ -74,7 +98,12 @@ class ResourceSharingSettings extends React.Component {
     // apparently unnecessary check prevents that.
     if (pageList.length === 0) return null;
 
-    return <Settings {...this.props} pages={pageList} paneTitle={<FormattedMessage id="ui-rs.meta.title" />} />;
+    return <Settings
+      paneTitle={<FormattedMessage id="ui-rs.meta.title" />}
+      {...this.props}
+      pages={pageList}
+      additionalRoutes={additionalRoutes}
+    />;
   }
 }
 

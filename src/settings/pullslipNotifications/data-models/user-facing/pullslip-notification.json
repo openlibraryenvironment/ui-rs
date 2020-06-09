@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "A notification schedule for pull-slips associated with locations",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 36,
+      "description": "The UUID of this schedule"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 80,
+      "description": "Human-readable name for this schedule"
+    },
+    "status": {
+      "type": "boolean",
+      "description": "Whether the notification is active"
+    },
+    "times": {
+      "type": "array",
+      "description": "The times at which notifications are sent, in 24h format",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9][0-9]:[0-9][0-9](:[0-9][0-9])?$",
+        "description": "A time at which notifications are sent, in 24h format"
+      }
+    },
+    "days": {
+      "type": "array",
+      "description": "Set of days on which the notification is sent",
+      "items": {
+        "type": "string",
+        "enum": ["M", "Tu", "W", "Th", "F", "Sa", "Su"],
+        "description": "Must be one of: M,Tu,W,Th,F,Sa,Su"
+      }
+    },
+    "locations": {
+      "type": "array",
+      "description": "The locations in which pending pull-slips are sought",
+      "items": {
+        "type": "string",
+        "maxLength": 36,
+        "description": "The UUID of a pickup location in the directory"
+      }
+    },
+    "emailAddresses": {
+      "type": "array",
+      "description": "The addresses to which notifications emails are sent",
+      "items": {
+        "type": "string",
+        "format": "email",
+        "pattern": "^[a-z0-9]+@[a-z0-9]+\\.[a-z0-9.]+$",
+        "description": "Must be a valid email address"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "times",
+    "days",
+    "emailAddresses"
+  ]
+}
