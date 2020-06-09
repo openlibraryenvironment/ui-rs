@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import arrayMutators from 'final-form-arrays';
 import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes/core';
-import { Pane, Card, Button, Row, Col, TextField, Checkbox } from '@folio/stripes/components';
+import { Pane, Card, Button, Row, Col, TextField, Checkbox, Accordion } from '@folio/stripes/components';
 import { raw2userData, user2rawData } from './util';
 import ListOfTimepicker from './ListOfTimepicker';
 import DaysOfWeek from './DaysOfWeek';
@@ -181,10 +181,11 @@ class EditPullslipNotification extends React.Component {
           )}
         />
 
-        <hr />
-        <pre>
-          {JSON.stringify(record, null, 2)}
-        </pre>
+        <Accordion closedByDefault label={<FormattedMessage id="ui-rs.information.heading.developer" />}>
+          <pre>
+            {JSON.stringify(record, null, 2)}
+          </pre>
+        </Accordion>
       </Pane>
     );
   }
