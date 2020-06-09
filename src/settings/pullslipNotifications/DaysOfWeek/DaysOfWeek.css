@@ -9,6 +9,8 @@
 .checked {
     color: white;
     background: #2b78e4;
+    text-decoration: underline;
+    text-decoration-thickness: 20%;
 }
 
 .unchecked {
