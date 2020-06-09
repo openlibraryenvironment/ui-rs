@@ -462,7 +462,6 @@ class PatronRequestsRoute extends React.Component {
             ...mutator,
             records: mutator.patronrequests,
           }}
-          showSingleResult
           visibleColumns={visibleColumns}
           columnMapping={{
             id: <FormattedMessage id="ui-rs.patronrequests.id" />,
