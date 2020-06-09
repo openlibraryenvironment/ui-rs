@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, IconButton, Row, Col, KeyValue } from '@folio/stripes/components';
@@ -76,19 +77,23 @@ class ViewPullslipNotification extends React.Component {
   headerStart(record) {
     return (
       <>
-        <IconButton icon="times" onClick={() => this.props.history.push('../pullslip-notifications')} />
+        <Link to="../pullslip-notifications">
+          <IconButton icon="times" />
+        </Link>
         <span>{record.name}</span>
       </>
     );
   }
 
   headerEnd(record) {
-    const topLevelEdit = `/supply/pullslip-notifications/${record.id}/edit`;
-
     return (
       <>
-        <IconButton icon="edit" title="Edit in place" onClick={() => this.props.history.push(`${record.id}/edit`)} />
-        <IconButton icon="search" title="Edit full screen" onClick={() => this.props.history.push(topLevelEdit)} />
+        <Link to={`${record.id}/edit`}>
+          <IconButton icon="edit" title="Edit in place" />
+        </Link>
+        <Link to={`/supply/pullslip-notifications/${record.id}/edit`}>
+          <IconButton icon="search" title="Edit full screen" />
+        </Link>
         <IconButton icon="trash" title="Delete" onClick={(e) => this.handleDelete(e, record.id)} />
       </>
     );
