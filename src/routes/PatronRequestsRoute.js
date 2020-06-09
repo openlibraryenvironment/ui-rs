@@ -259,38 +259,18 @@ class PatronRequestsRoute extends React.Component {
 
     return (
       <React.Fragment>
-        <Accordion
-          label={<FormattedMessage id="ui-rs.needsAttention" />}
-          id="needsAttention"
+        <CheckboxFilter
           name="needsAttention"
-          separator={false}
-          header={FilterAccordionHeader}
-          displayClearButton={values.state.length > 0}
-          onClearFilter={() => clearGroup('needsAttention')}
-        >
-          <CheckboxFilter
-            name="needsAttention"
-            dataOptions={options.needsAttention}
-            selectedValues={values.needsAttention}
-            onChange={setFilterState}
-          />
-        </Accordion>
-        <Accordion
-          label={<FormattedMessage id="ui-rs.unread" />}
-          id="hasUnread"
+          dataOptions={options.needsAttention}
+          selectedValues={values.needsAttention}
+          onChange={setFilterState}
+        />
+        <CheckboxFilter
           name="hasUnread"
-          separator={false}
-          header={FilterAccordionHeader}
-          displayClearButton={values.state.length > 0}
-          onClearFilter={() => clearGroup('hasUnread')}
-        >
-          <CheckboxFilter
-            name="hasUnread"
-            dataOptions={options.hasUnread}
-            selectedValues={values.hasUnread}
-            onChange={setFilterState}
-          />
-        </Accordion>
+          dataOptions={options.hasUnread}
+          selectedValues={values.hasUnread}
+          onChange={setFilterState}
+        />
         <Accordion
           label={<FormattedMessage id="ui-rs.filter.state" />}
           id="state"
@@ -390,8 +370,8 @@ class PatronRequestsRoute extends React.Component {
       .map(x => ({ label: x.name, value: x.id }))
       .sort(compareLabel);
 
-    const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.yes' }), value: 'true' })];
-    const hasUnread = [({ label: intl.formatMessage({ id: 'ui-rs.yes' }), value: 'unreadMessageCount>0' })];
+    const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })];
+    const hasUnread = [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })];
 
     return this.renderFiltersFromData({
       state: this.states,
