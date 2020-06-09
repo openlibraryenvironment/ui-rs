@@ -1,0 +1,10 @@
+To get from the user-oriented schema described in the parent directory
+to the schema implemented on the server:
+
+id -> id
+name -> description
+status -> enabled
+times, days -> rrule
+locations, email addresses -> encode as JSON and stash in taskConfig
+SET lastExecution = 0
+SET taskCode = "PrintPullSlips"
