@@ -100,7 +100,7 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
-          <Col xs={6}>
+          <Col xs={5}>
             <FormattedMessage id="ui-rs.pullslipNotification.days">
               {placeholder => (
                 <Field
@@ -112,7 +112,7 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
-          <Col xs={3}>
+          <Col xs={4}>
             <FormattedMessage id="ui-rs.pullslipNotification.times">
               {placeholder => (
                 <Field
