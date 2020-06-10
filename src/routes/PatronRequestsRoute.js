@@ -87,6 +87,9 @@ class PatronRequestsRoute extends React.Component {
       path: 'rs/patronrequests',
       params: generateQueryParams({
         searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,selectedItemBarcode',
+        // Omitting the date and unread filter keys here causes it to include their value verbatim
+        // rather than adding the key name and operator. This way we can store the operator and field
+        // in the value eg. how the hasUnread checkbox sets a value of 'unreadMessageCount>0'.
         filterKeys: {
           'r': 'isRequester',
           'needsAttention': 'state.needsAttention',
@@ -231,6 +234,7 @@ class PatronRequestsRoute extends React.Component {
       state: byName.state || [],
       institution: byName[institutionFilterId] || [],
       needsAttention: byName.needsAttention || [],
+      hasUnread: byName.hasUnread || [],
     };
 
     const setFilterState = (group) => {
@@ -258,22 +262,18 @@ class PatronRequestsRoute extends React.Component {
 
     return (
       <React.Fragment>
-        <Accordion
-          label={<FormattedMessage id="ui-rs.needsAttention" />}
-          id="needsAttention"
+        <CheckboxFilter
           name="needsAttention"
-          separator={false}
-          header={FilterAccordionHeader}
-          displayClearButton={values.state.length > 0}
-          onClearFilter={() => clearGroup('needsAttention')}
-        >
-          <CheckboxFilter
-            name="needsAttention"
-            dataOptions={options.needsAttention}
-            selectedValues={values.needsAttention}
-            onChange={setFilterState}
-          />
-        </Accordion>
+          dataOptions={options.needsAttention}
+          selectedValues={values.needsAttention}
+          onChange={setFilterState}
+        />
+        <CheckboxFilter
+          name="hasUnread"
+          dataOptions={options.hasUnread}
+          selectedValues={values.hasUnread}
+          onChange={setFilterState}
+        />
         <Accordion
           label={<FormattedMessage id="ui-rs.filter.state" />}
           id="state"
@@ -373,12 +373,15 @@ class PatronRequestsRoute extends React.Component {
       .map(x => ({ label: x.name, value: x.id }))
       .sort(compareLabel);
 
-    const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.yes' }), value: 'true' })];
+    const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })];
+    // see comment in manifest for explanation of value
+    const hasUnread = [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })];
 
     return this.renderFiltersFromData({
       state: this.states,
       institution: institutions,
       needsAttention,
+      hasUnread
     });
   };
 
@@ -443,7 +446,6 @@ class PatronRequestsRoute extends React.Component {
             ...mutator,
             records: mutator.patronrequests,
           }}
-          showSingleResult
           visibleColumns={visibleColumns}
           columnMapping={{
             id: <FormattedMessage id="ui-rs.patronrequests.id" />,
@@ -482,7 +484,7 @@ class PatronRequestsRoute extends React.Component {
             flags: a => {
               const flags = [];
               if (a?.state?.needsAttention) flags.push(<Icon icon="exclamation-circle" aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' })} />);
-              if (a?.unreadMessageCount > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.flags.unread' })}>{a.unreadMessageCount}</Badge>);
+              if (a?.unreadMessageCount > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.unread' })}>{a.unreadMessageCount}</Badge>);
               return <>{flags}</>;
             },
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
