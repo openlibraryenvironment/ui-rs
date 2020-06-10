@@ -29,6 +29,7 @@ const ListOfTimepicker = (props) => <FieldArray
 ListOfTimepicker.propTypes = {
   name: PropTypes.string.isRequired,
   legend: PropTypes.string,
+  label: PropTypes.string,
   addLabel: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
