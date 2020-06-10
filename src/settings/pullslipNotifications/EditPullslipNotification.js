@@ -130,7 +130,7 @@ class EditPullslipNotification extends React.Component {
                 <Field
                   name="times"
                   component={this.ListOfConfiguredTimepicker}
-                  label={placeholder}
+                  legend={placeholder}
                   placeholder={placeholder}
                 />
               )}
@@ -144,7 +144,7 @@ class EditPullslipNotification extends React.Component {
                 <Field
                   name="locations"
                   component={this.ListOfConfiguredLocation}
-                  label={placeholder}
+                  legend={placeholder}
                   placeholder={placeholder}
                 />
               )}
@@ -156,7 +156,7 @@ class EditPullslipNotification extends React.Component {
                 <Field
                   name="emailAddresses"
                   component={this.ListOfConfiguredEmailAddress}
-                  label={placeholder}
+                  legend={placeholder}
                   placeholder={placeholder}
                 />
               )}

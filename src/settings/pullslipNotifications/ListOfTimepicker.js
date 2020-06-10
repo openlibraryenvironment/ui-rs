@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
-import { RepeatableField, Timepicker, Label } from '@folio/stripes/components';
+import { RepeatableField, Timepicker } from '@folio/stripes/components';
 
 // eslint-disable-next-line camelcase, no-unused-vars
 const unused__TextboxOfTypeNumber = (p2) => {
@@ -13,8 +13,6 @@ const unused__TextboxOfTypeNumber = (p2) => {
 const ListOfTimepicker = (props) => <FieldArray
   name={props.name}
   legend={props.legend}
-  label={props.label}
-  headLabels={<Label id="authorLabel">{props.label}</Label>}
   addLabel={props.addLabel}
   component={RepeatableField}
   onAdd={fields => fields.push('')}
@@ -29,7 +27,6 @@ const ListOfTimepicker = (props) => <FieldArray
 ListOfTimepicker.propTypes = {
   name: PropTypes.string.isRequired,
   legend: PropTypes.string,
-  label: PropTypes.string,
   addLabel: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
