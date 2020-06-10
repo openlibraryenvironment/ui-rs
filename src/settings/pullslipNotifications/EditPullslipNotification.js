@@ -8,6 +8,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, Button, Row, Col, TextField, Checkbox, Accordion } from '@folio/stripes/components';
 import { raw2userData, user2rawData } from './util';
 import ListOfTimepicker from './ListOfTimepicker';
+import ListOfEmailAddress from './ListOfEmailAddress';
 import DaysOfWeek from './DaysOfWeek';
 
 
@@ -45,6 +46,11 @@ class EditPullslipNotification extends React.Component {
       name="times"
       addLabel={<FormattedMessage id="ui-rs.pullslipNotification.addTime" />}
       timeZone="UTC"
+    />;
+    this.ListOfConfiguredEmailAddress = (props2) => <ListOfEmailAddress
+      {...props2}
+      name="emailAddresses"
+      addLabel={<FormattedMessage id="ui-rs.pullslipNotification.addEmailAddress" />}
     />;
   }
 
@@ -124,8 +130,10 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
-          {/*
+        </Row>
+        <Row>
           <Col xs={6}>
+            {/*
             <FormattedMessage id="ui-rs.pullslipNotification.locations">
               {placeholder => (
                 <Field
@@ -136,20 +144,20 @@ class EditPullslipNotification extends React.Component {
                 />
               )}
             </FormattedMessage>
+            */}
           </Col>
           <Col xs={6}>
             <FormattedMessage id="ui-rs.pullslipNotification.emailAddresses">
               {placeholder => (
                 <Field
                   name="emailAddresses"
-                  component={TextField}
+                  component={this.ListOfConfiguredEmailAddress}
                   label={placeholder}
                   placeholder={placeholder}
                 />
               )}
             </FormattedMessage>
           </Col>
-          */}
         </Row>
       </>
     );
