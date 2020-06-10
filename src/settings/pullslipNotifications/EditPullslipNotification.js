@@ -9,6 +9,7 @@ import { Pane, Card, Button, Row, Col, TextField, Checkbox, Accordion } from '@f
 import { raw2userData, user2rawData } from './util';
 import ListOfTimepicker from './ListOfTimepicker';
 import ListOfEmailAddress from './ListOfEmailAddress';
+import ListOfLocation from './ListOfLocation';
 import DaysOfWeek from './DaysOfWeek';
 
 
@@ -51,6 +52,11 @@ class EditPullslipNotification extends React.Component {
       {...props2}
       name="emailAddresses"
       addLabel={<FormattedMessage id="ui-rs.pullslipNotification.addEmailAddress" />}
+    />;
+    this.ListOfConfiguredLocation = (props2) => <ListOfLocation
+      {...props2}
+      name="locations"
+      addLabel={<FormattedMessage id="ui-rs.pullslipNotification.addLocation" />}
     />;
   }
 
@@ -133,18 +139,16 @@ class EditPullslipNotification extends React.Component {
         </Row>
         <Row>
           <Col xs={6}>
-            {/*
             <FormattedMessage id="ui-rs.pullslipNotification.locations">
               {placeholder => (
                 <Field
                   name="locations"
-                  component={TextField}
+                  component={this.ListOfConfiguredLocation}
                   label={placeholder}
                   placeholder={placeholder}
                 />
               )}
             </FormattedMessage>
-            */}
           </Col>
           <Col xs={6}>
             <FormattedMessage id="ui-rs.pullslipNotification.emailAddresses">

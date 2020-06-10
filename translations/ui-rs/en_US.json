@@ -318,6 +318,7 @@
   "pullslipNotification.emailAddresses": "Email addresses",
   "pullslipNotification.addTime": "Add time",
   "pullslipNotification.addEmailAddress": "Add email address",
+  "pullslipNotification.addLocation": "Add location",
 
   "SENTINEL": "SENTINEL"
 }
