@@ -29,6 +29,7 @@ class PullslipNotifications extends React.Component {
       params: {
         perPage: '100',
         stats: 'true',
+        sort: 'description;asc',
       },
     },
   };
