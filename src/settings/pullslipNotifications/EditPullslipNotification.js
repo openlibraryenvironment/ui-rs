@@ -96,7 +96,7 @@ class EditPullslipNotification extends React.Component {
 
   renderForm() {
     const { lmsLocations } = this.props.resources;
-    // if (!lmsLocations.hasLoaded) return '...';
+    if (!lmsLocations.hasLoaded) return '...';
 
     return (
       <>
