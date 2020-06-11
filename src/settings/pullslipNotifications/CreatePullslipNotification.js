@@ -18,7 +18,7 @@ const CreatePullslipNotification = (props) => {
   };
 
   const onSubmit = (values) => {
-    return props.mutator.timers.POST(user2rawData(values))
+    return props.mutator.createTimers.POST(user2rawData(values))
       .then((newRecord) => {
         props.history.push(`/settings/rs/pullslip-notifications/${newRecord.id}`);
       });
@@ -44,7 +44,7 @@ CreatePullslipNotification.propTypes = {
     }),
   }).isRequired,
   mutator: PropTypes.shape({
-    timers: PropTypes.shape({
+    createTimers: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
@@ -54,7 +54,7 @@ CreatePullslipNotification.propTypes = {
 };
 
 CreatePullslipNotification.manifest = {
-  timers: {
+  createTimers: {
     type: 'okapi',
     path: 'rs/timers',
   },
