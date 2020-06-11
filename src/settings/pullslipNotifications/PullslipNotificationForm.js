@@ -4,9 +4,7 @@ import { Link, Prompt } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import arrayMutators from 'final-form-arrays';
 import { Form, Field } from 'react-final-form';
-import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, Button, Row, Col, TextField, Checkbox, Accordion } from '@folio/stripes/components';
-import { raw2userData, user2rawData } from './util';
 import ListOfTimepicker from './ListOfTimepicker';
 import ListOfEmailAddress from './ListOfEmailAddress';
 import ListOfLocation from './ListOfLocation';
@@ -15,42 +13,11 @@ import DaysOfWeek from './DaysOfWeek';
 
 class EditPullslipNotification extends React.Component {
   static propTypes = {
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      editTimer: PropTypes.shape({
-        hasLoaded: PropTypes.bool.isRequired,
-        records: PropTypes.arrayOf(
-          PropTypes.object.isRequired,
-        ),
-      }),
-      lmsLocations: PropTypes.shape({
-        hasLoaded: PropTypes.bool.isRequired,
-        records: PropTypes.arrayOf(
-          PropTypes.object.isRequired,
-        ),
-      }),
-    }).isRequired,
-    mutator: PropTypes.shape({
-      editTimer: PropTypes.shape({
-        PUT: PropTypes.func.isRequired,
-      }).isRequired,
-    }).isRequired,
-  };
-
-  static manifest = {
-    editTimer: {
-      type: 'okapi',
-      path: 'rs/timers/:{id}',
-    },
-    lmsLocations: {
-      type: 'okapi',
-      path: 'rs/hostLMSLocations',
-      params: {
-        perPage: '100',
-      }
-    },
+    record: PropTypes.object.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    lmsLocations: PropTypes.arrayOf(
+      PropTypes.object.isRequired,
+    ).isRequired,
   };
 
   constructor(props) {
@@ -73,16 +40,6 @@ class EditPullslipNotification extends React.Component {
     />;
   }
 
-  validate = (_values) => {
-    // Nothing to do at this stage
-    // console.log('validate: values =', values);
-  }
-
-  onSubmit = (values) => {
-    return this.props.mutator.editTimer.PUT(user2rawData(values))
-      .then(() => this.props.history.push(`/settings/rs/pullslip-notifications/${values.id}`));
-  }
-
   headerEnd(record, handleSubmit, disableSave) {
     return (
       <>
@@ -95,9 +52,6 @@ class EditPullslipNotification extends React.Component {
   }
 
   renderForm() {
-    const { lmsLocations } = this.props.resources;
-    if (!lmsLocations.hasLoaded) return '...';
-
     return (
       <>
         <Row>
@@ -162,7 +116,7 @@ class EditPullslipNotification extends React.Component {
                   component={this.ListOfConfiguredLocation}
                   legend={placeholder}
                   placeholder={placeholder}
-                  lmsLocations={lmsLocations.records}
+                  lmsLocations={this.props.lmsLocations}
                 />
               )}
             </FormattedMessage>
@@ -185,16 +139,13 @@ class EditPullslipNotification extends React.Component {
   }
 
   render() {
-    const { editTimer } = this.props.resources;
-    if (!editTimer || !editTimer.hasLoaded) return null;
-    const record = raw2userData(editTimer.records[0]);
+    const { record, onSubmit } = this.props;
 
     return (
       <Pane defaultWidth="fill">
         <Form
-          onSubmit={this.onSubmit}
-          validate={this.validate}
           initialValues={record}
+          onSubmit={onSubmit}
           mutators={{ ...arrayMutators }}
           render={({ handleSubmit, pristine, submitting, submitSucceeded }) => (
             <Card
@@ -222,4 +173,4 @@ class EditPullslipNotification extends React.Component {
   }
 }
 
-export default stripesConnect(EditPullslipNotification);
+export default EditPullslipNotification;
