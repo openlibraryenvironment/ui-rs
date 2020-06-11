@@ -18,10 +18,8 @@ const days = [
 
 const display2code = {};
 days.forEach(([code, display]) => { display2code[display] = code; });
-// console.log('display2code =', display2code);
 
 const DaysOfWeek = (props) => {
-  // console.log('props =', props);
   const { id, label, required, readOnly, input } = props;
   const { value, onChange } = input;
   const checked = {};
@@ -30,11 +28,9 @@ const DaysOfWeek = (props) => {
   const toggleDay = (e) => {
     const display = e.target.textContent;
     const code = display2code[display];
-    // console.log(` display='${display}', code='${code}'`);
 
     checked[code] = !checked[code];
     const newValue = days.filter(([c]) => checked[c]).map(([c]) => c);
-    // console.log('  newValue:', newValue);
     onChange(newValue);
   };
 
