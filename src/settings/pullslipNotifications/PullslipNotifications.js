@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
-import { Pane, MultiColumnList } from '@folio/stripes/components';
+import { Pane, MultiColumnList, Button } from '@folio/stripes/components';
 import { raw2userData } from './util';
 
 
@@ -40,7 +40,15 @@ class PullslipNotifications extends React.Component {
     const records = timers.records[0].results.map(raw2userData);
 
     return (
-      <Pane defaultWidth="fill">
+      <Pane
+        defaultWidth="fill"
+        paneTitle={<FormattedMessage id="ui-rs.settingsSection.pullslipNotifications" />}
+        lastMenu={(
+          <Button marginBottom0 buttonStyle="primary" to="pullslip-notifications/new">
+            New
+          </Button>
+        )}
+      >
         <MultiColumnList
           autosize
           contentData={records}

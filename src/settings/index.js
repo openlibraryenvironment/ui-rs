@@ -6,7 +6,9 @@ import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 import SettingPage from './SettingPage';
 import { CustomISO18626 } from './settingsComponents';
-import { PullslipNotifications, ViewPullslipNotification, EditPullslipNotification } from './pullslipNotifications';
+import {
+  PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
+} from './pullslipNotifications';
 
 
 function sortByLabelCaseInsensitive(a, b) {
@@ -80,6 +82,11 @@ class ResourceSharingSettings extends React.Component {
     const { match } = this.props;
 
     const additionalRoutes = [
+      <Route
+        key="pullslip-notifications/new"
+        path={`${match.path}/pullslip-notifications/new`}
+        component={CreatePullslipNotification}
+      />,
       <Route
         key="pullslip-notifications/:id/edit"
         path={`${match.path}/pullslip-notifications/:id/edit`}
