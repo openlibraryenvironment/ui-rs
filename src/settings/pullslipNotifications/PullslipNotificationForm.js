@@ -41,10 +41,11 @@ class EditPullslipNotification extends React.Component {
   }
 
   headerEnd(record, handleSubmit, disableSave) {
+    const suffix = record.id ? `/${record.id}` : '';
     return (
       <>
         <Button bottomMargin0 buttonStyle="primary" disabled={disableSave} onClick={handleSubmit}>Save</Button>
-        <Link to={`/settings/rs/pullslip-notifications/${record.id}`}>
+        <Link to={`/settings/rs/pullslip-notifications${suffix}`}>
           <Button bottomMargin0>Cancel</Button>
         </Link>
       </>
