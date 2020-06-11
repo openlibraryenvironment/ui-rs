@@ -14,7 +14,7 @@ const ListOfLocation = (props) => <FieldArray
     <Field
       name={field}
       component={Select}
-      dataOptions={props.lmsLocations.map(x => ({ value: x.id, label: x.name }))}
+      dataOptions={props.lmsLocations}
     />
   )}
 />;
@@ -28,8 +28,8 @@ ListOfLocation.propTypes = {
   ]),
   lmsLocations: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
 };

@@ -27,7 +27,7 @@ const CreatePullslipNotification = (props) => {
   return (
     <PullslipNotificationForm
       record={record}
-      lmsLocations={lmsLocations.records}
+      lmsLocations={lmsLocations.records.map(x => ({ value: x.id, label: x.name }))}
       onSubmit={onSubmit}
       {...props}
     />
