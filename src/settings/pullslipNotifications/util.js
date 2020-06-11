@@ -26,9 +26,12 @@ export function user2rawData(values) {
   const { locations, emailAddresses } = values;
   const rrule = new RRule({
     freq: RRule.WEEKLY,
-    byweekday: values.days.split(',').map(s => dayString2Number[s]),
     byhour: values.times.map(t => t.replace(/0*([0-9]+):.*/, '$1')),
   });
+
+  if (values.days) {
+    rrule.byweekday = values.days.split(',').map(s => dayString2Number[s]);
+  }
 
   return {
     id: values.id,
