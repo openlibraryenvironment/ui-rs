@@ -24,9 +24,8 @@ const DaysOfWeek = (props) => {
   // console.log('props =', props);
   const { id, label, required, readOnly, input } = props;
   const { value, onChange } = input;
-  const values = value.split(',');
   const checked = {};
-  values.forEach(v => { checked[v] = true; });
+  value.forEach(v => { checked[v] = true; });
 
   const toggleDay = (e) => {
     const display = e.target.textContent;
@@ -34,7 +33,7 @@ const DaysOfWeek = (props) => {
     // console.log(` display='${display}', code='${code}'`);
 
     checked[code] = !checked[code];
-    const newValue = days.filter(([c]) => checked[c]).map(([c]) => c).join(',');
+    const newValue = days.filter(([c]) => checked[c]).map(([c]) => c);
     // console.log('  newValue:', newValue);
     onChange(newValue);
   };
@@ -76,7 +75,9 @@ DaysOfWeek.propTypes = {
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   input: PropTypes.shape({
-    value: PropTypes.string.isRequired,
+    value: PropTypes.arrayOf(
+      PropTypes.string.isRequired,
+    ).isRequired,
     onChange: PropTypes.func.isRequired,
   }).isRequired,
 };

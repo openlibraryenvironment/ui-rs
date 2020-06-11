@@ -12,7 +12,7 @@ const CreatePullslipNotification = (props) => {
     status: true,
     name: '',
     times: [],
-    days: '',
+    days: [],
     locations: [],
     emailAddresses: [],
   };
