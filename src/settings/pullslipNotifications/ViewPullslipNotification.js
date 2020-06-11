@@ -29,28 +29,17 @@ class ViewPullslipNotification extends React.Component {
     }).isRequired,
     resources: PropTypes.shape({
       timer: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
         records: PropTypes.arrayOf(
-          PropTypes.shape({
-            specificRecord: PropTypes.shape({
-              id: PropTypes.string.isRequired,
-              name: PropTypes.string,
-              status: PropTypes.string,
-              times: PropTypes.arrayOf(
-                PropTypes.string.isRequired,
-              ).isRequired,
-              days: PropTypes.arrayOf(
-                PropTypes.string.isRequired,
-              ).isRequired,
-              locations: PropTypes.arrayOf(
-                PropTypes.string.isRequired,
-              ),
-              emailAddresses: PropTypes.arrayOf(
-                PropTypes.string.isRequired,
-              ).isRequired,
-            }),
-          }).isRequired,
+          PropTypes.object.isRequired,
         ),
-      })
+      }),
+      lmsLocations: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(
+          PropTypes.object.isRequired,
+        ),
+      }),
     }).isRequired,
     mutator: PropTypes.shape({
       timer: PropTypes.shape({
@@ -63,6 +52,13 @@ class ViewPullslipNotification extends React.Component {
     timer: {
       type: 'okapi',
       path: 'rs/timers/:{id}',
+    },
+    lmsLocations: {
+      type: 'okapi',
+      path: 'rs/hostLMSLocations',
+      params: {
+        perPage: '100',
+      }
     },
   };
 
@@ -100,8 +96,11 @@ class ViewPullslipNotification extends React.Component {
   }
 
   render() {
-    const timer = this.props.resources.timer;
-    if (!timer || !timer.hasLoaded) return null;
+    const { timer, lmsLocations } = this.props.resources;
+    if (!timer || !timer.hasLoaded || !lmsLocations || !lmsLocations.hasLoaded) return null;
+
+    const locationId2Name = {};
+    lmsLocations.records.forEach(x => { locationId2Name[x.id] = x.name; });
 
     const record = raw2userData(timer.records[0]);
     const formattedTimes = record.times
@@ -139,7 +138,7 @@ class ViewPullslipNotification extends React.Component {
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.pullslipNotification.locations" />}
-                value={(record.locations || []).map(l => l.substr(0, 8)).join(', ')}
+                value={(record.locations || []).map(l => locationId2Name[l]).join(', ')}
               />
             </Col>
             <Col xs={6}>

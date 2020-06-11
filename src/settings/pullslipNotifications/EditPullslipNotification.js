@@ -25,6 +25,12 @@ class EditPullslipNotification extends React.Component {
           PropTypes.object.isRequired,
         ),
       }),
+      lmsLocations: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(
+          PropTypes.object.isRequired,
+        ),
+      }),
     }).isRequired,
     mutator: PropTypes.shape({
       editTimer: PropTypes.shape({
@@ -37,6 +43,13 @@ class EditPullslipNotification extends React.Component {
     editTimer: {
       type: 'okapi',
       path: 'rs/timers/:{id}',
+    },
+    lmsLocations: {
+      type: 'okapi',
+      path: 'rs/hostLMSLocations',
+      params: {
+        perPage: '100',
+      }
     },
   };
 
@@ -82,6 +95,9 @@ class EditPullslipNotification extends React.Component {
   }
 
   renderForm() {
+    const { lmsLocations } = this.props.resources;
+    // if (!lmsLocations.hasLoaded) return '...';
+
     return (
       <>
         <Row>
@@ -146,6 +162,7 @@ class EditPullslipNotification extends React.Component {
                   component={this.ListOfConfiguredLocation}
                   legend={placeholder}
                   placeholder={placeholder}
+                  lmsLocations={lmsLocations.records}
                 />
               )}
             </FormattedMessage>

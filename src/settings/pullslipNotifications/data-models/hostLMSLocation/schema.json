@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "http://east-okapi.folio-dev.indexdata.com:8080/rs/kiwt/config/schema/HostLMSLocation",
+  "title": "Host LMSL ocation",
+  "type": "object",
+  "required": [
+    "code"
+  ],
+  "properties": {
+    "icalRrule": {
+      "type": "string",
+      "minLength": 0
+    },
+    "dateCreated": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 0
+    },
+    "lastCompleted": {
+      "type": "integer"
+    },
+    "lastUpdated": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 0
+    },
+    "version": {
+      "type": "integer"
+    }
+  }
+}
