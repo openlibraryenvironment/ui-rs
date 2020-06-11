@@ -19,6 +19,12 @@ class PullslipNotifications extends React.Component {
           PropTypes.object.isRequired,
         ),
       }),
+      lmsLocations: PropTypes.shape({
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(
+          PropTypes.object.isRequired,
+        ),
+      }),
     }).isRequired,
   };
 
@@ -32,11 +38,22 @@ class PullslipNotifications extends React.Component {
         sort: 'description;asc',
       },
     },
+    lmsLocations: {
+      type: 'okapi',
+      path: 'rs/hostLMSLocations',
+      params: {
+        perPage: '100',
+      }
+    },
   };
 
   render() {
-    const { timers } = this.props.resources;
-    if (!timers || !timers.hasLoaded) return null;
+    const { timers, lmsLocations } = this.props.resources;
+    if (!timers || !timers.hasLoaded || !lmsLocations || !lmsLocations.hasLoaded) return null;
+
+    const locationId2Name = {};
+    lmsLocations.records.forEach(x => { locationId2Name[x.id] = x.name; });
+
     const records = timers.records[0].results.map(raw2userData);
 
     return (
@@ -71,7 +88,7 @@ class PullslipNotifications extends React.Component {
           }}
           formatter={{
             times: r => r.times.join(', '),
-            locations: r => (r.locations || []).map(l => l.substr(0, 8)).join(', '),
+            locations: r => (r.locations || []).map(l => locationId2Name[l]).join(', '),
             emailAddresses: r => r.emailAddresses.join(', '),
           }}
           onRowClick={(_e, record) => this.props.history.push(`pullslip-notifications/${record.id}`)}
