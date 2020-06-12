@@ -17,6 +17,8 @@ import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
+import { required } from '../../util/validators';
+
 class ServiceField extends React.Component {
   static propTypes = {
     input: PropTypes.shape({
@@ -25,7 +27,7 @@ class ServiceField extends React.Component {
     meta: PropTypes.shape({
       initial: PropTypes.shape({
         id: PropTypes.string
-      }).isRequired,
+      }),
     }).isRequired,
     mutators: PropTypes.shape({
       setServiceValue: PropTypes.func.isRequired
@@ -79,6 +81,7 @@ class ServiceField extends React.Component {
 
   renderEditButton() {
     const { editing } = this.state;
+    const { meta } = this.props;
     const EditText = editing ? <FormattedMessage id="ui-directory.settings.services.finish-editing" /> :
     <FormattedMessage id="ui-directory.settings.services.edit" />;
 
@@ -91,6 +94,7 @@ class ServiceField extends React.Component {
             editing ? this.handleSave() : this.handleEdit()
           );
         }}
+        disabled={editing ? meta.pristine || meta.invalid : false}
         type={editing ? 'submit' : undefined}
       >
         {EditText}
@@ -163,6 +167,8 @@ class ServiceField extends React.Component {
                 component={Select}
                 dataOptions={types}
                 parse={v => v}
+                required
+                validate={required}
               /> : this.renderFieldValue(currentService?.type, typeLabel, 'types')
             }
           </Col>
@@ -174,6 +180,8 @@ class ServiceField extends React.Component {
                 component={Select}
                 dataOptions={functions}
                 parse={v => v}
+                required
+                validate={required}
               /> : this.renderFieldValue(currentService?.businessFunction, functionlabel, 'functions')
             }
           </Col>
@@ -186,6 +194,8 @@ class ServiceField extends React.Component {
                 label={addressLabel}
                 component={TextField}
                 parse={v => v}
+                required
+                validate={required}
               /> : this.renderFieldValue(currentService?.address, addressLabel)
             }
           </Col>

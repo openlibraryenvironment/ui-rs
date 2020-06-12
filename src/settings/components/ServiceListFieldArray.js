@@ -86,6 +86,11 @@ class ServiceListFieldArray extends React.Component {
                 types: (data?.types || [])[0]?.values?.map(obj => ({ value: obj.id, label: obj.label })) || []
               }}
               initialValues={this.props.initialValues}
+              // This `validate` appears stupid and like a no-op, but it's necessary because of the way
+              // that RFF decides whether to run validation: https://github.com/final-form/final-form/pull/267
+              // We want this Field to have validation info (meta.invalid) upon mount because some of the
+              // child Fields are required and they will run validation.
+              validate={() => {}}
             />
           );
         })}
