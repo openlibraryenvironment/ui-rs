@@ -29,15 +29,15 @@ plugins.forEach(plugin => {
 
 class AddressListFieldArray extends React.Component {
   static propTypes = {
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }).isRequired,
     items: PropTypes.arrayOf(PropTypes.shape({
       map: PropTypes.func,
     })),
     name: PropTypes.string,
     onAddField: PropTypes.func.isRequired,
-    onDeleteField: PropTypes.func.isRequired,
-    intl: PropTypes.shape({
-      formatMessage: PropTypes.func.isRequired,
-    }).isRequired,
+    onDeleteField: PropTypes.func.isRequired
   };
 
   renderAddAddress = () => {

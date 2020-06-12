@@ -22,6 +22,21 @@
 
   "settings.tags": "Tags",
   "settings.status": "Statuses",
+  "settings.services": "Services",
+
+  "settings.services.edit": "Edit",
+  "settings.services.finish-editing": "Save",
+  "settings.services.cancel": "Cancel",
+  "settings.services.delete": "Delete", 
+  "settings.services.new": "New",
+  "settings.services.delete.heading": "Delete Service",
+  "settings.services.delete.confirmMessage": "Service <strong>{name}</strong> will be <strong>deleted</strong>.",
+
+  "settings.services.callout.delete.error": "There was an error deleting service {name}: {error}",
+  "settings.services.callout.delete.success": "<strong>Service deleted:</strong> {name}",
+  "settings.services.callout.delete.serviceInUse": "Service <strong>{name}</strong> was not deleted because it is in use on one or more directory entries.",
+  "settings.services.callout.save.error": "There was an error saving service {name}: {error}",
+  "settings.services.callout.save.success": "<strong>Service saved:</strong> {name}",
 
   "objectName.tag": "Tag",
   "objectName.tags": "Tags",
@@ -84,11 +99,18 @@
   "information.addresses.postalCode": "Postal code",
   "information.heading.contactInformation": "Contact information",
   "information.addressNofM": "Address {index} of {count}",
-  "information.heading.services": "Services",
+  "information.heading.services": "Service accounts",
   "information.serviceNofM": "Service {index} of {count}",
   "information.serviceFunction": "Function",
   "information.serviceType": "Type",
   "information.serviceAddress": "Address",
+
+  "information.services.add": "Add service account",
+  "information.services.header": "Service account [{index}]",
+  "information.services.slug": "Slug",
+  "information.services.accountDetails": "Account details",
+  "information.services.service": "Service",
+  "information.services.deleteText": "Delete service account \"{slug}\"",
 
   "information.heading.directoryEntry": "Directory entry info",
   "information.heading.symbols": "Symbols",
