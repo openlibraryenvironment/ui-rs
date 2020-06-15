@@ -6,7 +6,8 @@ import {
   Accordion,
   Col,
   KeyValue,
-  Row,
+  NoValue,
+  Row
 } from '@folio/stripes/components';
 
 
@@ -66,7 +67,7 @@ class DirectoryEntryInfo extends React.Component {
           <Col xs={4}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.type" />}
-              value={record.type?.label || '-'}
+              value={record.type?.label || <NoValue />}
             />
           </Col>
           <Col xs={4}>

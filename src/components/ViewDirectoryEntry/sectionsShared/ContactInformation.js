@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, Col, KeyValue, Row } from '@folio/stripes/components';
+import { Accordion, Col, KeyValue, NoValue, Row } from '@folio/stripes/components';
 
 import { Address } from '../components';
 
@@ -35,19 +35,19 @@ class ContactInformation extends React.Component {
           <Col xs={4}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.mainPhoneNumber" />}
-              value={record.phoneNumber ? record.phoneNumber : '-'}
+              value={record.phoneNumber ? record.phoneNumber : <NoValue />}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.mainEmailAddress" />}
-              value={record.emailAddress ? record.emailAddress : '-'}
+              value={record.emailAddress ? record.emailAddress : <NoValue />}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
               label={<FormattedMessage id="ui-directory.information.mainContactName" />}
-              value={record.contactName ? record.contactName : '-'}
+              value={record.contactName ? record.contactName : <NoValue />}
             />
           </Col>
         </Row>

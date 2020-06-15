@@ -26,7 +26,7 @@ import EditDirectoryEntry from '../EditDirectoryEntry';
 import {
   DirectoryEntryInfo,
   ContactInformation,
-  Services,
+  ServiceAccounts,
   CustomProperties,
 } from './sectionsShared';
 
@@ -295,7 +295,7 @@ class ViewDirectoryEntry extends React.Component {
             <AccordionSet accordionStatus={this.state.sectionsShared}>
               <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
               <ContactInformation id="contactInformation" {...sectionProps} />
-              <Services id="services" {...sectionProps} />
+              <ServiceAccounts id="services" {...sectionProps} />
               <CustomProperties id="customProperties" {...sectionProps} />
               <Accordion
                 id="developerInfo"
