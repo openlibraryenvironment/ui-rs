@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
-import { Badge, Button, Icon, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
+import { Badge, Button, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
 import { SearchAndSort, withTags, CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { generateQueryParams } from '@folio/stripes-erm-components';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
@@ -482,10 +482,21 @@ class PatronRequestsRoute extends React.Component {
           resultsFormatter={{
             id: a => a.hrid,
             flags: a => {
-              const flags = [];
-              if (a?.state?.needsAttention) flags.push(<Icon icon="exclamation-circle" aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' })} />);
-              if (a?.unreadMessageCount > 0) flags.push(<Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.unread' })}>{a.unreadMessageCount}</Badge>);
-              return <>{flags}</>;
+              const needsAttention = a?.state?.needsAttention;
+              if (a?.unreadMessageCount > 0) {
+                if (needsAttention) {
+                  return (
+                    <Badge
+                      color="red"
+                      aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' }) + intl.formatMessage({ id: 'ui-rs.unread' })}
+                    >
+                      {`${a.unreadMessageCount}!`}
+                    </Badge>
+                  );
+                }
+                return <Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.unread' })}>{a.unreadMessageCount}</Badge>;
+              } else if (needsAttention) return <Badge color="red" aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' })}>!</Badge>;
+              return null;
             },
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             dateCreated: a => formattedDateTime(a.dateCreated),
