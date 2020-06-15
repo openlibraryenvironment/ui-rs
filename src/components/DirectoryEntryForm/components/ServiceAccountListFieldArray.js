@@ -97,6 +97,7 @@ class ServiceAccountListFieldArray extends React.Component {
                         id={`edit-directory-entry-service-[${index}]-account-details`}
                         label={placeholder}
                         name={`${this.props.name}[${index}].accountDetails`}
+                        parse={v => v}
                         placeholder={placeholder}
                       />
                     )}
