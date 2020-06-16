@@ -310,7 +310,7 @@
   "index.isbn": "ISBN",
   "index.itemBarcode": "Item barcode",
 
-  "pullslipNotification.status": "Status",
+  "pullslipNotification.status": "Active?",
   "pullslipNotification.name": "Name",
   "pullslipNotification.days": "Days",
   "pullslipNotification.times": "Times",

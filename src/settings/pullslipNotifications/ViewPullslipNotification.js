@@ -118,7 +118,7 @@ class ViewPullslipNotification extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.pullslipNotification.status" />}
-                value={record.status ? 'Active' : 'Disabled'}
+                value={<FormattedMessage id={`ui-rs.${record.status ? 'yes' : 'no'}`} />}
               />
             </Col>
             <Col xs={3}>
