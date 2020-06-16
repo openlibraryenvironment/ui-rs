@@ -89,7 +89,7 @@
   "flow.borrowerShipped": "Item returned - borrower shipped",
   "flow.complete": "Request complete",
   "flow.awaitingPullSlip": "New - awaiting pull slip printing",
-  "flow.stacksSearching": "Pullslip printed - stacks searching",
+  "flow.stacksSearching": "Pull slip printed - stacks searching",
   "flow.itemFound": "Item found - ready to ship",
   "flow.shippedToRequester": "Item shipped to requester",
 
@@ -224,8 +224,8 @@
   "button.scan": "Scan",
   "button.view": "View",
   "button.cancel-print": "Cancel print",
-  "printAllPullSlips": "Print pull-slips for all records in list",
-  "printPullSlips": "Print pull-slips",
+  "printAllPullSlips": "Print pull slips for all records in list",
+  "printPullSlips": "Print pull slips",
 
   "settings.name": "Name",
   "settings.value": "Value",
