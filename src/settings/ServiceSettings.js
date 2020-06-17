@@ -19,6 +19,7 @@ class ServiceSettings extends React.Component {
       type: 'okapi',
       path: 'directory/service',
       params: {
+        filters: 'status.value=managed',
         perPage: '100',
         sort: 'id'
       },
