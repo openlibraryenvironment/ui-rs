@@ -27,6 +27,8 @@ export function user2rawData(values) {
   const rruleParams = {
     freq: RRule.WEEKLY,
     byhour: values.times.map(t => t.replace(/0*([0-9]+):.*/, '$1')),
+    byminute: 0,
+    bysecond: 0,
   };
 
   if (values.days) {
