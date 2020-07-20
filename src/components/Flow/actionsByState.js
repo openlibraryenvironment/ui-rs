@@ -90,6 +90,7 @@ export const includesNote = {
   supplierPrintPullSlip: false,
   supplierManualCheckout: false,
   supplierMarkShipped: true,
+  requesterCancel: true,
   requesterReceived: true,
   patronReturnedItem: false,
   shippedReturn: true,
