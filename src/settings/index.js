@@ -4,8 +4,10 @@ import Route from 'react-router-dom/Route';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
+
 import SettingPage from './SettingPage';
 import { CustomISO18626 } from './settingsComponents';
+import Notices from './notices';
 import {
   PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
 } from './pullslipNotifications';
@@ -48,6 +50,11 @@ class ResourceSharingSettings extends React.Component {
       route: 'CustomISO18626Settings',
       id: 'iso18626',
       component: CustomISO18626
+    },
+    {
+      route: 'notices',
+      id: 'notices',
+      component: Notices,
     },
     {
       route: 'pullslip-notifications',
