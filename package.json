@@ -36,6 +36,7 @@
     "@folio/react-intl-safe-html": "^2.0.0",
     "@folio/stripes-erm-components": "^3.0.0",
     "@folio/stripes-reshare": "^1.0.0",
+    "@folio/stripes-template-editor": "^1.0.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
     "final-form-arrays": "^3.0.2",
@@ -74,7 +75,8 @@
     "queryResource": "query",
     "stripesDeps": [
       "@folio/stripes-erm-components",
-      "@folio/stripes-reshare"
+      "@folio/stripes-reshare",
+      "@folio/stripes-template-editor"
     ],
     "icons": [
       {
@@ -122,6 +124,18 @@
         "displayName": "Settings (resouce-sharing): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "settings.rs.notices",
+        "displayName": "Settings (resource-sharing): Can create, edit and remove notices and notice policies",
+        "subPermissions": [
+          "templates.collection.get",
+          "templates.item.get",
+          "templates.item.post",
+          "templates.item.put",
+          "templates.item.delete"
         ],
         "visible": true
       }
