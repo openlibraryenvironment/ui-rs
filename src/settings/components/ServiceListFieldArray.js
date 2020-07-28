@@ -82,8 +82,8 @@ class ServiceListFieldArray extends React.Component {
               onSave={() => this.handleSave(i)}
               onDelete={() => this.handleDelete(i)}
               serviceData={{
-                functions: (data?.functions || [])[0]?.values?.map(obj => ({ value: obj.id, label: obj.label })) || [],
-                types: (data?.types || [])[0]?.values?.map(obj => ({ value: obj.id, label: obj.label })) || []
+                functions: data?.functions?.map(obj => ({ value: obj.id, label: obj.label })) || [],
+                types: data?.types?.map(obj => ({ value: obj.id, label: obj.label })) || []
               }}
               initialValues={this.props.initialValues}
               // This `validate` appears stupid and like a no-op, but it's necessary because of the way

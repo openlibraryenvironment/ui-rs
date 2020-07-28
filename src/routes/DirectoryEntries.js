@@ -88,9 +88,12 @@ class DirectoryEntries extends React.Component {
       type: 'okapi',
       path: 'directory/service',
       params: {
+        filters: 'status.value=managed',
         perPage: '100',
+        sort: 'id'
       },
       throwErrors: false,
+      resourceShouldRefresh: true,
     },
     directoryTags: {
       type: 'okapi',

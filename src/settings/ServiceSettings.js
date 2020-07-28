@@ -34,6 +34,10 @@ class ServiceSettings extends React.Component {
       type: 'okapi',
       path: 'directory/refdata?filters=desc=Service.BusinessFunction',
     },
+    direntStatus: {
+      type: 'okapi',
+      path: 'directory/refdata?filters=desc=DirectoryEntry.Status',
+    },
   });
 
   static propTypes = {
@@ -85,6 +89,10 @@ class ServiceSettings extends React.Component {
   }
 
   handleSubmit = (service, reinitialize) => {
+    const { resources: { direntStatus: { records: { 0: { values: managedValues = [] } = {} } } = [] } } = this.props;
+    const managed = managedValues.filter(obj => obj.label === 'Managed')[0] || {};
+    service.status = managed.value;
+
     return this.submitPromise(service, reinitialize)
       .then(() => this.sendCallout('save', 'success', '', service?.name))
       .catch(response => {
@@ -129,10 +137,11 @@ class ServiceSettings extends React.Component {
   }
 
   render() {
-    const { resources: { services, type, businessFunction } } = this.props;
-    const { records: serviceRecords } = services || [];
-    const { records: typeRecords } = type || [];
-    const { records: businessFunctionRecords } = businessFunction || [];
+    const { resources: {
+      services: { records: serviceRecords } = [],
+      type : { records: { 0: { values: typeValues } = {} } } = [],
+      businessFunction: { records: { 0: { values: businessFunctionValues } = {} } } = []
+    } } = this.props;
 
     // We need to store the IDs of the refdata values rather than objects
     const initialValues = { 'services': serviceRecords?.map(obj => ({ ...obj, type: obj.type?.id, businessFunction: obj.businessFunction?.id })) };
@@ -166,8 +175,8 @@ class ServiceSettings extends React.Component {
                     onDelete={service => this.handleDelete(service, form.initialize)}
                     mutators={form.mutators}
                     data={{
-                      functions: businessFunctionRecords,
-                      types: typeRecords
+                      functions: businessFunctionValues,
+                      types: typeValues
                     }}
                     initialValues={initialValues}
                   />
