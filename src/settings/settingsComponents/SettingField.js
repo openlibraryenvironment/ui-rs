@@ -13,7 +13,7 @@ import {
 
 import { FormattedMessage } from 'react-intl';
 
-import RefdataButtons from './RefdataButtons';
+import { RefdataButtons } from '@folio/stripes-reshare';
 
 export default class SettingField extends React.Component {
   static propTypes = {
