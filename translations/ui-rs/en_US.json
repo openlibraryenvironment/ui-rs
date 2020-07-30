@@ -302,6 +302,7 @@
   "settingName.ncipServerAddress": "NCIP server address",
   "settingName.ncipAppProfile": "NCIP app profile",
   "settingName.ncipFromAgency": "NCIP from agency",
+  "settingName.ncipDisabled": "NCIP integration",
 
   "settingName.hostLmsIntegration": "Host LMS integration",
   
