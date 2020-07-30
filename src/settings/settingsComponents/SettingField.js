@@ -13,6 +13,8 @@ import {
 
 import { FormattedMessage } from 'react-intl';
 
+import RefdataButtons from './RefdataButtons';
+
 export default class SettingField extends React.Component {
   static propTypes = {
     settingData: PropTypes.shape({
@@ -80,6 +82,16 @@ export default class SettingField extends React.Component {
       const selectRefValues = settingData?.refdatavalues.filter((obj) => {
         return obj.desc === setting.vocab;
       })[0].values;
+
+      if (selectRefValues.length > 0 && selectRefValues.length <= 4) {
+        return (
+          <Field
+            name={`${this.props.input.name}`}
+            component={RefdataButtons}
+            dataOptions={selectRefValues}
+          />
+        );
+      }
       return (
         <Field
           name={`${this.props.input.name}`}
