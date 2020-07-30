@@ -108,9 +108,12 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
         if (successMessage) setMessage(successMessage, 'success');
         else setMessage('ui-rs.actions.generic.success', 'success', { action }, ['action']);
       })
-      .catch(() => {
-        if (errorMessage) setMessage(errorMessage, 'error');
-        else setMessage('ui-rs.actions.generic.error', 'error', { action }, ['action']);
+      .catch(response => {
+        response.json()
+          .then((rsp) => {
+            if (errorMessage) setMessage(errorMessage, 'error', { errMsg: rsp.message });
+            else setMessage('ui-rs.actions.generic.error', 'error', { action, errMsg: rsp.message }, ['action']);
+          });
       })
   );
 
@@ -233,6 +236,7 @@ ViewRoute.manifest = {
     path: 'rs/patronrequests/:{id}/performAction',
     fetch: false,
     clientGeneratePk: false,
+    throwErrors: false
   },
   query: {},
 };

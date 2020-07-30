@@ -144,7 +144,7 @@
   "actions.send": "Send",
 
   "actions.generic.success": "Sucess: {action}",
-  "actions.generic.error": "Error: {action}",
+  "actions.generic.error": "Error: {action}. {errMsg}",
   "actions.generic.prompt": "Scan request barcode to <strong>{action}</strong>",
 
   "actions.wrongId": "No action performed, scanned request does not match",
@@ -153,11 +153,11 @@
 
   "actions.requesterAgreeConditions": "Agree to loan conditions",
   "actions.requesterAgreeConditions.success": "Successfully sent agreement to loan conditions",
-  "actions.requesterAgreeConditions.error": "Failed to send agreement to loan conditions",
+  "actions.requesterAgreeConditions.error": "Failed to send agreement to loan conditions. {errMsg}",
   "actions.requesterRejectConditions": "Reject loan conditions",
   "actions.supplierMarkConditionsAgreed": "Mark loan conditions as agreed",
   "actions.supplierMarkConditionsAgreed.success": "Successfully marked loan conditions as agreed",
-  "actions.supplierMarkConditionsAgreed.error": "Failed to mark loan conditions as agreed",
+  "actions.supplierMarkConditionsAgreed.error": "Failed to mark loan conditions as agreed. {errMsg}",
 
   "actions.respondToCancel": "Send response",
   "actions.respondToCancel.confirm": "Do you wish to allow the cancellation of this request?",
@@ -166,12 +166,12 @@
   "actions.respondToCancel.cancelResponse": "Cancellation response",
   "actions.respondToCancel.note": "Add note",
   "actions.respondToCancel.success": "Successfully sent cancellation response",
-  "actions.respondToCancel.error": "Failed to send cancellation response",
+  "actions.respondToCancel.error": "Failed to send cancellation response. {errMsg}",
 
   
   "actions.respondYes": "Respond \"Will Supply\"",
   "actions.respondYes.success": "Responded \"Will Supply\"",
-  "actions.respondYes.error": "Cannot respond \"Will Supply\"",
+  "actions.respondYes.error": "Cannot respond \"Will Supply\". {errMsg}",
   "actions.respondYes.callNumber": "Call Number",
   "actions.respondYes.pickLocation": "Pick Location",
   "actions.respondYes.pickShelvingLocation": "Shelving Location",
@@ -180,13 +180,13 @@
   "actions.cannotSupply.confirm": "Are you sure you want to <strong>respond \"Cannot Supply\"</strong> to request {id} for the item <strong>\"{item}\"</strong>?",
   "actions.cannotSupply.reason": "Reason item cannot be supplied:",
   "actions.cannotSupply.success": "Responded \"Cannot supply\".",
-  "actions.cannotSupply.error": "Error, could not respond \"Cannot supply\".",
+  "actions.cannotSupply.error": "Error, could not respond \"Cannot supply\". {errMsg}",
 
   "actions.conditionalSupply": "Respond \"Conditional Supply\"",
   "actions.conditionalSupply.confirm": "Are you sure you want to <strong>respond \"Conditional Supply\"</strong> to request {id} for the item <strong>\"{item}\"</strong>?",
   "actions.conditionalSupply.condition": "Condition for item supply:",
   "actions.conditionalSupply.success": "Responded \"Conditional supply\".",
-  "actions.conditionalSupply.error": "Error, could not respond \"Conditional supply\".",
+  "actions.conditionalSupply.error": "Error, could not respond \"Conditional supply\". {errMsg}",
 
   "actions.conditionalSupply.holdingState": "Would you like to pause processing while waiting for the requester to reply?",
   "actions.conditionalSupply.holdingState.select": "Select \"Yes\" or \"No\"",
@@ -199,15 +199,15 @@
 
   "actions.addCondition": "Add loan condition",
   "actions.addCondition.success": "Condition successfully added",
-  "actions.addCondition.error": "Failed to add condition",
+  "actions.addCondition.error": "Failed to add condition. {errMsg}",
 
 
   "actions.checkIn.prompt": "Scan item barcode to <strong>fill this request</strong>",
   "actions.checkIn.success": "Request successfully filled.",
-  "actions.checkIn.error": "Error filling request.",
+  "actions.checkIn.error": "Error filling request. {errMsg}",
   "actions.manualCheckIn": "Mark local item created",
   "actions.manualCheckIn.success": "Successfully marked local item created.",
-  "actions.manualCheckIn.error": "Error marking local item created.",
+  "actions.manualCheckIn.error": "Error marking local item created. {errMsg}",
 
   "actions.patronReturnedItem.prompt": "Scan request barcode to mark it <strong>returned by patron</strong>",
   "actions.requesterReceived.prompt": "Scan request barcode to mark it <strong>received</strong>",
