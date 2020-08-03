@@ -4,7 +4,8 @@ import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Layout, Modal, ModalFooter, RadioButton, RadioButtonGroup, Row, TextArea } from '@folio/stripes/components';
+import { RefdataButtons } from '@folio/stripes-reshare';
+import { Button, Col, Layout, Modal, ModalFooter, Row, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
@@ -40,7 +41,6 @@ const CannotSupply = props => {
   };
   const listOfReasons = refdatavalues ? refdatavalues.records.filter(obj => obj.desc === 'cannotSupplyReasons').map(obj => obj.values)[0] : [];
 
-  const { formatMessage } = props.intl;
   return (
     <Form
       onSubmit={onSubmit}
@@ -55,22 +55,19 @@ const CannotSupply = props => {
             <Layout className="padding-top-gutter">
               <strong><FormattedMessage id="ui-rs.actions.cannotSupply.reason" /></strong>
             </Layout>
-            <Field
-              name="reason"
-              component={RadioButtonGroup}
-              required
-              validate={required}
-            >
-              {listOfReasons?.map(reason => (
-                <RadioButton
-                  label={
-                    formatMessage({ id: `ui-rs.settings.customiseListSelect.cannotSupplyReasons.${reason.value}`, defaultMessage: reason.label })
-                  }
-                  key={reason.value}
-                  value={reason.value}
+            <Row>
+              <Col>
+                <Field
+                  name="reason"
+                  component={RefdataButtons}
+                  dataOptions={listOfReasons}
+                  labelTranslations={{ key: 'ui-rs.settings.customiseListSelect.cannotSupplyReasons' }}
+                  maxCols={1}
+                  required
+                  validate={required}
                 />
-              ))}
-            </Field>
+              </Col>
+            </Row>
             <Layout className="padding-top-gutter">
               <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
             </Layout>

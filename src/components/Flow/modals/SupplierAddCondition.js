@@ -4,7 +4,8 @@ import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Layout, Modal, ModalFooter, RadioButton, RadioButtonGroup, Row, Select, TextArea } from '@folio/stripes/components';
+import { Button, Col, Layout, Modal, ModalFooter, Row, Select, TextArea } from '@folio/stripes/components';
+import { RefdataButtons } from '@folio/stripes-reshare';
 import { required } from '@folio/stripes/util';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
@@ -60,20 +61,13 @@ const AddCondition = props => {
                 </Layout>
                 <Field
                   name="loanCondition"
-                  component={RadioButtonGroup}
+                  component={RefdataButtons}
+                  dataOptions={listOfConditions}
+                  labelTranslations={{ key: 'ui-rs.settings.customiseListSelect.loanConditions' }}
+                  maxCols={1}
                   required
                   validate={required}
-                >
-                  {listOfConditions?.map(condition => (
-                    <RadioButton
-                      label={
-                        formatMessage({ id: `ui-rs.settings.customiseListSelect.loanConditions.${condition.value}`, defaultMessage: condition.label })
-                      }
-                      key={condition.value}
-                      value={condition.value}
-                    />
-                  ))}
-                </Field>
+                />
               </Col>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
