@@ -107,6 +107,7 @@
         "permissionName": "settings.rs.notices",
         "displayName": "Settings (resource-sharing): Can create, edit and remove notices and notice policies",
         "subPermissions": [
+          "settings.rs.enabled",
           "templates.collection.get",
           "templates.item.get",
           "templates.item.post",
