@@ -96,30 +96,6 @@
         "visible": true
       },
       {
-        "permissionName": "ui-rs.patronrequest.view",
-        "displayName": "RS: Can view patron request",
-        "visible": true,
-        "subPermissions": [
-          "module.rs.enabled"
-        ]
-      },
-      {
-        "permissionName": "ui-rs.patronrequest.edit",
-        "displayName": "RS: Can edit patron request",
-        "visible": true,
-        "subPermissions": [
-          "ui-rs.patronrequest.view"
-        ]
-      },
-      {
-        "permissionName": "ui-rs.patronrequest.create",
-        "displayName": "ERM: Can create and edit patron requests",
-        "visible": true,
-        "subPermissions": [
-          "ui-rs.patronrequest.edit"
-        ]
-      },
-      {
         "permissionName": "settings.rs.enabled",
         "displayName": "Settings (resouce-sharing): display list of settings pages",
         "subPermissions": [
@@ -131,6 +107,7 @@
         "permissionName": "settings.rs.notices",
         "displayName": "Settings (resource-sharing): Can create, edit and remove notices and notice policies",
         "subPermissions": [
+          "settings.rs.enabled",
           "templates.collection.get",
           "templates.item.get",
           "templates.item.post",
