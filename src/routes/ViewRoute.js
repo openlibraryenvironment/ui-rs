@@ -15,6 +15,7 @@ import renderNamedWithProps from '../util/renderNamedWithProps';
 import { ContextualMessageBanner, MessageModalProvider, useMessage } from '../components/MessageModalState';
 import * as modals from '../components/Flow/modals';
 import { actionsForRequest } from '../components/Flow/actionsByState';
+import AppNameContext from '../AppNameContext';
 import FlowRoute from './FlowRoute';
 import DetailsRoute from './DetailsRoute';
 import css from './ViewRoute.css';
@@ -100,7 +101,7 @@ const getHelperApp = (match, resources, mutator) => {
   );
 };
 
-const ViewRoute = ({ history, resources, location, location: { pathname }, match, mutator }) => {
+const ViewRoute = ({ history, resources, location, location: { pathname }, match, mutator, stripes }) => {
   const [, setMessage] = useMessage();
   const performAction = (action, payload, successMessage, errorMessage) => (
     mutator.action.POST({ action, actionParams: payload || {} })
@@ -168,18 +169,27 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
             </Layout>
           }
           actionMenu={() => (
-            <React.Fragment>
-              <Button buttonStyle="dropdownItem" to={`../../edit/${match.params.id}`} id="clickable-edit-patronrequest">
-                <Icon icon="edit">
-                  <FormattedMessage id="ui-rs.edit" />
-                </Icon>
-              </Button>
-              <DirectLink component={Button} buttonStyle="dropdownItem" to={{ pathname: 'pullslip', search: location.search }} id="clickable-pullslip">
-                <Icon icon="print">
-                  <FormattedMessage id="ui-rs.printPullslip" />
-                </Icon>
-              </DirectLink>
-            </React.Fragment>
+            <AppNameContext.Consumer>
+              {appName => (
+                <>
+                  {
+                    stripes.hasPerm(`ui-${appName}.edit`) && (
+                      <Button buttonStyle="dropdownItem" to={`../../edit/${match.params.id}`} id="clickable-edit-patronrequest">
+                        <Icon icon="edit">
+                          <FormattedMessage id="ui-rs.edit" />
+                        </Icon>
+                      </Button>
+                    )
+                  }
+                  <DirectLink component={Button} buttonStyle="dropdownItem" to={{ pathname: 'pullslip', search: location.search }} id="clickable-pullslip">
+                    <Icon icon="print">
+                      <FormattedMessage id="ui-rs.printPullslip" />
+                    </Icon>
+                  </DirectLink>
+                </>
+              )
+              }
+            </AppNameContext.Consumer>
           )}
         >
           <Layout className="centered" style={{ maxWidth: '80em' }}>
@@ -216,6 +226,9 @@ ViewRoute.propTypes = {
   history: PropTypes.object.isRequired,
   resources: PropTypes.object.isRequired,
   mutator: PropTypes.object.isRequired,
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 ViewRoute.manifest = {
