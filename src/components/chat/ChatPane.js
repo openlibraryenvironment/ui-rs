@@ -36,8 +36,9 @@ class ChatPane extends React.Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    const { resources: { selectedRecord: { records: { 0: { notifications: currentNotifications } = {} } = [] } = {} } = {} } = this.props;
-    const { resources: { selectedRecord: { records: { 0: { notifications: prevNotifications } = {} } = [] } = {} } = {} } = prevProps;
+    const currentNotifications = this.props?.resources?.selectedRecord?.records[0]?.notifications;
+    // eslint-disable-next-line react/prop-types
+    const prevNotifications = prevProps?.resources?.selectedRecord?.records[0]?.notifications;
     if (currentNotifications.length !== prevNotifications.length) {
       this.scrollToLatestMessage();
     }
