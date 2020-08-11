@@ -37,6 +37,7 @@ class ChatPane extends React.Component {
 
   componentDidUpdate = (prevProps) => {
     const currentNotifications = this.props?.resources?.selectedRecord?.records[0]?.notifications;
+    // For some reason (probably an ESLint bug) the below line fails linting despite the prop-types being declared above, disabling for now
     // eslint-disable-next-line react/prop-types
     const prevNotifications = prevProps?.resources?.selectedRecord?.records[0]?.notifications;
     if (currentNotifications.length !== prevNotifications.length) {
