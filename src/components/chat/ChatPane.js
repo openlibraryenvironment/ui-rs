@@ -9,11 +9,18 @@ import css from './ChatPane.css';
 
 class ChatPane extends React.Component {
   static propTypes = {
-    resources: PropTypes.object,
+    resources: PropTypes.shape({
+      selectedRecord: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.shape({
+          notifications: PropTypes.array,
+          validActions: PropTypes.arrayOf(PropTypes.string),
+        })),
+      }),
+    }),
     mutator:PropTypes.shape({
       action: PropTypes.object,
     }),
-    onToggle: PropTypes.func.isRequired,
+    onToggle: PropTypes.func,
   }
 
   static contextType = CalloutContext;
@@ -29,8 +36,8 @@ class ChatPane extends React.Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    const currentNotifications = this.props?.resources?.selectedRecord?.records[0]?.notifications;
-    const prevNotifications = prevProps?.resources?.selectedRecord?.records[0]?.notifications;
+    const { resources: { selectedRecord: { records: { 0: { notifications: currentNotifications } = {} } = [] } = {} } = {} } = this.props;
+    const { resources: { selectedRecord: { records: { 0: { notifications: prevNotifications } = {} } = [] } = {} } = {} } = prevProps;
     if (currentNotifications.length !== prevNotifications.length) {
       this.scrollToLatestMessage();
     }
@@ -125,10 +132,10 @@ class ChatPane extends React.Component {
     );
   }
 
-  displayMessage(notification, isLatest = false) {
+  displayMessage(notification, isLatest = false, index) {
     const { mutator } = this.props;
     return (
-      <ChatMessage notification={notification} mutator={mutator} isLatest={isLatest} ref={isLatest ? this.latestMessage : null} handleMessageRead={this.handleMessageRead} />
+      <ChatMessage key={`notificationMessage[${index}]`} notification={notification} mutator={mutator} isLatest={isLatest} ref={isLatest ? this.latestMessage : null} handleMessageRead={this.handleMessageRead} />
     );
   }
 
@@ -157,7 +164,7 @@ class ChatPane extends React.Component {
 
       return (
         <div className={css.noTopMargin}>
-          {notifications.map((notification) => this.displayMessage(notification, latestMessage.id === notification.id))}
+          {notifications.map((notification, index) => this.displayMessage(notification, latestMessage.id === notification.id, index))}
         </div>
       );
     }
