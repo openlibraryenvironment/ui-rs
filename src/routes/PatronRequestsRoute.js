@@ -24,6 +24,7 @@ const appDetails = {
       'isRequester',
       'dateCreated', 'title', 'patronIdentifier', 'state', 'serviceType',
     ],
+    createPerm: 'rs.patronrequests.item.post',
   },
   request: {
     title: 'Requests',
@@ -36,6 +37,7 @@ const appDetails = {
     intlId: 'supplier',
     institutionFilterId: 'supplier',
     statePrefix: 'REQ',
+    createPerm: 'ui-request.create',
   },
   supply: {
     title: 'Supply',
@@ -48,6 +50,7 @@ const appDetails = {
     intlId: 'requester',
     institutionFilterId: 'requester',
     statePrefix: 'RES',
+    createPerm: 'ui-supply.create',
   },
 };
 
@@ -391,7 +394,7 @@ class PatronRequestsRoute extends React.Component {
     }
 
     const { mutator, resources, appName, location, intl } = this.props;
-    const { title, visibleColumns } = appDetails[appName];
+    const { title, visibleColumns, createPerm } = appDetails[appName];
     const tweakedPackageInfo = Object.assign({}, packageInfo, {
       name: `@folio/${appName}`,
       stripes: Object.assign({}, packageInfo.stripes, {
@@ -433,7 +436,7 @@ class PatronRequestsRoute extends React.Component {
           createRecordPath="requests/create"
           viewRecordPathById={id => `requests/view/${id}${location.search}`}
           viewRecordPerms="module.rs.enabled"
-          newRecordPerms="module.rs.enabled"
+          newRecordPerms={createPerm}
           onCreate={this.createPatronRequest}
           detailProps={{
             onUpdate: this.handleUpdate
