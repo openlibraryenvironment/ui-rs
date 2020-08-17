@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
@@ -7,11 +7,13 @@ import { stripesConnect } from '@folio/stripes/core';
 import { RefdataButtons } from '@folio/stripes-reshare';
 import { Button, Col, Layout, Modal, ModalFooter, Row, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
+import { ActionContext } from '../ActionContext';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
 const CannotSupply = props => {
   const { request, performAction, resources: { refdatavalues } } = props;
+  const [actions] = useContext(ActionContext);
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
@@ -49,7 +51,7 @@ const CannotSupply = props => {
           <Modal
             label={<FormattedMessage id="ui-rs.actions.cannotSupply" />}
             open={currentModal === 'CannotSupply'}
-            footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
+            footer={<Footer disableSubmit={submitting || pristine || actions.pending} submit={form.submit} />}
           >
             <SafeHTMLMessage id="ui-rs.actions.cannotSupply.confirm" values={{ id: request.id, item: request.title }} />
             <Layout className="padding-top-gutter">

@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Button, Icon } from '@folio/stripes/components';
 import interCss from '@folio/stripes-components/lib/sharedStyles/interactionStyles.css';
 
+import { ActionContext } from './ActionContext';
 import css from './ActionButton.css';
 import NoteForm from '../NoteForm';
 import { includesNote } from './actionsByState';
 
 const ActionButton = ({ action, performAction, payload = {}, success = null, error = null, icon = null, label }) => {
+  const [actions] = useContext(ActionContext);
   const [noteFieldOpen, setNoteFieldOpen] = useState(false);
   const onSubmitNote = (note) => {
     performAction(action, { ...payload, note }, success, error);
@@ -34,12 +36,13 @@ const ActionButton = ({ action, performAction, payload = {}, success = null, err
           buttonStyle="dropdownItem"
           onClick={handleClick}
           buttonClass={{ [`${css.actionButton}`] : true, [`${css.withInlineForm}`]: withNote }}
+          disabled={actions.pending}
         >
           <Icon icon={icon || 'default'} className={css.button}>
             <FormattedMessage id={label} />
           </Icon>
         </Button>
-        { withNote && <NoteForm onSend={onSubmitNote} visibility={noteFieldOpen} setVisibility={setNoteFieldOpen} className={css.addNoteForm} /> }
+        { withNote && <NoteForm onSend={onSubmitNote} visibility={noteFieldOpen} setVisibility={setNoteFieldOpen} disabled={actions.pending} className={css.addNoteForm} /> }
       </span>
     );
   } else {

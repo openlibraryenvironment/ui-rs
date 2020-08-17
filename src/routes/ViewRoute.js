@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
@@ -15,6 +15,7 @@ import renderNamedWithProps from '../util/renderNamedWithProps';
 import { ContextualMessageBanner, MessageModalProvider, useMessage } from '../components/MessageModalState';
 import * as modals from '../components/Flow/modals';
 import { actionsForRequest } from '../components/Flow/actionsByState';
+import { ActionProvider, ActionContext } from '../components/Flow/ActionContext';
 import AppNameContext from '../AppNameContext';
 import FlowRoute from './FlowRoute';
 import DetailsRoute from './DetailsRoute';
@@ -103,20 +104,24 @@ const getHelperApp = (match, resources, mutator) => {
 
 const ViewRoute = ({ history, resources, location, location: { pathname }, match, mutator, stripes }) => {
   const [, setMessage] = useMessage();
-  const performAction = (action, payload, successMessage, errorMessage) => (
-    mutator.action.POST({ action, actionParams: payload || {} })
+  const [, setActions] = useContext(ActionContext);
+  const performAction = (action, payload, successMessage, errorMessage) => {
+    setActions({ pending: true });
+    return mutator.action.POST({ action, actionParams: payload || {} })
       .then(() => {
+        setActions({ pending: false });
         if (successMessage) setMessage(successMessage, 'success');
         else setMessage('ui-rs.actions.generic.success', 'success', { action }, ['action']);
       })
       .catch(response => {
+        setActions({ pending: false });
         response.json()
           .then((rsp) => {
             if (errorMessage) setMessage(errorMessage, 'error', { errMsg: rsp.message });
             else setMessage('ui-rs.actions.generic.error', 'error', { action, errMsg: rsp.message }, ['action']);
           });
-      })
-  );
+      });
+  };
 
   const resource = resources.selectedRecord;
   if (!_.get(resource, 'hasLoaded')) return null;
@@ -256,10 +261,12 @@ ViewRoute.manifest = {
 
 const ConnectedViewRoute = stripesConnect(ViewRoute);
 
-const ViewRouteMMP = props => (
-  <MessageModalProvider>
-    <ConnectedViewRoute {...props} />
-  </MessageModalProvider>
+const ViewRouteWithContext = props => (
+  <ActionProvider>
+    <MessageModalProvider>
+      <ConnectedViewRoute {...props} />
+    </MessageModalProvider>
+  </ActionProvider>
 );
 
-export default ViewRouteMMP;
+export default ViewRouteWithContext;

@@ -12,6 +12,7 @@ class AddNoteForm extends React.Component {
     setVisibility: PropTypes.func.isRequired,
     visibility: PropTypes.bool.isRequired,
     className: PropTypes.string,
+    disabled: PropTypes.bool,
   };
 
   constructor(props) {
@@ -35,7 +36,7 @@ class AddNoteForm extends React.Component {
   }
 
   render() {
-    const { className, setVisibility, visibility } = this.props;
+    const { className, setVisibility, visibility, disabled } = this.props;
 
     if (visibility) {
       // Render the form
@@ -52,6 +53,7 @@ class AddNoteForm extends React.Component {
               <Button
                 onClick={this.handleSend}
                 onBlur={this.handleOnBlur}
+                disabled={disabled}
               >
                 <FormattedMessage id="ui-rs.actions.send" />
               </Button>

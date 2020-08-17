@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form, Field } from 'react-final-form';
@@ -8,8 +8,10 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { useMessage } from '../MessageModalState';
 import AddNoteField from '../AddNoteField';
 import { includesNote } from './actionsByState';
+import { ActionContext } from './ActionContext';
 
 const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
+  const [actions] = useContext(ActionContext);
   const [, setMessage] = useMessage();
   const onSubmit = async values => {
     if (values?.reqId?.trim() !== request.hrid) {
@@ -36,7 +38,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
               <Field name="reqId" component={TextField} autoFocus />
             </Col>
             <Col xs={1}>
-              <Button buttonStyle="primary mega" type="submit" disabled={submitting}>
+              <Button buttonStyle="primary mega" type="submit" disabled={submitting || actions.pending}>
                 <FormattedMessage id="ui-rs.button.scan" />
               </Button>
             </Col>

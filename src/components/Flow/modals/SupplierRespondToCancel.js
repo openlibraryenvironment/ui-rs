@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
@@ -6,11 +6,13 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Layout, Modal, ModalFooter, RadioButton, RadioButtonGroup, Row, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
+import { ActionContext } from '../ActionContext';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
 const RespondToCancel = props => {
   const { request, performAction } = props;
+  const [actions] = useContext(ActionContext);
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
@@ -47,7 +49,7 @@ const RespondToCancel = props => {
           <Modal
             label={<FormattedMessage id="ui-rs.actions.respondToCancel" />}
             open={currentModal === 'RespondToCancel'}
-            footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
+            footer={<Footer disableSubmit={submitting || pristine || actions.pending} submit={form.submit} />}
           >
             <SafeHTMLMessage id="ui-rs.actions.respondToCancel.confirm" values={{ id: request.id, item: request.title }} />
             <Row>
