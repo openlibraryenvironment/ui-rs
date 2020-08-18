@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import classNames from 'classnames';
 import { Button, Icon } from '@folio/stripes/components';
 import interCss from '@folio/stripes-components/lib/sharedStyles/interactionStyles.css';
 
@@ -35,7 +36,7 @@ const ActionButton = ({ action, performAction, payload = {}, success = null, err
         <Button
           buttonStyle="dropdownItem"
           onClick={handleClick}
-          buttonClass={{ [`${css.actionButton}`] : true, [`${css.withInlineForm}`]: withNote }}
+          buttonClass={classNames({ [`${css.actionButton}`] : true, [`${css.withInlineForm}`]: withNote })}
           disabled={actions.pending}
         >
           <Icon icon={icon || 'default'} className={css.button}>
