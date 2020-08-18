@@ -24,25 +24,29 @@ const FlowRoute = ({ request, performAction }) => {
       || primaryActions.Generic;
   }
   return (
-    <React.Fragment>
-      <Layout className="centered" style={{ maxWidth: '80em' }}>
-        <KeyValue label={<FormattedMessage id="stripes-reshare.requestState" />}>
-          <Headline size="large" faded><FormattedMessage id={`stripes-reshare.states.${request.state?.code}`} /></Headline>
-        </KeyValue>
-        <div className={css.cards}>
-          {renderNamedWithProps(forCurrent.cards, cards, { request })}
-        </div>
-        <Layout className="padding-top-gutter">
-          {PrimaryAction && <PrimaryAction request={request} name={forCurrent.primaryAction} performAction={performAction} /> }
-        </Layout>
-        {stripes.hasPerm(`ui-${appName}.edit`) && forCurrent.moreActions.length > 0 &&
-          <Layout className={`padding-top-gutter ${css.optionList} ${css.noBorderRadius}`}>
-            <strong>More options:</strong>
-            {renderNamedWithProps(forCurrent.moreActions, moreActions, { request, performAction }, moreActions.Generic)}
-          </Layout>
-        }
-      </Layout>
-    </React.Fragment>
+    <Layout className="centered" style={{ maxWidth: '80em' }}>
+      <KeyValue label={<FormattedMessage id="stripes-reshare.requestState" />}>
+        <Headline size="large" faded><FormattedMessage id={`stripes-reshare.states.${request.state?.code}`} /></Headline>
+      </KeyValue>
+      <div className={css.cards}>
+        {renderNamedWithProps(forCurrent.cards, cards, { request })}
+      </div>
+      {stripes.hasPerm(`ui-${appName}.edit`) &&
+        <>
+          {PrimaryAction &&
+            <Layout className="padding-top-gutter">
+              <PrimaryAction request={request} name={forCurrent.primaryAction} performAction={performAction} />
+            </Layout>
+          }
+          {forCurrent.moreActions.length > 0 &&
+            <Layout className={`padding-top-gutter ${css.optionList} ${css.noBorderRadius}`}>
+              <strong>More options:</strong>
+              {renderNamedWithProps(forCurrent.moreActions, moreActions, { request, performAction }, moreActions.Generic)}
+            </Layout>
+          }
+        </>
+      }
+    </Layout>
   );
 };
 
