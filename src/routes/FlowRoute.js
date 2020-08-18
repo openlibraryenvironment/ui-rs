@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { Headline, KeyValue, Layout } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
 import initialToUpper from '../util/initialToUpper';
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { actionsForRequest } from '../components/Flow/actionsByState';
@@ -10,8 +11,12 @@ import * as cards from '../components/Flow/cardsByRequest';
 import * as primaryActions from '../components/Flow/primaryActions';
 import * as moreActions from '../components/Flow/moreActions';
 import css from './FlowRoute.css';
+import AppNameContext from '../AppNameContext';
 
 const FlowRoute = ({ request, performAction }) => {
+  const stripes = useStripes;
+  const appName = useContext(AppNameContext);
+
   const forCurrent = actionsForRequest(request);
   let PrimaryAction;
   if (forCurrent.primaryAction) {
@@ -30,7 +35,7 @@ const FlowRoute = ({ request, performAction }) => {
         <Layout className="padding-top-gutter">
           {PrimaryAction && <PrimaryAction request={request} name={forCurrent.primaryAction} performAction={performAction} /> }
         </Layout>
-        {forCurrent.moreActions.length > 0 &&
+        {stripes.hasPerm(`ui-${appName}.edit`) && forCurrent.moreActions.length > 0 &&
           <Layout className={`padding-top-gutter ${css.optionList} ${css.noBorderRadius}`}>
             <strong>More options:</strong>
             {renderNamedWithProps(forCurrent.moreActions, moreActions, { request, performAction }, moreActions.Generic)}
