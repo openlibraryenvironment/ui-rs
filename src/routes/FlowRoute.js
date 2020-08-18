@@ -14,7 +14,7 @@ import css from './FlowRoute.css';
 import AppNameContext from '../AppNameContext';
 
 const FlowRoute = ({ request, performAction }) => {
-  const stripes = useStripes;
+  const stripes = useStripes();
   const appName = useContext(AppNameContext);
 
   const forCurrent = actionsForRequest(request);
