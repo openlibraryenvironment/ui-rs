@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { Layout, Accordion } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
@@ -10,7 +11,8 @@ import * as moreActions from '../moreActions';
 import css from './Flow.css';
 import AppNameContext from '../../../AppNameContext';
 
-const ActionAccordion = ({ forCurrent, id, onToggle, open, request, performAction }) => {
+
+const ActionAccordion = ({ forCurrent, id, request, performAction }) => {
   const stripes = useStripes();
   const appName = useContext(AppNameContext);
 
@@ -22,9 +24,7 @@ const ActionAccordion = ({ forCurrent, id, onToggle, open, request, performActio
   return (
     <Accordion
       id={id}
-      label="TESTING"
-      onToggle={onToggle}
-      open={open}
+      label={<FormattedMessage id="ui-rs.flow.sections.actions" />}
     >
       {stripes.hasPerm(`ui-${appName}.edit`) &&
         <>
@@ -48,8 +48,6 @@ const ActionAccordion = ({ forCurrent, id, onToggle, open, request, performActio
 ActionAccordion.propTypes = {
   id: PropTypes.string.isRequired,
   forCurrent: PropTypes.object.isRequired,
-  onToggle: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
   request: PropTypes.object.isRequired,
   performAction: PropTypes.func.isRequired,
 };
