@@ -6,7 +6,7 @@ import ViewPatronRequest from '../components/ViewPatronRequest';
 
 const DetailsRoute = ({ request }) => {
   return (
-    <Layout className="centered" style={{ maxWidth: '80em' }}>
+    <Layout className="centered" style={{ maxWidth: '80%' }}>
       <ViewPatronRequest record={request} />
     </Layout>
   );

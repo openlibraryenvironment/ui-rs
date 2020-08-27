@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import _ from 'lodash';
-import { Headline, KeyValue, Layout, AccordionSet } from '@folio/stripes/components';
-import renderNamedWithProps from '../util/renderNamedWithProps';
+import { Layout, AccordionSet } from '@folio/stripes/components';
 import { actionsForRequest } from '../components/Flow/actionsByState';
-import * as cards from '../components/Flow/cardsByRequest';
-import css from '../components/Flow/FlowViewComponents/Flow.css';
-import { ActionAccordion } from '../components/Flow/FlowViewComponents';
+import { ActionAccordion, RequestInfo } from '../components/Flow/FlowViewComponents';
 
 const FlowRoute = ({ request, performAction }) => {
   const defaultAccordionState = {
+    info: true,
     actions: true
   };
 
@@ -37,13 +33,8 @@ const FlowRoute = ({ request, performAction }) => {
   };
   return (
     <AccordionSet>
-      <Layout className="centered" style={{ maxWidth: '80em' }}>
-        <KeyValue label={<FormattedMessage id="stripes-reshare.requestState" />}>
-          <Headline size="large" faded><FormattedMessage id={`stripes-reshare.states.${request.state?.code}`} /></Headline>
-        </KeyValue>
-        <div className={css.cards}>
-          {renderNamedWithProps(forCurrent.cards, cards, { request })}
-        </div>
+      <Layout className="centered" style={{ maxWidth: '80%' }}>
+        <RequestInfo {...getSectionProps('info')} />
         <ActionAccordion {...getSectionProps('actions')} />
       </Layout>
     </AccordionSet>
