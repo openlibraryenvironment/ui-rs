@@ -18,7 +18,7 @@ import { actionsForRequest } from '../components/Flow/actionsByState';
 import { ActionProvider, ActionContext } from '../components/Flow/ActionContext';
 import AppNameContext from '../AppNameContext';
 import FlowRoute from './FlowRoute';
-import DetailsRoute from './DetailsRoute';
+import ViewPatronRequest from '../components/ViewPatronRequest';
 import css from './ViewRoute.css';
 
 const subheading = (req, params) => {
@@ -142,6 +142,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
       <Paneset>
         {/* TODO: The "Request" string is translated as ui-rs.view.title which we can use conveniently with a hook once react-intl is upgraded */}
         <Pane
+          centerContent
           paneTitle={`Request ${_.get(resources, 'selectedRecord.records[0].hrid')}`}
           paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), match.params)}
           padContent={false}
@@ -197,11 +198,9 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
             </AppNameContext.Consumer>
           )}
         >
-          <Layout className="centered" style={{ maxWidth: '80em' }}>
-            <ContextualMessageBanner />
-          </Layout>
+          <ContextualMessageBanner />
           <Switch>
-            <Route path={`${match.path}/details`} render={() => <DetailsRoute request={request} />} />
+            <Route path={`${match.path}/details`} render={() => <ViewPatronRequest record={request} />} />
             <Route path={`${match.path}/flow`} render={() => <FlowRoute request={request} performAction={performAction} />} />
           </Switch>
         </Pane>

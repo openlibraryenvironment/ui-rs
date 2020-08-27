@@ -31,15 +31,13 @@ const FlowRoute = ({ request, performAction }) => {
 
   return (
     <AccordionSet>
-      <Layout className="centered" style={{ maxWidth: '80%' }}>
-        <Headline margin="none" size="large" tag="h2" weight="regular">
-          <strong>{`${request.hrid || request.id}: `}</strong>
-          {request.title}
-        </Headline>
-        {inventoryLink}
-        <RequestInfo {...sectionProps} />
-        <ActionAccordion {...sectionProps} />
-      </Layout>
+      <Headline margin="none" size="large" tag="h2" weight="regular">
+        <strong>{`${request.hrid || request.id}: `}</strong>
+        {request.title}
+      </Headline>
+      {inventoryLink}
+      <RequestInfo {...sectionProps} />
+      <ActionAccordion {...sectionProps} />
     </AccordionSet>
   );
 };
