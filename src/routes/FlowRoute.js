@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Layout, AccordionSet } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
+
+import { useStripes } from '@folio/stripes/core';
+import { AccordionSet, Headline, Layout } from '@folio/stripes/components';
 import { actionsForRequest } from '../components/Flow/actionsByState';
 import { ActionAccordion, RequestInfo } from '../components/Flow/FlowViewComponents';
 
 const FlowRoute = ({ request, performAction }) => {
+  const stripes = useStripes();
   const defaultAccordionState = {
     info: true,
     actions: true
@@ -31,9 +35,25 @@ const FlowRoute = ({ request, performAction }) => {
       request,
     };
   };
+
+  const inventoryLink = (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href={`${stripes.config.sharedIndexUI}/inventory/view/${request.id}`}
+    >
+      <FormattedMessage id="ui-rs.flow.info.viewInSharedIndex" />
+    </a>
+  );
+
   return (
     <AccordionSet>
       <Layout className="centered" style={{ maxWidth: '80%' }}>
+        <Headline margin="none" size="large" tag="h2" weight="regular">
+          <strong>{`${request.hrid || request.id}: `}</strong>
+          {request.title}
+        </Headline>
+        {inventoryLink}
         <RequestInfo {...getSectionProps('info')} />
         <ActionAccordion {...getSectionProps('actions')} />
       </Layout>
