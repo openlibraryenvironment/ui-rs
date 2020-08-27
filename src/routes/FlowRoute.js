@@ -1,45 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useStripes } from '@folio/stripes/core';
-import { AccordionSet, Col, ExpandAllButton, Headline, Layout, Row } from '@folio/stripes/components';
+import { AccordionSet, Headline, Layout } from '@folio/stripes/components';
 import { actionsForRequest } from '../components/Flow/actionsByState';
 import { ActionAccordion, RequestInfo } from '../components/Flow/FlowViewComponents';
 
 const FlowRoute = ({ request, performAction }) => {
   const stripes = useStripes();
-  const defaultAccordionState = {
-    info: true,
-    actions: true
-  };
 
   const forCurrent = actionsForRequest(request);
-  const [sections, setSections] = useState(defaultAccordionState);
 
-  const handleSectionToggle = ({ id }) => {
-    setSections((prevSections) => ({
-      sections: {
-        ...prevSections,
-        [id]: !prevSections[id],
-      }
-    }));
+  const sectionProps = {
+    forCurrent,
+    performAction,
+    request,
   };
 
-  const handleAllSectionsToggle = (sct) => {
-    setSections(sct);
-  };
-
-  const getSectionProps = (id) => {
-    return {
-      forCurrent,
-      id,
-      onToggle: handleSectionToggle,
-      open: sections[id],
-      performAction,
-      request,
-    };
-  };
 
   const inventoryLink = (
     <a
@@ -59,17 +37,8 @@ const FlowRoute = ({ request, performAction }) => {
           {request.title}
         </Headline>
         {inventoryLink}
-        <Row end="xs">
-          <Col xs>
-            <ExpandAllButton
-              accordionStatus={sections}
-              id="clickable-expand-all"
-              onToggle={handleAllSectionsToggle}
-            />
-          </Col>
-        </Row>
-        <RequestInfo {...getSectionProps('info')} />
-        <ActionAccordion {...getSectionProps('actions')} />
+        <RequestInfo {...sectionProps} />
+        <ActionAccordion {...sectionProps} />
       </Layout>
     </AccordionSet>
   );

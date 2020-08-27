@@ -24,7 +24,7 @@ const RequestInfo = ({ id, request }) => {
 
   return (
     <Accordion
-      id={id}
+      id="requestInfo"
       label={<FormattedMessage id="ui-rs.flow.sections.requestInfo" />}
     >
       <Layout className="padding-top-gutter">

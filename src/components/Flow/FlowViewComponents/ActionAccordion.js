@@ -24,7 +24,7 @@ const ActionAccordion = ({ forCurrent, id, request, performAction }) => {
   return (
     stripes.hasPerm(`ui-${appName}.edit`) ?
       <Accordion
-        id={id}
+        id="Actions"
         label={<FormattedMessage id="ui-rs.flow.sections.actions" />}
       >
         <>
