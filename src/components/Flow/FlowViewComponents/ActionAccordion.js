@@ -22,11 +22,11 @@ const ActionAccordion = ({ forCurrent, id, request, performAction }) => {
       || primaryActions.Generic;
   }
   return (
-    <Accordion
-      id={id}
-      label={<FormattedMessage id="ui-rs.flow.sections.actions" />}
-    >
-      {stripes.hasPerm(`ui-${appName}.edit`) &&
+    stripes.hasPerm(`ui-${appName}.edit`) ?
+      <Accordion
+        id={id}
+        label={<FormattedMessage id="ui-rs.flow.sections.actions" />}
+      >
         <>
           {PrimaryAction &&
             <Layout className="padding-top-gutter">
@@ -40,8 +40,8 @@ const ActionAccordion = ({ forCurrent, id, request, performAction }) => {
             </Layout>
           }
         </>
-      }
-    </Accordion>
+      </Accordion> :
+      null
   );
 };
 

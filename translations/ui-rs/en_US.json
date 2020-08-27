@@ -92,11 +92,17 @@
   "flow.stacksSearching": "Pull slip printed - stacks searching",
   "flow.itemFound": "Item found - ready to ship",
   "flow.shippedToRequester": "Item shipped to requester",
-  "flow.viewInSharedIndex": "View in shared index",
   "flow.sections.actions": "Actions",
   "flow.sections.requestInfo": "Request information",
   "flow.sections.supplyInfo": "Supply information",
   "flow.sections.loanConditions": "Loan conditions",
+
+  "flow.info.updated": "Updated: {date}",
+  "flow.info.viewInSharedIndex": "View in shared index",
+  "flow.info.itemBarcode": "Item barcode",
+  "flow.info.dueDate": "Due date",
+  "flow.info.requester": "Requester",
+  "flow.info.supplier": "Supplier",
 
   "view.showTags": "Show tags",
   "view.showChat": "Show chat",
