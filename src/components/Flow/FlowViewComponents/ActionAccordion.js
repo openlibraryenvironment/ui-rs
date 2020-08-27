@@ -35,7 +35,7 @@ const ActionAccordion = ({ forCurrent, id, request, performAction }) => {
           }
           {forCurrent.moreActions.length > 0 &&
             <Layout className={`padding-top-gutter ${css.optionList} ${css.noBorderRadius}`}>
-              <strong>More options:</strong>
+              <strong><FormattedMessage id="ui-rs.flow.actions.moreOptions" /></strong>
               {renderNamedWithProps(forCurrent.moreActions, moreActions, { request, performAction }, moreActions.Generic)}
             </Layout>
           }

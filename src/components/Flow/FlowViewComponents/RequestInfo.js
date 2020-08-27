@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
@@ -20,6 +20,8 @@ const RequestInfo = ({ id, request }) => {
     );
   };
 
+  const location = useLocation();
+
   return (
     <Accordion
       id={id}
@@ -27,7 +29,17 @@ const RequestInfo = ({ id, request }) => {
     >
       <Layout className="padding-top-gutter">
         <Headline margin="none" size="large"><FormattedMessage id={`stripes-reshare.states.${request.state?.code}`} /></Headline>
-        <FormattedMessage id="ui-rs.flow.info.updated" values={{ date: intl.formatDate(request.lastUpdated) }} />
+        {`${intl.formatMessage({ id: 'ui-rs.flow.info.updated' }, { date: intl.formatDate(request.lastUpdated) })} `}
+        <Link to={{
+          pathname: location?.pathname?.replace('flow', 'details'),
+          search: location?.search,
+          state: {
+            scrollToAuditTrail: true
+          }
+        }}
+        >
+          <FormattedMessage id="ui-rs.flow.info.viewAuditLog" />
+        </Link>
       </Layout>
       <Layout className="padding-top-gutter">
         <Row>
