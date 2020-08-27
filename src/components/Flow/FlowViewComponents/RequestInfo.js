@@ -5,12 +5,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useStripes } from '@folio/stripes/core';
 import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
 
-import * as cards from '../cardsByRequest';
-import renderNamedWithProps from '../../../util/renderNamedWithProps';
-
-import css from './Flow.css';
-
-const RequestInfo = ({ forCurrent, id, request }) => {
+const RequestInfo = ({ id, request }) => {
   const stripes = useStripes();
   const intl = useIntl();
   const requester = request?.resolvedRequester?.owner;
