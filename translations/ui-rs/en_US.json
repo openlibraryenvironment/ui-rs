@@ -95,7 +95,7 @@
 
   "flow.info.updated": "Updated: {date}",
   "flow.info.viewInSharedIndex": "View in shared index",
-  "flow.info.viewAuditLog": "(view audit log)",
+  "flow.info.viewAuditLog": "(view audit trail)",
   "flow.info.itemBarcode": "Item barcode",
   "flow.info.dueDate": "Due date",
   "flow.info.requester": "Requester",

@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useStripes } from '@folio/stripes/core';
-import { Headline } from '@folio/stripes/components';
+import { Headline, Layout } from '@folio/stripes/components';
+
+import css from './Flow.css';
 
 const TitleAndSILink = ({ request }) => {
   const stripes = useStripes();
@@ -18,13 +20,13 @@ const TitleAndSILink = ({ request }) => {
   );
 
   return (
-    <>
-      <Headline margin="none" size="large" tag="h2" weight="regular">
+    <Layout className={css.title_headline}>
+      <Headline margin="none" size="xx-large" tag="h2" weight="regular">
         <strong>{`${request.hrid || request.id}: `}</strong>
         {request.title}
       </Headline>
       {inventoryLink}
-    </>
+    </Layout>
   );
 };
 
