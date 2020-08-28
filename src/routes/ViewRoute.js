@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { Button, ButtonGroup, Icon, IconButton, Layout, MessageBanner, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
+import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 import { Tags } from '@folio/stripes-erm-components';
 import { DirectLink } from '@folio/stripes-reshare';
 
@@ -18,7 +18,8 @@ import { actionsForRequest } from '../components/Flow/actionsByState';
 import { ActionProvider, ActionContext } from '../components/Flow/ActionContext';
 import AppNameContext from '../AppNameContext';
 import FlowRoute from './FlowRoute';
-import DetailsRoute from './DetailsRoute';
+import ViewPatronRequest from '../components/ViewPatronRequest';
+import ViewMessageBanners from '../components/ViewMessageBanners';
 import css from './ViewRoute.css';
 
 const subheading = (req, params) => {
@@ -128,20 +129,13 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
   const request = _.get(resource, 'records[0]');
 
   const forCurrent = actionsForRequest(request);
-  const requesterRequestedCancellation = resources?.selectedRecord?.records[0]?.requesterRequestedCancellation;
 
   return (
     <>
-      {requesterRequestedCancellation ?
-        <MessageBanner
-          type="warning"
-        >
-          <FormattedMessage id="ui-rs.actions.requesterRequestedCancellation" />
-        </MessageBanner> : null
-      }
       <Paneset>
         {/* TODO: The "Request" string is translated as ui-rs.view.title which we can use conveniently with a hook once react-intl is upgraded */}
         <Pane
+          centerContent
           paneTitle={`Request ${_.get(resources, 'selectedRecord.records[0].hrid')}`}
           paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), match.params)}
           padContent={false}
@@ -197,11 +191,14 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
             </AppNameContext.Consumer>
           )}
         >
-          <Layout className="centered" style={{ maxWidth: '80em' }}>
-            <ContextualMessageBanner />
-          </Layout>
+          {/*
+            * ContextualMessageBanner is for any contextual messages that are dismissible -- one at a time
+            * Any messages which are either dismissible OR not, and need to stack use ViewMessageBanners
+            */}
+          <ViewMessageBanners request={request} />
+          <ContextualMessageBanner />
           <Switch>
-            <Route path={`${match.path}/details`} render={() => <DetailsRoute request={request} />} />
+            <Route path={`${match.path}/details`} render={() => <ViewPatronRequest record={request} />} />
             <Route path={`${match.path}/flow`} render={() => <FlowRoute request={request} performAction={performAction} />} />
           </Switch>
         </Pane>

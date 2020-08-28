@@ -4,7 +4,7 @@ import initialToUpper from '../../util/initialToUpper';
  * relative to src/components/Flow).
  *
  * SOME_STATE: {
- *   cards: <array of names of components exported from the cardsByRequest directory>
+ *   flowComponents: <array of names of components exported from the FlowViewComponents directory>
  *   primaryAction: <name of component exported from the primaryActions directory>
  *   moreActions: <array of names of components exported from the moreActions directory>
  *   secondHeadline: <array of names of components exported from the secondHeadlines directory>
@@ -33,7 +33,7 @@ import initialToUpper from '../../util/initialToUpper';
 
 export const actionsByState = {
   default: {
-    cards: ['LoanConditions', 'Bibliographic', 'RequesterSupplier'],
+    flowComponents: ['TitleAndSILink', 'RequestInfo', 'ActionAccordion', 'LoanConditions'],
     primaryAction: null,
     moreActions: [],
   },

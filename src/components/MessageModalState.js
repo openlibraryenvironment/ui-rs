@@ -10,7 +10,7 @@
 
 import React, { createContext, useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Layout, MessageBanner } from '@folio/stripes/components';
 
 export const MessageModalContext = createContext();
@@ -77,8 +77,9 @@ export const useModal = () => {
   return [state.modal, setModal];
 };
 
-const ContextualMessageBanner = ({ intl }) => {
+export const ContextualMessageBanner = () => {
   const [msg, setMsg] = useMessage();
+  const intl = useIntl;
   if (!msg) return null;
   let values;
   if (msg.values) {
@@ -101,8 +102,3 @@ const ContextualMessageBanner = ({ intl }) => {
     </Layout>
   );
 };
-ContextualMessageBanner.propTypes = {
-  intl: PropTypes.object.isRequired,
-};
-const IntlContextualMessageBanner = injectIntl(ContextualMessageBanner);
-export { IntlContextualMessageBanner as ContextualMessageBanner };
