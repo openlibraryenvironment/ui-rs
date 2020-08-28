@@ -293,6 +293,8 @@
   "settings.notices.requestTokenHeader": "Request",
   "settings.notices.previewHeader": "Preview of notice template",
 
+  "settings.pullslipNotifications.new": "New",
+
   "settingsSection.z3950": "Z39.50 settings",
   "settingsSection.sharedIndex": "Shared index settings",
   "settingsSection.localNCIP": "Local NCIP settings",
