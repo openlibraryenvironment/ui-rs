@@ -33,7 +33,7 @@ import initialToUpper from '../../util/initialToUpper';
 
 export const actionsByState = {
   default: {
-    flowComponents: ['TitleAndSILink', 'RequestInfo', 'ActionAccordion'],
+    flowComponents: ['TitleAndSILink', 'RequestInfo', 'ActionAccordion', 'LoanConditions'],
     primaryAction: null,
     moreActions: [],
   },

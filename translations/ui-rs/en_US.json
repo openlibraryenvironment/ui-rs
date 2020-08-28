@@ -11,10 +11,6 @@
   "yes": "Yes",
   "no": "No",
 
-  "loanConditions": "Loan Conditions",
-  "loanConditions.condition": "Condition: ",
-  "loanConditions.note": "Note: ",
-
   "patronrequests.id": "Request Id",
   "patronrequests.isRequester": "Requester?",
   "patronrequests.dateCreated": "Date Created",
@@ -106,6 +102,11 @@
   "flow.info.supplier": "Supplier",
 
   "flow.actions.moreOptions": "More options",
+
+  "flow.loanConditions": "Loan Conditions",
+  "flow.loanConditions.condition": "Loan condition",
+  "flow.loanConditions.note": "Note",
+  "flow.loanConditions.dateReceived": "Date received",
 
   "view.showTags": "Show tags",
   "view.showChat": "Show chat",
