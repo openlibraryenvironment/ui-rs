@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
 
-const RequestInfo = ({ id, request }) => {
+const RequestInfo = ({ request }) => {
   const intl = useIntl();
   const requester = request?.resolvedRequester?.owner;
   const supplier = request?.resolvedSupplier?.owner;
@@ -62,7 +62,6 @@ const RequestInfo = ({ id, request }) => {
 };
 
 RequestInfo.propTypes = {
-  id: PropTypes.string.isRequired,
   request: PropTypes.object.isRequired,
 };
 

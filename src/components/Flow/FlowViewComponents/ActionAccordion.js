@@ -12,7 +12,7 @@ import css from './Flow.css';
 import AppNameContext from '../../../AppNameContext';
 
 
-const ActionAccordion = ({ forCurrent, id, request, performAction }) => {
+const ActionAccordion = ({ forCurrent, request, performAction }) => {
   const stripes = useStripes();
   const appName = useContext(AppNameContext);
 
@@ -46,7 +46,6 @@ const ActionAccordion = ({ forCurrent, id, request, performAction }) => {
 };
 
 ActionAccordion.propTypes = {
-  id: PropTypes.string.isRequired,
   forCurrent: PropTypes.object.isRequired,
   request: PropTypes.object.isRequired,
   performAction: PropTypes.func.isRequired,
