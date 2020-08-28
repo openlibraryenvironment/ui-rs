@@ -6,7 +6,6 @@ import renderNamedWithProps from '../util/renderNamedWithProps';
 import * as flowViewComponents from '../components/Flow/FlowViewComponents';
 
 const FlowRoute = ({ request, performAction }) => {
-
   const forCurrent = actionsForRequest(request);
 
   const sectionProps = {
