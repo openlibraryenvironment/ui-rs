@@ -168,6 +168,8 @@
   "actions.wrongId": "No action performed, scanned request does not match",
 
   "actions.requesterRequestedCancellation": "The requester has requested cancellation of this request. Please respond.",
+  "actions.requestPendingLoanConditions": "<strong>Loan condition:</strong> The request has pending loan condition(s)",
+  "actions.requestAcceptedLoanConditions": "<strong>Loan condition:</strong> The request has accepted loan condition(s)",
 
   "actions.requesterAgreeConditions": "Agree to loan conditions",
   "actions.requesterAgreeConditions.success": "Successfully sent agreement to loan conditions",
