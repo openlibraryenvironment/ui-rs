@@ -6,12 +6,20 @@ import { FormattedMessage } from 'react-intl';
 const ViewMessageBanners = ({ request }) => {
   return (
     <>
-      {request.requesterRequestedCancellation ?
+      {request?.requesterRequestedCancellation ?
         <MessageBanner
           type="warning"
         >
           <FormattedMessage id="ui-rs.actions.requesterRequestedCancellation" />
-        </MessageBanner> : null}
+        </MessageBanner> : null
+      }
+      {request?.requesterRequestedCancellation ?
+        <MessageBanner
+          type="warning"
+        >
+          <FormattedMessage id="ui-rs.actions.requesterRequestedCancellation" />
+        </MessageBanner> : null
+      }
     </>
   );
 };

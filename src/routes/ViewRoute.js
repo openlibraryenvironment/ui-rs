@@ -191,7 +191,11 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
             </AppNameContext.Consumer>
           )}
         >
-          <ViewMessageBanners />
+          {/*
+            * ContextualMessageBanner is for any contextual messages that are dismissible -- one at a time
+            * Any messages which are either dismissible OR not, and need to stack use ViewMessageBanners
+            */}
+          <ViewMessageBanners request={request} />
           <ContextualMessageBanner />
           <Switch>
             <Route path={`${match.path}/details`} render={() => <ViewPatronRequest record={request} />} />

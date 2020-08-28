@@ -10,7 +10,7 @@
 
 import React, { createContext, useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Layout, MessageBanner } from '@folio/stripes/components';
 
 export const MessageModalContext = createContext();

@@ -24,7 +24,8 @@ const LoanConditions = (props) => {
     const conditionFormatter = {
       code: cond => formatConditionCode(cond, formatMessage),
       note: cond => formatConditionNote(cond),
-      dateCreated: cond => formatDate(cond.dateCreated)
+      dateCreated: cond => formatDate(cond.dateCreated),
+      accepted: cond => cond.accepted ? <FormattedMessage id="ui-rs.flow.loanConditions.status.accepted" /> : <FormattedMessage id="ui-rs.flow.loanConditions.status.pending" />}
     };
 
     return (
@@ -37,10 +38,11 @@ const LoanConditions = (props) => {
             code: <FormattedMessage id="ui-rs.flow.loanConditions.condition" />,
             note: <FormattedMessage id="ui-rs.flow.loanConditions.note" />,
             dateCreated: <FormattedMessage id="ui-rs.flow.loanConditions.dateReceived" />,
+            accepted: <FormattedMessage id="ui-rs.flow.loanConditions.status" />,
           }}
           contentData={relevantConditions}
           formatter={conditionFormatter}
-          visibleColumns={['code', 'dateCreated', 'note']}
+          visibleColumns={['code', 'dateCreated', 'accepted', 'note']}
         />
       </Accordion>
     );
