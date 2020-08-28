@@ -29,7 +29,8 @@ const ViewMessageBanners = ({ request }) => {
           <SafeHTMLMessage id="ui-rs.actions.requestPendingLoanConditions" />
         </MessageBanner> : null
       }
-      {relevantAcceptedConditions.length > 0 ?
+      { /* It's not particularly useful to show two banners when there is a pending AND accepted request */}
+      {relevantAcceptedConditions.length > 0 && relevantPendingConditions.length === 0 ?
         <MessageBanner
           type="success"
         >
