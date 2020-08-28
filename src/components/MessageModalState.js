@@ -79,7 +79,7 @@ export const useModal = () => {
 
 export const ContextualMessageBanner = () => {
   const [msg, setMsg] = useMessage();
-  const intl = useIntl;
+  const intl = useIntl();
   if (!msg) return null;
   let values;
   if (msg.values) {
