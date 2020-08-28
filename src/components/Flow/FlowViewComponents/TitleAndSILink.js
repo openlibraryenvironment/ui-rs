@@ -11,7 +11,7 @@ const TitleAndSILink = ({ request }) => {
     <a
       target="_blank"
       rel="noopener noreferrer"
-      href={`${stripes.config.sharedIndexUI}/inventory/view/${request.id}`}
+      href={`${stripes.config.sharedIndexUI}/inventory/view/${request.systemInstanceIdentifier}`}
     >
       <FormattedMessage id="ui-rs.flow.info.viewInSharedIndex" />
     </a>
