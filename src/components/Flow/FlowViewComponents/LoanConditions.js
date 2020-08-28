@@ -25,7 +25,7 @@ const LoanConditions = (props) => {
       code: cond => formatConditionCode(cond, formatMessage),
       note: cond => formatConditionNote(cond),
       dateCreated: cond => formatDate(cond.dateCreated),
-      accepted: cond => cond.accepted ? <FormattedMessage id="ui-rs.flow.loanConditions.status.accepted" /> : <FormattedMessage id="ui-rs.flow.loanConditions.status.pending" />}
+      accepted: cond => (cond.accepted ? <FormattedMessage id="ui-rs.flow.loanConditions.status.accepted" /> : <FormattedMessage id="ui-rs.flow.loanConditions.status.pending" />)
     };
 
     return (
