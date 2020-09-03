@@ -77,9 +77,9 @@ class ViewDirectoryEntry extends React.Component {
 
   state = {
     sectionsShared: {
-      directoryEntryInfo: false,
-      addresses: false,
-      services: true,
+      directoryEntryInfo: true,
+      contactInformation: true,
+      services: false,
       customProperties: false,
       developerInfo: false,
     },
