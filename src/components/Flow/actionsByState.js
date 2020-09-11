@@ -43,6 +43,9 @@ export const actionsByState = {
   REQ_IDLE:{
     primaryAction: null,
   },
+  REQ_INVALID_PATRON:{
+    primaryAction: null,
+  },
   RES_PENDING_CONDITIONAL_ANSWER: {
     primaryAction: 'SupplierMarkConditionsAgreed',
   },
