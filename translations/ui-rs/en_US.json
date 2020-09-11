@@ -319,7 +319,6 @@
   "settingName.lastResortLenders": "Lenders of last resort (Comma-separated list of symbols)",
   "settingName.requestIdPrefix": "Request ID prefix",
 
-  "settingName.borrowerCheck": "Borrower check",
 
   "settingName.ncipServerAddress": "NCIP server address",
   "settingName.ncipAppProfile": "NCIP app profile",
@@ -327,6 +326,10 @@
   "settingName.ncipDisabled": "NCIP integration",
 
   "settingName.hostLmsIntegration": "Host LMS integration",
+  "settingName.borrowerCheck": "Borrower check",
+  "settingName.acceptItem": "Accept item method",
+  "settingName.checkInItem": "Check in item method",
+  "settingName.checkOutItem": "Check out item method",
   
   "settingName.autoResponderCancel": "Cancellation auto responder",
   "settingName.autoResponderStatus": "Auto responder status",
