@@ -293,6 +293,15 @@
   "settings.notices.requestTokenHeader": "Request",
   "settings.notices.previewHeader": "Preview of notice template",
 
+  "settings.noticePolicies.active": "Active",
+  "settings.noticePolicies.addNotice": "Add notice",
+  "settings.noticePolicies.description": "Policy description",
+  "settings.noticePolicies.name": "Policy name",
+  "settings.noticePolicies.notice": "Notice",
+  "settings.noticePolicies.notices": "Notices",
+  "settings.noticePolicies.realTime": "Send in real time",
+  "settings.noticePolicies.template": "Template",
+
   "settings.pullslipNotifications.new": "New",
 
   "settingsSection.z3950": "Z39.50 settings",
@@ -305,7 +314,8 @@
   "settingsSection.chat": "Chat settings",
   "settingsSection.iso18626": "Custom ISO18626 settings",
   "settingsSection.pullslipNotifications": "Pull slip notifications",
-  "settingsSection.notices": "Notices",
+  "settingsSection.notices": "Notice Templates",
+  "settingsSection.noticePolicies": "Notice Policies",
 
   "settingName.settingLoading": "Setting Name Loading",
   "settingName.sharedIndexBaseUrl": "Shared index base url",

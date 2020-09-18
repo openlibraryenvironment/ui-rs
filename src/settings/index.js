@@ -8,6 +8,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import SettingPage from './SettingPage';
 import { CustomISO18626 } from './settingsComponents';
 import Notices from './notices';
+import NoticePolicies from './noticePolicies';
 import {
   PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
 } from './pullslipNotifications';
@@ -55,6 +56,11 @@ class ResourceSharingSettings extends React.Component {
       route: 'notices',
       id: 'notices',
       component: Notices,
+    },
+    {
+      route: 'notice-policies',
+      id: 'noticePolicies',
+      component: NoticePolicies,
     },
     {
       route: 'pullslip-notifications',
