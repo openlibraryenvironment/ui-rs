@@ -21,7 +21,7 @@ const ViewPatronRequest = ({ record, stripes }) => {
 
   const scrollToRef = (ref) => {
     return (
-      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      ref.current?.scrollIntoView({ behavior: 'auto', block: 'start' })
     );
   };
   const auditRef = useRef(null);

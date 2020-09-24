@@ -63,6 +63,7 @@ export default class SettingField extends React.Component {
     if (setting.settingType === 'String') {
       return (
         <Field
+          autoFocus
           name={`${this.props.input.name}`}
           component={TextField}
           parse={v => v} // Lets us send an empty string instead of 'undefined'
@@ -71,6 +72,7 @@ export default class SettingField extends React.Component {
     } else if (setting.settingType === 'Password') {
       return (
         <Field
+          autoFocus
           name={`${this.props.input.name}`}
           type="password"
           component={TextField}
