@@ -328,6 +328,7 @@
   "settingName.defaultRequestSymbol": "Default request symbol",
   "settingName.lastResortLenders": "Lenders of last resort (Comma-separated list of symbols)",
   "settingName.requestIdPrefix": "Request ID prefix",
+  "settingName.defaultInstitutionalPatronId": "Default institutional patron ID",
 
 
   "settingName.ncipServerAddress": "NCIP server address",
