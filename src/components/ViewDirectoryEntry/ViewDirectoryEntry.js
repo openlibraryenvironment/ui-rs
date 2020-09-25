@@ -37,11 +37,6 @@ import {
 
 class ViewDirectoryEntry extends React.Component {
   static manifest = Object.freeze({
-    custprops: {
-      type: 'okapi',
-      path: 'directory/custprops',
-      shouldRefresh: () => false,
-    },
     selectedRecord: {
       type: 'okapi',
       path: 'directory/entry/:{id}',
@@ -62,9 +57,6 @@ class ViewDirectoryEntry extends React.Component {
     onEdit: PropTypes.func,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     resources: PropTypes.shape({
-      custprops: PropTypes.shape({
-        records: PropTypes.array,
-      }),
       query: PropTypes.shape({
         layer: PropTypes.string,
       }),
@@ -104,16 +96,6 @@ class ViewDirectoryEntry extends React.Component {
     this.handleToggleHelper('tags', mutator, resources);
   };
 
-
-  getCustProps() {
-    const custprops = this.props.resources?.custprops?.records || [];
-    const arrayToObject = (array, keyField) => array.reduce((obj, item) => {
-      obj[item[keyField]] = item;
-      return obj;
-    }, {});
-    return arrayToObject(custprops, 'name');
-  }
-
   getInitialValues = () => {
     const record = Object.assign({}, this.getRecord());
     return record;
@@ -130,7 +112,6 @@ class ViewDirectoryEntry extends React.Component {
       record: this.getRecord(),
       onToggle: this.handleSectionToggle,
       stripes: this.props.stripes,
-      custprops: this.getCustProps(),
     };
   }
 
@@ -139,6 +120,10 @@ class ViewDirectoryEntry extends React.Component {
       sectionsShared: {
         ...prevState.sectionsShared,
         [id]: !prevState.sectionsShared[id],
+      },
+      sectionsLocal: {
+        ...prevState.sectionsLocal,
+        [id]: !prevState.sectionsLocal[id],
       }
     }));
   }

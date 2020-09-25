@@ -8,58 +8,59 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-class LocalDirectoryEntryInfo extends React.Component {
-  static propTypes = {
-    record: PropTypes.object,
-    id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
-    custprops: PropTypes.object,
-  };
+const renderCustProp = (custprop) => {
+  const isRefdata = custprop.type?.type === 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata';
+  return (
+    <Col xs={4}>
+      <KeyValue
+        label={custprop.type?.label}
+        value={isRefdata ? custprop.value?.label : custprop.value}
+      />
+    </Col>
+  );
+};
 
-  render() {
-    const { record, custprops } = this.props;
-    return (
-      <Accordion
-        id={this.props.id}
-        label={<FormattedMessage id="ui-directory.information.local.heading.directoryEntry" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
-      >
-        <Row>
-          {custprops.local_institutionalPatronId ?
-            <Col xs={6}>
-              <KeyValue
-                label={custprops.local_institutionalPatronId.label}
-                value={record.customProperties.local_institutionalPatronId ? record.customProperties.local_institutionalPatronId[0].value : '-'}
-              />
-            </Col>
-            : null
-          }
-          {custprops.local_widget_2 ?
-            <Col xs={6}>
-              <KeyValue
-                label={custprops.local_widget_2.label}
-                value={record.customProperties.local_widget_2 ? record.customProperties.local_widget_2[0].value : '-'}
-              />
-            </Col>
-            : null
-          }
-        </Row>
-        <Row>
-          {custprops.local_widget_3 ?
-            <Col xs={6}>
-              <KeyValue
-                label={custprops.local_widget_3.label}
-                value={record.customProperties.local_widget_3 ? record.customProperties.local_widget_3[0].value : '-'}
-              />
-            </Col>
-            : null
-          }
-        </Row>
-      </Accordion>
-    );
+const renderCustPropRow = (custprops) => {
+  return (
+    <Row>
+      {custprops.map(custprop => renderCustProp(custprop))}
+    </Row>
+  );
+};
+
+const renderCustProps = (custprops) => {
+  // Render the custprops in rows of 3 cols
+  const len = custprops.length;
+  const numOfRows = Math.ceil(len / 3);
+  const slicedArray = [];
+  for (let i = 0; i < numOfRows; i++) {
+    const endOfSlice = (i + 1) * 3 < len ? (i + 1) * 3 : len;
+    slicedArray.push(custprops.slice(i * 3, endOfSlice));
   }
-}
+  return slicedArray.map(slice => renderCustPropRow(slice));
+};
+
+
+const LocalDirectoryEntryInfo = (props) => {
+  const { record } = props;
+  const custprops = Object.values(record?.customProperties ? record?.customProperties : {}).map(cp => (cp?.[0] ? cp?.[0] : {}));
+  return (
+    <Accordion
+      id={props.id}
+      label={<FormattedMessage id="ui-directory.information.local.heading.directoryEntry" />}
+      open={props.open}
+      onToggle={props.onToggle}
+    >
+      {renderCustProps(custprops)}
+    </Accordion>
+  );
+};
+
+LocalDirectoryEntryInfo.propTypes = {
+  record: PropTypes.object,
+  id: PropTypes.string,
+  onToggle: PropTypes.func,
+  open: PropTypes.bool,
+};
 
 export default LocalDirectoryEntryInfo;
