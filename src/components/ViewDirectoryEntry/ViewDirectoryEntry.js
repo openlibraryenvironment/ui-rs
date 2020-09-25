@@ -32,7 +32,6 @@ import {
 
 import {
   LocalDirectoryEntryInfo,
-  LocalCustomProperties,
 } from './sectionsLocal';
 
 class ViewDirectoryEntry extends React.Component {
@@ -77,7 +76,6 @@ class ViewDirectoryEntry extends React.Component {
     },
     sectionsLocal: {
       localDirectoryEntryInfo: false,
-      localCustomProperties: false,
     },
     tab: 'shared',
   }
@@ -303,7 +301,6 @@ class ViewDirectoryEntry extends React.Component {
             </Row>
             <AccordionSet accordionStatus={this.state.sectionsLocal}>
               <LocalDirectoryEntryInfo id="localDirectoryEntryInfo" {...sectionProps} />
-              <LocalCustomProperties id="localCustomProperties" {...sectionProps} />
             </AccordionSet>
           </React.Fragment>
         }

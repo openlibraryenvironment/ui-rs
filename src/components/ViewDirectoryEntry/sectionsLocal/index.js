@@ -1,3 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
 export { default as LocalDirectoryEntryInfo } from './LocalDirectoryEntryInfo';
-export { default as LocalCustomProperties } from './LocalCustomProperties';
