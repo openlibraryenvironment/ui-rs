@@ -30,7 +30,7 @@ const appDetails = {
     title: 'Requests',
     visibleColumns: [
       'flags', 'id',
-      'dateCreated', 'title', 'patronIdentifier', 'state', 'serviceType',
+      'dateCreated', 'title', 'selectedItemBarcode', 'patronIdentifier', 'state', 'serviceType',
       'supplyingInstitutionSymbol',
     ],
     extraFilter: 'r.true',
