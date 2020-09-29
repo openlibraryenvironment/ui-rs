@@ -418,7 +418,6 @@ class PatronRequestsRoute extends React.Component {
       value: x.value,
     }));
     if (appName === 'supply') searchableIndexes.splice(3, 2);
-    if (appName === 'request') searchableIndexes.splice(9, 1);
 
     return (
       <React.Fragment>
