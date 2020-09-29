@@ -1,7 +1,8 @@
 # Change history for ui-rs
 
-## 1.1.0 (IN PROGRESS)
+## [1.1.0](https://github.com/openlibraryenvironment/ui-rs/tree/v1.1.0) (2020-08-24)
 
+* Initial release
 * Support "sub-applications" such as `ui-supply` by the top-level component determining the app-name from the route and passing it as the `appName` prop to the top-level and settings components.
 * Support creation of new patron-request records from the UI (PR-264).
 
