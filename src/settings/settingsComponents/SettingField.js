@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
-import snakeToCamel from '../../util/snakeToCamel';
-
+import { FormattedMessage } from 'react-intl';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   Button,
   Card,
@@ -11,10 +11,9 @@ import {
   Select,
   TextField,
 } from '@folio/stripes/components';
-
-import { FormattedMessage } from 'react-intl';
-
 import { RefdataButtons } from '@folio/stripes-reshare';
+import snakeToCamel from '../../util/snakeToCamel';
+import css from './SettingField.css';
 
 export default class SettingField extends React.Component {
   static propTypes = {
@@ -150,12 +149,7 @@ export default class SettingField extends React.Component {
   render() {
     const { settingData } = this.props;
     const currentSetting = settingData?.currentSetting;
-    let setting;
-    if (currentSetting) {
-      setting = currentSetting;
-    } else {
-      setting = {};
-    }
+    const setting = currentSetting || {};
 
     let renderFunction;
     if (this.state.editing === false) {
@@ -164,15 +158,23 @@ export default class SettingField extends React.Component {
       renderFunction = this.renderEditSettingValue(setting);
     }
 
+    const camelKey = snakeToCamel(setting.key);
     return (
       <Card
-        headerStart={currentSetting ? <FormattedMessage id={`ui-rs.settingName.${snakeToCamel(currentSetting.key)}`} /> : <FormattedMessage id="ui-rs.settingName.settingLoading" />}
+        headerStart={currentSetting ? <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> : <FormattedMessage id="ui-rs.settingName.settingLoading" />}
         headerEnd={this.renderEditButton()}
         roundedBorder
       >
         <Row>
           <Col xs={12}>
             {renderFunction}
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <div className={css.help}>
+              {<SafeHTMLMessage id={`ui-rs.settingName.${camelKey}.help`} />}
+            </div>
           </Col>
         </Row>
       </Card>

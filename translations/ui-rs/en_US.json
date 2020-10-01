@@ -343,7 +343,9 @@
   "settingName.checkOutItem": "Check out item method",
   
   "settingName.autoResponderCancel": "Cancellation auto responder",
+  "settingName.autoResponderCancel.help": "<p>Affects: Supply</p><ul><li>On: The cancellation auto-responder will automatically approve cancellation requests if the item has not yet shipped.</li><li>Off: All cancellation requests must receive a manual response.</li></ul>",
   "settingName.autoResponderStatus": "Auto responder status",
+  "settingName.autoResponderStatus.help": "<p>Affects: Supply</p><p>The auto-responder will respond to new requests based on a real-time availability check of your local ILS. If there is at least one available item, the auto-responder will respond “expects to supply.” If there are no available items, it will respond “Cannot supply.”</p><ul><li>On for found items: If there is at least one available item, the auto-responder will respond “expects to supply.”</li><li>On auto not found: If there is at least one available item, the auto-responder will respond “expects to supply.”  AND if there are no available items, it will respond “Cannot supply.”</li></ul>",
 
   "settingName.chatAutoRead": "Auto mark as read",
   "filter.state": "State",
