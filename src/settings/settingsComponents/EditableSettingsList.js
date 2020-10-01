@@ -25,12 +25,14 @@ class EditableSettingsList extends React.Component {
 
   render() {
     const {
-      data
+      data,
+      settingSection,
+      initialValues,
     } = this.props;
     return (
       <Form
         onSubmit={this.handleSave}
-        initialValues={this.props.initialValues}
+        initialValues={initialValues}
         enableReinitialize
         keepDirtyOnReinitialize
         mutators={{
@@ -45,8 +47,8 @@ class EditableSettingsList extends React.Component {
         {({ handleSubmit, mutators }) => (
           <Pane
             defaultWidth="fill"
-            id={`settings-${this.props.settingSection}`}
-            paneTitle={<FormattedMessage id={`ui-rs.settingsSection.${this.props.settingSection}`} />}
+            id={`settings-${settingSection}`}
+            paneTitle={<FormattedMessage id={`ui-rs.settingsSection.${settingSection}`} />}
           >
             <form onSubmit={handleSubmit}>
               <FieldArray
@@ -57,7 +59,7 @@ class EditableSettingsList extends React.Component {
                 data={{
                   refdatavalues: data?.refdatavalues
                 }}
-                initialValues={this.props.initialValues}
+                initialValues={initialValues}
               />
             </form>
           </Pane>
