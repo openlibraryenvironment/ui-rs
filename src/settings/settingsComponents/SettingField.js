@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   Button,
   Card,
@@ -14,6 +13,32 @@ import {
 import { RefdataButtons } from '@folio/stripes-reshare';
 import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
+
+
+function renderHelpText(key) {
+  return (
+    <div className={css.help}>
+      {
+        <FormattedMessage
+          id={`ui-rs.settingName.${key}.help`}
+          values={{
+            b: (chunks) => <b>{chunks}</b>,
+            i: (chunks) => <i>{chunks}</i>,
+            em: (chunks) => <em>{chunks}</em>,
+            strong: (chunks) => <strong>{chunks}</strong>,
+            span: (chunks) => <span>{chunks}</span>,
+            div: (chunks) => <div>{chunks}</div>,
+            p: (chunks) => <p>{chunks}</p>,
+            ul: (chunks) => <ul>{chunks}</ul>,
+            ol: (chunks) => <ol>{chunks}</ol>,
+            li: (chunks) => <li>{chunks}</li>,
+          }}
+        />
+      }
+    </div>
+  );
+}
+
 
 export default class SettingField extends React.Component {
   static propTypes = {
@@ -172,9 +197,7 @@ export default class SettingField extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <div className={css.help}>
-              {<SafeHTMLMessage id={`ui-rs.settingName.${camelKey}.help`} />}
-            </div>
+            {renderHelpText(camelKey)}
           </Col>
         </Row>
       </Card>
