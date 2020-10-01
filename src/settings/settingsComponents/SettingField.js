@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
+import snakeToCamel from '../../util/snakeToCamel';
 
 import {
   Button,
@@ -146,17 +147,6 @@ export default class SettingField extends React.Component {
       .then(() => this.setState({ editing: false }));
   }
 
-  snakeToCamel = (snakeStr) => {
-    const camelStr = snakeStr.replace(
-      /([-_][a-z])/g,
-      (group) => group.toUpperCase()
-        .replace('-', '')
-        .replace('_', '')
-    );
-    return (camelStr);
-  }
-
-
   render() {
     const { settingData } = this.props;
     const currentSetting = settingData?.currentSetting;
@@ -176,7 +166,7 @@ export default class SettingField extends React.Component {
 
     return (
       <Card
-        headerStart={currentSetting ? <FormattedMessage id={`ui-rs.settingName.${this.snakeToCamel(currentSetting.key)}`} /> : <FormattedMessage id="ui-rs.settingName.settingLoading" />}
+        headerStart={currentSetting ? <FormattedMessage id={`ui-rs.settingName.${snakeToCamel(currentSetting.key)}`} /> : <FormattedMessage id="ui-rs.settingName.settingLoading" />}
         headerEnd={this.renderEditButton()}
         roundedBorder
       >
