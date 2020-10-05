@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import {
   Button,
   Card,
@@ -15,12 +15,28 @@ import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
 
 
-function renderHelpText(key) {
-  return (
-    <div className={css.help}>
-      {
+class SettingField extends React.Component {
+  static propTypes = {
+    settingData: PropTypes.shape({
+      refdatavalues: PropTypes.arrayOf(PropTypes.object),
+      currentSetting: PropTypes.object
+    }),
+    input: PropTypes.object,
+    onSave: PropTypes.func
+  };
+
+  state = {
+    editing: false
+  };
+
+  renderHelpText = (key) => {
+    const id = `ui-rs.settingName.${key}.help`;
+    if (!this.props.intl.messages[id]) return undefined;
+
+    return (
+      <div className={css.help}>
         <FormattedMessage
-          id={`ui-rs.settingName.${key}.help`}
+          id={id}
           values={{
             b: (chunks) => <b>{chunks}</b>,
             i: (chunks) => <i>{chunks}</i>,
@@ -34,24 +50,8 @@ function renderHelpText(key) {
             li: (chunks) => <li>{chunks}</li>,
           }}
         />
-      }
-    </div>
-  );
-}
-
-
-export default class SettingField extends React.Component {
-  static propTypes = {
-    settingData: PropTypes.shape({
-      refdatavalues: PropTypes.arrayOf(PropTypes.object),
-      currentSetting: PropTypes.object
-    }),
-    input: PropTypes.object,
-    onSave: PropTypes.func
-  };
-
-  state = {
-    editing: false
+      </div>
+    );
   };
 
   renderSettingValue = (setting) => {
@@ -197,10 +197,12 @@ export default class SettingField extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            {renderHelpText(camelKey)}
+            {this.renderHelpText(camelKey)}
           </Col>
         </Row>
       </Card>
     );
   }
 }
+
+export default injectIntl(SettingField);
