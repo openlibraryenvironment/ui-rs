@@ -101,6 +101,7 @@
         "subPermissions": [
           "settings.enabled",
           "rs.settings.get",
+          "rs.settings.put",
           "rs.refdata.get"
         ],
         "visible": true
