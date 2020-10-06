@@ -62,7 +62,7 @@ class PullslipNotifications extends React.Component {
         paneTitle={<FormattedMessage id="ui-rs.settingsSection.pullslipNotifications" />}
         lastMenu={(
           <Button marginBottom0 buttonStyle="primary" to="pullslip-notifications/new">
-            <FormattedMessage id="ui-rs.pullslipNotifications.new" />
+            <FormattedMessage id="ui-rs.settings.pullslipNotifications.new" />
           </Button>
         )}
       >
