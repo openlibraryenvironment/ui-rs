@@ -56,13 +56,13 @@ class ResourceSharingSettings extends React.Component {
       route: 'notices',
       id: 'notices',
       component: Notices,
-      perm: 'settings.rs.notices',
+      perm: 'ui-rs.settings.notices',
     },
     {
       route: 'notice-policies',
       id: 'noticePolicies',
       component: NoticePolicies,
-      perm: 'settings.rs.notices',
+      perm: 'ui-rs.settings.notices',
     },
     {
       route: 'pullslip-notifications',

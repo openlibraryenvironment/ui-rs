@@ -23,9 +23,9 @@ const Notices = (props) => (
     }}
     nameKey="name"
     permissions={{
-      put: 'settings.rs.notices',
-      post: 'settings.rs.notices',
-      delete: 'settings.rs.notices',
+      put: 'ui-rs.settings.notices',
+      post: 'ui-rs.settings.notices',
+      delete: 'ui-rs.settings.notices',
     }}
     enableDetailsActionMenu
     editElement="both"

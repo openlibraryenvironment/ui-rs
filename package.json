@@ -106,7 +106,7 @@
         "visible": true
       },
       {
-        "permissionName": "settings.rs.notices",
+        "permissionName": "ui-rs.settings.notices",
         "displayName": "Settings (resource-sharing): Can create, edit and remove notices and notice policies",
         "subPermissions": [
           "settings.rs.enabled",
