@@ -56,11 +56,13 @@ class ResourceSharingSettings extends React.Component {
       route: 'notices',
       id: 'notices',
       component: Notices,
+      perm: 'settings.rs.notices',
     },
     {
       route: 'notice-policies',
       id: 'noticePolicies',
       component: NoticePolicies,
+      perm: 'settings.rs.notices',
     },
     {
       route: 'pullslip-notifications',
@@ -79,6 +81,7 @@ class ResourceSharingSettings extends React.Component {
       route: page.route,
       label: intl.formatMessage({ id: `ui-rs.settingsSection.${page.id}` }),
       component: page.component,
+      perm: page.perm,
     }));
 
     const dynamic = sections.map(section => ({
