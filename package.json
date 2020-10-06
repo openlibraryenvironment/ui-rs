@@ -118,6 +118,16 @@
           "templates.item.delete"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-rs.settings.pullslip-notifications",
+        "displayName": "Settings (resource-sharing): Can create, edit and remove pullslip notifications",
+        "subPermissions": [
+          "settings.rs.enabled",
+          "rs.hostlmslocations",
+          "rs.timers"
+        ],
+        "visible": true
       }
     ]
   }
