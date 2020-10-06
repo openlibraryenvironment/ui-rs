@@ -99,7 +99,9 @@
         "permissionName": "settings.rs.enabled",
         "displayName": "Settings (resource-sharing): display list of settings pages",
         "subPermissions": [
-          "settings.enabled"
+          "settings.enabled",
+          "rs.settings.get",
+          "rs.refdata.get"
         ],
         "visible": true
       },
