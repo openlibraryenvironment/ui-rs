@@ -12,6 +12,7 @@ const ListOfEmailAddress = (props) => <FieldArray
   addLabel={props.addLabel}
   component={RepeatableField}
   onAdd={fields => fields.push('')}
+  hasMargin={false}
   renderField={field => (
     <Field
       component={TextboxOfTypeEmail}

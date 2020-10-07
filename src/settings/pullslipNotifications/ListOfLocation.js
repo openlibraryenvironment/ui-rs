@@ -10,6 +10,7 @@ const ListOfLocation = (props) => <FieldArray
   addLabel={props.addLabel}
   component={RepeatableField}
   onAdd={fields => fields.push('')}
+  hasMargin={false}
   renderField={field => (
     <Field
       name={field}

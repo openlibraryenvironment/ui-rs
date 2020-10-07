@@ -16,6 +16,7 @@ const ListOfTimepicker = (props) => <FieldArray
   addLabel={props.addLabel}
   component={RepeatableField}
   onAdd={fields => fields.push('')}
+  hasMargin={false}
   renderField={field => (
     <Field
       component={(props2) => <Timepicker {...props2} timeZone={props.timeZone} />}
