@@ -133,5 +133,10 @@
   "information.local.heading.display-text": "The information in this section is managed by your institution, and any data added or edited here will be visible to your institution only.",
   "information.local.custPropValue": "Value",
 
-  "errors.custPropsNoteWithoutValue": "A value must be set for this custom property in order to save a note"
+  "errors.custPropsNoteWithoutValue": "A value must be set for this custom property in order to save a note",
+
+  "permission.module.directory.enabled": "UI: Directory module is enabled",
+  "permission.settings.directory.enabled": "Settings (directory): display list of settings pages",
+  "permission.directory.edit-self": "Directory: edit the directory entry of the present institution",
+  "permission.directory.edit-all": "Directory: edit all directory entries"
 }
