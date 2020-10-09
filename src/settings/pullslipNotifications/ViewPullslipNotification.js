@@ -115,19 +115,13 @@ class ViewPullslipNotification extends React.Component {
           headerEnd={this.headerEnd(record)}
         >
           <Row>
-            <Col xs={3}>
+            <Col xs={4}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.pullslipNotification.status" />}
                 value={<FormattedMessage id={`ui-rs.${record.status ? 'yes' : 'no'}`} />}
               />
             </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-rs.pullslipNotification.times" />}
-                value={formattedTimes}
-              />
-            </Col>
-            <Col xs={6}>
+            <Col xs={4}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.pullslipNotification.days" />}
                 value={record.days.map(code => dayname[code]).join(', ')}
@@ -135,13 +129,19 @@ class ViewPullslipNotification extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs={6}>
+            <Col xs={4}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.pullslipNotification.times" />}
+                value={formattedTimes}
+              />
+            </Col>
+            <Col xs={4}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.pullslipNotification.locations" />}
                 value={(record.locations || []).map(l => locationId2Name[l]).join(', ')}
               />
             </Col>
-            <Col xs={6}>
+            <Col xs={4}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.pullslipNotification.emailAddresses" />}
                 value={record.emailAddresses.join(', ')}
