@@ -6,7 +6,7 @@ import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
 import NoticeField from './NoticeField';
 
-const NoticeFieldArray = ({ items, name, templates, onAddField, onDeleteField }) => (
+const NoticeFieldArray = ({ items, name, options, onAddField, onDeleteField }) => (
   <>
     <div>
       {items.map((notice, index) => (
@@ -19,8 +19,7 @@ const NoticeFieldArray = ({ items, name, templates, onAddField, onDeleteField })
             component={NoticeField}
             index={index}
             name={`${name}[${index}]`}
-            dataOptions={templates}
-            templates={templates}
+            options={options}
             required
           />
         </EditCard>
