@@ -498,7 +498,7 @@ class PatronRequestsRoute extends React.Component {
                 }
                 return <Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.unread' })}>{a.unreadMessageCount}</Badge>;
               } else if (needsAttention) return <Badge color="red" aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' })}>!</Badge>;
-              return null;
+              return '';
             },
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
             dateCreated: a => formattedDateTime(a.dateCreated),
