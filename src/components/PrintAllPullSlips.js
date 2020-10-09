@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { withRouter } from 'react-router';
 import { includes, filter } from 'lodash';
 import { Callout } from '@folio/stripes/components';
-import { withOkapiKy } from '@folio/stripes-reshare';
+import { withOkapiKy } from '@folio/stripes/core';
 import AllPullSlips from './PullSlip/AllPullSlips';
 import PrintOrCancel from './PrintOrCancel';
 import upNLevels from '../util/upNLevels';
