@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { Button, Icon } from '@folio/stripes/components';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import interCss from '@folio/stripes-components/lib/sharedStyles/interactionStyles.css';
 
 import { ActionContext } from './ActionContext';
