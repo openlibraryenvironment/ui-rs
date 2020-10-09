@@ -70,7 +70,7 @@ class EditPullslipNotification extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={3}>
+          <Col xs={4}>
             <FormattedMessage id="ui-rs.pullslipNotification.status">
               {placeholder => (
                 <Field
@@ -83,7 +83,7 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
-          <Col xs={5}>
+          <Col xs={4}>
             <FormattedMessage id="ui-rs.pullslipNotification.days">
               {placeholder => (
                 <Field
@@ -95,6 +95,9 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
+        </Row>
+        <Row><Col>&nbsp;</Col></Row>
+        <Row>
           <Col xs={4}>
             <FormattedMessage id="ui-rs.pullslipNotification.times">
               {placeholder => (
@@ -107,9 +110,7 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
-        </Row>
-        <Row>
-          <Col xs={6}>
+          <Col xs={4}>
             <FormattedMessage id="ui-rs.pullslipNotification.locations">
               {placeholder => (
                 <Field
@@ -122,7 +123,7 @@ class EditPullslipNotification extends React.Component {
               )}
             </FormattedMessage>
           </Col>
-          <Col xs={6}>
+          <Col xs={4}>
             <FormattedMessage id="ui-rs.pullslipNotification.emailAddresses">
               {placeholder => (
                 <Field
