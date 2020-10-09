@@ -164,12 +164,6 @@ class EditPullslipNotification extends React.Component {
             </Card>
           )}
         />
-
-        <Accordion closedByDefault label={<FormattedMessage id="ui-rs.information.heading.developer" />}>
-          <pre>
-            {JSON.stringify(record, null, 2)}
-          </pre>
-        </Accordion>
       </Pane>
     );
   }
