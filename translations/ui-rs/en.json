@@ -294,6 +294,8 @@
     "settingName.ncipAppProfile": "NCIP app profile",
     "settingName.ncipFromAgency": "NCIP from agency",
     "settingName.ncipDisabled": "NCIP integration",
+    "settingName.ncipApiKey": "Api key",
+    "settingName.ncipApiSecret": "Api secret",
     "settingName.hostLmsIntegration": "Host LMS integration",
     "settingName.borrowerCheck": "Borrower check",
     "settingName.acceptItem": "Accept item method",
