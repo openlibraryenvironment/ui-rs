@@ -280,6 +280,8 @@
     "settingsSection.pullslipNotifications": "Pull slip notifications",
     "settingsSection.notices": "Notice Templates",
     "settingsSection.noticePolicies": "Notice Policies",
+    "settingsSection.wmsSettings": "WMS settings",
+    "settingName.wmsLookupPatronEndpoint": "Lookup patron endpoint",
     "settingName.settingLoading": "Setting Name Loading",
     "settingName.sharedIndexBaseUrl": "Shared index base url",
     "settingName.sharedIndexPass": "Shared index password",
