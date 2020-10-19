@@ -68,6 +68,7 @@ class ResourceSharingSettings extends React.Component {
       route: 'pullslip-notifications',
       id: 'pullslipNotifications',
       component: PullslipNotifications,
+      perm: 'ui-rs.settings.pullslip-notifications',
     },
   ];
 
