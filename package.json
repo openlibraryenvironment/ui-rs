@@ -33,7 +33,7 @@
     "sinon": "^6.3.4"
   },
   "dependencies": {
-    "@folio/react-intl-safe-html": "^2.0.0",
+    "@folio/react-intl-safe-html": "^3.0.0",
     "@folio/stripes-erm-components": "^4.0.0",
     "@folio/stripes-reshare": "^1.0.0",
     "@folio/stripes-template-editor": "^1.0.0",
