@@ -109,7 +109,7 @@ class DirectoryEntryInfo extends React.Component {
         }
 
         {record.fullyQualifiedName === record.name ? '' :
-        <React.Fragment>
+        <>
           <Row>
             <Col xs={12}>
               <KeyValue
@@ -128,11 +128,11 @@ class DirectoryEntryInfo extends React.Component {
               </Link>
             </Col>
           </Row>
-        </React.Fragment>
+        </>
         }
 
         {!unitList ? '' :
-        <React.Fragment>
+        <>
           <Row>
             <Col xs={12}>
               <KeyValue
@@ -141,11 +141,11 @@ class DirectoryEntryInfo extends React.Component {
               />
             </Col>
           </Row>
-        </React.Fragment>
+        </>
         }
 
         {!memberList ? '' :
-        <React.Fragment>
+        <>
           <Row>
             <Col xs={12}>
               <KeyValue
@@ -154,7 +154,7 @@ class DirectoryEntryInfo extends React.Component {
               />
             </Col>
           </Row>
-        </React.Fragment>
+        </>
         }
 
         <Row>

@@ -43,7 +43,7 @@ class DirectoryEntryFormContactInfo extends React.Component {
           open={this.props.open}
           onToggle={this.props.onToggle}
         >
-          <React.Fragment>
+          <>
             <Row>
               <Col xs={4}>
                 <Field
@@ -82,7 +82,7 @@ class DirectoryEntryFormContactInfo extends React.Component {
                 />
               </Col>
             </Row>
-          </React.Fragment>
+          </>
         </Accordion>
       </>
     );

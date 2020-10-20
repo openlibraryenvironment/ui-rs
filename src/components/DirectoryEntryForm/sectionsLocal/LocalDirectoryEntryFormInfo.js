@@ -76,7 +76,7 @@ class LocalDirectoryEntryFormInfo extends React.Component {
         open={open}
         onToggle={onToggle}
       >
-        <React.Fragment>
+        <>
           <Field
             name="customProperties"
             // validate={(value) => this.refToCustPropsListField.current && this.refToCustPropsField.current.isInvalid(value)}
@@ -91,7 +91,7 @@ class LocalDirectoryEntryFormInfo extends React.Component {
               );
             }}
           />
-        </React.Fragment>
+        </>
       </Accordion>
     );
   }

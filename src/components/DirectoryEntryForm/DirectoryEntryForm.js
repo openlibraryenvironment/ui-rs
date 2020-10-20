@@ -115,7 +115,7 @@ class DirectoryEntryForm extends React.Component {
           </ButtonGroup>
         </Layout>
         {tab === 'shared' &&
-          <React.Fragment>
+          <>
             <Row>
               <Col xs={12} lgOffset={1} lg={10}>
                 <MessageBanner>
@@ -137,10 +137,10 @@ class DirectoryEntryForm extends React.Component {
               <DirectoryEntryFormServices id="directoryEntryFormServices" open={sectionsShared.directoryEntryFormServices} {...sectionProps} />
               <DirectoryEntryFormCustProps id="directoryEntryFormCustProps" open={sectionsShared.directoryEntryFormCustProps} {...sectionProps} />
             </AccordionSet>
-          </React.Fragment>
+          </>
         }
         {tab === 'local' &&
-          <React.Fragment>
+          <>
             <Row>
               <Col xs={12} lgOffset={1} lg={10}>
                 <MessageBanner>
@@ -159,7 +159,7 @@ class DirectoryEntryForm extends React.Component {
               </Row>
               <LocalDirectoryEntryFormInfo id="localDirectoryEntryFormInfo" open={sectionsLocal.localDirectoryEntryFormInfo} {...sectionProps} />
             </AccordionSet>
-          </React.Fragment>
+          </>
         }
       </div>
     );

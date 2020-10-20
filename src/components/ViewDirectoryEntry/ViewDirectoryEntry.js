@@ -95,12 +95,12 @@ class ViewDirectoryEntry extends React.Component {
   };
 
   getInitialValues = () => {
-    const record = Object.assign({}, this.getRecord());
+    const record = { ...this.getRecord() };
     return record;
   }
 
   getParentValues = () => {
-    const record = Object.assign({}, this.getRecord());
+    const record = { ...this.getRecord() };
     const parentRecord = { parent: record };
     return parentRecord;
   }
@@ -267,7 +267,7 @@ class ViewDirectoryEntry extends React.Component {
           </ButtonGroup>
         </Layout>
         {tab === 'shared' &&
-          <React.Fragment>
+          <>
             <Row>
               <Col xs={12} lgOffset={1} lg={10}>
                 <MessageBanner>
@@ -288,10 +288,10 @@ class ViewDirectoryEntry extends React.Component {
                 <pre>{JSON.stringify(record, null, 2)}</pre>
               </Accordion>
             </AccordionSet>
-          </React.Fragment>
+          </>
         }
         {tab === 'local' &&
-          <React.Fragment>
+          <>
             <Row>
               <Col xs={12} lgOffset={1} lg={10}>
                 <MessageBanner>
@@ -302,7 +302,7 @@ class ViewDirectoryEntry extends React.Component {
             <AccordionSet accordionStatus={this.state.sectionsLocal}>
               <LocalDirectoryEntryInfo id="localDirectoryEntryInfo" {...sectionProps} />
             </AccordionSet>
-          </React.Fragment>
+          </>
         }
         { this.renderEditLayer() }
         { this.renderUnitLayer() }

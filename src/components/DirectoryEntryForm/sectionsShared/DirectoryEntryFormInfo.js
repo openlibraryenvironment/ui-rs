@@ -85,7 +85,7 @@ class DirectoryEntryFormInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <React.Fragment>
+        <>
           <Row>
             <Col xs={4}>
               <Field
@@ -199,8 +199,12 @@ class DirectoryEntryFormInfo extends React.Component {
               </FieldArray>
             </Col>
           </Row>
-          {warning ? <MessageBanner type="warning"> {warning} </MessageBanner> : null}
-        </React.Fragment>
+          {warning ? <MessageBanner type="warning">
+            {' '}
+            {warning}
+            {' '}
+          </MessageBanner> : null}
+        </>
       </Accordion>
     );
   }

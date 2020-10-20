@@ -216,10 +216,10 @@ class DirectoryEntries extends React.Component {
     };
 
     return (
-      <React.Fragment>
+      <>
         {renderGenericFilterSelection('type')}
         {renderGenericFilterSelection('tags')}
-      </React.Fragment>
+      </>
     );
   }
 
@@ -244,7 +244,7 @@ class DirectoryEntries extends React.Component {
     const { visibleColumns } = appDetails.directory;
 
     return (
-      <React.Fragment>
+      <>
         <SearchAndSort
           key="dirents"
           objectName="dirents"
@@ -296,7 +296,7 @@ class DirectoryEntries extends React.Component {
           }}
           renderFilters={this.renderFilters}
         />
-      </React.Fragment>
+      </>
     );
   }
 }
