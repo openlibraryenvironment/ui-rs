@@ -6,7 +6,7 @@ import { RepeatableField, Timepicker } from '@folio/stripes/components';
 
 // eslint-disable-next-line camelcase, no-unused-vars
 const unused__TextboxOfTypeNumber = (p2) => {
-  const input = Object.assign({}, p2.input, { value: (p2.input.value || '').replace(/:.*/, '') });
+  const input = { ...p2.input, value: (p2.input.value || '').replace(/:.*/, '') };
   return <input type="number" size="3" min="0" max="23" pattern="[0-9]*" {...input} />;
 };
 

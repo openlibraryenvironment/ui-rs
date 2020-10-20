@@ -100,12 +100,12 @@ class PrintAllPullSlips extends React.Component {
     location.search = oldSearch;
 
     return (
-      <React.Fragment>
+      <>
         <PrintOrCancel destUrl={destUrl}>
           <AllPullSlips records={records} />
         </PrintOrCancel>
         <Callout ref={this.callout} />
-      </React.Fragment>
+      </>
     );
   }
 }

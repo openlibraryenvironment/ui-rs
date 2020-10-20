@@ -124,7 +124,7 @@ const excludeRemote = ['message'];
  * falling back to the default for unknown states.
  */
 export const actionsForRequest = request => {
-  const actions = Object.assign({}, actionsByState.default, actionsByState[request.state?.code] || {});
+  const actions = { ...actionsByState.default, ...actionsByState[request.state?.code] || {} };
   if (Array.isArray(request.validActions)) {
     const remote = request.validActions.filter(
       action => actions.primaryAction !== initialToUpper(action) && !(excludeRemote.includes(action))

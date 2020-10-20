@@ -26,7 +26,7 @@ class RequestMetadataForm extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <React.Fragment>
+        <>
           <Row>
             <Col xs={3}>
               <FormattedMessage id="ui-rs.information.hrid">
@@ -127,7 +127,7 @@ class RequestMetadataForm extends React.Component {
               </FormattedMessage>
             </Col>
           </Row>
-        </React.Fragment>
+        </>
       </Accordion>
     );
   }

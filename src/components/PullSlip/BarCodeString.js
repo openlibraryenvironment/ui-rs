@@ -14,7 +14,7 @@ function barCodeString(text, options) {
   const document = new DOMImplementation().createDocument('http://www.w3.org/1999/xhtml', 'html', null);
   const svgNode = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
-  JsBarcode(svgNode, text, Object.assign({}, { xmlDocument: document }, options));
+  JsBarcode(svgNode, text, { xmlDocument: document, ...options });
   return xmlSerializer.serializeToString(svgNode);
 }
 
