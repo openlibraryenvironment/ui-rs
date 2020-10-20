@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Link } from 'react-router-dom';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedDate, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
 import { Badge, Button, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
 import { SearchAndSort, withTags, CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { generateQueryParams } from '@folio/stripes-erm-components';
 import PrintAllPullSlips from '../components/PrintAllPullSlips';
-import formattedDateTime from '../util/formattedDateTime';
 import { parseFilters, deparseFilters } from '../util/parseFilters';
 import packageInfo from '../../package';
 
@@ -498,7 +497,7 @@ class PatronRequestsRoute extends React.Component {
               return '';
             },
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
-            dateCreated: a => formattedDateTime(a.dateCreated),
+            dateCreated: a => <FormattedDate value={a.dateCreated} />,
             patronIdentifier: a => {
               const { patronGivenName, patronSurname } = a;
               if (patronGivenName && patronSurname) return `${patronSurname}, ${patronGivenName}`;
