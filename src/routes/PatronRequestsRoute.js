@@ -43,7 +43,7 @@ const appDetails = {
     visibleColumns: [
       'flags', 'id',
       'dateCreated', 'title', 'state', 'serviceType',
-      'requestingInstitutionSymbol', 'selectedItemBarcode', 'localCallNumber', 'pickLocation', 'pickShelvingLocation',
+      'requestingInstitutionSymbol', 'selectedItemBarcode',
     ],
     extraFilter: 'r.false',
     intlId: 'requester',
@@ -457,9 +457,6 @@ class PatronRequestsRoute extends React.Component {
             requestingInstitutionSymbol: <FormattedMessage id="ui-rs.patronrequests.requestingInstitutionSymbol" />,
             supplyingInstitutionSymbol: <FormattedMessage id="ui-rs.patronrequests.supplyingInstitutionSymbol" />,
             selectedItemBarcode: <FormattedMessage id="ui-rs.patronrequests.selectedItemBarcode" />,
-            localCallNumber: <FormattedMessage id="ui-rs.patronrequests.localCallNumber" />,
-            pickLocation: <FormattedMessage id="ui-rs.patronrequests.pickLocation" />,
-            pickShelvingLocation: <FormattedMessage id="ui-rs.patronrequests.pickShelvingLocation" />,
           }}
           columnWidths={{
             id: 110,
@@ -472,10 +469,6 @@ class PatronRequestsRoute extends React.Component {
             requestingInstitutionSymbol: 130,
             supplyingInstitutionSymbol: 130,
             selectedItemBarcode: 130,
-            localCallNumber: 200,
-            pickLocation: 150,
-            pickShelvingLocation: 200,
-
           }}
           resultsFormatter={{
             id: a => a.hrid,
