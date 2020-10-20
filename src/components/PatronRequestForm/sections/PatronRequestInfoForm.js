@@ -27,7 +27,7 @@ class PatronRequestInfoForm extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <React.Fragment>
+        <>
           <Row>
             <Col xs={12}>
               <FormattedMessage id="ui-rs.information.title">
@@ -77,7 +77,7 @@ class PatronRequestInfoForm extends React.Component {
               </FormattedMessage>
             </Col>
           </Row>
-        </React.Fragment>
+        </>
       </Accordion>
     );
   }

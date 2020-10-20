@@ -25,7 +25,7 @@ class UserCard extends React.Component {
   };
 
   render() {
-    const props = Object.assign({}, this.props);
+    const props = { ...this.props };
     // React complains if any of these props are passed in <Card>
     delete props.refreshRemote;
     delete props.dataKey;

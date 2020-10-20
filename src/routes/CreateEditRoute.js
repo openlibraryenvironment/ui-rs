@@ -48,11 +48,10 @@ const CreateEditRoute = props => {
   if (isEditing) {
     if (!resource || !resource.hasLoaded) return null;
     const record = resource.records[0];
-    initialValues = Object.assign({}, record, {
+    initialValues = { ...record,
       formattedDateCreated: (
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
-      )
-    });
+      ) };
   }
 
   const submit = newRecord => {

@@ -57,7 +57,7 @@ const appDetails = {
 
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
-  const res = Object.assign({}, resources.query);
+  const res = { ...resources.query };
   const { extraFilter } = appDetails[appName];
   if (extraFilter) {
     res.filters = !res.filters ? extraFilter : `${res.filters},${extraFilter}`;
@@ -264,7 +264,7 @@ class PatronRequestsRoute extends React.Component {
     const neededByTo = get(byName.neededByTo, 0, '');
 
     return (
-      <React.Fragment>
+      <>
         <CheckboxFilter
           name="needsAttention"
           dataOptions={options.needsAttention}
@@ -364,7 +364,7 @@ class PatronRequestsRoute extends React.Component {
             onChange={(e) => setFilterDate('neededBy', '<=', e.target.value)}
           />
         </Accordion>
-      </React.Fragment>
+      </>
     );
   }
 
@@ -395,12 +395,9 @@ class PatronRequestsRoute extends React.Component {
 
     const { mutator, resources, appName, location, intl } = this.props;
     const { title, visibleColumns, createPerm } = appDetails[appName];
-    const tweakedPackageInfo = Object.assign({}, packageInfo, {
+    const tweakedPackageInfo = { ...packageInfo,
       name: `@folio/${appName}`,
-      stripes: Object.assign({}, packageInfo.stripes, {
-        route: `/${appName}/requests`,
-      }),
-    });
+      stripes: { ...packageInfo.stripes, route: `/${appName}/requests` } };
 
     const searchableIndexes = [
       { label: 'allFields', value: '' },
@@ -420,7 +417,7 @@ class PatronRequestsRoute extends React.Component {
     if (appName === 'supply') searchableIndexes.splice(3, 2);
 
     return (
-      <React.Fragment>
+      <>
         <SearchAndSort
           key="patronrequests"
           title={title}
@@ -516,7 +513,7 @@ class PatronRequestsRoute extends React.Component {
           }}
           renderFilters={this.renderFilters}
         />
-      </React.Fragment>
+      </>
     );
   }
 }
