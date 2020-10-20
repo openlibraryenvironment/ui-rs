@@ -96,7 +96,7 @@
       },
       {
         "permissionName": "settings.rs.enabled",
-        "displayName": "Settings (resource-sharing): can view and edit settings that do not have separate permissions",
+        "displayName": "Settings (resource-sharing): can view and edit settings that do not have separate permissions [includes rs.refdata.put]",
         "subPermissions": [
           "settings.enabled",
           "rs.settings.get",
