@@ -21,7 +21,8 @@ const appDetails = {
     visibleColumns: [
       'id',
       'isRequester',
-      'dateCreated', 'title', 'patronIdentifier', 'state', 'serviceType',
+      'dateCreated', 'patronIdentifier', 'state', 'serviceType',
+      'title',
     ],
     createPerm: 'rs.patronrequests.item.post',
   },
@@ -29,8 +30,9 @@ const appDetails = {
     title: 'Requests',
     visibleColumns: [
       'flags', 'id',
-      'dateCreated', 'title', 'selectedItemBarcode', 'patronIdentifier', 'state', 'serviceType',
+      'dateCreated', 'selectedItemBarcode', 'patronIdentifier', 'state', 'serviceType',
       'supplyingInstitutionSymbol',
+      'title',
     ],
     extraFilter: 'r.true',
     intlId: 'supplier',
@@ -42,8 +44,9 @@ const appDetails = {
     title: 'Supply',
     visibleColumns: [
       'flags', 'id',
-      'dateCreated', 'title', 'state', 'serviceType',
+      'dateCreated', 'state', 'serviceType',
       'requestingInstitutionSymbol', 'selectedItemBarcode',
+      'title',
     ],
     extraFilter: 'r.false',
     intlId: 'requester',
