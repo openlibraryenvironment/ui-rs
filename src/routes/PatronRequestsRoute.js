@@ -446,8 +446,8 @@ class PatronRequestsRoute extends React.Component {
           }}
           visibleColumns={visibleColumns}
           columnMapping={{
-            id: <FormattedMessage id="ui-rs.patronrequests.id" />,
             flags: '',
+            id: <FormattedMessage id="ui-rs.patronrequests.id" />,
             isRequester: <FormattedMessage id="ui-rs.patronrequests.isRequester" />,
             dateCreated: <FormattedMessage id="ui-rs.patronrequests.dateCreated" />,
             title: <FormattedMessage id="ui-rs.patronrequests.title" />,
@@ -459,16 +459,12 @@ class PatronRequestsRoute extends React.Component {
             selectedItemBarcode: <FormattedMessage id="ui-rs.patronrequests.selectedItemBarcode" />,
           }}
           columnWidths={{
-            id: 110,
-            isRequester: 80,
-            dateCreated: 170,
-            title: 200,
-            patronIdentifier: 120,
-            state: 180,
-            serviceType: 130,
-            requestingInstitutionSymbol: 130,
-            supplyingInstitutionSymbol: 130,
-            selectedItemBarcode: 130,
+            flags: '48px',
+            id: { max: 115 },
+            dateCreated: '96px',
+            state: { min: 84 },
+            serviceType: { max: 80 },
+            selectedItemBarcode: '130px',
           }}
           resultsFormatter={{
             id: a => a.hrid,
