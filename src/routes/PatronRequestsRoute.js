@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Link } from 'react-router-dom';
-import { injectIntl, FormattedDate, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedDate, FormattedTime, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import compose from 'compose-function';
 import { Badge, Button, Accordion, FilterAccordionHeader, Datepicker } from '@folio/stripes/components';
@@ -489,7 +489,9 @@ class PatronRequestsRoute extends React.Component {
               return '';
             },
             isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
-            dateCreated: a => <FormattedDate value={a.dateCreated} />,
+            dateCreated: a => (new Date(a.dateCreated).toLocaleDateString() === new Date().toLocaleDateString()
+              ? <FormattedTime value={a.dateCreated} />
+              : <FormattedDate value={a.dateCreated} />),
             patronIdentifier: a => {
               const { patronGivenName, patronSurname } = a;
               if (patronGivenName && patronSurname) return `${patronSurname}, ${patronGivenName}`;
