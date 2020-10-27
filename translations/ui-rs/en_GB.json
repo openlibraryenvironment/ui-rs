@@ -1,8 +1,0 @@
-{
-    "settings.noticePolicies.format": "Format",
-    "settings.noticePolicies.trigger": "Trigger",
-    "settingName.ncipApiKey": "Api key",
-    "settingName.ncipApiSecret": "Api secret",
-    "settingsSection.wmsSettings": "WMS settings",
-    "settingName.wmsLookupPatronEndpoint": "Lookup patron endpoint"
-}
