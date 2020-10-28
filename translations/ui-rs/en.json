@@ -204,7 +204,7 @@
     "actions.requesterReceived.prompt": "Scan request barcode to mark it <strong>received</strong>",
     "actions.shippedReturn.prompt": "Scan request barcode to mark it <strong>return shipped</strong>",
     "actions.supplierMarkShipped.prompt": "Scan request barcode to <strong>mark it shipped</strong>",
-    "actions.supplierCheckOutOfReShare.prompt": "Scan request barcode to <strong>complete request</strong>",
+    "actions.supplierCheckOutOfReshare.prompt": "Scan request barcode to <strong>complete request</strong>",
     "actions.supplierManualCheckout.prompt": "Scan request barcode to <strong>mark item checked out of local LMS</strong>",
     "cards.reqSup.searching": "Searching for supplier.",
     "printPullslip": "Print pull slip",
