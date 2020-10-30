@@ -295,6 +295,7 @@
     "settingName.ncipServerAddress": "NCIP server address",
     "settingName.ncipAppProfile": "NCIP app profile",
     "settingName.ncipFromAgency": "NCIP from agency",
+    "settingName.ncipToAgency": "NCIP to agency",
     "settingName.ncipDisabled": "NCIP integration",
     "settingName.ncipApiKey": "Api key",
     "settingName.ncipApiSecret": "Api secret",
