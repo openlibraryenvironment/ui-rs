@@ -194,7 +194,12 @@ class ViewDirectoryEntry extends React.Component {
     );
   };
 
-  getActionMenu = ({ onToggle }, showEditButton) => {
+  getActionMenu = ({ onToggle }, showEditButton, showCreateUnitButton) => {
+    if (!showEditButton && !showCreateUnitButton) {
+      // Nothing to include in the menu, so don't make one at all
+      return null;
+    }
+
     return (
       <>
         {showEditButton ? (
@@ -212,18 +217,20 @@ class ViewDirectoryEntry extends React.Component {
             </Icon>
           </Button>
         ) : null}
-        <Button
-          buttonStyle="dropdownItem"
-          id="clickable-create-new-unit-directoryentry"
-          onClick={() => {
-            this.switchLayer('unit');
-            onToggle();
-          }}
-        >
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-directory.createUnit" />
-          </Icon>
-        </Button>
+        {showCreateUnitButton ? (
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-create-new-unit-directoryentry"
+            onClick={() => {
+              this.switchLayer('unit');
+              onToggle();
+            }}
+          >
+            <Icon icon="plus-sign">
+              <FormattedMessage id="ui-directory.createUnit" />
+            </Icon>
+          </Button>
+        ) : null}
       </>
     );
   }
@@ -237,6 +244,7 @@ class ViewDirectoryEntry extends React.Component {
     const { tab } = this.state;
     const directoryEntry = record.name || <FormattedMessage id="ui-directory.information.titleNotFound" />;
     const showEditButton = permissionToEdit(stripes, record);
+    const showCreateUnitButton = stripes.hasPerm('ui-directory.create');
 
     return (
       <Pane
@@ -246,7 +254,7 @@ class ViewDirectoryEntry extends React.Component {
         dismissible
         onClose={this.props.onClose}
         lastMenu={this.paneButtons(mutator, resources)}
-        actionMenu={(x) => this.getActionMenu(x, showEditButton)}
+        actionMenu={(x) => this.getActionMenu(x, showEditButton, showCreateUnitButton)}
       >
         <Layout className="textCentered">
           <ButtonGroup>

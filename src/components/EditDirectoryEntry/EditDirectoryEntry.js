@@ -149,7 +149,7 @@ class EditDirectoryEntry extends React.Component {
         break;
     }
 
-    if (!permissionToEdit(stripes, initialValues)) {
+    if (!permissionToEdit(stripes, initialValues) && !stripes.hasPerm('ui-directory.create')) {
       // Users should never see this message, so no need to internationalize
       return 'no perm';
     }

@@ -259,7 +259,7 @@ class DirectoryEntries extends React.Component {
           viewRecordComponent={ViewDirectoryEntry}
           editRecordComponent={EditDirectoryEntry}
           viewRecordPerms="module.directory.enabled"
-          newRecordPerms="module.directory.enabled"
+          newRecordPerms="ui-directory.create"
           onCreate={this.handleCreate}
           detailProps={{
             onCreate: this.handleCreate,
