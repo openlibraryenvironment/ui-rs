@@ -135,7 +135,11 @@ class ServiceField extends React.Component {
             component={TextField}
             parse={v => v}
           />
-        </Col> : <strong> {currentService?.name} </strong>
+        </Col>
+        :
+        <strong>
+          {currentService?.name}
+        </strong>
     );
   }
 

@@ -73,7 +73,11 @@ class AddressListFieldArray extends React.Component {
       warning = intl.formatMessage({ id: 'ui-directory.information.addresses.missingPlugin' });
     }
     return (
-      warning ? <MessageBanner type="warning"> {warning} </MessageBanner> : null
+      warning ? (
+        <MessageBanner type="warning">
+          {warning}
+        </MessageBanner>
+      ) : null
     );
   }
 

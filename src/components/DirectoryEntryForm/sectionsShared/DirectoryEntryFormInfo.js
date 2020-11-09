@@ -199,11 +199,13 @@ class DirectoryEntryFormInfo extends React.Component {
               </FieldArray>
             </Col>
           </Row>
-          {warning ? <MessageBanner type="warning">
-            {' '}
-            {warning}
-            {' '}
-          </MessageBanner> : null}
+          {warning ? (
+            <MessageBanner type="warning">
+              {' '}
+              {warning}
+              {' '}
+            </MessageBanner>) : null
+          }
         </>
       </Accordion>
     );
