@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   Col,
+  InfoPopover,
   Row,
   Select,
   TextField,
@@ -191,13 +192,11 @@ class SettingField extends React.Component {
         roundedBorder
       >
         <Row>
-          <Col xs={12}>
+          <Col xs={11}>
             {renderFunction}
           </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            {this.renderHelpText(camelKey)}
+          <Col xs={1}>
+            <InfoPopover content={this.renderHelpText(camelKey)} />
           </Col>
         </Row>
       </Card>
