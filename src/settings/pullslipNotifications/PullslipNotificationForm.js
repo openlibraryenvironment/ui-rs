@@ -4,7 +4,7 @@ import { Link, Prompt } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import arrayMutators from 'final-form-arrays';
 import { Form, Field } from 'react-final-form';
-import { Pane, Card, Button, Row, Col, TextField, Checkbox, Accordion } from '@folio/stripes/components';
+import { Pane, Card, Button, Row, Col, TextField, Checkbox } from '@folio/stripes/components';
 import ListOfTimepicker from './ListOfTimepicker';
 import ListOfEmailAddress from './ListOfEmailAddress';
 import ListOfLocation from './ListOfLocation';
