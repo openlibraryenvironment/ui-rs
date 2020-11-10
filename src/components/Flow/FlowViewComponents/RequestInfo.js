@@ -44,7 +44,7 @@ const RequestInfo = ({ request }) => {
       <Layout className="padding-top-gutter">
         <Row>
           {colKeyVal('itemBarcode', request.selectedItemBarcode || <NoValue />)}
-          {colKeyVal('dueDate', request.dueDateFromLMS || <NoValue />)}
+          {colKeyVal('dueDate', request.dueDateFromLMS || request.dueDateRS || <NoValue />)}
           {colKeyVal('requester', requester ?
             <Link to={`/directory/entries/view/${requester.id}`}>
               {requester.name}
