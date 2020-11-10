@@ -191,14 +191,8 @@ class SettingField extends React.Component {
         headerEnd={this.renderEditButton()}
         roundedBorder
       >
-        <Row>
-          <Col xs={11}>
-            {renderFunction}
-          </Col>
-          <Col xs={1}>
-            <InfoPopover content={this.renderHelpText(camelKey)} />
-          </Col>
-        </Row>
+        {renderFunction}
+        <InfoPopover content={this.renderHelpText(camelKey)} />
       </Card>
     );
   }
