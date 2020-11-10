@@ -5,9 +5,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import {
   Button,
   Card,
-  Col,
   InfoPopover,
-  Row,
   Select,
   TextField,
 } from '@folio/stripes/components';
@@ -30,10 +28,7 @@ class SettingField extends React.Component {
     editing: false
   };
 
-  renderHelpText = (key) => {
-    const id = `ui-rs.settingName.${key}.help`;
-    if (!this.props.intl.messages[id]) return undefined;
-
+  renderHelpText = (id) => {
     return (
       <div className={css.help}>
         <FormattedMessage
@@ -185,6 +180,8 @@ class SettingField extends React.Component {
     }
 
     const camelKey = snakeToCamel(setting.key);
+    const id = `ui-rs.settingName.${camelKey}.help`;
+
     return (
       <Card
         headerStart={currentSetting ? <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> : <FormattedMessage id="ui-rs.settingName.settingLoading" />}
@@ -192,7 +189,7 @@ class SettingField extends React.Component {
         roundedBorder
       >
         {renderFunction}
-        <InfoPopover content={this.renderHelpText(camelKey)} />
+        {this.props.intl.messages[id] && <InfoPopover content={this.renderHelpText(id)} />}
       </Card>
     );
   }
