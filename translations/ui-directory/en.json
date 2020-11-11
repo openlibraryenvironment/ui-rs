@@ -137,6 +137,8 @@
 
   "permission.module.directory.enabled": "UI: Directory module is enabled",
   "permission.settings.directory.enabled": "Settings (directory): display list of settings pages",
-  "permission.directory.edit-self": "Directory: edit the directory entry of the present institution",
-  "permission.directory.edit-all": "Directory: edit all directory entries"
+  "permission.ui-directory.edit-self": "Directory: edit the directory entry of the present institution",
+  "permission.ui-directory.edit-local": "Directory: edit the local fields of directory entries",
+  "permission.ui-directory.edit-all": "Directory: edit all directory entries",
+  "permission.ui-directory.create": "Directory: create new directory entries"
 }
