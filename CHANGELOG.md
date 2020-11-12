@@ -9,6 +9,7 @@
 * Fix legend-alignment problems in pull-slip notification editor. Fixes PR-723.
 * Layout improvements to pull slip delivery settings screen. Fixes PR-843.
 * Display due date on Requester view. Fixes PR-853.
+* Add a dummy "none" option to list of LMS locations when editing a pull-slip notification schedule. Fixes PR-847.
 
 ## [1.1.0](https://github.com/openlibraryenvironment/ui-rs/tree/v1.1.0) (2020-08-24)
 

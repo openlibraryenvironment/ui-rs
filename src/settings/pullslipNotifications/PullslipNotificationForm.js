@@ -53,6 +53,11 @@ class EditPullslipNotification extends React.Component {
   }
 
   renderForm() {
+    const lmsLocations = [
+      { label: '(None)', value: '' },
+      ...this.props.lmsLocations
+    ];
+
     return (
       <>
         <Row>
@@ -118,7 +123,7 @@ class EditPullslipNotification extends React.Component {
                   component={this.ListOfConfiguredLocation}
                   legend={placeholder}
                   placeholder={placeholder}
-                  lmsLocations={this.props.lmsLocations}
+                  lmsLocations={lmsLocations}
                 />
               )}
             </FormattedMessage>
