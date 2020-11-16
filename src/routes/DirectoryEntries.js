@@ -83,6 +83,13 @@ class DirectoryEntries extends React.Component {
       type: 'okapi',
       path: 'directory/entry/${selectedRecordId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
+      // XXX do not do this: see comments at https://openlibraryenvironment.atlassian.net/browse/PR-841
+      // PUT: {
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      // },
     },
     services: {
       type: 'okapi',
