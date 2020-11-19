@@ -11,11 +11,11 @@ export default {
   ],
   user: [
     {
-      token: 'user.firstName',
+      token: 'user.givenName',
       previewValue: 'John',
     },
     {
-      token: 'user.lastName',
+      token: 'user.surname',
       previewValue: 'Smith',
     },
     {
