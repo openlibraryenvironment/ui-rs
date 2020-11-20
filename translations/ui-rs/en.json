@@ -283,6 +283,8 @@
     "settingsSection.wmsSettings": "WMS settings",
     "settingName.wmsLookupPatronEndpoint": "Lookup patron endpoint",
     "settingName.wmsRegistryId": "Registry id",
+    "settingName.wmsApiSecret": "Api secret",
+    "settingName.wmsApiKey": "Api key",
     "settingName.settingLoading": "Setting Name Loading",
     "settingName.sharedIndexBaseUrl": "Shared index base url",
     "settingName.sharedIndexPass": "Shared index password",
