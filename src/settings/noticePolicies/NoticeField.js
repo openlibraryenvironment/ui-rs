@@ -20,7 +20,7 @@ const NoticeField = ({ input, options }) => (
         <Field
           component={Select}
           label={<FormattedMessage id="ui-rs.settings.noticePolicies.format" />}
-          name={`${input.name}.format`}
+          name={`${input.name}.format.id`}
           dataOptions={options.formats}
           placeholder=" "
           required
@@ -30,7 +30,7 @@ const NoticeField = ({ input, options }) => (
         <Field
           component={Select}
           label={<FormattedMessage id="ui-rs.settings.noticePolicies.trigger" />}
-          name={`${input.name}.trigger`}
+          name={`${input.name}.trigger.id`}
           dataOptions={options.triggers}
           placeholder=" "
           required

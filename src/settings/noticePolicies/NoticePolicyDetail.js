@@ -4,6 +4,14 @@ import { Accordion, AccordionSet, Card, KeyValue, Row } from '@folio/stripes/com
 import { stripesConnect } from '@folio/stripes/core';
 
 const NoticePolicyDetail = ({ initialValues: noticePolicy, resources }) => {
+  const refdataLookup = resources?.refdatavalues?.records
+    .filter(obj => obj?.desc?.startsWith('notice'))
+    .reduce((acc, cur) => {
+      for (const value of cur.values) {
+        acc[value.id] = value.label;
+      }
+      return acc;
+    }, {});
   return (
     <>
       <KeyValue
@@ -23,7 +31,7 @@ const NoticePolicyDetail = ({ initialValues: noticePolicy, resources }) => {
       />
       <AccordionSet>
         <Accordion label={<FormattedMessage id="ui-rs.settings.noticePolicies.notices" />}>
-          {resources?.templates?.hasLoaded && noticePolicy.notices.map(notice => {
+          {resources?.templates?.hasLoaded && resources?.refdatavalues?.hasLoaded && noticePolicy.notices.map(notice => {
             const template = resources.templates.records.filter(record => record.id === notice.template)[0];
             return (
               <Card headerStart=" " key={notice.id}>
@@ -32,6 +40,20 @@ const NoticePolicyDetail = ({ initialValues: noticePolicy, resources }) => {
                     label={<FormattedMessage id="ui-rs.settings.noticePolicies.template" />}
                     value={template.name}
                     key={notice.template}
+                  />
+                </Row>
+                <Row>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-rs.settings.noticePolicies.format" />}
+                    value={refdataLookup[notice.format?.id]}
+                    key={notice.format}
+                  />
+                </Row>
+                <Row>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-rs.settings.noticePolicies.trigger" />}
+                    value={refdataLookup[notice.trigger?.id]}
+                    key={notice.trigger}
                   />
                 </Row>
                 <Row>
@@ -61,7 +83,14 @@ NoticePolicyDetail.manifest = Object.freeze({
     params: {
       query: 'active="true"',
     },
-  }
+  },
+  refdatavalues: {
+    type: 'okapi',
+    path: 'rs/refdata',
+    params: {
+      max: '500',
+    },
+  },
 });
 
 export default stripesConnect(NoticePolicyDetail);
