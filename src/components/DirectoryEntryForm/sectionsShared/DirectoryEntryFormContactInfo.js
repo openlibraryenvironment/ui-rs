@@ -14,7 +14,6 @@ import {
 
 import { AddressListFieldArray } from '../components';
 
-
 class DirectoryEntryFormContactInfo extends React.Component {
   static propTypes = {
     id: PropTypes.string,

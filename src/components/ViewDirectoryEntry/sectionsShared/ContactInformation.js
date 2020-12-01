@@ -11,7 +11,6 @@ function renderAddress(address, index, count) {
   );
 }
 
-
 class ContactInformation extends React.Component {
   static propTypes = {
     record: PropTypes.object,

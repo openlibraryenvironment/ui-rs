@@ -135,7 +135,6 @@ export default class CustPropsListField extends React.Component {
     );
   }
 
-
   renderCustProps() {
     const custPropsList = this.state.custprops.map((custprop, i) => {
       const header = custprop.label;

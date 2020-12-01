@@ -230,7 +230,6 @@ class DirectoryEntries extends React.Component {
     );
   }
 
-
   renderFilters = () => {
     const { resources } = this.props;
     const tags = ((resources.directoryTags || {}).records || []).map(obj => ({ value: obj.value, label: obj.normValue }));

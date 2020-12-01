@@ -34,7 +34,6 @@ plugins.forEach(plugin => {
   });
 });
 
-
 class EditDirectoryEntry extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
@@ -126,7 +125,6 @@ class EditDirectoryEntry extends React.Component {
 
   render() {
     const { initialValues, onSubmit, stripes } = this.props;
-
 
     // Grab current layer
     const layer = this.getCurrentLayer();

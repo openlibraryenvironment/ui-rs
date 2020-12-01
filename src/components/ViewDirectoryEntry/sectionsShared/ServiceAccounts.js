@@ -72,7 +72,6 @@ function renderServiceAccount(serviceAcct, index, count) {
   );
 }
 
-
 class ServiceAccounts extends React.Component {
   static propTypes = {
     record: PropTypes.object,

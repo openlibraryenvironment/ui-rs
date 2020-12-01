@@ -10,7 +10,6 @@ import {
   Row
 } from '@folio/stripes/components';
 
-
 function makeUnitList(units) {
   if (!units || units.length === 0) return null;
 
@@ -23,7 +22,6 @@ function makeUnitList(units) {
   );
 }
 
-
 function makeMemberList(members) {
   if (!members || members.length === 0) return null;
 
@@ -35,7 +33,6 @@ function makeMemberList(members) {
     </ul>
   );
 }
-
 
 class DirectoryEntryInfo extends React.Component {
   static propTypes = {

@@ -5,7 +5,6 @@ import { Card } from '@folio/stripes/components';
 
 import css from './Address.css';
 
-
 class Address extends React.Component {
   static propTypes = {
     address: PropTypes.shape({
