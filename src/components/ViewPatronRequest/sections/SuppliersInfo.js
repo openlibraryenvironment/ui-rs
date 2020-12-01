@@ -10,7 +10,6 @@ import {
 } from '@folio/stripes/components';
 import css from './SuppliersInfo.css';
 
-
 class SuppliersInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,

@@ -7,7 +7,6 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Pane, Card, IconButton, Row, Col, KeyValue } from '@folio/stripes/components';
 import { raw2userData } from './util';
 
-
 const dayname = {
   Mo: 'Monday',
   Tu: 'Tuesday',
@@ -17,7 +16,6 @@ const dayname = {
   Sa: 'Saturday',
   Su: 'Sunday',
 };
-
 
 class ViewPullslipNotification extends React.Component {
   static propTypes = {

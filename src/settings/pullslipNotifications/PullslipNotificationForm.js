@@ -10,7 +10,6 @@ import ListOfEmailAddress from './ListOfEmailAddress';
 import ListOfLocation from './ListOfLocation';
 import DaysOfWeek from './DaysOfWeek';
 
-
 class EditPullslipNotification extends React.Component {
   static propTypes = {
     record: PropTypes.object.isRequired,

@@ -13,7 +13,6 @@ import { RefdataButtons } from '@folio/stripes-reshare';
 import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
 
-
 class SettingField extends React.Component {
   static propTypes = {
     settingData: PropTypes.shape({
@@ -124,7 +123,6 @@ class SettingField extends React.Component {
       );
     }
   }
-
 
   renderEditButton() {
     const { editing } = this.state;

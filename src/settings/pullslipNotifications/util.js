@@ -4,7 +4,6 @@ const dayNumber2String = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 const dayString2Number = {};
 dayNumber2String.forEach((val, i) => { dayString2Number[val] = i; });
 
-
 export function raw2userData(raw) {
   const rrule = rrulestr(raw.rrule);
   const payload = JSON.parse(raw.taskConfig);
@@ -20,7 +19,6 @@ export function raw2userData(raw) {
     emailAddresses,
   };
 }
-
 
 export function user2rawData(values) {
   const { locations, emailAddresses } = values;

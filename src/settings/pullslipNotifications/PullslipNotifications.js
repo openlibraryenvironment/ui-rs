@@ -6,7 +6,6 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Pane, MultiColumnList, Button } from '@folio/stripes/components';
 import { raw2userData } from './util';
 
-
 class PullslipNotifications extends React.Component {
   static propTypes = {
     history: PropTypes.shape({

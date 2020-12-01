@@ -10,7 +10,6 @@ import {
 } from '@folio/stripes/components';
 import formattedDateTime from '../../../util/formattedDateTime';
 
-
 class RequestInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,

@@ -11,7 +11,6 @@ import * as moreActions from '../moreActions';
 import css from './Flow.css';
 import AppNameContext from '../../../AppNameContext';
 
-
 const ActionAccordion = ({ forCurrent, request, performAction }) => {
   const stripes = useStripes();
   const appName = useContext(AppNameContext);

@@ -13,13 +13,11 @@ import {
   PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
 } from './pullslipNotifications';
 
-
 function sortByLabelCaseInsensitive(a, b) {
   const al = a.label.toLowerCase();
   const bl = b.label.toLowerCase();
   return (al < bl) ? -1 : (al > bl) ? 1 : 0;
 }
-
 
 class ResourceSharingSettings extends React.Component {
   static manifest = Object.freeze({

@@ -4,7 +4,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, MultiColumnList } from '@folio/stripes/components';
 import { formatConditionCode, formatConditionNote } from '../../../util/formatCondition';
 
-
 const LoanConditions = (props) => {
   const { formatDate, formatMessage } = useIntl();
   const request = props?.request;

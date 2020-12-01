@@ -7,7 +7,6 @@ import { Callout } from '@folio/stripes/components';
 import PullSlip from './PullSlip';
 import PrintOrCancel from './PrintOrCancel';
 
-
 class PrintPullSlip extends React.Component {
   static propTypes = {
     record: PropTypes.object.isRequired,
@@ -69,6 +68,5 @@ class PrintPullSlip extends React.Component {
     );
   }
 }
-
 
 export default withRouter(stripesConnect(PrintPullSlip));

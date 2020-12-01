@@ -14,7 +14,6 @@ import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
 
-
 const appDetails = {
   rs: {
     title: 'Resource Sharing',
@@ -56,7 +55,6 @@ const appDetails = {
   },
 };
 
-
 function queryModifiedForApp(resources, props) {
   const { appName } = props;
   const res = { ...resources.query };
@@ -79,11 +77,9 @@ function queryModifiedForApp(resources, props) {
   return res;
 }
 
-
 function compareLabel(a, b) {
   return (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 }
-
 
 class PatronRequestsRoute extends React.Component {
   static manifest = Object.freeze({
@@ -510,7 +506,6 @@ class PatronRequestsRoute extends React.Component {
     );
   }
 }
-
 
 export default compose(
   injectIntl,

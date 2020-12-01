@@ -119,7 +119,6 @@ const ChatMessage = React.forwardRef((props, ref) => {
     );
   };
 
-
   const renderDropdownButtonContents = () => {
     const { onToggle } = props;
     return (

@@ -5,7 +5,6 @@ import { Card } from '@folio/stripes/components';
 import formattedDateTime from '../../../util/formattedDateTime';
 import css from './AuditInfo.css';
 
-
 class AuditInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,

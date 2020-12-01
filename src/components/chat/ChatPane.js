@@ -63,7 +63,6 @@ class ChatPane extends React.Component {
     this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} });
   }
 
-
   onSubmitMessage = values => {
     return (
       this.sendMessage(
@@ -140,7 +139,6 @@ class ChatPane extends React.Component {
       <ChatMessage key={`notificationMessage[${index}]`} notification={notification} mutator={mutator} isLatest={isLatest} ref={isLatest ? this.latestMessage : null} handleMessageRead={this.handleMessageRead} />
     );
   }
-
 
   sortByTimestamp = (a, b) => {
     if (a.timestamp > b.timestamp) {
