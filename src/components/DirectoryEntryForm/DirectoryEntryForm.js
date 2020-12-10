@@ -36,17 +36,26 @@ class DirectoryEntryForm extends React.Component {
     values: PropTypes.object,
   }
 
-  state = {
-    sectionsShared: {
-      directoryEntryFormInfo: true,
-      directoryEntryFormContactInfo: true,
-      directoryEntryFormServices: false,
-      directoryEntryFormCustProps: false,
-    },
-    sectionsLocal: {
-      localDirectoryEntryFormInfo: false,
-    },
-    tab: 'shared',
+  constructor(props) {
+    super(props);
+
+    const { stripes } = props;
+    this.localOnly = (stripes.hasPerm('ui-directory.edit-local') &&
+                      !stripes.hasPerm('ui-directory.edit-all') &&
+                      !(stripes.hasPerm('ui-directory.edit-self')));
+
+    this.state = {
+      sectionsShared: {
+        directoryEntryFormInfo: true,
+        directoryEntryFormContactInfo: true,
+        directoryEntryFormServices: false,
+        directoryEntryFormCustProps: false,
+      },
+      sectionsLocal: {
+        localDirectoryEntryFormInfo: this.localOnly,
+      },
+      tab: this.localOnly ? 'local' : 'shared',
+    };
   }
 
   getSectionProps() {
@@ -98,13 +107,15 @@ class DirectoryEntryForm extends React.Component {
       <div>
         <Layout className="textCentered">
           <ButtonGroup>
-            <Button
-              onClick={() => this.setState({ tab: 'shared' })}
-              buttonStyle={tab === 'shared' ? 'primary' : 'default'}
-              id="clickable-nav-shared"
-            >
-              <FormattedMessage id="ui-directory.information.tab.shared" />
-            </Button>
+            {!this.localOnly &&
+              <Button
+                onClick={() => this.setState({ tab: 'shared' })}
+                buttonStyle={tab === 'shared' ? 'primary' : 'default'}
+                id="clickable-nav-shared"
+              >
+                <FormattedMessage id="ui-directory.information.tab.shared" />
+              </Button>
+            }
             <Button
               onClick={() => this.setState({ tab: 'local' })}
               buttonStyle={tab === 'local' ? 'primary' : 'default'}
