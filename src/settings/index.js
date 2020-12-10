@@ -91,12 +91,16 @@ class ResourceSharingSettings extends React.Component {
         {
           route: sectionFormatted,
           label: intl.formatMessage({ id: `ui-rs.settingsSection.${sectionFormatted}` }),
-          component: (props) => <SettingPage sectionName={sectionFormatted} {...props} />,
+          component: (props) => <SettingPage sectionName={section} {...props} />,
         }
       );
     });
 
-    return persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
+    console.log("PERSISTENT PAGES: %o", persistent)
+    console.log("DYNAMIC PAGES: %o", dynamic)
+    const settingPageList = persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
+    console.log("DYNAMIC PAGES: %o", dynamic)
+    return settingPageList;
   }
 
   render() {
