@@ -96,10 +96,7 @@ class ResourceSharingSettings extends React.Component {
       );
     });
 
-    console.log("PERSISTENT PAGES: %o", persistent)
-    console.log("DYNAMIC PAGES: %o", dynamic)
     const settingPageList = persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
-    console.log("DYNAMIC PAGES: %o", dynamic)
     return settingPageList;
   }
 

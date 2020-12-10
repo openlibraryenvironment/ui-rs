@@ -83,10 +83,11 @@ class SettingField extends React.Component {
     switch (setting.settingType) {
       case 'Refdata':
         // Grab refdata values corresponding to setting
+        // eslint-disable-next-line no-case-declarations
         const selectRefValues = settingData?.refdatavalues.filter((obj) => {
           return obj.desc === setting.vocab;
         })[0].values;
-
+        // eslint-disable-next-line no-case-declarations
         let RefdataComponent = Select;
         if (selectRefValues.length > 0 && selectRefValues.length <= 4) {
           RefdataComponent = RefdataButtons;
@@ -121,7 +122,7 @@ class SettingField extends React.Component {
           />
         );
       default:
-        //If in doubt, go with String
+        // If in doubt, go with String
         return (
           <Field
             autoFocus
