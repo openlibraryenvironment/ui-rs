@@ -7,6 +7,7 @@ import {
   Card,
   InfoPopover,
   Select,
+  TextArea,
   TextField,
 } from '@folio/stripes/components';
 import { RefdataButtons } from '@folio/stripes-reshare';
@@ -79,48 +80,56 @@ class SettingField extends React.Component {
   renderEditSettingValue = (setting) => {
     const { settingData } = this.props;
 
-    // We need to check if we are working with a String Setting or with a refdata one
-    if (setting.settingType === 'String') {
-      return (
-        <Field
-          autoFocus
-          name={`${this.props.input.name}`}
-          component={TextField}
-          parse={v => v} // Lets us send an empty string instead of 'undefined'
-        />
-      );
-    } else if (setting.settingType === 'Password') {
-      return (
-        <Field
-          autoFocus
-          name={`${this.props.input.name}`}
-          type="password"
-          component={TextField}
-          parse={v => v} // Lets us send an empty string instead of 'undefined'
-        />
-      );
-    } else {
-      // Grab refdata values corresponding to setting
-      const selectRefValues = settingData?.refdatavalues.filter((obj) => {
-        return obj.desc === setting.vocab;
-      })[0].values;
+    switch (setting.settingType) {
+      case 'Refdata':
+        // Grab refdata values corresponding to setting
+        const selectRefValues = settingData?.refdatavalues.filter((obj) => {
+          return obj.desc === setting.vocab;
+        })[0].values;
 
-      if (selectRefValues.length > 0 && selectRefValues.length <= 4) {
+        let RefdataComponent = Select;
+        if (selectRefValues.length > 0 && selectRefValues.length <= 4) {
+          RefdataComponent = RefdataButtons;
+        }
+
         return (
           <Field
             name={`${this.props.input.name}`}
-            component={RefdataButtons}
+            component={RefdataComponent}
             dataOptions={selectRefValues}
           />
         );
-      }
-      return (
-        <Field
-          name={`${this.props.input.name}`}
-          component={Select}
-          dataOptions={selectRefValues}
-        />
-      );
+
+      case 'Password':
+        return (
+          <Field
+            autoFocus
+            name={`${this.props.input.name}`}
+            type="password"
+            component={TextField}
+            parse={v => v} // Lets us send an empty string instead of 'undefined'
+          />
+        );
+      case 'Template':
+        return (
+          <Field
+            autoFocus
+            fullWidth
+            name={`${this.props.input.name}`}
+            component={TextArea}
+            parse={v => v} // Lets us send an empty string instead of 'undefined'
+          />
+        );
+      default:
+        //If in doubt, go with String
+        return (
+          <Field
+            autoFocus
+            name={`${this.props.input.name}`}
+            component={TextField}
+            parse={v => v} // Lets us send an empty string instead of 'undefined'
+          />
+        );
     }
   }
 

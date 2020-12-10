@@ -13,6 +13,8 @@ import {
   PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
 } from './pullslipNotifications';
 
+import snakeToCamel from '../util/snakeToCamel';
+
 function sortByLabelCaseInsensitive(a, b) {
   const al = a.label.toLowerCase();
   const bl = b.label.toLowerCase();
@@ -83,13 +85,22 @@ class ResourceSharingSettings extends React.Component {
       perm: page.perm,
     }));
 
-    const dynamic = sections.map(section => ({
-      route: section,
-      label: intl.formatMessage({ id: `ui-rs.settingsSection.${section}` }),
-      component: (props) => <SettingPage sectionName={section} {...props} />,
-    }));
+    const dynamic = sections.map(section => {
+      const sectionFormatted = snakeToCamel(section);
+      return (
+        {
+          route: sectionFormatted,
+          label: intl.formatMessage({ id: `ui-rs.settingsSection.${sectionFormatted}` }),
+          component: (props) => <SettingPage sectionName={section} {...props} />,
+        }
+      );
+    });
 
-    return persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
+    console.log("PERSISTENT PAGES: %o", persistent)
+    console.log("DYNAMIC PAGES: %o", dynamic)
+    const settingPageList = persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
+    console.log("DYNAMIC PAGES: %o", dynamic)
+    return settingPageList;
   }
 
   render() {
