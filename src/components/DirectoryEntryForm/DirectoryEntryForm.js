@@ -40,9 +40,17 @@ class DirectoryEntryForm extends React.Component {
     super(props);
 
     const { stripes } = props;
+    const managed = props.initialValues.status?.value === 'managed';
     this.localOnly = (stripes.hasPerm('ui-directory.edit-local') &&
                       !stripes.hasPerm('ui-directory.edit-all') &&
-                      !(stripes.hasPerm('ui-directory.edit-self')));
+                      !(managed && stripes.hasPerm('ui-directory.edit-self')));
+    /*
+    console.log(`edit-local=${stripes.hasPerm('ui-directory.edit-local')}, ` +
+                `edit-all=${stripes.hasPerm('ui-directory.edit-all')}, ` +
+                `edit-self=${stripes.hasPerm('ui-directory.edit-self')}, ` +
+                `managed=${managed} --> ` +
+                `localOnly=${this.localOnly}`);
+    */
 
     this.state = {
       sectionsShared: {
