@@ -1,6 +1,10 @@
 export default {
   item: [
     {
+      token: 'item.barcode',
+      previewValue: '456123789',
+    },
+    {
       token: 'item.title',
       previewValue: 'The Wines of Italy',
     },
