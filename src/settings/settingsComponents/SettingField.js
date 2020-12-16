@@ -6,11 +6,16 @@ import {
   Button,
   Card,
   InfoPopover,
+  NoValue,
   Select,
   TextArea,
   TextField,
 } from '@folio/stripes/components';
 import { RefdataButtons } from '@folio/stripes-reshare';
+import { TemplateEditor } from '@folio/stripes-template-editor';
+
+import HtmlToReact, { Parser } from 'html-to-react';
+
 import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
 
@@ -52,28 +57,41 @@ class SettingField extends React.Component {
 
   renderSettingValue = (setting) => {
     const { settingData } = this.props;
-    if (setting.settingType === 'Refdata') {
-      const refValues = settingData?.refdatavalues?.filter((obj) => {
-        return obj.desc === setting.vocab;
-      })[0]?.values;
-      const settingLabel = setting.value ? refValues?.filter((obj) => obj.value === setting.value)[0]?.label : undefined;
-      return (
-        <p>
-          {settingLabel || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
-        </p>
-      );
-    } else if (setting.settingType !== 'Password') {
-      return (
-        <p>
-          {setting.value ? setting.value : (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
-        </p>
-      );
-    } else {
-      return (
-        <p>
-          {setting.value ? '********' : (setting.defValue ? '[default] ********' : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
-        </p>
-      );
+    switch (setting.settingType){
+      case 'Refdata':
+        const refValues = settingData?.refdatavalues?.filter((obj) => {
+          return obj.desc === setting.vocab;
+        })[0]?.values;
+        const settingLabel = setting.value ? refValues?.filter((obj) => obj.value === setting.value)[0]?.label : undefined;
+        return (
+          <p>
+            {settingLabel || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
+          </p>
+        );
+      case 'Password':
+        return (
+          <p>
+            {setting.value ? '********' : (setting.defValue ? '[default] ********' : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
+          </p>
+        );
+      case 'Template':
+        const parser = new Parser();
+        const processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions(React);
+        const rules = [
+          {
+            shouldProcessNode: () => true,
+            processNode: processNodeDefinitions.processDefaultNode,
+          },
+        ];
+        const valueToParse = setting.value || setting.defValue;
+        const parsedTemplate = parser.parseWithInstructions(valueToParse, () => true, rules);
+        return parsedTemplate;
+      default:
+        return (
+          <p>
+            {setting.value || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" /> )}
+          </p>
+        );
     }
   }
 
@@ -114,11 +132,11 @@ class SettingField extends React.Component {
       case 'Template':
         return (
           <Field
-            autoFocus
-            fullWidth
             name={`${this.props.input.name}`}
-            component={TextArea}
-            parse={v => v} // Lets us send an empty string instead of 'undefined'
+            component={TemplateEditor}
+            previewModalHeader={
+              <FormattedMessage id={`ui-rs.settings.template.${snakeToCamel(setting.key)}.previewHeader`} />
+            }
           />
         );
       default:
