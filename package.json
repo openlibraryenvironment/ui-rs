@@ -8,6 +8,9 @@
   "engines": {
     "node": ">=10.0.0"
   },
+  "publishConfig" : {
+    "registry": "https://repository.dev-us-east-1.indexdata.com/repository/reshare"
+  },
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
