@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form } from 'react-final-form';
 import { Prompt } from 'react-router-dom';
@@ -39,15 +38,27 @@ const CreateEditRoute = props => {
     history,
     match,
     mutator,
-    resources: { selectedRecord: resource },
+    resources,
     intl,
   } = props;
+  if (!resources?.locations?.hasLoaded) return null;
+  // locations are where rec.type.value is 'branch' and there is a tag in rec.type.tags where the value is 'pickup'
+  // and are formatted for the Select component as { value: lmsLocationCode, label: name }
+  const locations = resources.locations.records
+    .filter(rec => rec?.type?.value === 'branch'
+      && rec?.tags.reduce((acc, cur) => acc || cur?.value === 'pickup', false))
+    .reduce((acc, cur) => ([...acc, { value: cur.lmsLocationCode, label: cur.name }]), []);
+
+  const validRequesterRecords = resources.locations.records
+    .filter(rec => rec?.type?.value === 'institution');
+  if (!validRequesterRecords?.[0]?.symbols?.[0]?.symbol) throw new Error('Cannot resolve symbol to create requests as');
+  const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
   const isEditing = typeof match.params.id === 'string';
   let initialValues = {};
   if (isEditing) {
-    if (!resource || !resource.hasLoaded) return null;
-    const record = resource.records[0];
+    if (!resources?.selectedRecord?.hasLoaded) return null;
+    const record = resources.selectedRecord.records[0];
     initialValues = { ...record,
       formattedDateCreated: (
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
@@ -58,9 +69,13 @@ const CreateEditRoute = props => {
     if (isEditing) {
       return mutator.selectedRecord.PUT(newRecord).then(() => history.goBack());
     }
+    const baseRecord = {
+      requestingInstitutionSymbol: requesters[0].value,
+      isRequester: true
+    };
     return (
       mutator.patronRequests
-        .POST(newRecord)
+        .POST({ ...baseRecord, ...newRecord })
         // We want to go to the new record but we also want it to be easy to return to where we were,
         // hence use of history.replace rather than history.push -- the create form turns into the
         // created record.
@@ -74,13 +89,14 @@ const CreateEditRoute = props => {
         {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
           <Pane
             defaultWidth="100%"
+            centerContent
             onClose={history.goBack}
             dismissible
             lastMenu={renderLastMenu(pristine, submitting, handleSubmit, isEditing)}
             paneTitle={<FormattedMessage id={isEditing ? 'ui-rs.updatePatronRequest' : 'ui-rs.createPatronRequest'} />}
           >
             <form onSubmit={handleSubmit} id="form-rs-entry">
-              <PatronRequestForm />
+              <PatronRequestForm locations={locations} requesters={requesters} />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">
               {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
@@ -102,21 +118,11 @@ CreateEditRoute.manifest = {
     type: 'okapi',
     path: 'rs/patronrequests/:{id}',
   },
+  locations: {
+    type: 'okapi',
+    path: 'directory/entry?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100',
+  },
   query: {},
 };
 
-CreateEditRoute.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.object,
-  }).isRequired,
-  history: PropTypes.object.isRequired,
-  mutator: PropTypes.shape({
-    patronRequests: PropTypes.object,
-    selectedRecord: PropTypes.object,
-  }).isRequired,
-  resources: PropTypes.shape({
-    selectedRecord: PropTypes.object,
-  }).isRequired,
-  intl: PropTypes.object.isRequired,
-};
 export default stripesConnect(injectIntl(CreateEditRoute));
