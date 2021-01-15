@@ -26,8 +26,6 @@ const PatronRequestForm = ({ locations, requesters }) => (
             backendDateStandard="YYYY-MM-DD"
             label={<FormattedMessage id="ui-rs.information.dateNeeded" />}
             component={Datepicker}
-            required
-            validate={required}
           />
         </Col>
         <Col xs={3}>
