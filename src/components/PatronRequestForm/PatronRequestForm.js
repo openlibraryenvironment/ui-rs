@@ -83,6 +83,18 @@ const PatronRequestForm = ({ locations, requesters }) => (
       <Row>
         <Col xs={4}>
           <Field
+            id="edit-patron-request-systemInstanceIdentifier"
+            name="systemInstanceIdentifier"
+            label={<FormattedMessage id="ui-rs.information.systemInstanceIdentifier" />}
+            component={TextField}
+            required
+            validate={required}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={4}>
+          <Field
             id="edit-patron-request-title"
             name="title"
             label={<FormattedMessage id="ui-rs.information.title" />}
@@ -161,18 +173,6 @@ const PatronRequestForm = ({ locations, requesters }) => (
             name="oclcNumber"
             label={<FormattedMessage id="ui-rs.information.oclcNumber" />}
             component={TextField}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={4}>
-          <Field
-            id="edit-patron-request-systemInstanceIdentifier"
-            name="systemInstanceIdentifier"
-            label={<FormattedMessage id="ui-rs.information.systemInstanceIdentifier" />}
-            component={TextField}
-            required
-            validate={required}
           />
         </Col>
       </Row>
