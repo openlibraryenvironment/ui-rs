@@ -164,6 +164,18 @@ const PatronRequestForm = ({ locations, requesters }) => (
           />
         </Col>
       </Row>
+      <Row>
+        <Col xs={4}>
+          <Field
+            id="edit-patron-request-systemInstanceIdentifier"
+            name="systemInstanceIdentifier"
+            label={<FormattedMessage id="ui-rs.information.systemInstanceIdentifier" />}
+            component={TextField}
+            required
+            validate={required}
+          />
+        </Col>
+      </Row>
     </Accordion>
   </AccordionSet>
 );

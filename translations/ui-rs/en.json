@@ -36,6 +36,7 @@
     "information.isbn": "ISBN",
     "information.issn": "ISSN",
     "information.oclcNumber": "OCLC Number",
+    "information.systemInstanceIdentifier": "System identifier",
     "information.volume": "Volume",
     "createPatronRequest": "Create patron request",
     "updatePatronRequest": "Update patron request",
