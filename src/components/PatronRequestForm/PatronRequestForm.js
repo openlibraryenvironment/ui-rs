@@ -77,7 +77,7 @@ const PatronRequestForm = ({ locations, requesters }) => (
         </Col>
       </Row>
     </Accordion>
-    <Accordion label={<FormattedMessage id="ui-rs.information.heading.requestedItem" />}>
+    <Accordion label={<FormattedMessage id="ui-rs.information.heading.requestedTitle" />}>
       <Row>
         <Col xs={4}>
           <Field
