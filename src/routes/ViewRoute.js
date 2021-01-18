@@ -172,7 +172,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
               {appName => (
                 <>
                   {
-                    stripes.hasPerm(`ui-${appName}.edit`) && (
+                    appName === 'request' && stripes.hasPerm(`ui-${appName}.edit`) && (
                       <Button buttonStyle="dropdownItem" to={`../../edit/${match.params.id}`} id="clickable-edit-patronrequest">
                         <Icon icon="edit">
                           <FormattedMessage id="ui-rs.edit" />

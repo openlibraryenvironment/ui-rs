@@ -501,6 +501,7 @@ class PatronRequestsRoute extends React.Component {
             pickLocation: a => a.pickLocation && a.pickLocation.name,
           }}
           renderFilters={this.renderFilters}
+          hasNewButton={this.props.appName === 'request'}
         />
       </>
     );
