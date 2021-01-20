@@ -79,7 +79,7 @@ const CreateEditRoute = props => {
         // When creating a new request we need to delay before redirecting to the request's page to
         // give the server some time to resolve the requesting institution from the symbol and generate
         // an appropriate ID.
-        .then(res => new Promise(resolve => setTimeout(() => resolve(res), 2000)))
+        .then(res => new Promise(resolve => setTimeout(() => resolve(res), 3000)))
         // We want to go to the new record but we also want it to be easy to return to where we were,
         // hence use of history.replace rather than history.push -- the create form turns into the
         // created record.
