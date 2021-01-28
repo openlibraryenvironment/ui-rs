@@ -6,9 +6,7 @@ import {
   Button,
   Card,
   InfoPopover,
-  NoValue,
   Select,
-  TextArea,
   TextField,
 } from '@folio/stripes/components';
 import { RefdataButtons } from '@folio/stripes-reshare';
@@ -134,6 +132,8 @@ class SettingField extends React.Component {
           <Field
             name={`${this.props.input.name}`}
             component={TemplateEditor}
+            tokens={[]}
+            tokensList={<div/>}
             previewModalHeader={
               <FormattedMessage id={`ui-rs.settings.template.${snakeToCamel(setting.key)}.previewHeader`} />
             }
