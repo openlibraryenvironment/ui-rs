@@ -148,11 +148,7 @@ const NoticePolicyForm = ({ initialValues, onSubmit, onCancel, resources }) => {
 NoticePolicyForm.manifest = Object.freeze({
   templates: {
     type: 'okapi',
-    path: 'templates',
-    records: 'templates',
-    params: {
-      query: 'active="true"',
-    },
+    path: 'rs/template'
   },
   refdatavalues: {
     type: 'okapi',

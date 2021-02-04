@@ -54,9 +54,7 @@ const Notices = (props) => {
 Notices.manifest = Object.freeze({
   entries: {
     type: 'okapi',
-    path: 'rs/template',
-    recordsRequired: 50,
-    perRequest: 50,
+    path: 'rs/template'
   },
 });
 
