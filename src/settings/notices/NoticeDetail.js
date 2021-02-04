@@ -13,7 +13,8 @@ const NoticeDetail = ({ initialValues: notice }) => {
       processNode: processNodeDefinitions.processDefaultNode,
     },
   ];
-  const parsedEmailTemplate = parser.parseWithInstructions(notice?.localizedTemplates?.en?.body, () => true, rules);
+  const localizedTemplate = notice?.localizedTemplates?.en?.template || {}
+  const parsedEmailTemplate = parser.parseWithInstructions(localizedTemplate.templateBody, () => true, rules);
 
   return (
     <>
@@ -36,7 +37,7 @@ const NoticeDetail = ({ initialValues: notice }) => {
         <Accordion id="email-template" label={<FormattedMessage id="ui-rs.settings.notices.email" />}>
           <KeyValue
             label={<FormattedMessage id="ui-rs.settings.notices.subject" />}
-            value={notice?.localizedTemplates?.en?.header}
+            value={localizedTemplate.header}
           />
           <KeyValue
             label={<FormattedMessage id="ui-rs.settings.notices.body" />}
