@@ -27,7 +27,10 @@ import TokensList from './TokensList';
 const NoticeForm = ({ initialValues, onSubmit, onCancel }) => {
   const onMassagedSubmit = (values) => {
     // Take the localizedTemplates and force them back into the shape they need to be for save
-    const template = values.localizedTemplates.en.template
+    const template = values.localizedTemplates.en
+    if (!template.id) {
+      template.locality = "en"
+    }
     onSubmit({ ...values, localizedTemplates: [template]})
   }
 
