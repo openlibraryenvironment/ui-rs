@@ -12,9 +12,9 @@ const PullslipTemplates = () => {
     <Templates
       context="pullslipTemplate"
       permissions={{
-        put: 'ui-rs.settings.pullslipTemplates',
-        post: 'ui-rs.settings.pullslipTemplates',
-        delete: 'ui-rs.settings.pullslipTemplates',
+        put: 'ui-rs.settings.pullslip-notifications',
+        post: 'ui-rs.settings.pullslip-notifications',
+        delete: 'ui-rs.settings.pullslip-notifications',
       }}
       templateContextLabel={intl.formatMessage({id: 'ui-rs.settings.templates.pullslipTemplate'})?.toLowerCase()}
       tokens={tokens}
