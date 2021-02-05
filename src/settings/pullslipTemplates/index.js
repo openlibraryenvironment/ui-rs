@@ -10,13 +10,13 @@ const Notices = () => {
   const intl = useIntl();
   return (
     <Templates
-      context="noticeTemplate"
+      context="pullslipTemplate"
       permissions={{
         put: 'ui-rs.settings.notices',
         post: 'ui-rs.settings.notices',
         delete: 'ui-rs.settings.notices',
       }}
-      templateContextLabel={intl.formatMessage({id: 'ui-rs.settings.templates.noticeTemplate'})?.toLowerCase()}
+      templateContextLabel={intl.formatMessage({id: 'ui-rs.settings.templates.pullslipTemplate'})?.toLowerCase()}
       tokens={tokens}
       tokensList={TokensList}
     />

@@ -21,10 +21,8 @@ import {
 } from '@folio/stripes/components';
 import { TemplateEditor } from '@folio/stripes-template-editor';
 
-import tokens from './tokens';
-import TokensList from './TokensList';
 
-const NoticeForm = ({ initialValues, onSubmit, onCancel }) => {
+const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel, tokensList, tokens }) => {
   const onMassagedSubmit = (values) => {
     // Take the localizedTemplates and force them back into the shape they need to be for save
     const template = values.localizedTemplates.en
@@ -37,13 +35,13 @@ const NoticeForm = ({ initialValues, onSubmit, onCancel }) => {
   return (
     <Form onSubmit={onMassagedSubmit} initialValues={initialValues}>
       {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
-        <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
+        <form id="form-patron-template" noValidate data-test-template-form onSubmit={handleSubmit}>
           <Paneset isRoot>
             <Pane
               defaultWidth="100%"
               paneTitle={initialValues?.id
                 ? initialValues?.name
-                : <FormattedMessage id="ui-rs.settings.notices.newLabel" />
+                : <FormattedMessage id="ui-rs.settings.templates.newLabel" values={{templateContextLabel: templateContextLabel}} />
               }
               firstMenu={
                 <PaneMenu>
@@ -81,24 +79,13 @@ const NoticeForm = ({ initialValues, onSubmit, onCancel }) => {
               }
             >
               <Row>
-                <Col xs={8} data-test-notice-template-name>
+                <Col xs={8} data-test-template-name>
                   <Field
                     label={<FormattedMessage id="ui-rs.settings.name" />}
                     name="name"
                     required
-                    id="input-patron-notice-name"
+                    id="input-patron-template-name"
                     component={TextField}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-rs.settings.notices.active" />}
-                    name="active"
-                    id="input-patron-notice-active"
-                    component={Checkbox}
-                    defaultChecked={initialValues?.active}
                   />
                 </Col>
               </Row>
@@ -106,9 +93,9 @@ const NoticeForm = ({ initialValues, onSubmit, onCancel }) => {
               <Row>
                 <Col xs={8}>
                   <Field
-                    label={<FormattedMessage id="ui-rs.settings.notices.description" />}
+                    label={<FormattedMessage id="ui-rs.settings.templates.description" />}
                     name="description"
-                    id="input-patron-notice-description"
+                    id="input-patron-template-description"
                     component={TextArea}
                   />
                 </Col>
@@ -116,15 +103,15 @@ const NoticeForm = ({ initialValues, onSubmit, onCancel }) => {
               <AccordionSet>
                 <Accordion
                   id="email-template"
-                  label={<FormattedMessage id="ui-rs.settings.notices.email" />}
+                  label={<FormattedMessage id="ui-rs.settings.templates.email" />}
                 >
                   <Row>
                     <Col xs={8}>
                       <Field
-                        id="input-patron-notice-subject"
+                        id="input-patron-template-subject"
                         component={TextField}
                         required
-                        label={<FormattedMessage id="ui-rs.settings.notices.subject" />}
+                        label={<FormattedMessage id="ui-rs.settings.templates.subject" />}
                         name="localizedTemplates.en.template.header"
                       />
                     </Col>
@@ -132,15 +119,15 @@ const NoticeForm = ({ initialValues, onSubmit, onCancel }) => {
                   <Row>
                     <Col xs={8}>
                       <Field
-                        label={<FormattedMessage id="ui-rs.settings.notices.body" />}
+                        label={<FormattedMessage id="ui-rs.settings.templates.body" />}
                         required
                         name="localizedTemplates.en.template.templateBody"
                         id="input-email-template-body"
                         component={TemplateEditor}
                         tokens={tokens}
-                        tokensList={TokensList}
+                        tokensList={tokensList}
                         previewModalHeader={
-                          <FormattedMessage id="ui-rs.settings.notices.previewHeader" />
+                          <FormattedMessage id="ui-rs.settings.templates.previewHeader" values={{templateContextLabel: templateContextLabel}} />
                         }
                       />
                     </Col>
@@ -158,10 +145,11 @@ const NoticeForm = ({ initialValues, onSubmit, onCancel }) => {
   );
 };
 
-NoticeForm.propTypes = {
+TemplateForm.propTypes = {
+  templateContextLabel: PropTypes.string,
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
   onCancel: PropTypes.func,
 };
 
-export default NoticeForm;
+export default TemplateForm;

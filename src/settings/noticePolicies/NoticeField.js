@@ -10,7 +10,7 @@ const NoticeField = ({ input, options }) => (
         <Field
           component={Select}
           label={<FormattedMessage id="ui-rs.settings.noticePolicies.template" />}
-          name={`${input.name}.template`}
+          name={`${input.name}.template.id`}
           dataOptions={options.templates}
           placeholder=" "
           required
