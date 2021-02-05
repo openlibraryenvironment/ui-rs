@@ -112,21 +112,18 @@
         "subPermissions": [
           "settings.rs.enabled",
           "rs.noticePolicies",
-          "templates.collection.get",
-          "templates.item.get",
-          "templates.item.post",
-          "templates.item.put",
-          "templates.item.delete"
+          "rs.template.write"
         ],
         "visible": true
       },
       {
         "permissionName": "ui-rs.settings.pullslip-notifications",
-        "displayName": "Settings (resource-sharing): Can create, edit and remove pullslip notifications",
+        "displayName": "Settings (resource-sharing): Can create, edit and remove pullslip notifications and templates",
         "subPermissions": [
           "settings.rs.enabled",
           "rs.hostlmslocations",
-          "rs.timers"
+          "rs.timers",
+          "rs.template.write"
         ],
         "visible": true
       }

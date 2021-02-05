@@ -6,15 +6,15 @@ import TokensList from './TokensList';
 
 import Templates from '../templates';
 
-const Notices = () => {
+const PullslipTemplates = () => {
   const intl = useIntl();
   return (
     <Templates
       context="pullslipTemplate"
       permissions={{
-        put: 'ui-rs.settings.notices',
-        post: 'ui-rs.settings.notices',
-        delete: 'ui-rs.settings.notices',
+        put: 'ui-rs.settings.pullslipTemplates',
+        post: 'ui-rs.settings.pullslipTemplates',
+        delete: 'ui-rs.settings.pullslipTemplates',
       }}
       templateContextLabel={intl.formatMessage({id: 'ui-rs.settings.templates.pullslipTemplate'})?.toLowerCase()}
       tokens={tokens}
@@ -23,4 +23,4 @@ const Notices = () => {
   );
 };
 
-export default Notices;
+export default PullslipTemplates;
