@@ -287,7 +287,7 @@
     "settingsSection.chat": "Chat settings",
     "settingsSection.iso18626": "Custom ISO18626 settings",
     "settingsSection.pullslipNotifications": "Pull slip notifications",
-    "settingsSection.pullslipTemplateConfig": "Pull slip templating",
+    "settingsSection.pullslipTemplateConfig": "Pull slip configuration",
     "settingsSection.pullslipTemplates": "Pull slip templates",
     "settingsSection.notices": "Notice Templates",
     "settingsSection.noticePolicies": "Notice Policies",
