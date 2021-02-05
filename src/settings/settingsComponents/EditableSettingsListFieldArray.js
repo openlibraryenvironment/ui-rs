@@ -21,7 +21,7 @@ export default class EditableSettingsListFieldArray extends React.Component {
   }
 
   render() {
-    const { data, fields, mutators } = this.props;
+    const { data, fields, mutators, templates } = this.props;
     return (
       // Returns the settings in alphabetical order
       (fields.value || []).sort((a, b) => {
@@ -34,10 +34,11 @@ export default class EditableSettingsListFieldArray extends React.Component {
           mutators={mutators}
           onSave={() => this.handleSave(i)}
           settingData={{
+            ...data,
             currentSetting: setting,
-            refdatavalues: data?.refdatavalues
           }}
           initialValues={this.props.initialValues}
+          templates={templates}
         />
       ))
     );

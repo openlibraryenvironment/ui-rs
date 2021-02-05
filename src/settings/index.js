@@ -30,7 +30,7 @@ class ResourceSharingSettings extends React.Component {
       params: {
         max: '500',
       },
-    },
+    }
   });
 
   static propTypes = {

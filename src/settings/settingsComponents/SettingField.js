@@ -194,9 +194,13 @@ class SettingField extends React.Component {
   }
 
   render() {
-    const { settingData } = this.props;
-    const currentSetting = settingData?.currentSetting;
-    const setting = currentSetting || {};
+    const { 
+      settingData: {
+        currentSetting: setting = {}
+      } = {}
+    } = this.props;
+
+    console.log("PROPS: %o", this.props)
 
     let renderFunction;
     if (this.state.editing === false) {
@@ -210,7 +214,11 @@ class SettingField extends React.Component {
 
     return (
       <Card
-        headerStart={currentSetting ? <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> : <FormattedMessage id="ui-rs.settingName.settingLoading" />}
+        headerStart={
+          Object.keys(setting).length > 0 ?
+          <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> :
+          <FormattedMessage id="ui-rs.settingName.settingLoading" />
+        }
         headerEnd={this.renderEditButton()}
         roundedBorder
       >
