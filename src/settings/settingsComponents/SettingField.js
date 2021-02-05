@@ -16,6 +16,7 @@ import HtmlToReact, { Parser } from 'html-to-react';
 
 import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
+import { unregisterDecorator } from 'handlebars';
 
 class SettingField extends React.Component {
   static propTypes = {
@@ -73,17 +74,14 @@ class SettingField extends React.Component {
           </p>
         );
       case 'Template':
-        const parser = new Parser();
-        const processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions(React);
-        const rules = [
-          {
-            shouldProcessNode: () => true,
-            processNode: processNodeDefinitions.processDefaultNode,
-          },
-        ];
-        const valueToParse = setting.value || setting.defValue;
-        const parsedTemplate = parser.parseWithInstructions(valueToParse, () => true, rules);
-        return parsedTemplate;
+        console.log("TVs: %o", settingData?.templates)
+        const templateValue = settingData?.templates.filter((obj) => {
+          const settingId = setting.value || setting.defValue;
+          console.log("SettingId: %o", settingId)
+          return obj.id === settingId;
+        })[0];
+        console.log("TV: %o", templateValue)
+        return templateValue?.name || <FormattedMessage id="ui-rs.settings.no-current-value" />;
       default:
         return (
           <p>
@@ -128,15 +126,22 @@ class SettingField extends React.Component {
           />
         );
       case 'Template':
+
+        // Grab refdata values corresponding to setting
+        // eslint-disable-next-line no-case-declarations
+        const templateValues = settingData?.templates.filter((obj) => {
+          return obj.context === setting.vocab;
+        });
+
+        const selectTemplateValues = templateValues.reduce(
+          (acc, cur) => ([...acc, { value: cur.id, label: cur.name }]), []
+        );
+
         return (
           <Field
             name={`${this.props.input.name}`}
-            component={TemplateEditor}
-            tokens={[]}
-            tokensList={<div/>}
-            previewModalHeader={
-              <FormattedMessage id={`ui-rs.settings.template.${snakeToCamel(setting.key)}.previewHeader`} />
-            }
+            component={Select}
+            dataOptions={selectTemplateValues}
           />
         );
       default:
@@ -199,8 +204,6 @@ class SettingField extends React.Component {
         currentSetting: setting = {}
       } = {}
     } = this.props;
-
-    console.log("PROPS: %o", this.props)
 
     let renderFunction;
     if (this.state.editing === false) {
