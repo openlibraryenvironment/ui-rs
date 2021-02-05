@@ -74,13 +74,10 @@ class SettingField extends React.Component {
           </p>
         );
       case 'Template':
-        console.log("TVs: %o", settingData?.templates)
         const templateValue = settingData?.templates.filter((obj) => {
           const settingId = setting.value || setting.defValue;
-          console.log("SettingId: %o", settingId)
           return obj.id === settingId;
         })[0];
-        console.log("TV: %o", templateValue)
         return templateValue?.name || <FormattedMessage id="ui-rs.settings.no-current-value" />;
       default:
         return (
