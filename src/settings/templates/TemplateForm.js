@@ -8,7 +8,6 @@ import {
   Accordion,
   AccordionSet,
   Button,
-  Checkbox,
   Col,
   IconButton,
   Pane,
@@ -21,6 +20,7 @@ import {
 } from '@folio/stripes/components';
 import { TemplateEditor } from '@folio/stripes-template-editor';
 
+import { required } from '../../util/validators';
 
 const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel, tokensList, tokens }) => {
   const onMassagedSubmit = (values) => {
@@ -34,7 +34,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
 
   return (
     <Form onSubmit={onMassagedSubmit} initialValues={initialValues}>
-      {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
+      {({ handleSubmit, pristine, submitting, submitSucceeded, invalid }) => (
         <form id="form-patron-template" noValidate data-test-template-form onSubmit={handleSubmit}>
           <Paneset isRoot>
             <Pane
@@ -62,7 +62,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
                   renderEnd={
                     <Button
                       buttonStyle="primary mega"
-                      disabled={pristine || submitting}
+                      disabled={pristine || submitting || invalid}
                       marginBottom0
                       onClick={handleSubmit}
                       type="submit"
@@ -86,6 +86,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
                     required
                     id="input-patron-template-name"
                     component={TextField}
+                    validate={required}
                   />
                 </Col>
               </Row>
@@ -95,8 +96,10 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
                   <Field
                     label={<FormattedMessage id="ui-rs.settings.templates.description" />}
                     name="description"
+                    required
                     id="input-patron-template-description"
                     component={TextArea}
+                    validate={required}
                   />
                 </Col>
               </Row>
@@ -113,6 +116,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
                         required
                         label={<FormattedMessage id="ui-rs.settings.templates.subject" />}
                         name="localizedTemplates.en.template.header"
+                        validate={required}
                       />
                     </Col>
                   </Row>
@@ -129,6 +133,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
                         previewModalHeader={
                           <FormattedMessage id="ui-rs.settings.templates.previewHeader" values={{templateContextLabel: templateContextLabel}} />
                         }
+                        validate={required}
                       />
                     </Col>
                   </Row>

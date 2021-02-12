@@ -23,13 +23,6 @@ const TemplateDetail = ({ initialValues: notice }) => {
         value={notice.name}
       />
       <KeyValue
-        label={<FormattedMessage id="ui-rs.settings.templates.active" />}
-        value={notice.active
-          ? <FormattedMessage id="ui-rs.yes" />
-          : <FormattedMessage id="ui-rs.no" />
-        }
-      />
-      <KeyValue
         label={<FormattedMessage id="ui-rs.settings.templates.description" />}
         value={notice.description}
       />
