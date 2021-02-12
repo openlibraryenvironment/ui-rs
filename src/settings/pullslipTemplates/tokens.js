@@ -1,44 +1,40 @@
 export default {
-  item: [
+  locations: [
     {
-      token: 'item.barcode',
-      previewValue: '456123789',
+      token: "locations",
+      previewValue: "['location 1', 'location 2']"
     },
     {
-      token: 'item.title',
-      previewValue: 'The Wines of Italy',
-    },
-    {
-      token: 'item.materialType',
-      previewValue: 'Serial',
-    },
+      token: "locations.[0]",
+      previewValue: "location 1"
+    }
   ],
-  user: [
+  pendingRequests: [
     {
-      token: 'user.givenName',
-      previewValue: 'John',
+      token: "pendingRequests",
+      previewValue: "[{id: '12345'}, {id: 'abcde'}]"
     },
     {
-      token: 'user.surname',
-      previewValue: 'Smith',
-    },
-    {
-      token: 'user.id',
-      previewValue: '456123789',
-    },
+      token: "pendingRequests.length",
+      previewValue: 2
+    }
   ],
-  request: [
+  numRequests: [
     {
-      token: 'request.id',
-      previewValue: '456123789',
-    },
+      token: 'numRequests',
+      previewValue: 35
+    }
+  ],
+  summary: [
     {
-      token: 'request.pickupLocation',
-      previewValue: 'Main Library',
-    },
+      token: 'summary',
+      previewValue: "[[9, 'location 4'], [12, 'location 6'], [1, 'location 15']]"
+    }
+  ],
+  foliourl: [
     {
-      token: 'request.neededBy',
-      previewValue: 'Mar 31, 2020',
-    },
+      token: 'foliourl',
+      previewValue: 'https://folio.url.for.this.install'
+    }
   ]
 };

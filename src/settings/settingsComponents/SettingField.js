@@ -130,15 +130,16 @@ class SettingField extends React.Component {
           return obj.context === setting.vocab;
         });
 
-        const selectTemplateValues = templateValues.reduce(
+        const selectTemplateValues = [{value: '', label: ''}, ...templateValues.reduce(
           (acc, cur) => ([...acc, { value: cur.id, label: cur.name }]), []
-        );
+        )];
 
         return (
           <Field
             name={`${this.props.input.name}`}
             component={Select}
             dataOptions={selectTemplateValues}
+            parse={v => v}
           />
         );
       default:
