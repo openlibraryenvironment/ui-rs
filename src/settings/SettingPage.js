@@ -21,6 +21,13 @@ class SettingPage extends React.Component {
       params: {
         max: '500',
       },
+    },
+    templates: {
+      type: 'okapi',
+      path: 'rs/template',
+      params: {
+        max: '500',
+      },
     }
   });
 
@@ -47,20 +54,31 @@ class SettingPage extends React.Component {
   }
 
   render() {
-    const { sectionName } = this.props;
+    const {
+      resources: {
+        templates: {
+          records: tmp = []
+        } = {},
+        refdatavalues: {
+          records: rdv = []
+        } = {},
+        settings: {
+          records: rows = []
+        } = {}
+      } = {},
+      sectionName
+    } = this.props;
 
     // We grab the rows and check for a valid filter
-
-    const rows = (this.props.resources.settings ? this.props.resources.settings.records : []);
     const filteredRows = sectionName ? rows.filter(obj => obj.section === sectionName) : rows;
 
     const settings = { 'settings': filteredRows };
-    const refdatavalues = this.props?.resources?.refdatavalues?.records ? this.props?.resources?.refdatavalues?.records : [];
 
     return (
       <EditableSettingsList
         data={{
-          refdatavalues
+          refdatavalues: rdv,
+          templates: tmp
         }}
         settingSection={sectionName}
         initialValues={settings}

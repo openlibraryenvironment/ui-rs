@@ -31,8 +31,9 @@ const NoticePolicyDetail = ({ initialValues: noticePolicy, resources }) => {
       />
       <AccordionSet>
         <Accordion label={<FormattedMessage id="ui-rs.settings.noticePolicies.notices" />}>
-          {resources?.templates?.hasLoaded && resources?.refdatavalues?.hasLoaded && noticePolicy.notices.map(notice => {
-            const template = resources.templates.records.filter(record => record.id === notice.template)[0];
+          {resources?.refdatavalues?.hasLoaded && noticePolicy.notices.map(notice => {
+            const template = notice.template
+
             return (
               <Card headerStart=" " key={notice.id}>
                 <Row>
@@ -76,14 +77,6 @@ const NoticePolicyDetail = ({ initialValues: noticePolicy, resources }) => {
 };
 
 NoticePolicyDetail.manifest = Object.freeze({
-  templates: {
-    type: 'okapi',
-    path: 'templates',
-    records: 'templates',
-    params: {
-      query: 'active="true"',
-    },
-  },
   refdatavalues: {
     type: 'okapi',
     path: 'rs/refdata',

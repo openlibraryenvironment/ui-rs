@@ -29,6 +29,7 @@ class EditableSettingsList extends React.Component {
       settingSection,
       initialValues,
     } = this.props;
+
     return (
       <Form
         onSubmit={this.handleSave}
@@ -56,9 +57,7 @@ class EditableSettingsList extends React.Component {
                 name="settings"
                 onSave={this.handleSave}
                 mutators={mutators}
-                data={{
-                  refdatavalues: data?.refdatavalues
-                }}
+                data={data}
                 initialValues={initialValues}
               />
             </form>

@@ -7,12 +7,16 @@ import {
   Card,
   InfoPopover,
   Select,
-  TextArea,
   TextField,
 } from '@folio/stripes/components';
 import { RefdataButtons } from '@folio/stripes-reshare';
+import { TemplateEditor } from '@folio/stripes-template-editor';
+
+import HtmlToReact, { Parser } from 'html-to-react';
+
 import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
+import { unregisterDecorator } from 'handlebars';
 
 class SettingField extends React.Component {
   static propTypes = {
@@ -52,28 +56,35 @@ class SettingField extends React.Component {
 
   renderSettingValue = (setting) => {
     const { settingData } = this.props;
-    if (setting.settingType === 'Refdata') {
-      const refValues = settingData?.refdatavalues?.filter((obj) => {
-        return obj.desc === setting.vocab;
-      })[0]?.values;
-      const settingLabel = setting.value ? refValues?.filter((obj) => obj.value === setting.value)[0]?.label : undefined;
-      return (
-        <p>
-          {settingLabel || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
-        </p>
-      );
-    } else if (setting.settingType !== 'Password') {
-      return (
-        <p>
-          {setting.value ? setting.value : (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
-        </p>
-      );
-    } else {
-      return (
-        <p>
-          {setting.value ? '********' : (setting.defValue ? '[default] ********' : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
-        </p>
-      );
+    switch (setting.settingType){
+      case 'Refdata':
+        const refValues = settingData?.refdatavalues?.filter((obj) => {
+          return obj.desc === setting.vocab;
+        })[0]?.values;
+        const settingLabel = setting.value ? refValues?.filter((obj) => obj.value === setting.value)[0]?.label : undefined;
+        return (
+          <p>
+            {settingLabel || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
+          </p>
+        );
+      case 'Password':
+        return (
+          <p>
+            {setting.value ? '********' : (setting.defValue ? '[default] ********' : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
+          </p>
+        );
+      case 'Template':
+        const templateValue = settingData?.templates.filter((obj) => {
+          const settingId = setting.value || setting.defValue;
+          return obj.id === settingId;
+        })[0];
+        return templateValue?.name || <FormattedMessage id="ui-rs.settings.no-current-value" />;
+      default:
+        return (
+          <p>
+            {setting.value || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" /> )}
+          </p>
+        );
     }
   }
 
@@ -112,13 +123,23 @@ class SettingField extends React.Component {
           />
         );
       case 'Template':
+
+        // Grab refdata values corresponding to setting
+        // eslint-disable-next-line no-case-declarations
+        const templateValues = settingData?.templates.filter((obj) => {
+          return obj.context === setting.vocab;
+        });
+
+        const selectTemplateValues = [{value: '', label: ''}, ...templateValues.reduce(
+          (acc, cur) => ([...acc, { value: cur.id, label: cur.name }]), []
+        )];
+
         return (
           <Field
-            autoFocus
-            fullWidth
             name={`${this.props.input.name}`}
-            component={TextArea}
-            parse={v => v} // Lets us send an empty string instead of 'undefined'
+            component={Select}
+            dataOptions={selectTemplateValues}
+            parse={v => v}
           />
         );
       default:
@@ -176,9 +197,11 @@ class SettingField extends React.Component {
   }
 
   render() {
-    const { settingData } = this.props;
-    const currentSetting = settingData?.currentSetting;
-    const setting = currentSetting || {};
+    const { 
+      settingData: {
+        currentSetting: setting = {}
+      } = {}
+    } = this.props;
 
     let renderFunction;
     if (this.state.editing === false) {
@@ -192,7 +215,11 @@ class SettingField extends React.Component {
 
     return (
       <Card
-        headerStart={currentSetting ? <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> : <FormattedMessage id="ui-rs.settingName.settingLoading" />}
+        headerStart={
+          Object.keys(setting).length > 0 ?
+          <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> :
+          <FormattedMessage id="ui-rs.settingName.settingLoading" />
+        }
         headerEnd={this.renderEditButton()}
         roundedBorder
       >
