@@ -3,8 +3,9 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { AccordionSet, Accordion, Col, Row, Datepicker, Select, TextArea, TextField } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
+import { Pluggable, withStripes } from '@folio/stripes/core';
 
-const PatronRequestForm = ({ locations, requesters }) => (
+const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => (
   <AccordionSet>
     <Accordion label={<FormattedMessage id="ui-rs.information.heading.request" />}>
       <Row>
@@ -77,7 +78,15 @@ const PatronRequestForm = ({ locations, requesters }) => (
         </Col>
       </Row>
     </Accordion>
-    <Accordion label={<FormattedMessage id="ui-rs.information.heading.requestedTitle" />}>
+    <Accordion
+      label={<FormattedMessage id="ui-rs.information.heading.requestedTitle" />}
+      displayWhenOpen={<Pluggable
+        type={`find-si-${stripes.config?.reshare?.sharedIndex?.type}`}
+        searchButtonStyle="primary marginBottom0"
+        searchLabel="Populate from shared index"
+        selectInstance={onSISelect}
+      />}
+    >
       <Row>
         <Col xs={4}>
           <Field
@@ -178,4 +187,4 @@ const PatronRequestForm = ({ locations, requesters }) => (
   </AccordionSet>
 );
 
-export default PatronRequestForm;
+export default withStripes(PatronRequestForm);

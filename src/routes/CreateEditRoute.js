@@ -6,6 +6,10 @@ import { Button, Pane, Paneset, PaneMenu } from '@folio/stripes/components';
 import { stripesConnect } from '@folio/stripes/core';
 import PatronRequestForm from '../components/PatronRequestForm';
 
+const handleSISelect = (args, state, tools) => {
+  Object.entries(args[0]).forEach(([field, value]) => tools.changeValue(state, field, () => value));
+};
+
 const renderLastMenu = (pristine, submitting, submit, isEditing) => {
   let id;
   let label;
@@ -89,8 +93,8 @@ const CreateEditRoute = props => {
 
   return (
     <Paneset>
-      <Form onSubmit={submit} initialValues={initialValues} keepDirtyOnReinitialize>
-        {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
+      <Form onSubmit={submit} initialValues={initialValues} mutators={{ handleSISelect }} keepDirtyOnReinitialize>
+        {({ form, handleSubmit, pristine, submitting, submitSucceeded }) => (
           <Pane
             defaultWidth="100%"
             centerContent
@@ -100,7 +104,7 @@ const CreateEditRoute = props => {
             paneTitle={<FormattedMessage id={isEditing ? 'ui-rs.updatePatronRequest' : 'ui-rs.createPatronRequest'} />}
           >
             <form onSubmit={handleSubmit} id="form-rs-entry">
-              <PatronRequestForm locations={locations} requesters={requesters} />
+              <PatronRequestForm locations={locations} requesters={requesters} onSISelect={form.mutators.handleSISelect} />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">
               {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
