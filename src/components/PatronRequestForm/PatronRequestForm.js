@@ -81,7 +81,8 @@ const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => (
     <Accordion
       label={<FormattedMessage id="ui-rs.information.heading.requestedTitle" />}
       displayWhenOpen={<Pluggable
-        type={`find-si-${stripes.config?.reshare?.sharedIndex?.type}`}
+        type={`rs-siquery-${stripes.config?.reshare?.sharedIndex?.type}`}
+        endpoint={stripes.config?.reshare?.sharedIndex?.query}
         searchButtonStyle="primary marginBottom0"
         searchLabel="Populate from shared index"
         selectInstance={onSISelect}
