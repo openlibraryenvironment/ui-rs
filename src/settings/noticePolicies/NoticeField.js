@@ -6,17 +6,17 @@ import { Row, Col, Checkbox, Select } from '@folio/stripes/components';
 const NoticeField = ({ input, options }) => (
   <>
     <Row>
-      <Col md={4}>
+      <Col xs={4}>
         <Field
           component={Select}
           label={<FormattedMessage id="ui-rs.settings.noticePolicies.template" />}
-          name={`${input.name}.template`}
+          name={`${input.name}.template.id`}
           dataOptions={options.templates}
           placeholder=" "
           required
         />
       </Col>
-      <Col md={4}>
+      <Col xs={4}>
         <Field
           component={Select}
           label={<FormattedMessage id="ui-rs.settings.noticePolicies.format" />}
@@ -26,7 +26,7 @@ const NoticeField = ({ input, options }) => (
           required
         />
       </Col>
-      <Col md={4}>
+      <Col xs={4}>
         <Field
           component={Select}
           label={<FormattedMessage id="ui-rs.settings.noticePolicies.trigger" />}

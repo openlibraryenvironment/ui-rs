@@ -1,54 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { sortBy } from 'lodash';
-import { EntryManager } from '@folio/stripes/smart-components';
-import { stripesConnect } from '@folio/stripes/core';
+import { useIntl } from 'react-intl';
 
-import NoticeDetail from './NoticeDetail';
-import NoticeForm from './NoticeForm';
+import tokens from './tokens';
+import TokensList from './TokensList';
 
-const Notices = (props) => (
-  <EntryManager
-    {...props}
-    parentMutator={props.mutator}
-    entryList={sortBy((props.resources.entries || {}).records || [], ['name'])}
-    detailComponent={NoticeDetail}
-    paneTitle={props.label}
-    entryLabel={props.label}
-    entryFormComponent={NoticeForm}
-    defaultEntry={{
-      active: true,
-      outputFormats: ['text/html'],
-      templateResolver: 'mustache',
-    }}
-    nameKey="name"
-    permissions={{
-      put: 'ui-rs.settings.notices',
-      post: 'ui-rs.settings.notices',
-      delete: 'ui-rs.settings.notices',
-    }}
-    enableDetailsActionMenu
-    editElement="both"
-  />
-);
+import Templates from '../templates';
 
-Notices.manifest = Object.freeze({
-  entries: {
-    type: 'okapi',
-    path: 'templates',
-    records: 'templates',
-    params: {
-      query: 'cql.allRecords=1 AND name=""',
-    },
-    recordsRequired: 50,
-    perRequest: 50,
-  },
-});
-
-Notices.propTypes = {
-  mutator: PropTypes.object,
-  resources: PropTypes.object,
-  label: PropTypes.string,
+const Notices = () => {
+  const intl = useIntl();
+  return (
+    <Templates
+      context="noticeTemplate"
+      permissions={{
+        put: 'ui-rs.settings.notices',
+        post: 'ui-rs.settings.notices',
+        delete: 'ui-rs.settings.notices',
+      }}
+      templateContextLabel={intl.formatMessage({id: 'ui-rs.settings.templates.noticeTemplate'})?.toLowerCase()}
+      tokens={tokens}
+      tokensList={TokensList}
+    />
+  );
 };
 
-export default stripesConnect(Notices);
+export default Notices;
