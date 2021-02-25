@@ -300,6 +300,7 @@
     "settingName.wmsApiSecret": "Api secret",
     "settingName.wmsApiKey": "Api key",
     "settingName.settingLoading": "Setting Name Loading",
+    "settingName.sharedIndex": "Shared index implementation",
     "settingName.sharedIndexBaseUrl": "Shared index base url",
     "settingName.sharedIndexPass": "Shared index password",
     "settingName.sharedIndexUser": "Shared index username",
