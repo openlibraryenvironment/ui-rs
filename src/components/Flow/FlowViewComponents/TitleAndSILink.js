@@ -9,15 +9,16 @@ import css from './Flow.css';
 
 const TitleAndSILink = ({ request }) => {
   const stripes = useStripes();
-  const inventoryLink = (
+  const siUIURL = stripes.config?.reshare?.sharedIndex?.ui;
+  const inventoryLink = siUIURL ? (
     <a
       target="_blank"
       rel="noopener noreferrer"
-      href={`${stripes.config.sharedIndexUI}/inventory/view/${request.systemInstanceIdentifier}`}
+      href={`${siUIURL}/inventory/view/${request.systemInstanceIdentifier}`}
     >
       <FormattedMessage id="ui-rs.flow.info.viewInSharedIndex" />
     </a>
-  );
+  ) : null;
 
   return (
     <Layout className={css.title_headline}>
