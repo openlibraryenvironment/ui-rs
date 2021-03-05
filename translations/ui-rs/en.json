@@ -41,6 +41,7 @@
     "createPatronRequest": "Create patron request",
     "create.error": "Error creating patron request",
     "updatePatronRequest": "Update patron request",
+    "update.error": "Error updating patron request",
     "closeNewPatronRequest": "Close new patron request",
     "information.hrid": "Request ID",
     "information.fullId": "Full ID",

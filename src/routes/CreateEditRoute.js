@@ -74,7 +74,15 @@ const CreateEditRoute = props => {
 
   const submit = newRecord => {
     if (isEditing) {
-      return mutator.selectedRecord.PUT(newRecord).then(() => history.goBack());
+      return mutator.selectedRecord.PUT(newRecord)
+        .then(() => history.goBack())
+        .catch(res => callout.sendCallout({ type: 'error',
+          message: (
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.update.error" />}
+              value={res?.statusText || ''}
+            />
+          ) }));
     }
     const baseRecord = {
       requestingInstitutionSymbol: requesters[0].value,
@@ -97,8 +105,7 @@ const CreateEditRoute = props => {
               label={<FormattedMessage id="ui-rs.create.error" />}
               value={res?.statusText || ''}
             />
-          )
-        }))
+          ) }))
     );
   };
 
@@ -137,6 +144,7 @@ CreateEditRoute.manifest = {
   selectedRecord: {
     type: 'okapi',
     path: 'rs/patronrequests/:{id}',
+    throwErrors: false,
   },
   locations: {
     type: 'okapi',
