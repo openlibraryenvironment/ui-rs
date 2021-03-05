@@ -39,6 +39,7 @@
     "information.systemInstanceIdentifier": "System identifier",
     "information.volume": "Volume",
     "createPatronRequest": "Create patron request",
+    "create.error": "Error creating patron request",
     "updatePatronRequest": "Update patron request",
     "closeNewPatronRequest": "Close new patron request",
     "information.hrid": "Request ID",

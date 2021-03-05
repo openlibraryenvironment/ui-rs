@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form } from 'react-final-form';
 import { Prompt } from 'react-router-dom';
-import { Button, Pane, Paneset, PaneMenu } from '@folio/stripes/components';
-import { stripesConnect } from '@folio/stripes/core';
+import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
+import { stripesConnect, CalloutContext } from '@folio/stripes/core';
 import PatronRequestForm from '../components/PatronRequestForm';
 
 const handleSISelect = (args, state, tools) => {
@@ -14,7 +14,7 @@ const renderLastMenu = (pristine, submitting, submit, isEditing) => {
   let id;
   let label;
   if (isEditing) {
-    id = 'clickable-update-rs-entry';
+    id = 'clickble-update-rs-entry';
     label = <FormattedMessage id="ui-rs.updatePatronRequest" />;
   } else {
     id = 'clickable-create-rs-entry';
@@ -45,6 +45,9 @@ const CreateEditRoute = props => {
     resources,
     intl,
   } = props;
+
+  const callout = useContext(CalloutContext);
+
   if (!resources?.locations?.hasLoaded) return null;
   // locations are where rec.type.value is 'branch' and there is a tag in rec.type.tags where the value is 'pickup'
   // and are formatted for the Select component as { value: lmsLocationCode, label: name }
@@ -88,6 +91,14 @@ const CreateEditRoute = props => {
         // hence use of history.replace rather than history.push -- the create form turns into the
         // created record.
         .then(res => history.replace(`view/${res.id}`))
+        .catch(res => callout.sendCallout({ type: 'error',
+          message: (
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.create.error" />}
+              value={res?.statusText || ''}
+            />
+          )
+        }))
     );
   };
 
@@ -121,6 +132,7 @@ CreateEditRoute.manifest = {
     type: 'okapi',
     path: 'rs/patronrequests',
     fetch: false,
+    throwErrors: false,
   },
   selectedRecord: {
     type: 'okapi',
