@@ -125,7 +125,7 @@ const CreateEditRoute = props => {
               <PatronRequestForm locations={locations} requesters={requesters} onSISelect={form.mutators.handleSISelect} />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">
-              {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
+              {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt[0]} />}
             </FormattedMessage>
           </Pane>
         )}
