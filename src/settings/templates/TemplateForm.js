@@ -142,7 +142,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
             </Pane>
           </Paneset>
           <FormattedMessage id="ui-rs.confirmDirtyNavigate">
-            {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
+            {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt[0]} />}
           </FormattedMessage>
         </form>
       )}
