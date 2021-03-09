@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form } from 'react-final-form';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { stripesConnect, CalloutContext } from '@folio/stripes/core';
 import PatronRequestForm from '../components/PatronRequestForm';
@@ -46,6 +46,7 @@ const CreateEditRoute = props => {
     intl,
   } = props;
 
+  const routerLocation = useLocation();
   const callout = useContext(CalloutContext);
 
   if (!resources?.locations?.hasLoaded) return null;
@@ -98,7 +99,7 @@ const CreateEditRoute = props => {
         // We want to go to the new record but we also want it to be easy to return to where we were,
         // hence use of history.replace rather than history.push -- the create form turns into the
         // created record.
-        .then(res => history.replace(`view/${res.id}`))
+        .then(res => history.replace(`view/${res.id}${routerLocation.search}`))
         .catch(res => callout.sendCallout({ type: 'error',
           message: (
             <KeyValue

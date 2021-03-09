@@ -427,7 +427,7 @@ class PatronRequestsRoute extends React.Component {
           packageInfo={tweakedPackageInfo}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
-          createRecordPath="requests/create"
+          createRecordPath={`requests/create${location.search}`}
           viewRecordPathById={id => `requests/view/${id}${location.search}`}
           viewRecordPerms="module.rs.enabled"
           newRecordPerms={createPerm}
