@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 
@@ -22,70 +22,57 @@ function sortByLabelCaseInsensitive(a, b) {
   return (al < bl) ? -1 : (al > bl) ? 1 : 0;
 }
 
-class ResourceSharingSettings extends React.Component {
-  static manifest = Object.freeze({
-    settings: {
-      type: 'okapi',
-      path: 'rs/settings/appSettings',
-      params: {
-        max: '500',
-      },
-    }
-  });
+const persistentPages = [
+  {
+    route: 'CustomISO18626Settings',
+    id: 'iso18626',
+    component: CustomISO18626
+  },
+  {
+    route: 'notices',
+    id: 'notices',
+    component: Notices,
+    perm: 'ui-rs.settings.notices',
+  },
+  {
+    route: 'pullslipTemplates',
+    id: 'pullslipTemplates',
+    component: PullslipTemplates,
+    perm: 'ui-rs.settings.pullslip-notifications',
+  },
+  {
+    route: 'notice-policies',
+    id: 'noticePolicies',
+    component: NoticePolicies,
+    perm: 'ui-rs.settings.notices',
+  },
+  {
+    route: 'pullslip-notifications',
+    id: 'pullslipNotifications',
+    component: PullslipNotifications,
+    perm: 'ui-rs.settings.pullslip-notifications',
+  },
+];
 
-  static propTypes = {
-    resources: PropTypes.shape({
-      settings: PropTypes.shape({
-        records: PropTypes.array
-      })
-    }),
-    intl: PropTypes.shape({
-      formatMessage: PropTypes.func.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      path: PropTypes.string.isRequired,
-    }).isRequired,
-  };
+const dynamicPageExclusions = [ "pullslipTemplateConfig" ];
 
-  persistentPages = [
-    {
-      route: 'CustomISO18626Settings',
-      id: 'iso18626',
-      component: CustomISO18626
-    },
-    {
-      route: 'notices',
-      id: 'notices',
-      component: Notices,
-      perm: 'ui-rs.settings.notices',
-    },
-    {
-      route: 'pullslipTemplates',
-      id: 'pullslipTemplates',
-      component: PullslipTemplates,
-      perm: 'ui-rs.settings.pullslip-notifications',
-    },
-    {
-      route: 'notice-policies',
-      id: 'noticePolicies',
-      component: NoticePolicies,
-      perm: 'ui-rs.settings.notices',
-    },
-    {
-      route: 'pullslip-notifications',
-      id: 'pullslipNotifications',
-      component: PullslipNotifications,
-      perm: 'ui-rs.settings.pullslip-notifications',
-    },
-  ];
+const ResourceSharingSettings = (props) => {
 
-  pageList() {
-    const { intl } = this.props;
-    const rows = (this.props.resources.settings || {}).records || [];
-    const sections = Array.from(new Set(rows.map(obj => obj.section)));
+  const intl = useIntl();
+  const { match } = props;
+
+  const makePageList = () => {
+    const rows = (props.resources.settings || {}).records || [];
+    let sections = Array.from(new Set(rows.map(obj => obj.section)));
+
+    // Remove excluded sections
+    sections = sections.filter(s => {
+      return !dynamicPageExclusions.includes(s);
+    });
+
     if (sections.length === 0) return [];
 
-    const persistent = this.persistentPages.map(page => ({
+    const persistent = persistentPages.map(page => ({
       route: page.route,
       label: intl.formatMessage({ id: `ui-rs.settingsSection.${page.id}` }),
       component: page.component,
@@ -98,7 +85,7 @@ class ResourceSharingSettings extends React.Component {
         {
           route: sectionFormatted,
           label: intl.formatMessage({ id: `ui-rs.settingsSection.${sectionFormatted}` }),
-          component: (props) => <SettingPage sectionName={section} {...props} />,
+          component: (prps) => <SettingPage sectionName={section} {...prps} />,
         }
       );
     });
@@ -106,42 +93,61 @@ class ResourceSharingSettings extends React.Component {
     const settingPageList = persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
     return settingPageList;
   }
+  
+  const additionalRoutes = [
+    <Route
+      key="pullslip-notifications/new"
+      path={`${match.path}/pullslip-notifications/new`}
+      component={CreatePullslipNotification}
+    />,
+    <Route
+      key="pullslip-notifications/:id/edit"
+      path={`${match.path}/pullslip-notifications/:id/edit`}
+      component={EditPullslipNotification}
+    />,
+    <Route
+      key="pullslip-notifications/:id"
+      path={`${match.path}/pullslip-notifications/:id`}
+      component={ViewPullslipNotification}
+    />
+  ];
 
-  render() {
-    const pageList = this.pageList();
-    const { match } = this.props;
+  const pageList = makePageList();
+  // XXX DO NOT REMOVE THE NEXT LINE. For reasons we do not
+  // understand, if once this code renders an empty set of pages, it
+  // will not re-render until you navigate away and return. This
+  // apparently unnecessary check prevents that.
+  if (pageList.length === 0) return null;
 
-    const additionalRoutes = [
-      <Route
-        key="pullslip-notifications/new"
-        path={`${match.path}/pullslip-notifications/new`}
-        component={CreatePullslipNotification}
-      />,
-      <Route
-        key="pullslip-notifications/:id/edit"
-        path={`${match.path}/pullslip-notifications/:id/edit`}
-        component={EditPullslipNotification}
-      />,
-      <Route
-        key="pullslip-notifications/:id"
-        path={`${match.path}/pullslip-notifications/:id`}
-        component={ViewPullslipNotification}
-      />
-    ];
-
-    // XXX DO NOT REMOVE THE NEXT LINE. For reasons we do not
-    // understand, if once this code renders an empty set of pages, it
-    // will not re-render until you navigate away and return. This
-    // apparently unnecessary check prevents that.
-    if (pageList.length === 0) return null;
-
-    return <Settings
+  return (
+    <Settings
       paneTitle={<FormattedMessage id="ui-rs.meta.title" />}
-      {...this.props}
+      {...props}
       pages={pageList}
       additionalRoutes={additionalRoutes}
-    />;
-  }
+    />
+  );
 }
 
-export default injectIntl(stripesConnect(ResourceSharingSettings));
+ResourceSharingSettings.manifest = Object.freeze({
+  settings: {
+    type: 'okapi',
+    path: 'rs/settings/appSettings',
+    params: {
+      max: '500',
+    },
+  }
+});
+
+ResourceSharingSettings.propTypes = {
+  resources: PropTypes.shape({
+    settings: PropTypes.shape({
+      records: PropTypes.array
+    })
+  }),
+  match: PropTypes.shape({
+    path: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default stripesConnect(ResourceSharingSettings);
