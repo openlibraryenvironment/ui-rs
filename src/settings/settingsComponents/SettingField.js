@@ -10,11 +10,6 @@ import {
   TextField,
 } from '@folio/stripes/components';
 import { RefdataButtons } from '@folio/stripes-reshare';
-import { TemplateEditor } from '@folio/stripes-template-editor';
-
-import HtmlToReact, { Parser } from 'html-to-react';
-
-import { unregisterDecorator } from 'handlebars';
 import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
 
@@ -57,7 +52,7 @@ class SettingField extends React.Component {
   renderSettingValue = (setting) => {
     const { settingData } = this.props;
     switch (setting.settingType) {
-      case 'Refdata':
+      case 'Refdata': {
         const refValues = settingData?.refdatavalues?.filter((obj) => {
           return obj.desc === setting.vocab;
         })[0]?.values;
@@ -67,24 +62,28 @@ class SettingField extends React.Component {
             {settingLabel || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
           </p>
         );
-      case 'Password':
+      }
+      case 'Password': {
         return (
           <p>
             {setting.value ? '********' : (setting.defValue ? '[default] ********' : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
           </p>
         );
-      case 'Template':
+      }
+      case 'Template': {
         const templateValue = settingData?.templates.filter((obj) => {
           const settingId = setting.value || setting.defValue;
           return obj.id === settingId;
         })[0];
         return templateValue?.name || <FormattedMessage id="ui-rs.settings.no-current-value" />;
-      default:
+      }
+      default: {
         return (
           <p>
             {setting.value || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
           </p>
         );
+      }
     }
   }
 
@@ -122,8 +121,7 @@ class SettingField extends React.Component {
             parse={v => v} // Lets us send an empty string instead of 'undefined'
           />
         );
-      case 'Template':
-
+      case 'Template': {
         // Grab refdata values corresponding to setting
         // eslint-disable-next-line no-case-declarations
         const templateValues = settingData?.templates.filter((obj) => {
@@ -142,6 +140,7 @@ class SettingField extends React.Component {
             parse={v => v}
           />
         );
+      }
       default:
         // If in doubt, go with String
         return (

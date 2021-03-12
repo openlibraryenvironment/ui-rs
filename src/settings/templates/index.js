@@ -8,7 +8,7 @@ import TemplateDetail from './TemplateDetail';
 import TemplateForm from './TemplateForm';
 
 const Templates = (props) => {
-  const { context, permissions, templateContextLabel, tokens, tokensList } = props;
+  const { context, templateContextLabel, tokens, tokensList } = props;
 
   // Massage shape of incoming template to fit nice form structure
   /*
@@ -28,9 +28,9 @@ const Templates = (props) => {
   });
   const sortedEntryList = sortBy(entryList, ['name']);
 
-  const ContextualisedTemplateForm = (props) => (
+  const ContextualisedTemplateForm = (prps) => (
     <TemplateForm
-      {...props}
+      {...prps}
       tokens={tokens}
       tokensList={tokensList}
       templateContextLabel={templateContextLabel}
