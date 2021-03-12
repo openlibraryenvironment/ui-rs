@@ -4,9 +4,6 @@ import { FieldArray } from 'react-final-form-arrays';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import { Pane } from '@folio/stripes/components';
-import { FormattedMessage } from 'react-intl';
-
 import EditableSettingsListFieldArray from './EditableSettingsListFieldArray';
 
 class EditableSettingsList extends React.Component {
@@ -15,7 +12,6 @@ class EditableSettingsList extends React.Component {
     data: PropTypes.shape({
       refdatavalues: PropTypes.arrayOf(PropTypes.object)
     }),
-    settingSection: PropTypes.string,
     initialValues: PropTypes.object
   };
 
@@ -26,7 +22,6 @@ class EditableSettingsList extends React.Component {
   render() {
     const {
       data,
-      settingSection,
       initialValues,
     } = this.props;
 
@@ -46,22 +41,16 @@ class EditableSettingsList extends React.Component {
         navigationCheck
       >
         {({ handleSubmit, mutators }) => (
-          <Pane
-            defaultWidth="fill"
-            id={`settings-${settingSection}`}
-            paneTitle={<FormattedMessage id={`ui-rs.settingsSection.${settingSection}`} />}
-          >
-            <form onSubmit={handleSubmit}>
-              <FieldArray
-                component={EditableSettingsListFieldArray}
-                name="settings"
-                onSave={this.handleSave}
-                mutators={mutators}
-                data={data}
-                initialValues={initialValues}
-              />
-            </form>
-          </Pane>
+          <form onSubmit={handleSubmit}>
+            <FieldArray
+              component={EditableSettingsListFieldArray}
+              name="settings"
+              onSave={this.handleSave}
+              mutators={mutators}
+              data={data}
+              initialValues={initialValues}
+            />
+          </form>
         )}
       </Form>
     );

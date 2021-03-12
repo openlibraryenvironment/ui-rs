@@ -5,8 +5,7 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 
-import SettingPage from './SettingPage';
-import { CustomISO18626 } from './settingsComponents';
+import { CustomISO18626, SettingPagePane } from './settingsComponents';
 import Notices from './notices';
 import PullslipTemplates from './pullslipTemplates';
 import NoticePolicies from './noticePolicies';
@@ -85,7 +84,7 @@ const ResourceSharingSettings = (props) => {
         {
           route: sectionFormatted,
           label: intl.formatMessage({ id: `ui-rs.settingsSection.${sectionFormatted}` }),
-          component: (prps) => <SettingPage sectionName={section} {...prps} />,
+          component: (prps) => <SettingPagePane sectionName={section} {...prps} />,
         }
       );
     });

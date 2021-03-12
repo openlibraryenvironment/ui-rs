@@ -80,7 +80,6 @@ class SettingPage extends React.Component {
           refdatavalues: rdv,
           templates: tmp
         }}
-        settingSection={sectionName}
         initialValues={settings}
         onSave={this.handleSubmit}
         onSubmit={this.handleSubmit}
