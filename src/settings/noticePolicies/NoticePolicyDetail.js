@@ -32,7 +32,7 @@ const NoticePolicyDetail = ({ initialValues: noticePolicy, resources }) => {
       <AccordionSet>
         <Accordion label={<FormattedMessage id="ui-rs.settings.noticePolicies.notices" />}>
           {resources?.refdatavalues?.hasLoaded && noticePolicy.notices.map(notice => {
-            const template = notice.template
+            const template = notice.template;
 
             return (
               <Card headerStart=" " key={notice.id}>

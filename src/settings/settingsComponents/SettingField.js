@@ -10,13 +10,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 import { RefdataButtons } from '@folio/stripes-reshare';
-import { TemplateEditor } from '@folio/stripes-template-editor';
-
-import HtmlToReact, { Parser } from 'html-to-react';
-
 import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
-import { unregisterDecorator } from 'handlebars';
 
 class SettingField extends React.Component {
   static propTypes = {
@@ -56,8 +51,8 @@ class SettingField extends React.Component {
 
   renderSettingValue = (setting) => {
     const { settingData } = this.props;
-    switch (setting.settingType){
-      case 'Refdata':
+    switch (setting.settingType) {
+      case 'Refdata': {
         const refValues = settingData?.refdatavalues?.filter((obj) => {
           return obj.desc === setting.vocab;
         })[0]?.values;
@@ -67,24 +62,28 @@ class SettingField extends React.Component {
             {settingLabel || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
           </p>
         );
-      case 'Password':
+      }
+      case 'Password': {
         return (
           <p>
             {setting.value ? '********' : (setting.defValue ? '[default] ********' : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
           </p>
         );
-      case 'Template':
+      }
+      case 'Template': {
         const templateValue = settingData?.templates.filter((obj) => {
           const settingId = setting.value || setting.defValue;
           return obj.id === settingId;
         })[0];
         return templateValue?.name || <FormattedMessage id="ui-rs.settings.no-current-value" />;
-      default:
+      }
+      default: {
         return (
           <p>
-            {setting.value || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" /> )}
+            {setting.value || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
           </p>
         );
+      }
     }
   }
 
@@ -122,15 +121,14 @@ class SettingField extends React.Component {
             parse={v => v} // Lets us send an empty string instead of 'undefined'
           />
         );
-      case 'Template':
-
+      case 'Template': {
         // Grab refdata values corresponding to setting
         // eslint-disable-next-line no-case-declarations
         const templateValues = settingData?.templates.filter((obj) => {
           return obj.context === setting.vocab;
         });
 
-        const selectTemplateValues = [{value: '', label: ''}, ...templateValues.reduce(
+        const selectTemplateValues = [{ value: '', label: '' }, ...templateValues.reduce(
           (acc, cur) => ([...acc, { value: cur.id, label: cur.name }]), []
         )];
 
@@ -142,6 +140,7 @@ class SettingField extends React.Component {
             parse={v => v}
           />
         );
+      }
       default:
         // If in doubt, go with String
         return (
@@ -197,7 +196,7 @@ class SettingField extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       settingData: {
         currentSetting: setting = {}
       } = {}
@@ -217,8 +216,8 @@ class SettingField extends React.Component {
       <Card
         headerStart={
           Object.keys(setting).length > 0 ?
-          <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> :
-          <FormattedMessage id="ui-rs.settingName.settingLoading" />
+            <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> :
+            <FormattedMessage id="ui-rs.settingName.settingLoading" />
         }
         headerEnd={this.renderEditButton()}
         roundedBorder

@@ -16,7 +16,7 @@ const PullslipTemplates = () => {
         post: 'ui-rs.settings.pullslip-notifications',
         delete: 'ui-rs.settings.pullslip-notifications',
       }}
-      templateContextLabel={intl.formatMessage({id: 'ui-rs.settings.templates.pullslipTemplate'})?.toLowerCase()}
+      templateContextLabel={intl.formatMessage({ id: 'ui-rs.settings.templates.pullslipTemplate' })?.toLowerCase()}
       tokens={tokens}
       tokensList={TokensList}
     />

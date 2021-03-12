@@ -16,7 +16,7 @@ const Notices = () => {
         post: 'ui-rs.settings.notices',
         delete: 'ui-rs.settings.notices',
       }}
-      templateContextLabel={intl.formatMessage({id: 'ui-rs.settings.templates.noticeTemplate'})?.toLowerCase()}
+      templateContextLabel={intl.formatMessage({ id: 'ui-rs.settings.templates.noticeTemplate' })?.toLowerCase()}
       tokens={tokens}
       tokensList={TokensList}
     />
