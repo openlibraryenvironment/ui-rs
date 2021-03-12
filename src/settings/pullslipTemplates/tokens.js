@@ -1,12 +1,12 @@
 export default {
   tokens: [
     {
-      token: "locations",
+      token: 'locations',
       previewValue: "['location 1', 'location 2']"
     },
     {
       token: 'numRequests',
-      previewValue: "35".toString()
+      previewValue: '35'.toString()
     },
     {
       token: 'foliourl',

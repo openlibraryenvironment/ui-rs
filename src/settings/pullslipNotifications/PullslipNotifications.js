@@ -6,7 +6,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { Pane, MultiColumnList, Button } from '@folio/stripes/components';
 import { raw2userData } from './util';
 
-import SettingPage from '../SettingPage';
+import { SettingPage } from '../settingsComponents';
 
 class PullslipNotifications extends React.Component {
   static propTypes = {
@@ -53,9 +53,6 @@ class PullslipNotifications extends React.Component {
     const {
       timers,
       lmsLocations,
-      pullslipTemplateConfigSettings: {
-        records: pullslipTemplateConfigSettings = []
-      } = {}
     } = this.props.resources;
 
     if (!timers || !timers.hasLoaded || !lmsLocations || !lmsLocations.hasLoaded) return null;

@@ -16,7 +16,7 @@ const Templates = (props) => {
    * deal with a proper FieldArray for each localizedTemplate
    */
   const entryList = (props?.resources?.entries?.records || []).map(n => {
-    const enTemplate = n.localizedTemplates?.find(t => t.locality === "en") || {}
+    const enTemplate = n.localizedTemplates?.find(t => t.locality === 'en') || {};
     return (
       {
         ...n,
@@ -25,8 +25,8 @@ const Templates = (props) => {
         }
       }
     );
-  })
-  const sortedEntryList = sortBy(entryList, ['name'])
+  });
+  const sortedEntryList = sortBy(entryList, ['name']);
 
   const ContextualisedTemplateForm = (props) => (
     <TemplateForm
@@ -47,7 +47,7 @@ const Templates = (props) => {
       entryLabel={props.label}
       entryFormComponent={ContextualisedTemplateForm}
       defaultEntry={{
-        context: context,
+        context,
         templateResolver: 'handlebars',
       }}
       nameKey="name"

@@ -14,9 +14,9 @@ import { TemplateEditor } from '@folio/stripes-template-editor';
 
 import HtmlToReact, { Parser } from 'html-to-react';
 
+import { unregisterDecorator } from 'handlebars';
 import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
-import { unregisterDecorator } from 'handlebars';
 
 class SettingField extends React.Component {
   static propTypes = {
@@ -56,7 +56,7 @@ class SettingField extends React.Component {
 
   renderSettingValue = (setting) => {
     const { settingData } = this.props;
-    switch (setting.settingType){
+    switch (setting.settingType) {
       case 'Refdata':
         const refValues = settingData?.refdatavalues?.filter((obj) => {
           return obj.desc === setting.vocab;
@@ -82,7 +82,7 @@ class SettingField extends React.Component {
       default:
         return (
           <p>
-            {setting.value || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" /> )}
+            {setting.value || (setting.defValue ? `[default] ${setting.defValue}` : <FormattedMessage id="ui-rs.settings.no-current-value" />)}
           </p>
         );
     }
@@ -130,7 +130,7 @@ class SettingField extends React.Component {
           return obj.context === setting.vocab;
         });
 
-        const selectTemplateValues = [{value: '', label: ''}, ...templateValues.reduce(
+        const selectTemplateValues = [{ value: '', label: '' }, ...templateValues.reduce(
           (acc, cur) => ([...acc, { value: cur.id, label: cur.name }]), []
         )];
 
@@ -197,7 +197,7 @@ class SettingField extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       settingData: {
         currentSetting: setting = {}
       } = {}
@@ -217,8 +217,8 @@ class SettingField extends React.Component {
       <Card
         headerStart={
           Object.keys(setting).length > 0 ?
-          <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> :
-          <FormattedMessage id="ui-rs.settingName.settingLoading" />
+            <FormattedMessage id={`ui-rs.settingName.${camelKey}`} /> :
+            <FormattedMessage id="ui-rs.settingName.settingLoading" />
         }
         headerEnd={this.renderEditButton()}
         roundedBorder

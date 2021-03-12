@@ -13,7 +13,7 @@ const TemplateDetail = ({ initialValues: notice }) => {
       processNode: processNodeDefinitions.processDefaultNode,
     },
   ];
-  const localizedTemplate = notice?.localizedTemplates?.en?.template || {}
+  const localizedTemplate = notice?.localizedTemplates?.en?.template || {};
   const parsedEmailTemplate = parser.parseWithInstructions(localizedTemplate.templateBody, () => true, rules);
 
   return (

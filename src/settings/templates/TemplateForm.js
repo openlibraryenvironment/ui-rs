@@ -25,12 +25,12 @@ import { required } from '../../util/validators';
 const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel, tokensList, tokens }) => {
   const onMassagedSubmit = (values) => {
     // Take the localizedTemplates and force them back into the shape they need to be for save
-    const template = values.localizedTemplates.en
+    const template = values.localizedTemplates.en;
     if (!template.id) {
-      template.locality = "en"
+      template.locality = 'en';
     }
-    onSubmit({ ...values, localizedTemplates: [template]})
-  }
+    onSubmit({ ...values, localizedTemplates: [template] });
+  };
 
   return (
     <Form onSubmit={onMassagedSubmit} initialValues={initialValues}>
@@ -41,7 +41,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
               defaultWidth="100%"
               paneTitle={initialValues?.id
                 ? initialValues?.name
-                : <FormattedMessage id="ui-rs.settings.templates.newLabel" values={{templateContextLabel: templateContextLabel}} />
+                : <FormattedMessage id="ui-rs.settings.templates.newLabel" values={{ templateContextLabel }} />
               }
               firstMenu={
                 <PaneMenu>
@@ -131,7 +131,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
                         tokens={tokens}
                         tokensList={tokensList}
                         previewModalHeader={
-                          <FormattedMessage id="ui-rs.settings.templates.previewHeader" values={{templateContextLabel: templateContextLabel}} />
+                          <FormattedMessage id="ui-rs.settings.templates.previewHeader" values={{ templateContextLabel }} />
                         }
                         validate={required}
                       />

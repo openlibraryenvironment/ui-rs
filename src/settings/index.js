@@ -5,7 +5,7 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 
-import { CustomISO18626, SettingPagePane } from './settingsComponents';
+import { CustomISO18626, SettingPagePane, SettingPage } from './settingsComponents';
 import Notices from './notices';
 import PullslipTemplates from './pullslipTemplates';
 import NoticePolicies from './noticePolicies';
@@ -53,10 +53,9 @@ const persistentPages = [
   },
 ];
 
-const dynamicPageExclusions = [ "pullslipTemplateConfig" ];
+const dynamicPageExclusions = ['pullslipTemplateConfig'];
 
 const ResourceSharingSettings = (props) => {
-
   const intl = useIntl();
   const { match } = props;
 
@@ -84,15 +83,19 @@ const ResourceSharingSettings = (props) => {
         {
           route: sectionFormatted,
           label: intl.formatMessage({ id: `ui-rs.settingsSection.${sectionFormatted}` }),
-          component: (prps) => <SettingPagePane sectionName={section} {...prps} />,
+          component: (prps) => (
+            <SettingPagePane sectionName={section}>
+              <SettingPage sectionName={section} {...prps} />
+            </SettingPagePane>
+          ),
         }
       );
     });
 
     const settingPageList = persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
     return settingPageList;
-  }
-  
+  };
+
   const additionalRoutes = [
     <Route
       key="pullslip-notifications/new"
@@ -126,7 +129,7 @@ const ResourceSharingSettings = (props) => {
       additionalRoutes={additionalRoutes}
     />
   );
-}
+};
 
 ResourceSharingSettings.manifest = Object.freeze({
   settings: {
