@@ -14,6 +14,8 @@ import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
 
+const everythingAfterEquals = s => s.slice(s.indexOf('=') + 1);
+
 const appDetails = {
   rs: {
     title: 'Resource Sharing',
@@ -256,10 +258,12 @@ class PatronRequestsRoute extends React.Component {
       setFilterDate(name, '<=', null);
     };
 
-    const dateCreatedFrom = get(byName.dateCreatedFrom, 0, '');
-    const dateCreatedTo = get(byName.dateCreatedTo, 0, '');
-    const neededByFrom = get(byName.neededByFrom, 0, '');
-    const neededByTo = get(byName.neededByTo, 0, '');
+    // Parse the dates out of the filter parameters to populate the form fields
+    const dateNames = ['dateCreatedFrom', 'dateCreatedTo', 'neededByFrom', 'neededByTo'];
+    const dates = dateNames.reduce((acc, name) => {
+      acc[name] = everythingAfterEquals(get(byName[name], 0, ''));
+      return acc;
+    }, {});
 
     return (
       <>
@@ -322,16 +326,16 @@ class PatronRequestsRoute extends React.Component {
             name="dateCreatedFrom"
             label="From"
             dateFormat="YYYY-MM-DD"
-            value={dateCreatedFrom}
-            key={`cf${dateCreatedFrom}`}
+            value={dates.dateCreatedFrom}
+            key={`cf${dates.dateCreatedFrom}`}
             onChange={(e) => setFilterDate('dateCreated', '>=', e.target.value)}
           />
           <Datepicker
             name="dateCreatedTo"
             label="To"
             dateFormat="YYYY-MM-DD"
-            value={dateCreatedTo}
-            key={`ct${dateCreatedTo}`}
+            value={dates.dateCreatedTo}
+            key={`ct${dates.dateCreatedTo}`}
             onChange={(e) => setFilterDate('dateCreated', '<=', e.target.value)}
           />
         </Accordion>
@@ -349,16 +353,16 @@ class PatronRequestsRoute extends React.Component {
             name="neededByFrom"
             label="From"
             dateFormat="YYYY-MM-DD"
-            value={neededByFrom}
-            key={`nf${neededByFrom}`}
+            value={dates.neededByFrom}
+            key={`nf${dates.neededByFrom}`}
             onChange={(e) => setFilterDate('neededBy', '>=', e.target.value)}
           />
           <Datepicker
             name="neededByTo"
             label="To"
             dateFormat="YYYY-MM-DD"
-            value={neededByTo}
-            key={`nt${neededByTo}`}
+            value={dates.neededByTo}
+            key={`nt${dates.neededByTo}`}
             onChange={(e) => setFilterDate('neededBy', '<=', e.target.value)}
           />
         </Accordion>
