@@ -29,6 +29,10 @@ export default {
   ],
   request: [
     {
+      token: 'request.cancellationReason',
+      previewValue: 'User requested',
+    },
+    {
       token: 'request.id',
       previewValue: '456123789',
     },
