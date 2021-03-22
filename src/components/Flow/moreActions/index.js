@@ -8,8 +8,8 @@ export { default as Generic } from './Generic';
 
 // Named corresponding to actions
 export const SupplierCannotSupply = () => (
-  <ShowModalButton buttonStyle="dropdownItem" modal="CannotSupply">
-    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.cannotSupply" /></Icon>
+  <ShowModalButton buttonStyle="dropdownItem" modal="supplierCannotSupply">
+    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.supplierCannotSupply" /></Icon>
   </ShowModalButton>
 );
 
@@ -22,6 +22,12 @@ export const SupplierConditionalSupply = () => (
 export const SupplierAddCondition = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="AddCondition">
     <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.addCondition" /></Icon>
+  </ShowModalButton>
+);
+
+export const RequesterCancel = () => (
+  <ShowModalButton buttonStyle="dropdownItem" modal="requesterCancel">
+    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.requesterCancel" /></Icon>
   </ShowModalButton>
 );
 
