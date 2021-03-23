@@ -2,7 +2,7 @@ export default {
   tokens: [
     {
       token: 'locations',
-      previewValue: "location 1, location 2"
+      previewValue: 'location 1, location 2'
     },
     {
       token: 'numRequests',
