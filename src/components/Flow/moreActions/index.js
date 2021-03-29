@@ -7,6 +7,12 @@ import { ShowModalButton } from '../../ModalButtons';
 export { default as Generic } from './Generic';
 
 // Named corresponding to actions
+export const CancelLocal = () => (
+  <ShowModalButton buttonStyle="dropdownItem" modal="cancelLocal">
+    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.requesterCancel" /></Icon>
+  </ShowModalButton>
+);
+
 export const SupplierCannotSupply = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="supplierCannotSupply">
     <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.supplierCannotSupply" /></Icon>
@@ -36,6 +42,8 @@ export const RespondYes = () => (
     <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.respondYes" /></Icon>
   </ShowModalButton>
 );
+
+
 
 // Client only, component names do not correspond to actions
 export const PrintPullSlip = () => (
