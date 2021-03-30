@@ -7,8 +7,9 @@ import { stripesConnect } from '@folio/stripes/core';
 
 import { CustomISO18626, SettingPagePane, SettingPage } from './settingsComponents';
 import Notices from './notices';
-import PullslipTemplates from './pullslipTemplates';
 import NoticePolicies from './noticePolicies';
+import OtherSettings from './OtherSettings';
+import PullslipTemplates from './pullslipTemplates';
 import {
   PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
 } from './pullslipNotifications';
@@ -32,6 +33,11 @@ const persistentPages = [
     id: 'notices',
     component: Notices,
     perm: 'ui-rs.settings.notices',
+  },
+  {
+    route: 'other',
+    id: 'other',
+    component: OtherSettings
   },
   {
     route: 'pullslipTemplates',
