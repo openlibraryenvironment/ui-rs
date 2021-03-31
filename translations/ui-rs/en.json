@@ -225,6 +225,8 @@
     "actions.supplierMarkShipped.prompt": "Scan request barcode to <strong>mark it shipped</strong>",
     "actions.supplierCheckOutOfReshare.prompt": "Scan request barcode to <strong>complete request</strong>",
     "actions.supplierManualCheckout.prompt": "Scan request barcode to <strong>mark item checked out of local LMS</strong>",
+    "actions.fillLocally" : "Fill locally",
+    "actions.localSupplierCannotSupply" : "Respond \"Cannot Supply\"",
     "cards.reqSup.searching": "Searching for supplier.",
     "printPullslip": "Print pull slip",
     "button.goBack": "Go back",
