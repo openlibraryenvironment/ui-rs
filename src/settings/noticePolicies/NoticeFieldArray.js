@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { Button } from '@folio/stripes/components';
 import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { required } from '@folio/stripes/util';
 
 import NoticeField from './NoticeField';
 
@@ -21,6 +22,7 @@ const NoticeFieldArray = ({ items, name, options, onAddField, onDeleteField }) =
             name={`${name}[${index}]`}
             options={options}
             required
+            validate={required}
           />
         </EditCard>
       ))}

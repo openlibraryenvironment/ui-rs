@@ -5,6 +5,7 @@ import { Prompt } from 'react-router-dom';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { stripesConnect } from '@folio/stripes/core';
+import { required } from '@folio/stripes/util';
 import {
   Accordion,
   AccordionSet,
@@ -94,6 +95,7 @@ const NoticePolicyForm = ({ initialValues, onSubmit, onCancel, resources }) => {
                     label={<FormattedMessage id="ui-rs.settings.noticePolicies.name" />}
                     name="name"
                     required
+                    validate={required}
                     id="input-patron-notice-name"
                     component={TextField}
                   />
