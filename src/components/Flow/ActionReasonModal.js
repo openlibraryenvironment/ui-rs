@@ -11,7 +11,7 @@ import { CancelModalButton } from '../ModalButtons';
 import { useModal } from '../MessageModalState';
 
 const ActionReasonModal = props => {
-  const { action, request, performAction, reasonVocab, reasonTranslationPrefix, resources: { refdatavalues } } = props;
+  const { action, request, performAction, reasonVocab, resources: { refdatavalues } } = props;
   const [actions] = useContext(ActionContext);
   const [currentModal, setModal] = useModal();
 
@@ -58,7 +58,6 @@ const ActionReasonModal = props => {
                   name="reason"
                   component={RefdataButtons}
                   dataOptions={listOfReasons}
-                  labelTranslations={{ key: reasonTranslationPrefix || `ui-rs.actions.${action}.reasons` }}
                   maxCols={1}
                   required
                   validate={required}
