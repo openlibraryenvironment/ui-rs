@@ -7,7 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 import { Tags } from '@folio/stripes-erm-components';
-import { DirectLink } from '@folio/stripes-reshare';
+import { DirectLink } from '@reshare/stripes-reshare';
 
 import { ChatPane } from '../components/chat';
 import upNLevels from '../util/upNLevels';

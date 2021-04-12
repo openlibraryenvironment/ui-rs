@@ -9,7 +9,7 @@ import {
   Select,
   TextField,
 } from '@folio/stripes/components';
-import { RefdataButtons } from '@folio/stripes-reshare';
+import { RefdataButtons } from '@reshare/stripes-reshare';
 import snakeToCamel from '../../util/snakeToCamel';
 import css from './SettingField.css';
 

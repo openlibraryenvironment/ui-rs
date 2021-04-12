@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
-import { RefdataButtons } from '@folio/stripes-reshare';
+import { RefdataButtons } from '@reshare/stripes-reshare';
 import { Button, Col, Layout, Modal, ModalFooter, Row, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 import { ActionContext } from './ActionContext';

@@ -1,5 +1,5 @@
 {
-  "name": "@folio/rs",
+  "name": "@reshare/rs",
   "version": "1.1.0",
   "description": "Resource Sharing",
   "main": "src/index.js",
@@ -35,7 +35,7 @@
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
     "@folio/stripes-erm-components": "^4.0.0",
-    "@folio/stripes-reshare": "^1.0.0",
+    "@reshare/stripes-reshare": "^1.0.0",
     "@folio/stripes-template-editor": "^2.0.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
@@ -75,7 +75,7 @@
     "queryResource": "query",
     "stripesDeps": [
       "@folio/stripes-erm-components",
-      "@folio/stripes-reshare",
+      "@reshare/stripes-reshare",
       "@folio/stripes-template-editor"
     ],
     "icons": [
