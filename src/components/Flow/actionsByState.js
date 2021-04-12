@@ -85,6 +85,9 @@ export const actionsByState = {
   },
   REQ_AWAITING_RETURN_SHIPPING: {
     moreActions: ['PrintPullSlip'],
+  },
+  REQ_LOCAL_REVIEW: {
+    primaryAction: 'fillLocally',
   }
 };
 
