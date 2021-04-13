@@ -46,6 +46,21 @@ export const SupplierMarkConditionsAgreed = ({ performAction }) => (
   </Button>
 );
 
+export const FillLocally = ({ performAction }) => (
+  <Button
+    onClick={() => performAction(
+      'fillLocally',
+      false,
+      'ui-rs.actions.fillLocally.success',
+      'ui-rs.actions.fillLocally.error'
+    )}
+    buttonStyle="primary mega"
+    fullWidth
+  >
+    <FormattedMessage id="ui-rs.actions.fillLocally" />
+  </Button>
+);
+
 export const RequesterAgreeConditions = ({ performAction }) => (
   <Button
     onClick={() => performAction(
