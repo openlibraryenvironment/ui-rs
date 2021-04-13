@@ -51,8 +51,8 @@ export const FillLocally = ({ performAction }) => (
     onClick={() => performAction(
       'fillLocally',
       false,
-      'ui-rs.actions.fillLocally.success',
-      'ui-rs.actions.fillLocally.error'
+      'stripes-reshare.actions.fillLocally.success',
+      'stripes-reshare.actions.fillLocally.error'
     )}
     buttonStyle="primary mega"
     fullWidth
