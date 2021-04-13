@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { Row, Col, Checkbox, Select } from '@folio/stripes/components';
+import { required } from '@folio/stripes/util';
 
 const NoticeField = ({ input, options }) => (
   <>
@@ -13,6 +14,7 @@ const NoticeField = ({ input, options }) => (
           name={`${input.name}.template.id`}
           dataOptions={options.templates}
           placeholder=" "
+          validate={required}
           required
         />
       </Col>
@@ -23,6 +25,7 @@ const NoticeField = ({ input, options }) => (
           name={`${input.name}.format.id`}
           dataOptions={options.formats}
           placeholder=" "
+          validate={required}
           required
         />
       </Col>
@@ -33,6 +36,7 @@ const NoticeField = ({ input, options }) => (
           name={`${input.name}.trigger.id`}
           dataOptions={options.triggers}
           placeholder=" "
+          validate={required}
           required
         />
       </Col>
