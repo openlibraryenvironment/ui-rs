@@ -57,7 +57,7 @@ export const FillLocally = ({ performAction }) => (
     buttonStyle="primary mega"
     fullWidth
   >
-    <FormattedMessage id="ui-rs.actions.fillLocally" />
+    <FormattedMessage id="stripes-reshare.actions.fillLocally" />
   </Button>
 );
 
