@@ -43,3 +43,4 @@ Now that your new app is running, search the code for "`stripes-new-app`" to fin
 Read the [Stripes Module Developer's Guide](https://github.com/folio-org/stripes/blob/master/doc/dev-guide.md).
 
 Update this README with information about your app.
+
