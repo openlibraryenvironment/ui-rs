@@ -86,7 +86,7 @@
       }
     ],
     "okapiInterfaces": {
-      "rs": "2.1",
+      "rs": "1.0 2.0",
       "tags": "1.0"
     },
     "permissionSets": [
