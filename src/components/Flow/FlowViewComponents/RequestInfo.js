@@ -21,6 +21,7 @@ const RequestInfo = ({ request }) => {
   };
 
   const location = useLocation();
+  const itemBarcodeText = request.volumes.length <= 1 ? request.selectedItemBarcode : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />
 
   return (
     <Accordion
@@ -43,7 +44,8 @@ const RequestInfo = ({ request }) => {
       </Layout>
       <Layout className="padding-top-gutter">
         <Row>
-          {colKeyVal('itemBarcode', request.selectedItemBarcode || <NoValue />)}
+          {colKeyVal('volumesNeeded', request.volume) || <NoValue />}
+          {colKeyVal('itemBarcode', itemBarcodeText || <NoValue />)}
           {colKeyVal('dueDate', request.dueDateFromLMS || request.dueDateRS || <NoValue />)}
           {colKeyVal('requester', requester ?
             <Link to={`/directory/entries/view/${requester.id}`}>

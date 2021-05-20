@@ -51,3 +51,9 @@ export const PrintPullSlip = () => (
     <Icon icon="print"><FormattedMessage id="ui-rs.printPullslip" /></Icon>
   </DirectLink>
 );
+
+export const FillMultiVolumeRequest = () => (
+  <ShowModalButton buttonStyle="dropdownItem" modal="FillMultiVolumeRequest">
+    <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest" /></Icon>
+  </ShowModalButton>
+);

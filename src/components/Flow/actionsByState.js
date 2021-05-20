@@ -33,7 +33,7 @@ import initialToUpper from '../../util/initialToUpper';
 
 export const actionsByState = {
   default: {
-    flowComponents: ['TitleAndSILink', 'RequestInfo', 'ActionAccordion', 'LoanConditions'],
+    flowComponents: ['TitleAndSILink', 'RequestInfo', 'ActionAccordion', 'Volumes', 'LoanConditions'],
     primaryAction: null,
     moreActions: [],
   },
@@ -54,13 +54,19 @@ export const actionsByState = {
   },
   RES_AWAIT_PICKING: {
     primaryAction: 'SupplierCheckInToReshare',
-    moreActions: ['PrintPullSlip'],
+    moreActions: ['PrintPullSlip', 'FillMultiVolumeRequest'],
+  },
+  RES_AWAIT_PROXY_BORROWER: {
+    moreActions: ['FillMultiVolumeRequest'],
   },
   RES_AWAIT_LMS_CHECKOUT: {
     primaryAction: 'supplierManualCheckout',
   },
+  // TODO we will want to replace primary actions like this sometimes for multivol requests.
+  // Perhaps have switch inside the default component itself?
   RES_AWAIT_SHIP: {
-    primaryAction: 'supplierMarkShipped'
+    primaryAction: 'supplierMarkShipped',
+    moreActions: ['FillMultiVolumeRequest']
   },
   REQ_SHIPPED: {
     moreActions: ['PrintPullSlip'],
