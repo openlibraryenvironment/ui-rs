@@ -1,22 +1,64 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
-import { FieldArray, arrayMutators } from 'react-final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
+import arrayMutators from 'final-form-arrays';
 
 import { FormattedMessage } from 'react-intl';
 import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import { Button, Modal, ModalFooter } from '@folio/stripes/components';
+import { Button, Col, Modal, ModalFooter, Row, TextField } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 import { ActionContext } from '../ActionContext';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
+const ItemBarcodeFieldArray = withKiwtFieldArray(({
+  items,
+  name,
+  onAddField,
+  onDeleteField
+}) => {
+
+  const renderAddBarcode = () => {
+    return (
+      <Button
+        id="add-volume-btn"
+        onClick={() => this.props.onAddField()}
+      >
+        <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.addVolume" />
+      </Button>
+    );
+  }
+
+  console.log("Items: %o", items)
+  return (
+    items.map((volume, index) => {
+      return (
+        <Row>
+          <Col xs={6} >
+            <Field
+              name={`${name}[${index}].name`}
+              label="LABEL (CHANGE ME)"
+              component={TextField}
+            />
+          </Col>
+          <Col xs={6} >
+            <Field
+              name={`${name}[${index}].itemId`}
+              label="BARCODE (CHANGE ME)"
+              component={TextField}
+            />
+          </Col>
+        </Row>
+      );
+    })
+  );
+})
+
 const FillMultiVolumeRequest = ({ request, performAction }) => {
   const [actions] = useContext(ActionContext);
   const [currentModal, setModal] = useModal();
-
-  console.log("Current modal: %o", currentModal)
 
   const onSubmit = values => {
     return performAction(
@@ -45,6 +87,9 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
 
   return (
     <Form
+      initialValues={{
+        itemBarcodes: request.volumes
+      }}
       mutators={{
         ...arrayMutators,
       }}
@@ -56,10 +101,10 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
             open={currentModal === 'FillMultiVolumeRequest'}
             footer={<Footer disableSubmit={submitting || pristine || actions.pending} submit={form.submit} />}
           >
-            hello
-            {/* <FieldArray
-              "hello"
-            /> */}
+            <FieldArray
+              name="itemBarcodes"
+              component={ItemBarcodeFieldArray}
+            />
           </Modal>
         </form>
       )}
