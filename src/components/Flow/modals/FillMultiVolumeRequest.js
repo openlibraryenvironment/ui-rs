@@ -22,7 +22,7 @@ const ItemBarcodeFieldArray = ({
     onAddField,
     onDeleteField,
     requestCode
-  } = useKiwtFieldArray(name);
+  } = useKiwtFieldArray(name, true);
 
   const renderAddBarcode = () => {
     return (

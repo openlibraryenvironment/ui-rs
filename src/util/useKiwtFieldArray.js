@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useFieldArray } from 'react-final-form-arrays'
-const useKiwtFieldArray = (name) => {
+import { useFieldArray } from 'react-final-form-arrays';
+
+const useKiwtFieldArray = (name, submitWholeDeletedObject = false) => {
   const { fields } = useFieldArray(name);
   const { value: values } = fields;
   const [ endOfList, setEndOfList ] = useState(0);
@@ -22,7 +23,11 @@ const useKiwtFieldArray = (name) => {
 
   const onMarkForDeletion = (field) => {
     if (field && field.id) {
-      fields.push({ ...field, _delete: true });
+      if (submitWholeDeletedObject) {
+        fields.push({ ...field, _delete: true });
+      } else {
+        fields.push({ id: field.id, _delete: true });
+      }
     }
   }
 
