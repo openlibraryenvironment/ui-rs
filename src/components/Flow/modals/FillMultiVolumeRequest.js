@@ -5,9 +5,10 @@ import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
 
 import { FormattedMessage } from 'react-intl';
-import { Button, Col, Headline, Icon, IconButton, Modal, ModalFooter, Row, TextField } from '@folio/stripes/components';
+import { Button, Col, Headline, Icon, IconButton, Modal, ModalFooter, NoValue, Row, TextField } from '@folio/stripes/components';
 import volumeStateStatus from '../../../util/volumeStateStatus';
 import useKiwtFieldArray from '../../../util/useKiwtFieldArray';
+import { required as requiredValidator } from '../../../util/validators';
 import { ActionContext } from '../ActionContext';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
@@ -15,48 +16,47 @@ import { useModal } from '../../MessageModalState';
 const ItemBarcodeFieldArray = ({
   fields: {
     name
+  },
+  request: {
+    state: {
+      code: requestCode
+    },
+    volume
   }
 }) => {
   const {
     items,
     onAddField,
-    onDeleteField,
-    requestCode
+    onDeleteField
   } = useKiwtFieldArray(name, true);
 
   const renderAddBarcode = () => {
     return (
       <Button
         id="add-volume-btn"
-        onClick={() => onAddField()}
+        onClick={() => onAddField({ name: volume })}
       >
         <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.addVolume" />
       </Button>
     );
   };
 
-  console.log('Items: %o', items);
   return (
     <>
       <Row>
-        <Col xs={4}>
+        <Col xs={3}>
           <Headline size="medium">
-            LABEL
+            <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.label" />
           </Headline>
         </Col>
         <Col xs={4}>
           <Headline size="medium">
-            BARCODE
+            <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.barcode" />
           </Headline>
         </Col>
-        <Col xs={2}>
+        <Col xs={4}>
           <Headline size="medium">
-            STATUS
-          </Headline>
-        </Col>
-        <Col xs={2}>
-          <Headline size="medium">
-            REMOVE
+            <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.status" />
           </Headline>
         </Col>
       </Row>
@@ -64,7 +64,7 @@ const ItemBarcodeFieldArray = ({
         const vss = volumeStateStatus(volume, requestCode);
         return (
           <Row>
-            <Col xs={4}>
+            <Col xs={3}>
               <Field
                 name={`${name}[${index}].name`}
                 component={TextField}
@@ -72,28 +72,39 @@ const ItemBarcodeFieldArray = ({
             </Col>
             <Col xs={4}>
               <Field
+                autoFocus={index === items.length - 1}
                 disabled={vss}
                 name={`${name}[${index}].itemId`}
                 component={TextField}
+                required
+                validate={requiredValidator}
               />
             </Col>
-            <Col xs={2}>
+            <Col xs={4}>
               <Icon
                 icon={vss ? 'check-circle' : 'exclamation-circle'}
                 size="small"
                 status={vss ? 'success' : 'warn'}
-              />
+              >
+                {volume.status?.value ?
+                  <FormattedMessage id={`ui-rs.flow.volumes.status.${volume.status.value}`} /> :
+                  <NoValue />
+                }
+              </Icon>
             </Col>
-            <Col xs={2}>
-              <IconButton
-                icon="trash"
-                id="remove-volume-button"
-                onClick={() => onDeleteField(index, volume)}
-              />
-            </Col>
+            {!vss &&
+              <Col xs={1}>
+                <IconButton
+                  icon="trash"
+                  id="remove-volume-button"
+                  onClick={() => onDeleteField(index, volume)}
+                />
+              </Col>
+            }
           </Row>
         );
       })}
+      {renderAddBarcode()}
     </>
   );
 };
@@ -146,7 +157,7 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
           >
             <FieldArray
               name="itemBarcodes"
-              requestCode={code}
+              request={request}
               component={ItemBarcodeFieldArray}
             />
           </Modal>

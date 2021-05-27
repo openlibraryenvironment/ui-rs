@@ -8,7 +8,7 @@ const volumeStateStatus = (vol, code) => {
       code === 'RES_AWAIT_SHIP'
   ) {
     // At this point, the ideal scenario is 'Checked in to ReShare'
-    return vol.status.value === 'checked_in_to_reshare';
+    return vol.status?.value === 'checked_in_to_reshare';
   }
   return false;
 };
