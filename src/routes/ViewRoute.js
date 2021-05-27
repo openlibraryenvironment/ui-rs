@@ -233,7 +233,7 @@ ViewRoute.propTypes = {
   }).isRequired,
 };
 
-// TODO potentially replace the manifest with react-query, to enforce refresh on performAction 
+// TODO potentially replace the manifest with react-query, to enforce refresh on performAction
 ViewRoute.manifest = {
   selectedRecord: {
     type: 'okapi',

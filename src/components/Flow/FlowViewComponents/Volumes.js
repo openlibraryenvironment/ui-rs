@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Accordion, Icon, MultiColumnList } from '@folio/stripes/components';
 import volumeStateStatus from '../../../util/volumeStateStatus';
-import css from './Flow.css';
 
 const Volumes = ({
   request: {
@@ -11,12 +10,10 @@ const Volumes = ({
     volumes = []
   } = {}
 }) => {
-  
   if (volumes.length > 1) {
-    
     const volumeFormatter = {
       status: vol => {
-        const vss = volumeStateStatus(vol, code)
+        const vss = volumeStateStatus(vol, code);
         return (
           <>
             <Icon
@@ -29,7 +26,7 @@ const Volumes = ({
           </>
         );
       }
-    }
+    };
 
     return (
       <Accordion

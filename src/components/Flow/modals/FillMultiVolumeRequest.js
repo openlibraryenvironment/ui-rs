@@ -33,9 +33,9 @@ const ItemBarcodeFieldArray = ({
         <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.addVolume" />
       </Button>
     );
-  }
+  };
 
-  console.log("Items: %o", items)
+  console.log('Items: %o', items);
   return (
     <>
       <Row>
@@ -61,16 +61,16 @@ const ItemBarcodeFieldArray = ({
         </Col>
       </Row>
       {items.map((volume, index) => {
-        const vss = volumeStateStatus(volume, requestCode)
+        const vss = volumeStateStatus(volume, requestCode);
         return (
           <Row>
-            <Col xs={4} >
+            <Col xs={4}>
               <Field
                 name={`${name}[${index}].name`}
                 component={TextField}
               />
             </Col>
-            <Col xs={4} >
+            <Col xs={4}>
               <Field
                 disabled={vss}
                 name={`${name}[${index}].itemId`}
@@ -85,18 +85,18 @@ const ItemBarcodeFieldArray = ({
               />
             </Col>
             <Col xs={2}>
-            <IconButton
-              icon="trash"
-              id="remove-volume-button"
-              onClick={() => onDeleteField(index, volume)}
-            />
+              <IconButton
+                icon="trash"
+                id="remove-volume-button"
+                onClick={() => onDeleteField(index, volume)}
+              />
             </Col>
           </Row>
         );
       })}
     </>
   );
-}
+};
 
 const FillMultiVolumeRequest = ({ request, performAction }) => {
   const [actions] = useContext(ActionContext);
