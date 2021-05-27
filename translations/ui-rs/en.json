@@ -237,6 +237,8 @@
     "actions.fillMultiVolumeRequest.label": "Label",
     "actions.fillMultiVolumeRequest.barcode": "Item barcode",
     "actions.fillMultiVolumeRequest.status": "Status",
+    "actions.fillMultiVolumeRequest.success": "Successfully filled multi-item request",
+    "actions.fillMultiVolumeRequest.error": "Failed to fill multi-item request",
     "cards.reqSup.searching": "Searching for supplier.",
     "printPullslip": "Print pull slip",
     "button.goBack": "Go back",
