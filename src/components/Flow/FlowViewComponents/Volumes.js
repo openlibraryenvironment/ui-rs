@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, Icon, MultiColumnList } from '@folio/stripes/components';
+import volumeStateStatus from '../../../util/volumeStateStatus';
 import css from './Flow.css';
 
 const Volumes = ({
@@ -10,26 +11,12 @@ const Volumes = ({
     volumes = []
   } = {}
 }) => {
-  const { formatDate, formatMessage } = useIntl();
   
   if (volumes.length > 1) {
     
-    /*
-     * This is a function to take in a RequestVolume and determine,
-     * from the request state code, whether that volume is in an acceptable state or not
-     */
-    const volumeStateStatus = (vol) => {
-      if (code === "RES_AWAIT_PICKING" || "RES_AWAIT_PROXY_BORROWER" || "RES_AWAIT_SHIP") {
-        // At this point, the ideal scenario is 'Checked in to ReShare'
-        return vol.status.value === 'checked_in_to_reshare'
-      }
-
-      return false;
-    }
-
     const volumeFormatter = {
       status: vol => {
-        const vss = volumeStateStatus(vol)
+        const vss = volumeStateStatus(vol, code)
         return (
           <>
             <Icon

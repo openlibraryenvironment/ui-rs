@@ -5,26 +5,30 @@ import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
 
 import { FormattedMessage } from 'react-intl';
-import { withKiwtFieldArray } from '@folio/stripes-erm-components';
-
-import { Button, Col, Modal, ModalFooter, Row, TextField } from '@folio/stripes/components';
-import { required } from '@folio/stripes/util';
+import { Button, Col, Headline, Icon, IconButton, Modal, ModalFooter, Row, TextField } from '@folio/stripes/components';
+import volumeStateStatus from '../../../util/volumeStateStatus';
+import useKiwtFieldArray from '../../../util/useKiwtFieldArray';
 import { ActionContext } from '../ActionContext';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
-const ItemBarcodeFieldArray = withKiwtFieldArray(({
-  items,
-  name,
-  onAddField,
-  onDeleteField
+const ItemBarcodeFieldArray = ({
+  fields: {
+    name
+  }
 }) => {
+  const {
+    items,
+    onAddField,
+    onDeleteField,
+    requestCode
+  } = useKiwtFieldArray(name);
 
   const renderAddBarcode = () => {
     return (
       <Button
         id="add-volume-btn"
-        onClick={() => this.props.onAddField()}
+        onClick={() => onAddField()}
       >
         <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.addVolume" />
       </Button>
@@ -33,32 +37,71 @@ const ItemBarcodeFieldArray = withKiwtFieldArray(({
 
   console.log("Items: %o", items)
   return (
-    items.map((volume, index) => {
-      return (
-        <Row>
-          <Col xs={6} >
-            <Field
-              name={`${name}[${index}].name`}
-              label="LABEL (CHANGE ME)"
-              component={TextField}
+    <>
+      <Row>
+        <Col xs={4}>
+          <Headline size="medium">
+            LABEL
+          </Headline>
+        </Col>
+        <Col xs={4}>
+          <Headline size="medium">
+            BARCODE
+          </Headline>
+        </Col>
+        <Col xs={2}>
+          <Headline size="medium">
+            STATUS
+          </Headline>
+        </Col>
+        <Col xs={2}>
+          <Headline size="medium">
+            REMOVE
+          </Headline>
+        </Col>
+      </Row>
+      {items.map((volume, index) => {
+        const vss = volumeStateStatus(volume, requestCode)
+        return (
+          <Row>
+            <Col xs={4} >
+              <Field
+                name={`${name}[${index}].name`}
+                component={TextField}
+              />
+            </Col>
+            <Col xs={4} >
+              <Field
+                disabled={vss}
+                name={`${name}[${index}].itemId`}
+                component={TextField}
+              />
+            </Col>
+            <Col xs={2}>
+              <Icon
+                icon={vss ? 'check-circle' : 'exclamation-circle'}
+                size="small"
+                status={vss ? 'success' : 'warn'}
+              />
+            </Col>
+            <Col xs={2}>
+            <IconButton
+              icon="trash"
+              id="remove-volume-button"
+              onClick={() => onDeleteField(index, volume)}
             />
-          </Col>
-          <Col xs={6} >
-            <Field
-              name={`${name}[${index}].itemId`}
-              label="BARCODE (CHANGE ME)"
-              component={TextField}
-            />
-          </Col>
-        </Row>
-      );
-    })
+            </Col>
+          </Row>
+        );
+      })}
+    </>
   );
-})
+}
 
 const FillMultiVolumeRequest = ({ request, performAction }) => {
   const [actions] = useContext(ActionContext);
   const [currentModal, setModal] = useModal();
+  const { state: { code } = {} } = request;
 
   const onSubmit = values => {
     return performAction(
@@ -94,15 +137,16 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
         ...arrayMutators,
       }}
       onSubmit={onSubmit}
-      render={({ handleSubmit, submitting, pristine, form }) => (
+      render={({ handleSubmit, submitting, form }) => (
         <form onSubmit={handleSubmit}>
           <Modal
             label={<FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest" />}
             open={currentModal === 'FillMultiVolumeRequest'}
-            footer={<Footer disableSubmit={submitting || pristine || actions.pending} submit={form.submit} />}
+            footer={<Footer disableSubmit={submitting || actions.pending} submit={form.submit} />}
           >
             <FieldArray
               name="itemBarcodes"
+              requestCode={code}
               component={ItemBarcodeFieldArray}
             />
           </Modal>
