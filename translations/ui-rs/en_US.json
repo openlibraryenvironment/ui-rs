@@ -108,7 +108,7 @@
     "view.showTags": "Show tags",
     "view.showChat": "Show chat",
     "view.title": "Request {id}",
-    "view.chatPane": "Chat with {chatOtherParty}",
+    "view.chatPane": "Messages with {chatOtherParty}",
     "view.chatPane.sendMessage": "Send",
     "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
     "view.chatPane.actions": "Actions",
