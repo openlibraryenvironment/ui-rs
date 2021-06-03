@@ -53,7 +53,7 @@
     "xmldom": "^0.1.27"
   },
   "peerDependencies": {
-    "@folio/stripes": "^5.0.0 || ^6.1.0",
+    "@folio/stripes": "^6.1.0",
     "moment": "^2.29.0",
     "react": "*",
     "react-intl": "^5.0.0",
