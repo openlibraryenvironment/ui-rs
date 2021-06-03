@@ -119,7 +119,8 @@
     "flow.volumes.status": "Status",
     "flow.volumes.status.awaiting_lms_check_out": "Filled; Awaiting LMS check out",
     "flow.volumes.status.lms_check_out_complete": "Filled; LMS check out complete",
-    "flow.volumes.status.complete": "Complete",
+    "flow.volumes.status.awaiting_lms_check_in": "Return shipped; Awaiting LMS check in",
+    "flow.volumes.status.completed": "Complete",
     "flow.volumes.status.awaiting_temporary_item_creation": "Awaiting temporary item creation",
     "flow.volumes.status.temporary_item_created_in_host_lms": "Temporary item created in host LMS",
 
