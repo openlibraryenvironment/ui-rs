@@ -46,7 +46,7 @@ const appDetails = {
     visibleColumns: [
       'flags', 'id',
       'dateCreated', 'state', 'serviceType',
-      'requestingInstitutionSymbol', 'selectedItemBarcode',
+      'requestingInstitutionSymbol', 'selectedItemBarcode', 'pickLocation',
       'title',
     ],
     extraFilter: 'r.false',
@@ -471,6 +471,7 @@ class PatronRequestsRoute extends React.Component {
             requestingInstitutionSymbol: <FormattedMessage id="ui-rs.patronrequests.requestingInstitutionSymbol" />,
             supplyingInstitutionSymbol: <FormattedMessage id="ui-rs.patronrequests.supplyingInstitutionSymbol" />,
             selectedItemBarcode: <FormattedMessage id="ui-rs.patronrequests.selectedItemBarcode" />,
+            pickLocation: <FormattedMessage id="ui-rs.patronrequests.pickLocation" />,
           }}
           columnWidths={{
             flags: '48px',
