@@ -108,6 +108,7 @@ class PatronRequestsRoute extends React.Component {
           'r': 'isRequester',
           'needsAttention': 'state.needsAttention',
           'state': 'state.code',
+          'location': 'pickLocation.id',
           'requester': 'resolvedRequester.owner.id',
           'supplier': 'resolvedSupplier.owner.id',
         },
@@ -133,6 +134,13 @@ class PatronRequestsRoute extends React.Component {
         perPage: '100',
         stats: 'true',
       },
+    },
+    lmsLocations: {
+      type: 'okapi',
+      path: 'rs/hostLMSLocations',
+      params: {
+        perPage: '100',
+      }
     },
     // If this (query) isn't here, then we get this.props.parentMutator.query is undefined in the UI
     query: {},
@@ -247,6 +255,7 @@ class PatronRequestsRoute extends React.Component {
     const values = {
       state: byName.state || [],
       institution: byName[institutionFilterId] || [],
+      location: byName.location || [],
       needsAttention: byName.needsAttention || [],
       hasUnread: byName.hasUnread || [],
     };
@@ -323,6 +332,24 @@ class PatronRequestsRoute extends React.Component {
             onChange={setFilterState}
           />
         </Accordion>
+        {appName === 'supply' &&
+          <Accordion
+            label={<FormattedMessage id="ui-rs.patronrequests.pickLocation" />}
+            id="location"
+            name="location"
+            separator={false}
+            header={FilterAccordionHeader}
+            displayClearButton={values.location.length > 0}
+            onClearFilter={() => clearGroup('location')}
+          >
+            <MultiSelectionFilter
+              name="location"
+              dataOptions={options.location}
+              selectedValues={values.location}
+              onChange={setFilterState}
+            />
+          </Accordion>
+        }
         <Accordion
           label={<FormattedMessage id="ui-rs.filter.dateSubmitted" />}
           id="dateCreated"
@@ -389,6 +416,10 @@ class PatronRequestsRoute extends React.Component {
       .map(x => ({ label: x.name, value: x.id }))
       .sort(compareLabel);
 
+    const location = (resources?.lmsLocations?.records ?? [])
+      .map(x => ({ label: x.name, value: x.id }))
+      .sort(compareLabel);
+
     const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })];
     // see comment in manifest for explanation of value
     const hasUnread = [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })];
@@ -396,6 +427,7 @@ class PatronRequestsRoute extends React.Component {
     return this.renderFiltersFromData({
       state: this.states,
       institution: institutions,
+      location,
       needsAttention,
       hasUnread
     });
