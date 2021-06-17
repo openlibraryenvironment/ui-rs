@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
-import { useIntl, FormattedMessage } from 'react-intl';
-import { Settings } from '@folio/stripes/smart-components';
-import { stripesConnect } from '@folio/stripes/core';
+import { useIntl } from 'react-intl';
 
-import { CustomISO18626, SettingPagePane, SettingPage } from './settingsComponents';
+import { Route } from 'react-router-dom';
+
+import { useSettings } from '@kint/stripes-kint-components';
+
+import { CustomISO18626 } from './settingsComponents';
 import Notices from './notices';
 import NoticePolicies from './noticePolicies';
 import OtherSettings from './OtherSettings';
@@ -14,93 +15,65 @@ import {
   PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
 } from './pullslipNotifications';
 
-import snakeToCamel from '../util/snakeToCamel';
-
-function sortByLabelCaseInsensitive(a, b) {
-  const al = a.label.toLowerCase();
-  const bl = b.label.toLowerCase();
-  return (al < bl) ? -1 : (al > bl) ? 1 : 0;
-}
-
-const persistentPages = [
-  {
-    route: 'CustomISO18626Settings',
-    id: 'iso18626',
-    component: CustomISO18626
-  },
-  {
-    route: 'notices',
-    id: 'notices',
-    component: Notices,
-    perm: 'ui-rs.settings.notices',
-  },
-  {
-    route: 'other',
-    id: 'other',
-    component: OtherSettings
-  },
-  {
-    route: 'pullslipTemplates',
-    id: 'pullslipTemplates',
-    component: PullslipTemplates,
-    perm: 'ui-rs.settings.pullslip-notifications',
-  },
-  {
-    route: 'notice-policies',
-    id: 'noticePolicies',
-    component: NoticePolicies,
-    perm: 'ui-rs.settings.notices',
-  },
-  {
-    route: 'pullslip-notifications',
-    id: 'pullslipNotifications',
-    component: PullslipNotifications,
-    perm: 'ui-rs.settings.pullslip-notifications',
-  },
-];
-
-const dynamicPageExclusions = ['pullslipTemplateConfig'];
-
 const ResourceSharingSettings = (props) => {
-  const intl = useIntl();
+
   const { match } = props;
+  const intl = useIntl();
 
-  const makePageList = () => {
-    const rows = (props.resources.settings || {}).records || [];
-    let sections = Array.from(new Set(rows.map(obj => obj.section)));
+  const persistentPages = [
+    {
+      route: 'CustomISO18626Settings',
+      id: 'iso18626',
+      label: intl.formatMessage({ id: 'ui-rs.settingsSection.iso18626' }),
+      component: CustomISO18626
+    },
+    {
+      route: 'notices',
+      id: 'notices',
+      label: intl.formatMessage({ id: 'ui-rs.settingsSection.notices' }),
+      component: Notices,
+      perm: 'ui-rs.settings.notices',
+    },
+    {
+      route: 'other',
+      id: 'other',
+      label: intl.formatMessage({ id: 'ui-rs.settingsSection.other' }),
+      component: OtherSettings
+    },
+    {
+      route: 'pullslipTemplates',
+      id: 'pullslipTemplates',
+      label: intl.formatMessage({ id: 'ui-rs.settingsSection.pullslipTemplates' }),
+      component: PullslipTemplates,
+      perm: 'ui-rs.settings.pullslip-notifications',
+    },
+    {
+      route: 'notice-policies',
+      id: 'noticePolicies',
+      label: intl.formatMessage({ id: 'ui-rs.settingsSection.noticePolicies' }),
+      component: NoticePolicies,
+      perm: 'ui-rs.settings.notices',
+    },
+    {
+      route: 'pullslip-notifications',
+      id: 'pullslipNotifications',
+      label: intl.formatMessage({ id: 'ui-rs.settingsSection.pullslipNotifications' }),
+      component: PullslipNotifications,
+      perm: 'ui-rs.settings.pullslip-notifications',
+    },
+  ];
 
-    // Remove excluded sections
-    sections = sections.filter(s => {
-      return !dynamicPageExclusions.includes(s);
-    });
+  const { isLoading, SettingsComponent } = useSettings({
+    dynamicPageExclusions: ['pullslipTemplateConfig'],
+    intlKey: 'ui-rs',
+    persistentPages,
+    refdataEndpoint: 'rs/refdata',
+    settingEndpoint: 'rs/settings/appSettings'
+  });
 
-    if (sections.length === 0) return [];
-
-    const persistent = persistentPages.map(page => ({
-      route: page.route,
-      label: intl.formatMessage({ id: `ui-rs.settingsSection.${page.id}` }),
-      component: page.component,
-      perm: page.perm,
-    }));
-
-    const dynamic = sections.map(section => {
-      const sectionFormatted = snakeToCamel(section);
-      return (
-        {
-          route: sectionFormatted,
-          label: intl.formatMessage({ id: `ui-rs.settingsSection.${sectionFormatted}` }),
-          component: (prps) => (
-            <SettingPagePane sectionName={section}>
-              <SettingPage sectionName={section} {...prps} />
-            </SettingPagePane>
-          ),
-        }
-      );
-    });
-
-    const settingPageList = persistent.concat(dynamic).sort(sortByLabelCaseInsensitive);
-    return settingPageList;
-  };
+  if (isLoading) {
+    return null;
+  }
 
   const additionalRoutes = [
     <Route
@@ -120,32 +93,13 @@ const ResourceSharingSettings = (props) => {
     />
   ];
 
-  const pageList = makePageList();
-  // XXX DO NOT REMOVE THE NEXT LINE. For reasons we do not
-  // understand, if once this code renders an empty set of pages, it
-  // will not re-render until you navigate away and return. This
-  // apparently unnecessary check prevents that.
-  if (pageList.length === 0) return null;
-
   return (
-    <Settings
-      paneTitle={<FormattedMessage id="ui-rs.meta.title" />}
+    <SettingsComponent
       {...props}
-      pages={pageList}
       additionalRoutes={additionalRoutes}
     />
   );
 };
-
-ResourceSharingSettings.manifest = Object.freeze({
-  settings: {
-    type: 'okapi',
-    path: 'rs/settings/appSettings',
-    params: {
-      max: '500',
-    },
-  }
-});
 
 ResourceSharingSettings.propTypes = {
   resources: PropTypes.shape({
@@ -158,4 +112,4 @@ ResourceSharingSettings.propTypes = {
   }).isRequired,
 };
 
-export default stripesConnect(ResourceSharingSettings);
+export default ResourceSharingSettings;
