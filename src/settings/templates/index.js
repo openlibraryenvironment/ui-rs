@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { sortBy } from 'lodash';
 import { EntryManager } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
+import { useTemplate } from '@kint/stripes-kint-components';
 
 import TemplateDetail from './TemplateDetail';
 import TemplateForm from './TemplateForm';
@@ -15,6 +16,9 @@ const Templates = (props) => {
    * TODO if we want to support localised email stuff at some point, this should be removed and we should
    * deal with a proper FieldArray for each localizedTemplate
    */
+  /* const entryList = useTemplate({
+    endpoint: 'rs/template'
+  }); */
   const entryList = (props?.resources?.entries?.records || []).map(n => {
     const enTemplate = n.localizedTemplates?.find(t => t.locality === 'en') || {};
     return (

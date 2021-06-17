@@ -68,7 +68,8 @@ const ResourceSharingSettings = (props) => {
     intlKey: 'ui-rs',
     persistentPages,
     refdataEndpoint: 'rs/refdata',
-    settingEndpoint: 'rs/settings/appSettings'
+    settingEndpoint: 'rs/settings/appSettings',
+    templateEndpoint: 'rs/template'
   });
 
   if (isLoading) {
