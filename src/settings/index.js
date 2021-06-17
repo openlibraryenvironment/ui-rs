@@ -24,40 +24,40 @@ const ResourceSharingSettings = (props) => {
     {
       route: 'CustomISO18626Settings',
       id: 'iso18626',
-      label: intl.formatMessage({ id: 'ui-rs.settingsSection.iso18626' }),
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.iso18626' }),
       component: CustomISO18626
     },
     {
       route: 'notices',
       id: 'notices',
-      label: intl.formatMessage({ id: 'ui-rs.settingsSection.notices' }),
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.notices' }),
       component: Notices,
       perm: 'ui-rs.settings.notices',
     },
     {
       route: 'other',
       id: 'other',
-      label: intl.formatMessage({ id: 'ui-rs.settingsSection.other' }),
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.other' }),
       component: OtherSettings
     },
     {
       route: 'pullslipTemplates',
       id: 'pullslipTemplates',
-      label: intl.formatMessage({ id: 'ui-rs.settingsSection.pullslipTemplates' }),
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.pullslipTemplates' }),
       component: PullslipTemplates,
       perm: 'ui-rs.settings.pullslip-notifications',
     },
     {
       route: 'notice-policies',
       id: 'noticePolicies',
-      label: intl.formatMessage({ id: 'ui-rs.settingsSection.noticePolicies' }),
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.noticePolicies' }),
       component: NoticePolicies,
       perm: 'ui-rs.settings.notices',
     },
     {
       route: 'pullslip-notifications',
       id: 'pullslipNotifications',
-      label: intl.formatMessage({ id: 'ui-rs.settingsSection.pullslipNotifications' }),
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.pullslipNotifications' }),
       component: PullslipNotifications,
       perm: 'ui-rs.settings.pullslip-notifications',
     },
