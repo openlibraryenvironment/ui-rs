@@ -10,6 +10,8 @@
 * Layout improvements to pull slip delivery settings screen. Fixes PR-843.
 * Display due date on Requester view. Fixes PR-853.
 * Add a dummy "none" option to list of LMS locations when editing a pull-slip notification schedule. Fixes PR-847.
+* Rename "Chat" to "Messages" in helper app. Fixes PR-991.
+* Remove _all_ translations from `en_US.json`, which is not presently maintained and had become and accidental dumping ground for translations intended for `en.json`. Fixes PR-996.
 
 ## [1.1.0](https://github.com/openlibraryenvironment/ui-rs/tree/v1.1.0) (2020-08-24)
 

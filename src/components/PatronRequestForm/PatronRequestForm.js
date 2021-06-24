@@ -95,7 +95,6 @@ const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => (
             name="systemInstanceIdentifier"
             label={<FormattedMessage id="ui-rs.information.systemInstanceIdentifier" />}
             component={TextField}
-            required
             validate={required}
           />
         </Col>
@@ -127,7 +126,6 @@ const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => (
             name="publicationDate"
             label={<FormattedMessage id="ui-rs.information.date" />}
             component={TextField}
-            required
             validate={required}
           />
         </Col>
