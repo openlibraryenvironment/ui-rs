@@ -52,7 +52,7 @@ const paneButtons = (mutator, resources) => {
   listOfUnseenNotifications = listOfUnseenNotifications ? listOfUnseenNotifications.filter(notification => notification.seen === false && notification.isSender === false) : null;
   return (
     <PaneMenu>
-      {handleToggleTags &&
+      {handleToggleChat && resources?.selectedRecord?.records?.[0]?.resolvedSupplier &&
       <FormattedMessage id="ui-rs.view.showChat">
         {ariaLabel => (
           <IconButton
@@ -65,7 +65,7 @@ const paneButtons = (mutator, resources) => {
         )}
       </FormattedMessage>
       }
-      {handleToggleChat &&
+      {handleToggleTags &&
       <FormattedMessage id="ui-rs.view.showTags">
         {ariaLabel => (
           <IconButton
