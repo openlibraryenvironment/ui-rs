@@ -12,6 +12,7 @@
 * Add a dummy "none" option to list of LMS locations when editing a pull-slip notification schedule. Fixes PR-847.
 * Rename "Chat" to "Messages" in helper app. Fixes PR-991.
 * Remove _all_ translations from `en_US.json`, which is not presently maintained and had become and accidental dumping ground for translations intended for `en.json`. Fixes PR-996.
+* Format due dates according to locale. Fixes PR-1003.
 
 ## [1.1.0](https://github.com/openlibraryenvironment/ui-rs/tree/v1.1.0) (2020-08-24)
 
