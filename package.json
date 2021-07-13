@@ -47,12 +47,13 @@
     "xmldom": "^0.1.27"
   },
   "peerDependencies": {
-    "@folio/stripes": "^5.0.0 || ^6.1.0",
+    "@folio/stripes": "^6.1.0",
     "moment": "^2.29.0",
     "react": "*",
     "react-intl": "^5.0.0",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.0.0"
+    "react-router-dom": "^5.0.0",
+    "react-query": "^3.9.0"
   },
   "stripes": {
     "actsAs": [

@@ -100,7 +100,7 @@ class PatronRequestsRoute extends React.Component {
       type: 'okapi',
       path: 'rs/patronrequests',
       params: generateQueryParams({
-        searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,selectedItemBarcode',
+        searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,volumes.itemId',
         // Omitting the date and unread filter keys here causes it to include their value verbatim
         // rather than adding the key name and operator. This way we can store the operator and field
         // in the value eg. how the hasUnread checkbox sets a value of 'unreadMessageCount>0'.
@@ -454,7 +454,7 @@ class PatronRequestsRoute extends React.Component {
       { label: 'author', value: 'author' },
       { label: 'issn', value: 'issn' },
       { label: 'isbn', value: 'isbn' },
-      { label: 'itemBarcode', value: 'selectedItemBarcode' },
+      { label: 'itemBarcode', value: 'volumes.itemId' },
     ].map(x => ({
       label: intl.formatMessage({ id: `ui-rs.index.${x.label}` }),
       value: x.value,
@@ -547,6 +547,7 @@ class PatronRequestsRoute extends React.Component {
             serviceType: a => a.serviceType && a.serviceType.value,
             supplyingInstitutionSymbol: a => get(a, 'resolvedSupplier.owner.symbolSummary', '').replace(/,.*/, ''),
             pickLocation: a => a.pickLocation && a.pickLocation.name,
+            selectedItemBarcode: a => a.volumes.length <= 1 ? a.volumes[0]?.itemId : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />
           }}
           renderFilters={this.renderFilters}
           hasNewButton={this.props.appName === 'request'}
