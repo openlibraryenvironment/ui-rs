@@ -547,7 +547,7 @@ class PatronRequestsRoute extends React.Component {
             serviceType: a => a.serviceType && a.serviceType.value,
             supplyingInstitutionSymbol: a => get(a, 'resolvedSupplier.owner.symbolSummary', '').replace(/,.*/, ''),
             pickLocation: a => a.pickLocation && a.pickLocation.name,
-            selectedItemBarcode: a => a.volumes.length <= 1 ? a.volumes[0]?.itemId : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />
+            selectedItemBarcode: a => a.volumes?.length <= 1 ? a.volumes[0]?.itemId : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />
           }}
           renderFilters={this.renderFilters}
           hasNewButton={this.props.appName === 'request'}
