@@ -20,7 +20,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
           <SafeHTMLMessage id="ui-rs.actions.checkIn.prompt" />
           <Row>
             <Col xs={11}>
-              <Field name="itemBarcode" component={TextField} autoFocus />
+              <Field name="itemBarcodes[0].itemId" component={TextField} autoFocus />
             </Col>
             <Col xs={1}>
               <Button buttonStyle="primary mega" type="submit" disabled={submitting}>

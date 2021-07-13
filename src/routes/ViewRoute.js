@@ -4,7 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useQuery } from 'react-query';
+
 import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 import { Tags } from '@folio/stripes-erm-components';
 import { DirectLink } from '@reshare/stripes-reshare';
@@ -47,8 +49,8 @@ const handleToggleChat = (mutator, resources) => {
   handleToggleHelper('chat', mutator, resources);
 };
 
-const paneButtons = (mutator, resources) => {
-  let listOfUnseenNotifications = _.get(resources, 'selectedRecord.records[0].notifications');
+const paneButtons = (mutator, resources, request) => {
+  let listOfUnseenNotifications = request?.notifications;
   listOfUnseenNotifications = listOfUnseenNotifications ? listOfUnseenNotifications.filter(notification => notification.seen === false && notification.isSender === false) : null;
   return (
     <PaneMenu>
@@ -71,7 +73,7 @@ const paneButtons = (mutator, resources) => {
           <IconButton
             icon="tag"
             id="clickable-show-tags"
-            badgeCount={_.get(resources, 'selectedRecord.records[0].tags.length', 0)}
+            badgeCount={request?.tags?.length ?? 0}
             onClick={() => handleToggleTags(mutator, resources)}
             ariaLabel={ariaLabel}
           />
@@ -106,6 +108,13 @@ const getHelperApp = (match, resources, mutator) => {
 const ViewRoute = ({ history, resources, location, location: { pathname }, match, mutator, stripes }) => {
   const [, setMessage] = useMessage();
   const [, setActions] = useContext(ActionContext);
+
+  const ky = useOkapiKy();
+  const { data: request = {}, isSuccess: hasRequestLoaded, refetch: refetchRequest } = useQuery(
+    ['ui-rs', 'viewRoute', 'getSelectedRecord', match.params?.id],
+    () => ky(`rs/patronrequests/${match.params?.id}`).json()
+  );
+
   const performAction = (action, payload, successMessage, errorMessage) => {
     setActions({ pending: true });
     return mutator.action.POST({ action, actionParams: payload || {} })
@@ -113,6 +122,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
         setActions({ pending: false });
         if (successMessage) setMessage(successMessage, 'success');
         else setMessage('ui-rs.actions.generic.success', 'success', { action: `stripes-reshare.actions.${action}` }, ['action']);
+        refetchRequest()
       })
       .catch(response => {
         setActions({ pending: false });
@@ -121,13 +131,11 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
             if (errorMessage) setMessage(errorMessage, 'error', { errMsg: rsp.message });
             else setMessage('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg: rsp.message }, ['action']);
           });
+        refetchRequest()
       });
   };
 
-  const resource = resources.selectedRecord;
-  if (!_.get(resource, 'hasLoaded')) return null;
-  const request = _.get(resource, 'records[0]');
-
+  if (!hasRequestLoaded) return null;
   const forCurrent = actionsForRequest(request);
 
   return (
@@ -136,8 +144,8 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
         {/* TODO: The "Request" string is translated as ui-rs.view.title which we can use conveniently with a hook once react-intl is upgraded */}
         <Pane
           centerContent
-          paneTitle={`Request ${_.get(resources, 'selectedRecord.records[0].hrid')}`}
-          paneSub={subheading(_.get(resources, 'selectedRecord.records[0]'), match.params)}
+          paneTitle={`Request ${request.hrid}`}
+          paneSub={subheading(request, match.params)}
           padContent={false}
           onClose={() => history.push(upNLevels(location, 3))}
           dismissible
@@ -234,10 +242,6 @@ ViewRoute.propTypes = {
 };
 
 ViewRoute.manifest = {
-  selectedRecord: {
-    type: 'okapi',
-    path: 'rs/patronrequests/:{id}',
-  },
   tagsValues: {
     type: 'okapi',
     path: 'tags',
