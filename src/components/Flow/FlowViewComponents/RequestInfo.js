@@ -39,7 +39,6 @@ const RequestInfo = ({ request }) => {
   };
 
   const location = useLocation();
-  const dueDate = calculateDueDate(intl, request);
 
   return (
     <Accordion
@@ -63,7 +62,7 @@ const RequestInfo = ({ request }) => {
       <Layout className="padding-top-gutter">
         <Row>
           {colKeyVal('itemBarcode', request.selectedItemBarcode || <NoValue />)}
-          {colKeyVal('dueDate', dueDate)}
+          {colKeyVal('dueDate', calculateDueDate(intl, request))}
           {colKeyVal('requester', requester ?
             <Link to={`/directory/entries/view/${requester.id}`}>
               {requester.name}
