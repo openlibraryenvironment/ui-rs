@@ -86,9 +86,17 @@
       },
       {
         "permissionName": "settings.rs.enabled",
-        "displayName": "Settings (resource-sharing): can view and edit settings that do not have separate permissions",
+        "displayName": "Settings (resource-sharing): settings enabled",
         "subPermissions": [
-          "settings.enabled",
+          "settings.enabled"
+        ],
+        "visible": false
+      },
+      {
+        "permissionName": "ui-rs.settings.system",
+        "displayName": "Settings (resource-sharing): can view and edit system settings that do not have separate permissions",
+        "subPermissions": [
+          "settings.rs.enabled",
           "rs.settings.get",
           "rs.settings.put",
           "rs.refdata.get",
@@ -102,6 +110,7 @@
         "subPermissions": [
           "settings.rs.enabled",
           "rs.noticePolicies",
+          "rs.refdata.get",
           "rs.template.write"
         ],
         "visible": true
@@ -111,8 +120,9 @@
         "displayName": "Settings (resource-sharing): Can create, edit and remove pullslip notifications and templates",
         "subPermissions": [
           "settings.rs.enabled",
-          "rs.hostlmslocations",
+          "rs.hostlmslocations.get",
           "rs.timers",
+          "rs.refdata.get",
           "rs.template.write"
         ],
         "visible": true

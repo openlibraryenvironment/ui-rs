@@ -396,7 +396,7 @@
     "pullslipNotification.addEmailAddress": "Add email address",
     "pullslipNotification.addLocation": "Add location",
     "permission.module.rs.enabled": "UI: resource-sharing module is enabled",
-    "permission.settings.rs.enabled": "Settings (resource-sharing): can view and edit settings that do not have separate permissions",
+    "permission.ui-rs.settings.system": "Settings (resource-sharing): can view and edit system settings that do not have separate permissions",
     "permission.ui-rs.settings.notices": "Settings (resource-sharing): Can create, edit and remove notices and notice policies",
     "permission.ui-rs.settings.pullslip-notifications": "Settings (resource-sharing): Can create, edit and remove pullslip notifications",
     "invalid-date": "Bad date: {date}",

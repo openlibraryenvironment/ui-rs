@@ -26,7 +26,8 @@ const persistentPages = [
   {
     route: 'CustomISO18626Settings',
     id: 'iso18626',
-    component: CustomISO18626
+    component: CustomISO18626,
+    perm: 'ui-rs.settings.system',
   },
   {
     route: 'notices',
@@ -37,7 +38,8 @@ const persistentPages = [
   {
     route: 'other',
     id: 'other',
-    component: OtherSettings
+    component: OtherSettings,
+    perm: 'ui-rs.settings.system',
   },
   {
     route: 'pullslipTemplates',
@@ -94,6 +96,7 @@ const ResourceSharingSettings = (props) => {
               <SettingPage sectionName={section} {...prps} />
             </SettingPagePane>
           ),
+          perm: 'ui-rs.settings.system',
         }
       );
     });
