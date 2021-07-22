@@ -122,7 +122,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
         setActions({ pending: false });
         if (successMessage) setMessage(successMessage, 'success');
         else setMessage('ui-rs.actions.generic.success', 'success', { action: `stripes-reshare.actions.${action}` }, ['action']);
-        refetchRequest()
+        refetchRequest();
       })
       .catch(response => {
         setActions({ pending: false });
@@ -131,7 +131,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
             if (errorMessage) setMessage(errorMessage, 'error', { errMsg: rsp.message });
             else setMessage('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg: rsp.message }, ['action']);
           });
-        refetchRequest()
+        refetchRequest();
       });
   };
 

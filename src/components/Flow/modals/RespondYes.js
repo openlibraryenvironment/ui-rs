@@ -6,6 +6,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { Button, Modal, ModalFooter, Row, Col, TextArea } from '@folio/stripes/components';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
+import { required as requiredValidator } from '../../../util/validators';
 
 const RespondYes = ({ performAction }) => {
   const [currentModal, setModal] = useModal();
@@ -39,37 +40,55 @@ const RespondYes = ({ performAction }) => {
   return (
     <Form
       onSubmit={onSubmit}
-      render={({ handleSubmit, submitting, pristine, form }) => (
+      render={({ handleSubmit, invalid, submitting, pristine, form }) => (
         <form onSubmit={handleSubmit}>
           <Modal
             label={<FormattedMessage id="ui-rs.actions.respondYes" />}
             open={currentModal === 'RespondYes'}
-            footer={<Footer disableSubmit={submitting || pristine} submit={form.submit} />}
+            footer={<Footer disableSubmit={invalid || pristine || submitting} submit={form.submit} />}
           >
-
             <form onSubmit={handleSubmit}>
               <SafeHTMLMessage id="ui-rs.actions.respondYes.callNumber" />
               <Row>
                 <Col xs={11}>
-                  <Field name="callnumber" component={TextArea} autoFocus />
+                  <Field
+                    autoFocus
+                    component={TextArea}
+                    name="callnumber"
+                    required
+                    validate={requiredValidator}
+                  />
                 </Col>
               </Row>
               <SafeHTMLMessage id="ui-rs.actions.respondYes.pickLocation" />
               <Row>
                 <Col xs={11}>
-                  <Field name="pickLocation" component={TextArea} autoFocus />
+                  <Field
+                    component={TextArea}
+                    name="pickLocation"
+                    required
+                    validate={requiredValidator}
+                  />
                 </Col>
               </Row>
               <SafeHTMLMessage id="ui-rs.actions.respondYes.pickShelvingLocation" />
               <Row>
                 <Col xs={11}>
-                  <Field name="pickShelvingLocation" component={TextArea} autoFocus />
+                  <Field
+                    component={TextArea}
+                    name="pickShelvingLocation"
+                    required
+                    validate={requiredValidator}
+                  />
                 </Col>
               </Row>
               <SafeHTMLMessage id="ui-rs.actions.addNote" />
               <Row>
                 <Col xs={11}>
-                  <Field name="note" component={TextArea} autoFocus />
+                  <Field
+                    component={TextArea}
+                    name="note"
+                  />
                 </Col>
               </Row>
             </form>

@@ -20,8 +20,7 @@ const ItemBarcodeFieldArray = ({
   request: {
     state: {
       code: requestCode
-    },
-    volume
+    }
   }
 }) => {
   const {
@@ -34,7 +33,7 @@ const ItemBarcodeFieldArray = ({
     return (
       <Button
         id="add-volume-btn"
-        onClick={() => onAddField({ name: volume })}
+        onClick={() => onAddField({ })}
       >
         <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.addVolume" />
       </Button>
@@ -68,6 +67,8 @@ const ItemBarcodeFieldArray = ({
               <Field
                 name={`${name}[${index}].name`}
                 component={TextField}
+                required
+                validate={requiredValidator}
               />
             </Col>
             <Col xs={4}>
@@ -112,7 +113,6 @@ const ItemBarcodeFieldArray = ({
 const FillMultiVolumeRequest = ({ request, performAction }) => {
   const [actions] = useContext(ActionContext);
   const [currentModal, setModal] = useModal();
-  const { state: { code } = {} } = request;
 
   const onSubmit = values => {
     return performAction(
