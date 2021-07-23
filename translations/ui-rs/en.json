@@ -292,6 +292,10 @@
     "settings.templates.pullslipTemplate": "Pullslip template",
     "settings.templates.pullslipTemplates": "Pullslip templates",
 
+    "settings.lmsloc.correspondingDirectoryEntry": "Related directory entry",
+    "settings.lmsloc.hostLMSLocation": "Host LMS location",
+    "settings.lmsloc.supplyPreference": "Supplying priority",
+
     "settings.noticePolicies.active": "Active",
     "settings.noticePolicies.addNotice": "Add notice",
     "settings.noticePolicies.description": "Policy description",
@@ -310,6 +314,7 @@
     "settingsSection.requests": "Request defaults",
     "settingsSection.requesterValidation": "Requester validation",
     "settingsSection.hostLMSIntegration": "Host LMS integration settings",
+    "settingsSection.hostLMSLocations": "Host LMS locations",
     "settingsSection.autoResponder": "Auto responder settings",
     "settingsSection.chat": "Chat settings",
     "settingsSection.iso18626": "Custom ISO18626 settings",

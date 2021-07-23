@@ -6,6 +6,7 @@ import { Settings } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
 
 import { CustomISO18626, SettingPagePane, SettingPage } from './settingsComponents';
+import HostLMSLocations from './HostLMSLocations';
 import Notices from './notices';
 import NoticePolicies from './noticePolicies';
 import OtherSettings from './OtherSettings';
@@ -58,6 +59,11 @@ const persistentPages = [
     id: 'pullslipNotifications',
     component: PullslipNotifications,
     perm: 'ui-rs.settings.pullslip-notifications',
+  },
+  {
+    route: 'lmslocations',
+    id: 'hostLMSLocations',
+    component: HostLMSLocations
   },
 ];
 

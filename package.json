@@ -116,6 +116,16 @@
         "visible": true
       },
       {
+        "permissionName": "ui-rs.settings.hostlmslocations",
+        "displayName": "Settings (resource-sharing): Can edit host LMS locations",
+        "subPermissions": [
+          "settings.rs.enabled",
+          "rs.directoryentry.get",
+          "rs.hostlmslocations"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-rs.settings.pullslip-notifications",
         "displayName": "Settings (resource-sharing): Can create, edit and remove pullslip notifications and templates",
         "subPermissions": [
