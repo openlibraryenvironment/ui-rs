@@ -70,6 +70,7 @@
   "information.control": "Directory entry control",
   "information.symbols.authority": "Authority",
   "information.symbols.symbol": "Symbol",
+  "information.symbols.priority": "Priority",
   "information.symbols.add": "Add symbol",
   "information.symbol.index": "Symbol {index}",
   "information.qualifiedName": "Fully qualified name",

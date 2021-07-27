@@ -7,6 +7,8 @@ import {
   Button,
   Select,
   TextField,
+  Row,
+  Col,
 } from '@folio/stripes/components';
 
 import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
@@ -46,22 +48,35 @@ class SymbolListField extends React.Component {
               header={<FormattedMessage id="ui-directory.information.symbol.index" values={{ index }} />}
               key={`symbols[${index}].editCard`}
             >
-              <Field
-                name={`symbols[${index}].authority`}
-                component={Select}
-                dataOptions={[{ value:'', label: '' }, ...namingAuthorities]}
-                label={<FormattedMessage id="ui-directory.information.symbols.authority" />}
-                format={v => v?.id}
-                required
-                validate={required}
-              />
-              <Field
-                name={`symbols[${index}].symbol`}
-                label={<FormattedMessage id="ui-directory.information.symbols.symbol" />}
-                component={TextField}
-                required
-                validate={required}
-              />
+              <Row>
+                <Col md={4}>
+                  <Field
+                    name={`symbols[${index}].authority`}
+                    component={Select}
+                    dataOptions={[{ value:'', label: '' }, ...namingAuthorities]}
+                    label={<FormattedMessage id="ui-directory.information.symbols.authority" />}
+                    format={v => v?.id}
+                    required
+                    validate={required}
+                  />
+                </Col>
+                <Col md={4}>
+                  <Field
+                    name={`symbols[${index}].symbol`}
+                    label={<FormattedMessage id="ui-directory.information.symbols.symbol" />}
+                    component={TextField}
+                    required
+                    validate={required}
+                  />
+                </Col>
+                <Col md={4}>
+                  <Field
+                    name={`symbols[${index}].priority`}
+                    label={<FormattedMessage id="ui-directory.information.symbols.priority" />}
+                    component={TextField}
+                  />
+                </Col>
+              </Row>
             </EditCard>
           );
         })}
