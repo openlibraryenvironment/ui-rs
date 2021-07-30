@@ -149,7 +149,7 @@ CreateEditRoute.manifest = {
   },
   locations: {
     type: 'okapi',
-    path: 'directory/entry?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100',
+    path: 'directory/entry?filters=(type.value%3D%3Dinstitution)&filters=status.value%3D%3Dmanaged&perPage=100',
   },
   query: {},
 };
