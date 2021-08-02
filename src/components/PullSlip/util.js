@@ -29,6 +29,12 @@ function styledBarCodeString(text) {
   });
 }
 
+function formatSymbols(symbols) {
+  return symbols
+    .filter(cur => cur.priority === 'shipping')
+    .reduce((acc, cur) => [...acc, `${cur?.authority?.symbol ?? ''}:${cur?.symbol ?? ''}`], []);
+}
+
 function recordToPullSlipData(intl, record) {
   const now = new Date();
   const id = record.hrid || record.id;
@@ -59,6 +65,7 @@ function recordToPullSlipData(intl, record) {
     location: fullLocation,
     fromSlug: get(record, 'resolvedSupplier.owner.slug'),
     toSlug: get(record, 'resolvedRequester.owner.slug') || record.requestingInstitutionSymbol,
+    fromSymbols: formatSymbols(record?.pickLocation?.correspondingDirectoryEntry?.symbols ?? []),
     now: `${intl.formatDate(now)} ${intl.formatTime(now)}`,
     logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
     itemBarcode: styledBarCodeString(record.selectedItemBarcode),

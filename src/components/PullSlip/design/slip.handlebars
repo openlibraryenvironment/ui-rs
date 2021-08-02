@@ -53,7 +53,12 @@
               <div class="slot--item-call-number">{{callNumber}}</div>
               <div class="slot--item-location">{{location}}</div>
               <div class="details-row">
-                <div class="details-row__column details-row__column--first">From {{fromSlug}}</div>
+                <div class="details-row__column details-row__column--first">
+                  From {{fromSlug}}
+                  {{#each fromSymbols}}
+                    <br>{{this}}
+                  {{/each}}
+                </div>
                 <div class="details-row__column details-row__column--second">To {{toSlug}}</div>
               </div>
               <div class="details-row">
