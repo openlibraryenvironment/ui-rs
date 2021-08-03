@@ -59,7 +59,12 @@
                     <br>{{this}}
                   {{/each}}
                 </div>
-                <div class="details-row__column details-row__column--second">To {{toSlug}}</div>
+                <div class="details-row__column details-row__column--second">
+                  To {{toSlug}}
+                  {{#each toSymbols}}
+                    <br>{{this}}
+                  {{/each}}
+                </div>
               </div>
               <div class="details-row">
                 <div class="details-row__column details-row__column--first">{{now}}</div>
