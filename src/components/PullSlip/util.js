@@ -53,7 +53,7 @@ function recordToPullSlipData(intl, record) {
 
   const parsedPickup = record?.pickupLocation?.split(' --> ');
   const pickupLocation = parsedPickup?.[0]?.trim() ?? '';
-  const toSymbols = parsedPickup.length > 1 ? [parsedPickup[1]?.trim()] : [];
+  const toSymbols = parsedPickup?.length > 1 ? [parsedPickup[1]?.trim()] : [];
 
   return {
     borrower: name,
