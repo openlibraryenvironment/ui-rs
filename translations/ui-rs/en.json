@@ -119,10 +119,13 @@
     "flow.volumes.status": "Status",
     "flow.volumes.status.awaiting_lms_check_out": "Filled; Awaiting LMS check out",
     "flow.volumes.status.lms_check_out_complete": "Filled; LMS check out complete",
+    "flow.volumes.status.lms_check_out_(no_integration)": "LMS check out disabled; please check out manually",
     "flow.volumes.status.awaiting_lms_check_in": "Return shipped; Awaiting LMS check in",
     "flow.volumes.status.completed": "Complete",
+    "flow.volumes.status.lms_check_in_(no_integration)": "LMS check in disabled; please check in manually",
     "flow.volumes.status.awaiting_temporary_item_creation": "Awaiting temporary item creation",
     "flow.volumes.status.temporary_item_created_in_host_lms": "Temporary item created in host LMS",
+    "flow.volumes.status.temporary_item_creation_(no_integration)": "LMS temporary item creation disabled; please create manually",
 
     "view.showTags": "Show tags",
     "view.showChat": "Show chat",
