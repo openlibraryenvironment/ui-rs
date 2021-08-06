@@ -50,17 +50,16 @@ const handleToggleChat = (mutator, resources) => {
 };
 
 const paneButtons = (mutator, resources, request) => {
-  let listOfUnseenNotifications = request?.notifications;
-  listOfUnseenNotifications = listOfUnseenNotifications ? listOfUnseenNotifications.filter(notification => notification.seen === false && notification.isSender === false) : null;
+  const unseenNotifications = request?.notifications?.filter(notification => notification.seen === false && notification.isSender === false)?.length ?? 0;
   return (
     <PaneMenu>
-      {handleToggleChat && resources?.selectedRecord?.records?.[0]?.resolvedSupplier &&
+      {handleToggleChat && request?.resolvedSupplier &&
       <FormattedMessage id="ui-rs.view.showChat">
         {ariaLabel => (
           <IconButton
             icon="comment"
             id="clickable-show-chat"
-            badgeCount={listOfUnseenNotifications ? listOfUnseenNotifications.length : 0}
+            badgeCount={unseenNotifications}
             onClick={() => handleToggleChat(mutator, resources)}
             ariaLabel={ariaLabel}
           />
@@ -81,27 +80,6 @@ const paneButtons = (mutator, resources, request) => {
       </FormattedMessage>
       }
     </PaneMenu>
-  );
-};
-
-const getHelperApp = (match, resources, mutator) => {
-  const helper = _.get(resources, 'query.helper', null);
-  if (!helper) return null;
-
-  let HelperComponent = null;
-
-  if (helper === 'tags') HelperComponent = Tags;
-  if (helper === 'chat') HelperComponent = ChatPane;
-
-  if (!HelperComponent) return null;
-
-  const extraProps = { mutator, resources };
-  return (
-    <HelperComponent
-      link={`rs/patronrequests/${match.params.id}`}
-      onToggle={() => handleToggleHelper(helper, mutator, resources)}
-      {... extraProps}
-    />
   );
 };
 
@@ -135,6 +113,28 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
       });
   };
 
+  const getHelperApp = () => {
+    const helper = _.get(resources, 'query.helper', null);
+    if (!helper) return null;
+
+    let HelperComponent = null;
+
+    if (helper === 'tags') HelperComponent = Tags;
+    if (helper === 'chat') HelperComponent = ChatPane;
+
+    if (!HelperComponent) return null;
+
+    const extraProps = { request, mutator, resources };
+    return (
+      <HelperComponent
+        link={`rs/patronrequests/${match.params.id}`}
+        onToggle={() => handleToggleHelper(helper, mutator, resources)}
+        onRequestRefresh={refetchRequest}
+        {... extraProps}
+      />
+    );
+  };
+
   if (!hasRequestLoaded) return null;
   const forCurrent = actionsForRequest(request);
 
@@ -149,7 +149,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
           padContent={false}
           onClose={() => history.push(upNLevels(location, 3))}
           dismissible
-          lastMenu={paneButtons(mutator, resources)}
+          lastMenu={paneButtons(mutator, resources, request)}
           defaultWidth="fill"
           subheader={
             <Layout
@@ -210,7 +210,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
             <Route path={`${match.path}/flow`} render={() => <FlowRoute request={request} performAction={performAction} />} />
           </Switch>
         </Pane>
-        {getHelperApp(match, resources, mutator)}
+        {getHelperApp()}
       </Paneset>
       {/* Render modals that correspond to available actions */}
       {renderNamedWithProps(

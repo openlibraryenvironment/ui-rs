@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Dropdown, DropdownMenu, IconButton, Pane, Row, TextArea } from '@folio/stripes/components';
+import { Button, Col, Dropdown, DropdownMenu, Pane, Row, TextArea } from '@folio/stripes/components';
 import { ChatMessage } from './components';
 import css from './ChatPane.css';
 
+
+const ENTER_KEY = 13;
+
 class ChatPane extends React.Component {
   static propTypes = {
-    resources: PropTypes.shape({
-      selectedRecord: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.shape({
-          notifications: PropTypes.array,
-          validActions: PropTypes.arrayOf(PropTypes.string),
-        })),
-      }),
+    request: PropTypes.shape({
+      notifications: PropTypes.array,
+      validActions: PropTypes.arrayOf(PropTypes.string),
     }),
     mutator:PropTypes.shape({
       action: PropTypes.object,
     }),
     onToggle: PropTypes.func,
-  }
+    onRequestRefresh: PropTypes.func.isRequired
+  };
 
   static contextType = CalloutContext;
 
@@ -36,17 +36,17 @@ class ChatPane extends React.Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    const currentNotifications = this.props?.resources?.selectedRecord?.records[0]?.notifications;
-    // For some reason (probably an ESLint bug) the below line fails linting despite the prop-types being declared above, disabling for now
-    // eslint-disable-next-line react/prop-types
-    const prevNotifications = prevProps?.resources?.selectedRecord?.records[0]?.notifications;
-    if (currentNotifications.length !== prevNotifications.length) {
+    const { request: { notifications: currentNotifications } = {} } = this.props;
+    const { request: { notifications: prevNotifications } = {} } = prevProps;
+
+    if (currentNotifications?.length !== prevNotifications?.length) {
       this.scrollToLatestMessage();
     }
-  }
+  };
 
   handleMarkAllRead(readStatus, excluding = false) {
     this.props.mutator.action.POST({ action: 'messagesAllSeen', actionParams: { seenStatus: readStatus, excludes: excluding } });
+    this.props.onRequestRefresh();
   }
 
   handleMessageRead = (notification, currentReadStatus) => {
@@ -57,10 +57,12 @@ class ChatPane extends React.Component {
       payload.seenStatus = true;
     }
     this.props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} });
+    this.props.onRequestRefresh();
   };
 
   sendMessage(payload) {
     this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} });
+    this.props.onRequestRefresh();
   }
 
   onSubmitMessage = values => {
@@ -69,18 +71,18 @@ class ChatPane extends React.Component {
         values
       )
     );
-  }
+  };
 
   renderPaneFooter() {
-    const validActions = this.props?.resources?.selectedRecord?.records[0]?.validActions;
-    const messageValid = validActions ? validActions.includes('message') : false;
+    const { request: { validActions } = {} } = this.props;
 
+    const messageValid = validActions?.includes('message');
     return (
       <Form
         onSubmit={this.onSubmitMessage}
         render={({ form, handleSubmit, pristine }) => {
           const onEnterPress = async (e) => {
-            if (e.keyCode === 13 && e.shiftKey === false && !pristine) {
+            if (e.keyCode === ENTER_KEY && e.shiftKey === false && !pristine) {
               e.preventDefault();
               if (messageValid) {
                 await handleSubmit();
@@ -89,7 +91,7 @@ class ChatPane extends React.Component {
                 this.context.sendCallout({ type: 'error', message: <FormattedMessage id="ui-rs.view.chatPane.stateInvalidMessage" /> });
                 form.reset();
               }
-            } else if (e.keyCode === 13 && e.shiftKey === false) {
+            } else if (e.keyCode === ENTER_KEY && e.shiftKey === false) {
               e.preventDefault();
               form.reset();
             }
@@ -133,7 +135,7 @@ class ChatPane extends React.Component {
     );
   }
 
-  displayMessage(notification, isLatest = false, index) {
+  displayMessage(notification, index, isLatest = false) {
     const { mutator } = this.props;
     return (
       <ChatMessage key={`notificationMessage[${index}]`} notification={notification} mutator={mutator} isLatest={isLatest} ref={isLatest ? this.latestMessage : null} handleMessageRead={this.handleMessageRead} />
@@ -155,8 +157,7 @@ class ChatPane extends React.Component {
   }
 
   displayMessages() {
-    const { resources } = this.props;
-    const notifications = resources?.selectedRecord?.records[0]?.notifications;
+    const { request: { notifications } = {} } = this.props;
     if (notifications) {
       // Sort the notifications into order by time recieved/sent
       notifications.sort((a, b) => this.sortByTimestamp(a, b));
@@ -164,7 +165,7 @@ class ChatPane extends React.Component {
 
       return (
         <div className={css.noTopMargin}>
-          {notifications.map((notification, index) => this.displayMessage(notification, latestMessage.id === notification.id, index))}
+          {notifications.map((notification, index) => this.displayMessage(notification, index, latestMessage.id === notification.id))}
         </div>
       );
     }
@@ -180,8 +181,7 @@ class ChatPane extends React.Component {
   }
 
   renderDropdownButtonContents = () => {
-    const { onToggle } = this.props;
-    const notifications = this.props?.resources?.selectedRecord?.records[0]?.notifications;
+    const { onToggle, request: { notifications } = {} } = this.props;
     return (
       <DropdownMenu
         data-role="menu"
@@ -220,21 +220,15 @@ class ChatPane extends React.Component {
   renderDropdownButton = () => {
     return (
       <Dropdown
-        className={css.dropdownMenu}
+        buttonProps={{ marginBottom0: true }}
         label={<FormattedMessage id="ui-rs.view.chatPane.actions" />}
         renderMenu={this.renderDropdownButtonContents}
-      >
-        <IconButton
-          data-role="toggle"
-          icon="ellipsis"
-        />
-      </Dropdown>
+      />
     );
   };
 
   render() {
-    const { resources, onToggle } = this.props;
-    const isRequester = resources?.selectedRecord?.records[0]?.isRequester;
+    const { request: { isRequester } = {}, onToggle } = this.props;
     const chatOtherParty = isRequester ? 'supplier' : 'requester';
 
     return (
