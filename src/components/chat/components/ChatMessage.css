@@ -11,8 +11,18 @@
   word-wrap: break-word;
 }
 
-.dropdownMenu {
-  float: right;
+.actionButton {
+  padding: 5px;
+  align-self: center;
+}
+
+.rightHandSide {
+  display: flex;
+  margin-left: auto;
+}
+
+.leftHandSide {
+  margin: 10px auto 10px 5px;
 }
 
 .unread {
@@ -23,34 +33,32 @@
   background-color: #fff;
 }
 
-.action {
+.actionMessage {
   background-color: #fffbd9;
+}
+
+.displayFlex {
+  display: flex;
 }
 
 .actionText {
   color: #9ea4aa;
 }
 
-.messageContainerSender {
-  border-left: 5px;
-  border-left-style: solid;
-  border-color: var(--primary);
-  margin-right: -15px;
-  margin-left: -15px;
-  padding-left: 5px;
-  padding-right: 10px;
-}
-
 .messageContainer {
-  border-left: 5px;
-  border-left-style: solid;
-  border-color: coral;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color:  #9ea4aa;
   margin-right: -15px;
   margin-left: -15px;
-  padding-left: 5px;
-  padding-right: 10px;
 }
 
-hr {
-  margin-bottom:0px;
+.sender {
+  border-left-width: 5px;
+  border-left-color:  coral;
+}
+
+.receiver {
+  border-left-width: 5px;
+  border-color: var(--primary);
 }
