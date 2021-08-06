@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Dropdown, DropdownMenu, IconButton, Pane, Row, TextArea } from '@folio/stripes/components';
+import { Button, Col, Dropdown, DropdownMenu, Pane, Row, TextArea } from '@folio/stripes/components';
 import { ChatMessage } from './components';
 import css from './ChatPane.css';
 
@@ -61,10 +61,8 @@ class ChatPane extends React.Component {
   };
 
   sendMessage(payload) {
-    const { onRequestRefresh } = this.props;
-
-    this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} })
-      .then(onRequestRefresh());
+    this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} });
+    this.props.onRequestRefresh();
   }
 
   onSubmitMessage = values => {
