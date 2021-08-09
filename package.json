@@ -1,6 +1,6 @@
 {
   "name": "@reshare/rs",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Resource Sharing",
   "main": "src/index.js",
   "repository": "",
@@ -24,7 +24,7 @@
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
     "@folio/stripes-erm-components": "^5.0.0",
-    "@reshare/stripes-reshare": "^1.4.0",
+    "@reshare/stripes-reshare": "^1.5.0",
     "@folio/stripes-template-editor": "^3.0.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
