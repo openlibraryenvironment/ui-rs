@@ -6,6 +6,7 @@ import { Button, Col, Dropdown, DropdownMenu, Pane, Row, TextArea } from '@folio
 import { ChatMessage } from './components';
 import { useRSCallout } from '../MessageModalState';
 import css from './ChatPane.css';
+import MessageDropdown from './components/MessageDropdown';
 
 
 const ENTER_KEY = 13;
@@ -146,59 +147,26 @@ const ChatPane = ({
     return null;
   };
 
-  const renderDropdownButtonContents = () => {
-    return (
-      <DropdownMenu
-        data-role="menu"
-        aria-label="actions-for-message"
-        onToggle={onToggle}
-      >
-        <FormattedMessage id="ui-rs.view.chatPane.actions">
-          {ariaLabel => (
-            notifications?.length > 0 ?
-              <>
-                <Button
-                  aria-label={ariaLabel}
-                  buttonStyle="dropdownItem"
-                  id="clickable-mark-all-message-read"
-                  marginBottom0
-                  onClick={() => handleMarkAllRead(true)}
-                >
-                  <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsRead" />
-                </Button>
-                <Button
-                  aria-label={ariaLabel}
-                  buttonStyle="dropdownItem"
-                  id="clickable-mark-all-message-unread"
-                  marginBottom0
-                  onClick={() => handleMarkAllRead(false)}
-                >
-                  <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsUnread" />
-                </Button>
-              </> : <FormattedMessage id="ui-rs.view.chatMessage.actions.noAvailableActions" />
-          )}
-        </FormattedMessage>
-      </DropdownMenu>
-    );
-  };
-
-  const renderDropdownButton = () => {
-    return (
-      <Dropdown
-        buttonProps={{ marginBottom0: true }}
-        label={<FormattedMessage id="ui-rs.view.chatPane.actions" />}
-        renderMenu={renderDropdownButtonContents}
-      />
-    );
-  };
-
   return (
     <Pane
       defaultWidth="30%"
       dismissible
       onClose={onToggle}
       paneTitle={<FormattedMessage id="ui-rs.view.chatPane" values={{ chatOtherParty: isRequester ? 'supplier' : 'requester' }} />}
-      lastMenu={renderDropdownButton()}
+      lastMenu={
+        <MessageDropdown
+          actionItems={[
+            {
+              label: <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsRead" />,
+              onClick: () => handleMarkAllRead(true)
+            },
+            {
+              label: <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsUnread" />,
+              onClick: () => handleMarkAllRead(false)
+            }
+          ]}
+        />
+      }
       footer={renderPaneFooter()}
       id="chat-pane"
     >
