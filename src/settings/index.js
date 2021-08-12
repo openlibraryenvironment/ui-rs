@@ -7,7 +7,6 @@ import { Route } from 'react-router-dom';
 import { useSettings } from '@kint/stripes-kint-components';
 
 import { CustomISO18626 } from './settingsComponents';
-import HostLMSLocations from './HostLMSLocations';
 import Notices from './notices';
 import NoticePolicies from './noticePolicies';
 import OtherSettings from './OtherSettings';
