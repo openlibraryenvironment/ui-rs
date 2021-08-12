@@ -14,7 +14,7 @@ import { DirectLink } from '@reshare/stripes-reshare';
 import { ChatPane } from '../components/chat';
 import upNLevels from '../util/upNLevels';
 import renderNamedWithProps from '../util/renderNamedWithProps';
-import { ContextualMessageBanner, MessageModalProvider, useMessage } from '../components/MessageModalState';
+import { ContextualMessageBanner, MessageModalProvider, useMessage, useRSCallout } from '../components/MessageModalState';
 import * as modals from '../components/Flow/modals';
 import { actionsForRequest } from '../components/Flow/actionsByState';
 import { ActionProvider, ActionContext } from '../components/Flow/ActionContext';
@@ -86,28 +86,49 @@ const paneButtons = (mutator, resources, request) => {
 const ViewRoute = ({ history, resources, location, location: { pathname }, match, mutator, stripes }) => {
   const [, setMessage] = useMessage();
   const [, setActions] = useContext(ActionContext);
+  const sendCallout = useRSCallout();
 
   const ky = useOkapiKy();
+  // Fetch the request
   const { data: request = {}, isSuccess: hasRequestLoaded, refetch: refetchRequest } = useQuery(
     ['ui-rs', 'viewRoute', 'getSelectedRecord', match.params?.id],
     () => ky(`rs/patronrequests/${match.params?.id}`).json()
   );
 
-  const performAction = (action, payload, successMessage, errorMessage) => {
+  // For now we can control whether we use callout or messageBanner with this final boolean.
+  const performAction = (action, payload, successMessage, errorMessage, displayMethod = 'banner') => {
     setActions({ pending: true });
+
+    let displayFunc;
+    switch (displayMethod) {
+      case 'callout':
+        displayFunc = sendCallout;
+        break;
+      case 'banner':
+        displayFunc = setMessage;
+        break;
+      default:
+        // If anything else is passed in here, default to not displaying outcome of action
+        displayFunc = () => null;
+        break;
+    }
+
     return mutator.action.POST({ action, actionParams: payload || {} })
       .then(() => {
         setActions({ pending: false });
-        if (successMessage) setMessage(successMessage, 'success');
-        else setMessage('ui-rs.actions.generic.success', 'success', { action: `stripes-reshare.actions.${action}` }, ['action']);
+        if (successMessage) {
+          displayFunc(successMessage, 'success');
+        } else {
+          displayFunc('ui-rs.actions.generic.success', 'success', { action: `stripes-reshare.actions.${action}` }, ['action']);
+        }
         refetchRequest();
       })
       .catch(response => {
         setActions({ pending: false });
         response.json()
           .then((rsp) => {
-            if (errorMessage) setMessage(errorMessage, 'error', { errMsg: rsp.message });
-            else setMessage('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg: rsp.message }, ['action']);
+            if (errorMessage) displayFunc(errorMessage, 'error', { errMsg: rsp.message });
+            else displayFunc('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg: rsp.message }, ['action']);
           });
         refetchRequest();
       });
@@ -124,12 +145,11 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
 
     if (!HelperComponent) return null;
 
-    const extraProps = { request, mutator, resources };
+    const extraProps = { request, performAction };
     return (
       <HelperComponent
         link={`rs/patronrequests/${match.params.id}`}
         onToggle={() => handleToggleHelper(helper, mutator, resources)}
-        onRequestRefresh={refetchRequest}
         {... extraProps}
       />
     );
@@ -242,14 +262,6 @@ ViewRoute.propTypes = {
 };
 
 ViewRoute.manifest = {
-  tagsValues: {
-    type: 'okapi',
-    path: 'tags',
-    params: {
-      limit: '1000',
-      query: 'cql.allRecords=1 sortby label',
-    },
-  },
   action: {
     type: 'okapi',
     path: 'rs/patronrequests/:{id}/performAction',

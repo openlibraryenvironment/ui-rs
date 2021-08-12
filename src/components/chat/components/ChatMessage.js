@@ -27,41 +27,36 @@ const ChatMessage = React.forwardRef((props, ref) => {
   };
 
   const renderDateTime = () => {
-    const timestamp = notification?.timestamp;
+    const duration = moment.duration(moment().diff(moment(notification?.timestamp)));
 
-    const currentTime = moment();
-    const timestampDate = moment(timestamp);
-
-    const duration = moment.duration(currentTime.diff(timestampDate));
-
-    const days = duration?._data.days;
-    const hours = duration?._data.hours;
-    const minutes = duration?._data.minutes;
-    const seconds = duration?._data.seconds;
-
+    const { days, hours, minutes, seconds } = duration?._data || {};
     const JUST_NOW_THRESHOLD = 30;
-
-    if (days === 0) {
-      if (hours === 0) {
-        if (minutes === 0) {
-          if (seconds < JUST_NOW_THRESHOLD) {
-            return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />;
-          } else {
-            return <FormattedMessage id="ui-rs.view.chatMessage.seconds" values={{ seconds }} />;
-          }
-        } else if (minutes === 1) {
-          return <FormattedMessage id="ui-rs.view.chatMessage.minute" />;
-        } else {
-          return <FormattedMessage id="ui-rs.view.chatMessage.minutes" values={{ minutes }} />;
-        }
-      } else if (hours === 1) {
-        return <FormattedMessage id="ui-rs.view.chatMessage.hour" />;
-      } else {
-        return <FormattedMessage id="ui-rs.view.chatMessage.hours" values={{ hours }} />;
-      }
-    } else {
-      return (longDateFormatter(timestampDate));
+    // If more than a day, return long date formatted
+    if (days !== 0) {
+      return (longDateFormatter(moment(notification?.timestamp)));
     }
+
+    // If time in hours
+    if (hours > 1) {
+      return <FormattedMessage id="ui-rs.view.chatMessage.hours" values={{ hours }} />;
+    }
+    if (hours === 1) {
+      return <FormattedMessage id="ui-rs.view.chatMessage.hour" />;
+    }
+
+    if (minutes > 1) {
+      return <FormattedMessage id="ui-rs.view.chatMessage.minutes" values={{ minutes }} />;
+    }
+
+    if (minutes === 1) {
+      return <FormattedMessage id="ui-rs.view.chatMessage.minute" />;
+    }
+
+    if (seconds > JUST_NOW_THRESHOLD) {
+      return <FormattedMessage id="ui-rs.view.chatMessage.seconds" values={{ seconds }} />;
+    }
+
+    return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />; 
   };
 
   const renderHeader = () => {
@@ -232,9 +227,6 @@ const ChatMessage = React.forwardRef((props, ref) => {
 
 ChatMessage.propTypes = {
   handleMessageRead: PropTypes.func.isRequired,
-  mutator:PropTypes.shape({
-    action: PropTypes.object,
-  }),
   notification: PropTypes.shape({
     id: PropTypes.string,
     messageContent: PropTypes.string,
