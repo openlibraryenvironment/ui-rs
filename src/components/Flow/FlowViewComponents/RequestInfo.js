@@ -1,8 +1,26 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, FormattedDate, useIntl } from 'react-intl';
 import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
+
+
+function calculateDueDate(intl, request) {
+  const dueDateText = request.dueDateFromLMS || request.dueDateRS;
+  if (!dueDateText) return <NoValue />;
+
+  // By inspection (the documentation is useless) intl.formatDate does
+  // not throw an exception or return undefined when fed a bad date,
+  // but vomits all over the JavaScript console and returns the
+  // human-readable string "Invalid Date". That's no use, so we have
+  // to check by hand whether the date string is OK. _sigh_
+
+  if (dueDateText.match(/^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2}:\d{2})?$/)) {
+    return <FormattedDate value={dueDateText} />;
+  }
+  return <FormattedMessage id="ui-rs.invalid-date" values={{ date: dueDateText }} />;
+}
+
 
 const RequestInfo = ({ request }) => {
   const intl = useIntl();
@@ -21,6 +39,7 @@ const RequestInfo = ({ request }) => {
   };
 
   const location = useLocation();
+  const itemBarcodeText = request.volumes?.length <= 1 ? request.volumes[0]?.itemId : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />;
 
   return (
     <Accordion
@@ -43,8 +62,9 @@ const RequestInfo = ({ request }) => {
       </Layout>
       <Layout className="padding-top-gutter">
         <Row>
-          {colKeyVal('itemBarcode', request.selectedItemBarcode || <NoValue />)}
-          {colKeyVal('dueDate', request.dueDateFromLMS || request.dueDateRS || <NoValue />)}
+          {colKeyVal('volumesNeeded', request.volume) || <NoValue />}
+          {colKeyVal('itemBarcode', itemBarcodeText || <NoValue />)}
+          {colKeyVal('dueDate', calculateDueDate(intl, request))}
           {colKeyVal('requester', requester ?
             <Link to={`/directory/entries/view/${requester.id}`}>
               {requester.name}

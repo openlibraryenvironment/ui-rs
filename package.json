@@ -1,6 +1,6 @@
 {
   "name": "@reshare/rs",
-  "version": "1.4.0",
+  "version": "1.6.0",
   "description": "Resource Sharing",
   "main": "src/index.js",
   "repository": "",
@@ -25,7 +25,7 @@
     "@folio/react-intl-safe-html": "^3.0.0",
     "@folio/stripes-erm-components": "^5.0.0",
     "@kint/stripes-kint-components": "^1.0.0",
-    "@reshare/stripes-reshare": "^1.4.0",
+    "@reshare/stripes-reshare": "^1.6.0",
     "@folio/stripes-template-editor": "^3.0.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
@@ -48,12 +48,13 @@
     "xmldom": "^0.1.27"
   },
   "peerDependencies": {
-    "@folio/stripes": "^5.0.0 || ^6.1.0",
+    "@folio/stripes": "^6.1.0",
     "moment": "^2.29.0",
     "react": "*",
     "react-intl": "^5.0.0",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.0.0"
+    "react-router-dom": "^5.0.0",
+    "react-query": "^3.9.0"
   },
   "stripes": {
     "actsAs": [
@@ -87,9 +88,17 @@
       },
       {
         "permissionName": "settings.rs.enabled",
-        "displayName": "Settings (resource-sharing): can view and edit settings that do not have separate permissions",
+        "displayName": "Settings (resource-sharing): settings enabled",
         "subPermissions": [
-          "settings.enabled",
+          "settings.enabled"
+        ],
+        "visible": false
+      },
+      {
+        "permissionName": "ui-rs.settings.system",
+        "displayName": "Settings (resource-sharing): can view and edit system settings that do not have separate permissions",
+        "subPermissions": [
+          "settings.rs.enabled",
           "rs.settings.get",
           "rs.settings.put",
           "rs.refdata.get",
@@ -103,7 +112,18 @@
         "subPermissions": [
           "settings.rs.enabled",
           "rs.noticePolicies",
+          "rs.refdata.get",
           "rs.template.write"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-rs.settings.hostlmslocations",
+        "displayName": "Settings (resource-sharing): Can edit host LMS locations",
+        "subPermissions": [
+          "settings.rs.enabled",
+          "rs.directoryentry.get",
+          "rs.hostlmslocations"
         ],
         "visible": true
       },
@@ -112,8 +132,9 @@
         "displayName": "Settings (resource-sharing): Can create, edit and remove pullslip notifications and templates",
         "subPermissions": [
           "settings.rs.enabled",
-          "rs.hostlmslocations",
+          "rs.hostlmslocations.get",
           "rs.timers",
+          "rs.refdata.get",
           "rs.template.write"
         ],
         "visible": true

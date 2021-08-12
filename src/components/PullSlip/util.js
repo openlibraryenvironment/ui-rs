@@ -29,6 +29,12 @@ function styledBarCodeString(text) {
   });
 }
 
+function formatSymbols(symbols) {
+  return symbols
+    .filter(cur => cur.priority === 'shipping')
+    .reduce((acc, cur) => [...acc, `${cur?.authority?.symbol ?? ''}:${cur?.symbol ?? ''}`], []);
+}
+
 function recordToPullSlipData(intl, record) {
   const now = new Date();
   const id = record.hrid || record.id;
@@ -45,9 +51,13 @@ function recordToPullSlipData(intl, record) {
   const psl = record.pickShelvingLocation;
   const fullLocation = (pul && psl) ? `${pul} — ${psl}` : (pul || psl);
 
+  const parsedPickup = record?.pickupLocation?.split(' --> ');
+  const pickupLocation = parsedPickup?.[0]?.trim() ?? '';
+  const toSymbols = parsedPickup?.length > 1 ? [parsedPickup[1]?.trim()] : [];
+
   return {
     borrower: name,
-    pickupLocation: record.pickupLocation,
+    pickupLocation,
     requestBarcode: styledBarCodeString(id.substring(0, 18)),
     requestId: id,
     title: record.title,
@@ -59,6 +69,8 @@ function recordToPullSlipData(intl, record) {
     location: fullLocation,
     fromSlug: get(record, 'resolvedSupplier.owner.slug'),
     toSlug: get(record, 'resolvedRequester.owner.slug') || record.requestingInstitutionSymbol,
+    fromSymbols: formatSymbols(record?.pickLocation?.correspondingDirectoryEntry?.symbols ?? []),
+    toSymbols,
     now: `${intl.formatDate(now)} ${intl.formatTime(now)}`,
     logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
     itemBarcode: styledBarCodeString(record.selectedItemBarcode),

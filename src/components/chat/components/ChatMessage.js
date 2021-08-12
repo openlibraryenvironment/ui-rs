@@ -1,12 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Button, Dropdown, DropdownMenu, IconButton } from '@folio/stripes/components';
+import { Button, Dropdown, DropdownMenu } from '@folio/stripes/components';
 import moment from 'moment';
+
+import classNames from 'classnames';
 import css from './ChatMessage.css';
 
 const ChatMessage = React.forwardRef((props, ref) => {
   const { notification } = props;
+
+  const lowerCaseFirstLetter = (string) => {
+    return string.charAt(0).toLowerCase() + string.slice(1);
+  };
 
   const systemMessageKeys = [
     '#ReShareLoanConditionAgreeResponse#',
@@ -33,10 +39,12 @@ const ChatMessage = React.forwardRef((props, ref) => {
     const minutes = duration?._data.minutes;
     const seconds = duration?._data.seconds;
 
+    const JUST_NOW_THRESHOLD = 30;
+
     if (days === 0) {
       if (hours === 0) {
         if (minutes === 0) {
-          if (seconds < 30) {
+          if (seconds < JUST_NOW_THRESHOLD) {
             return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />;
           } else {
             return <FormattedMessage id="ui-rs.view.chatMessage.seconds" values={{ seconds }} />;
@@ -81,20 +89,13 @@ const ChatMessage = React.forwardRef((props, ref) => {
   };
 
   const renderActionContents = () => {
-    const action = notification?.attachedAction ? notification?.attachedAction.charAt(0).toLowerCase() + notification?.attachedAction.substring(1) : undefined;
-    const actionStatus = notification?.actionStatus ? notification?.actionStatus?.charAt(0).toLowerCase() + notification?.actionStatus?.substring(1) : undefined;
-    // const actionData = notification?.actionData ? notification?.actionData?.charAt(0).toLowerCase() + notification?.actionData?.substring(1) : undefined;
+    const { attachedAction: action, actionStatus } = notification;
 
     let loanNotification = false;
-
-    let actionKey = action;
+    let actionKey = lowerCaseFirstLetter(action);
     if (actionStatus) {
-      actionKey = `${actionKey}.${actionStatus}`;
+      actionKey = `${actionKey}.${lowerCaseFirstLetter(actionStatus)}`;
     }
-    // For now we're not displaying this information in the message
-    /* if (actionData) {
-      actionKey = `${actionKey}.${actionData}`;
-    } */
 
     // If the message is a loan condition agreement then it will be prefaced by one of the keys in systemMessageKeys above. We want to display an action message in its place
     const systemKey = systemMessageKeys.find(key => notification?.messageContent?.startsWith(key));
@@ -103,17 +104,18 @@ const ChatMessage = React.forwardRef((props, ref) => {
       loanNotification = true;
     }
 
+    // If there's no action, or this is a non-loan-notification, return null
+    if (!action || (lowerCaseFirstLetter(action) === 'notification' && !loanNotification)) {
+      return null;
+    }
+
     return (
       <>
-        {
-          action ? (action !== 'notification' || loanNotification) &&
-          <span
-            className={css.actionText}
-          >
-            <FormattedMessage id={`ui-rs.view.withAction.${actionKey}`} />
-          </span> :
-            null
-        }
+        <span
+          className={css.actionText}
+        >
+          <FormattedMessage id={`ui-rs.view.withAction.${actionKey}`} />
+        </span>
         <span>&nbsp;</span>
       </>
     );
@@ -121,6 +123,10 @@ const ChatMessage = React.forwardRef((props, ref) => {
 
   const renderDropdownButtonContents = () => {
     const { onToggle } = props;
+    const markAsReadText = notification?.seen ?
+      <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsUnread" /> :
+      <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsRead" />;
+
     return (
       <DropdownMenu
         data-role="menu"
@@ -137,10 +143,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
                 marginBottom0
                 onClick={() => props.handleMessageRead(notification, notification.seen)}
               >
-                {notification?.seen ?
-                  <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsUnread" /> :
-                  <FormattedMessage id="ui-rs.view.chatMessage.actions.markAsRead" />
-                }
+                {markAsReadText}
               </Button> : <FormattedMessage id="ui-rs.view.chatMessage.actions.noAvailableActions" />
           )}
         </FormattedMessage>
@@ -148,7 +151,18 @@ const ChatMessage = React.forwardRef((props, ref) => {
     );
   };
 
-  const renderMessageContents = () => {
+  const renderDropdownButton = () => {
+    return (
+      <Dropdown
+        buttonProps={{ marginBottom0: true }}
+        className={css.actionButton}
+        label={<FormattedMessage id="ui-rs.view.chatMessage.actions" />}
+        renderMenu={renderDropdownButtonContents}
+      />
+    );
+  };
+
+  const renderContents = () => {
     let contents = notification.messageContent;
 
     // If the message is a loan condition agreement then it will be prefaced by some system key in hashes. We want to remove this from our reshare display
@@ -156,32 +170,14 @@ const ChatMessage = React.forwardRef((props, ref) => {
       const re = new RegExp('#[\\s\\S]*?#');
       contents = contents.replace(re, '');
     }
-    return contents;
-  };
 
-  const renderDropdownButton = () => {
-    return (
-      <Dropdown
-        className={css.dropdownMenu}
-        label={<FormattedMessage id="ui-rs.view.chatMessage.actions" />}
-        renderMenu={renderDropdownButtonContents}
-      >
-        <IconButton
-          data-role="toggle"
-          icon="ellipsis"
-        />
-      </Dropdown>
-    );
-  };
-
-  const renderContents = () => {
+    // Sometimes there will be an action message preceding the message itself
     return (
       <div
-        className={css.contents}
+        className={classNames(css.contents, css.displayFlex)}
       >
-        {renderDropdownButton()}
         {renderActionContents()}
-        {renderMessageContents()}
+        {contents}
       </div>
     );
   };
@@ -196,26 +192,38 @@ const ChatMessage = React.forwardRef((props, ref) => {
     if (notification?.isSender) {
       messageClassName = null;
       if (action && action !== 'Notification') {
-        messageClassName = css.action;
+        messageClassName = css.actionMessage;
       }
     } else if (action && action !== 'Notification' && !read) {
-      messageClassName = css.action;
+      messageClassName = css.actionMessage;
     }
 
     return messageClassName;
   };
 
-  const messageClassName = classOfMessageCard();
+  const className = classOfMessageCard();
   return (
-    <div className={notification?.isSender ? css.messageContainerSender : css.messageContainer} ref={ref}>
+    <>
       <div
-        className={messageClassName}
+        className={classNames(
+          css.messageContainer,
+          notification?.isSender ? css.sender : css.receiver
+        )}
+        ref={ref}
       >
-        {renderHeader()}
-        {renderContents()}
-        <hr />
+        <div
+          className={classNames(className, css.displayFlex)}
+        >
+          <div className={css.leftHandSide}>
+            {renderHeader()}
+            {renderContents()}
+          </div>
+          <div className={css.rightHandSide}>
+            {renderDropdownButton()}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 });
 
