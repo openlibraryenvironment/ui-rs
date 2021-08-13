@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import uniq from 'lodash/uniq';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import reset from '!!style-loader?injectType=lazyStyleTag!css-loader!reset-css/reset.css';
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -30,9 +31,11 @@ function styledBarCodeString(text) {
 }
 
 function formatSymbols(symbols) {
-  return symbols
+  // TODO: we can eventually remove the filtering of parenthetical content and duplicates
+  // once the short-term patches that necessitated them are more sustainably implemented
+  return uniq(symbols
     .filter(cur => cur.priority === 'shipping')
-    .reduce((acc, cur) => [...acc, `${cur?.authority?.symbol ?? ''}:${cur?.symbol ?? ''}`], []);
+    .reduce((acc, cur) => [...acc, `${cur?.authority?.symbol ?? ''}:${cur?.symbol.replace(/\s*\(.*?\)\s*$/g, '')}`], []));
 }
 
 function recordToPullSlipData(intl, record) {
