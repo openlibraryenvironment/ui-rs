@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
-import { Button, Col, Dropdown, DropdownMenu, Pane, Row, TextArea } from '@folio/stripes/components';
+import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
 import { ChatMessage } from './components';
 import { useRSCallout } from '../MessageModalState';
 import css from './ChatPane.css';
