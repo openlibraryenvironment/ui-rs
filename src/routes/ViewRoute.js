@@ -4,14 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 
-import { stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useMutation, useQuery } from 'react-query';
 
-import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
-import { Tags } from '@folio/stripes-erm-components';
+import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 import { DirectLink } from '@reshare/stripes-reshare';
 
-import { ChatPane } from '../components/chat';
 import upNLevels from '../util/upNLevels';
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { ContextualMessageBanner, MessageModalProvider, useMessage, useRSCallout } from '../components/MessageModalState';
@@ -35,7 +33,6 @@ const subheading = (req, params) => {
   const supplier = _.get(req, 'resolvedSupplier.owner.slug', '');
   return `${title} · ${requester} → ${supplier}`;
 };
-
 
 
 const ViewRoute = ({ history, location, location: { pathname }, match }) => {
@@ -208,11 +205,6 @@ ViewRoute.propTypes = {
     search: PropTypes.string.isRequired,
   }).isRequired,
   history: PropTypes.object.isRequired,
-  resources: PropTypes.object.isRequired,
-  mutator: PropTypes.object.isRequired,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 const ConnectedViewRoute = ViewRoute;
