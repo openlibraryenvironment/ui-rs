@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
 
 import { IconButton } from '@folio/stripes/components';
@@ -12,6 +12,7 @@ import { ChatPane } from './chat';
 const useHelperApp = () => {
   const history = useHistory();
   const location = useLocation();
+  const { id: requestId } = useParams();
 
   const query = queryString.parse(location.search);
 
@@ -63,11 +64,12 @@ const useHelperApp = () => {
 
     return (
       <Component
+        link={`rs/patronrequests/${requestId}`}
         onToggle={() => handleToggleHelper(query?.helper)}
         {...props}
       />
     );
-  }), [handleToggleHelper, query.helper]);
+  }), [handleToggleHelper, requestId, query.helper]);
 
   const TagButton = ({ request }) => (
     <FormattedMessage id="ui-rs.view.showTags">

@@ -8,7 +8,6 @@ import { useRSCallout } from '../MessageModalState';
 import css from './ChatPane.css';
 import MessageDropdown from './components/MessageDropdown';
 
-
 const ENTER_KEY = 13;
 
 const ChatPane = ({
