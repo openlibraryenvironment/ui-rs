@@ -41,7 +41,7 @@ const ChatMessageHeader = ({ notification }) => {
       return <FormattedMessage id="ui-rs.view.chatMessage.seconds" values={{ seconds }} />;
     }
 
-    return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />; 
+    return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />;
   };
 
 

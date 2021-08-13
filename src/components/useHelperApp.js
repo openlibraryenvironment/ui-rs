@@ -21,16 +21,10 @@ const useHelperApp = () => {
 
   useEffect(() => {
     if (currentHelper !== query?.helper) {
-      const { helper: _p, ...rest } = query;
-      let newQuery = {};
-      if (currentHelper) {
-        newQuery = {
-          ...rest,
-          helper: currentHelper
-        };
-      } else {
-        newQuery = { ...rest };
-      }
+      const newQuery = {
+        ...query,
+        helper: currentHelper
+      };
 
       history.push({
         pathname: location.pathname,
