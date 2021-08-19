@@ -65,7 +65,7 @@
     "queryResource": "query",
     "stripesDeps": [
       "@folio/stripes-erm-components",
-      "@kint/stripes-kint-components",
+      "@k-int/stripes-kint-components",
       "@reshare/stripes-reshare",
       "@folio/stripes-template-editor"
     ],
