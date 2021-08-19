@@ -16,7 +16,7 @@ const Templates = (props) => {
    * deal with a proper FieldArray for each localizedTemplate
    */
   // IMPORTANT this must remain using stripes-connect until such time as we replace EntryManager, as that requires stripes-connect stuff
-  // Eventually we want to replace this with 'useTemplates' from @kint/stripes-kint-components
+  // Eventually we want to replace this with 'useTemplates' from @k-int/stripes-kint-components
   const entryList = (props?.resources?.entries?.records || []).map(n => {
     const enTemplate = n.localizedTemplates?.find(t => t.locality === 'en') || {};
     return (

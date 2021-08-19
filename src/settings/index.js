@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { Route } from 'react-router-dom';
 
-import { useSettings } from '@kint/stripes-kint-components';
+import { useSettings } from '@k-int/stripes-kint-components';
 
 import { CustomISO18626 } from './settingsComponents';
 import Notices from './notices';

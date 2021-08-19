@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, MultiColumnList, Button } from '@folio/stripes/components';
 
-import { SettingPage } from '@kint/stripes-kint-components';
+import { SettingPage } from '@k-int/stripes-kint-components';
 
 import { raw2userData } from './util';
 

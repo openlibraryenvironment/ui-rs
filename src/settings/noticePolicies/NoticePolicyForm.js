@@ -5,7 +5,7 @@ import { Prompt } from 'react-router-dom';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { useRefdata, useTemplates } from '@kint/stripes-kint-components';
+import { useRefdata, useTemplates } from '@k-int/stripes-kint-components';
 
 import { required } from '@folio/stripes/util';
 import {
