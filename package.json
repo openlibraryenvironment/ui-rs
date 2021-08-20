@@ -24,9 +24,9 @@
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
     "@folio/stripes-erm-components": "^5.0.0",
-    "@k-int/stripes-kint-components": "^1.0.0",
-    "@reshare/stripes-reshare": "^1.6.0",
     "@folio/stripes-template-editor": "^3.0.0",
+    "@k-int/stripes-kint-components": "^1.0.2",
+    "@reshare/stripes-reshare": "^1.6.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
     "final-form-arrays": "^3.0.2",
@@ -52,9 +52,9 @@
     "moment": "^2.29.0",
     "react": "*",
     "react-intl": "^5.0.0",
+    "react-query": "^3.9.0",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.0.0",
-    "react-query": "^3.9.0"
+    "react-router-dom": "^5.0.0"
   },
   "stripes": {
     "actsAs": [
