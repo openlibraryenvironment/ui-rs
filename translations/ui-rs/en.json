@@ -403,6 +403,7 @@
     "index.issn": "ISSN",
     "index.isbn": "ISBN",
     "index.itemBarcode": "Item barcode",
+    "pullslip.multipleItem": "Multiple item request",
     "pullslipNotification.status": "Is active",
     "pullslipNotification.name": "Name",
     "pullslipNotification.days": "Days",

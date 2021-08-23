@@ -76,7 +76,9 @@ function recordToPullSlipData(intl, record) {
     toSymbols,
     now: `${intl.formatDate(now)} ${intl.formatTime(now)}`,
     logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
-    itemBarcode: styledBarCodeString(record.selectedItemBarcode),
+    itemBarcode: typeof record.selectedItemBarcode === 'string' && record.selectedItemBarcode.startsWith('[multivol:')
+      ? intl.formatMessage({ id: 'ui-rs.pullslip.multipleItem' })
+      : styledBarCodeString(record.selectedItemBarcode),
     itemId: record.selectedItemBarcode,
     conditions: (record.conditions || []).map(condition => {
       const code = formatConditionCode(condition, intl.formatMessage);
