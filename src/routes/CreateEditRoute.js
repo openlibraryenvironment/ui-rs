@@ -55,7 +55,7 @@ const CreateEditRoute = props => {
   const locations = resources.locations.records
     .filter(rec => rec?.type?.value === 'branch'
       && rec?.tags.reduce((acc, cur) => acc || cur?.value === 'pickup', false))
-    .reduce((acc, cur) => ([...acc, { value: cur.lmsLocationCode, label: cur.name }]), []);
+    .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), []);
 
   const validRequesterRecords = resources.locations.records
     .filter(rec => rec?.type?.value === 'institution');
