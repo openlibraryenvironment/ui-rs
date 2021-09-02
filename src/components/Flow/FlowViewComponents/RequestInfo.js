@@ -62,9 +62,6 @@ const RequestInfo = ({ request }) => {
       </Layout>
       <Layout className="padding-top-gutter">
         <Row>
-          {colKeyVal('volumesNeeded', request.volume) || <NoValue />}
-          {colKeyVal('itemBarcode', itemBarcodeText || <NoValue />)}
-          {colKeyVal('dueDate', calculateDueDate(intl, request))}
           {colKeyVal('requester', requester ?
             <Link to={`/directory/entries/view/${requester.id}`}>
               {requester.name}
@@ -75,6 +72,9 @@ const RequestInfo = ({ request }) => {
               {supplier.name}
             </Link> :
             <NoValue />)}
+          {colKeyVal('itemBarcode', itemBarcodeText || <NoValue />)}
+          {colKeyVal('dueDate', calculateDueDate(intl, request))}
+          {colKeyVal('volumesNeeded', request.volume) || <NoValue />}
         </Row>
       </Layout>
     </Accordion>

@@ -1,85 +1,75 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Dropdown, DropdownMenu, Pane, Row, TextArea } from '@folio/stripes/components';
+import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
 import { ChatMessage } from './components';
+import { useRSCallout } from '../MessageModalState';
 import css from './ChatPane.css';
-
+import MessageDropdown from './components/MessageDropdown';
 
 const ENTER_KEY = 13;
 
-class ChatPane extends React.Component {
-  static propTypes = {
-    request: PropTypes.shape({
-      notifications: PropTypes.array,
-      validActions: PropTypes.arrayOf(PropTypes.string),
-    }),
-    mutator:PropTypes.shape({
-      action: PropTypes.object,
-    }),
-    onToggle: PropTypes.func,
-    onRequestRefresh: PropTypes.func.isRequired
+const ChatPane = ({
+  onToggle,
+  performAction,
+  request: {
+    isRequester,
+    notifications,
+    validActions
+  } = {}
+}) => {
+  const latestMessage = useRef();
+  const sendCallout = useRSCallout();
+
+  const scrollToLatestMessage = () => {
+    return latestMessage?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  static contextType = CalloutContext;
-
-  constructor(props) {
-    super(props);
-    this.latestMessage = React.createRef();
-  }
-
-  componentDidMount() {
-    this.jumpToLatestMessage();
-    this.handleMarkAllRead(true, true);
-  }
-
-  componentDidUpdate = (prevProps) => {
-    const { request: { notifications: currentNotifications } = {} } = this.props;
-    const { request: { notifications: prevNotifications } = {} } = prevProps;
-
-    if (currentNotifications?.length !== prevNotifications?.length) {
-      this.scrollToLatestMessage();
-    }
+  const jumpToLatestMessage = () => {
+    return latestMessage?.current?.scrollIntoView({ block: 'end' });
   };
 
-  handleMarkAllRead(readStatus, excluding = false) {
-    this.props.mutator.action.POST({ action: 'messagesAllSeen', actionParams: { seenStatus: readStatus, excludes: excluding } });
-    this.props.onRequestRefresh();
-  }
+  const handleMarkAllRead = (readStatus, excluding = false) => {
+    const successKey = readStatus ? 'ui-rs.actions.messagesAllSeen.success' : 'ui-rs.actions.messagesAllUnseen.success';
+    const errorKey = readStatus ? 'ui-rs.actions.messagesAllSeen.error' : 'ui-rs.actions.messagesAllUnseen.error';
+    performAction('messagesAllSeen', { seenStatus: readStatus, excludes: excluding }, successKey, errorKey, 'none');
+  };
 
-  handleMessageRead = (notification, currentReadStatus) => {
+  const handleMessageRead = (notification, currentReadStatus) => {
     const id = notification?.id;
+
+    const successKey = currentReadStatus ? 'ui-rs.actions.messageSeen.success' : 'ui-rs.actions.messageUnseen.success';
+    const errorKey = currentReadStatus ? 'ui-rs.actions.messageSeen.error' : 'ui-rs.actions.messageUnseen.error';
 
     const payload = { id, seenStatus: false };
     if (!currentReadStatus) {
       payload.seenStatus = true;
     }
-    this.props.mutator.action.POST({ action: 'messageSeen', actionParams: (payload) || {} });
-    this.props.onRequestRefresh();
+    performAction('messageSeen', payload, successKey, errorKey, 'none');
   };
 
-  sendMessage(payload) {
-    this.props.mutator.action.POST({ action: 'message', actionParams: payload || {} });
-    this.props.onRequestRefresh();
-  }
+  // Ensure this only fires once, on mount
+  useEffect(() => {
+    jumpToLatestMessage();
+    handleMarkAllRead(true, true);
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, []);
 
-  onSubmitMessage = values => {
-    return (
-      this.sendMessage(
-        values
-      )
-    );
-  };
+  // Track if new notification has arrived, and if so scroll to it
+  const [notificationCount, setNotificationCount] = useState(notifications?.length);
+  useEffect(() => {
+    if (notificationCount !== notifications?.length) {
+      scrollToLatestMessage();
+      setNotificationCount(notifications?.length);
+    }
+  }, [notificationCount, notifications, setNotificationCount]);
 
-  renderPaneFooter() {
-    const { request: { validActions } = {} } = this.props;
-
+  const renderPaneFooter = () => {
     const messageValid = validActions?.includes('message');
     return (
       <Form
-        onSubmit={this.onSubmitMessage}
+        onSubmit={payload => performAction('message', (payload || {}), 'ui-rs.actions.message.success', 'ui-rs.actions.message.error', 'none')}
         render={({ form, handleSubmit, pristine }) => {
           const onEnterPress = async (e) => {
             if (e.keyCode === ENTER_KEY && e.shiftKey === false && !pristine) {
@@ -88,7 +78,7 @@ class ChatPane extends React.Component {
                 await handleSubmit();
                 form.reset();
               } else {
-                this.context.sendCallout({ type: 'error', message: <FormattedMessage id="ui-rs.view.chatPane.stateInvalidMessage" /> });
+                sendCallout('ui-rs.view.chatPane.stateInvalidMessage', 'error');
                 form.reset();
               }
             } else if (e.keyCode === ENTER_KEY && e.shiftKey === false) {
@@ -133,118 +123,63 @@ class ChatPane extends React.Component {
         }}
       />
     );
-  }
-
-  displayMessage(notification, index, isLatest = false) {
-    const { mutator } = this.props;
-    return (
-      <ChatMessage key={`notificationMessage[${index}]`} notification={notification} mutator={mutator} isLatest={isLatest} ref={isLatest ? this.latestMessage : null} handleMessageRead={this.handleMessageRead} />
-    );
-  }
-
-  sortByTimestamp = (a, b) => {
-    if (a.timestamp > b.timestamp) {
-      return 1;
-    }
-    if (a.timestamp < b.timestamp) {
-      return -1;
-    }
-    return 0;
   };
 
-  last(array) {
-    return array[array.length - 1];
-  }
-
-  displayMessages() {
-    const { request: { notifications } = {} } = this.props;
+  const displayMessages = () => {
     if (notifications) {
       // Sort the notifications into order by time recieved/sent
-      notifications.sort((a, b) => this.sortByTimestamp(a, b));
-      const latestMessage = this.last(notifications);
+      notifications.sort((a, b) => a.timestamp - b.timestamp);
 
       return (
         <div className={css.noTopMargin}>
-          {notifications.map((notification, index) => this.displayMessage(notification, index, latestMessage.id === notification.id))}
+          {notifications.map((notification, index) => (
+            <ChatMessage
+              key={`notificationMessage[${index}]`}
+              notification={notification}
+              ref={index === notifications.length - 1 ? latestMessage : null}
+              handleMessageRead={handleMessageRead}
+            />
+          ))}
         </div>
       );
     }
     return null;
-  }
-
-  scrollToLatestMessage() {
-    return this.latestMessage?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  jumpToLatestMessage() {
-    return this.latestMessage?.current?.scrollIntoView({ block: 'end' });
-  }
-
-  renderDropdownButtonContents = () => {
-    const { onToggle, request: { notifications } = {} } = this.props;
-    return (
-      <DropdownMenu
-        data-role="menu"
-        aria-label="actions-for-message"
-        onToggle={onToggle}
-      >
-        <FormattedMessage id="ui-rs.view.chatPane.actions">
-          {ariaLabel => (
-            notifications?.length > 0 ?
-              <>
-                <Button
-                  aria-label={ariaLabel}
-                  buttonStyle="dropdownItem"
-                  id="clickable-mark-all-message-read"
-                  marginBottom0
-                  onClick={() => this.handleMarkAllRead(true)}
-                >
-                  <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsRead" />
-                </Button>
-                <Button
-                  aria-label={ariaLabel}
-                  buttonStyle="dropdownItem"
-                  id="clickable-mark-all-message-unread"
-                  marginBottom0
-                  onClick={() => this.handleMarkAllRead(false)}
-                >
-                  <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsUnread" />
-                </Button>
-              </> : <FormattedMessage id="ui-rs.view.chatMessage.actions.noAvailableActions" />
-          )}
-        </FormattedMessage>
-      </DropdownMenu>
-    );
   };
 
-  renderDropdownButton = () => {
-    return (
-      <Dropdown
-        buttonProps={{ marginBottom0: true }}
-        label={<FormattedMessage id="ui-rs.view.chatPane.actions" />}
-        renderMenu={this.renderDropdownButtonContents}
-      />
-    );
-  };
+  return (
+    <Pane
+      defaultWidth="30%"
+      dismissible
+      onClose={onToggle}
+      paneTitle={<FormattedMessage id="ui-rs.view.chatPane" values={{ chatOtherParty: isRequester ? 'supplier' : 'requester' }} />}
+      lastMenu={
+        <MessageDropdown
+          actionItems={[
+            {
+              label: <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsRead" />,
+              onClick: () => handleMarkAllRead(true)
+            },
+            {
+              label: <FormattedMessage id="ui-rs.view.chatPane.actions.markAllAsUnread" />,
+              onClick: () => handleMarkAllRead(false)
+            }
+          ]}
+        />
+      }
+      footer={renderPaneFooter()}
+      id="chat-pane"
+    >
+      {displayMessages()}
+    </Pane>
+  );
+};
 
-  render() {
-    const { request: { isRequester } = {}, onToggle } = this.props;
-    const chatOtherParty = isRequester ? 'supplier' : 'requester';
+ChatPane.propTypes = {
+  request: PropTypes.shape({
+    notifications: PropTypes.array,
+    validActions: PropTypes.arrayOf(PropTypes.string),
+  }),
+  onToggle: PropTypes.func,
+};
 
-    return (
-      <Pane
-        defaultWidth="30%"
-        dismissible
-        onClose={onToggle}
-        paneTitle={<FormattedMessage id="ui-rs.view.chatPane" values={{ chatOtherParty }} />}
-        lastMenu={this.renderDropdownButton()}
-        footer={this.renderPaneFooter()}
-        id="chat-pane"
-      >
-        {this.displayMessages()}
-      </Pane>
-    );
-  }
-}
-
-export default stripesConnect(ChatPane);
+export default ChatPane;

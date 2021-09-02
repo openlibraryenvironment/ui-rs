@@ -4,17 +4,15 @@ import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 
-import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useQuery } from 'react-query';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useMutation, useQuery } from 'react-query';
 
-import { Button, ButtonGroup, Icon, IconButton, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
-import { Tags } from '@folio/stripes-erm-components';
+import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 import { DirectLink } from '@reshare/stripes-reshare';
 
-import { ChatPane } from '../components/chat';
 import upNLevels from '../util/upNLevels';
 import renderNamedWithProps from '../util/renderNamedWithProps';
-import { ContextualMessageBanner, MessageModalProvider, useMessage } from '../components/MessageModalState';
+import { ContextualMessageBanner, MessageModalProvider, useMessage, useRSCallout } from '../components/MessageModalState';
 import * as modals from '../components/Flow/modals';
 import { actionsForRequest } from '../components/Flow/actionsByState';
 import { ActionProvider, ActionContext } from '../components/Flow/ActionContext';
@@ -22,6 +20,8 @@ import AppNameContext from '../AppNameContext';
 import FlowRoute from './FlowRoute';
 import ViewPatronRequest from '../components/ViewPatronRequest';
 import ViewMessageBanners from '../components/ViewMessageBanners';
+import useHelperApp from '../components/useHelperApp';
+
 import css from './ViewRoute.css';
 
 const subheading = (req, params) => {
@@ -34,106 +34,77 @@ const subheading = (req, params) => {
   return `${title} · ${requester} → ${supplier}`;
 };
 
-const handleToggleHelper = (helper, mutator, resources) => {
-  const currentHelper = _.get(resources, 'query.helper', null);
-  const nextHelper = currentHelper !== helper ? helper : null;
 
-  mutator.query.update({ helper: nextHelper });
-};
-
-const handleToggleTags = (mutator, resources) => {
-  handleToggleHelper('tags', mutator, resources);
-};
-
-const handleToggleChat = (mutator, resources) => {
-  handleToggleHelper('chat', mutator, resources);
-};
-
-const paneButtons = (mutator, resources, request) => {
-  const unseenNotifications = request?.notifications?.filter(notification => notification.seen === false && notification.isSender === false)?.length ?? 0;
-  return (
-    <PaneMenu>
-      {handleToggleChat && request?.resolvedSupplier &&
-      <FormattedMessage id="ui-rs.view.showChat">
-        {ariaLabel => (
-          <IconButton
-            icon="comment"
-            id="clickable-show-chat"
-            badgeCount={unseenNotifications}
-            onClick={() => handleToggleChat(mutator, resources)}
-            ariaLabel={ariaLabel}
-          />
-        )}
-      </FormattedMessage>
-      }
-      {handleToggleTags &&
-      <FormattedMessage id="ui-rs.view.showTags">
-        {ariaLabel => (
-          <IconButton
-            icon="tag"
-            id="clickable-show-tags"
-            badgeCount={request?.tags?.length ?? 0}
-            onClick={() => handleToggleTags(mutator, resources)}
-            ariaLabel={ariaLabel}
-          />
-        )}
-      </FormattedMessage>
-      }
-    </PaneMenu>
-  );
-};
-
-const ViewRoute = ({ history, resources, location, location: { pathname }, match, mutator, stripes }) => {
+const ViewRoute = ({ history, location, location: { pathname }, match }) => {
+  const stripes = useStripes();
   const [, setMessage] = useMessage();
   const [, setActions] = useContext(ActionContext);
+  const sendCallout = useRSCallout();
+  const { ChatButton, HelperComponent, TagButton } = useHelperApp();
 
   const ky = useOkapiKy();
+  // Fetch the request
   const { data: request = {}, isSuccess: hasRequestLoaded, refetch: refetchRequest } = useQuery(
     ['ui-rs', 'viewRoute', 'getSelectedRecord', match.params?.id],
     () => ky(`rs/patronrequests/${match.params?.id}`).json()
   );
 
-  const performAction = (action, payload, successMessage, errorMessage) => {
+  // POSTing an action
+  const { mutateAsync: postAction } = useMutation(
+    ['ui-rs', 'viewRoute', 'postAction'],
+    (data) => ky.post(`rs/patronrequests/${match.params?.id}/performAction`, { json: data })
+  );
+
+  const paneButtons = () => {
+    return (
+      <PaneMenu>
+        {request?.resolvedSupplier &&
+          <ChatButton request={request} />
+        }
+        <TagButton request={request} />
+      </PaneMenu>
+    );
+  };
+
+  // For now we can control whether we use callout or messageBanner with this final boolean.
+  const performAction = (action, payload, successMessage, errorMessage, displayMethod = 'banner') => {
     setActions({ pending: true });
-    return mutator.action.POST({ action, actionParams: payload || {} })
+
+    let displayFunc;
+    switch (displayMethod) {
+      case 'callout':
+        displayFunc = sendCallout;
+        break;
+      case 'banner':
+        displayFunc = setMessage;
+        break;
+      default:
+        // If anything else is passed in here, default to not displaying outcome of action
+        displayFunc = () => null;
+        break;
+    }
+
+    return postAction({ action, actionParams: payload || {} })
       .then(() => {
         setActions({ pending: false });
-        if (successMessage) setMessage(successMessage, 'success');
-        else setMessage('ui-rs.actions.generic.success', 'success', { action: `stripes-reshare.actions.${action}` }, ['action']);
+        if (successMessage) {
+          displayFunc(successMessage, 'success');
+        } else {
+          displayFunc('ui-rs.actions.generic.success', 'success', { action: `stripes-reshare.actions.${action}` }, ['action']);
+        }
         refetchRequest();
       })
       .catch(response => {
         setActions({ pending: false });
         response.json()
           .then((rsp) => {
-            if (errorMessage) setMessage(errorMessage, 'error', { errMsg: rsp.message });
-            else setMessage('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg: rsp.message }, ['action']);
+            if (errorMessage) displayFunc(errorMessage, 'error', { errMsg: rsp.message });
+            else displayFunc('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg: rsp.message }, ['action']);
           });
         refetchRequest();
       });
   };
 
-  const getHelperApp = () => {
-    const helper = _.get(resources, 'query.helper', null);
-    if (!helper) return null;
-
-    let HelperComponent = null;
-
-    if (helper === 'tags') HelperComponent = Tags;
-    if (helper === 'chat') HelperComponent = ChatPane;
-
-    if (!HelperComponent) return null;
-
-    const extraProps = { request, mutator, resources };
-    return (
-      <HelperComponent
-        link={`rs/patronrequests/${match.params.id}`}
-        onToggle={() => handleToggleHelper(helper, mutator, resources)}
-        onRequestRefresh={refetchRequest}
-        {... extraProps}
-      />
-    );
-  };
 
   if (!hasRequestLoaded) return null;
   const forCurrent = actionsForRequest(request);
@@ -149,7 +120,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
           padContent={false}
           onClose={() => history.push(upNLevels(location, 3))}
           dismissible
-          lastMenu={paneButtons(mutator, resources, request)}
+          lastMenu={paneButtons()}
           defaultWidth="fill"
           subheader={
             <Layout
@@ -210,7 +181,7 @@ const ViewRoute = ({ history, resources, location, location: { pathname }, match
             <Route path={`${match.path}/flow`} render={() => <FlowRoute request={request} performAction={performAction} />} />
           </Switch>
         </Pane>
-        {getHelperApp()}
+        <HelperComponent request={request} performAction={performAction} />
       </Paneset>
       {/* Render modals that correspond to available actions */}
       {renderNamedWithProps(
@@ -234,33 +205,9 @@ ViewRoute.propTypes = {
     search: PropTypes.string.isRequired,
   }).isRequired,
   history: PropTypes.object.isRequired,
-  resources: PropTypes.object.isRequired,
-  mutator: PropTypes.object.isRequired,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
-ViewRoute.manifest = {
-  tagsValues: {
-    type: 'okapi',
-    path: 'tags',
-    params: {
-      limit: '1000',
-      query: 'cql.allRecords=1 sortby label',
-    },
-  },
-  action: {
-    type: 'okapi',
-    path: 'rs/patronrequests/:{id}/performAction',
-    fetch: false,
-    clientGeneratePk: false,
-    throwErrors: false
-  },
-  query: {},
-};
-
-const ConnectedViewRoute = stripesConnect(ViewRoute);
+const ConnectedViewRoute = ViewRoute;
 
 const ViewRouteWithContext = props => (
   <ActionProvider>

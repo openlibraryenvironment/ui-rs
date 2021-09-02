@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import uniq from 'lodash/uniq';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import reset from '!!style-loader?injectType=lazyStyleTag!css-loader!reset-css/reset.css';
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -30,9 +31,11 @@ function styledBarCodeString(text) {
 }
 
 function formatSymbols(symbols) {
-  return symbols
+  // TODO: we can eventually remove the filtering of parenthetical content and duplicates
+  // once the short-term patches that necessitated them are more sustainably implemented
+  return uniq(symbols
     .filter(cur => cur.priority === 'shipping')
-    .reduce((acc, cur) => [...acc, `${cur?.authority?.symbol ?? ''}:${cur?.symbol ?? ''}`], []);
+    .reduce((acc, cur) => [...acc, `${cur?.authority?.symbol ?? ''}:${cur?.symbol.replace(/\s*\(.*?\)\s*$/g, '')}`], []));
 }
 
 function recordToPullSlipData(intl, record) {
@@ -73,7 +76,9 @@ function recordToPullSlipData(intl, record) {
     toSymbols,
     now: `${intl.formatDate(now)} ${intl.formatTime(now)}`,
     logo: logoUrl, // XXX Should be somehow obtained from consortium record in directory
-    itemBarcode: styledBarCodeString(record.selectedItemBarcode),
+    itemBarcode: typeof record.selectedItemBarcode === 'string' && record.selectedItemBarcode.startsWith('[multivol:')
+      ? intl.formatMessage({ id: 'ui-rs.pullslip.multipleItem' })
+      : styledBarCodeString(record.selectedItemBarcode),
     itemId: record.selectedItemBarcode,
     conditions: (record.conditions || []).map(condition => {
       const code = formatConditionCode(condition, intl.formatMessage);

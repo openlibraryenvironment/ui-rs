@@ -32,7 +32,7 @@ const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => (
         <Col xs={3}>
           <Field
             id="edit-request-metadata-pickupLocation"
-            name="pickupLocationCode"
+            name="pickupLocationSlug"
             label={<FormattedMessage id="ui-rs.information.pickupLocation" />}
             placeholder=" "
             component={Select}
