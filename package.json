@@ -25,7 +25,7 @@
     "@folio/react-intl-safe-html": "^3.0.0",
     "@folio/stripes-erm-components": "^5.0.0",
     "@folio/stripes-template-editor": "^3.0.0",
-    "@k-int/stripes-kint-components": "^1.0.2",
+    "@k-int/stripes-kint-components": "^1.0.3",
     "@reshare/stripes-reshare": "^1.6.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
