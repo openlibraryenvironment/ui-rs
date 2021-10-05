@@ -21,6 +21,7 @@ import FlowRoute from './FlowRoute';
 import ViewPatronRequest from '../components/ViewPatronRequest';
 import ViewMessageBanners from '../components/ViewMessageBanners';
 import useHelperApp from '../components/useHelperApp';
+import useChatActions from '../components/chat/useChatActions';
 
 import css from './ViewRoute.css';
 
@@ -54,17 +55,6 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
     ['ui-rs', 'viewRoute', 'postAction'],
     (data) => ky.post(`rs/patronrequests/${match.params?.id}/performAction`, { json: data })
   );
-
-  const paneButtons = () => {
-    return (
-      <PaneMenu>
-        {request?.resolvedSupplier &&
-          <ChatButton request={request} />
-        }
-        <TagButton request={request} />
-      </PaneMenu>
-    );
-  };
 
   // For now we can control whether we use callout or messageBanner with this final boolean.
   const performAction = (action, payload, successMessage, errorMessage, displayMethod = 'banner') => {
@@ -103,6 +93,26 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
           });
         refetchRequest();
       });
+  };
+
+  const { handleMarkAllRead } = useChatActions(performAction);
+
+  const paneButtons = () => {
+    return (
+      <PaneMenu>
+        {request?.resolvedSupplier &&
+          <ChatButton
+            request={request}
+            onClick={({ open }) => {
+              if (!open) {
+                handleMarkAllRead(true, true);
+              }
+            }}
+          />
+        }
+        <TagButton request={request} />
+      </PaneMenu>
+    );
   };
 
 

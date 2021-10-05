@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
+
 import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
 import { ChatMessage } from './components';
 import { useRSCallout } from '../MessageModalState';
 import css from './ChatPane.css';
 import MessageDropdown from './components/MessageDropdown';
+import useChatActions from './useChatActions';
 
 const ENTER_KEY = 13;
 
@@ -21,6 +23,7 @@ const ChatPane = ({
 }) => {
   const latestMessage = useRef();
   const sendCallout = useRSCallout();
+  const { handleMarkAllRead, handleMessageRead } = useChatActions(performAction);
 
   const scrollToLatestMessage = () => {
     return latestMessage?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -30,29 +33,9 @@ const ChatPane = ({
     return latestMessage?.current?.scrollIntoView({ block: 'end' });
   };
 
-  const handleMarkAllRead = (readStatus, excluding = false) => {
-    const successKey = readStatus ? 'ui-rs.actions.messagesAllSeen.success' : 'ui-rs.actions.messagesAllUnseen.success';
-    const errorKey = readStatus ? 'ui-rs.actions.messagesAllSeen.error' : 'ui-rs.actions.messagesAllUnseen.error';
-    performAction('messagesAllSeen', { seenStatus: readStatus, excludes: excluding }, successKey, errorKey, 'none');
-  };
-
-  const handleMessageRead = (notification, currentReadStatus) => {
-    const id = notification?.id;
-
-    const successKey = currentReadStatus ? 'ui-rs.actions.messageSeen.success' : 'ui-rs.actions.messageUnseen.success';
-    const errorKey = currentReadStatus ? 'ui-rs.actions.messageSeen.error' : 'ui-rs.actions.messageUnseen.error';
-
-    const payload = { id, seenStatus: false };
-    if (!currentReadStatus) {
-      payload.seenStatus = true;
-    }
-    performAction('messageSeen', payload, successKey, errorKey, 'none');
-  };
-
   // Ensure this only fires once, on mount
   useEffect(() => {
     jumpToLatestMessage();
-    handleMarkAllRead(true, true);
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
