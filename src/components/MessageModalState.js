@@ -6,12 +6,14 @@
  *  CancelModalButton: A Button that sets the modal to null, dismissing it
  *  useMessage: A hook that offers a [message, setMessage(translationKey, type)] tuple
  *  useModal: A hook that offers a [modal, setModal(modalKey)] tuple (null to dismiss modal)
+ *  useRSCallout: A hook that offers a [message, setMessage(translationKey, type)] tuple as per useMessage, but instead will display in a callout
  */
 
 import React, { createContext, useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Layout, MessageBanner } from '@folio/stripes/components';
+import { CalloutContext } from '@folio/stripes/core';
 
 export const MessageModalContext = createContext();
 // Message shape is: { key, type, values, valuesToTranslate }
@@ -90,6 +92,7 @@ export const ContextualMessageBanner = () => {
       return ent;
     }));
   }
+
   return (
     <Layout className="padding-top-gutter padding-bottom-gutter">
       <MessageBanner
@@ -101,4 +104,22 @@ export const ContextualMessageBanner = () => {
       </MessageBanner>
     </Layout>
   );
+};
+
+export const useRSCallout = () => {
+  const callout = useContext(CalloutContext);
+  const intl = useIntl();
+
+  return (key, type, values, valuesToTranslate) => {
+    let intlValues;
+    if (values) {
+      intlValues = Object.fromEntries(Object.entries(values).map(ent => {
+        if (Array.isArray(valuesToTranslate) && valuesToTranslate.includes(ent[0])) {
+          return [ent[0], intl.formatMessage({ id: ent[1] })];
+        }
+        return ent;
+      }));
+    }
+    callout.sendCallout({ message: <FormattedMessage id={key} values={intlValues} />, type });
+  };
 };
