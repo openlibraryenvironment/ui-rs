@@ -111,6 +111,7 @@ class PatronRequestsRoute extends React.Component {
           'location': 'pickLocation.id',
           'requester': 'resolvedRequester.owner.id',
           'supplier': 'resolvedSupplier.owner.id',
+          'terminal': 'state.terminal'
         },
         queryGetter: queryModifiedForApp,
       }),
@@ -143,7 +144,8 @@ class PatronRequestsRoute extends React.Component {
       }
     },
     // If this (query) isn't here, then we get this.props.parentMutator.query is undefined in the UI
-    query: {},
+    // initialFilters prop doesn't work, store default filters here
+    query: { },
 
     selectedRecordId: { initialValue: '' }
   });
@@ -252,13 +254,19 @@ class PatronRequestsRoute extends React.Component {
     const { appName, resources, mutator } = this.props;
     const { intlId, institutionFilterId } = appDetails[appName];
     const byName = parseFilters(get(resources.query, 'filters'));
+    console.log("Q: %o", resources.query)
+
+    console.log("BN: %o", byName)
+
     const values = {
       state: byName.state || [],
       institution: byName[institutionFilterId] || [],
       location: byName.location || [],
       needsAttention: byName.needsAttention || [],
       hasUnread: byName.hasUnread || [],
+      terminal: byName.terminal || []
     };
+    console.log("V: %o", values)
 
     const setFilterState = (group) => {
       if (group.values === null) {
@@ -297,6 +305,12 @@ class PatronRequestsRoute extends React.Component {
           name="hasUnread"
           dataOptions={options.hasUnread}
           selectedValues={values.hasUnread}
+          onChange={setFilterState}
+        />
+        <CheckboxFilter
+          name="terminal"
+          dataOptions={options.terminal}
+          selectedValues={values.terminal}
           onChange={setFilterState}
         />
         <Accordion
@@ -423,13 +437,15 @@ class PatronRequestsRoute extends React.Component {
     const needsAttention = [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })];
     // see comment in manifest for explanation of value
     const hasUnread = [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })];
+    const terminal = [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })];
 
     return this.renderFiltersFromData({
       state: this.states,
       institution: institutions,
       location,
       needsAttention,
-      hasUnread
+      hasUnread,
+      terminal
     });
   };
 
@@ -473,6 +489,7 @@ class PatronRequestsRoute extends React.Component {
           objectName="patronrequest"
           packageInfo={tweakedPackageInfo}
           initialResultCount={INITIAL_RESULT_COUNT}
+          initialFilters="terminal.false"
           resultCountIncrement={INITIAL_RESULT_COUNT}
           createRecordPath={`requests/create${location.search}`}
           viewRecordPathById={id => `requests/view/${id}${location.search}`}
