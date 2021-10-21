@@ -254,9 +254,6 @@ class PatronRequestsRoute extends React.Component {
     const { appName, resources, mutator } = this.props;
     const { intlId, institutionFilterId } = appDetails[appName];
     const byName = parseFilters(get(resources.query, 'filters'));
-    console.log("Q: %o", resources.query)
-
-    console.log("BN: %o", byName)
 
     const values = {
       state: byName.state || [],
@@ -266,7 +263,6 @@ class PatronRequestsRoute extends React.Component {
       hasUnread: byName.hasUnread || [],
       terminal: byName.terminal || []
     };
-    console.log("V: %o", values)
 
     const setFilterState = (group) => {
       if (group.values === null) {

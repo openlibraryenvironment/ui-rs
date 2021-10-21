@@ -44,7 +44,7 @@ class ResourceSharing extends React.Component {
           <Redirect
             exact
             from={path}
-            to={`${path}/requests?filters=terminal.false`}
+            to={`${path}/requests`}
           />
           {appName === 'request' &&
             <Route path={`${path}/requests/create`} component={CreateEditRoute} />
