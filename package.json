@@ -13,6 +13,12 @@
     "lint": "eslint src"
   },
   "devDependencies": {
+    "@folio/eslint-config-stripes": "^5.0.0",
+    "@folio/stripes-cli": "^2.1.0",
+    "babel-eslint": "^10.0.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.0.0",
+    "mocha": "^5.2.0",
     "postcss": "^7.0.0",
     "postcss-calc": "^7.0.0",
     "postcss-color-function": "^4.1.0",
@@ -23,19 +29,14 @@
     "postcss-media-minmax": "^4.0.0",
     "postcss-nesting": "^7.0.1",
     "postcss-syntax": "^0.34.0",
-    "@folio/eslint-config-stripes": "^5.0.0",
-    "@folio/stripes-cli": "~2.1.0",
-    "babel-eslint": "^10.0.0",
-    "chai": "^4.2.0",
-    "eslint": "^6.0.0",
-    "mocha": "^5.2.0",
     "sinon": "^6.3.4"
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
     "@folio/stripes-erm-components": "^5.0.0",
-    "@reshare/stripes-reshare": "^1.6.0",
     "@folio/stripes-template-editor": "^3.0.0",
+    "@k-int/stripes-kint-components": "^1.2.1",
+    "@reshare/stripes-reshare": "^1.6.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
     "final-form-arrays": "^3.0.2",
@@ -61,9 +62,9 @@
     "moment": "^2.29.0",
     "react": "*",
     "react-intl": "^5.0.0",
+    "react-query": "^3.9.0",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.0.0",
-    "react-query": "^3.9.0"
+    "react-router-dom": "^5.0.0"
   },
   "stripes": {
     "actsAs": [
