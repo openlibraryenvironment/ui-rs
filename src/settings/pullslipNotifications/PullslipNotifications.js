@@ -4,9 +4,11 @@ import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Pane, MultiColumnList, Button } from '@folio/stripes/components';
+
+import { SettingPage } from '@k-int/stripes-kint-components';
+
 import { raw2userData } from './util';
 
-import { SettingPage } from '../settingsComponents';
 
 class PullslipNotifications extends React.Component {
   static propTypes = {
@@ -65,7 +67,7 @@ class PullslipNotifications extends React.Component {
     return (
       <Pane
         defaultWidth="fill"
-        paneTitle={<FormattedMessage id="ui-rs.settingsSection.pullslipNotifications" />}
+        paneTitle={<FormattedMessage id="ui-rs.settings.settingsSection.pullslipNotifications" />}
         lastMenu={(
           <Button marginBottom0 buttonStyle="primary" to="pullslip-notifications/new">
             <FormattedMessage id="ui-rs.settings.pullslipNotifications.new" />

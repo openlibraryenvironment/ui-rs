@@ -4,7 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
-import { stripesConnect } from '@folio/stripes/core';
+
+import { useRefdata, useTemplates } from '@k-int/stripes-kint-components';
+
 import { required } from '@folio/stripes/util';
 import {
   Accordion,
@@ -26,22 +28,36 @@ import NoticeFieldArray from './NoticeFieldArray';
 
 // Takes the refdata as it comes back from stripes-connect and teases out an
 // object to feed to a select control eg. the value property is set to the id.
-const selectifyRefdata = (refdataRecords, category) => (
+const selectifyRefdata = (refdataRecords) => (
   refdataRecords
-    .filter(obj => obj.desc === category)
     .map(obj => (
       obj.values.map(entry => ({ label: entry.label, value: entry.id }))
     ))[0]
 );
 
-const NoticePolicyForm = ({ initialValues, onSubmit, onCancel, resources }) => {
+const NoticePolicyForm = ({ initialValues, onSubmit, onCancel }) => {
   const options = {};
-  if (resources?.templates?.hasLoaded && resources?.refdatavalues?.hasLoaded) {
-    const refdataRecords = resources.refdatavalues.records;
-    options.templates = resources.templates.records.reduce((acc, cur) => ([...acc, { value: cur.id, label: cur.name }]), []);
-    options.triggers = selectifyRefdata(refdataRecords, 'noticeTriggers');
-    options.formats = selectifyRefdata(refdataRecords, 'noticeFormats');
-  }
+
+  const triggersRefdata = selectifyRefdata(useRefdata({
+    desc: 'noticeTriggers',
+    endpoint: 'rs/refdata'
+  }));
+
+  const formatsRefdata = selectifyRefdata(useRefdata({
+    desc: 'noticeFormats',
+    endpoint: 'rs/refdata'
+  }));
+
+  const templates = useTemplates({
+    context: 'noticeTemplate',
+    endpoint: 'rs/template',
+    sort: 'id'
+  });
+
+  options.templates = templates.map(template => ({ value: template.id, label: template.name }));
+  options.triggers = triggersRefdata;
+  options.formats = formatsRefdata;
+
   return (
     <Form onSubmit={onSubmit} initialValues={initialValues} mutators={{ ...arrayMutators }}>
       {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
@@ -147,22 +163,4 @@ const NoticePolicyForm = ({ initialValues, onSubmit, onCancel, resources }) => {
   );
 };
 
-NoticePolicyForm.manifest = Object.freeze({
-  templates: {
-    type: 'okapi',
-    path: 'rs/template',
-    params: {
-      filters: 'context=noticeTemplate',
-      sort: 'id'
-    },
-  },
-  refdatavalues: {
-    type: 'okapi',
-    path: 'rs/refdata',
-    params: {
-      max: '500',
-    },
-  }
-});
-
-export default stripesConnect(NoticePolicyForm);
+export default NoticePolicyForm;
