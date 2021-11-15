@@ -23,6 +23,7 @@
     "patronrequests.localCallNumber": "Call Number",
     "patronrequests.pickLocation": "Location",
     "patronrequests.pickShelvingLocation": "Shelving Location",
+    "patronrequests.found": "{number} records found",
     "information.heading.developer": "Developer info",
     "information.heading.developer.help": "(JSON dump of raw record)",
     "information.heading.request": "Request information",
