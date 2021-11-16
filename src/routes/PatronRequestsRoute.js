@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useInfiniteQuery, useQueries } from 'react-query';
 import { useIntl } from 'react-intl';
-import { LoadingView } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 import { generateKiwtQuery, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 import PatronRequests from '../components/PatronRequests';
@@ -43,7 +42,6 @@ const PatronRequestsRoute = ({ appName, children, location }) => {
       .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
       .sort(compareLabel);
   }, [appName, intl]);
-
   const prQuery = useInfiniteQuery(
     {
       queryKey: [appName, 'patronRequests', query],
@@ -74,21 +72,23 @@ const PatronRequestsRoute = ({ appName, children, location }) => {
       useErrorBoundary: true,
     },
   ]);
-  if (filterQueries.some(x => !x?.isSuccess)) return <LoadingView />;
-  const [lmsLocations, { results: institutions }] = filterQueries?.map(x => x.data);
 
-  const filterOptions = {
-    hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })],
-    institution: institutions
-      .map(x => ({ label: x.name, value: x.id }))
-      .sort(compareLabel),
-    location: lmsLocations
-      .map(x => ({ label: x.name, value: x.id }))
-      .sort(compareLabel),
-    needsAttention: [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })],
-    state: states,
-    terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
-  };
+  let filterOptions;
+  if (filterQueries.every(x => x.isSuccess)) {
+    const [lmsLocations, { results: institutions }] = filterQueries.map(x => x.data);
+    filterOptions = {
+      hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })],
+      institution: institutions
+        .map(x => ({ label: x.name, value: x.id }))
+        .sort(compareLabel),
+      location: lmsLocations
+        .map(x => ({ label: x.name, value: x.id }))
+        .sort(compareLabel),
+      needsAttention: [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })],
+      state: states,
+      terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
+    };
+  }
 
   return (
     <PatronRequests
