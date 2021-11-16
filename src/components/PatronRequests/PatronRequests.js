@@ -217,6 +217,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                     pickLocation: a => a.pickLocation && a.pickLocation.name,
                     selectedItemBarcode: a => (a.volumes?.length <= 1 ? a.volumes[0]?.itemId : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />)
                   }}
+                  hasMargin
                   loading={requestsQuery?.isFetching}
                   onHeaderClick={onSort}
                   onNeedMoreData={fetchMore}
