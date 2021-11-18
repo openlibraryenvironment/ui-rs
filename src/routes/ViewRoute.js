@@ -20,7 +20,7 @@ import AppNameContext from '../AppNameContext';
 import FlowRoute from './FlowRoute';
 import ViewPatronRequest from '../components/ViewPatronRequest';
 import ViewMessageBanners from '../components/ViewMessageBanners';
-import useHelperApp from '../components/useHelperApp';
+import useRSHelperApp from '../components/useRSHelperApp';
 import useChatActions from '../components/chat/useChatActions';
 
 import css from './ViewRoute.css';
@@ -41,7 +41,7 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   const [, setMessage] = useMessage();
   const [, setActions] = useContext(ActionContext);
   const sendCallout = useRSCallout();
-  const { ChatButton, HelperComponent, TagButton } = useHelperApp();
+  const { ChatButton, HelperComponent, TagButton } = useRSHelperApp();
 
   const ky = useOkapiKy();
   // Fetch the request
