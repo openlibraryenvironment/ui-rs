@@ -15,6 +15,8 @@ const Templates = (props) => {
    * TODO if we want to support localised email stuff at some point, this should be removed and we should
    * deal with a proper FieldArray for each localizedTemplate
    */
+  // IMPORTANT this must remain using stripes-connect until such time as we replace EntryManager, as that requires stripes-connect stuff
+  // Eventually we want to replace this with 'useTemplates' from @k-int/stripes-kint-components
   const entryList = (props?.resources?.entries?.records || []).map(n => {
     const enTemplate = n.localizedTemplates?.find(t => t.locality === 'en') || {};
     return (
