@@ -32,6 +32,7 @@ const useRSHelperApp = () => {
           badgeCount={request?.tags?.length ?? 0}
           onClick={
             () => {
+              helperToggleFunctions.tags();
               onClick({ open: isOpen('tags') });
             }
           }
