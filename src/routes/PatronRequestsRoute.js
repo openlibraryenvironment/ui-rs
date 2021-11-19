@@ -9,7 +9,7 @@ const PER_PAGE = 100;
 
 const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 
-const PatronRequestsRoute = ({ appName, children, location }) => {
+const PatronRequestsRoute = ({ appName, children }) => {
   const intl = useIntl();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
   const ky = useOkapiKy();
@@ -96,7 +96,6 @@ const PatronRequestsRoute = ({ appName, children, location }) => {
       queryGetter={queryGetter}
       querySetter={querySetter}
       filterOptions={filterOptions}
-      searchString={location.search}
     >
       {children}
     </PatronRequests>

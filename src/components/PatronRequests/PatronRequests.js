@@ -6,6 +6,7 @@ import {
   useIntl
 } from 'react-intl';
 import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import queryString from 'query-string';
 import {
   Badge,
   Button,
@@ -61,6 +62,8 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
 
   const requests = requestsQuery?.data?.pages?.flatMap(x => x.results);
   const totalCount = requestsQuery?.data?.pages?.[0]?.total;
+  const parsedParams = queryString.parse(location.search);
+  const sortOrder = parsedParams.sort || '';
   const fetchMore = (_askAmount, index) => {
     requestsQuery.fetchNextPage({ pageParam: index });
   };
@@ -228,6 +231,8 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                     onHeaderClick={onSort}
                     onNeedMoreData={fetchMore}
                     onRowClick={(_e, rowData) => history.push(`${match.url}/view/${rowData.id}${location.search}`)}
+                    sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
+                    sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     totalCount={totalCount}
                     virtualize
                     visibleColumns={visibleColumns}
