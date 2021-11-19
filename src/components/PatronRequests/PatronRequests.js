@@ -89,7 +89,9 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
 
   return (
     <SearchAndSortQuery
+      initialFilterState={{ terminal: ['false'] }}
       initialSearchState={{ query: '' }}
+      initialSortState={{ sort: '-dateCreated' }}
       queryGetter={queryGetter}
       querySetter={querySetter}
     >
