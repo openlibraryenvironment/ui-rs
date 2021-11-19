@@ -56,7 +56,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     {
       queryKey: [appName, 'lmsLocations'],
       queryFn: () => ky('rs/hostLMSLocations', { searchParams: { perPage: '100' } }).json(),
-      staleTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 60 * 2,
       useErrorBoundary: true,
     },
     {
@@ -68,7 +68,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
           stats: 'true',
         }
       }).json(),
-      staleTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 60 * 2,
       useErrorBoundary: true,
     },
   ]);
