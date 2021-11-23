@@ -165,6 +165,7 @@
     "view.withAction.ReShareSupplierAwaitingConditionConfirmation": "The supplier has placed this request into a holding state, pending agreement of the loan condition(s)",
     "view.withAction.ReShareSupplierConditionsAssumedAgreed": "The supplier has continued along their workflow of this request. The loan conditions are assumed to have been read and agreed to",
     "view.withAction.ReShareAddLoanCondition": "The supplier has added a loan condition",
+    "view.withAction.statusChange.overdue": "The supplier has marked the item overdue",
     "actions.addNote": "Add note",
     "actions.cancelLocal": "Cancel local request",
     "actions.cancelLocal.success": "Successfully submitted cancellation request",
