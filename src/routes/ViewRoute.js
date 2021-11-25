@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
 import { DirectLink } from '@reshare/stripes-reshare';
@@ -42,6 +42,8 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   const [, setActions] = useContext(ActionContext);
   const sendCallout = useRSCallout();
   const { ChatButton, HelperComponent, TagButton } = useRSHelperApp();
+  const queryClient = useQueryClient();
+  const appName = useContext(AppNameContext);
 
   const ky = useOkapiKy();
   // Fetch the request
@@ -54,7 +56,9 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   // POSTing an action
   const { mutateAsync: postAction } = useMutation(
     ['ui-rs', 'viewRoute', 'postAction'],
-    (data) => ky.post(`rs/patronrequests/${match.params?.id}/performAction`, { json: data })
+    (data) => ky
+      .extend({ timeout: 45000 }) // longer timeout as some actions take a while
+      .post(`rs/patronrequests/${match.params?.id}/performAction`, { json: data })
   );
 
   // For now we can control whether we use callout or messageBanner with this final boolean.
@@ -84,6 +88,7 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
           displayFunc('ui-rs.actions.generic.success', 'success', { action: `stripes-reshare.actions.${action}` }, ['action']);
         }
         refetchRequest();
+        queryClient.invalidateQueries([appName, 'patronRequests']);
       })
       .catch(err => {
         setActions({ pending: false });
@@ -162,27 +167,22 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
             </Layout>
           }
           actionMenu={() => (
-            <AppNameContext.Consumer>
-              {appName => (
-                <>
-                  {
-                    appName === 'request' && stripes.hasPerm(`ui-${appName}.edit`) && (
-                      <Button buttonStyle="dropdownItem" to={`../../edit/${match.params.id}`} id="clickable-edit-patronrequest">
-                        <Icon icon="edit">
-                          <FormattedMessage id="ui-rs.edit" />
-                        </Icon>
-                      </Button>
-                    )
-                  }
-                  <DirectLink component={Button} buttonStyle="dropdownItem" to={{ pathname: 'pullslip', search: location.search }} id="clickable-pullslip">
-                    <Icon icon="print">
-                      <FormattedMessage id="ui-rs.printPullslip" />
+            <>
+              {
+                appName === 'request' && stripes.hasPerm(`ui-${appName}.edit`) && (
+                  <Button buttonStyle="dropdownItem" to={`../../edit/${match.params.id}`} id="clickable-edit-patronrequest">
+                    <Icon icon="edit">
+                      <FormattedMessage id="ui-rs.edit" />
                     </Icon>
-                  </DirectLink>
-                </>
-              )
+                  </Button>
+                )
               }
-            </AppNameContext.Consumer>
+              <DirectLink component={Button} buttonStyle="dropdownItem" to={{ pathname: 'pullslip', search: location.search }} id="clickable-pullslip">
+                <Icon icon="print">
+                  <FormattedMessage id="ui-rs.printPullslip" />
+                </Icon>
+              </DirectLink>
+            </>
           )}
         >
           {/*
