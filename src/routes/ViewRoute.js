@@ -45,10 +45,11 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
 
   const ky = useOkapiKy();
   // Fetch the request
-  const { data: request = {}, isSuccess: hasRequestLoaded, refetch: refetchRequest } = useQuery(
-    ['ui-rs', 'viewRoute', 'getSelectedRecord', match.params?.id],
-    () => ky(`rs/patronrequests/${match.params?.id}`).json()
-  );
+  const { data: request = {}, isSuccess: hasRequestLoaded, refetch: refetchRequest } = useQuery({
+    queryKey: ['ui-rs', 'viewRoute', 'getSelectedRecord', match.params?.id],
+    queryFn: () => ky(`rs/patronrequests/${match.params?.id}`).json(),
+    useErrorBoundary: true,
+  });
 
   // POSTing an action
   const { mutateAsync: postAction } = useMutation(
@@ -84,13 +85,17 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
         }
         refetchRequest();
       })
-      .catch(response => {
+      .catch(err => {
         setActions({ pending: false });
-        response.json()
-          .then((rsp) => {
-            if (errorMessage) displayFunc(errorMessage, 'error', { errMsg: rsp.message });
-            else displayFunc('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg: rsp.message }, ['action']);
-          });
+        const showError = errMsg => {
+          if (errorMessage) displayFunc(errorMessage, 'error', { errMsg });
+          else displayFunc('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg }, ['action']);
+        };
+        if (err?.response?.json) {
+          err.response.json().then(res => showError(res.message));
+        } else {
+          showError(err.message);
+        }
         refetchRequest();
       });
   };
