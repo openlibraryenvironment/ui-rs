@@ -363,6 +363,7 @@
     "settings.localNCIP.ncipAppProfile": "NCIP app profile",
     "settings.localNCIP.ncipFromAgency": "NCIP from agency",
     "settings.localNCIP.ncipToAgency": "NCIP to agency",
+    "settings.localNCIP.ncipUseDueDate": "Use due date received from NCIP",
     "settings.hostLMSIntegration.hostLmsIntegration": "Host LMS integration",
     "settings.hostLMSIntegration.borrowerCheck": "Borrower check",
     "settings.hostLMSIntegration.acceptItem": "Accept item method",
