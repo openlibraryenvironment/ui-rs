@@ -231,6 +231,7 @@
     "actions.checkIn.prompt": "Scan item barcode to <strong>fill this request</strong>",
     "actions.checkIn.success": "Request successfully filled.",
     "actions.checkIn.error": "Error filling request. {errMsg}",
+    "actions.checkIn.dueTooSoon": "Request successfully filled but please check configuration: Due date is quite soon.",
     "actions.manualCheckIn": "Mark local item created",
     "actions.manualCheckIn.success": "Successfully marked local item created.",
     "actions.manualCheckIn.error": "Error marking local item created. {errMsg}",

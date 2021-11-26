@@ -62,7 +62,7 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   );
 
   // For now we can control whether we use callout or messageBanner with this final boolean.
-  const performAction = (action, payload, successMessage, errorMessage, displayMethod = 'banner') => {
+  const performAction = async (action, payload, successMessage, errorMessage, displayMethod = 'banner') => {
     setActions({ pending: true });
 
     let displayFunc;
@@ -79,30 +79,33 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
         break;
     }
 
-    return postAction({ action, actionParams: payload || {} })
-      .then(() => {
-        setActions({ pending: false });
-        if (successMessage) {
-          displayFunc(successMessage, 'success');
-        } else {
-          displayFunc('ui-rs.actions.generic.success', 'success', { action: `stripes-reshare.actions.${action}` }, ['action']);
-        }
-        refetchRequest();
-        queryClient.invalidateQueries([appName, 'patronRequests']);
-      })
-      .catch(err => {
-        setActions({ pending: false });
-        const showError = errMsg => {
-          if (errorMessage) displayFunc(errorMessage, 'error', { errMsg });
-          else displayFunc('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg }, ['action']);
-        };
-        if (err?.response?.json) {
-          err.response.json().then(res => showError(res.message));
-        } else {
-          showError(err.message);
-        }
-        refetchRequest();
-      });
+    try {
+      const res = await postAction({ action, actionParams: payload || {} });
+      setActions({ pending: false });
+      const freshReq = await refetchRequest();
+      if (successMessage) {
+        if (typeof successMessage === 'function') {
+          successMessage({ actionResponse: res, request: freshReq.data, displayFunc });
+        } else displayFunc(successMessage, 'success');
+      } else {
+        displayFunc('ui-rs.actions.generic.success', 'success', { action: `stripes-reshare.actions.${action}` }, ['action']);
+      }
+      queryClient.invalidateQueries([appName, 'patronRequests']);
+      return res;
+    } catch (err) {
+      setActions({ pending: false });
+      const showError = errMsg => {
+        if (errorMessage) displayFunc(errorMessage, 'error', { errMsg });
+        else displayFunc('ui-rs.actions.generic.error', 'error', { action: `stripes-reshare.actions.${action}`, errMsg }, ['action']);
+      };
+      if (err?.response?.json) {
+        err.response.json().then(res => showError(res.message));
+      } else {
+        showError(err.message);
+      }
+      refetchRequest();
+      return null;
+    }
   };
 
   const { handleMarkAllRead } = useChatActions(performAction);
