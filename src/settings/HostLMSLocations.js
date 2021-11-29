@@ -51,7 +51,7 @@ const HostLMSLocations = ({ resources }) => {
     hiddenFields={['lastUpdated', 'numberOfObjects']}
     readOnlyFields={['name']}
     visibleFields={['name', 'supplyPreference', 'correspondingDirectoryEntry']}
-    label={intl.formatMessage({ id: 'ui-rs.settingsSection.hostLMSLocations' })}
+    label={intl.formatMessage({ id: 'ui-rs.settings.settingsSection.hostLMSLocations' })}
     labelSingular={intl.formatMessage({ id: 'ui-rs.settings.lmsloc.hostLMSLocation' })}
     limitParam="max"
     objectLabel={<FormattedMessage id="ui-rs.settings.values" />}

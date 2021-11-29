@@ -7,6 +7,7 @@ import { Route } from 'react-router-dom';
 import { useSettings } from '@k-int/stripes-kint-components';
 
 import { CustomISO18626 } from './settingsComponents';
+import HostLMSLocations from './HostLMSLocations';
 import Notices from './notices';
 import NoticePolicies from './noticePolicies';
 import OtherSettings from './OtherSettings';
@@ -60,6 +61,12 @@ const ResourceSharingSettings = (props) => {
       label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.pullslipNotifications' }),
       component: PullslipNotifications,
       perm: 'ui-rs.settings.pullslip-notifications',
+    },
+    {
+      route: 'lmslocations',
+      id: 'hostLMSLocations',
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.hostLMSLocations' }),
+      component: HostLMSLocations
     },
   ];
 

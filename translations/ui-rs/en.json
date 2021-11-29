@@ -330,6 +330,7 @@
     "settings.settingsSection.requests": "Request defaults",
     "settings.settingsSection.requesterValidation": "Requester validation",
     "settings.settingsSection.hostLMSIntegration": "Host LMS integration settings",
+    "settings.settingsSection.hostLMSLocations": "Host LMS locations",
     "settings.settingsSection.autoResponder": "Auto responder settings",
     "settings.settingsSection.chat": "Chat settings",
     "settings.settingsSection.iso18626": "Custom ISO18626 settings",
