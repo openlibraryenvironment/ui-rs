@@ -49,6 +49,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
         `rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`
       ).json(),
       useErrorBoundary: true,
+      // we render before useKiwtSASQuery() finishes, let's prevent an extra, unnecessary, fetch
+      enabled: Object.prototype.hasOwnProperty.call(query, 'query'),
     }
   );
 
