@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useQIndex } from '@k-int/stripes-kint-components';
 import { Button, Icon, SearchField } from '@folio/stripes/components';
 import AppNameContext from '../../AppNameContext';
 
 const Search = ({ resetAll, searchHandlers, searchValue, searchChanged, filterChanged }) => {
   const intl = useIntl();
   const appName = useContext(AppNameContext);
+  const [qIndex, setQIndex] = useQIndex();
   const searchableIndexes = [
     { label: 'allFields', value: '' },
     { label: 'id', value: 'id' },
@@ -31,6 +33,8 @@ const Search = ({ resetAll, searchHandlers, searchValue, searchChanged, filterCh
         onChange={searchHandlers.query}
         onClear={searchHandlers.reset}
         searchableIndexes={searchableIndexes}
+        selectedIndex={qIndex}
+        onChangeIndex={e => setQIndex(e?.target?.value)}
         value={searchValue.query}
       />
       <Button
