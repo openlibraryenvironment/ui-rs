@@ -12,7 +12,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
     ({ request, displayFunc }) => {
       // Warn if due date is less than a week away
       if (request.parsedDueDateRS
-        && (Date.now() - new Date(request.parsedDueDateRS)) / (1000 * 60 * 60 * 24 * 7) > 1) {
+        && new Date(request.parsedDueDateRS) - Date.now() < 1000 * 60 * 60 * 24 * 7) {
         displayFunc('ui-rs.actions.checkIn.dueTooSoon', 'warning');
       } else {
         displayFunc('ui-rs.actions.checkIn.success', 'success');
