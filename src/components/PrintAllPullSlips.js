@@ -1,29 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import queryString from 'query-string';
-import { withRouter } from 'react-router';
+import { useLocation, useHistory } from 'react-router';
 import { includes, filter } from 'lodash';
-import { Callout } from '@folio/stripes/components';
-import { withOkapiKy } from '@folio/stripes/core';
+import { FormattedMessage } from 'react-intl';
+import { Button, Callout } from '@folio/stripes/components';
+import { useOkapiKy } from '@folio/stripes/core';
+import { onCloseDirect } from '@reshare/stripes-reshare';
+import { CalloutContext } from '@folio/stripes/core';
 import AllPullSlips from './PullSlip/AllPullSlips';
 import PrintOrCancel from './PrintOrCancel';
 import upNLevels from '../util/upNLevels';
 
-class PrintAllPullSlips extends React.Component {
-  constructor() {
-    super();
-    this.callout = React.createRef();
-  }
+const PrintAllPullSlips = ({query: requestsQuery}) => {
+  const callout = useContext(CalloutContext);
+  const history = useHistory();
+  const location = useLocation();
+  const okapiKy = useOkapiKy();
 
-  componentDidMount() {
-    this.markAllPrintableAsPrinted();
-  }
+  const destUrl = upNLevels(location, 1);
+  const records = requestsQuery?.data?.pages?.flatMap(x => x.results);
+  const totalRecords = requestsQuery?.data?.pages?.[0]?.total;
 
-  markAllPrintableAsPrinted = () => {
+  const markAllPrintableAsPrinted = () => {
     const promises = [];
 
-    this.props.query?.data?.pages?.flatMap(x => x.results).forEach(record => {
+    requestsQuery?.data?.pages?.flatMap(x => x.results).forEach(record => {
       if (includes(record.validActions, 'supplierPrintPullSlip')) {
-        promises.push(this.props.okapiKy(`rs/patronrequests/${record.id}/performAction`, {
+        promises.push(okapiKy(`rs/patronrequests/${record.id}/performAction`, {
           method: 'POST',
           json: { action: 'supplierPrintPullSlip' },
         }).json());
@@ -32,48 +35,47 @@ class PrintAllPullSlips extends React.Component {
 
     Promise.all(promises)
       .catch((exception) => {
-        this.showCallout('error', `Protocol failure in marking slips as printed: ${exception}`);
+        callout.sendCallout({ type: 'error', message: `Protocol failure in marking slips as printed: ${exception}` });
       })
       .then((responses) => {
         const failures = filter(responses, r => !r.status);
         if (failures.length === 0) {
-          this.showCallout('success', `All slips ${responses.length === 0 ? 'were already ' : ''}marked as printed.`);
+          callout.sendCallout({ type: 'success', message: `All slips ${responses.length === 0 ? 'were already ' : ''}marked as printed.` });
         } else {
           const messages = failures.map(f => f.message).join('; ');
           console.error(messages); // eslint-disable-line no-console
-          this.showCallout('error', `Some slips not marked as printed: ${messages}`);
+          callout.sendCallout({ type: 'error', message: `Some slips not marked as printed: ${messages}` });
         }
         // Need to re-fetch requests to reflect updated states
-        this.props.query.refetch();
+        requestsQuery.refetch();
       });
   }
 
-  showCallout(type, message) {
-    this.callout.current.sendCallout({ type, message });
+  if (!requestsQuery.isSuccess) {
+    return 'Record not yet loaded for printing';
   }
 
-  render() {
-    const requestsQuery = this.props.query;
-    const records = requestsQuery?.data?.pages?.flatMap(x => x.results);
-    const totalRecords = requestsQuery?.data?.pages?.[0]?.total;
-
-    if (!requestsQuery.isSuccess) {
-      return 'Record not yet loaded for printing';
-    }
-
-    if (records.length < totalRecords) {
-      return `Not enough records loaded for printing (${records.length} of ${totalRecords})`;
-    }
-
-    return (
-      <>
-        <PrintOrCancel destUrl={upNLevels(this.props.location, 1)}>
-          <AllPullSlips records={records} />
-        </PrintOrCancel>
-        <Callout ref={this.callout} />
-      </>
-    );
+  if (records.length < totalRecords) {
+    return `Not enough records loaded for printing (${records.length} of ${totalRecords})`;
   }
+
+  return (
+    <>
+      <PrintOrCancel
+        destUrl={destUrl}
+        extraButtons={
+          <Button marginBottom0 onClick={() => {
+            markAllPrintableAsPrinted();
+            onCloseDirect(destUrl, history, location)();
+          }}>
+            <FormattedMessage id="ui-rs.markAllSlipsPrinted" />
+          </Button>
+        }
+      >
+        <AllPullSlips records={records} />
+      </PrintOrCancel>
+    </>
+  );
 }
 
-export default withOkapiKy(withRouter(PrintAllPullSlips));
+export default PrintAllPullSlips;

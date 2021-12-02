@@ -267,6 +267,7 @@
     "button.cancel-print": "Cancel print",
     "printAllPullSlips": "Print pull slips for all records in list",
     "printPullSlips": "Print pull slips",
+    "markAllSlipsPrinted":  "Mark pull slips as printed",
     "settings.name": "Name",
     "settings.value": "Value",
     "settings.no-current-value": "There is no current value for this setting",
