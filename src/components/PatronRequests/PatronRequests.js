@@ -143,8 +143,8 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                   appIcon={<AppIcon app={appName} iconKey="app" size="small" />}
                   defaultWidth="fill"
                   lastMenu={(
-                    <IfPermission perm={createPerm}>
-                      <PaneMenu>
+                    <PaneMenu>
+                      <IfPermission perm={createPerm}>
                         <Button
                           buttonStyle="primary"
                           id="clickable-new-patron-request"
@@ -153,8 +153,8 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                         >
                           <FormattedMessage id="stripes-smart-components.new" />
                         </Button>
-                      </PaneMenu>
-                    </IfPermission>
+                      </IfPermission>
+                    </PaneMenu>
                   )}
                   noOverflow
                   padContent={false}
