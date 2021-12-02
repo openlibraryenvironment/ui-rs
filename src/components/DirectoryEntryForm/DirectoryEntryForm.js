@@ -16,13 +16,12 @@ import {
 import {
   DirectoryEntryFormInfo,
   DirectoryEntryFormContactInfo,
-  DirectoryEntryFormCustProps,
   DirectoryEntryFormServices
 } from './sectionsShared';
 
 import {
-  LocalDirectoryEntryFormInfo,
-} from './sectionsLocal';
+  DirectoryEntryFormCustomProperties,
+} from './components';
 
 const DirectoryEntryForm = ({
   form,
@@ -128,7 +127,7 @@ const DirectoryEntryForm = ({
             <DirectoryEntryFormInfo id="directoryEntryFormInfo" open={sectionsShared.directoryEntryFormInfo} {...sectionProps} />
             <DirectoryEntryFormContactInfo id="directoryEntryFormContactInfo" open={sectionsShared.directoryEntryFormContactInfo} {...sectionProps} />
             <DirectoryEntryFormServices id="directoryEntryFormServices" open={sectionsShared.directoryEntryFormServices} {...sectionProps} />
-            <DirectoryEntryFormCustProps id="directoryEntryFormCustProps" open={sectionsShared.directoryEntryFormCustProps} {...sectionProps} />
+            <DirectoryEntryFormCustomProperties id="directoryEntryFormCustProps" open={sectionsShared.directoryEntryFormCustProps} tab="shared" {...sectionProps} />
           </AccordionSet>
         </>
       }
@@ -150,7 +149,7 @@ const DirectoryEntryForm = ({
                 />
               </Col>
             </Row>
-            <LocalDirectoryEntryFormInfo id="localDirectoryEntryFormInfo" open={sectionsLocal.localDirectoryEntryFormInfo} {...sectionProps} />
+            <DirectoryEntryFormCustomProperties id="localDirectoryEntryFormInfo" open={sectionsLocal.localDirectoryEntryFormInfo} tab="local" {...sectionProps} />
           </AccordionSet>
         </>
       }

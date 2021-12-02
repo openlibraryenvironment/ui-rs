@@ -1,0 +1,13 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.container {
+  display: grid;
+  grid-gap: var(--gutter-static-two-thirds);
+  align-items: center;
+
+  @media (--small) { grid-template-columns: 100%; }
+  @media (--medium) { grid-template-columns: repeat(2, auto); }
+  @media (--large) { grid-template-columns: repeat(3, auto); }
+  @media (--x-large) { grid-template-columns: repeat(4, auto); }
+  @media (min-width: 1921px) { grid-template-columns: repeat(4, auto); }
+}
