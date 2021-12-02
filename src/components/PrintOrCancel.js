@@ -28,6 +28,7 @@ class PrintOrCancel extends React.Component {
     }).isRequired,
     location: PropTypes.object,
     destUrl: PropTypes.string.isRequired,
+    extraButtons: PropTypes.node,
     children: PropTypes.element.isRequired,
   };
 
@@ -62,6 +63,7 @@ class PrintOrCancel extends React.Component {
             )}
             content={() => this.ref.current}
           />
+          {this.props.extraButtons}
         </div>
         <div ref={this.ref}>
           {this.props.children}
