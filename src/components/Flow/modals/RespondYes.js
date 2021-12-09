@@ -12,15 +12,11 @@ const RespondYes = ({ performAction }) => {
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
-    return performAction(
-      'respondYes',
-      values,
-      'ui-rs.actions.respondYes.success',
-      'ui-rs.actions.respondYes.error',
-    )
-      .then(() => setModal(null))
-      // Currently displaying errors with this via the route-level MessageBanner rather than within the modal
-      .catch(() => setModal(null));
+    return performAction('respondYes', values, {
+      success: 'ui-rs.actions.respondYes.success',
+      error: 'ui-rs.actions.respondYes.error',
+    })
+      .then(() => setModal(null));
   };
 
   const Footer = ({ disableSubmit, submit }) => (

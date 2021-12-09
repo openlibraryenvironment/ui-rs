@@ -1,31 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Layout, Modal, ModalFooter, Row, Select, TextArea } from '@folio/stripes/components';
-import { RefdataButtons } from '@reshare/stripes-reshare';
+import { RefdataButtons, useIsActionPending } from '@reshare/stripes-reshare';
 import { required } from '@folio/stripes/util';
-import { ActionContext } from '../ActionContext';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
 const AddCondition = props => {
   const { request, performAction, resources: { refdatavalues } } = props;
-  const [actions] = useContext(ActionContext);
+  const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
-    return performAction(
-      'supplierAddCondition',
-      values,
-      'ui-rs.actions.addCondition.success',
-      'ui-rs.actions.addCondition.error',
-    )
-      .then(() => setModal(null))
-      // Currently displaying errors with this via the route-level MessageBanner rather than within the modal
-      .catch(() => setModal(null));
+    return performAction('supplierAddCondition', values, {
+      error: 'ui-rs.actions.addCondition.success',
+      success: 'ui-rs.actions.addCondition.error',
+    })
+      .then(() => setModal(null));
   };
 
   const Footer = ({ disableSubmit, submit }) => (
@@ -53,7 +48,7 @@ const AddCondition = props => {
           <Modal
             label={<FormattedMessage id="ui-rs.actions.conditionalSupply" />}
             open={currentModal === 'AddCondition'}
-            footer={<Footer disableSubmit={submitting || pristine || actions.pending} submit={form.submit} />}
+            footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
             <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: displayId, item: request.title }} />
             <Row>

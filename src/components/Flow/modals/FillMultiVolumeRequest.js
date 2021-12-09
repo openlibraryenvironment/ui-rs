@@ -1,15 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
-
 import { FormattedMessage } from 'react-intl';
 import { Button, Col, Headline, Icon, IconButton, Modal, ModalFooter, NoValue, Row, TextField } from '@folio/stripes/components';
+import { useIsActionPending } from '@reshare/stripes-reshare';
 import volumeStateStatus from '../../../util/volumeStateStatus';
 import useKiwtFieldArray from '../../../util/useKiwtFieldArray';
 import { required as requiredValidator } from '../../../util/validators';
-import { ActionContext } from '../ActionContext';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
@@ -111,18 +110,15 @@ const ItemBarcodeFieldArray = ({
 };
 
 const FillMultiVolumeRequest = ({ request, performAction }) => {
-  const [actions] = useContext(ActionContext);
+  const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
 
   const onSubmit = values => {
-    return performAction(
-      'supplierCheckInToReshare',
-      values,
-      'ui-rs.actions.fillMultiVolumeRequest.success',
-      'ui-rs.actions.fillMultiVolumeRequest.error',
-    )
-      .then(() => setModal(null))
-      .catch(() => setModal(null));
+    return performAction('supplierCheckInToReshare', values, {
+      success: 'ui-rs.actions.fillMultiVolumeRequest.success',
+      error: 'ui-rs.actions.fillMultiVolumeRequest.error',
+    })
+      .then(() => setModal(null));
   };
 
   const Footer = ({ disableSubmit, submit }) => (
@@ -153,7 +149,7 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
           <Modal
             label={<FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest" />}
             open={currentModal === 'FillMultiVolumeRequest'}
-            footer={<Footer disableSubmit={submitting || actions.pending} submit={form.submit} />}
+            footer={<Footer disableSubmit={submitting || actionPending} submit={form.submit} />}
           >
             <FieldArray
               name="itemBarcodes"

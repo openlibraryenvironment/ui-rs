@@ -175,8 +175,6 @@
     "actions.hideNoteField": "Hide note",
     "actions.hideNoteFieldWarning": "Hiding the note field does not prevent the contents from being sent",
     "actions.send": "Send",
-    "actions.generic.success": "Sucess: {action}",
-    "actions.generic.error": "Error: {action}. {errMsg}",
     "actions.generic.prompt": "Scan request ID to <strong>{action}</strong>",
     "actions.wrongId": "No action performed, scanned request does not match",
     "actions.requesterRequestedCancellation": "The requester has requested cancellation of this request. Please respond.",

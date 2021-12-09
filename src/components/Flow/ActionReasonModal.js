@@ -1,30 +1,25 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
-import { RefdataButtons } from '@reshare/stripes-reshare';
+import { RefdataButtons, useIsActionPending } from '@reshare/stripes-reshare';
 import { Button, Col, Layout, Modal, ModalFooter, Row, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
-import { ActionContext } from './ActionContext';
 import { CancelModalButton } from '../ModalButtons';
 import { useModal } from '../MessageModalState';
 
 const ActionReasonModal = props => {
   const { action, request, performAction, reasonVocab, resources: { refdatavalues } } = props;
-  const [actions] = useContext(ActionContext);
   const [currentModal, setModal] = useModal();
+  const actionPending = !!useIsActionPending(request.id);
 
   const onSubmit = values => {
-    return performAction(
-      action,
-      values,
-      `ui-rs.actions.${action}.success`,
-      `ui-rs.actions.${action}.error`,
-    )
-      .then(() => setModal(null))
-      // Currently displaying errors with this via the route-level MessageBanner rather than within the modal
-      .catch(() => setModal(null));
+    return performAction(action, values, {
+      success: `ui-rs.actions.${action}.success`,
+      error: `ui-rs.actions.${action}.error`,
+    })
+      .then(() => setModal(null));
   };
 
   const Footer = ({ disableSubmit, submit }) => (
@@ -46,7 +41,7 @@ const ActionReasonModal = props => {
           <Modal
             label={<FormattedMessage id={`ui-rs.actions.${action}`} />}
             open={currentModal === action}
-            footer={<Footer disableSubmit={submitting || pristine || actions.pending} submit={form.submit} />}
+            footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
             <SafeHTMLMessage id={`ui-rs.actions.${action}.confirm`} values={{ id: request.id, item: request.title }} />
             <Layout className="padding-top-gutter">

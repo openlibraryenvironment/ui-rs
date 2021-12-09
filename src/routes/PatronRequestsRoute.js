@@ -42,12 +42,11 @@ const PatronRequestsRoute = ({ appName, children }) => {
       .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
       .sort(compareLabel);
   }, [appName, intl]);
+
   const prQuery = useInfiniteQuery(
     {
-      queryKey: [appName, 'patronRequests', query],
-      queryFn: ({ pageParam = 0 }) => ky(
-        `rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`
-      ).json(),
+      queryKey: ['rs/patronRequests', query, `@reshare/${appName}`],
+      queryFn: ({ pageParam = 0 }) => ky(`rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`).json(),
       useErrorBoundary: true,
       // we render before useKiwtSASQuery() finishes, let's prevent an extra, unnecessary, fetch
       enabled: Object.prototype.hasOwnProperty.call(query, 'query'),

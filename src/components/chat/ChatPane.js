@@ -4,8 +4,8 @@ import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
+import { useIntlCallout } from '@reshare/stripes-reshare';
 import { ChatMessage } from './components';
-import { useRSCallout } from '../MessageModalState';
 import css from './ChatPane.css';
 import MessageDropdown from './components/MessageDropdown';
 import useChatActions from './useChatActions';
@@ -22,7 +22,7 @@ const ChatPane = ({
   } = {}
 }) => {
   const latestMessage = useRef();
-  const sendCallout = useRSCallout();
+  const sendCallout = useIntlCallout();
   const { handleMarkAllRead, handleMessageRead } = useChatActions(performAction);
 
   const scrollToLatestMessage = () => {
@@ -52,7 +52,11 @@ const ChatPane = ({
     const messageValid = validActions?.includes('message');
     return (
       <Form
-        onSubmit={payload => performAction('message', (payload || {}), 'ui-rs.actions.message.success', 'ui-rs.actions.message.error', 'none')}
+        onSubmit={payload => performAction('message', (payload || {}), {
+          success:'ui-rs.actions.message.success',
+          error:'ui-rs.actions.message.error',
+          display: 'none'
+        })}
         render={({ form, handleSubmit, pristine }) => {
           const onEnterPress = async (e) => {
             if (e.keyCode === ENTER_KEY && e.shiftKey === false && !pristine) {

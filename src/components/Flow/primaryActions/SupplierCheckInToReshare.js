@@ -6,20 +6,10 @@ import { Button, Row, Col, TextField } from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 const SupplierCheckInToReshare = ({ performAction }) => {
-  const onSubmit = values => performAction(
-    'supplierCheckInToReshare',
-    values,
-    ({ request, displayFunc }) => {
-      // Warn if due date is less than a week away
-      if (request.parsedDueDateRS
-        && new Date(request.parsedDueDateRS) - Date.now() < 1000 * 60 * 60 * 24 * 7) {
-        displayFunc('ui-rs.actions.checkIn.dueTooSoon', 'warning');
-      } else {
-        displayFunc('ui-rs.actions.checkIn.success', 'success');
-      }
-    },
-    'ui-rs.actions.checkIn.error',
-  );
+  const onSubmit = values => performAction('supplierCheckInToReshare', values, {
+    success: 'ui-rs.actions.checkIn.success',
+    error: 'ui-rs.actions.checkIn.error',
+  });
   return (
     <Form
       onSubmit={onSubmit}

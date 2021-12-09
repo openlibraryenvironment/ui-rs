@@ -8,12 +8,10 @@ export { default as Generic } from './Generic';
 // Named corresponding to actions
 export const RequesterManualCheckIn = ({ performAction }) => (
   <Button
-    onClick={() => performAction(
-      'requesterManualCheckIn',
-      false,
-      'ui-rs.actions.manualCheckIn.success',
-      'ui-rs.actions.manualCheckIn.error'
-    )}
+    onClick={() => performAction('requesterManualCheckIn', false, {
+      success: 'ui-rs.actions.manualCheckIn.success',
+      error: 'ui-rs.actions.manualCheckIn.error'
+    })}
     buttonStyle="primary mega"
     fullWidth
   >
@@ -33,12 +31,10 @@ export const SupplierRespondToCancel = () => (
 
 export const SupplierMarkConditionsAgreed = ({ performAction }) => (
   <Button
-    onClick={() => performAction(
-      'supplierMarkConditionsAgreed',
-      false,
-      'ui-rs.actions.supplierMarkConditionsAgreed.success',
-      'ui-rs.actions.supplierMarkConditionsAgreed.error'
-    )}
+    onClick={() => performAction('supplierMarkConditionsAgreed', false, {
+      success: 'ui-rs.actions.supplierMarkConditionsAgreed.success',
+      error: 'ui-rs.actions.supplierMarkConditionsAgreed.error'
+    })}
     buttonStyle="primary mega"
     fullWidth
   >
@@ -48,12 +44,10 @@ export const SupplierMarkConditionsAgreed = ({ performAction }) => (
 
 export const FillLocally = ({ performAction }) => (
   <Button
-    onClick={() => performAction(
-      'fillLocally',
-      false,
-      'stripes-reshare.actions.fillLocally.success',
-      'stripes-reshare.actions.fillLocally.error'
-    )}
+    onClick={() => performAction('fillLocally', false, {
+      success: 'stripes-reshare.actions.fillLocally.success',
+      error: 'stripes-reshare.actions.fillLocally.error'
+    })}
     buttonStyle="primary mega"
     fullWidth
   >
@@ -63,12 +57,10 @@ export const FillLocally = ({ performAction }) => (
 
 export const RequesterAgreeConditions = ({ performAction }) => (
   <Button
-    onClick={() => performAction(
-      'requesterAgreeConditions',
-      false,
-      'ui-rs.actions.requesterAgreeConditions.success',
-      'ui-rs.actions.requesterAgreeConditions.error'
-    )}
+    onClick={() => performAction('requesterAgreeConditions', false, {
+      success: 'ui-rs.actions.requesterAgreeConditions.success',
+      error: 'ui-rs.actions.requesterAgreeConditions.error'
+    })}
     buttonStyle="primary mega"
     fullWidth
   >

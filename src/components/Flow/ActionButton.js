@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
@@ -6,16 +6,14 @@ import { Button, Icon } from '@folio/stripes/components';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import interCss from '@folio/stripes-components/lib/sharedStyles/interactionStyles.css';
 
-import { ActionContext } from './ActionContext';
 import css from './ActionButton.css';
 import NoteForm from '../NoteForm';
 import { includesNote } from './actionsByState';
 
-const ActionButton = ({ action, performAction, payload = {}, success = null, error = null, icon = null, label }) => {
-  const [actions] = useContext(ActionContext);
+const ActionButton = ({ action, disabled, performAction, payload = {}, success = null, error = null, icon = null, label }) => {
   const [noteFieldOpen, setNoteFieldOpen] = useState(false);
   const onSubmitNote = (note) => {
-    performAction(action, { ...payload, note }, success, error);
+    performAction(action, { ...payload, note }, { success, error });
   };
 
   const handleClick = (e) => {
@@ -24,7 +22,7 @@ const ActionButton = ({ action, performAction, payload = {}, success = null, err
 
     // Stop this event from firing if the notes form is shown.
     if (!noteFieldOpen) {
-      performAction(action, payload, success, error);
+      performAction(action, payload, { success, error });
     }
     // else NOOP.
   };
@@ -38,13 +36,13 @@ const ActionButton = ({ action, performAction, payload = {}, success = null, err
           buttonStyle="dropdownItem"
           onClick={handleClick}
           buttonClass={classNames({ [`${css.actionButton}`] : true, [`${css.withInlineForm}`]: withNote })}
-          disabled={actions.pending}
+          disabled={disabled}
         >
           <Icon icon={icon || 'default'} className={css.button}>
             <FormattedMessage id={label} />
           </Icon>
         </Button>
-        { withNote && <NoteForm onSend={onSubmitNote} visibility={noteFieldOpen} setVisibility={setNoteFieldOpen} disabled={actions.pending} className={css.addNoteForm} /> }
+        { withNote && <NoteForm onSend={onSubmitNote} visibility={noteFieldOpen} setVisibility={setNoteFieldOpen} disabled={disabled} className={css.addNoteForm} /> }
       </span>
     );
   } else {
