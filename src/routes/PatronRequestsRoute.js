@@ -48,6 +48,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
       queryKey: ['rs/patronRequests', query, `@reshare/${appName}`],
       queryFn: ({ pageParam = 0 }) => ky(`rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`).json(),
       useErrorBoundary: true,
+      staleTime: 2 * 60 * 1000,
+      cacheTime: 10 * 60 * 1000,
       // we render before useKiwtSASQuery() finishes, let's prevent an extra, unnecessary, fetch
       enabled: Object.prototype.hasOwnProperty.call(query, 'query'),
     }
