@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { useInfiniteQuery, useQueries } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { useIntl } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
 import { generateKiwtQuery, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import { useSharedOkapiQuery } from '@reshare/stripes-reshare';
 import PatronRequests from '../components/PatronRequests';
 
 const PER_PAGE = 100;
@@ -55,26 +56,22 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }
   );
 
-  const filterQueries = useQueries([
-    {
-      queryKey: [appName, 'lmsLocations'],
-      queryFn: () => ky('rs/hostLMSLocations', { searchParams: { perPage: '100' } }).json(),
-      staleTime: 1000 * 60 * 60 * 2,
-      useErrorBoundary: true,
-    },
-    {
-      queryKey: [appName, 'institutions'],
-      queryFn: () => ky('directory/entry', {
-        searchParams: {
-          filters: 'type.value=institution',
-          perPage: '100',
-          stats: 'true',
-        }
-      }).json(),
-      staleTime: 1000 * 60 * 60 * 2,
-      useErrorBoundary: true,
-    },
-  ]);
+  const filterQueries = [
+    useSharedOkapiQuery(
+      'rs/hostLMSLocations',
+      { perPage: '1000' },
+      2 * 60 * 60 * 1000,
+    ),
+    useSharedOkapiQuery(
+      'directory/entry',
+      {
+        filters: 'type.value=institution',
+        perPage: '1000',
+        stats: 'true',
+      },
+      2 * 60 * 60 * 1000,
+    ),
+  ];
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
