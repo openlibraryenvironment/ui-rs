@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
-
 import { Route } from 'react-router-dom';
 
 import { useSettings } from '@k-int/stripes-kint-components';
@@ -17,7 +16,6 @@ import {
 } from './pullslipNotifications';
 
 const ResourceSharingSettings = (props) => {
-
   const { match } = props;
   const intl = useIntl();
 

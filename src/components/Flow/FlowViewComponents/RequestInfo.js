@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedDate, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
 
 
