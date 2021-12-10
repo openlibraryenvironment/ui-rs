@@ -15,6 +15,10 @@ const ViewMessageBanners = ({ request }) => {
 
   const cancellationRequested = request?.state?.code === 'RES_CANCEL_REQUEST_RECEIVED';
 
+  const dueTooSoon = request.parsedDueDateRS
+    && request?.state?.code === 'RES_AWAIT_SHIP'
+    && new Date(request.parsedDueDateRS) - Date.now() < 1000 * 60 * 60 * 24 * 7;
+
   const renderConditionsBanner = () => {
     if (relevantPendingConditions.length > 0) {
       return (
@@ -44,6 +48,13 @@ const ViewMessageBanners = ({ request }) => {
           type="warning"
         >
           <FormattedMessage id="ui-rs.actions.requesterRequestedCancellation" />
+        </MessageBanner>
+      }
+      {dueTooSoon &&
+        <MessageBanner
+          type="warning"
+        >
+          <FormattedMessage id="ui-rs.actions.checkIn.dueTooSoon" />
         </MessageBanner>
       }
       {renderConditionsBanner()}
