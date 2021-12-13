@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
-import { DirectLink, usePerformAction, useSharedOkapiQuery } from '@reshare/stripes-reshare';
+import { DirectLink, usePerformAction, useOkapiQuery } from '@reshare/stripes-reshare';
 
 import upNLevels from '../util/upNLevels';
 import renderNamedWithProps from '../util/renderNamedWithProps';
@@ -42,7 +42,7 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   const { handleMarkAllRead } = useChatActions(performAction);
 
   // Fetch the request
-  const { data: request = {}, isSuccess: hasRequestLoaded } = useSharedOkapiQuery(`rs/patronrequests/${id}`);
+  const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000 });
 
   const paneButtons = () => {
     return (
