@@ -1,9 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { useLocation } from 'react-router-dom';
-import queryString from 'query-string';
-
 import { useHelperApp } from '@k-int/stripes-kint-components';
 
 import { IconButton } from '@folio/stripes/components';
@@ -12,18 +9,12 @@ import { ChatPane } from './chat';
 
 
 const useRSHelperApp = () => {
-  const location = useLocation();
-  const { HelperComponent, helperToggleFunctions } = useHelperApp({
+  const { HelperComponent, helperToggleFunctions, isOpen } = useHelperApp({
     tags: Tags,
     chat: ChatPane
   });
 
-  const { helper: currentHelper } = queryString.parse(location.search);
-  const isOpen = (helper) => {
-    return currentHelper === helper;
-  };
-
-  const TagButton = ({ request, onClick }) => (
+  const TagButton = ({ request, onClick = () => null }) => (
     <FormattedMessage id="ui-rs.view.showTags">
       {ariaLabel => (
         <IconButton
@@ -42,7 +33,7 @@ const useRSHelperApp = () => {
     </FormattedMessage>
   );
 
-  const ChatButton = ({ request, onClick }) => {
+  const ChatButton = ({ request, onClick = () => null }) => {
     const unseenNotifications = request?.notifications?.filter(notification => notification.seen === false && notification.isSender === false)?.length ?? 0;
     return (
       <FormattedMessage id="ui-rs.view.showChat">
@@ -64,7 +55,7 @@ const useRSHelperApp = () => {
     );
   };
 
-  return { ChatButton, HelperComponent, TagButton };
+  return { ChatButton, HelperComponent, TagButton, isOpen };
 };
 
 export default useRSHelperApp;

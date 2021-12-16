@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
@@ -32,17 +32,27 @@ const subheading = (req, params) => {
   return `${title} · ${requester} → ${supplier}`;
 };
 
-
 const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   const id = match.params?.id;
   const stripes = useStripes();
-  const { ChatButton, HelperComponent, TagButton } = useRSHelperApp();
+  const { ChatButton, HelperComponent, TagButton, isOpen } = useRSHelperApp();
   const appName = useContext(AppNameContext);
   const performAction = usePerformAction(id);
-  const { handleMarkAllRead } = useChatActions(performAction);
+  const { handleMarkAllRead } = useChatActions(id);
 
   // Fetch the request
   const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000 });
+
+  /* On mount ONLY we want to check if the helper is open, and if so then mark all messages as read.
+   * If this useEffect is handed dependencies handleMarkAllRead and isOpen then it will infinitely loop,
+   */
+
+  useEffect(() => {
+    if (isOpen('chat')) {
+      handleMarkAllRead(true, true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const paneButtons = () => {
     return (
@@ -128,7 +138,7 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
             <Route path={`${match.path}/flow`} render={() => <FlowRoute request={request} performAction={performAction} />} />
           </Switch>
         </Pane>
-        <HelperComponent request={request} performAction={performAction} />
+        <HelperComponent request={request} isOpen={isOpen} />
       </Paneset>
       {/* Render modals that correspond to available actions */}
       {renderNamedWithProps(

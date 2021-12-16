@@ -1,7 +1,8 @@
+import { usePerformAction } from '@reshare/stripes-reshare';
 
-// This doesn't really need to be a hook, but we could eventually try to untangle performAction
-// into a neat hook and then this would be perfectly placed to utilise that.
-const useChatActions = (performAction) => {
+const useChatActions = (reqId) => {
+  const performAction = usePerformAction(reqId);
+
   const handleMarkAllRead = (readStatus, excluding = false) => {
     const success = readStatus ? 'ui-rs.actions.messagesAllSeen.success' : 'ui-rs.actions.messagesAllUnseen.success';
     const error = readStatus ? 'ui-rs.actions.messagesAllSeen.error' : 'ui-rs.actions.messagesAllUnseen.error';
