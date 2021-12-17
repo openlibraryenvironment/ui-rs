@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
-import { useIntlCallout } from '@reshare/stripes-reshare';
+import { useIntlCallout, usePerformAction } from '@reshare/stripes-reshare';
 import { ChatMessage } from './components';
 import css from './ChatPane.css';
 import MessageDropdown from './components/MessageDropdown';
@@ -13,17 +13,21 @@ import useChatActions from './useChatActions';
 const ENTER_KEY = 13;
 
 const ChatPane = ({
+  isOpen,
   onToggle,
-  performAction,
   request: {
+    id: reqId,
     isRequester,
     notifications,
     validActions
   } = {}
 }) => {
   const latestMessage = useRef();
+
+  const performAction = usePerformAction();
+
   const sendCallout = useIntlCallout();
-  const { handleMarkAllRead, handleMessageRead } = useChatActions(performAction);
+  const { handleMarkAllRead, handleMessageRead } = useChatActions(reqId);
 
   const scrollToLatestMessage = () => {
     return latestMessage?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -33,10 +37,20 @@ const ChatPane = ({
     return latestMessage?.current?.scrollIntoView({ block: 'end' });
   };
 
+  // TODO Maybe no longer need this with hasFired
+/*   const [unreadMessageCount, setUnreadMessageCount] = useState(notifications?.filter(notification => notification.seen === false && notification.isSender === false)?.length ?? 0);
+
+  useEffect(() => {
+    setUnreadMessageCount(notifications?.filter(notification => notification.seen === false && notification.isSender === false)?.length ?? 0);
+  }, [notifications]); */
+
   // Ensure this only fires once, on mount
   useEffect(() => {
+   /*  if (isOpen('chat') && unreadMessageCount > 0) {
+      handleMarkAllRead(true);
+    } */
     jumpToLatestMessage();
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
   // Track if new notification has arrived, and if so scroll to it
