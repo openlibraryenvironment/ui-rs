@@ -47,6 +47,8 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
    * If this useEffect is handed dependencies handleMarkAllRead and isOpen then it will infinitely loop,
    */
 
+  // This could maybe be solved by memoizing isOpen within useHelperApp?
+
   useEffect(() => {
     if (isOpen('chat')) {
       handleMarkAllRead(true, true);
@@ -61,6 +63,7 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
           <ChatButton
             request={request}
             onClick={({ open }) => {
+              // This case handles the marking of messages as read when the chat pane opens for the first time within the view
               if (!open) {
                 handleMarkAllRead(true, true);
               }
