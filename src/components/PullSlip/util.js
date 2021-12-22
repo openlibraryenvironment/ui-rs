@@ -6,7 +6,7 @@ import reset from '!!style-loader?injectType=lazyStyleTag!css-loader!reset-css/r
 import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
 import { formatConditionCode, formatConditionNote } from '../../util/formatCondition';
 import barCodeString from './BarCodeString';
-import logoUrl from './design/images/palci-logo.png';
+import logoUrl from './design/images/blank-logo.png';
 
 function establishStylesHook() {
   reset.use();
