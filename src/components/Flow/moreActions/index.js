@@ -13,6 +13,12 @@ export const CancelLocal = () => (
   </ShowModalButton>
 );
 
+export const ManualClose = () => (
+  <ShowModalButton buttonStyle="dropdownItem" modal="ManualClose">
+    <Icon icon="exclamation-circle"><FormattedMessage id="ui-rs.actions.manualClose" /></Icon>
+  </ShowModalButton>
+);
+
 export const SupplierCannotSupply = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="supplierCannotSupply">
     <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.supplierCannotSupply" /></Icon>

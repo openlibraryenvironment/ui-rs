@@ -129,6 +129,9 @@ export const actionIcons = {
 /* Actions from request.validActions to exclude from all states when using the below function */
 const excludeRemote = ['message'];
 
+/* Actions from request.validActions that cannot become the primary action */
+const excludePrimary = ['manualClose'];
+
 /* This function returns the contextual actions for a provided request,
  * falling back to the default for unknown states.
  */
@@ -142,7 +145,8 @@ export const actionsForRequest = request => {
       action => !(remote.includes(`${action.charAt(0).toLowerCase()}${action.substring(1)}`))
     );
     actions.moreActions = remote.concat(client);
-    if (remote.length > 0 && actionsByState?.[request.state?.code]?.primaryAction === undefined) actions.primaryAction = remote[0];
+    const maybePrimary = remote.filter(action => !excludePrimary.includes(action));
+    if (maybePrimary.length > 0 && actionsByState?.[request.state?.code]?.primaryAction === undefined) actions.primaryAction = maybePrimary[0];
   }
   return actions;
 };
