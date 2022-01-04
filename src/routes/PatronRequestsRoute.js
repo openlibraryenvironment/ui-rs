@@ -29,6 +29,10 @@ const PatronRequestsRoute = ({ appName, children }) => {
       'supplier': 'resolvedSupplier.owner.id',
       'terminal': 'state.terminal'
     },
+    sortKeys: {
+      'pickLocation': 'pickLocation.name',
+      'supplyingInstitutionSymbol': 'resolvedSupplier.owner.symbolSummary',
+    },
     // Extra keys in the object are added to mod-rs params by generateKiwtQuery
     perPage: PER_PAGE,
     filters: `isRequester==${appName === 'request' ? 'true' : 'false'}`,

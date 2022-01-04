@@ -26,7 +26,7 @@ const appDetails = {
   request: {
     title: 'Requests',
     visibleColumns: [
-      'flags', 'id',
+      'flags', 'hrid',
       'dateCreated', 'selectedItemBarcode', 'patronIdentifier', 'state', 'serviceType',
       'supplyingInstitutionSymbol',
       'title',
@@ -40,7 +40,7 @@ const appDetails = {
   supply: {
     title: 'Supply',
     visibleColumns: [
-      'flags', 'id',
+      'flags', 'hrid',
       'dateCreated', 'state', 'serviceType',
       'requestingInstitutionSymbol', 'selectedItemBarcode', 'pickLocation',
       'title',
@@ -169,7 +169,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                     autosize
                     columnMapping={{
                       flags: '',
-                      id: <FormattedMessage id="ui-rs.patronrequests.id" />,
+                      hrid: <FormattedMessage id="ui-rs.patronrequests.id" />,
                       isRequester: <FormattedMessage id="ui-rs.patronrequests.isRequester" />,
                       dateCreated: <FormattedMessage id="ui-rs.patronrequests.dateCreated" />,
                       title: <FormattedMessage id="ui-rs.patronrequests.title" />,
@@ -191,7 +191,6 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                     }}
                     contentData={requests}
                     formatter={{
-                      id: a => a.hrid,
                       flags: a => {
                         const needsAttention = a?.state?.needsAttention;
                         if (a?.unreadMessageCount > 0) {
