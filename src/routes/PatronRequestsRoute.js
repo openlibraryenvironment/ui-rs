@@ -46,7 +46,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
 
   const prQuery = useInfiniteQuery(
     {
-      queryKey: ['rs/patronRequests', query, `@reshare/${appName}`],
+      queryKey: ['rs/patronrequests', query, `@reshare/${appName}`],
       queryFn: ({ pageParam = 0 }) => ky(`rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`).json(),
       useErrorBoundary: true,
       staleTime: 2 * 60 * 1000,
