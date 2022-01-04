@@ -17,12 +17,13 @@ const MessageDropdown = ({ actionItems }) => {
         data-role="menu"
         aria-label="actions-for-message"
       >
-        {actionItems.map(ai => {
+        {actionItems.map((ai, index) => {
           const { onClick, label, ...buttonProps } = ai;
           return (
             <Button
               buttonStyle="dropdownItem"
               onClick={onClick}
+              key={index}
               {...buttonProps}
             >
               {label}
