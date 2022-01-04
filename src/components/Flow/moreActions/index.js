@@ -27,13 +27,13 @@ export const SupplierCannotSupply = () => (
 
 export const SupplierConditionalSupply = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="ConditionalSupply">
-    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.conditionalSupply" /></Icon>
+    <Icon icon="ellipsis"><FormattedMessage id="ui-rs.actions.conditionalSupply" /></Icon>
   </ShowModalButton>
 );
 
 export const SupplierAddCondition = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="AddCondition">
-    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.addCondition" /></Icon>
+    <Icon icon="plus-sign"><FormattedMessage id="ui-rs.actions.addCondition" /></Icon>
   </ShowModalButton>
 );
 
