@@ -24,7 +24,7 @@ const ChatPane = ({
 }) => {
   const latestMessage = useRef();
 
-  const performAction = usePerformAction();
+  const performAction = usePerformAction(reqId);
 
   const sendCallout = useIntlCallout();
   const { handleMarkAllRead, handleMessageRead } = useChatActions(reqId);
