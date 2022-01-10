@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+// (it doesn't recognise FormattedMessage as a text label for th)
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Card } from '@folio/stripes/components';
@@ -33,11 +35,11 @@ const AuditInfo = ({ record, id }) => {
         <thead>
           <tr>
             <th>#</th>
-            <th>User</th>
-            <th>Date</th>
-            <th>From state</th>
-            <th>To state</th>
-            <th>Message</th>
+            <th><FormattedMessage id="ui-rs.audit.user" /></th>
+            <th><FormattedMessage id="ui-rs.audit.date" /></th>
+            <th><FormattedMessage id="ui-rs.audit.from" /></th>
+            <th><FormattedMessage id="ui-rs.audit.to" /></th>
+            <th><FormattedMessage id="ui-rs.audit.message" /></th>
           </tr>
         </thead>
         <tbody>
