@@ -126,7 +126,6 @@ const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => (
             name="publicationDate"
             label={<FormattedMessage id="ui-rs.information.date" />}
             component={TextField}
-            validate={required}
           />
         </Col>
       </Row>
