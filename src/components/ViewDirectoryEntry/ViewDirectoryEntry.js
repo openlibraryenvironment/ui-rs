@@ -24,15 +24,14 @@ import permissionToEdit from '../../util/permissionToEdit';
 import EditDirectoryEntry from '../EditDirectoryEntry';
 
 import {
+  CustomProperties
+} from './components';
+
+import {
   DirectoryEntryInfo,
   ContactInformation,
   ServiceAccounts,
-  CustomProperties,
 } from './sectionsShared';
-
-import {
-  LocalDirectoryEntryInfo,
-} from './sectionsLocal';
 
 class ViewDirectoryEntry extends React.Component {
   static manifest = Object.freeze({
@@ -287,7 +286,7 @@ class ViewDirectoryEntry extends React.Component {
               <DirectoryEntryInfo id="directoryEntryInfo" {...sectionProps} />
               <ContactInformation id="contactInformation" {...sectionProps} />
               <ServiceAccounts id="services" {...sectionProps} />
-              <CustomProperties id="customProperties" {...sectionProps} />
+              <CustomProperties id="customProperties" {...{ defaultInternal: false, ...sectionProps }} />
               <Accordion
                 id="developerInfo"
                 label={<FormattedMessage id="ui-directory.information.heading.developer" />}
@@ -308,7 +307,7 @@ class ViewDirectoryEntry extends React.Component {
               </Col>
             </Row>
             <AccordionSet accordionStatus={this.state.sectionsLocal}>
-              <LocalDirectoryEntryInfo id="localDirectoryEntryInfo" {...sectionProps} />
+              <CustomProperties id="customProperties" {...sectionProps} />
             </AccordionSet>
           </>
         }

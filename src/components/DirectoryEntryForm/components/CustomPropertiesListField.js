@@ -9,9 +9,8 @@ import {
   TextArea,
   TextField,
 } from '@folio/stripes/components';
-import { EditCard } from '@folio/stripes-erm-components';
 
-import css from './CustomPropertiesListField.css'
+import css from './CustomPropertiesListField.css';
 
 const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
@@ -32,10 +31,6 @@ const CustomPropertiesListField = ({
   } else {
     custProps = custPropsShared;
   }
-
-  const getCustProp = (custPropValue) => {
-    return availableCustProps.find(cp => cp.value === custPropValue);
-  };
 
   const isInvalid = (values) => {
     const err = {};
@@ -99,6 +94,7 @@ const CustomPropertiesListField = ({
         value={controlledFieldValue}
         error={!isEmpty(errors) ? errors[cp.value] : undefined}
         {...fieldProps}
+        validate={isInvalid}
       />
     );
   };
@@ -129,7 +125,6 @@ CustomPropertiesListField.propTypes = {
     value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     onChange: PropTypes.func,
   }),
-  meta: PropTypes.object,
   availableCustProps: PropTypes.arrayOf(PropTypes.shape({
     description: PropTypes.string,
     label: PropTypes.string.isRequired,

@@ -1,0 +1,13 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.flexRowContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.flexRowContainer > .flexRowItem {
+  flex: 1 1 30%; /*grow | shrink | basis */
+  height: 100px;
+}

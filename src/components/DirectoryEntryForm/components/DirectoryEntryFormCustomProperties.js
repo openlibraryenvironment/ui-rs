@@ -16,7 +16,6 @@ const DirectoryEntryFormCustomProperties = ({
     id,
     onToggle,
     open,
-    typeValues
   },
   tab = 'shared'
 }) => {
@@ -42,10 +41,6 @@ const DirectoryEntryFormCustomProperties = ({
       defaultInternal: cp.defaultInternal,
     };
   });
-
-  const getTypeValues = () => {
-    return typeValues?.records?.map(({ id: theId, label }) => ({ label, value: theId }));
-  };
 
   const label = tab === 'shared' ?
     <FormattedMessage id="ui-directory.information.heading.customProps" /> :
