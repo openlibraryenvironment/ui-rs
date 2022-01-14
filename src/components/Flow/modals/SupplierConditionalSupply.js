@@ -17,8 +17,8 @@ const ConditionalSupply = props => {
 
   const onSubmit = values => {
     return performAction('supplierConditionalSupply', values, {
-      error: 'ui-rs.actions.conditionalSupply.success',
-      success: 'ui-rs.actions.conditionalSupply.error',
+      error: 'ui-rs.actions.conditionalSupply.error',
+      success: 'ui-rs.actions.conditionalSupply.success',
     })
       .then(() => setModal(null));
   };
