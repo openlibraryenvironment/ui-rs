@@ -10,7 +10,7 @@ import css from './ActionButton.css';
 import NoteForm from '../NoteForm';
 import { includesNote } from './actionsByState';
 
-const ActionButton = ({ action, disabled, performAction, payload = {}, success = null, error = null, icon = null, label }) => {
+const ActionButton = ({ action, disabled, performAction, payload = {}, success = null, error = null, icon = null, label, withoutNote = false }) => {
   const [noteFieldOpen, setNoteFieldOpen] = useState(false);
   const onSubmitNote = (note) => {
     performAction(action, { ...payload, note }, { success, error });
@@ -27,7 +27,7 @@ const ActionButton = ({ action, disabled, performAction, payload = {}, success =
     // else NOOP.
   };
 
-  const withNote = (action ? includesNote[action] : null) ?? includesNote.default;
+  const withNote = !withoutNote && ((action ? includesNote[action] : null) ?? includesNote.default);
 
   if (!noteFieldOpen) {
     return (
@@ -68,6 +68,7 @@ ActionButton.propTypes = {
   success: PropTypes.string,
   error: PropTypes.string,
   performAction: PropTypes.func.isRequired,
+  withoutNote: PropTypes.bool,
 };
 
 export default ActionButton;
