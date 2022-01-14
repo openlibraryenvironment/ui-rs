@@ -6,13 +6,14 @@ import { Route, Switch } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
-import { DirectLink, usePerformAction, useOkapiQuery } from '@reshare/stripes-reshare';
+import { usePerformAction, useOkapiQuery } from '@reshare/stripes-reshare';
 
 import upNLevels from '../util/upNLevels';
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { MessageModalProvider } from '../components/MessageModalState';
 import * as modals from '../components/Flow/modals';
-import { actionsForRequest } from '../components/Flow/actionsByState';
+import { actionsForRequest, excludeRemote } from '../components/Flow/actionsByState';
+import { ManualClose, PrintPullSlip } from '../components/Flow/moreActions';
 import AppNameContext from '../AppNameContext';
 import FlowRoute from './FlowRoute';
 import ViewPatronRequest from '../components/ViewPatronRequest';
@@ -127,11 +128,10 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
                   </Button>
                 )
               }
-              <DirectLink component={Button} buttonStyle="dropdownItem" to={{ pathname: 'pullslip', search: location.search }} id="clickable-pullslip">
-                <Icon icon="print">
-                  <FormattedMessage id="ui-rs.printPullslip" />
-                </Icon>
-              </DirectLink>
+              {request?.validActions?.includes('manualClose') &&
+                <ManualClose />
+              }
+              <PrintPullSlip />
             </>
           )}
         >
@@ -143,11 +143,11 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
         </Pane>
         <HelperComponent request={request} isOpen={isOpen} />
       </Paneset>
-      {/* Render modals that correspond to available actions */}
+      {/* Render modals that correspond to available actions, adding back excluded actions */}
       {renderNamedWithProps(
         forCurrent.primaryAction && !forCurrent.moreActions.includes(forCurrent.primaryAction)
-          ? [forCurrent.primaryAction, ...forCurrent.moreActions]
-          : forCurrent.moreActions,
+          ? [forCurrent.primaryAction, ...forCurrent.moreActions, ...excludeRemote]
+          : [...forCurrent.moreActions, ...excludeRemote],
         modals,
         { request, performAction }
       )}

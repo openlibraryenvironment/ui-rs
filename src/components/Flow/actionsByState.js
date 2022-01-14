@@ -127,10 +127,10 @@ export const actionIcons = {
 };
 
 /* Actions from request.validActions to exclude from all states when using the below function */
-const excludeRemote = ['message'];
+export const excludeRemote = ['message', 'manualClose'];
 
 /* Actions from request.validActions that cannot become the primary action */
-const excludePrimary = ['manualClose'];
+const excludePrimary = [];
 
 /* This function returns the contextual actions for a provided request,
  * falling back to the default for unknown states.
