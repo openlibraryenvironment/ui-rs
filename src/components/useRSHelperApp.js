@@ -27,7 +27,7 @@ const useRSHelperApp = () => {
               onClick({ open: isOpen('tags') });
             }
           }
-          ariaLabel={ariaLabel}
+          ariaLabel={ariaLabel[0]}
         />
       )}
     </FormattedMessage>
@@ -48,7 +48,7 @@ const useRSHelperApp = () => {
                 onClick({ open: isOpen('chat') });
               }
             }
-            ariaLabel={ariaLabel}
+            ariaLabel={ariaLabel[0]}
           />
         )}
       </FormattedMessage>

@@ -43,7 +43,6 @@ const MessageDropdown = ({ actionItems }) => {
         autoFocus
         ref={triggerRef}
         icon="ellipsis"
-        marginBottom0
         onClick={onToggle}
         {...ariaProps}
       />
