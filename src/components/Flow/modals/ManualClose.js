@@ -28,7 +28,9 @@ const ManualClose = ({ request, performAction }) => {
   });
   if (!terminalQuery.isSuccess) return null;
   const terminalOptions = terminalQuery.data
-    .filter(state => state.code.startsWith(request.isRequester ? 'REQ' : 'RES'))
+    .filter(state => state.code.startsWith(request.isRequester ? 'REQ' : 'RES')
+      // TODO: temporarily excluding this state pending resolution of PR-1250 / better translations (see PR-1245)
+      && state.code !== 'RES_NOT_SUPPLIED')
     .map(state => ({ value: state.code, label: formatMessage({ id: `stripes-reshare.states.${state.code}` }) }));
 
   const onSubmit = values => {
