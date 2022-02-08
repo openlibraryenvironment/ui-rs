@@ -3,7 +3,7 @@ import uniq from 'lodash/uniq';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import reset from '!!style-loader?injectType=lazyStyleTag!css-loader!reset-css/reset.css';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import style from '!!style-loader?injectType=lazyStyleTag!postcss-loader!./design/style.css';
+import style from '!!style-loader?injectType=lazyStyleTag!css-loader!./design/style.css';
 import { formatConditionCode, formatConditionNote } from '../../util/formatCondition';
 import barCodeString from './BarCodeString';
 import logoUrl from './design/images/blank-logo.png';

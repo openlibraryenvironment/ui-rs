@@ -1,6 +1,5 @@
 {
   "extends": "@folio/eslint-config-stripes",
-  "parser": "babel-eslint",
   "rules": {
     "react/prop-types": "off"
   }
