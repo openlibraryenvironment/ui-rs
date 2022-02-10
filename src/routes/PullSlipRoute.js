@@ -1,37 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { get } from 'lodash';
-import { stripesConnect } from '@folio/stripes/core';
-import PrintPullSlip from '../components/PrintPullSlip';
+import React, { useEffect } from 'react';
+import { useIsActionPending, usePerformAction, useOkapiQuery } from '@reshare/stripes-reshare';
+import PrintOrCancel from '../components/PrintOrCancel';
+import PullSlip from '../components/PullSlip';
+import upNLevels from '../util/upNLevels';
 
-const PullSlipRoute = props => {
+const PullSlipRoute = ({ location, match }) => {
+  const id = match.params?.id;
+  const performAction = usePerformAction(id);
+  const pending = useIsActionPending(id);
+  const { data: request = {}, isSuccess, isFetching, isStale } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000 });
+
+  useEffect(() => {
+    if (isSuccess && !isFetching && !isStale && pending === 0 && request.validActions?.includes('supplierPrintPullSlip')) {
+      performAction('supplierPrintPullSlip');
+    }
+  }, [isFetching, isSuccess, isStale, pending, performAction, request]);
+
+  if (!isSuccess) return null;
   return (
-    <div>
-      <div>
-        {
-          get(props.resources.viewRecord, 'hasLoaded') &&
-            <PrintPullSlip record={props.resources.viewRecord.records[0]} />
-        }
-      </div>
-    </div>
+    <PrintOrCancel destUrl={upNLevels(location, 1)}>
+      <PullSlip record={request} />
+    </PrintOrCancel>
   );
 };
 
-PullSlipRoute.manifest = {
-  viewRecord: {
-    type: 'okapi',
-    path: 'rs/patronrequests/:{id}',
-  },
-};
-
-PullSlipRoute.propTypes = {
-  resources: PropTypes.shape({
-    viewRecord: PropTypes.shape({
-      records: PropTypes.arrayOf(
-        PropTypes.object.isRequired,
-      ).isRequired,
-    }),
-  }).isRequired
-};
-
-export default stripesConnect(PullSlipRoute);
+export default PullSlipRoute;
