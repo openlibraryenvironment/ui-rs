@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 
@@ -35,6 +34,7 @@ const subheading = (req, params) => {
 
 const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   const id = match.params?.id;
+  const intl = useIntl();
   const stripes = useStripes();
   const { ChatButton, HelperComponent, TagButton, isOpen } = useRSHelperApp();
   const appName = useContext(AppNameContext);
@@ -83,10 +83,9 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   return (
     <>
       <Paneset>
-        {/* TODO: The "Request" string is translated as ui-rs.view.title which we can use conveniently with a hook once react-intl is upgraded */}
         <Pane
           centerContent
-          paneTitle={`Request ${request.hrid}`}
+          paneTitle={intl.formatMessage({ id: 'ui-rs.view.title' }, { id: request.hrid })}
           paneSub={subheading(request, match.params)}
           padContent={false}
           onClose={() => history.push(upNLevels(location, 3))}
@@ -155,23 +154,9 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   );
 };
 
-ViewRoute.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.object,
-    url: PropTypes.string,
-  }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-    search: PropTypes.string.isRequired,
-  }).isRequired,
-  history: PropTypes.object.isRequired,
-};
-
-const ConnectedViewRoute = ViewRoute;
-
 const ViewRouteWithContext = props => (
   <MessageModalProvider>
-    <ConnectedViewRoute {...props} />
+    <ViewRoute {...props} />
   </MessageModalProvider>
 );
 
