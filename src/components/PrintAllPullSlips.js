@@ -1,17 +1,15 @@
 import React, { useContext } from 'react';
-import queryString from 'query-string';
 import { useLocation, useHistory } from 'react-router';
 import { includes, filter } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Button, Callout } from '@folio/stripes/components';
-import { useOkapiKy } from '@folio/stripes/core';
+import { Button } from '@folio/stripes/components';
+import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import { onCloseDirect } from '@reshare/stripes-reshare';
-import { CalloutContext } from '@folio/stripes/core';
 import AllPullSlips from './PullSlip/AllPullSlips';
 import PrintOrCancel from './PrintOrCancel';
 import upNLevels from '../util/upNLevels';
 
-const PrintAllPullSlips = ({query: requestsQuery}) => {
+const PrintAllPullSlips = ({ query: requestsQuery }) => {
   const callout = useContext(CalloutContext);
   const history = useHistory();
   const location = useLocation();
@@ -49,7 +47,7 @@ const PrintAllPullSlips = ({query: requestsQuery}) => {
         // Need to re-fetch requests to reflect updated states
         requestsQuery.refetch();
       });
-  }
+  };
 
   if (!requestsQuery.isSuccess) {
     return 'Record not yet loaded for printing';
@@ -64,10 +62,13 @@ const PrintAllPullSlips = ({query: requestsQuery}) => {
       <PrintOrCancel
         destUrl={destUrl}
         extraButtons={
-          <Button marginBottom0 onClick={() => {
-            markAllPrintableAsPrinted();
-            onCloseDirect(destUrl, history, location)();
-          }}>
+          <Button
+            marginBottom0
+            onClick={() => {
+              markAllPrintableAsPrinted();
+              onCloseDirect(destUrl, history, location)();
+            }}
+          >
             <FormattedMessage id="ui-rs.markAllSlipsPrinted" />
           </Button>
         }
@@ -76,6 +77,6 @@ const PrintAllPullSlips = ({query: requestsQuery}) => {
       </PrintOrCancel>
     </>
   );
-}
+};
 
 export default PrintAllPullSlips;
