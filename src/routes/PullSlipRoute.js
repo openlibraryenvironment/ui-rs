@@ -10,7 +10,10 @@ const PullSlipRoute = ({ location, match }) => {
   const { data: request = {}, isSuccess } = useOkapiQuery(`rs/patronrequests/${id}`, {
     onSuccess: req => {
       if (req.validActions?.includes('supplierPrintPullSlip')) {
-        performAction('supplierPrintPullSlip');
+        performAction('supplierPrintPullSlip', false, {
+          success: 'stripes-reshare.actions.supplierPrintPullSlip.success',
+          error: 'stripes-reshare.actions.supplierPrintPullSlip.error'
+        });
       }
     }
   });
