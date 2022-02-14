@@ -3,15 +3,16 @@ import { FormattedMessage } from 'react-intl';
 import { Field, useForm } from 'react-final-form';
 import { AccordionSet, Accordion, Col, Row, Datepicker, Select, TextArea, TextField } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
-import { Pluggable, withStripes } from '@folio/stripes/core';
+import { Pluggable, useStripes } from '@folio/stripes/core';
 
-const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => {
+const PatronRequestForm = ({ locations, requesters, onSISelect }) => {
   const { change } = useForm();
+  const stripes = useStripes();
   useEffect(() => {
     if (locations?.length === 1) {
       change('pickupLocationSlug', locations[0]?.value);
     }
-  }, [locations]);
+  }, [locations, change]);
 
   return (
     <AccordionSet>
@@ -37,18 +38,18 @@ const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => {
               component={Datepicker}
             />
           </Col>
-            <Col xs={3}>
-              <Field
-                id="edit-request-metadata-pickupLocation"
-                name="pickupLocationSlug"
-                label={<FormattedMessage id="ui-rs.information.pickupLocation" />}
-                placeholder=" "
-                component={Select}
-                dataOptions={locations}
-                required
-                validate={required}
-              />
-            </Col>
+          <Col xs={3}>
+            <Field
+              id="edit-request-metadata-pickupLocation"
+              name="pickupLocationSlug"
+              label={<FormattedMessage id="ui-rs.information.pickupLocation" />}
+              placeholder=" "
+              component={Select}
+              dataOptions={locations}
+              required
+              validate={required}
+            />
+          </Col>
           <Col xs={3}>
             <Field
               id="edit-request-metadata-volume"
@@ -193,4 +194,4 @@ const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => {
   );
 };
 
-export default withStripes(PatronRequestForm);
+export default PatronRequestForm;
