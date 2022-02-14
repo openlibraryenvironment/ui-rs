@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
-
 
 function calculateDueDate(intl, request) {
   if (request.parsedDueDateRS) {
@@ -19,7 +17,6 @@ function calculateDueDate(intl, request) {
   if (!dueDateText) return <NoValue />;
   return <FormattedMessage id="ui-rs.invalid-date" values={{ date: dueDateText }} />;
 }
-
 
 const RequestInfo = ({ request }) => {
   const intl = useIntl();
@@ -75,13 +72,19 @@ const RequestInfo = ({ request }) => {
           {colKeyVal('dueDate', calculateDueDate(intl, request))}
           {colKeyVal('volumesNeeded', request.volume) || <NoValue />}
         </Row>
+        {request.patronNote &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.notes" />}
+                value={request.patronNote}
+              />
+            </Col>
+          </Row>
+        }
       </Layout>
     </Accordion>
   );
-};
-
-RequestInfo.propTypes = {
-  request: PropTypes.object.isRequired,
 };
 
 export default RequestInfo;
