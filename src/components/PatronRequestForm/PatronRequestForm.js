@@ -103,7 +103,6 @@ const PatronRequestForm = ({ locations, requesters, onSISelect, stripes }) => {
               name="systemInstanceIdentifier"
               label={<FormattedMessage id="ui-rs.information.systemInstanceIdentifier" />}
               component={TextField}
-              validate={required}
             />
           </Col>
         </Row>
