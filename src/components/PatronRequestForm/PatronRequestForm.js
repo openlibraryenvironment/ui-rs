@@ -83,6 +83,7 @@ const PatronRequestForm = ({ locations, requesters, onSISelect }) => {
               label={<FormattedMessage id="ui-rs.information.notes" />}
               component={TextArea}
               rows={5}
+              maxlength={255}
             />
           </Col>
         </Row>
