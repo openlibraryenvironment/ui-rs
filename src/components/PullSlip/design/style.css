@@ -431,6 +431,10 @@ p.slot--patron-name {
   border-color: #aaa;
 }
 
+.note-long {
+  font-size: 75%;
+}
+
 .conditions {
   box-sizing: border-box;
   border-top: 0.5pt dotted #000;

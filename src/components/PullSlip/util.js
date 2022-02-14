@@ -89,6 +89,8 @@ function recordToPullSlipData(intl, record) {
         return note ? `${code} (${note})` : code;
       }
     }),
+    patronNote: record.patronNote,
+    isPatronNoteLong: record.patronNote && record.patronNote.length > 50,
   };
 }
 

@@ -50,6 +50,12 @@
                   {{/each}}
                 </div>
               {{/if}}
+              {{#if patronNote}}
+                <div>
+                  <h2>Patron note</h2>
+                  <div class="note{{#if isPatronNoteLong}} note-long{{/if}}">{{patronNote}}</div>
+                </div>
+              {{/if}}
               <div class="slot--item-call-number">{{callNumber}}</div>
               <div class="slot--item-location">{{location}}</div>
               <div class="details-row">
