@@ -24,6 +24,8 @@
     "patronrequests.pickLocation": "Location",
     "patronrequests.pickShelvingLocation": "Shelving Location",
     "patronrequests.found": "{number} records found",
+    "patronrequests.notFound": "No records found.",
+    "patronrequests.withoutFilter": "Click here to try search again without filters.",
     "information.heading.developer": "Developer info",
     "information.heading.developer.help": "(JSON dump of raw record)",
     "information.heading.request": "Request information",
