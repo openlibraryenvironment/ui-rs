@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <SchemaVersion>2.0</SchemaVersion>
+        <ProjectGuid>{494c15a4-e175-4c6d-9955-e16842012a37}</ProjectGuid>
+        <ProjectHome>.</ProjectHome>
+        <ProjectView>ShowAllFiles</ProjectView>
+        <StartupFile />
+        <WorkingDirectory>.</WorkingDirectory>
+        <OutputPath>.</OutputPath>
+        <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+        <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">17.0</VisualStudioVersion>
+        <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+    <ItemGroup>
+        <Content Include="package.json" />
+        <Content Include="CHANGELOG.md" />
+        <Content Include="CONTRIBUTING.md" />
+        <Content Include="README.md" />
+        <Content Include="doc\architecture-of-searchandsort-app.md" />
+        <Content Include="doc\data-structure.md" />
+        <Content Include="doc\demo-walkthrough.md" />
+        <Content Include="doc\README.md" />
+        <Content Include="doc\refdata-api.md" />
+        <Content Include="icons\app.png" />
+        <Content Include="icons\app.svg" />
+        <Content Include="src\index.js" />
+        <Content Include="src\routes\DirectoryEntries.js" />
+        <Content Include="src\settings\index.js" />
+        <Content Include="src\settings\ServiceSettings.js" />
+        <Content Include="src\settings\TagSettings.js" />
+        <Content Include="src\util\getRefdataValuesFromParentResources.js" />
+        <Content Include="src\util\parseFilters.js" />
+        <Content Include="src\util\permissionToEdit.js" />
+        <Content Include="src\util\validators.js" />
+        <Content Include="src\components\DirectoryEntryForm\DirectoryEntryForm.js" />
+        <Content Include="src\components\DirectoryEntryForm\index.js" />
+        <Content Include="src\components\EditDirectoryEntry\EditDirectoryEntry.js" />
+        <Content Include="src\components\EditDirectoryEntry\index.js" />
+        <Content Include="src\components\ViewDirectoryEntry\index.js" />
+        <Content Include="src\components\ViewDirectoryEntry\ViewDirectoryEntry.js" />
+        <Content Include="src\components\DirectoryEntryForm\components\CustomPropertiesListField.css" />
+        <Content Include="src\components\DirectoryEntryForm\components\AddressListFieldArray.js" />
+        <Content Include="src\components\DirectoryEntryForm\components\CustomPropertiesListField.js" />
+        <Content Include="src\components\DirectoryEntryForm\components\DirectoryEntryFormCustomProperties.js" />
+        <Content Include="src\components\DirectoryEntryForm\components\index.js" />
+        <Content Include="src\components\DirectoryEntryForm\components\ServiceAccountListFieldArray.js" />
+        <Content Include="src\components\DirectoryEntryForm\components\SymbolListField.js" />
+        <Content Include="src\components\DirectoryEntryForm\sectionsShared\DirectoryEntryFormContactInfo.js" />
+        <Content Include="src\components\DirectoryEntryForm\sectionsShared\DirectoryEntryFormInfo.js" />
+        <Content Include="src\components\DirectoryEntryForm\sectionsShared\DirectoryEntryFormServices.js" />
+        <Content Include="src\components\DirectoryEntryForm\sectionsShared\index.js" />
+        <Content Include="src\components\ViewDirectoryEntry\components\Address.css" />
+        <Content Include="src\components\ViewDirectoryEntry\components\CustomProperties.css" />
+        <Content Include="src\components\ViewDirectoryEntry\components\Address.js" />
+        <Content Include="src\components\ViewDirectoryEntry\components\CustomProperties.js" />
+        <Content Include="src\components\ViewDirectoryEntry\components\CustomProperty.js" />
+        <Content Include="src\components\ViewDirectoryEntry\components\index.js" />
+        <Content Include="src\components\ViewDirectoryEntry\sectionsShared\ContactInformation.js" />
+        <Content Include="src\components\ViewDirectoryEntry\sectionsShared\DirectoryEntryInfo.js" />
+        <Content Include="src\components\ViewDirectoryEntry\sectionsShared\index.js" />
+        <Content Include="src\components\ViewDirectoryEntry\sectionsShared\ServiceAccounts.js" />
+        <Content Include="src\settings\components\index.js" />
+        <Content Include="src\settings\components\ServiceField.js" />
+        <Content Include="src\settings\components\ServiceListFieldArray.js" />
+        <Content Include="translations\ui-directory\en.json" />
+        <Content Include="translations\ui-directory\en_US.json" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Directory" />
+        <Folder Include="doc" />
+        <Folder Include="icons" />
+        <Folder Include="src" />
+        <Folder Include="src\components" />
+        <Folder Include="src\components\DirectoryEntryForm" />
+        <Folder Include="src\components\DirectoryEntryForm\components" />
+        <Folder Include="src\components\DirectoryEntryForm\sectionsShared" />
+        <Folder Include="src\components\EditDirectoryEntry" />
+        <Folder Include="src\components\ViewDirectoryEntry" />
+        <Folder Include="src\components\ViewDirectoryEntry\components" />
+        <Folder Include="src\components\ViewDirectoryEntry\sectionsShared" />
+        <Folder Include="src\routes" />
+        <Folder Include="src\settings" />
+        <Folder Include="src\settings\components" />
+        <Folder Include="src\util" />
+        <Folder Include="translations" />
+        <Folder Include="translations\ui-directory" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+    <ProjectExtensions>
+        <VisualStudio>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+            <WebProjectProperties>
+              <UseIIS>False</UseIIS>
+              <AutoAssignPort>True</AutoAssignPort>
+              <DevelopmentServerPort>0</DevelopmentServerPort>
+              <DevelopmentServerVPath>/</DevelopmentServerVPath>
+              <IISUrl>http://localhost:48022/</IISUrl>
+              <NTLMAuthentication>False</NTLMAuthentication>
+              <UseCustomServer>True</UseCustomServer>
+              <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+              <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+            </WebProjectProperties>
+          </FlavorProperties>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+            <WebProjectProperties>
+              <StartPageUrl>
+              </StartPageUrl>
+              <StartAction>CurrentPage</StartAction>
+              <AspNetDebugging>True</AspNetDebugging>
+              <SilverlightDebugging>False</SilverlightDebugging>
+              <NativeDebugging>False</NativeDebugging>
+              <SQLDebugging>False</SQLDebugging>
+              <ExternalProgram>
+              </ExternalProgram>
+              <StartExternalURL>
+              </StartExternalURL>
+              <StartCmdLineArguments>
+              </StartCmdLineArguments>
+              <StartWorkingDirectory>
+              </StartWorkingDirectory>
+              <EnableENC>False</EnableENC>
+              <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+            </WebProjectProperties>
+          </FlavorProperties>
+        </VisualStudio>
+    </ProjectExtensions>
+</Project>
