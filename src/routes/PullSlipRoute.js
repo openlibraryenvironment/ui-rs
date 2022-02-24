@@ -2,9 +2,8 @@ import React from 'react';
 import { usePerformAction, useOkapiQuery } from '@reshare/stripes-reshare';
 import PrintOrCancel from '../components/PrintOrCancel';
 import PullSlip from '../components/PullSlip';
-import upNLevels from '../util/upNLevels';
 
-const PullSlipRoute = ({ location, match }) => {
+const PullSlipRoute = ({ match }) => {
   const id = match.params?.id;
   const performAction = usePerformAction(id);
   const { data: request = {}, isSuccess } = useOkapiQuery(`rs/patronrequests/${id}`, {
@@ -20,7 +19,7 @@ const PullSlipRoute = ({ location, match }) => {
 
   if (!isSuccess) return null;
   return (
-    <PrintOrCancel destUrl={upNLevels(location, 1)}>
+    <PrintOrCancel>
       <PullSlip record={request} />
     </PrintOrCancel>
   );

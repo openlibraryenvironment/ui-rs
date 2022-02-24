@@ -5,9 +5,8 @@ import { Route, Switch } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
-import { usePerformAction, useOkapiQuery } from '@reshare/stripes-reshare';
+import { upNLevels, useCloseDirect, usePerformAction, useOkapiQuery } from '@reshare/stripes-reshare';
 
-import upNLevels from '../util/upNLevels';
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { MessageModalProvider } from '../components/MessageModalState';
 import * as modals from '../components/Flow/modals';
@@ -32,7 +31,7 @@ const subheading = (req, params) => {
   return `${title} · ${requester} → ${supplier}`;
 };
 
-const ViewRoute = ({ history, location, location: { pathname }, match }) => {
+const ViewRoute = ({ location, location: { pathname }, match }) => {
   const id = match.params?.id;
   const intl = useIntl();
   const stripes = useStripes();
@@ -40,6 +39,7 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
   const appName = useContext(AppNameContext);
   const performAction = usePerformAction(id);
   const { handleMarkAllRead } = useChatActions(id);
+  const close = useCloseDirect(upNLevels(location, 3));
 
   // Fetch the request
   const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000 });
@@ -88,7 +88,7 @@ const ViewRoute = ({ history, location, location: { pathname }, match }) => {
           paneTitle={intl.formatMessage({ id: 'ui-rs.view.title' }, { id: request.hrid })}
           paneSub={subheading(request, match.params)}
           padContent={false}
-          onClose={() => history.push(upNLevels(location, 3))}
+          onClose={close}
           dismissible
           lastMenu={paneButtons()}
           defaultWidth="fill"

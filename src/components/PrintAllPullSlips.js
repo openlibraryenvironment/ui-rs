@@ -1,21 +1,17 @@
 import React, { useContext } from 'react';
-import { useLocation, useHistory } from 'react-router';
 import { includes, filter } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Button } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
-import { onCloseDirect } from '@reshare/stripes-reshare';
+import { useCloseDirect } from '@reshare/stripes-reshare';
 import AllPullSlips from './PullSlip/AllPullSlips';
 import PrintOrCancel from './PrintOrCancel';
-import upNLevels from '../util/upNLevels';
 
 const PrintAllPullSlips = ({ query: requestsQuery }) => {
   const callout = useContext(CalloutContext);
-  const history = useHistory();
-  const location = useLocation();
   const okapiKy = useOkapiKy();
+  const close = useCloseDirect();
 
-  const destUrl = upNLevels(location, 1);
   const records = requestsQuery?.data?.pages?.flatMap(x => x.results);
   const totalRecords = requestsQuery?.data?.pages?.[0]?.total;
 
@@ -60,13 +56,12 @@ const PrintAllPullSlips = ({ query: requestsQuery }) => {
   return (
     <>
       <PrintOrCancel
-        destUrl={destUrl}
         extraButtons={
           <Button
             marginBottom0
             onClick={() => {
               markAllPrintableAsPrinted();
-              onCloseDirect(destUrl, history, location)();
+              close();
             }}
           >
             <FormattedMessage id="ui-rs.markAllSlipsPrinted" />

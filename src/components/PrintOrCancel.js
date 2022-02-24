@@ -12,65 +12,48 @@
 // * Use Chrome instead of Firefox.
 // * Run your development system under HTTPS somehow.
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { withRouter } from 'react-router';
 import ReactToPrint from 'react-to-print';
 import { Button, PaneHeaderIconButton, HotKeys } from '@folio/stripes/components';
-import { onCloseDirect } from '@reshare/stripes-reshare';
+import { useCloseDirect } from '@reshare/stripes-reshare';
 import css from './PrintPullSlip.css';
 
-class PrintOrCancel extends React.Component {
-  static propTypes = {
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.object,
-    destUrl: PropTypes.string.isRequired,
-    extraButtons: PropTypes.node,
-    children: PropTypes.element.isRequired,
-  };
+const PrintOrCancel = ({ extraButtons, children }) => {
+  const close = useCloseDirect();
+  const ref = useRef();
+  const keys = { cancel: ['escape'] };
+  const handlers = { cancel: close };
 
-  constructor(props) {
-    super(props);
-    this.ref = React.createRef();
-  }
-
-  render() {
-    const keys = { cancel: ['escape'] };
-    const handlers = { cancel: onCloseDirect(this.props.destUrl, this.props?.history, this.props?.location) };
-
-    return (
-      <HotKeys keyMap={keys} handlers={handlers} attach={document.body} focused>
-        <div className={css.buttonBar}>
-          <div className={css.cancelIcon}>
-            <FormattedMessage id="ui-rs.button.cancel-print">
-              {ariaLabel => (
-                <PaneHeaderIconButton
-                  icon="times"
-                  onClick={handlers.cancel}
-                  aria-label={ariaLabel}
-                />
-              )}
-            </FormattedMessage>
-          </div>
-          <ReactToPrint
-            trigger={() => (
-              <Button data-test-print-pull-slip marginBottom0>
-                <FormattedMessage id="ui-rs.button.print" />
-              </Button>
+  return (
+    <HotKeys keyMap={keys} handlers={handlers} attach={document.body} focused>
+      <div className={css.buttonBar}>
+        <div className={css.cancelIcon}>
+          <FormattedMessage id="ui-rs.button.cancel-print">
+            {ariaLabel => (
+              <PaneHeaderIconButton
+                icon="times"
+                onClick={close}
+                aria-label={ariaLabel}
+              />
             )}
-            content={() => this.ref.current}
-          />
-          {this.props.extraButtons}
+          </FormattedMessage>
         </div>
-        <div ref={this.ref}>
-          {this.props.children}
-        </div>
-      </HotKeys>
-    );
-  }
-}
+        <ReactToPrint
+          trigger={() => (
+            <Button data-test-print-pull-slip marginBottom0>
+              <FormattedMessage id="ui-rs.button.print" />
+            </Button>
+          )}
+          content={() => ref.current}
+        />
+        {extraButtons}
+      </div>
+      <div ref={ref}>
+        {children}
+      </div>
+    </HotKeys>
+  );
+};
 
-export default withRouter(PrintOrCancel);
+export default PrintOrCancel;
