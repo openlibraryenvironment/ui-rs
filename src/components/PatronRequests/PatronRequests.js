@@ -92,9 +92,9 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
 
   return (
     <SearchAndSortQuery
-      initialFilterState={{ terminal: ['false'] }}
+      initialSearch="?filters=terminal.false&sort=-dateCreated"
       initialSearchState={{ query: '' }}
-      initialSortState={{ sort: '-dateCreated' }}
+      key={location.search}
       queryGetter={queryGetter}
       querySetter={querySetter}
     >
@@ -226,6 +226,16 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       selectedItemBarcode: a => (a.volumes?.length <= 1 ? a.volumes[0]?.itemId : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />)
                     }}
                     hasMargin
+                    isEmptyMessage={
+                      <>
+                        <FormattedMessage id="ui-rs.patronrequests.notFound" /><br />
+                        {location?.search?.includes('filter') &&
+                          <Link to={queryString.exclude(`${location.pathname}${location.search}`, ['filters'])}>
+                            <FormattedMessage id="ui-rs.patronrequests.withoutFilter" />
+                          </Link>
+                        }
+                      </>
+                    }
                     loading={requestsQuery?.isFetching}
                     onHeaderClick={onSort}
                     onNeedMoreData={fetchMore}

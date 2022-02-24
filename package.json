@@ -61,7 +61,6 @@
     ],
     "displayName": "ui-rs.meta.title",
     "route": "/rs",
-    "queryResource": "query",
     "stripesDeps": [
       "@folio/stripes-erm-components",
       "@k-int/stripes-kint-components",
