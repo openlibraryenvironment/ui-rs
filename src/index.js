@@ -8,6 +8,7 @@ import PullSlipRoute from './routes/PullSlipRoute';
 import { EditPullslipNotification } from './settings/pullslipNotifications';
 import Settings from './settings';
 import AppNameContext from './AppNameContext';
+import StaleBundleWarning from './components/StaleBundleWarning';
 
 class ResourceSharing extends React.Component {
   static propTypes = {
@@ -40,6 +41,9 @@ class ResourceSharing extends React.Component {
     }
     return (
       <AppNameContext.Provider value={appName}>
+        {/* TODO: remove after switching to the Stripes version from the Morning Glory release
+        which will include this functionality in core */}
+        <StaleBundleWarning />
         <Switch>
           <Redirect
             exact
