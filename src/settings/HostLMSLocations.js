@@ -1,43 +1,41 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useMutation, useQuery } from 'react-query';
-
+import { useMutation } from 'react-query';
 import { Field } from 'react-final-form';
 
 import { Pane, Select, Spinner } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
-
 import { ActionList, generateKiwtQuery } from '@k-int/stripes-kint-components';
+import { useOkapiQuery } from '@reshare/stripes-reshare';
 
 const HostLMSLocations = () => {
   const ky = useOkapiKy();
 
-  const { data: locations } = useQuery(
-    ['ui-rs', 'settings', 'HostLMSLocations', 'getLocations'],
-    () => ky(`rs/hostLMSLocations${generateKiwtQuery({sort: 'name', stats: false, max: 100}, {})}`).json()
-  );
+  // Not caching locations as they are autopopulated and we want to see the latest whenever we navigate here
+  const { data: locations } = useOkapiQuery('rs/hostLMSLocations', {
+    searchParams: generateKiwtQuery({ sort: 'name', stats: false, max: 1000 }, {}),
+  });
 
-  const branchPath = `rs/directoryEntry${generateKiwtQuery(
+  const branchParams = generateKiwtQuery(
     {
       filterKeys: {
         entryType: 'type.value',
         entryStatus: 'status.value'
       },
-      max: 100,
+      max: 1000,
       sort: 'name',
       stats: false
     },
     {
-      filters: 'entryType.branch, entryStatus.managed'
+      filters: 'entryType.branch, entryStatus.managed' // it doesn't seem to properly apply the status filter?
     }
-  )}`;
-
-  const { data: branchLocations, isLoading: branchLocationsLoading } = useQuery(
-    ['ui-rs', 'settings', 'HostLMSLocations', 'getBranchLocations'],
-    () => ky(branchPath).json()
   );
+  const { data: branchLocations, isLoading: branchLocationsLoading } = useOkapiQuery('rs/directoryEntry', {
+    searchParams: branchParams,
+    staleTime: 1 * 60 * 1000 // can set this longer once we invalidate in ui-directory
+  });
 
-  const dirOptions = branchLocations?.reduce((acc, cur) => ([...acc, { value: cur.id, label: cur.name }]), [{"": ""}]);
+  const dirOptions = branchLocations?.reduce((acc, cur) => ([...acc, { value: cur.id, label: cur.name }]), [{ '': '' }]);
   // This is fine for now but we should probably just expand the dir entry name on the record
   const dirLookup = dirOptions?.reduce((acc, cur) => ({ ...acc, [cur.value]: cur.label }), {});
 
@@ -46,8 +44,6 @@ const HostLMSLocations = () => {
     ['ui-rs', 'settings', 'HostLMSLocations', 'putLocations'],
     async (data) => ky.put(`rs/hostLMSLocations/${data.id}`, { json: data }).json()
   );
-
-  console.log("Locations: %o", locations)
 
   const actionAssigner = () => {
     return ([
@@ -99,7 +95,7 @@ const HostLMSLocations = () => {
             const id = rec?.correspondingDirectoryEntry?.id;
             if (!id) return '';
             if (branchLocationsLoading) {
-              return <Spinner/>;
+              return <Spinner />;
             }
             return dirLookup[id] ?? id;
           }
