@@ -2,6 +2,8 @@
   "front.welcome": "Welcome to ReShare!",
   "meta.title": "Resource Sharing",
   "edit": "Edit",
+  "create": "Create",
+  "delete": "Delete",
   "editPatronRequest": "Edit Patron Request",
   "new-app.greeting": "Congratulations!",
   "new-app.message": "Your Stripes app is running.",
