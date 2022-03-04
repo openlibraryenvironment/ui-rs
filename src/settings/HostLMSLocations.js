@@ -20,7 +20,7 @@ const HostLMSLocations = () => {
   const branchPath = `rs/directoryEntry${generateKiwtQuery(
     {
       filterKeys: {
-        entryType: 'tpye.value',
+        entryType: 'type.value',
         entryStatus: 'status.value'
       },
       max: 100,
