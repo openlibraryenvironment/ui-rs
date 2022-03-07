@@ -27,7 +27,7 @@ const HostLMSLocations = () => {
       stats: false
     },
     {
-      filters: 'entryType.branch, entryStatus.managed' // it doesn't seem to properly apply the status filter?
+      filters: 'entryType.branch,entryStatus.managed'
     }
   );
   const { data: branchLocations, isLoading: branchLocationsLoading } = useOkapiQuery('rs/directoryEntry', {
