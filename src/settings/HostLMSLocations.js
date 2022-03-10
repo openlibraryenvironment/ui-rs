@@ -6,12 +6,14 @@ import { Field } from 'react-final-form';
 import { Button, Pane, Select, Spinner, TextField } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 import { ActionList, FormModal, generateKiwtQuery } from '@k-int/stripes-kint-components';
-import { useOkapiQueryConfig } from '@reshare/stripes-reshare';
+import { useOkapiQueryConfig, useIntlCallout } from '@reshare/stripes-reshare';
 import HostLMSLocationForm from './HostLMSLocationForm';
 
 const HostLMSLocations = () => {
   const ky = useOkapiKy();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
+  const sendCallout = useIntlCallout();
+
   const [ hostLMSFormModal, setHostLMSFormModal] = useState(false);
 
   // Not caching locations as they are autopopulated and we want to see the latest whenever we navigate here
@@ -63,7 +65,16 @@ const HostLMSLocations = () => {
   const { mutateAsync: deleteLocation } = useMutation(
     ['ui-rs', 'settings', 'HostLMSLocations', 'deleteLocation'],
     async (data) => {
-      await ky.delete(`rs/hostLMSLocations/${data.id}`, { json: data });
+      await ky.delete(`rs/hostLMSLocations/${data.id}`, { json: data })
+        .catch(error => {
+          error.response.json()
+            .then(resp => {
+              // This simultaneously checks the error type and that we have a sensible array of linked ids
+              if (resp.linkedPatronRequests?.length) {
+                sendCallout('ui-rs.settings.lmsloc.linkedPRs', 'error', { prs: resp.linkedPatronRequests?.join(', ')});
+              }
+            });
+        });
       queryClient.invalidateQueries(locationQueryConfig.queryKey);
     }
   );

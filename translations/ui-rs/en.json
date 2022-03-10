@@ -329,6 +329,7 @@
   "settings.lmsloc.code": "Host LMS location code",
   "settings.lmsloc.icalRrule": "Host LMS location icalRrule",
 
+  "settings.lmsloc.linkedPRs": "Host LMS location cannot be deleted, as it is still in use on one or more Patron requests: {prs}",
 
   "settings.noticePolicies.active": "Active",
   "settings.noticePolicies.addNotice": "Add notice",
