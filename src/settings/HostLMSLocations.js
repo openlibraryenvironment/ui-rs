@@ -1,58 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { Field } from 'react-final-form';
 
-import { Pane, Select, Spinner } from '@folio/stripes/components';
+import { Button, Pane, Select, Spinner, TextField } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
-import { ActionList, generateKiwtQuery } from '@k-int/stripes-kint-components';
-import { useOkapiQuery } from '@reshare/stripes-reshare';
+import { ActionList, FormModal, generateKiwtQuery } from '@k-int/stripes-kint-components';
+import { useOkapiQueryConfig } from '@reshare/stripes-reshare';
+import HostLMSLocationForm from './HostLMSLocationForm';
 
 const HostLMSLocations = () => {
   const ky = useOkapiKy();
+  const queryClient = useQueryClient()
+  const [ hostLMSFormModal, setHostLMSFormModal] = useState(false);
 
   // Not caching locations as they are autopopulated and we want to see the latest whenever we navigate here
-  const { data: locations } = useOkapiQuery('rs/hostLMSLocations', {
-    searchParams: generateKiwtQuery({ sort: 'name', stats: false, max: 1000 }, {}),
+  const locationQueryConfig = useOkapiQueryConfig('rs/hostLMSLocations', {
+    searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: 1000 }, {}),
   });
+  const { data: locations } = useQuery(locationQueryConfig);
 
   const branchParams = generateKiwtQuery(
     {
-      filterKeys: {
-        entryType: 'type.value',
-        entryStatus: 'status.value'
-      },
       max: 1000,
-      sort: 'name',
+      filters: [
+        { path: 'type.value', value: 'branch' },
+        { path: 'status.value', value: 'managed'}
+      ],
+      sort: [{ path: 'name' }],
       stats: false
     },
-    {
-      filters: 'entryType.branch,entryStatus.managed'
-    }
+    {}
   );
-  const { data: branchLocations, isLoading: branchLocationsLoading } = useOkapiQuery('rs/directoryEntry', {
+  const branchQueryConfig = useOkapiQueryConfig('rs/directoryEntry', {
     searchParams: branchParams,
     staleTime: 1 * 60 * 1000 // can set this longer once we invalidate in ui-directory
   });
+  const { data: branchLocations, isLoading: branchLocationsLoading } = useQuery(branchQueryConfig);
 
   const dirOptions = branchLocations?.reduce((acc, cur) => ([...acc, { value: cur.id, label: cur.name }]), [{ '': '' }]);
   // This is fine for now but we should probably just expand the dir entry name on the record
   const dirLookup = dirOptions?.reduce((acc, cur) => ({ ...acc, [cur.value]: cur.label }), {});
 
 
+
   const { mutateAsync: putLocation } = useMutation(
     ['ui-rs', 'settings', 'HostLMSLocations', 'putLocations'],
-    async (data) => ky.put(`rs/hostLMSLocations/${data.id}`, { json: data }).json()
+    async (data) => {
+      await ky.put(`rs/hostLMSLocations/${data.id}`, { json: data }).json();
+      queryClient.invalidateQueries(locationQueryConfig.queryKey);
+    }
+  );
+
+  const { mutateAsync: postLocation } = useMutation(
+    ['ui-rs', 'settings', 'HostLMSLocations', 'postLocations'],
+    async (data) => {
+      await ky.post(`rs/hostLMSLocations`, { json: data }).json();
+      queryClient.invalidateQueries(locationQueryConfig.queryKey);
+    }
+  );
+
+  const { mutateAsync: deleteLocation } = useMutation(
+    ['ui-rs', 'settings', 'HostLMSLocations', 'deleteLocation'],
+    async (data) => {
+      await ky.delete(`rs/hostLMSLocations/${data.id}`, { json: data });
+      queryClient.invalidateQueries(locationQueryConfig.queryKey);
+    }
   );
 
   const actionAssigner = () => {
     return ([
       { name: 'edit', label: <FormattedMessage id="ui-rs.edit" />, icon: 'edit' },
+      { name: 'delete', label: <FormattedMessage id="ui-rs.delete" />, icon: 'trash' },
     ]);
   };
 
   const actionCalls = {
-    edit: (data) => putLocation(data)
+    edit: (data) => putLocation(data),
+    delete: (data) => deleteLocation(data)
   };
 
   const fieldComponents = {
@@ -69,40 +94,75 @@ const HostLMSLocations = () => {
         />
       );
     },
+    supplyPreference: ({ ...fieldProps }) => {
+      return (
+        <Field
+          {...fieldProps}
+          component={TextField}
+          type="number"
+          fullWidth
+          marginBottom0
+          parse={v => v}
+        />
+      );
+    }
   };
 
-
   return (
-    <Pane
-      defaultWidth="fill"
-      paneTitle={<FormattedMessage id="ui-rs.settings.settingsSection.hostLMSLocations" />}
-    >
-      <ActionList
-        actionAssigner={actionAssigner}
-        actionCalls={actionCalls}
-        columnMapping={{
-          name: <FormattedMessage id="ui-rs.settings.lmsloc.hostLMSLocation" />,
-          supplyPreference: <FormattedMessage id="ui-rs.settings.lmsloc.supplyPreference" />,
-          correspondingDirectoryEntry: <FormattedMessage id="ui-rs.settings.lmsloc.correspondingDirectoryEntry" />
-        }}
-        contentData={locations}
-        editableFields={{
-          name: () => false
-        }}
-        fieldComponents={fieldComponents}
-        formatter={{
-          correspondingDirectoryEntry: rec => {
-            const id = rec?.correspondingDirectoryEntry?.id;
-            if (!id) return '';
-            if (branchLocationsLoading) {
-              return <Spinner />;
+    <>
+      <Pane
+        defaultWidth="fill"
+        lastMenu={
+          <Button
+            marginBottom0
+            onClick={() => setHostLMSFormModal(true)}
+          >
+            <FormattedMessage id="stripes-kint-components.create" />
+          </Button>
+        }
+        paneTitle={<FormattedMessage id="ui-rs.settings.settingsSection.hostLMSLocations" />}
+      >
+        <ActionList
+          actionAssigner={actionAssigner}
+          actionCalls={actionCalls}
+          columnMapping={{
+            name: <FormattedMessage id="ui-rs.settings.lmsloc.hostLMSLocation" />,
+            supplyPreference: <FormattedMessage id="ui-rs.settings.lmsloc.supplyPreference" />,
+            correspondingDirectoryEntry: <FormattedMessage id="ui-rs.settings.lmsloc.correspondingDirectoryEntry" />
+          }}
+          contentData={locations}
+          editableFields={{
+            name: () => false
+          }}
+          fieldComponents={fieldComponents}
+          formatter={{
+            correspondingDirectoryEntry: rec => {
+              const id = rec?.correspondingDirectoryEntry?.id;
+              if (!id) return '';
+              if (branchLocationsLoading) {
+                return <Spinner />;
+              }
+              return dirLookup[id] ?? id;
             }
-            return dirLookup[id] ?? id;
-          }
+          }}
+          hideCreateButton
+          visibleFields={['name', 'supplyPreference', 'correspondingDirectoryEntry']}
+        />
+      </Pane>
+      <FormModal
+        onSubmit={data => {
+          postLocation(data);
+          setHostLMSFormModal(false);
         }}
-        visibleFields={['name', 'supplyPreference', 'correspondingDirectoryEntry']}
-      />
-    </Pane>
+        modalProps={{
+          onClose: () => setHostLMSFormModal(false),
+          open: hostLMSFormModal,
+          size: "small"
+        }}
+      >
+        <HostLMSLocationForm dirOptions={dirOptions}/>
+      </FormModal>
+    </>
   );
 };
 

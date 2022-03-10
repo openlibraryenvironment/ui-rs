@@ -4,10 +4,12 @@ import { Form, Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
 import { FormattedMessage } from 'react-intl';
+
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
+
 import { Button, Col, Headline, Icon, IconButton, Modal, ModalFooter, NoValue, Row, TextField } from '@folio/stripes/components';
 import { useIsActionPending } from '@reshare/stripes-reshare';
 import volumeStateStatus from '../../../util/volumeStateStatus';
-import useKiwtFieldArray from '../../../util/useKiwtFieldArray';
 import { required as requiredValidator } from '../../../util/validators';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';

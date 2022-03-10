@@ -35,7 +35,10 @@ const PatronRequestsRoute = ({ appName, children }) => {
     },
     // Extra keys in the object are added to mod-rs params by generateKiwtQuery
     perPage: PER_PAGE,
-    filters: `isRequester==${appName === 'request' ? 'true' : 'false'}`,
+    filters: [{
+      path: 'isRequester',
+      value: appName === 'request' ? 'true' : 'false'
+    }],
   };
 
   const states = useMemo(() => {
