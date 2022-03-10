@@ -13,22 +13,20 @@ const HostLMSLocations = () => {
 
   // Not caching locations as they are autopopulated and we want to see the latest whenever we navigate here
   const { data: locations } = useOkapiQuery('rs/hostLMSLocations', {
-    searchParams: generateKiwtQuery({ sort: 'name', stats: false, max: 1000 }, {}),
+    searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: 1000 }, {}),
   });
 
   const branchParams = generateKiwtQuery(
     {
-      filterKeys: {
-        entryType: 'type.value',
-        entryStatus: 'status.value'
-      },
       max: 1000,
-      sort: 'name',
+      filters: [
+        { path: 'type.value', value: 'branch' },
+        { path: 'status.value', value: 'managed'}
+      ],
+      sort: [{ path: 'name' }],
       stats: false
     },
-    {
-      filters: 'entryType.branch,entryStatus.managed'
-    }
+    {}
   );
   const { data: branchLocations, isLoading: branchLocationsLoading } = useOkapiQuery('rs/directoryEntry', {
     searchParams: branchParams,
