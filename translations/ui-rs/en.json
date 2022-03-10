@@ -326,6 +326,10 @@
   "settings.lmsloc.hostLMSLocation": "Host LMS location",
   "settings.lmsloc.supplyPreference": "Supplying priority",
 
+  "settings.lmsloc.code": "Host LMS location code",
+  "settings.lmsloc.icalRrule": "Host LMS location icalRrule",
+
+
   "settings.noticePolicies.active": "Active",
   "settings.noticePolicies.addNotice": "Add notice",
   "settings.noticePolicies.description": "Policy description",
