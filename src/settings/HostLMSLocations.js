@@ -14,7 +14,7 @@ const HostLMSLocations = () => {
   const queryClient = useQueryClient();
   const sendCallout = useIntlCallout();
 
-  const [ hostLMSFormModal, setHostLMSFormModal] = useState(false);
+  const [hostLMSFormModal, setHostLMSFormModal] = useState(false);
 
   // Not caching locations as they are autopopulated and we want to see the latest whenever we navigate here
   const locationQueryConfig = useOkapiQueryConfig('rs/hostLMSLocations', {
@@ -27,7 +27,7 @@ const HostLMSLocations = () => {
       max: 1000,
       filters: [
         { path: 'type.value', value: 'branch' },
-        { path: 'status.value', value: 'managed'}
+        { path: 'status.value', value: 'managed' }
       ],
       sort: [{ path: 'name' }],
       stats: false
@@ -57,7 +57,7 @@ const HostLMSLocations = () => {
   const { mutateAsync: postLocation } = useMutation(
     ['ui-rs', 'settings', 'HostLMSLocations', 'postLocations'],
     async (data) => {
-      await ky.post(`rs/hostLMSLocations`, { json: data }).json();
+      await ky.post('rs/hostLMSLocations', { json: data }).json();
       queryClient.invalidateQueries(locationQueryConfig.queryKey);
     }
   );
@@ -71,7 +71,7 @@ const HostLMSLocations = () => {
             .then(resp => {
               // This simultaneously checks the error type and that we have a sensible array of linked ids
               if (resp.linkedPatronRequests?.length) {
-                sendCallout('ui-rs.settings.lmsloc.linkedPRs', 'error', { prs: resp.linkedPatronRequests?.join(', ')});
+                sendCallout('ui-rs.settings.lmsloc.linkedPRs', 'error', { prs: resp.linkedPatronRequests?.join(', ') });
               }
             });
         });
@@ -168,10 +168,10 @@ const HostLMSLocations = () => {
         modalProps={{
           onClose: () => setHostLMSFormModal(false),
           open: hostLMSFormModal,
-          size: "small"
+          size: 'small'
         }}
       >
-        <HostLMSLocationForm dirOptions={dirOptions}/>
+        <HostLMSLocationForm dirOptions={dirOptions} />
       </FormModal>
     </>
   );
