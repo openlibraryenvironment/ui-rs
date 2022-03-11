@@ -388,6 +388,7 @@
   "settings.hostLMSIntegration.borrowerCheck": "Borrower check",
   "settings.hostLMSIntegration.acceptItem": "Accept item method",
   "settings.hostLMSIntegration.checkInItem": "Check in item method",
+  "settings.hostLMSIntegration.checkInOnReturn": "Check in request when returned by patron",
   "settings.hostLMSIntegration.checkOutItem": "Check out item method",
   "settings.other.cancellationReasons": "Cancellation reasons",
   "settings.autoResponder.autoResponderCancel": "Cancellation auto responder",
