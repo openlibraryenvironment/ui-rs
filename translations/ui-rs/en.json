@@ -25,6 +25,7 @@
   "patronrequests.localCallNumber": "Call Number",
   "patronrequests.pickLocation": "Location",
   "patronrequests.pickShelvingLocation": "Shelving Location",
+  "patronrequests.pickupLocation": "Pickup Location",
   "patronrequests.found": "{number} records found",
   "patronrequests.notFound": "No records found.",
   "patronrequests.withoutFilter": "Click here to try search again without filters.",
