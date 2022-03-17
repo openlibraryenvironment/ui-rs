@@ -305,6 +305,7 @@
   "settings.notices.itemTokenHeader": "Item",
   "settings.notices.userTokenHeader": "User",
   "settings.notices.requestTokenHeader": "Request",
+  "settings.notices.patronProfileHeader": "Patron Profile",
 
   "settings.templates.active": "Active",
   "settings.templates.description": "Description",
