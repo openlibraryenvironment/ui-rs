@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Route } from 'react-router-dom';
 
@@ -7,6 +6,7 @@ import { useSettings } from '@k-int/stripes-kint-components';
 
 import { CustomISO18626 } from './settingsComponents';
 import HostLMSLocations from './HostLMSLocations';
+import HostLMSShelvingLocations from './HostLMSShelvingLocations';
 import Notices from './notices';
 import NoticePolicies from './noticePolicies';
 import OtherSettings from './OtherSettings';
@@ -64,7 +64,15 @@ const ResourceSharingSettings = (props) => {
       route: 'lmslocations',
       id: 'hostLMSLocations',
       label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.hostLMSLocations' }),
-      component: HostLMSLocations
+      component: HostLMSLocations,
+      perm: 'ui-rs.settings.hostlmslocations',
+    },
+    {
+      route: 'lmsshelving',
+      id: 'hostLMSShelvingLocations',
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.hostLMSShelvingLocations' }),
+      component: HostLMSShelvingLocations,
+      perm: 'ui-rs.settings.hostlmslocations',
     },
   ];
 
@@ -105,17 +113,6 @@ const ResourceSharingSettings = (props) => {
       additionalRoutes={additionalRoutes}
     />
   );
-};
-
-ResourceSharingSettings.propTypes = {
-  resources: PropTypes.shape({
-    settings: PropTypes.shape({
-      records: PropTypes.array
-    })
-  }),
-  match: PropTypes.shape({
-    path: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default ResourceSharingSettings;
