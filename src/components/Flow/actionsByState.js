@@ -18,6 +18,14 @@ import initialToUpper from '../../util/initialToUpper';
  * validActions without a component named for them will be rendered with the component
  * "Generic" which is roughly the ActionButton for moreActions and the ScanConfirmAction
  * for a primaryAction with accomodations for missing translations.
+ * 
+ * excludesActions is for the VERY rare cases where an action IS a validAction,
+ * but we do not want to explicitly render an action button for it.
+ * Example - for RES_AWAIT_SHIP "supplierCheckInToReshare" is a validAction,
+ * since FillMultiVolumeRequest is valid and uses that action.
+ * However the generic "Fill request" option (which uses the same action on the backend)
+ * no longer makes sense in this state, so needs to be excluded,
+ * and FillMultiVolumeRequest rendered through "moreActions".
  *
  * Translations for generic components:
  *
@@ -66,7 +74,8 @@ export const actionsByState = {
   // Perhaps have switch inside the default component itself?
   RES_AWAIT_SHIP: {
     primaryAction: 'supplierMarkShipped',
-    moreActions: ['FillMultiVolumeRequest']
+    moreActions: ['FillMultiVolumeRequest'],
+    excludeActions: ['supplierCheckInToReshare']
   },
   REQ_SHIPPED: {
     moreActions: ['PrintPullSlip'],
@@ -139,7 +148,7 @@ export const actionsForRequest = request => {
   const actions = { ...actionsByState.default, ...actionsByState[request.state?.code] || {} };
   if (Array.isArray(request.validActions)) {
     const remote = request.validActions.filter(
-      action => actions.primaryAction !== initialToUpper(action) && !(excludeRemote.includes(action))
+      action => actions.primaryAction !== initialToUpper(action) && !(excludeRemote.includes(action)) && !(actions.excludeActions?.includes(action))
     );
     const client = actions.moreActions.filter(
       action => !(remote.includes(`${action.charAt(0).toLowerCase()}${action.substring(1)}`))
