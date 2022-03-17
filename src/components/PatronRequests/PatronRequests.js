@@ -28,7 +28,7 @@ const appDetails = {
     visibleColumns: [
       'flags', 'hrid',
       'dateCreated', 'selectedItemBarcode', 'patronIdentifier', 'state', 'serviceType',
-      'supplyingInstitutionSymbol',
+      'supplyingInstitutionSymbol', 'pickupLocation',
       'title',
     ],
     extraFilter: 'r.true',
@@ -180,6 +180,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       supplyingInstitutionSymbol: <FormattedMessage id="ui-rs.patronrequests.supplyingInstitutionSymbol" />,
                       selectedItemBarcode: <FormattedMessage id="ui-rs.patronrequests.selectedItemBarcode" />,
                       pickLocation: <FormattedMessage id="ui-rs.patronrequests.pickLocation" />,
+                      pickupLocation: <FormattedMessage id="ui-rs.patronrequests.pickupLocation" />,
                     }}
                     columnWidths={{
                       flags: '48px',
