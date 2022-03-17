@@ -44,5 +44,11 @@ export default {
       token: 'request.neededBy',
       previewValue: 'Mar 31, 2020',
     },
+  ],
+  patronProfile: [
+    {
+      token: 'patronProfile.name',
+      previewValue: 'name of patron profile'
+    }
   ]
 };
