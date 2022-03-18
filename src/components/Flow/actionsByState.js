@@ -93,6 +93,7 @@ export const actionsByState = {
     primaryAction: 'RequesterManualCheckIn',
   },
   REQ_CHECKED_IN: {
+    primaryAction: 'PatronReturnedItem',
     moreActions: ['PrintPullSlip'],
   },
   REQ_CONDITIONAL_ANSWER_RECEIVED: {
@@ -139,7 +140,8 @@ export const actionIcons = {
 export const excludeRemote = [
   'message',
   'manualClose',
-  'supplierCheckInToReshareAndSupplierMarkShipped' // This will replace the action performed by "fill request depending on config"
+  'supplierCheckInToReshareAndSupplierMarkShipped', // This will replace the action performed by "fill request" depending on config
+  'patronReturnedItemAndShippedReturn'// This will replace the action performed by "mark returned by patron" depending on config
 ];
 
 /* Actions from request.validActions that cannot become the primary action */
