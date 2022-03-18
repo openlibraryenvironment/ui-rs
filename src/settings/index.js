@@ -6,6 +6,7 @@ import { useSettings } from '@k-int/stripes-kint-components';
 
 import { CustomISO18626 } from './settingsComponents';
 import HostLMSLocations from './HostLMSLocations';
+import HostLMSPatronProfiles from './HostLMSPatronProfiles';
 import HostLMSShelvingLocations from './HostLMSShelvingLocations';
 import Notices from './notices';
 import NoticePolicies from './noticePolicies';
@@ -66,6 +67,13 @@ const ResourceSharingSettings = (props) => {
       id: 'hostLMSLocations',
       label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.hostLMSLocations' }),
       component: HostLMSLocations,
+      perm: 'ui-rs.settings.hostlmslocations',
+    },
+    {
+      route: 'lmsprofiles',
+      id: 'hostLMSPatronProfiles',
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.hostLMSPatronProfiles' }),
+      component: HostLMSPatronProfiles,
       perm: 'ui-rs.settings.hostlmslocations',
     },
     {
