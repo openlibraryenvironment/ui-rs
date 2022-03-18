@@ -9,7 +9,7 @@ import { ActionList, FormModal, generateKiwtQuery } from '@k-int/stripes-kint-co
 import { useOkapiQuery, useIntlCallout } from '@reshare/stripes-reshare';
 import ShelvingLocationForm from './ShelvingLocationForm';
 
-const HostLMSLocations = () => {
+const HostLMSShelvingLocations = () => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
   const sendCallout = useIntlCallout();
@@ -127,4 +127,4 @@ const HostLMSLocations = () => {
   );
 };
 
-export default HostLMSLocations;
+export default HostLMSShelvingLocations;
