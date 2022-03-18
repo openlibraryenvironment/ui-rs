@@ -6,6 +6,7 @@ import { stripesConnect } from '@folio/stripes/core';
 
 import TemplateDetail from './TemplateDetail';
 import TemplateForm from './TemplateForm';
+import { TEMPLATES_ENDPOINT } from '../../constants/endpoints';
 
 const Templates = (props) => {
   const { context, templateContextLabel, tokens, tokensList } = props;
@@ -64,7 +65,7 @@ const Templates = (props) => {
 Templates.manifest = Object.freeze({
   entries: {
     type: 'okapi',
-    path: 'rs/template',
+    path: TEMPLATES_ENDPOINT,
     params: (_q, _p, _r, _s, props) => ({
       filters: `context=${props.context}`,
       sort: 'id'

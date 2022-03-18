@@ -10,6 +10,8 @@ import { useIsActionPending } from '@reshare/stripes-reshare';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
+import { REFDATA_ENDPOINT } from '../../../constants/endpoints';
+
 const RespondToCancel = props => {
   const { request, performAction } = props;
   const actionPending = !!useIsActionPending(request.id);
@@ -91,7 +93,7 @@ const RespondToCancel = props => {
 RespondToCancel.manifest = {
   refdatavalues: {
     type: 'okapi',
-    path: 'rs/refdata',
+    path: REFDATA_ENDPOINT,
     params: {
       max: '500',
     },

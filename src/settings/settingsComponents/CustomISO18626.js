@@ -5,11 +5,13 @@ import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import { REFDATA_ENDPOINT } from '../../constants/endpoints';
+
 class CustomISO18626 extends React.Component {
   static manifest = Object.freeze({
     refdatavalues: {
       type: 'okapi',
-      path: 'rs/refdata',
+      path: REFDATA_ENDPOINT,
       params: {
         max: '500',
       },
@@ -75,7 +77,7 @@ class CustomISO18626 extends React.Component {
           <this.connectedControlledVocab
             {...this.props}
             actuatorType="refdata"
-            baseUrl={`rs/refdata/${this.state.categoryId}`}
+            baseUrl={`${REFDATA_ENDPOINT}/${this.state.categoryId}`}
             columnMapping={{
               label: intl.formatMessage({ id: 'ui-rs.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-rs.settings.actions' }),

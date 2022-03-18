@@ -25,6 +25,7 @@ import {
 } from '@folio/stripes/components';
 
 import NoticeFieldArray from './NoticeFieldArray';
+import { REFDATA_ENDPOINT, TEMPLATES_ENDPOINT } from '../../constants/endpoints';
 
 // Takes the refdata as it comes back from stripes-connect and teases out an
 // object to feed to a select control eg. the value property is set to the id.
@@ -40,17 +41,17 @@ const NoticePolicyForm = ({ initialValues, onSubmit, onCancel }) => {
 
   const triggersRefdata = selectifyRefdata(useRefdata({
     desc: 'noticeTriggers',
-    endpoint: 'rs/refdata'
+    endpoint: REFDATA_ENDPOINT
   }));
 
   const formatsRefdata = selectifyRefdata(useRefdata({
     desc: 'noticeFormats',
-    endpoint: 'rs/refdata'
+    endpoint: REFDATA_ENDPOINT
   }));
 
   const templates = useTemplates({
     context: 'noticeTemplate',
-    endpoint: 'rs/template',
+    endpoint: TEMPLATES_ENDPOINT,
     sort: 'id'
   });
 

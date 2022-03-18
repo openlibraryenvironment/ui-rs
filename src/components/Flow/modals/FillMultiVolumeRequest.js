@@ -3,16 +3,31 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
-import { Button, Col, Headline, Icon, IconButton, Modal, ModalFooter, NoValue, Row, TextField } from '@folio/stripes/components';
+import {
+  Button,
+  Col,
+  Headline,
+  Icon,
+  IconButton,
+  MessageBanner,
+  Modal,
+  ModalFooter,
+  NoValue,
+  Row,
+  TextField
+} from '@folio/stripes/components';
 import { useIsActionPending } from '@reshare/stripes-reshare';
+
 import volumeStateStatus from '../../../util/volumeStateStatus';
 import { required as requiredValidator } from '../../../util/validators';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
+
+import useActionConfig from '../useActionConfig';
 
 const ItemBarcodeFieldArray = ({
   fields: {
@@ -114,20 +129,33 @@ const ItemBarcodeFieldArray = ({
 const FillMultiVolumeRequest = ({ request, performAction }) => {
   const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
+  const intl = useIntl();
+
+  const { combine_fill_and_ship } = useActionConfig();
+  const combine = combine_fill_and_ship === 'yes';
 
   const onSubmit = values => {
-    return performAction('supplierCheckInToReshare', values, {
-      success: 'ui-rs.actions.fillMultiVolumeRequest.success',
-      error: 'ui-rs.actions.fillMultiVolumeRequest.error',
-    })
+    return performAction(
+      combine ?
+        'supplierCheckInToReshareAndSupplierMarkShipped' :
+        'supplierCheckInToReshare',
+      values, {
+        success: 'ui-rs.actions.fillMultiVolumeRequest.success',
+        error: 'ui-rs.actions.fillMultiVolumeRequest.error',
+      }
+    )
       .then(() => setModal(null));
   };
+
+  const fillMultiVolumeRequestLabel = combine ?
+    <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequestAndShip" /> :
+    <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest" />;
 
   const Footer = ({ disableSubmit, submit }) => (
     <ModalFooter>
       {/* These appear in the reverse order? */}
       <Button buttonStyle="danger" onClick={submit} disabled={disableSubmit}>
-        <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest" />
+        {fillMultiVolumeRequestLabel}
       </Button>
       <CancelModalButton><FormattedMessage id="ui-rs.button.goBack" /></CancelModalButton>
     </ModalFooter>
@@ -149,10 +177,23 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
       render={({ handleSubmit, submitting, form }) => (
         <form onSubmit={handleSubmit}>
           <Modal
-            label={<FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest" />}
+            label={fillMultiVolumeRequestLabel}
             open={currentModal === 'FillMultiVolumeRequest'}
             footer={<Footer disableSubmit={submitting || actionPending} submit={form.submit} />}
           >
+            {combine &&
+              <MessageBanner
+                type="warning"
+              >
+                <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.warning.combine"
+                  values={{
+                    stateConfigOption: intl.formatMessage({ id: "ui-rs.settings.stateActionConfig.combineFillAndShip"}),
+                    settingValue: combine_fill_and_ship,
+                    state: intl.formatMessage({ id: "stripes-reshare.states.RES_ITEM_SHIPPED"})
+                  }}
+                />
+              </MessageBanner>
+            }
             <FieldArray
               name="itemBarcodes"
               request={request}

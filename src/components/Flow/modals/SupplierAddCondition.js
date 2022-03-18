@@ -10,6 +10,8 @@ import { required } from '@folio/stripes/util';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
+import { REFDATA_ENDPOINT } from '../../../constants/endpoints';
+
 const AddCondition = props => {
   const { request, performAction, resources: { refdatavalues } } = props;
   const actionPending = !!useIsActionPending(request.id);
@@ -102,7 +104,7 @@ const AddCondition = props => {
 AddCondition.manifest = {
   refdatavalues: {
     type: 'okapi',
-    path: 'rs/refdata',
+    path: REFDATA_ENDPOINT,
     params: {
       max: '500',
     },

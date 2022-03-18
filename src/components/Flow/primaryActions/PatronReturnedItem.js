@@ -5,14 +5,14 @@ import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import useActionConfig from '../useActionConfig';
-const SupplierCheckInToReshare = ({ performAction }) => {
-  const { combine_fill_and_ship } = useActionConfig();
-  const combine = combine_fill_and_ship === 'yes';
+const PatronReturnedItem = ({ performAction }) => {
+  const { combine_returned_by_patron_and_return_ship } = useActionConfig();
+  const combine = combine_returned_by_patron_and_return_ship === 'yes';
 
   const onSubmit = values => performAction(
     combine ?
-      'supplierCheckInToReshareAndSupplierMarkShipped' :
-      'supplierCheckInToReshare',
+      'patronReturnedItemAndShippedReturn' :
+      'patronReturnedItem',
     values, {
       success: 'ui-rs.actions.checkIn.success',
       error: 'ui-rs.actions.checkIn.error',
@@ -23,7 +23,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, form }) => (
         <form onSubmit={handleSubmit} autoComplete="off">
-          <SafeHTMLMessage id={`ui-rs.actions.${combine ? 'checkInAndShip' : 'checkIn'}.prompt`} />
+          <SafeHTMLMessage id={`ui-rs.actions.${combine ? 'patronReturnedItemAndShipped' : 'patronReturnedItem'}.prompt`} />
           <Row>
             <Col xs={11}>
               <Field name="itemBarcodes[0].itemId" component={TextField} autoFocus />
@@ -39,7 +39,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
     />
   );
 };
-SupplierCheckInToReshare.propTypes = {
+PatronReturnedItem.propTypes = {
   performAction: PropTypes.func.isRequired,
 };
-export default SupplierCheckInToReshare;
+export default PatronReturnedItem;
