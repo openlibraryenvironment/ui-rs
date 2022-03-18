@@ -14,6 +14,7 @@ import PullslipTemplates from './pullslipTemplates';
 import {
   PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
 } from './pullslipNotifications';
+import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT, TEMPLATES_ENDPOINT } from '../constants/endpoints';
 
 const ResourceSharingSettings = (props) => {
   const { match } = props;
@@ -72,9 +73,9 @@ const ResourceSharingSettings = (props) => {
     dynamicPageExclusions: ['pullslipTemplateConfig'],
     intlKey: 'ui-rs',
     persistentPages,
-    refdataEndpoint: 'rs/refdata',
-    settingEndpoint: 'rs/settings/appSettings',
-    templateEndpoint: 'rs/template'
+    refdataEndpoint: REFDATA_ENDPOINT,
+    settingEndpoint: SETTINGS_ENDPOINT,
+    templateEndpoint: TEMPLATES_ENDPOINT
   });
 
   if (isLoading) {

@@ -3,6 +3,8 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { stripesConnect, useStripes } from '@folio/stripes/core';
 
+import { REFDATA_ENDPOINT } from '../../constants/endpoints';
+
 const ConnectedControlledVocab = stripesConnect(ControlledVocab);
 
 const ControlledRefdata = ({ resources, category, ...rest }) => {
@@ -15,7 +17,7 @@ const ControlledRefdata = ({ resources, category, ...rest }) => {
 
   return (<ConnectedControlledVocab
     actuatorType="refdata"
-    baseUrl={`rs/refdata/${categoryId}`}
+    baseUrl={`${REFDATA_ENDPOINT}/${categoryId}`}
     columnMapping={{
       label: intl.formatMessage({ id: 'ui-rs.settings.value' }),
       actions: intl.formatMessage({ id: 'ui-rs.settings.actions' }),
@@ -36,7 +38,7 @@ ControlledRefdata.manifest = {
   // just needed for the category id
   refdatavalues: {
     type: 'okapi',
-    path: 'rs/refdata',
+    path: REFDATA_ENDPOINT,
     params: {
       max: '500',
     },

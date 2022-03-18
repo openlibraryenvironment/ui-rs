@@ -9,6 +9,8 @@ import { required } from '@folio/stripes/util';
 import { CancelModalButton } from '../ModalButtons';
 import { useModal } from '../MessageModalState';
 
+import { REFDATA_ENDPOINT } from '../../constants/endpoints';
+
 const ActionReasonModal = props => {
   const { action, request, performAction, reasonVocab, resources: { refdatavalues } } = props;
   const [currentModal, setModal] = useModal();
@@ -77,7 +79,7 @@ const ActionReasonModal = props => {
 ActionReasonModal.manifest = {
   refdatavalues: {
     type: 'okapi',
-    path: 'rs/refdata',
+    path: REFDATA_ENDPOINT,
     params: {
       max: '500',
     },

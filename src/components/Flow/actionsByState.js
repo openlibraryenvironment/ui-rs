@@ -136,7 +136,11 @@ export const actionIcons = {
 };
 
 /* Actions from request.validActions to exclude from all states when using the below function */
-export const excludeRemote = ['message', 'manualClose'];
+export const excludeRemote = [
+  'message',
+  'manualClose',
+  'supplierCheckInToReshareAndSupplierMarkShipped' // This will replace the action performed by "fill request depending on config"
+];
 
 /* Actions from request.validActions that cannot become the primary action */
 const excludePrimary = [];
