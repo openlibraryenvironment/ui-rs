@@ -129,6 +129,7 @@ const ItemBarcodeFieldArray = ({
 const FillMultiVolumeRequest = ({ request, performAction }) => {
   const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
+  const closeModal = () => setModal(null);
   const intl = useIntl();
 
   const { combine_fill_and_ship } = useActionConfig();
@@ -144,7 +145,7 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
         error: 'ui-rs.actions.fillMultiVolumeRequest.error',
       }
     )
-      .then(() => setModal(null));
+      .then(closeModal);
   };
 
   const fillMultiVolumeRequestLabel = combine ?
@@ -179,6 +180,8 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
           <Modal
             label={fillMultiVolumeRequestLabel}
             open={currentModal === 'FillMultiVolumeRequest'}
+            onClose={closeModal}
+            dismissible
             footer={<Footer disableSubmit={submitting || actionPending} submit={form.submit} />}
           >
             {combine &&

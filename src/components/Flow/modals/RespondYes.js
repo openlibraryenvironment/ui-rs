@@ -28,6 +28,7 @@ Footer.propTypes = {
 
 const RespondYes = ({ performAction }) => {
   const [currentModal, setModal] = useModal();
+  const closeModal = () => setModal(null);
 
   const locQuery = useOkapiQuery('rs/hostLMSLocations', { searchParams: { perPage: '1000' }, staleTime: 30 * 60 * 1000 });
   const shelvingQuery = useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 30 * 60 * 1000 });
@@ -46,7 +47,7 @@ const RespondYes = ({ performAction }) => {
       success: 'ui-rs.actions.respondYes.success',
       error: 'ui-rs.actions.respondYes.error',
     })
-      .then(() => setModal(null));
+      .then(closeModal);
   };
 
   return (
@@ -57,6 +58,8 @@ const RespondYes = ({ performAction }) => {
           <Modal
             label={<FormattedMessage id="ui-rs.actions.respondYes" />}
             open={currentModal === 'RespondYes'}
+            onClose={closeModal}
+            dismissible
             footer={<Footer disableSubmit={invalid || pristine || submitting} submit={form.submit} />}
           >
             <form onSubmit={handleSubmit}>
