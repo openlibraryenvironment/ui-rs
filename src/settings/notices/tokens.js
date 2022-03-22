@@ -26,6 +26,10 @@ export default {
       token: 'user.id',
       previewValue: '456123789',
     },
+    {
+        token: 'user.patronProfile',
+        previewValue: 'Patron profile'
+    }
   ],
   request: [
     {
@@ -44,11 +48,5 @@ export default {
       token: 'request.neededBy',
       previewValue: 'Mar 31, 2020',
     },
-  ],
-  patronProfile: [
-    {
-      token: 'patronProfile.name',
-      previewValue: 'name of patron profile'
-    }
   ]
 };
