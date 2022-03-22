@@ -35,15 +35,6 @@ const TokensList = ({ tokens, onSectionInit, onTokenSelect }) => (
         onTokenSelect={onTokenSelect}
       />
     </Col>
-    <Col xs={4}>
-      <TokensSection
-        section="patronProfile"
-        header={<FormattedMessage id="ui-rs.settings.notices.patronProfileTokenHeader" />}
-        tokens={tokens.patronProfile}
-        onSectionInit={onSectionInit}
-        onTokenSelect={onTokenSelect}
-      />
-    </Col>
   </Row>
 );
 
