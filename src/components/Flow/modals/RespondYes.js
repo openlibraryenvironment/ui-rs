@@ -12,6 +12,20 @@ import { required as requiredValidator } from '../../../util/validators';
 
 const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 
+const Footer = ({ disableSubmit, submit }) => (
+  <ModalFooter>
+    {/* These appear in the reverse order? */}
+    <Button buttonStyle="danger" onClick={submit} disabled={disableSubmit}>
+      <FormattedMessage id="ui-rs.actions.respondYes" />
+    </Button>
+    <CancelModalButton><FormattedMessage id="ui-rs.button.goBack" /></CancelModalButton>
+  </ModalFooter>
+);
+Footer.propTypes = {
+  disableSubmit: PropTypes.bool,
+  submit: PropTypes.func.isRequired,
+};
+
 const RespondYes = ({ performAction }) => {
   const [currentModal, setModal] = useModal();
 
@@ -33,20 +47,6 @@ const RespondYes = ({ performAction }) => {
       error: 'ui-rs.actions.respondYes.error',
     })
       .then(() => setModal(null));
-  };
-
-  const Footer = ({ disableSubmit, submit }) => (
-    <ModalFooter>
-      {/* These appear in the reverse order? */}
-      <Button buttonStyle="danger" onClick={submit} disabled={disableSubmit}>
-        <FormattedMessage id="ui-rs.actions.respondYes" />
-      </Button>
-      <CancelModalButton><FormattedMessage id="ui-rs.button.goBack" /></CancelModalButton>
-    </ModalFooter>
-  );
-  Footer.propTypes = {
-    disableSubmit: PropTypes.bool,
-    submit: PropTypes.func.isRequired,
   };
 
   return (
