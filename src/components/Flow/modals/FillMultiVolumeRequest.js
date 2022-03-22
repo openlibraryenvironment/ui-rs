@@ -79,7 +79,7 @@ const ItemBarcodeFieldArray = ({
       {items.map((volume, index) => {
         const vss = volumeStateStatus(volume, requestCode);
         return (
-          <Row>
+          <Row key={index}>
             <Col xs={3}>
               <Field
                 name={`${name}[${index}].name`}
