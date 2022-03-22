@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
@@ -188,11 +189,12 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
               <MessageBanner
                 type="warning"
               >
-                <FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest.warning.combine"
+                <FormattedMessage
+                  id="ui-rs.actions.fillMultiVolumeRequest.warning.combine"
                   values={{
-                    stateConfigOption: intl.formatMessage({ id: "ui-rs.settings.stateActionConfig.combineFillAndShip"}),
+                    stateConfigOption: intl.formatMessage({ id: 'ui-rs.settings.stateActionConfig.combineFillAndShip' }),
                     settingValue: combine_fill_and_ship,
-                    state: intl.formatMessage({ id: "stripes-reshare.states.RES_ITEM_SHIPPED"})
+                    state: intl.formatMessage({ id: 'stripes-reshare.states.RES_ITEM_SHIPPED' })
                   }}
                 />
               </MessageBanner>
