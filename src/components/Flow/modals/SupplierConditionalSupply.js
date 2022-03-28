@@ -10,17 +10,20 @@ import { RefdataButtons, useIsActionPending } from '@reshare/stripes-reshare';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
+import { REFDATA_ENDPOINT } from '../../../constants/endpoints';
+
 const ConditionalSupply = props => {
   const { request, performAction, resources: { refdatavalues } } = props;
   const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
+  const closeModal = () => setModal(null);
 
   const onSubmit = values => {
     return performAction('supplierConditionalSupply', values, {
       error: 'ui-rs.actions.conditionalSupply.error',
       success: 'ui-rs.actions.conditionalSupply.success',
     })
-      .then(() => setModal(null));
+      .then(closeModal);
   };
 
   const Footer = ({ disableSubmit, submit }) => (
@@ -48,6 +51,8 @@ const ConditionalSupply = props => {
           <Modal
             label={<FormattedMessage id="ui-rs.actions.conditionalSupply" />}
             open={currentModal === 'ConditionalSupply'}
+            onClose={closeModal}
+            dismissible
             footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
             <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: displayId, item: request.title }} />
@@ -122,7 +127,7 @@ const ConditionalSupply = props => {
 ConditionalSupply.manifest = {
   refdatavalues: {
     type: 'okapi',
-    path: 'rs/refdata',
+    path: REFDATA_ENDPOINT,
     params: {
       max: '500',
     },

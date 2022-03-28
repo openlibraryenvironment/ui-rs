@@ -10,17 +10,20 @@ import { useIsActionPending } from '@reshare/stripes-reshare';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
+import { REFDATA_ENDPOINT } from '../../../constants/endpoints';
+
 const RespondToCancel = props => {
   const { request, performAction } = props;
   const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
+  const closeModal = () => setModal(null);
 
   const onSubmit = values => {
     return performAction('supplierRespondToCancel', values, {
       success: 'ui-rs.actions.respondToCancel.success',
       error: 'ui-rs.actions.respondToCancel.error',
     })
-      .then(() => setModal(null));
+      .then(closeModal);
   };
 
   const Footer = ({ disableSubmit, submit }) => (
@@ -45,6 +48,8 @@ const RespondToCancel = props => {
           <Modal
             label={<FormattedMessage id="ui-rs.actions.respondToCancel" />}
             open={currentModal === 'RespondToCancel'}
+            onClose={closeModal}
+            dismissible
             footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
             <SafeHTMLMessage id="ui-rs.actions.respondToCancel.confirm" values={{ id: request.id, item: request.title }} />
@@ -91,7 +96,7 @@ const RespondToCancel = props => {
 RespondToCancel.manifest = {
   refdatavalues: {
     type: 'okapi',
-    path: 'rs/refdata',
+    path: REFDATA_ENDPOINT,
     params: {
       max: '500',
     },

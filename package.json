@@ -118,11 +118,13 @@
       },
       {
         "permissionName": "ui-rs.settings.hostlmslocations",
-        "displayName": "Settings (resource-sharing): Can edit host LMS locations",
+        "displayName": "Settings (resource-sharing): Can edit host LMS locations and patron profiles",
         "subPermissions": [
           "settings.rs.enabled",
           "rs.directoryentry.get",
-          "rs.hostlmslocations"
+          "rs.hostlmslocations.write",
+          "rs.hostlmspatronprofiles.write",
+          "rs.shelvingLocations.write"
         ],
         "visible": true
       },

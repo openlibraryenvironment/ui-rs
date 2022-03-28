@@ -69,6 +69,8 @@ export const RequesterAgreeConditions = ({ performAction }) => (
 );
 
 export { default as SupplierCheckInToReshare } from './SupplierCheckInToReshare';
+export { default as PatronReturnedItem } from './PatronReturnedItem';
+
 
 // Client only, component names do not correspond to actions
 export const PrintPullSlip = () => <Button buttonStyle="primary mega" fullWidth to="pullslip">Print pull slip</Button>;

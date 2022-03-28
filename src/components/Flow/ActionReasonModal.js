@@ -9,9 +9,12 @@ import { required } from '@folio/stripes/util';
 import { CancelModalButton } from '../ModalButtons';
 import { useModal } from '../MessageModalState';
 
+import { REFDATA_ENDPOINT } from '../../constants/endpoints';
+
 const ActionReasonModal = props => {
   const { action, request, performAction, reasonVocab, resources: { refdatavalues } } = props;
   const [currentModal, setModal] = useModal();
+  const closeModal = () => setModal(null);
   const actionPending = !!useIsActionPending(request.id);
 
   const onSubmit = values => {
@@ -19,7 +22,7 @@ const ActionReasonModal = props => {
       success: `ui-rs.actions.${action}.success`,
       error: `ui-rs.actions.${action}.error`,
     })
-      .then(() => setModal(null));
+      .then(closeModal);
   };
 
   const Footer = ({ disableSubmit, submit }) => (
@@ -41,6 +44,8 @@ const ActionReasonModal = props => {
           <Modal
             label={<FormattedMessage id={`ui-rs.actions.${action}`} />}
             open={currentModal === action}
+            onClose={closeModal}
+            dismissible
             footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
             <SafeHTMLMessage id={`ui-rs.actions.${action}.confirm`} values={{ id: request.id, item: request.title }} />
@@ -77,7 +82,7 @@ const ActionReasonModal = props => {
 ActionReasonModal.manifest = {
   refdatavalues: {
     type: 'okapi',
-    path: 'rs/refdata',
+    path: REFDATA_ENDPOINT,
     params: {
       max: '500',
     },

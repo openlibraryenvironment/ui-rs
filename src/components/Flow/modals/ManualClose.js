@@ -20,6 +20,7 @@ const Footer = ({ disableSubmit, submit }) => (
 const ManualClose = ({ request, performAction }) => {
   const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
+  const closeModal = () => setModal(null);
   const { formatMessage } = useIntl();
 
   const terminalQuery = useOkapiQuery('rs/status', {
@@ -36,7 +37,7 @@ const ManualClose = ({ request, performAction }) => {
       success: 'ui-rs.actions.manualClose.success',
       error: 'ui-rs.actions.manualClose.error',
     })
-      .then(() => setModal(null));
+      .then(closeModal);
   };
 
   return (
@@ -50,6 +51,8 @@ const ManualClose = ({ request, performAction }) => {
           <Modal
             label={<FormattedMessage id="ui-rs.actions.manualClose" />}
             open={currentModal === 'ManualClose'}
+            onClose={closeModal}
+            dismissible
             footer={<Footer disableSubmit={submitting || actionPending} submit={form.submit} />}
           >
             <p>

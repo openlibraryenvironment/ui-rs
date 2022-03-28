@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Accordion, AccordionSet, Card, KeyValue, Row } from '@folio/stripes/components';
 import { stripesConnect } from '@folio/stripes/core';
+import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
 const NoticePolicyDetail = ({ initialValues: noticePolicy, resources }) => {
   const refdataLookup = resources?.refdatavalues?.records
@@ -79,7 +80,7 @@ const NoticePolicyDetail = ({ initialValues: noticePolicy, resources }) => {
 NoticePolicyDetail.manifest = Object.freeze({
   refdatavalues: {
     type: 'okapi',
-    path: 'rs/refdata',
+    path: REFDATA_ENDPOINT,
     params: {
       max: '500',
     },
