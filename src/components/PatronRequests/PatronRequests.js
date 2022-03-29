@@ -27,7 +27,7 @@ const appDetails = {
     title: 'Requests',
     visibleColumns: [
       'flags', 'hrid',
-      'dateCreated', 'selectedItemBarcode', 'patronIdentifier', 'state', 'serviceType',
+      'dateCreated', 'lastUpdated', 'selectedItemBarcode', 'patronIdentifier', 'state', 'serviceType',
       'supplyingInstitutionSymbol', 'pickupLocation',
       'title',
     ],
@@ -172,6 +172,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       hrid: <FormattedMessage id="ui-rs.patronrequests.id" />,
                       isRequester: <FormattedMessage id="ui-rs.patronrequests.isRequester" />,
                       dateCreated: <FormattedMessage id="ui-rs.patronrequests.dateCreated" />,
+                      lastUpdated: <FormattedMessage id="ui-rs.patronrequests.lastUpdated" />,
                       title: <FormattedMessage id="ui-rs.patronrequests.title" />,
                       patronIdentifier: <FormattedMessage id="ui-rs.patronrequests.patronIdentifier" />,
                       state: <FormattedMessage id="ui-rs.patronrequests.state" />,
