@@ -99,15 +99,16 @@ const HostLMSShelvingLocations = () => {
           actionCalls={actionCalls}
           columnMapping={{
             name: <FormattedMessage id="ui-rs.settings.lmsshlv.shelvingLocation" />,
+            code: <FormattedMessage id="ui-rs.settings.lmsshlv.code" />,
             supplyPreference: <FormattedMessage id="ui-rs.settings.lmsloc.supplyPreference" />,
           }}
           contentData={locations}
           editableFields={{
-            name: () => false
+            code: () => false
           }}
           fieldComponents={fieldComponents}
           hideCreateButton
-          visibleFields={['name', 'supplyPreference']}
+          visibleFields={['name', 'code', 'supplyPreference']}
         />
       </Pane>
       <FormModal
