@@ -98,15 +98,16 @@ const HostLMSPatronProfiles = () => {
           actionCalls={actionCalls}
           columnMapping={{
             name: <FormattedMessage id="ui-rs.settings.lmspprf.patronProfile" />,
+            code: <FormattedMessage id="ui-rs.settings.lmspprf.code" />,
             canCreateRequests: <FormattedMessage id="ui-rs.settings.lmspprf.canCreateRequests" />,
           }}
           contentData={locations}
           editableFields={{
-            name: () => false
+            code: () => false
           }}
           fieldComponents={fieldComponents}
           hideCreateButton
-          visibleFields={['name', 'canCreateRequests']}
+          visibleFields={['name', 'code', 'canCreateRequests']}
         />
       </Pane>
       <FormModal

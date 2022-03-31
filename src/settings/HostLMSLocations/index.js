@@ -138,12 +138,13 @@ const HostLMSLocations = () => {
           actionCalls={actionCalls}
           columnMapping={{
             name: <FormattedMessage id="ui-rs.settings.lmsloc.hostLMSLocation" />,
+            code: <FormattedMessage id="ui-rs.settings.lmsloc.code" />,
             supplyPreference: <FormattedMessage id="ui-rs.settings.lmsloc.supplyPreference" />,
             correspondingDirectoryEntry: <FormattedMessage id="ui-rs.settings.lmsloc.correspondingDirectoryEntry" />
           }}
           contentData={locations}
           editableFields={{
-            name: () => false
+            code: () => false
           }}
           fieldComponents={fieldComponents}
           formatter={{
@@ -157,7 +158,7 @@ const HostLMSLocations = () => {
             }
           }}
           hideCreateButton
-          visibleFields={['name', 'supplyPreference', 'correspondingDirectoryEntry']}
+          visibleFields={['name', 'code', 'supplyPreference', 'correspondingDirectoryEntry']}
         />
       </Pane>
       <FormModal
