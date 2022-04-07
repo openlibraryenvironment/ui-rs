@@ -2,23 +2,28 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { Field } from 'react-final-form';
+import { useLocation } from 'react-router';
+import queryString from 'query-string';
 
-import { Button, Pane, Select, Spinner, TextField } from '@folio/stripes/components';
+import { Button, Layer, Pane, Paneset, Select, Spinner, TextField } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 import { ActionList, FormModal, generateKiwtQuery } from '@k-int/stripes-kint-components';
 import { useOkapiQueryConfig, useIntlCallout } from '@reshare/stripes-reshare';
 import HostLMSLocationForm from './HostLMSLocationForm';
+import ShelvingLocationSites from './ShelvingLocationSites';
 
 const HostLMSLocations = () => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
   const sendCallout = useIntlCallout();
+  const search = queryString.parse(useLocation().search);
 
   const [hostLMSFormModal, setHostLMSFormModal] = useState(false);
 
-  // Not caching locations as they are autopopulated and we want to see the latest whenever we navigate here
+  // Not caching locations for long as they are autopopulated and we want to see the latest
   const locationQueryConfig = useOkapiQueryConfig('rs/hostLMSLocations', {
     searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: 1000 }, {}),
+    staleTime: 60 * 1000,
   });
   const { data: locations } = useQuery(locationQueryConfig);
 
@@ -79,10 +84,16 @@ const HostLMSLocations = () => {
     }
   );
 
-  const actionAssigner = () => {
+  const actionAssigner = row => {
     return ([
       { name: 'edit', label: <FormattedMessage id="ui-rs.edit" />, icon: 'edit' },
       { name: 'delete', label: <FormattedMessage id="ui-rs.delete" />, icon: 'trash' },
+      {
+        name: 'detail',
+        label: <FormattedMessage id="ui-rs.shelvingOverrides" />,
+        icon: 'ellipsis',
+        to: `lmslocations?detail=${row?.id}`,
+      },
     ]);
   };
 
@@ -120,7 +131,7 @@ const HostLMSLocations = () => {
   };
 
   return (
-    <>
+    <Paneset>
       <Pane
         defaultWidth="fill"
         lastMenu={
@@ -140,7 +151,8 @@ const HostLMSLocations = () => {
             name: <FormattedMessage id="ui-rs.settings.lmsloc.hostLMSLocation" />,
             code: <FormattedMessage id="ui-rs.settings.lmsloc.code" />,
             supplyPreference: <FormattedMessage id="ui-rs.settings.lmsloc.supplyPreference" />,
-            correspondingDirectoryEntry: <FormattedMessage id="ui-rs.settings.lmsloc.correspondingDirectoryEntry" />
+            correspondingDirectoryEntry: <FormattedMessage id="ui-rs.settings.lmsloc.correspondingDirectoryEntry" />,
+            sites: <FormattedMessage id="ui-rs.settings.lmsloc.shelvingOverride" />,
           }}
           contentData={locations}
           editableFields={{
@@ -155,11 +167,15 @@ const HostLMSLocations = () => {
                 return <Spinner />;
               }
               return dirLookup[id] ?? id;
-            }
+            },
+            sites: rec => !!rec?.sites.some(site => typeof site.supplyPreference === 'number'),
           }}
           hideCreateButton
-          visibleFields={['name', 'code', 'supplyPreference', 'correspondingDirectoryEntry']}
+          visibleFields={['name', 'code', 'supplyPreference', 'correspondingDirectoryEntry', 'sites']}
         />
+        <Layer isOpen={!!search.detail}>
+          <ShelvingLocationSites location={locations?.filter(loc => loc.id === search.detail)?.[0]} />
+        </Layer>
       </Pane>
       <FormModal
         onSubmit={data => {
@@ -174,7 +190,7 @@ const HostLMSLocations = () => {
       >
         <HostLMSLocationForm dirOptions={dirOptions} />
       </FormModal>
-    </>
+    </Paneset>
   );
 };
 
