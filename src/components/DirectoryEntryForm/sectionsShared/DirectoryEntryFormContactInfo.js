@@ -50,6 +50,7 @@ class DirectoryEntryFormContactInfo extends React.Component {
                   name="phoneNumber"
                   component={TextField}
                   label={<FormattedMessage id="ui-directory.information.mainPhoneNumber" />}
+                  parse={v => v}
                 />
               </Col>
               <Col xs={4}>
@@ -58,6 +59,7 @@ class DirectoryEntryFormContactInfo extends React.Component {
                   name="emailAddress"
                   component={TextField}
                   label={<FormattedMessage id="ui-directory.information.mainEmailAddress" />}
+                  parse={v => v}
                 />
               </Col>
               <Col xs={4}>
@@ -66,6 +68,7 @@ class DirectoryEntryFormContactInfo extends React.Component {
                   name="contactName"
                   component={TextField}
                   label={<FormattedMessage id="ui-directory.information.mainContactName" />}
+                  parse={v => v}
                 />
               </Col>
             </Row>

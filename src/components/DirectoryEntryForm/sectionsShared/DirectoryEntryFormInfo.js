@@ -184,6 +184,7 @@ class DirectoryEntryFormInfo extends React.Component {
                 name="lmsLocationCode"
                 component={TextField}
                 label={<FormattedMessage id="ui-directory.information.lmsLocationCode" />}
+                parse={v => v}
               />
             </Col>
           </Row>
