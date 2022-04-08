@@ -106,11 +106,21 @@ const HostLMSPatronProfiles = () => {
             code: () => false
           }}
           fieldComponents={fieldComponents}
+          formatter={{
+            canCreateRequests: rec => {
+              switch (rec.canCreateRequests) {
+                case true: return '✓';
+                case false: return '✗';
+                default: return '';
+              }
+            }
+          }}
           hideCreateButton
           visibleFields={['name', 'code', 'canCreateRequests']}
         />
       </Pane>
       <FormModal
+        initialValues={{ canCreateRequests: false }}
         onSubmit={data => {
           postLocation(data);
           setFormModal(false);
