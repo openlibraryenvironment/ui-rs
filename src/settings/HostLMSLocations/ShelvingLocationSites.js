@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { Field } from 'react-final-form';
+import { FORM_ERROR } from 'final-form';
 import { useHistory } from 'react-router';
 
 import { Button, Pane, TextField } from '@folio/stripes/components';
@@ -124,14 +125,22 @@ const ShelvingLocationSites = ({ location }) => {
         />
       </Pane>
       <FormModal
-        onSubmit={data => {
-          postSite({ ...data, location: location.id });
-          setFormModal(false);
+        onSubmit={async (data, form) => {
+          try {
+            await postSite({ ...data, location: location.id });
+            form.restart();
+            setFormModal(false);
+            return undefined;
+          } catch (e) {
+            const res = await e?.response?.json();
+            return { [FORM_ERROR]: res.message ?? e.message };
+          }
         }}
         modalProps={{
           onClose: () => setFormModal(false),
           open: formModal,
-          size: 'small'
+          size: 'small',
+          label: <FormattedMessage id="ui-rs.settings.lmsloc.createOverrideFor" values={{ location: location.name }} />,
         }}
       >
         <ShelvingLocationSiteForm location={location} />

@@ -328,19 +328,23 @@
   "settings.templates.pullslipTemplates": "Pullslip templates",
 
   "settings.lmsloc.correspondingDirectoryEntry": "Related directory entry",
+  "settings.lmsloc.createNew": "Create new host LMS location",
   "settings.lmsloc.hostLMSLocation": "Host LMS location",
   "settings.lmsloc.supplyPreference": "Supplying priority",
   "settings.lmsloc.code": "Host LMS location code",
   "settings.lmsloc.shelvingOverride": "Shelving override",
   "settings.lmsloc.overridesFor": "Shelving overrides for {location}",
+  "settings.lmsloc.createOverrideFor": "Create override for {location}",
   "settings.lmsloc.icalRrule": "Host LMS location icalRrule",
   "settings.lmsloc.linkedPRs": "Host LMS location cannot be deleted, as it is still in use on one or more Patron requests: {prs}",
 
-  "settings.lmspprf.code": "Patron profile code",
   "settings.lmspprf.canCreateRequests": "Can create requests?",
+  "settings.lmspprf.code": "Patron profile code",
+  "settings.lmspprf.createNew": "Create new patron profile",
   "settings.lmspprf.patronProfile": "Patron profile",
 
   "settings.lmsshlv.shelvingLocation": "Shelving location",
+  "settings.lmsshlv.createNew": "Create new shelving location",
   "settings.lmsshlv.code": "Shelving location code",
 
   "settings.noticePolicies.active": "Active",

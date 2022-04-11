@@ -1,12 +1,13 @@
-import { Field } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
-import { Col, Row, Select, TextField } from '@folio/stripes/components';
+import { Col, Row, Select, TextField, MessageBanner } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import { useOkapiQuery } from '@reshare/stripes-reshare';
 
 const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 
 const ShelvingLocationForm = () => {
+  const formState = useFormState();
   const shelvingQuery = useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 30 * 60 * 1000 });
   if (!shelvingQuery.isSuccess) return null;
   const shelvingOptions = shelvingQuery.data
@@ -16,6 +17,7 @@ const ShelvingLocationForm = () => {
 
   return (
     <>
+      {formState.hasSubmitErrors && <MessageBanner type="error">{formState.submitError}</MessageBanner>}
       <Row>
         <Col xs={12}>
           <Field

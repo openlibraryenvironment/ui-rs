@@ -1,11 +1,13 @@
-import { Field } from 'react-final-form';
-import { Col, Row, Select, TextField } from '@folio/stripes/components';
+import { Field, useFormState } from 'react-final-form';
+import { Col, Row, Select, TextField, MessageBanner } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import { FormattedMessage } from 'react-intl';
 
 const HostLMSLocationForm = ({ dirOptions }) => {
+  const formState = useFormState();
   return (
     <>
+      {formState.hasSubmitErrors && <MessageBanner type="error">{formState.submitError}</MessageBanner>}
       <Row>
         <Col xs={6}>
           <Field
