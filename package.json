@@ -28,6 +28,7 @@
     "@reshare/stripes-reshare": "^1.7.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
+    "final-form": "^4.2.0",
     "final-form-arrays": "^3.0.2",
     "graphql-tag": "^2.5.0",
     "handlebars": "^4.5.3",

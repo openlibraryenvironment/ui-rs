@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { Field } from 'react-final-form';
+import { FORM_ERROR } from 'final-form';
 import { useLocation } from 'react-router';
 import queryString from 'query-string';
 
@@ -13,6 +14,7 @@ import HostLMSLocationForm from './HostLMSLocationForm';
 import ShelvingLocationSites from './ShelvingLocationSites';
 
 const HostLMSLocations = () => {
+  const intl = useIntl();
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
   const sendCallout = useIntlCallout();
@@ -173,19 +175,27 @@ const HostLMSLocations = () => {
           hideCreateButton
           visibleFields={['name', 'code', 'supplyPreference', 'correspondingDirectoryEntry', 'sites']}
         />
-        <Layer isOpen={!!search.detail}>
+        <Layer isOpen={!!search.detail} contentLabel={intl.formatMessage({ id: 'ui-rs.settings.lmsloc.shelvingOverride' })}>
           <ShelvingLocationSites location={locations?.filter(loc => loc.id === search.detail)?.[0]} />
         </Layer>
       </Pane>
       <FormModal
-        onSubmit={data => {
-          postLocation(data);
-          setHostLMSFormModal(false);
+        onSubmit={async (data, form) => {
+          try {
+            await postLocation(data);
+            form.restart();
+            setHostLMSFormModal(false);
+            return undefined;
+          } catch (e) {
+            const res = await e?.response?.json();
+            return { [FORM_ERROR]: res.message ?? e.message };
+          }
         }}
         modalProps={{
           onClose: () => setHostLMSFormModal(false),
           open: hostLMSFormModal,
-          size: 'small'
+          size: 'small',
+          label: <FormattedMessage id="ui-rs.settings.lmsloc.createNew" />,
         }}
       >
         <HostLMSLocationForm dirOptions={dirOptions} />
