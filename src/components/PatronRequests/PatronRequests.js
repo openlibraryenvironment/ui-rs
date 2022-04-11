@@ -214,6 +214,9 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       dateCreated: a => (new Date(a.dateCreated).toLocaleDateString() === new Date().toLocaleDateString()
                         ? <FormattedTime value={a.dateCreated} />
                         : <FormattedDate value={a.dateCreated} />),
+                      lastUpdated: a => (new Date(a.lastUpdated).toLocaleDateString() === new Date().toLocaleDateString()
+                        ? <FormattedTime value={a.lastUpdated} />
+                        : <FormattedDate value={a.lastUpdated} />),
                       patronIdentifier: a => {
                         const { patronGivenName, patronSurname } = a;
                         if (patronGivenName && patronSurname) return `${patronSurname}, ${patronGivenName}`;
