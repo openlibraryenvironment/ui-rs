@@ -6,6 +6,7 @@ import { useSettings } from '@k-int/stripes-kint-components';
 
 import { CustomISO18626 } from './settingsComponents';
 import HostLMSLocations from './HostLMSLocations';
+import ShelvingLocationSites from './HostLMSLocations/ShelvingLocationSites';
 import HostLMSPatronProfiles from './HostLMSPatronProfiles';
 import HostLMSShelvingLocations from './HostLMSShelvingLocations';
 import Notices from './notices';
@@ -113,6 +114,11 @@ const ResourceSharingSettings = (props) => {
       key="pullslip-notifications/:id"
       path={`${match.path}/pullslip-notifications/:id`}
       component={ViewPullslipNotification}
+    />,
+    <Route
+      key="lmslocations/:id/shelvingsites"
+      path={`${match.path}/lmslocations/:id/shelvingsites`}
+      component={ShelvingLocationSites}
     />
   ];
 

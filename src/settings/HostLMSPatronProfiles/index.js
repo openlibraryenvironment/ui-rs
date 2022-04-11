@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { Field } from 'react-final-form';
+import { FORM_ERROR } from 'final-form';
 
 import { Button, Pane, Checkbox } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
@@ -98,26 +99,45 @@ const HostLMSPatronProfiles = () => {
           actionCalls={actionCalls}
           columnMapping={{
             name: <FormattedMessage id="ui-rs.settings.lmspprf.patronProfile" />,
+            code: <FormattedMessage id="ui-rs.settings.lmspprf.code" />,
             canCreateRequests: <FormattedMessage id="ui-rs.settings.lmspprf.canCreateRequests" />,
           }}
           contentData={locations}
           editableFields={{
-            name: () => false
+            code: () => false
           }}
           fieldComponents={fieldComponents}
+          formatter={{
+            canCreateRequests: rec => {
+              switch (rec.canCreateRequests) {
+                case true: return '✓';
+                case false: return '✗';
+                default: return '';
+              }
+            }
+          }}
           hideCreateButton
-          visibleFields={['name', 'canCreateRequests']}
+          visibleFields={['name', 'code', 'canCreateRequests']}
         />
       </Pane>
       <FormModal
-        onSubmit={data => {
-          postLocation(data);
-          setFormModal(false);
+        initialValues={{ canCreateRequests: false }}
+        onSubmit={async (data, form) => {
+          try {
+            await postLocation(data);
+            form.restart();
+            setFormModal(false);
+            return undefined;
+          } catch (e) {
+            const res = await e?.response?.json();
+            return { [FORM_ERROR]: res.message ?? e.message };
+          }
         }}
         modalProps={{
           onClose: () => setFormModal(false),
           open: formModal,
-          size: 'small'
+          size: 'small',
+          label: <FormattedMessage id="ui-rs.settings.lmspprf.createNew" />,
         }}
       >
         <PatronProfileForm />

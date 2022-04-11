@@ -3,44 +3,44 @@ import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { Field } from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
+import { useHistory } from 'react-router';
 
 import { Button, Pane, TextField } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
-import { ActionList, FormModal, generateKiwtQuery } from '@k-int/stripes-kint-components';
-import { useOkapiQuery, useIntlCallout } from '@reshare/stripes-reshare';
-import ShelvingLocationForm from './ShelvingLocationForm';
+import { ActionList, FormModal } from '@k-int/stripes-kint-components';
+import { useIntlCallout } from '@reshare/stripes-reshare';
+import ShelvingLocationSiteForm from './ShelvingLocationSiteForm';
 
-const HostLMSShelvingLocations = () => {
+const ShelvingLocationSites = ({ location }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
   const sendCallout = useIntlCallout();
+  const history = useHistory();
 
   const [formModal, setFormModal] = useState(false);
 
-  const { data: locations } = useOkapiQuery('rs/shelvingLocations', {
-    searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: 1000 }, {}),
-  });
-
-  const { mutateAsync: putLocation } = useMutation(
-    ['ui-rs', 'putShelvingLocation'],
+  const { mutateAsync: putSite } = useMutation(
+    ['ui-rs', 'putShelvingLocationSite'],
     async (data) => {
-      await ky.put(`rs/shelvingLocations/${data.id}`, { json: data }).json();
-      queryClient.invalidateQueries('rs/shelvingLocations');
+      await ky.put(`rs/shelvingLocationSites/${data.id}`, { json: data }).json();
+      queryClient.invalidateQueries('rs/shelvingLocationSites');
+      queryClient.invalidateQueries('rs/hostLMSLocations');
     }
   );
 
-  const { mutateAsync: postLocation } = useMutation(
-    ['ui-rs', 'postShelvingLocation'],
+  const { mutateAsync: postSite } = useMutation(
+    ['ui-rs', 'postShelvingLocationSite'],
     async (data) => {
-      await ky.post('rs/shelvingLocations', { json: data }).json();
-      queryClient.invalidateQueries('rs/shelvingLocations');
+      await ky.post('rs/shelvingLocationSites', { json: data }).json();
+      queryClient.invalidateQueries('rs/shelvingLocationSites');
+      queryClient.invalidateQueries('rs/hostLMSLocations');
     }
   );
 
-  const { mutateAsync: deleteLocation } = useMutation(
-    ['ui-rs', 'deleteShelvingLocation'],
+  const { mutateAsync: deleteSite } = useMutation(
+    ['ui-rs', 'deleteShelvingLocationSite'],
     async (data) => {
-      await ky.delete(`rs/shelvingLocations/${data.id}`, { json: data })
+      await ky.delete(`rs/shelvingLocationSites/${data.id}`, { json: data })
         .catch(error => {
           error.response.json()
             .then(resp => {
@@ -50,9 +50,18 @@ const HostLMSShelvingLocations = () => {
               }
             });
         });
-      queryClient.invalidateQueries('rs/shelvingLocations');
+      queryClient.invalidateQueries('rs/shelvingLocationSites');
+      queryClient.invalidateQueries('rs/hostLMSLocations');
     }
   );
+
+
+  if (!Array.isArray(location?.sites)) return null;
+  const sites = location.sites.map(site => ({
+    ...site,
+    code: site.shelvingLocation.code,
+    name: site.shelvingLocation.name,
+  }));
 
   const actionAssigner = () => {
     return ([
@@ -62,8 +71,8 @@ const HostLMSShelvingLocations = () => {
   };
 
   const actionCalls = {
-    edit: (data) => putLocation(data),
-    delete: (data) => deleteLocation(data)
+    edit: (data) => putSite(data),
+    delete: (data) => deleteSite(data)
   };
 
   const fieldComponents = {
@@ -85,6 +94,8 @@ const HostLMSShelvingLocations = () => {
     <>
       <Pane
         defaultWidth="fill"
+        dismissible
+        onClose={() => history.push({ search: '' })}
         lastMenu={
           <Button
             marginBottom0
@@ -93,7 +104,7 @@ const HostLMSShelvingLocations = () => {
             <FormattedMessage id="stripes-kint-components.create" />
           </Button>
         }
-        paneTitle={<FormattedMessage id="ui-rs.settings.settingsSection.hostLMSShelvingLocations" />}
+        paneTitle={<FormattedMessage id="ui-rs.settings.lmsloc.overridesFor" values={{ location: location.name }} />}
       >
         <ActionList
           actionAssigner={actionAssigner}
@@ -103,9 +114,10 @@ const HostLMSShelvingLocations = () => {
             code: <FormattedMessage id="ui-rs.settings.lmsshlv.code" />,
             supplyPreference: <FormattedMessage id="ui-rs.settings.lmsloc.supplyPreference" />,
           }}
-          contentData={locations}
+          contentData={sites}
           editableFields={{
-            code: () => false
+            code: () => false,
+            name: () => false,
           }}
           fieldComponents={fieldComponents}
           hideCreateButton
@@ -115,7 +127,7 @@ const HostLMSShelvingLocations = () => {
       <FormModal
         onSubmit={async (data, form) => {
           try {
-            await postLocation(data);
+            await postSite({ ...data, location: location.id });
             form.restart();
             setFormModal(false);
             return undefined;
@@ -128,13 +140,13 @@ const HostLMSShelvingLocations = () => {
           onClose: () => setFormModal(false),
           open: formModal,
           size: 'small',
-          label: <FormattedMessage id="ui-rs.settings.lmsshlv.createNew" />,
+          label: <FormattedMessage id="ui-rs.settings.lmsloc.createOverrideFor" values={{ location: location.name }} />,
         }}
       >
-        <ShelvingLocationForm />
+        <ShelvingLocationSiteForm location={location} />
       </FormModal>
     </>
   );
 };
 
-export default HostLMSShelvingLocations;
+export default ShelvingLocationSites;
