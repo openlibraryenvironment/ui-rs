@@ -27,7 +27,7 @@ const appDetails = {
     title: 'Requests',
     visibleColumns: [
       'flags', 'hrid',
-      'dateCreated', 'selectedItemBarcode', 'patronIdentifier', 'state', 'serviceType',
+      'dateCreated', 'lastUpdated', 'selectedItemBarcode', 'patronIdentifier', 'state', 'serviceType',
       'supplyingInstitutionSymbol', 'pickupLocation',
       'title',
     ],
@@ -172,6 +172,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       hrid: <FormattedMessage id="ui-rs.patronrequests.id" />,
                       isRequester: <FormattedMessage id="ui-rs.patronrequests.isRequester" />,
                       dateCreated: <FormattedMessage id="ui-rs.patronrequests.dateCreated" />,
+                      lastUpdated: <FormattedMessage id="ui-rs.patronrequests.lastUpdated" />,
                       title: <FormattedMessage id="ui-rs.patronrequests.title" />,
                       patronIdentifier: <FormattedMessage id="ui-rs.patronrequests.patronIdentifier" />,
                       state: <FormattedMessage id="ui-rs.patronrequests.state" />,
@@ -213,6 +214,9 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       dateCreated: a => (new Date(a.dateCreated).toLocaleDateString() === new Date().toLocaleDateString()
                         ? <FormattedTime value={a.dateCreated} />
                         : <FormattedDate value={a.dateCreated} />),
+                      lastUpdated: a => (new Date(a.lastUpdated).toLocaleDateString() === new Date().toLocaleDateString()
+                        ? <FormattedTime value={a.lastUpdated} />
+                        : <FormattedDate value={a.lastUpdated} />),
                       patronIdentifier: a => {
                         const { patronGivenName, patronSurname } = a;
                         if (patronGivenName && patronSurname) return `${patronSurname}, ${patronGivenName}`;

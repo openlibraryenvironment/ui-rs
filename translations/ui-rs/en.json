@@ -15,6 +15,7 @@
   "patronrequests.id": "Request Id",
   "patronrequests.isRequester": "Requester?",
   "patronrequests.dateCreated": "Created",
+  "patronrequests.lastUpdated": "Updated",
   "patronrequests.title": "Title",
   "patronrequests.patronIdentifier": "Patron",
   "patronrequests.state": "State",
