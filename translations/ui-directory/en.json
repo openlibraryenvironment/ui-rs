@@ -141,5 +141,10 @@
   "permission.ui-directory.edit-self": "Directory: edit the directory entry of the present institution",
   "permission.ui-directory.edit-local": "Directory: edit the local fields of directory entries",
   "permission.ui-directory.edit-all": "Directory: edit all directory entries",
-  "permission.ui-directory.create": "Directory: create new directory entries"
+  "permission.ui-directory.create": "Directory: create new directory entries",
+  
+  "directoryEntry.confirmationModal.header": "Confirm directory entry creation",
+  "directoryEntry.confirmationModal.message": "Warning. Please confirm directory entry creation.",
+  "directoryEntry.warning.managedInstitutionAlreadyExists": "A managed root entry already exists for type 'Institution' for your tenant in this ReShare system. If you meant to add a Branch record for your tenant please select your tenant's Institution record and under Actions choose Create Unit and select Branch in the Type field.",
+  "directoryEntry.warning.consortiumAlreadyExists": "An root entry already exists for type 'Consortium' in this ReShare system. Adding a second Consortium directory record is not recommended. If you meant to add an Institution record please update the entry in the Type field accordingly before creating the record. If you meant to add a Branch record please find the Institution record you wish to add a branch for and under Actions choose Create Unit and select Branch in the Type field."
 }
