@@ -1,28 +1,30 @@
 import { Field, useFormState } from 'react-final-form';
-import { Col, Row, TextField, MessageBanner } from '@folio/stripes/components';
-import { requiredValidator } from '@folio/stripes-erm-components';
 import { FormattedMessage } from 'react-intl';
+import { Col, Row, Select, TextField, MessageBanner } from '@folio/stripes/components';
+import { requiredValidator } from '@folio/stripes-erm-components';
+import { useOkapiQuery } from '@reshare/stripes-reshare';
+
+const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 
 const ShelvingLocationForm = () => {
   const formState = useFormState();
+  const shelvingQuery = useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 30 * 60 * 1000 });
+  if (!shelvingQuery.isSuccess) return null;
+  const shelvingOptions = shelvingQuery.data
+    .filter(x => x.supplyPreference >= 0)
+    .map(x => ({ label: x.name, value: x.id }))
+    .sort(compareLabel);
+
   return (
     <>
       {formState.hasSubmitErrors && <MessageBanner type="error">{formState.submitError}</MessageBanner>}
       <Row>
-        <Col xs={6}>
+        <Col xs={12}>
           <Field
-            name="name"
+            component={Select}
+            dataOptions={[{ label: '', value: '' }, ...shelvingOptions]}
+            name="shelvingLocation"
             label={<FormattedMessage id="ui-rs.settings.lmsshlv.shelvingLocation" />}
-            component={TextField}
-            required
-            validate={requiredValidator}
-          />
-        </Col>
-        <Col xs={6}>
-          <Field
-            name="code"
-            label={<FormattedMessage id="ui-rs.settings.lmsshlv.code" />}
-            component={TextField}
             required
             validate={requiredValidator}
           />

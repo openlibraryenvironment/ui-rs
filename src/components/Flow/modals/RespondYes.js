@@ -87,18 +87,22 @@ const RespondYes = ({ performAction }) => {
                   />
                 </Col>
               </Row>
-              <SafeHTMLMessage id="ui-rs.actions.respondYes.pickShelvingLocation" />
-              <Row>
-                <Col xs={11}>
-                  <Field
-                    component={Select}
-                    dataOptions={[{ label: '', value: '' }, ...shelvingOptions]}
-                    name="pickShelvingLocation"
-                    required
-                    validate={requiredValidator}
-                  />
-                </Col>
-              </Row>
+              {shelvingOptions.length > 0 &&
+                <>
+                  <SafeHTMLMessage id="ui-rs.actions.respondYes.pickShelvingLocation" />
+                  <Row>
+                    <Col xs={11}>
+                      <Field
+                        component={Select}
+                        dataOptions={[{ label: '', value: '' }, ...shelvingOptions]}
+                        name="pickShelvingLocation"
+                        required
+                        validate={requiredValidator}
+                      />
+                    </Col>
+                  </Row>
+                </>
+              }
               <SafeHTMLMessage id="ui-rs.actions.addNote" />
               <Row>
                 <Col xs={11}>
