@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import compose from 'compose-function';
 
 import { MultiSelectionFilter, SearchAndSort, withTags } from '@folio/stripes/smart-components';
@@ -164,7 +163,7 @@ class DirectoryEntries extends React.Component {
 
     mutator.dirents.POST(record)
       .then((newRecord) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-directory.create.callout" values={{ name: newRecord.name }} /> });
+        this.context.sendCallout({ message: <FormattedMessage id="ui-directory.create.callout" values={{ name: newRecord.name }} /> });
         mutator.query.update({
           _path: `/directory/entries/view/${newRecord.id}`,
           layer: '',
@@ -172,8 +171,8 @@ class DirectoryEntries extends React.Component {
       })
       .catch(response => {
         response.json()
-          .then(error => this.context.sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-directory.create.callout.error" values={{ err: error.message }} /> }))
-          .catch(() => this.context.sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-directory.create.callout.error" values={{ err: '' }} /> }));
+          .then(error => this.context.sendCallout({ type: 'error', message: <FormattedMessage id="ui-directory.create.callout.error" values={{ err: error.message }} /> }))
+          .catch(() => this.context.sendCallout({ type: 'error', message: <FormattedMessage id="ui-directory.create.callout.error" values={{ err: '' }} /> }));
       });
   };
 

@@ -15,7 +15,6 @@ import {
 import { Field } from 'react-final-form';
 
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import { required } from '../../util/validators';
 
@@ -234,7 +233,7 @@ class ServiceField extends React.Component {
             data-test-confirmationModal
             heading={<FormattedMessage id="ui-directory.settings.services.delete.heading" />}
             id="delete-job-confirmation"
-            message={<SafeHTMLMessage id="ui-directory.settings.services.delete.confirmMessage" values={{ name: currentService.name }} />}
+            message={<FormattedMessage id="ui-directory.settings.services.delete.confirmMessage" values={{ name: currentService.name }} />}
             onCancel={this.hideDeleteConfirmationModal}
             onConfirm={() => {
               this.props.onDelete();

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { Form } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
@@ -60,7 +59,7 @@ class ServiceSettings extends React.Component {
     this.callout.sendCallout({
       type: outcome,
       message: (
-        <SafeHTMLMessage
+        <FormattedMessage
           id={`ui-directory.settings.services.callout.${operation}.${outcome}`}
           values={{ error, name: custPropName }}
         />
@@ -73,7 +72,7 @@ class ServiceSettings extends React.Component {
     return this.callout.sendCallout({
       type: 'error',
       message: (
-        <SafeHTMLMessage id="ui-directory.settings.services.callout.delete.serviceInUse" values={{ name: serviceName }} />
+        <FormattedMessage id="ui-directory.settings.services.callout.delete.serviceInUse" values={{ name: serviceName }} />
       ),
       timeout: 0,
     });
