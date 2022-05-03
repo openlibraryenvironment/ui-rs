@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
 import { RefdataButtons, useIsActionPending } from '@reshare/stripes-reshare';
 import { Button, Col, Layout, Modal, ModalFooter, Row, TextArea } from '@folio/stripes/components';
@@ -48,7 +47,7 @@ const ActionReasonModal = props => {
             dismissible
             footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
-            <SafeHTMLMessage id={`ui-rs.actions.${action}.confirm`} values={{ id: request.id, item: request.title }} />
+            <FormattedMessage id={`ui-rs.actions.${action}.confirm`} values={{ id: request.id, item: request.title }} />
             <Layout className="padding-top-gutter">
               <strong><FormattedMessage id={`ui-rs.actions.${action}.reason`} /></strong>
             </Layout>
@@ -65,7 +64,7 @@ const ActionReasonModal = props => {
               </Col>
             </Row>
             <Layout className="padding-top-gutter">
-              <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
+              <strong><FormattedMessage id="ui-rs.actions.addNote" /></strong>
             </Layout>
             <Row>
               <Col xs={11}>

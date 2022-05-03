@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Layout, Modal, ModalFooter, Row, Select, TextArea } from '@folio/stripes/components';
 import { RefdataButtons, useIsActionPending } from '@reshare/stripes-reshare';
@@ -55,7 +54,7 @@ const AddCondition = props => {
             dismissible
             footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
-            <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: displayId, item: request.title }} />
+            <FormattedMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: displayId, item: request.title }} />
             <Row>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
@@ -73,7 +72,7 @@ const AddCondition = props => {
               </Col>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
-                  <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
+                  <strong><FormattedMessage id="ui-rs.actions.addNote" /></strong>
                 </Layout>
                 <Row>
                   <Col xs={11}>

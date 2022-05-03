@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Layout, Modal, ModalFooter, Row, Select, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
@@ -55,24 +54,24 @@ const ConditionalSupply = props => {
             dismissible
             footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
-            <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: displayId, item: request.title }} />
+            <FormattedMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: displayId, item: request.title }} />
             <Row>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
-                  <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.callNumber" />
+                  <FormattedMessage id="ui-rs.actions.conditionalSupply.callNumber" />
                 </Layout>
                 <Row>
                   <Col xs={11}>
                     <Field name="callnumber" component={TextArea} autoFocus />
                   </Col>
                 </Row>
-                <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.pickLocation" />
+                <FormattedMessage id="ui-rs.actions.conditionalSupply.pickLocation" />
                 <Row>
                   <Col xs={11}>
                     <Field name="pickLocation" component={TextArea} autoFocus />
                   </Col>
                 </Row>
-                <SafeHTMLMessage id="ui-rs.actions.conditionalSupply.pickShelvingLocation" />
+                <FormattedMessage id="ui-rs.actions.conditionalSupply.pickShelvingLocation" />
                 <Row>
                   <Col xs={11}>
                     <Field name="pickShelvingLocation" component={TextArea} autoFocus />
@@ -95,7 +94,7 @@ const ConditionalSupply = props => {
               </Col>
             </Row>
             <Layout className="padding-top-gutter">
-              <strong><SafeHTMLMessage id="ui-rs.actions.addNote" /></strong>
+              <strong><FormattedMessage id="ui-rs.actions.addNote" /></strong>
             </Layout>
             <Row>
               <Col xs={11}>

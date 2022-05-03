@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { useIsActionPending } from '@reshare/stripes-reshare';
 import { useMessage } from '../MessageModalState';
 import AddNoteField from '../AddNoteField';
@@ -26,10 +25,10 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, form }) => (
         <form onSubmit={handleSubmit} autoComplete="off">
-          {prompt && <SafeHTMLMessage id={prompt} />}
+          {prompt && <FormattedMessage id={prompt} />}
           {!prompt &&
             <FormattedMessage id={`stripes-reshare.actions.${action}`}>
-              {dispAction => <SafeHTMLMessage id="ui-rs.actions.generic.prompt" values={{ action: dispAction }} />}
+              {dispAction => <FormattedMessage id="ui-rs.actions.generic.prompt" values={{ action: dispAction }} />}
             </FormattedMessage>
           }
           <Row>

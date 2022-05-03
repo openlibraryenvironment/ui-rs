@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MessageBanner } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 const ViewMessageBanners = ({ request }) => {
   const relevantPendingConditions = request.conditions?.filter(
@@ -25,7 +24,7 @@ const ViewMessageBanners = ({ request }) => {
         <MessageBanner
           type="warning"
         >
-          <SafeHTMLMessage id="ui-rs.actions.requestPendingLoanConditions" />
+          <FormattedMessage id="ui-rs.actions.requestPendingLoanConditions" />
         </MessageBanner>
       );
     } else if (relevantAcceptedConditions.length > 0) {
@@ -34,7 +33,7 @@ const ViewMessageBanners = ({ request }) => {
         <MessageBanner
           type="success"
         >
-          <SafeHTMLMessage id="ui-rs.actions.requestAcceptedLoanConditions" />
+          <FormattedMessage id="ui-rs.actions.requestAcceptedLoanConditions" />
         </MessageBanner>
       );
     }

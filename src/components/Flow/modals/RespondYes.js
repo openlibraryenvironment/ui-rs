@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { Button, Modal, ModalFooter, Row, Col, Select, TextArea } from '@folio/stripes/components';
 import { useOkapiQuery } from '@reshare/stripes-reshare';
 
@@ -63,7 +62,7 @@ const RespondYes = ({ performAction }) => {
             footer={<Footer disableSubmit={invalid || pristine || submitting} submit={form.submit} />}
           >
             <form onSubmit={handleSubmit}>
-              <SafeHTMLMessage id="ui-rs.actions.respondYes.callNumber" />
+              <FormattedMessage id="ui-rs.actions.respondYes.callNumber" />
               <Row>
                 <Col xs={11}>
                   <Field
@@ -75,7 +74,7 @@ const RespondYes = ({ performAction }) => {
                   />
                 </Col>
               </Row>
-              <SafeHTMLMessage id="ui-rs.actions.respondYes.pickLocation" />
+              <FormattedMessage id="ui-rs.actions.respondYes.pickLocation" />
               <Row>
                 <Col xs={11}>
                   <Field
@@ -89,7 +88,7 @@ const RespondYes = ({ performAction }) => {
               </Row>
               {shelvingOptions.length > 0 &&
                 <>
-                  <SafeHTMLMessage id="ui-rs.actions.respondYes.pickShelvingLocation" />
+                  <FormattedMessage id="ui-rs.actions.respondYes.pickShelvingLocation" />
                   <Row>
                     <Col xs={11}>
                       <Field
@@ -103,7 +102,7 @@ const RespondYes = ({ performAction }) => {
                   </Row>
                 </>
               }
-              <SafeHTMLMessage id="ui-rs.actions.addNote" />
+              <FormattedMessage id="ui-rs.actions.addNote" />
               <Row>
                 <Col xs={11}>
                   <Field

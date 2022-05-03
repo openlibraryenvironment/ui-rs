@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Layout, Modal, ModalFooter, RadioButton, RadioButtonGroup, Row, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
@@ -52,11 +51,11 @@ const RespondToCancel = props => {
             dismissible
             footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
-            <SafeHTMLMessage id="ui-rs.actions.respondToCancel.confirm" values={{ id: request.id, item: request.title }} />
+            <FormattedMessage id="ui-rs.actions.respondToCancel.confirm" values={{ id: request.id, item: request.title }} />
             <Row>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
-                  <strong><SafeHTMLMessage id="ui-rs.actions.respondToCancel.cancelResponse" /></strong>
+                  <strong><FormattedMessage id="ui-rs.actions.respondToCancel.cancelResponse" /></strong>
                 </Layout>
                 <Field
                   name="cancelResponse"
@@ -78,7 +77,7 @@ const RespondToCancel = props => {
               </Col>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
-                  <strong><SafeHTMLMessage id="ui-rs.actions.respondToCancel.note" /></strong>
+                  <strong><FormattedMessage id="ui-rs.actions.respondToCancel.note" /></strong>
                 </Layout>
                 <Field
                   name="note"
