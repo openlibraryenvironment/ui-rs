@@ -18,7 +18,7 @@ import initialToUpper from '../../util/initialToUpper';
  * validActions without a component named for them will be rendered with the component
  * "Generic" which is roughly the ActionButton for moreActions and the ScanConfirmAction
  * for a primaryAction with accomodations for missing translations.
- * 
+ *
  * excludesActions is for the VERY rare cases where an action IS a validAction,
  * but we do not want to explicitly render an action button for it.
  * Example - for RES_AWAIT_SHIP "supplierCheckInToReshare" is a validAction,

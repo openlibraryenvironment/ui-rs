@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
@@ -173,14 +172,6 @@ const ChatPane = ({
       {displayMessages()}
     </Pane>
   );
-};
-
-ChatPane.propTypes = {
-  request: PropTypes.shape({
-    notifications: PropTypes.array,
-    validActions: PropTypes.arrayOf(PropTypes.string),
-  }),
-  onToggle: PropTypes.func,
 };
 
 export default ChatPane;

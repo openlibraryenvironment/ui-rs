@@ -5,8 +5,11 @@ import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import useActionConfig from '../useActionConfig';
+
 const SupplierCheckInToReshare = ({ performAction }) => {
+  // eslint-disable-next-line camelcase
   const { combine_fill_and_ship } = useActionConfig();
+  // eslint-disable-next-line camelcase
   const combine = combine_fill_and_ship === 'yes';
 
   const onSubmit = values => performAction(

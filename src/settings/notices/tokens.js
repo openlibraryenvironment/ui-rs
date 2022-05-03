@@ -27,8 +27,8 @@ export default {
       previewValue: '456123789',
     },
     {
-        token: 'user.patronProfile',
-        previewValue: 'Patron profile'
+      token: 'user.patronProfile',
+      previewValue: 'Patron profile'
     }
   ],
   request: [

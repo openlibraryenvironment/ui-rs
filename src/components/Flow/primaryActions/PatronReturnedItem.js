@@ -5,8 +5,11 @@ import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import useActionConfig from '../useActionConfig';
+
 const PatronReturnedItem = ({ performAction }) => {
+  // eslint-disable-next-line camelcase
   const { combine_returned_by_patron_and_return_ship } = useActionConfig();
+  // eslint-disable-next-line camelcase
   const combine = combine_returned_by_patron_and_return_ship === 'yes';
 
   const onSubmit = values => performAction(

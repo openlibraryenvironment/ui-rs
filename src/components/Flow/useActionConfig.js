@@ -1,5 +1,5 @@
-import { useSettingSection } from "@k-int/stripes-kint-components/src/lib/hooks";
-import { SETTINGS_ENDPOINT } from "../../constants/endpoints";
+import { useSettingSection } from '@k-int/stripes-kint-components/src/lib/hooks';
+import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
 const useActionConfig = () => {
   const { settings } = useSettingSection({
@@ -9,7 +9,7 @@ const useActionConfig = () => {
 
   const returnObj = {};
 
-  settings.map(st => returnObj[st.key] = st.value ?? st.defValue)
+  settings.map(st => returnObj[st.key] = st.value ?? st.defValue);
   return returnObj;
 };
 
