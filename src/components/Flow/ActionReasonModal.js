@@ -1,18 +1,29 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import { stripesConnect } from '@folio/stripes/core';
+import { FormattedMessage } from 'react-intl';
+import { useRefdata } from '@k-int/stripes-kint-components';
 import { RefdataButtons, useIsActionPending } from '@reshare/stripes-reshare';
 import { Button, Col, Layout, Modal, ModalFooter, Row, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
+
 import { CancelModalButton } from '../ModalButtons';
 import { useModal } from '../MessageModalState';
 
 import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
 const ActionReasonModal = props => {
-  const { action, request, performAction, reasonVocab, resources: { refdatavalues } } = props;
+  const { action, request, performAction, reasonVocab } = props;
   const [currentModal, setModal] = useModal();
+  const isOpen = currentModal === action;
+  const refdatavalues = useRefdata({
+    desc: reasonVocab,
+    endpoint: REFDATA_ENDPOINT,
+    queryParams: {
+      // TODO: ditch controlledvocab so we can invalidate this in settings and make this waaaay longer
+      staleTime: 2 * 60 * 1000,
+      enabled: isOpen,
+    }
+  });
   const closeModal = () => setModal(null);
   const actionPending = !!useIsActionPending(request.id);
 
@@ -33,7 +44,7 @@ const ActionReasonModal = props => {
       <CancelModalButton><FormattedMessage id="ui-rs.button.goBack" /></CancelModalButton>
     </ModalFooter>
   );
-  const listOfReasons = refdatavalues ? refdatavalues.records.filter(obj => obj.desc === reasonVocab).map(obj => obj.values)[0] : [];
+  const listOfReasons = refdatavalues?.length > 0 ? refdatavalues.filter(obj => obj.desc === reasonVocab).map(obj => obj.values)?.[0] : [];
 
   return (
     <Form
@@ -42,7 +53,7 @@ const ActionReasonModal = props => {
         <form onSubmit={handleSubmit}>
           <Modal
             label={<FormattedMessage id={`ui-rs.actions.${action}`} />}
-            open={currentModal === action}
+            open={isOpen}
             onClose={closeModal}
             dismissible
             footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
@@ -78,14 +89,4 @@ const ActionReasonModal = props => {
   );
 };
 
-ActionReasonModal.manifest = {
-  refdatavalues: {
-    type: 'okapi',
-    path: REFDATA_ENDPOINT,
-    params: {
-      max: '500',
-    },
-  }
-};
-
-export default stripesConnect(injectIntl(ActionReasonModal));
+export default ActionReasonModal;
