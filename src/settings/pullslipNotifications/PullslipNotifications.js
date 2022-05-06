@@ -62,7 +62,9 @@ class PullslipNotifications extends React.Component {
     const locationId2Name = {};
     lmsLocations.records.forEach(x => { locationId2Name[x.id] = x.name; });
 
-    const records = timers.records[0].results.map(raw2userData);
+    const records = timers.records[0].results
+      .filter(ps => ps.taskCode === 'PrintPullSlips')
+      .map(raw2userData);
 
     return (
       <Pane
