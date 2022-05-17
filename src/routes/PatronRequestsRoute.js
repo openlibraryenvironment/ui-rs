@@ -27,6 +27,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       'location': 'pickLocation.id',
       'requester': 'resolvedRequester.owner.id',
       'supplier': 'resolvedSupplier.owner.id',
+      'terminal': 'state.terminal'
     },
     sortKeys: {
       'pickLocation': 'pickLocation.name',
@@ -87,7 +88,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .sort(compareLabel),
       needsAttention: [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })],
       state: states,
-      terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'state.terminal isNotSet || state.terminal=false' })],
+      terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
     };
   }
 
