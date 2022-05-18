@@ -12,6 +12,14 @@ export default {
       token: 'item.materialType',
       previewValue: 'Serial',
     },
+    {
+        token: 'item.location',
+      previewValue: 'MAIN',
+    },
+    {
+        token: 'item.shelvingLocation',
+      previewValue: 'STACKS',
+    }
   ],
   user: [
     {
