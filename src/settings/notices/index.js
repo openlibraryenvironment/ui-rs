@@ -11,6 +11,7 @@ const Notices = () => {
   return (
     <Templates
       context="noticeTemplate"
+      label={intl.formatMessage({ id: 'ui-rs.settings.settingsSection.notices' })}
       permissions={{
         put: 'ui-rs.settings.notices',
         post: 'ui-rs.settings.notices',
