@@ -11,6 +11,7 @@ const PullslipTemplates = () => {
   return (
     <Templates
       context="pullslipTemplate"
+      label={intl.formatMessage({ id: 'ui-rs.settings.settingsSection.pullslipTemplates' })}
       permissions={{
         put: 'ui-rs.settings.pullslip-notifications',
         post: 'ui-rs.settings.pullslip-notifications',
