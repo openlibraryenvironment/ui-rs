@@ -69,7 +69,7 @@ const NoticePolicyForm = ({ initialValues, onSubmit, onCancel }) => {
               centerContent
               paneTitle={initialValues?.id
                 ? initialValues?.name
-                : <FormattedMessage id="ui-rs.settings.notices.newLabel" />
+                : <FormattedMessage id="ui-rs.settings.noticePolicies.new" />
             }
               firstMenu={
                 <PaneMenu>

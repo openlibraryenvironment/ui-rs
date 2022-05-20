@@ -353,6 +353,7 @@
   "settings.noticePolicies.description": "Policy description",
   "settings.noticePolicies.format": "Format",
   "settings.noticePolicies.name": "Policy name",
+  "settings.noticePolicies.new": "New notice policy",
   "settings.noticePolicies.notice": "Notice",
   "settings.noticePolicies.notices": "Notices",
   "settings.noticePolicies.realTime": "Send in real time",
