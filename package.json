@@ -8,17 +8,12 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test-int": "stripes test nightmare --run demo --show",
-    "test": "stripes test karma",
     "lint": "eslint src"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^6.0.0",
     "@folio/stripes-cli": "~2.4.0",
-    "chai": "^4.2.0",
-    "eslint": "^7.0.0",
-    "mocha": "^5.2.0",
-    "sinon": "^6.3.4"
+    "eslint": "^7.0.0"
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^5.0.0",
