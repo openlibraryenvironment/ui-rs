@@ -11,12 +11,12 @@
     "lint": "eslint src"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^6.0.0",
-    "@folio/stripes-cli": "~2.4.0",
+    "@folio/eslint-config-stripes": "^6.1.0",
+    "@folio/stripes-cli": "~2.5.0",
     "eslint": "^7.0.0"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^5.0.0",
+    "@folio/stripes-erm-components": "^6.1.0",
     "@folio/stripes-template-editor": "^3.0.0",
     "@k-int/stripes-kint-components": "^2.5.1",
     "@reshare/stripes-reshare": "^1.7.0",
