@@ -105,6 +105,7 @@ const CustomPropertiesListField = ({
         return (
           <KeyValue
             label={cp.label}
+            key={i}
             value={renderCustPropValue(cp, i)}
           />
         );
