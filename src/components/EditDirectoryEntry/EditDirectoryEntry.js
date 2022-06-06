@@ -303,9 +303,6 @@ EditDirectoryEntry.propTypes = {
   stripes: PropTypes.shape({
     hasPerm: PropTypes.func.isRequired,
   }).isRequired,
-  intl: PropTypes.shape({
-    formatMessage: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default EditDirectoryEntry;
