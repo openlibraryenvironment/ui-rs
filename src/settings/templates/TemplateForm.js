@@ -51,7 +51,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
                         icon="times"
                         id="close-rs-form-button"
                         onClick={onCancel}
-                        aria-label={ariaLabel}
+                        aria-label={ariaLabel[0]}
                       />
                     )}
                   </FormattedMessage>

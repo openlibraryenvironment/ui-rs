@@ -81,8 +81,8 @@ class EditPullslipNotification extends React.Component {
                   name="status"
                   component={Checkbox}
                   type="checkbox"
-                  label={placeholder}
-                  placeholder={placeholder}
+                  label={placeholder[0]}
+                  placeholder={placeholder[0]}
                 />
               )}
             </FormattedMessage>
@@ -93,8 +93,8 @@ class EditPullslipNotification extends React.Component {
                 <Field
                   name="days"
                   component={DaysOfWeek}
-                  label={placeholder}
-                  placeholder={placeholder}
+                  label={placeholder[0]}
+                  placeholder={placeholder[0]}
                 />
               )}
             </FormattedMessage>
@@ -108,8 +108,8 @@ class EditPullslipNotification extends React.Component {
                 <Field
                   name="times"
                   component={this.ListOfConfiguredTimepicker}
-                  legend={placeholder}
-                  placeholder={placeholder}
+                  legend={placeholder[0]}
+                  placeholder={placeholder[0]}
                 />
               )}
             </FormattedMessage>
@@ -120,8 +120,8 @@ class EditPullslipNotification extends React.Component {
                 <Field
                   name="locations"
                   component={this.ListOfConfiguredLocation}
-                  legend={placeholder}
-                  placeholder={placeholder}
+                  legend={placeholder[0]}
+                  placeholder={placeholder[0]}
                   lmsLocations={lmsLocations}
                 />
               )}
@@ -133,8 +133,8 @@ class EditPullslipNotification extends React.Component {
                 <Field
                   name="emailAddresses"
                   component={this.ListOfConfiguredEmailAddress}
-                  legend={placeholder}
-                  placeholder={placeholder}
+                  legend={placeholder[0]}
+                  placeholder={placeholder[0]}
                 />
               )}
             </FormattedMessage>
@@ -163,7 +163,7 @@ class EditPullslipNotification extends React.Component {
                 {this.renderForm()}
               </form>
               <FormattedMessage id="ui-rs.confirmDirtyNavigate">
-                {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
+                {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt[0]} />}
               </FormattedMessage>
             </Card>
           )}

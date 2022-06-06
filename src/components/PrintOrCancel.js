@@ -34,7 +34,7 @@ const PrintOrCancel = ({ extraButtons, children }) => {
               <PaneHeaderIconButton
                 icon="times"
                 onClick={close}
-                aria-label={ariaLabel}
+                aria-label={ariaLabel[0]}
               />
             )}
           </FormattedMessage>

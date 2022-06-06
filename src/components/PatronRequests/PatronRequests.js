@@ -74,7 +74,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
         {ariaLabel => (
           <Button
             id="clickable-print-pull-slips"
-            aria-label={ariaLabel}
+            aria-label={ariaLabel[0]}
             buttonStyle="dropdownItem"
           >
             <FormattedMessage id="ui-rs.printPullSlips" />
