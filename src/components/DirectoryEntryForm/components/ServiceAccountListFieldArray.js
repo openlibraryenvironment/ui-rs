@@ -62,9 +62,9 @@ class ServiceAccountListFieldArray extends React.Component {
                       <Field
                         component={TextField}
                         id={`edit-directory-entry-service-[${index}]-slug`}
-                        label={placeholder}
+                        label={placeholder[0]}
                         name={`${this.props.name}[${index}].slug`}
-                        placeholder={placeholder}
+                        placeholder={placeholder[0]}
                         required
                         validate={required}
                       />
@@ -78,9 +78,9 @@ class ServiceAccountListFieldArray extends React.Component {
                         component={Select}
                         dataOptions={servicesList}
                         id={`edit-directory-entry-service-[${index}]-service`}
-                        label={placeholder}
+                        label={placeholder[0]}
                         name={`${this.props.name}[${index}].service`}
-                        placeholder={placeholder}
+                        placeholder={placeholder[0]}
                         required
                         validate={required}
                       />
@@ -95,10 +95,10 @@ class ServiceAccountListFieldArray extends React.Component {
                       <Field
                         component={TextArea}
                         id={`edit-directory-entry-service-[${index}]-account-details`}
-                        label={placeholder}
+                        label={placeholder[0]}
                         name={`${this.props.name}[${index}].accountDetails`}
                         parse={v => v}
-                        placeholder={placeholder}
+                        placeholder={placeholder[0]}
                       />
                     )}
                   </FormattedMessage>

@@ -120,10 +120,10 @@ class DirectoryEntryFormInfo extends React.Component {
                   <Field
                     id="edit-directory-entry-type"
                     name="type"
-                    label={placeholder}
+                    label={placeholder[0]}
                     component={Select}
                     dataOptions={directoryEntryTypes}
-                    placeholder={placeholder}
+                    placeholder={placeholder[0]}
                   />
                 )}
               </FormattedMessage>
@@ -134,9 +134,9 @@ class DirectoryEntryFormInfo extends React.Component {
                   <Field
                     id="edit-directory-entry-slug"
                     name="slug"
-                    label={placeholder}
+                    label={placeholder[0]}
                     component={TextField}
-                    placeholder={placeholder}
+                    placeholder={placeholder[0]}
                     disabled={layer === 'edit'}
                     required
                     validate={required}

@@ -72,7 +72,7 @@ const EditDirectoryEntry = (props) => {
               icon="times"
               id="close-directory-form-button"
               onClick={onCancel}
-              aria-label={ariaLabel}
+              aria-label={ariaLabel[0]}
             />
           )}
         </FormattedMessage>
@@ -255,7 +255,7 @@ const EditDirectoryEntry = (props) => {
               <Layout className="centered" style={{ maxWidth: '80em' }}>
                 <DirectoryEntryForm values={values} form={form} {...props} />
                 <FormattedMessage id="ui-directory.confirmDirtyNavigate">
-                  {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt} />}
+                  {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt[0]} />}
                 </FormattedMessage>
               </Layout>
             </Pane>

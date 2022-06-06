@@ -184,7 +184,7 @@ class ViewDirectoryEntry extends React.Component {
               icon="tag"
               badgeCount={resources?.selectedRecord.records[0]?.tags?.length || 0}
               onClick={() => this.handleToggleTags(mutator, resources)}
-              ariaLabel={ariaLabel}
+              ariaLabel={ariaLabel[0]}
             />
           )}
         </FormattedMessage>
