@@ -18,11 +18,8 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
-import pluginNA from '@folio/address-plugin-north-america';
-import pluginGeneric from '@folio/address-plugin-generic';
-import pluginGBR from '@folio/address-plugin-british-isles';
-
 import permissionToEdit from '../../util/permissionToEdit';
+import { pluginMap } from '../../util/pluginMap';
 import getRefdataValuesFromParentResources from '../../util/getRefdataValuesFromParentResources';
 import DirectoryEntryForm from '../DirectoryEntryForm';
 
@@ -30,14 +27,6 @@ const defaultSubmit = (directory, dispatch, props) => {
   return props.onUpdate(directory)
     .then(() => props.onCancel());
 };
-
-const plugins = [pluginGeneric, pluginNA, pluginGBR];
-const pluginMap = {};
-plugins.forEach(plugin => {
-  plugin.listOfSupportedCountries.forEach(country => {
-    pluginMap[country] = plugin;
-  });
-});
 
 const EditDirectoryEntry = (props) => {
   // Destructure this separately because onSubmit appears to take the entirety of props atm...?
@@ -181,6 +170,17 @@ const EditDirectoryEntry = (props) => {
       });
       initialValues.services = newServices;
     }
+
+    // This part will set up the initialValues for the address in the form
+    initialValues.addresses = initialValues.addresses?.map(address => {
+      const plugin = selectPlugin(address.countryCode);
+      const addressFields = plugin.backendToFields(address);
+
+      return ({
+        ...address,
+        ...addressFields
+      });
+    });
   }
 
   // the submit handler passed in from SearchAndSort expects props as provided by redux-form

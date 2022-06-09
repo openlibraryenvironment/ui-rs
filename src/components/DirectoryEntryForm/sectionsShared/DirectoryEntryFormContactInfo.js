@@ -77,7 +77,6 @@ class DirectoryEntryFormContactInfo extends React.Component {
                 <Label>
                   <FormattedMessage id="ui-directory.information.addresses" />
                 </Label>
-
                 <FieldArray
                   name="addresses"
                   component={AddressListFieldArray}
