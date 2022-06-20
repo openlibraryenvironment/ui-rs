@@ -18,16 +18,22 @@ function establishStylesHook() {
 }
 
 function styledBarCodeString(text) {
-  return barCodeString(text, {
-    format: 'code39',
-    displayValue: false,
-    background: 'transparent',
-    lineColor: '#000000',
-    margin: 0,
-    marginLeft: 0,
-    height: 30,
-    width: 1
-  });
+  try {
+    return barCodeString(text, {
+      format: 'code39',
+      displayValue: false,
+      background: 'transparent',
+      lineColor: '#000000',
+      margin: 0,
+      marginLeft: 0,
+      height: 30,
+      width: 1
+    });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to render barcode: ', e);
+    return undefined;
+  }
 }
 
 function formatSymbols(symbols) {
