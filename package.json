@@ -119,6 +119,7 @@
           "rs.directoryentry.get",
           "rs.hostlmslocations.write",
           "rs.hostlmspatronprofiles.write",
+          "rs.hostlmsitemloanpolicies.write",
           "rs.shelvingLocations.write"
         ],
         "visible": true

@@ -8,6 +8,7 @@ import { CustomISO18626 } from './settingsComponents';
 import HostLMSLocations from './HostLMSLocations';
 import ShelvingLocationSites from './HostLMSLocations/ShelvingLocationSites';
 import HostLMSPatronProfiles from './HostLMSPatronProfiles';
+import HostLMSItemLoanPolicies from './HostLMSItemLoanPolicies';
 import HostLMSShelvingLocations from './HostLMSShelvingLocations';
 import Notices from './notices';
 import NoticePolicies from './noticePolicies';
@@ -68,6 +69,13 @@ const ResourceSharingSettings = (props) => {
       id: 'hostLMSLocations',
       label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.hostLMSLocations' }),
       component: HostLMSLocations,
+      perm: 'ui-rs.settings.hostlmslocations',
+    },
+    {
+      route: 'lmspolicies',
+      id: 'hostLMSItemLoanPolicies',
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.hostLMSItemLoanPolicies' }),
+      component: HostLMSItemLoanPolicies,
       perm: 'ui-rs.settings.hostlmslocations',
     },
     {

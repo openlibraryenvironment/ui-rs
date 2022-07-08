@@ -344,6 +344,11 @@
   "settings.lmspprf.createNew": "Create new patron profile",
   "settings.lmspprf.patronProfile": "Patron profile",
 
+  "settings.lmsilp.code": "Item loan policy code",
+  "settings.lmsilp.createNew": "Create new item loan policy",
+  "settings.lmsilp.lendable": "Lendable?",
+  "settings.lmsilp.itemLoanPolicy": "Item loan policy",
+
   "settings.lmsshlv.shelvingLocation": "Shelving location",
   "settings.lmsshlv.createNew": "Create new shelving location",
   "settings.lmsshlv.code": "Shelving location code",
@@ -369,6 +374,7 @@
   "settings.settingsSection.hostLMSIntegration": "Host LMS integration settings",
   "settings.settingsSection.hostLMSLocations": "Host LMS locations",
   "settings.settingsSection.hostLMSPatronProfiles": "Host LMS patron profiles",
+  "settings.settingsSection.hostLMSItemLoanPolicies": "Host LMS item loan policies",
   "settings.settingsSection.hostLMSShelvingLocations": "Host LMS shelving locations",
   "settings.settingsSection.autoResponder": "Auto responder settings",
   "settings.settingsSection.chat": "Chat settings",
