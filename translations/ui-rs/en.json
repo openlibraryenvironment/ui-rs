@@ -402,6 +402,7 @@
   "settings.sharedIndex.sharedIndexPass": "Shared index password",
   "settings.sharedIndex.sharedIndexUser": "Shared index username",
   "settings.sharedIndex.sharedIndexTenant": "Shared index tenant",
+  "settings.z3950.z3950ProxyAddress": "Z39.50 proxy address",
   "settings.z3950.z3950ServerAddress": "Z39.50 server address",
   "settings.requests.defaultRequestSymbol": "Default request symbol",
   "settings.requests.lastResortLenders": "Lenders of last resort (Comma-separated list of symbols)",
