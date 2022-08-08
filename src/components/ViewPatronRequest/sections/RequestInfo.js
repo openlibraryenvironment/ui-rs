@@ -67,6 +67,16 @@ class RequestInfo extends React.Component {
             />
           </Col>
         </Row>
+        {record?.requestIdentifiers?.length > 0 &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.otherIdentifiers" />}
+                value={record.requestIdentifiers.map(ident => `${ident.identifierType}: ${ident.identifier}`).join(', ')}
+              />
+            </Col>
+          </Row>
+        }
         <Row>
           <Col xs={12}>
             <KeyValue

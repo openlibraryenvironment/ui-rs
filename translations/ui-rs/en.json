@@ -52,6 +52,7 @@
   "closeNewPatronRequest": "Close new patron request",
   "information.hrid": "Request ID",
   "information.fullId": "Full ID",
+  "information.otherIdentifiers": "Other identifiers",
   "information.lastUpdated": "Last updated",
   "information.pickupLocation": "Pick-up location",
   "information.requestingInstitution": "Requesting institution",
