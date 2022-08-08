@@ -78,22 +78,40 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
           />
         </Accordion>
         {appName === 'supply' &&
-          <Accordion
-            label={<FormattedMessage id="ui-rs.patronrequests.pickLocation" />}
-            id="location"
-            name="location"
-            separator={false}
-            header={FilterAccordionHeader}
-            displayClearButton={activeFilters?.location?.length > 0}
-            onClearFilter={() => filterHandlers.clearGroup('location')}
-          >
-            <MultiSelectionFilter
+          <>
+            <Accordion
+              label={<FormattedMessage id="ui-rs.patronrequests.pickLocation" />}
+              id="location"
               name="location"
-              dataOptions={options.location}
-              selectedValues={activeFilters.location}
-              onChange={onChangeHandler}
-            />
-          </Accordion>
+              separator={false}
+              header={FilterAccordionHeader}
+              displayClearButton={activeFilters?.location?.length > 0}
+              onClearFilter={() => filterHandlers.clearGroup('location')}
+            >
+              <MultiSelectionFilter
+                name="location"
+                dataOptions={options.location}
+                selectedValues={activeFilters.location}
+                onChange={onChangeHandler}
+              />
+            </Accordion>
+            <Accordion
+              label={<FormattedMessage id="ui-rs.patronrequests.pickShelvingLocation" />}
+              id="shelvingLocation"
+              name="shelvingLocation"
+              separator={false}
+              header={FilterAccordionHeader}
+              displayClearButton={activeFilters?.location?.length > 0}
+              onClearFilter={() => filterHandlers.clearGroup('location')}
+            >
+              <MultiSelectionFilter
+                name="shelvingLocation"
+                dataOptions={options.shelvingLocation}
+                selectedValues={activeFilters.shelvingLocation}
+                onChange={onChangeHandler}
+              />
+            </Accordion>
+          </>
         }
         <DateFilter
           accordionLabel={<FormattedMessage id="ui-rs.filter.dateSubmitted" />}

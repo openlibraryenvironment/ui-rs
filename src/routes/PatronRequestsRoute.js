@@ -26,6 +26,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       'state': 'state.code',
       'location': 'pickLocation.id',
       'requester': 'resolvedRequester.owner.id',
+      'shelvingLocation': 'pickShelvingLocation',
       'supplier': 'resolvedSupplier.owner.id',
       'terminal': 'state.terminal'
     },
@@ -65,6 +66,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
 
   const filterQueries = [
     useOkapiQuery('rs/hostLMSLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
+    useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
     useOkapiQuery('directory/entry', {
       searchParams: {
         filters: 'type.value=institution',
@@ -77,7 +79,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
-    const [lmsLocations, { results: institutions }] = filterQueries.map(x => x.data);
+    const [lmsLocations, shelvingLocations, { results: institutions }] = filterQueries.map(x => x.data);
     filterOptions = {
       hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })],
       institution: institutions
@@ -87,6 +89,9 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .map(x => ({ label: x.name, value: x.id }))
         .sort(compareLabel),
       needsAttention: [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })],
+      shelvingLocation: shelvingLocations
+        .map(x => ({ label: x.name, value: x.name }))
+        .sort(compareLabel),
       state: states,
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
     };
