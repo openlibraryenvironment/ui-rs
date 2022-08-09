@@ -12,6 +12,7 @@ const Search = ({ resetAll, searchHandlers, searchValue, searchChanged, filterCh
     { label: 'allFields', value: '' },
     { label: 'id', value: 'id' },
     { label: 'hrid', value: 'hrid' },
+    { label: 'extid', value: 'requestIdentifiers.identifier' },
     { label: 'requesterGivenName', value: 'patronGivenName' },
     { label: 'requesterSurname', value: 'patronSurname' },
     { label: 'title', value: 'title' },
@@ -19,6 +20,7 @@ const Search = ({ resetAll, searchHandlers, searchValue, searchChanged, filterCh
     { label: 'issn', value: 'issn' },
     { label: 'isbn', value: 'isbn' },
     { label: 'itemBarcode', value: 'volumes.itemId' },
+    { label: 'extidType', value: 'requestIdentifiers.identifierType' },
   ].map(x => ({
     label: intl.formatMessage({ id: `ui-rs.index.${x.label}` }),
     value: x.value,

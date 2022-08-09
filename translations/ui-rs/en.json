@@ -463,6 +463,8 @@
   "index.allFields": "All fields",
   "index.id": "Full ID",
   "index.hrid": "Request ID",
+  "index.extid": "External ID",
+  "index.extidType": "External ID source",
   "index.requesterGivenName": "Requester first name",
   "index.requesterSurname": "Requester last name",
   "index.title": "Title",
