@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import stringify from 'json-stable-stringify';
-import { withStripes } from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
 import { CatalogInfo } from '@reshare/stripes-reshare/cards';
 import AppNameContext from '../../AppNameContext';
@@ -16,8 +15,9 @@ import {
   AuditInfo
 } from './sections';
 
-const ViewPatronRequest = ({ record, stripes }) => {
+const ViewPatronRequest = ({ record }) => {
   const location = useLocation();
+  const stripes = useStripes();
 
   const scrollToRef = (ref) => {
     return (
@@ -90,13 +90,4 @@ const ViewPatronRequest = ({ record, stripes }) => {
   );
 };
 
-ViewPatronRequest.propTypes = {
-  record: PropTypes.object,
-  stripes: PropTypes.shape({
-    config: PropTypes.shape({
-      showDevInfo: PropTypes.bool,
-    }).isRequired,
-  }).isRequired,
-};
-
-export default withStripes(ViewPatronRequest);
+export default ViewPatronRequest;
