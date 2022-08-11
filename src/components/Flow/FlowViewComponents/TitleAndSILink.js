@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { useStripes } from '@folio/stripes/core';
 import { Headline, Layout } from '@folio/stripes/components';
+import { useGetSIURL } from '@reshare/stripes-reshare';
 
 import css from './Flow.css';
 
 const TitleAndSILink = ({ request }) => {
-  const stripes = useStripes();
-  const siUIURL = stripes.config?.reshare?.sharedIndex?.ui;
-  const inventoryLink = siUIURL ? (
+  const getSIURL = useGetSIURL();
+  const siURL = getSIURL(request.systemInstanceIdentifier);
+  const inventoryLink = siURL ? (
     <a
       target="_blank"
       rel="noopener noreferrer"
-      href={`${siUIURL}/inventory/view/${request.systemInstanceIdentifier}`}
+      href={siURL}
     >
       <FormattedMessage id="ui-rs.flow.info.viewInSharedIndex" />
     </a>
