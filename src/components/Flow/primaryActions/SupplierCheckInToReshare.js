@@ -16,7 +16,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
       'supplierCheckInToReshareAndSupplierMarkShipped' :
       'supplierCheckInToReshare',
     values, {
-      success: 'ui-rs.actions.checkIn.success',
+      success: 'ui-rs.actions.checkIn.supplier.success',
       error: 'ui-rs.actions.checkIn.error',
     }
   );
