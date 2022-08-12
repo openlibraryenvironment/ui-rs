@@ -16,7 +16,7 @@ const PatronReturnedItem = ({ performAction }) => {
       'patronReturnedItemAndShippedReturn' :
       'patronReturnedItem',
     values, {
-      success: 'ui-rs.actions.checkIn.success',
+        success: combine ? 'ui-rs.actions.checkIn.patron.combined.success' : 'ui-rs.actions.checkIn.patron.success',
       error: 'ui-rs.actions.checkIn.error',
     }
   );
