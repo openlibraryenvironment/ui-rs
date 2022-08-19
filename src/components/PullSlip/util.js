@@ -57,7 +57,7 @@ function recordToPullSlipData(intl, record) {
   }
 
   const pul = get(record, 'pickLocation.name');
-  const psl = record.pickShelvingLocation;
+    const psl = get(record, 'pickShelvingLocation.name');
   const fullLocation = (pul && psl) ? `${pul} — ${psl}` : (pul || psl);
 
   const parsedPickup = record?.pickupLocation?.split(' --> ');

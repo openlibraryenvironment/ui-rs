@@ -26,7 +26,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       'state': 'state.code',
       'location': 'pickLocation.id',
       'requester': 'resolvedRequester.owner.id',
-      'shelvingLocation': 'pickShelvingLocation',
+      'shelvingLocation': 'pickShelvingLocation.id',
       'supplier': 'resolvedSupplier.owner.id',
       'terminal': 'state.terminal'
     },
@@ -90,7 +90,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .sort(compareLabel),
       needsAttention: [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })],
       shelvingLocation: shelvingLocations
-        .map(x => ({ label: x.name, value: x.name }))
+        .map(x => ({ label: x.name, value: x.id }))
         .sort(compareLabel),
       state: states,
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
