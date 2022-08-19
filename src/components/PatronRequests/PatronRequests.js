@@ -43,7 +43,7 @@ const appDetails = {
       'flags', 'hrid',
       'dateCreated', 'state', 'serviceType',
       'requestingInstitutionSymbol', 'selectedItemBarcode', 'pickLocation',
-      'title', 'pickShelvingLocation'
+      'pickShelvingLocation', 'title'
     ],
     extraFilter: 'r.false',
     intlId: 'requester',
