@@ -43,7 +43,7 @@ const appDetails = {
       'flags', 'hrid',
       'dateCreated', 'state', 'serviceType',
       'requestingInstitutionSymbol', 'selectedItemBarcode', 'pickLocation',
-      'title',
+      'title', 'pickShelvingLocation'
     ],
     extraFilter: 'r.false',
     intlId: 'requester',
@@ -181,6 +181,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       supplyingInstitutionSymbol: <FormattedMessage id="ui-rs.patronrequests.supplyingInstitutionSymbol" />,
                       selectedItemBarcode: <FormattedMessage id="ui-rs.patronrequests.selectedItemBarcode" />,
                       pickLocation: <FormattedMessage id="ui-rs.patronrequests.pickLocation" />,
+                      pickShelvingLocation: <FormattedMessage id="ui-rs.patronrequests.pickShelvingLocation" />,
                       pickupLocation: <FormattedMessage id="ui-rs.patronrequests.pickupLocation" />,
                     }}
                     columnWidths={{
@@ -228,6 +229,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       serviceType: a => a.serviceType && a.serviceType.value,
                       supplyingInstitutionSymbol: a => (a?.resolvedSupplier?.owner?.symbolSummary ?? '').replace(/,.*/, ''),
                       pickLocation: a => a.pickLocation && a.pickLocation.name,
+                      pickShelvingLocation: a => a.pickShelvingLocation && a.pickShelvingLocation.name,
                       selectedItemBarcode: a => (a.volumes?.length <= 1 ? a.volumes[0]?.itemId : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />)
                     }}
                     hasMargin
