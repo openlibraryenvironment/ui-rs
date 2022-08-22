@@ -121,7 +121,13 @@ const HostLMSShelvingLocations = () => {
             return undefined;
           } catch (e) {
             const res = await e?.response?.json();
-            return { [FORM_ERROR]: res.message ?? e.message };
+            let message = res.message;
+            if (message != null) {
+              if (message.endsWith('must be unique')) {
+                message = <FormattedMessage id="ui-rs.settings.lmsshlv.alreadyExists" />;
+              }
+            }
+            return { [FORM_ERROR]: message ?? e.message };
           }
         }}
         modalProps={{
