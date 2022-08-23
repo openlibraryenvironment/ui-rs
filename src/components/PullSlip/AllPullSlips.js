@@ -20,10 +20,75 @@ function makePairs(singles, fallback) {
   return pairs;
 }
 
+function picklistSortComparable(record1, record2) {
+    for (let sortPos = 0; sortPos < record1.sortValues.length; sortPos++) {
+        if (sortPos < record2.sortValues.length) {
+            if (record1.sortValues[sortPos] < record2.sortValues[sortPos]) {
+                return (-1);
+            } else if (record1.sortValues[sortPos] > record2.sortValues[sortPos]) {
+                return (1);
+            }
+        } else {
+            // No more sort positions for record 2
+            return (-1);
+        }
+    }
+
+    // Run out of sort positions for record 1
+    return (record1.sortValues.length === record2.sortValues.length ? 0 : -1);
+}
+
+function sortRecordsByLationAndCalNumber(records) {
+    // Create the sort array on the records
+    for (let i = 0; i < records.length; i++) {
+
+        // create a sort array on the record
+        let record = records[i];
+        record.sortValues = [];
+
+        // Add the pick location to be the first sort field
+        if ((record.location !== undefined) && (record.location !== null)) {
+            record.sortValues.push(record.location.toUpperCase());
+        }
+
+        // If we have a call number then we can attempt tp parse it
+        if ((record.callNumber !== undefined) && (record.callNumber !== null)) {
+            // Get hold of all the groups in the local call number
+            const groupRregexp = /[a-z0-9.]+/gi;
+            const groupMatch = record.callNumber.match(groupRregexp);
+            if ((groupMatch != null) && (groupMatch.length > 0)) {
+                for (let j = 0; j < groupMatch.length; j++) {
+                    const sectionRegexp = /([a-z]*)([0-9.]+)/i;
+                    const sectionMatch = groupMatch[j].match(sectionRegexp);
+                    if ((sectionMatch != null) && (sectionMatch.length > 0)) {
+                        // Do not add the first field if it is blank
+                        if (sectionMatch[1] !== '') {
+                            record.sortValues.push(sectionMatch[1].toUpperCase());
+                        }
+
+                        // Do not add the second field if it dosn't exist
+                        if ((sectionMatch.length > 2) && (sectionMatch[2] !== '')) {
+                            record.sortValues.push(parseFloat(sectionMatch[2]));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Finally sort the records and return them
+    return (records.sort(picklistSortComparable));
+}
+
 const AllPullSlips = (props) => {
   useEffect(establishStylesHook, []);
   Handlebars.registerPartial('slip', slipTemplate);
-  const records = props.records.map(r => recordToPullSlipData(props.intl, r));
+  let records = props.records.map(r => recordToPullSlipData(props.intl, r));
+    records = sortRecordsByLationAndCalNumber(records);
+// Have left this console logging here to prove what we are sorting by
+//  for (let i = 0; i < records.length; i++) {
+//    console.log(`Location: ${records[i].location}, Call number: ${records[i].callNumber}, Sort fields:  ${records[i].sortValues}`);
+//  }
   const s = wrapperTemplate({ pairs: makePairs(records, {}) });
   return (new Parser()).parse(s);
 };
