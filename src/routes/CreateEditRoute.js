@@ -58,8 +58,8 @@ const CreateEditRoute = props => {
     .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), []);
 
   const validRequesterRecords = resources.locations.records
-    .filter(rec => rec?.type?.value === 'institution');
-  if (!validRequesterRecords?.[0]?.symbols?.[0]?.symbol) throw new Error('Cannot resolve symbol to create requests as');
+    .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol);
+  if (!validRequesterRecords?.[0]) throw new Error('Cannot resolve symbol to create requests as');
   const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
   const isEditing = typeof match.params.id === 'string';
