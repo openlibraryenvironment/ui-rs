@@ -6,7 +6,7 @@ import { FORM_ERROR } from 'final-form';
 import { useLocation } from 'react-router';
 import queryString from 'query-string';
 
-import { Button, Layer, Layout, Pane, Paneset, Select, Spinner, TextField } from '@folio/stripes/components';
+import { Button, Layer, Pane, Paneset, Select, Spinner, TextField } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 import { ActionList, FormModal, generateKiwtQuery } from '@k-int/stripes-kint-components';
 import { useOkapiQueryConfig, useIntlCallout } from '@reshare/stripes-reshare';
@@ -158,8 +158,7 @@ const HostLMSLocations = () => {
           }}
           contentData={locations}
           editableFields={{
-            code: () => false,
-            sites: () => false,
+            code: () => false
           }}
           fieldComponents={fieldComponents}
           formatter={{
@@ -171,7 +170,7 @@ const HostLMSLocations = () => {
               }
               return dirLookup[id] ?? id;
             },
-            sites: rec => rec?.sites?.some(site => typeof site.supplyPreference === 'number') && <Layout className="centerContent full">✓</Layout>,
+            sites: rec => !!rec?.sites.some(site => typeof site.supplyPreference === 'number'),
           }}
           hideCreateButton
           visibleFields={['name', 'code', 'supplyPreference', 'correspondingDirectoryEntry', 'sites']}
