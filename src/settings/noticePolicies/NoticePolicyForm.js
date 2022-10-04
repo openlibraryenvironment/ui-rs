@@ -1,9 +1,10 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useLocation } from 'react-router-dom';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
+import _ from 'lodash';
 
 import { useRefdata, useTemplates } from '@k-int/stripes-kint-components';
 
@@ -38,6 +39,14 @@ const selectifyRefdata = (refdataRecords) => (
 
 const NoticePolicyForm = ({ initialValues, onSubmit, onCancel }) => {
   const options = {};
+  const location = useLocation();
+
+  // When cloning a record we need to filter ids out of the initial values as EntryManager only does that at the top level
+  const cloning = location.search.match('layer=clone');
+  let sanitizedInitial;
+  if (cloning) {
+    sanitizedInitial = { ...initialValues, notices: initialValues.notices.map(notice => _.omit(notice, ['id', 'noticePolicy'])) };
+  } else sanitizedInitial = initialValues;
 
   const triggersRefdata = selectifyRefdata(useRefdata({
     desc: 'noticeTriggers',
@@ -60,7 +69,7 @@ const NoticePolicyForm = ({ initialValues, onSubmit, onCancel }) => {
   options.formats = formatsRefdata;
 
   return (
-    <Form onSubmit={onSubmit} initialValues={initialValues} mutators={{ ...arrayMutators }}>
+    <Form onSubmit={onSubmit} initialValues={sanitizedInitial} mutators={{ ...arrayMutators }}>
       {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
         <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
           <Paneset isRoot>
