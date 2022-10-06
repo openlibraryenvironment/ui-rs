@@ -35,7 +35,7 @@ const RequestInfo = ({ request }) => {
   };
 
   const location = useLocation();
-  const itemBarcodeText = request.volumes?.length <= 1 ? request.volumes[0]?.itemId : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />;
+  const itemBarcodeText = request.volumes?.length <= 1 ? (request.volumes[0]?.itemId || request.selectedItemBarcode) : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />;
 
   return (
     <Accordion
