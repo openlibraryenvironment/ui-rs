@@ -290,6 +290,14 @@
   "printAllPullSlips": "Print pull slips for all records in list",
   "printPullSlips": "Print pull slips",
   "markAllSlipsPrinted": "Mark pull slips as printed",
+
+  "refdata.label": "Label",
+  "refdata.value": "Value",
+
+  "actions": "Actions",
+  "settings.default": "Default",
+  "settings.valueFor": "Value for {name}",
+
   "settings.name": "Name",
   "settings.value": "Value",
   "settings.no-current-value": "There is no current value for this setting",

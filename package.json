@@ -18,7 +18,7 @@
   "dependencies": {
     "@folio/stripes-erm-components": "^6.1.0",
     "@folio/stripes-template-editor": "^3.0.0",
-    "@k-int/stripes-kint-components": "^2.5.1",
+    "@k-int/stripes-kint-components": "^3.0.0",
     "@reshare/stripes-reshare": "^1.9.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",

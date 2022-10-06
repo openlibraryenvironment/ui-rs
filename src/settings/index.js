@@ -99,6 +99,7 @@ const ResourceSharingSettings = (props) => {
     intlKey: 'ui-rs',
     persistentPages,
     refdataEndpoint: REFDATA_ENDPOINT,
+    renderWithActionList: true,
     settingEndpoint: SETTINGS_ENDPOINT,
     templateEndpoint: TEMPLATES_ENDPOINT
   });

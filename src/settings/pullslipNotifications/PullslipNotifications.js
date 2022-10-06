@@ -69,6 +69,7 @@ class PullslipNotifications extends React.Component {
     return (
       <Pane
         defaultWidth="fill"
+        id="settings-pullslip-notifications"
         paneTitle={<FormattedMessage id="ui-rs.settings.settingsSection.pullslipNotifications" />}
         lastMenu={(
           <Button marginBottom0 buttonStyle="primary" to="pullslip-notifications/new">
@@ -77,6 +78,7 @@ class PullslipNotifications extends React.Component {
         )}
       >
         <SettingPage
+          renderWithActionList
           sectionName="pullslipTemplateConfig"
         />
         <MultiColumnList
