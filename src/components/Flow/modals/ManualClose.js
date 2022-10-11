@@ -23,13 +23,11 @@ const ManualClose = ({ request, performAction }) => {
   const closeModal = () => setModal(null);
   const { formatMessage } = useIntl();
 
-  const terminalQuery = useOkapiQuery('rs/status', {
-    searchParams: { filters: 'terminal==true && visible==true' },
+    const terminalQuery = useOkapiQuery('rs/patronrequests/' + request.id + '/manualCloseStates', {
     staleTime: 8 * 60 * 1000
   });
   if (!terminalQuery.isSuccess) return null;
   const terminalOptions = terminalQuery.data
-    .filter(state => state.code.startsWith(request.isRequester ? 'REQ' : 'RES'))
     .map(state => ({ value: state.code, label: formatMessage({ id: `stripes-reshare.states.${state.code}` }) }));
 
   const onSubmit = values => {
@@ -44,7 +42,7 @@ const ManualClose = ({ request, performAction }) => {
     <Form
       onSubmit={onSubmit}
       initialValues={{
-        terminalState: request.isRequester ? 'REQ_REQUEST_COMPLETE' : 'RES_COMPLETE'
+          terminalState: terminalOptions[0].value
       }}
       render={({ handleSubmit, submitting, form }) => (
         <form onSubmit={handleSubmit}>
