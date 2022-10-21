@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
+import { DirectLink } from '@reshare/stripes-reshare';
 import { ShowModalButton } from '../../ModalButtons';
 
 export { default as Generic } from './Generic';
@@ -73,4 +74,8 @@ export { default as PatronReturnedItem } from './PatronReturnedItem';
 
 
 // Client only, component names do not correspond to actions
-export const PrintPullSlip = () => <Button buttonStyle="primary mega" fullWidth to="pullslip">Print pull slip</Button>;
+export const PrintPullSlip = () => (
+  <DirectLink component={Button} buttonStyle="primary mega" fullWidth to="pullslip">
+    <FormattedMessage id="ui-rs.printPullslip" />
+  </DirectLink>
+);
