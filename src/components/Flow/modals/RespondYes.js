@@ -33,11 +33,11 @@ const RespondYes = ({ performAction }) => {
   const shelvingQuery = useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 30 * 60 * 1000 });
   if (![locQuery, shelvingQuery].every(x => x?.isSuccess)) return null;
   const locOptions = locQuery.data
-    .filter(x => x.supplyPreference >= 0)
+    .filter(x => !(x?.supplyPreference < 0))
     .map(x => ({ label: x.name, value: x.name }))
     .sort(compareLabel);
   const shelvingOptions = shelvingQuery.data
-    .filter(x => x.supplyPreference >= 0)
+    .filter(x => !(x?.supplyPreference < 0))
     .map(x => ({ label: x.name, value: x.name }))
     .sort(compareLabel);
 
