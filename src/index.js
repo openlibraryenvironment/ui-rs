@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { useIntlKeyStore } from '@k-int/stripes-kint-components';
 import PatronRequestsRoute from './routes/PatronRequestsRoute';
 import CreateEditRoute from './routes/CreateEditRoute';
 import ViewRoute from './routes/ViewRoute';
@@ -19,9 +20,14 @@ const ResourceSharing = (props) => {
   const appName = path.substring(1).replace(/\/.*/, '');
   props.stripes.logger.log('appName', `us-rs: path='${path}', appName='${appName}'`);
 
+  // stripes-kint-components no longer contains translations for its strings and needs to know where to look
+  const addKey = useIntlKeyStore(state => state.addKey);
+  addKey('stripes-reshare');
+
   if (actAs === 'settings') {
     return <Settings {...props} appName={appName} />;
   }
+
   return (
     <AppNameContext.Provider value={appName}>
       {/* TODO: remove after switching to the Stripes version from the Morning Glory release
