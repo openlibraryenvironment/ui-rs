@@ -77,6 +77,7 @@ class PullslipNotifications extends React.Component {
         )}
       >
         <SettingPage
+          intlKey="ui-rs"
           sectionName="pullslipTemplateConfig"
         />
         <MultiColumnList
