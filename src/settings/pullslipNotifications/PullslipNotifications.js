@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
-import { Pane, MultiColumnList, Button } from '@folio/stripes/components';
+import { Button, Layout, MultiColumnList, Pane } from '@folio/stripes/components';
 
 import { SettingPage } from '@k-int/stripes-kint-components';
 
@@ -100,6 +100,7 @@ class PullslipNotifications extends React.Component {
             emailAddresses: 400,
           }}
           formatter={{
+            status: r => r.status === true && <Layout className="centered">✓</Layout>,
             days: r => r.days.join(', '),
             times: r => r.times.join(', '),
             locations: r => (r.locations || []).map(l => locationId2Name[l]).join(', '),
