@@ -1,6 +1,6 @@
 {
   "name": "@reshare/rs",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Resource Sharing",
   "main": "src/index.js",
   "repository": "",
@@ -12,14 +12,14 @@
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^6.1.0",
-    "@folio/stripes-cli": "~2.5.0",
+    "@folio/stripes-cli": "~2.6.0",
     "eslint": "^7.0.0"
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^6.1.0",
     "@folio/stripes-template-editor": "^3.0.0",
-    "@k-int/stripes-kint-components": "^2.5.1",
-    "@reshare/stripes-reshare": "^1.9.0",
+    "@k-int/stripes-kint-components": "^4.2.0",
+    "@reshare/stripes-reshare": "^1.10.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
     "final-form": "^4.2.0",
@@ -31,6 +31,7 @@
     "json-stable-stringify": "^1.0.1",
     "ky": "^0.23.0",
     "lodash": "^4.17.4",
+    "omit-deep-lodash": "^1.1.7",
     "postcss-nested": "^4.1.2",
     "prop-types": "^15.6.0",
     "query-string": "^6.10.1",

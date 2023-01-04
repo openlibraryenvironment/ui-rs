@@ -24,7 +24,7 @@ const HostLMSLocations = () => {
 
   // Not caching locations for long as they are autopopulated and we want to see the latest
   const locationQueryConfig = useOkapiQueryConfig('rs/hostLMSLocations', {
-    searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: 1000 }, {}),
+    searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: -1 }, {}),
     staleTime: 60 * 1000,
   });
   const { data: locations } = useQuery(locationQueryConfig);

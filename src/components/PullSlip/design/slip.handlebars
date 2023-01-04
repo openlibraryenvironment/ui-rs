@@ -19,7 +19,10 @@
             </div>
             <div class="slip__section__body">
               <h2 class="slot--item-title">{{title}}</h2>
-              <p class="item-metadata">By: <span class="slot--item-author">{{author}}</span>. Volume: <span class="slot--item-volume">{{volume}}</span></p>
+              {{#if volume}}
+                <p class="item-metadata">Volume: <span class="slot--item-volume">{{volume}}</span></p>
+              {{/if}}
+              <p class="item-metadata">By: <span class="slot--item-author">{{author}}</span></p>
               <div class="spacer--m"></div>
               <section class="conditional-display--recall-policy">
                 <h2>This item may be recalled</h2>

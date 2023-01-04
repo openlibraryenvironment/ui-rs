@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
@@ -36,14 +36,18 @@ const RequestInfo = ({ request }) => {
 
   const location = useLocation();
   const itemBarcodeText = request.volumes?.length <= 1 ? (request.volumes[0]?.itemId || request.selectedItemBarcode) : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />;
+  const [showStateCode, setShowStateCode] = useState(false);
 
   return (
     <Accordion
       id="requestInfo"
       label={<FormattedMessage id="ui-rs.flow.sections.requestInfo" />}
     >
-      <Layout className="padding-top-gutter">
-        <Headline margin="none" size="large"><FormattedMessage id={`stripes-reshare.states.${request.state?.code}`} /></Headline>
+      <Layout className="padding-top-gutter" onClick={e => (e.altKey || e.ctrlKey || e.shiftKey) && setShowStateCode(true)}>
+        <Headline margin="none" size="large">
+          <FormattedMessage id={`stripes-reshare.states.${request.state?.code}`} />
+          {showStateCode && <span> ({request.state?.code})</span>}
+        </Headline>
         {`${intl.formatMessage({ id: 'ui-rs.flow.info.updated' }, { date: intl.formatDate(request.lastUpdated) })} `}
         <Link to={{
           pathname: location?.pathname?.replace('flow', 'details'),
