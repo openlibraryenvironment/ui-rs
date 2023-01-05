@@ -292,6 +292,8 @@
   "markAllSlipsPrinted": "Mark pull slips as printed",
   "settings.name": "Name",
   "settings.value": "Value",
+  "settings.noCurrentValue": "No current value",
+  "settings.default": "default",
   "settings.no-current-value": "There is no current value for this setting",
   "settings.edit": "Edit",
   "settings.finish-editing": "Finish Editing",
