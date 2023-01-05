@@ -2,6 +2,7 @@
   "front.welcome": "Welcome to ReShare!",
   "meta.title": "Resource Sharing",
   "edit": "Edit",
+  "save": "Save",
   "create": "Create",
   "delete": "Delete",
   "editPatronRequest": "Edit Patron Request",
