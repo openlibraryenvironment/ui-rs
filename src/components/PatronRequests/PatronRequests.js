@@ -10,15 +10,15 @@ import queryString from 'query-string';
 import {
   Badge,
   Button,
+  Icon,
   LoadingPane,
   MultiColumnList,
   Pane,
   PaneMenu,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon, CalloutContext, IfPermission, useOkapiKy } from '@folio/stripes/core';
 import { SearchAndSortQuery, PersistedPaneset } from '@folio/stripes/smart-components';
 import AppNameContext from '../../AppNameContext';
-import PrintAllPullSlips from '../PrintAllPullSlips';
 import Filters from './Filters';
 import Search from './Search';
 
@@ -53,12 +53,14 @@ const appDetails = {
   },
 };
 
-const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions, children }) => {
+const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions, searchParams, children }) => {
   const appName = useContext(AppNameContext);
+  const callout = useContext(CalloutContext);
   const history = useHistory();
   const intl = useIntl();
   const location = useLocation();
   const match = useRouteMatch();
+  const okapiKy = useOkapiKy();
 
   const requests = requestsQuery?.data?.pages?.flatMap(x => x.results);
   const totalCount = requestsQuery?.data?.pages?.[0]?.total;
@@ -68,27 +70,33 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
     requestsQuery.fetchNextPage({ pageParam: index });
   };
 
+  const onPrintAll = () => {
+    okapiKy(`rs/patronrequests/generatePickListBatch${searchParams}`).then(async res => {
+      const { batchId } = await res.json();
+      history.push(`requests/batch/${batchId}/pullslip`);
+    }).catch(async e => {
+      const res = await e?.response?.json();
+      const message = intl.formatMessage({ id: 'ui-rs.pullSlipError' }, { errMsg: res?.error ?? e.message });
+      callout.sendCallout({ type: 'error', message });
+    });
+  };
+
   const getActionMenu = () => (
-    <Link to={`${match.url}/printslips${location.search}`}>
-      <FormattedMessage id="ui-rs.printAllPullSlips">
-        {ariaLabel => (
-          <Button
-            id="clickable-print-pull-slips"
-            aria-label={ariaLabel[0]}
-            buttonStyle="dropdownItem"
-          >
-            <FormattedMessage id="ui-rs.printPullSlips" />
-          </Button>
-        )}
-      </FormattedMessage>
-    </Link>
+    <FormattedMessage id="ui-rs.printAllPullSlips">
+      {ariaLabel => (
+        <Button
+          id="clickable-print-pull-slips"
+          aria-label={ariaLabel[0]}
+          buttonStyle="dropdownItem"
+          onClick={onPrintAll}
+        >
+          <Icon icon="print"><FormattedMessage id="ui-rs.printPullSlips" /></Icon>
+        </Button>
+      )}
+    </FormattedMessage>
   );
 
   const { title, visibleColumns, createPerm } = appDetails[appName];
-
-  if (match.params.action === 'printslips') {
-    return <PrintAllPullSlips query={requestsQuery} />;
-  }
 
   return (
     <SearchAndSortQuery

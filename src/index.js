@@ -30,8 +30,8 @@ const ResourceSharing = (props) => {
 
   return (
     <AppNameContext.Provider value={appName}>
-      {/* TODO: remove after switching to the Stripes version from the Morning Glory release
-      which will include this functionality in core */}
+      {/* TODO: remove after switching to the Stripes version from a future release
+      which will include this functionality in stripes-ui */}
       <StaleBundleWarning />
       <Switch>
         <Redirect
@@ -51,6 +51,7 @@ const ResourceSharing = (props) => {
           to={`${path}/requests/view/:id/flow${search}`}
         />
         <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
+        <Route path={`${path}/requests/batch/:batchId/pullslip`} component={PullSlipRoute} />
 
         {/* Contains nested routes: ./details and ./flow */}
         <Route path={`${path}/requests/view/:id`} component={ViewRoute} />
