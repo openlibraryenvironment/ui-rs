@@ -56,14 +56,19 @@ const HostLMSPatronProfiles = () => {
 
   const actionAssigner = () => {
     return ([
-      { name: 'edit', label: <FormattedMessage id="ui-rs.edit" />, icon: 'edit' },
-      { name: 'delete', label: <FormattedMessage id="ui-rs.delete" />, icon: 'trash' },
+      {
+        name: 'edit',
+        callback: (data) => putLocation(data),
+        label: <FormattedMessage id="ui-rs.edit" />,
+        icon: 'edit',
+      },
+      {
+        name: 'delete',
+        callback: (data) => deleteLocation(data),
+        label: <FormattedMessage id="ui-rs.delete" />,
+        icon: 'trash',
+      },
     ]);
-  };
-
-  const actionCalls = {
-    edit: (data) => putLocation(data),
-    delete: (data) => deleteLocation(data)
   };
 
   const fieldComponents = {
@@ -96,7 +101,6 @@ const HostLMSPatronProfiles = () => {
       >
         <ActionList
           actionAssigner={actionAssigner}
-          actionCalls={actionCalls}
           columnMapping={{
             name: <FormattedMessage id="ui-rs.settings.lmspprf.patronProfile" />,
             code: <FormattedMessage id="ui-rs.settings.lmspprf.code" />,
