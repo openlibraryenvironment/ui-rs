@@ -6,8 +6,6 @@
   "create": "Create",
   "delete": "Delete",
   "editPatronRequest": "Edit Patron Request",
-  "new-app.greeting": "Congratulations!",
-  "new-app.message": "Your Stripes app is running.",
   "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
   "requester": "Requester",
   "supplier": "Supplier",
