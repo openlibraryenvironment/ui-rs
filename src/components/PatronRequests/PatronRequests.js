@@ -76,7 +76,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
       history.push(`requests/batch/${batchId}/pullslip`);
     }).catch(async e => {
       const res = await e?.response?.json();
-      const message = intl.formatMessage({ id: 'ui-rs.pullSlipError' }, { errMsg: res?.error ?? e.message });
+      const message = intl.formatMessage({ id: 'ui-rs.pullSlip.error' }, { errMsg: res?.error ?? e.message });
       callout.sendCallout({ type: 'error', message });
     });
   };
