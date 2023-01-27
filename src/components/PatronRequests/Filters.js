@@ -5,6 +5,7 @@ import {
   Accordion,
   AccordionSet,
   FilterAccordionHeader,
+  Selection,
 } from '@folio/stripes/components';
 // TODO: use DateFilter from stripes-erm-components once version is released with
 // accordionLabel prop
@@ -113,6 +114,22 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
             </Accordion>
           </>
         }
+        <Accordion
+          label={<FormattedMessage id="ui-rs.filter.batch" />}
+          id="batch"
+          name="batch"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={activeFilters?.batch?.length > 0}
+          onClearFilter={() => filterHandlers.clearGroup('batch')}
+        >
+          <Selection
+            name="batch"
+            dataOptions={options.batch}
+            value={activeFilters?.batch?.[0] ?? []}
+            onChange={value => filterHandlers.state({ ...activeFilters, batch: [value] })}
+          />
+        </Accordion>
         <DateFilter
           accordionLabel={<FormattedMessage id="ui-rs.filter.dateSubmitted" />}
           activeFilters={activeFilters}

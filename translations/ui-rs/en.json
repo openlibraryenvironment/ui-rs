@@ -474,6 +474,7 @@
   "settings.fileStorage.s3BucketName": "S3 bucket name",
   "settings.fileStorage.s3BucketRegion": "S3 bucket region",
   "settings.fileStorage.s3ObjectPrefix": "S3 object prefix",
+  "filter.batch": "Batch",
   "filter.state": "State",
   "filter.pullSlip": "Pull slip",
   "filter.supplier": "Supplier",
