@@ -7,6 +7,7 @@ import {
 } from 'react-intl';
 import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import queryString from 'query-string';
+import { useQueryClient } from 'react-query';
 import {
   Badge,
   Button,
@@ -61,6 +62,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
   const location = useLocation();
   const match = useRouteMatch();
   const okapiKy = useOkapiKy();
+  const queryClient = useQueryClient();
 
   const requests = requestsQuery?.data?.pages?.flatMap(x => x.results);
   const totalCount = requestsQuery?.data?.pages?.[0]?.total;
@@ -73,6 +75,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
   const onPrintAll = () => {
     okapiKy(`rs/patronrequests/generatePickListBatch${searchParams}`).then(async res => {
       const { batchId } = await res.json();
+      queryClient.invalidateQueries('rs/batch');
       history.push(`requests/batch/${batchId}/pullslip`);
     }).catch(async e => {
       const res = await e?.response?.json();
