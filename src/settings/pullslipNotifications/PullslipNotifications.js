@@ -83,7 +83,7 @@ class PullslipNotifications extends React.Component {
         <MultiColumnList
           autosize
           contentData={records}
-          visibleColumns={['status', 'name', 'days', 'times', 'locations', 'emailAddresses']}
+          visibleColumns={['status', 'attachPullSlips', 'name', 'days', 'times', 'locations', 'emailAddresses']}
           columnMapping={{
             status: <FormattedMessage id="ui-rs.pullslipNotification.status" />,
             name: <FormattedMessage id="ui-rs.pullslipNotification.name" />,
@@ -91,17 +91,15 @@ class PullslipNotifications extends React.Component {
             times: <FormattedMessage id="ui-rs.pullslipNotification.times" />,
             locations: <FormattedMessage id="ui-rs.pullslipNotification.locations" />,
             emailAddresses: <FormattedMessage id="ui-rs.pullslipNotification.emailAddresses" />,
+            attachPullSlips: <FormattedMessage id="ui-rs.pullslipNotification.attachPullSlips" />,
           }}
           columnWidths={{
             status: 60,
-            name: 150,
-            days: 150,
-            times: 150,
-            locations: 250,
-            emailAddresses: 400,
+            attachPullSlips: 60,
           }}
           formatter={{
             status: r => r.status === true && <Layout className="centered">✓</Layout>,
+            attachPullSlips: r => r.attachPullSlips === true && <Layout className="centered">✓</Layout>,
             days: r => r.days.join(', '),
             times: r => r.times.join(', '),
             locations: r => (r.locations || []).map(l => locationId2Name[l]).join(', '),

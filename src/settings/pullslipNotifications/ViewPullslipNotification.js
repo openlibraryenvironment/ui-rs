@@ -115,14 +115,20 @@ class ViewPullslipNotification extends React.Component {
           <Row>
             <Col xs={4}>
               <KeyValue
+                label={<FormattedMessage id="ui-rs.pullslipNotification.days" />}
+                value={record.days.map(code => dayname[code]).join(', ')}
+              />
+            </Col>
+            <Col xs={4}>
+              <KeyValue
                 label={<FormattedMessage id="ui-rs.pullslipNotification.status" />}
                 value={<FormattedMessage id={`ui-rs.${record.status ? 'yes' : 'no'}`} />}
               />
             </Col>
             <Col xs={4}>
               <KeyValue
-                label={<FormattedMessage id="ui-rs.pullslipNotification.days" />}
-                value={record.days.map(code => dayname[code]).join(', ')}
+                label={<FormattedMessage id="ui-rs.pullslipNotification.attachPullSlips" />}
+                value={<FormattedMessage id={`ui-rs.${record.attachPullSlips ? 'yes' : 'no'}`} />}
               />
             </Col>
           </Row>

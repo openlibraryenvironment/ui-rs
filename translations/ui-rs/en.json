@@ -498,6 +498,7 @@
   "index.itemBarcode": "Item barcode",
   "pullslip.multipleItem": "Multiple item request",
   "pullslipNotification.status": "Is active",
+  "pullslipNotification.attachPullSlips": "Attach PDF",
   "pullslipNotification.name": "Name",
   "pullslipNotification.days": "Days",
   "pullslipNotification.times": "Times",

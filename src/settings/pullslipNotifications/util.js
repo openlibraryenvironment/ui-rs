@@ -7,7 +7,7 @@ dayNumber2String.forEach((val, i) => { dayString2Number[val] = i; });
 export function raw2userData(raw) {
   const rrule = rrulestr(raw.rrule);
   const payload = JSON.parse(raw.taskConfig);
-  const { locations, emailAddresses } = payload;
+  const { locations, emailAddresses, attachPullSlips } = payload;
 
   return {
     id: raw.id,
@@ -17,6 +17,7 @@ export function raw2userData(raw) {
     days: rrule.options.byweekday.map(w => dayNumber2String[w]),
     locations,
     emailAddresses,
+    attachPullSlips,
   };
 }
 
@@ -40,6 +41,6 @@ export function user2rawData(values) {
     description: values.name,
     enabled: values.status,
     rrule: rrule.toString(),
-    taskConfig: JSON.stringify({ locations, emailAddresses }),
+    taskConfig: JSON.stringify({ locations, emailAddresses, attachPullSlips: values.attachPullSlips || false }),
   };
 }

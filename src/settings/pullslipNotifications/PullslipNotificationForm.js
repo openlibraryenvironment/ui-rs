@@ -75,17 +75,32 @@ class EditPullslipNotification extends React.Component {
         </Row>
         <Row>
           <Col xs={4}>
-            <FormattedMessage id="ui-rs.pullslipNotification.status">
-              {placeholder => (
-                <Field
-                  name="status"
-                  component={Checkbox}
-                  type="checkbox"
-                  label={placeholder[0]}
-                  placeholder={placeholder[0]}
-                />
-              )}
-            </FormattedMessage>
+            <Row>
+              <FormattedMessage id="ui-rs.pullslipNotification.status">
+                {placeholder => (
+                  <Field
+                    name="status"
+                    component={Checkbox}
+                    type="checkbox"
+                    label={placeholder[0]}
+                    placeholder={placeholder[0]}
+                  />
+                )}
+              </FormattedMessage>
+            </Row>
+            <Row>
+              <FormattedMessage id="ui-rs.pullslipNotification.attachPullSlips">
+                {placeholder => (
+                  <Field
+                    name="attachPullSlips"
+                    component={Checkbox}
+                    type="checkbox"
+                    label={placeholder[0]}
+                    placeholder={placeholder[0]}
+                  />
+                )}
+              </FormattedMessage>
+            </Row>
           </Col>
           <Col xs={4}>
             <FormattedMessage id="ui-rs.pullslipNotification.days">
