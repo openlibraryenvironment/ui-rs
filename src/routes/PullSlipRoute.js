@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
@@ -8,6 +8,7 @@ import { useOkapiQuery, usePerformAction } from '@reshare/stripes-reshare';
 const PullSlipRoute = ({ match, history }) => {
   const requestId = match.params?.id;
   const batchId = match.params?.batchId;
+  const [pdfUrl, setPdfUrl] = useState();
   const intl = useIntl();
   const okapiKy = useOkapiKy();
   const queryClient = useQueryClient();
@@ -17,7 +18,8 @@ const PullSlipRoute = ({ match, history }) => {
 
   const reqQuery = useOkapiQuery(`rs/patronrequests/${requestId}`, {
     enabled: !!requestId,
-    staleTime: 2 * 60 * 1000
+    // will still be invalidated by performAction() eg. this will not prevent the "mark printed" button being greyed out after it is clicked
+    staleTime: Infinity
   });
   const isReqPrintable = reqQuery?.data?.validActions?.includes('supplierPrintPullSlip');
 
@@ -26,10 +28,17 @@ const PullSlipRoute = ({ match, history }) => {
   const pdfQuery = useQuery({
     queryKey: [fetchPath, fetchParams],
     queryFn: () => okapiKy(fetchPath, { searchParams: fetchParams }).blob(),
+    // we never want to re-fetch the PDF
+    staleTime: Infinity
   });
 
-  if (!pdfQuery.isSuccess) return null;
-  const url = URL.createObjectURL(pdfQuery.data);
+  useEffect(() => {
+    if (pdfQuery.isSuccess) {
+      setPdfUrl(URL.createObjectURL(pdfQuery.data));
+    }
+  }, [pdfQuery.isSuccess, pdfQuery.data]);
+
+  if (!pdfUrl) return null;
 
   const markPrinted = () => {
     if (requestId && isReqPrintable) {
@@ -63,7 +72,7 @@ const PullSlipRoute = ({ match, history }) => {
           </Button>
         }
       >
-        <iframe src={url} width="100%" height="100%" title={title} />
+        <iframe src={pdfUrl} width="100%" height="100%" title={title} />
       </Pane>
     </Paneset>
   );
