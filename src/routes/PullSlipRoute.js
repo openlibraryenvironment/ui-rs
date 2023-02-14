@@ -33,7 +33,7 @@ const PullSlipRoute = ({ match, history }) => {
 
   const markPrinted = () => {
     if (requestId && isReqPrintable) {
-      performAction(requestId, 'supplierPrintPullSlip');
+      performAction('supplierPrintPullSlip');
     } else if (batchId) {
       okapiKy('rs/patronrequests/markBatchAsPrinted', { searchParams: { batchId } }).then(() => {
         queryClient.invalidateQueries('rs/patronrequests');
