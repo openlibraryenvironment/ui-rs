@@ -126,7 +126,7 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
           <Selection
             name="batch"
             dataOptions={options.batch}
-            value={activeFilters?.batch?.[0] ?? []}
+            value={activeFilters?.batch?.[0]}
             onChange={value => filterHandlers.state({ ...activeFilters, batch: [value] })}
           />
         </Accordion>
