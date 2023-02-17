@@ -8,7 +8,7 @@ const useChatActions = (reqId) => {
     const error = readStatus ? 'ui-rs.actions.messagesAllSeen.error' : 'ui-rs.actions.messagesAllUnseen.error';
     performAction('messagesAllSeen',
       { seenStatus: readStatus, excludes: excluding },
-      { success, error, display: 'none' });
+      { success, error, display: 'none', noAsync: true });
   };
 
   const handleMessageRead = (notification, currentReadStatus) => {
@@ -21,7 +21,7 @@ const useChatActions = (reqId) => {
     if (!currentReadStatus) {
       payload.seenStatus = true;
     }
-    performAction('messageSeen', payload, { success, error, display: 'none' });
+    performAction('messageSeen', payload, { success, error, display: 'none', noAsync: true });
   };
 
   return { handleMarkAllRead, handleMessageRead };
