@@ -24,7 +24,7 @@ const HostLMSLocations = () => {
 
   // Not caching locations for long as they are autopopulated and we want to see the latest
   const locationQueryConfig = useOkapiQueryConfig('rs/hostLMSLocations', {
-    searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: 1000 }, {}),
+    searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: -1 }, {}),
     staleTime: 60 * 1000,
   });
   const { data: locations } = useQuery(locationQueryConfig);
@@ -87,21 +87,26 @@ const HostLMSLocations = () => {
   );
 
   const actionAssigner = row => {
-    return ([
-      { name: 'edit', label: <FormattedMessage id="ui-rs.edit" />, icon: 'edit' },
-      { name: 'delete', label: <FormattedMessage id="ui-rs.delete" />, icon: 'trash' },
+    return [
+      {
+        name: 'edit',
+        callback: (data) => putLocation(data),
+        label: <FormattedMessage id="ui-rs.edit" />,
+        icon: 'edit',
+      },
+      {
+        name: 'delete',
+        callback: (data) => deleteLocation(data),
+        label: <FormattedMessage id="ui-rs.delete" />,
+        icon: 'trash',
+      },
       {
         name: 'detail',
         label: <FormattedMessage id="ui-rs.shelvingOverrides" />,
         icon: 'ellipsis',
         to: `lmslocations?detail=${row?.id}`,
       },
-    ]);
-  };
-
-  const actionCalls = {
-    edit: (data) => putLocation(data),
-    delete: (data) => deleteLocation(data)
+    ];
   };
 
   const fieldComponents = {
@@ -148,7 +153,6 @@ const HostLMSLocations = () => {
       >
         <ActionList
           actionAssigner={actionAssigner}
-          actionCalls={actionCalls}
           columnMapping={{
             name: <FormattedMessage id="ui-rs.settings.lmsloc.hostLMSLocation" />,
             code: <FormattedMessage id="ui-rs.settings.lmsloc.code" />,

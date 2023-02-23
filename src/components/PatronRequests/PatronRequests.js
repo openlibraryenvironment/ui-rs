@@ -7,18 +7,19 @@ import {
 } from 'react-intl';
 import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import queryString from 'query-string';
+import { useQueryClient } from 'react-query';
 import {
   Badge,
   Button,
+  Icon,
   LoadingPane,
   MultiColumnList,
   Pane,
   PaneMenu,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon, CalloutContext, IfPermission, useOkapiKy } from '@folio/stripes/core';
 import { SearchAndSortQuery, PersistedPaneset } from '@folio/stripes/smart-components';
 import AppNameContext from '../../AppNameContext';
-import PrintAllPullSlips from '../PrintAllPullSlips';
 import Filters from './Filters';
 import Search from './Search';
 
@@ -53,12 +54,15 @@ const appDetails = {
   },
 };
 
-const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions, children }) => {
+const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions, searchParams, children }) => {
   const appName = useContext(AppNameContext);
+  const callout = useContext(CalloutContext);
   const history = useHistory();
   const intl = useIntl();
   const location = useLocation();
   const match = useRouteMatch();
+  const okapiKy = useOkapiKy();
+  const queryClient = useQueryClient();
 
   const requests = requestsQuery?.data?.pages?.flatMap(x => x.results);
   const totalCount = requestsQuery?.data?.pages?.[0]?.total;
@@ -68,27 +72,34 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
     requestsQuery.fetchNextPage({ pageParam: index });
   };
 
+  const onPrintAll = () => {
+    okapiKy(`rs/patronrequests/generatePickListBatch${searchParams}`).then(async res => {
+      const { batchId } = await res.json();
+      queryClient.invalidateQueries('rs/batch');
+      history.push(`requests/batch/${batchId}/pullslip`);
+    }).catch(async e => {
+      const res = await e?.response?.json();
+      const message = intl.formatMessage({ id: 'ui-rs.pullSlip.error' }, { errMsg: res?.error ?? e.message });
+      callout.sendCallout({ type: 'error', message });
+    });
+  };
+
   const getActionMenu = () => (
-    <Link to={`${match.url}/printslips${location.search}`}>
-      <FormattedMessage id="ui-rs.printAllPullSlips">
-        {ariaLabel => (
-          <Button
-            id="clickable-print-pull-slips"
-            aria-label={ariaLabel[0]}
-            buttonStyle="dropdownItem"
-          >
-            <FormattedMessage id="ui-rs.printPullSlips" />
-          </Button>
-        )}
-      </FormattedMessage>
-    </Link>
+    <FormattedMessage id="ui-rs.printAllPullSlips">
+      {ariaLabel => (
+        <Button
+          id="clickable-print-pull-slips"
+          aria-label={ariaLabel[0]}
+          buttonStyle="dropdownItem"
+          onClick={onPrintAll}
+        >
+          <Icon icon="print"><FormattedMessage id="ui-rs.printPullSlips" /></Icon>
+        </Button>
+      )}
+    </FormattedMessage>
   );
 
   const { title, visibleColumns, createPerm } = appDetails[appName];
-
-  if (match.params.action === 'printslips') {
-    return <PrintAllPullSlips query={requestsQuery} />;
-  }
 
   return (
     <SearchAndSortQuery
@@ -230,7 +241,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       supplyingInstitutionSymbol: a => (a?.resolvedSupplier?.owner?.symbolSummary ?? '').replace(/,.*/, ''),
                       pickLocation: a => a.pickLocation && a.pickLocation.name,
                       pickShelvingLocation: a => a.pickShelvingLocation && a.pickShelvingLocation.name,
-                      selectedItemBarcode: a => (a.volumes?.length <= 1 ? a.volumes[0]?.itemId : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />)
+                      selectedItemBarcode: a => (a.volumes?.length <= 1 ? (a.volumes[0]?.itemId || a.selectedItemBarcode) : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />)
                     }}
                     hasMargin
                     isEmptyMessage={

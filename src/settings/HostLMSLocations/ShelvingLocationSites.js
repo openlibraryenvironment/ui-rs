@@ -65,14 +65,19 @@ const ShelvingLocationSites = ({ location }) => {
 
   const actionAssigner = () => {
     return ([
-      { name: 'edit', label: <FormattedMessage id="ui-rs.edit" />, icon: 'edit' },
-      { name: 'delete', label: <FormattedMessage id="ui-rs.delete" />, icon: 'trash' },
+      {
+        name: 'edit',
+        callback: (data) => putSite(data),
+        label: <FormattedMessage id="ui-rs.edit" />,
+        icon: 'edit',
+      },
+      {
+        name: 'delete',
+        callback: (data) => deleteSite(data),
+        label: <FormattedMessage id="ui-rs.delete" />,
+        icon: 'trash',
+      },
     ]);
-  };
-
-  const actionCalls = {
-    edit: (data) => putSite(data),
-    delete: (data) => deleteSite(data)
   };
 
   const fieldComponents = {
@@ -108,7 +113,6 @@ const ShelvingLocationSites = ({ location }) => {
       >
         <ActionList
           actionAssigner={actionAssigner}
-          actionCalls={actionCalls}
           columnMapping={{
             name: <FormattedMessage id="ui-rs.settings.lmsshlv.shelvingLocation" />,
             code: <FormattedMessage id="ui-rs.settings.lmsshlv.code" />,

@@ -42,7 +42,7 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   const close = useCloseDirect(upNLevels(location, 3));
 
   // Fetch the request
-  const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000 });
+  const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000, notifyOnChangeProps: 'tracked' });
 
   /* On mount ONLY we want to check if the helper is open, and if so then mark all messages as read.
    * If this useEffect is handed dependencies handleMarkAllRead and isOpen then it will infinitely loop,

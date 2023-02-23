@@ -9,6 +9,7 @@ import PatronRequests from '../components/PatronRequests';
 const PER_PAGE = 100;
 
 const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
+const compareCreated = (a, b) => (new Date(b?.dateCreated) - new Date(a?.dateCreated));
 
 const PatronRequestsRoute = ({ appName, children }) => {
   const intl = useIntl();
@@ -21,6 +22,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     // rather than adding the key name and operator. This way we can store the operator and field
     // in the value eg. how the hasUnread checkbox sets a value of 'unreadMessageCount>0'.
     filterKeys: {
+      'batch': 'batches.id',
       'r': 'isRequester',
       'needsAttention': 'state.needsAttention',
       'state': 'state.code',
@@ -66,6 +68,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
   );
 
   const filterQueries = [
+    useOkapiQuery('rs/batch', { searchParams: { perPage: '1000' }, staleTime: 15 * 60 * 1000 }),
     useOkapiQuery('rs/hostLMSLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
     useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
     useOkapiQuery('directory/entry', {
@@ -80,8 +83,11 @@ const PatronRequestsRoute = ({ appName, children }) => {
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
-    const [lmsLocations, shelvingLocations, { results: institutions }] = filterQueries.map(x => x.data);
+    const [batches, lmsLocations, shelvingLocations, { results: institutions }] = filterQueries.map(x => x.data);
     filterOptions = {
+      batch: batches
+        .sort(compareCreated)
+        .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
       hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })],
       institution: institutions
         .map(x => ({ label: x.name, value: x.id }))
@@ -104,6 +110,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       queryGetter={queryGetter}
       querySetter={querySetter}
       filterOptions={filterOptions}
+      searchParams={generateKiwtQuery(SASQ_MAP, query)}
     >
       {children}
     </PatronRequests>

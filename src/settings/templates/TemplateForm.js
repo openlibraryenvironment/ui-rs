@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useLocation } from 'react-router-dom';
+import omitDeep from 'omit-deep-lodash';
 
 import {
   Accordion,
@@ -32,8 +33,17 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
     onSubmit({ ...values, localizedTemplates: [template] });
   };
 
+  // When cloning a record we need to filter ids out of the initial values as EntryManager only does that at the top level
+  const location = useLocation();
+  const cloning = location.search.match('layer=clone');
+  let sanitizedInitial;
+  if (cloning) {
+    // let's preserve the id of the template resolver
+    sanitizedInitial = { ...initialValues, localizedTemplates: omitDeep(initialValues.localizedTemplates, 'id') };
+  } else sanitizedInitial = initialValues;
+
   return (
-    <Form onSubmit={onMassagedSubmit} initialValues={initialValues}>
+    <Form onSubmit={onMassagedSubmit} initialValues={sanitizedInitial}>
       {({ handleSubmit, pristine, submitting, submitSucceeded, invalid }) => (
         <form id="form-patron-template" noValidate data-test-template-form onSubmit={handleSubmit}>
           <Paneset isRoot>

@@ -68,7 +68,8 @@ const ChatPane = ({
         onSubmit={payload => performAction('message', (payload || {}), {
           success:'ui-rs.actions.message.success',
           error:'ui-rs.actions.message.error',
-          display: 'none'
+          display: 'none',
+          noAsync: true
         })}
         render={({ form, handleSubmit, pristine }) => {
           const onEnterPress = async (e) => {
