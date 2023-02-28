@@ -18,7 +18,7 @@ const HostLMSShelvingLocations = () => {
   const [formModal, setFormModal] = useState(false);
 
   const { data: locations } = useOkapiQuery('rs/shelvingLocations', {
-    searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: -1 }, {}),
+    searchParams: generateKiwtQuery({ sort: [{ path: 'name' }], stats: false, max: 1000 }, {}),
   });
 
   const { mutateAsync: putLocation } = useMutation(
