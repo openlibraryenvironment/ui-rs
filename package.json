@@ -16,6 +16,7 @@
     "eslint": "^7.0.0"
   },
   "dependencies": {
+    "@folio/stripes-data-transfer-components": "^5.4.0",
     "@folio/stripes-erm-components": "^6.1.0",
     "@folio/stripes-template-editor": "^3.0.0",
     "@k-int/stripes-kint-components": "^4.2.0",

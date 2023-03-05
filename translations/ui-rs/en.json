@@ -315,6 +315,14 @@
   "settings.values": "Values",
   "settings.actions": "Actions",
 
+  "settings.fileSetting.valueSet": "Custom value set",
+  "settings.fileSetting.reset": "Remove current value",
+  "settings.fileSetting.upload": "Upload",
+  "settings.fileSetting.drop": "Drop file here to replace",
+  "settings.fileSetting.button": "...or click to choose a file",
+  "settings.fileSetting.success": "Succesfully uploaded file.",
+  "settings.fileSetting.error": "Error uploading file. {errMsg}",
+
   "settings.notices.newLabel": "New notice template",
   "settings.notices.itemTokenHeader": "Item",
   "settings.notices.userTokenHeader": "User",

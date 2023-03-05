@@ -13,6 +13,7 @@ import HostLMSShelvingLocations from './HostLMSShelvingLocations';
 import Notices from './notices';
 import NoticePolicies from './noticePolicies';
 import OtherSettings from './OtherSettings';
+import PullslipConfiguration from './pullslipConfiguration';
 import PullslipTemplates from './pullslipTemplates';
 import {
   PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
@@ -42,6 +43,13 @@ const ResourceSharingSettings = (props) => {
       id: 'other',
       label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.other' }),
       component: OtherSettings
+    },
+    {
+      route: 'pullslipConfiguration',
+      id: 'pullslipConfiguration',
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.pullslipConfiguration' }),
+      component: PullslipConfiguration,
+      perm: 'ui-rs.settings.pullslip-notifications',
     },
     {
       route: 'pullslipTemplates',
@@ -95,7 +103,7 @@ const ResourceSharingSettings = (props) => {
   ];
 
   const { isLoading, SettingsComponent } = useSettings({
-    dynamicPageExclusions: ['pullslipTemplateConfig'],
+    dynamicPageExclusions: ['pullslipConfiguration', 'pullslipTemplateConfig'],
     intlKey: 'ui-rs',
     persistentPages,
     refdataEndpoint: REFDATA_ENDPOINT,
