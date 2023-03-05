@@ -124,6 +124,7 @@
         "displayName": "Settings (resource-sharing): Can create, edit and remove pullslip notifications and templates",
         "subPermissions": [
           "settings.rs.enabled",
+          "rs.file.upload",
           "rs.hostlmslocations.get",
           "rs.timers",
           "rs.refdata.get",
