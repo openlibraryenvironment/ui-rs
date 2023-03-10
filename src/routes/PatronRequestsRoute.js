@@ -68,7 +68,13 @@ const PatronRequestsRoute = ({ appName, children }) => {
   );
 
   const filterQueries = [
-    useOkapiQuery('rs/batch', { searchParams: { perPage: '1000' }, staleTime: 15 * 60 * 1000 }),
+    useOkapiQuery('rs/batch', {
+      searchParams: {
+        perPage: '1000',
+        filters: appName === 'supply' ? 'isRequester!=true' : 'isRequester==true',
+      },
+      staleTime: 15 * 60 * 1000
+    }),
     useOkapiQuery('rs/hostLMSLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
     useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
     useOkapiQuery('directory/entry', {
