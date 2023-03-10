@@ -1,4 +1,4 @@
-import { useSettingSection } from '@k-int/stripes-kint-components/src/lib/hooks';
+import { useSettingSection } from '@k-int/stripes-kint-components';
 import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
 const useActionConfig = () => {
