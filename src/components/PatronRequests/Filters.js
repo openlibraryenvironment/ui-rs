@@ -128,6 +128,7 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
             dataOptions={options.batch}
             value={activeFilters?.batch?.[0]}
             onChange={value => filterHandlers.state({ ...activeFilters, batch: [value] })}
+            onFilter={(value, opts) => opts.filter(({ label }) => label.toLowerCase().includes(value.toLowerCase()))}
           />
         </Accordion>
         <DateFilter
