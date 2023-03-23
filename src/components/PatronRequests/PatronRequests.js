@@ -42,7 +42,7 @@ const appDetails = {
     title: 'Supply',
     visibleColumns: [
       'flags', 'hrid',
-      'dateCreated', 'state', 'serviceType',
+      'dateCreated', 'lastUpdated', 'state', 'serviceType',
       'requestingInstitutionSymbol', 'selectedItemBarcode', 'pickLocation',
       'pickShelvingLocation', 'title'
     ],
