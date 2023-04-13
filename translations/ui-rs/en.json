@@ -418,6 +418,7 @@
   "settings.localNCIP.ncipServerAddress": "NCIP server address",
   "settings.localNCIP.ncipAppProfile": "NCIP app profile",
   "settings.localNCIP.ncipFromAgency": "NCIP from agency",
+  "settings.localNCIP.ncipFromAgencyAuthentication": "NCIP from agency authentication",
   "settings.localNCIP.ncipToAgency": "NCIP to agency",
   "settings.localNCIP.ncipUseDueDate": "Use due date received from NCIP",
   "settings.localNCIP.ncipDueDateFormat": "Format we expect the Due Date to be in",
