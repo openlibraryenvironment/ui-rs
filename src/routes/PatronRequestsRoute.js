@@ -82,7 +82,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
   if (filterQueries.every(x => x.isSuccess)) {
     const [lmsLocations, shelvingLocations, { results: institutions }] = filterQueries.map(x => x.data);
     filterOptions = {
-      hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })],
+      hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'hasUnreadMessages=true' })],
       institution: institutions
         .map(x => ({ label: x.name, value: x.id }))
         .sort(compareLabel),
