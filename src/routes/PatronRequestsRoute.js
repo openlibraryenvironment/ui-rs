@@ -94,7 +94,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       batch: batches
         .sort(compareCreated)
         .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
-      hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'unreadMessageCount>0' })],
+      hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'hasUnreadMessages=true' })],
       institution: institutions
         .map(x => ({ label: x.name, value: x.id }))
         .sort(compareLabel),
