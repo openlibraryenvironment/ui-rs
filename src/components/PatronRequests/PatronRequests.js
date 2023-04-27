@@ -155,16 +155,18 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                   defaultWidth="fill"
                   lastMenu={(
                     <PaneMenu>
-                      <IfPermission perm={createPerm}>
-                        <Button
-                          buttonStyle="primary"
-                          id="clickable-new-patron-request"
-                          marginBottom0
-                          to={`requests/create${location.search}`}
-                        >
-                          <FormattedMessage id="stripes-smart-components.new" />
-                        </Button>
-                      </IfPermission>
+                      {(appName === 'request') ?
+                        <IfPermission perm={createPerm}>
+                          <Button
+                            buttonStyle="primary"
+                            id="clickable-new-patron-request"
+                            marginBottom0
+                            to={`requests/create${location.search}`}
+                          >
+                            <FormattedMessage id="stripes-smart-components.new" />
+                          </Button>
+                        </IfPermission>
+                      : ''}
                     </PaneMenu>
                   )}
                   noOverflow
