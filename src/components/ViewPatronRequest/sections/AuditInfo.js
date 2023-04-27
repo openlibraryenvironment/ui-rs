@@ -45,14 +45,16 @@ const AuditInfo = ({ record, id }) => {
         <tbody>
           {
             audit.map((entry, i) => (
-              <tr key={i}>
-                <td>{audit.length - i}</td>
-                <td>{entry.user && <AuditUser id={entry.user} />}</td>
-                <td>{formattedDateTime(entry.dateCreated)}</td>
-                <td>{entry.fromStatus && <FormattedMessage id={`stripes-reshare.states.${entry.fromStatus.code}`} />}</td>
-                <td>{entry.toStatus && <FormattedMessage id={`stripes-reshare.states.${entry.toStatus.code}`} />}</td>
-                <td>{entry.message}</td>
-              </tr>
+              entry.showInAuditTrail === true ?
+                <tr key={i}>
+                  <td>{audit.length - i}</td>
+                  <td>{entry.user && <AuditUser id={entry.user} />}</td>
+                  <td>{formattedDateTime(entry.dateCreated)}</td>
+                  <td>{entry.fromStatus && <FormattedMessage id={`stripes-reshare.states.${entry.fromStatus.code}`} />}</td>
+                  <td>{entry.toStatus && <FormattedMessage id={`stripes-reshare.states.${entry.toStatus.code}`} />}</td>
+                  <td>{entry.message}</td>
+                </tr>
+              : ''
             ))
           }
         </tbody>
