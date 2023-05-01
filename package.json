@@ -126,9 +126,10 @@
           "settings.rs.enabled",
           "rs.file.upload",
           "rs.hostlmslocations.get",
-          "rs.timers",
           "rs.refdata.get",
-          "rs.template.write"
+          "rs.report.admin",
+          "rs.template.write",
+          "rs.timers"
         ],
         "visible": true
       }
