@@ -77,6 +77,10 @@ export const actionsByState = {
     moreActions: ['FillMultiVolumeRequest'],
     excludeActions: ['supplierCheckInToReshare']
   },
+  RES_SEQUESTERED: {
+    primaryAction: 'supplierFillDigitalLoan',
+    excludeActions: ['supplierFillDigitalLoan'],
+  },
   REQ_SHIPPED: {
     moreActions: ['PrintPullSlip'],
   },
