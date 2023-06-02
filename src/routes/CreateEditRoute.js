@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Form } from 'react-final-form';
+import { useMutation, useQueryClient } from 'react-query';
 import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
-import { stripesConnect, CalloutContext } from '@folio/stripes/core';
+import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
+import { useOkapiQuery } from '@reshare/stripes-reshare';
 import PatronRequestForm from '../components/PatronRequestForm';
 
 const handleSISelect = (args, state, tools) => {
@@ -38,26 +40,72 @@ const renderLastMenu = (pristine, submitting, submit, isEditing) => {
 };
 
 const CreateEditRoute = props => {
-  const {
-    history,
-    match,
-    mutator,
-    resources,
-    intl,
-  } = props;
-
+  const { history, match } = props;
+  const id = match.params?.id;
   const routerLocation = useLocation();
   const callout = useContext(CalloutContext);
+  const intl = useIntl();
+  const queryClient = useQueryClient();
+  const okapiKy = useOkapiKy();
 
-  if (!resources?.locations?.hasLoaded) return null;
+  const locQuery = useOkapiQuery('directory/entry', { searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100' });
+  const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
+
+  const updater = useMutation({
+    mutationFn: (updated) => okapiKy
+      .put(`rs/patronrequests/${id}`, { json: updated })
+      .then((res) => res.data),
+    onSuccess: async () => {
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      await queryClient.invalidateQueries(`rs/patronrequests/${id}`);
+      await queryClient.invalidateQueries('rs/patronrequests');
+      history.goBack();
+    },
+    onError: async (err) => {
+      callout.sendCallout({ type: 'error',
+        message: (
+          <KeyValue
+            label={<FormattedMessage id="ui-rs.update.error" />}
+            value={err.response?.statusText || ''}
+          />
+        ) });
+    },
+  });
+
+  const creator = useMutation({
+    mutationFn: (newRecord) => okapiKy
+      .post('rs/patronrequests', { json: newRecord }),
+    onSuccess: async (res) => {
+      const created = await res.json();
+      // When creating a new request we need to delay before redirecting to the request's page to
+      // give the server some time to resolve the requesting institution from the symbol and generate
+      // an appropriate ID.
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      // We want to go to the new record but we also want it to be easy to return to where we were,
+      // hence use of history.replace rather than history.push -- the create form turns into the
+      // created record.
+      history.replace(`view/${created.id}${routerLocation.search}`);
+    },
+    onError: async (err) => {
+      callout.sendCallout({ type: 'error',
+        message: (
+          <KeyValue
+            label={<FormattedMessage id="ui-rs.create.error" />}
+            value={err.response?.statusText || ''}
+          />
+        ) });
+    },
+  });
+
+  if (!locQuery.isSuccess) return null;
   // locations are where rec.type.value is 'branch' and there is a tag in rec.type.tags where the value is 'pickup'
   // and are formatted for the Select component as { value: lmsLocationCode, label: name }
-  const locations = resources.locations.records
+  const locations = locQuery.data
     .filter(rec => rec?.type?.value === 'branch'
       && rec?.tags.reduce((acc, cur) => acc || cur?.value === 'pickup', false))
     .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), []);
 
-  const validRequesterRecords = resources.locations.records
+  const validRequesterRecords = locQuery.data
     .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol);
   if (!validRequesterRecords?.[0]) throw new Error('Cannot resolve symbol to create requests as');
   const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
@@ -65,8 +113,8 @@ const CreateEditRoute = props => {
   const isEditing = typeof match.params.id === 'string';
   let initialValues = {};
   if (isEditing) {
-    if (!resources?.selectedRecord?.hasLoaded) return null;
-    const record = resources.selectedRecord.records[0];
+    if (!reqQuery.isSuccess) return null;
+    const record = reqQuery.data;
     initialValues = { ...record,
       formattedDateCreated: (
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
@@ -74,40 +122,12 @@ const CreateEditRoute = props => {
   }
 
   const submit = newRecord => {
-    if (isEditing) {
-      return mutator.selectedRecord.PUT(newRecord)
-        .then(() => history.goBack())
-        .catch(res => callout.sendCallout({ type: 'error',
-          message: (
-            <KeyValue
-              label={<FormattedMessage id="ui-rs.update.error" />}
-              value={res?.statusText || ''}
-            />
-          ) }));
-    }
+    if (isEditing) return updater.mutateAsync(newRecord);
     const baseRecord = {
       requestingInstitutionSymbol: requesters[0].value,
       isRequester: true
     };
-    return (
-      mutator.patronRequests
-        .POST({ ...baseRecord, ...newRecord })
-        // When creating a new request we need to delay before redirecting to the request's page to
-        // give the server some time to resolve the requesting institution from the symbol and generate
-        // an appropriate ID.
-        .then(res => new Promise(resolve => setTimeout(() => resolve(res), 3000)))
-        // We want to go to the new record but we also want it to be easy to return to where we were,
-        // hence use of history.replace rather than history.push -- the create form turns into the
-        // created record.
-        .then(res => history.replace(`view/${res.id}${routerLocation.search}`))
-        .catch(res => callout.sendCallout({ type: 'error',
-          message: (
-            <KeyValue
-              label={<FormattedMessage id="ui-rs.create.error" />}
-              value={res?.statusText || ''}
-            />
-          ) }))
-    );
+    return creator.mutateAsync({ ...baseRecord, ...newRecord });
   };
 
   return (
@@ -135,23 +155,4 @@ const CreateEditRoute = props => {
   );
 };
 
-CreateEditRoute.manifest = {
-  patronRequests: {
-    type: 'okapi',
-    path: 'rs/patronrequests',
-    fetch: false,
-    throwErrors: false,
-  },
-  selectedRecord: {
-    type: 'okapi',
-    path: 'rs/patronrequests/:{id}',
-    throwErrors: false,
-  },
-  locations: {
-    type: 'okapi',
-    path: 'directory/entry?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100',
-  },
-  query: {},
-};
-
-export default stripesConnect(injectIntl(CreateEditRoute));
+export default CreateEditRoute;
