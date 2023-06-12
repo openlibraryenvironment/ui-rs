@@ -151,10 +151,16 @@ export const excludeRemote = [
 /* Actions from request.validActions that cannot become the primary action */
 const excludePrimary = [];
 
+/* UI-only actions to exclude from electronic requests */
+const excludeElectronic = ['FillMultiVolumeRequest'];
+
 /* This function returns the contextual actions for a provided request,
  * falling back to the default for unknown states.
  */
 export const actionsForRequest = request => {
+  /* Since state model types aren't implemented yet and deliveryMethod won't necessarily be set we currently
+  need to rely on discrete state model codes to determine if a request is electronic */
+  const isElectronic = ['CDLResponder', 'DigitalReturnableRequester'].includes(request.stateModel?.shortcode);
   const actions = { ...actionsByState.default, ...actionsByState[request.state?.code] || {} };
   if (Array.isArray(request.validActions)) {
     const remote = request.validActions.filter(
@@ -162,6 +168,7 @@ export const actionsForRequest = request => {
     );
     const client = actions.moreActions.filter(
       action => !(remote.includes(`${action.charAt(0).toLowerCase()}${action.substring(1)}`))
+        && !(isElectronic && excludeElectronic.includes(action))
     );
     actions.moreActions = remote.concat(client);
     const maybePrimary = remote.filter(action => !excludePrimary.includes(action));
