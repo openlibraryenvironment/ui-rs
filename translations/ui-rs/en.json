@@ -257,6 +257,8 @@
   "actions.supplierFillDigitalLoan": "Fill digital loan",
   "actions.supplierFillDigitalLoan.prompt": "Enter URL to fill digital loan",
   "actions.supplierFillDigitalLoan.button": "Fill loan",
+  "actions.supplierFillDigitalLoan.success": "Successfully filled digital loan",
+  "actions.supplierFillDigitalLoan.error": "Error filling digital loan",
   "actions.fillMultiVolumeRequest": "Fill multi-volume request",
   "actions.fillMultiVolumeRequestAndShip": "Fill multi-volume request and mark shipped",
   "actions.fillMultiVolumeRequest.addVolume": "Add volume",
