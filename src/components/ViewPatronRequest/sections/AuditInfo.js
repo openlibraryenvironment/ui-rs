@@ -22,6 +22,7 @@ const AuditUser = ({ id }) => {
 
 const AuditInfo = ({ record, id }) => {
   const audit = (record || {}).audit || [];
+    const filteredAudit = audit.filter(entry => entry.showInAuditTrail);
 
   return (
     <Card
@@ -44,17 +45,15 @@ const AuditInfo = ({ record, id }) => {
         </thead>
         <tbody>
           {
-            audit.map((entry, i) => (
-              entry.showInAuditTrail === true ?
-                <tr key={i}>
-                  <td>{audit.length - i}</td>
-                  <td>{entry.user && <AuditUser id={entry.user} />}</td>
-                  <td>{formattedDateTime(entry.dateCreated)}</td>
-                  <td>{entry.fromStatus && <FormattedMessage id={`stripes-reshare.states.${entry.fromStatus.code}`} />}</td>
-                  <td>{entry.toStatus && <FormattedMessage id={`stripes-reshare.states.${entry.toStatus.code}`} />}</td>
-                  <td>{entry.message}</td>
+            filteredAudit.map((entry, i) => (
+              <tr key={i}>
+                <td>{filteredAudit.length - i}</td>
+                <td>{entry.user && <AuditUser id={entry.user} />}</td>
+                <td>{formattedDateTime(entry.dateCreated)}</td>
+                <td>{entry.fromStatus && <FormattedMessage id={`stripes-reshare.states.${entry.fromStatus.code}`} />}</td>
+                <td>{entry.toStatus && <FormattedMessage id={`stripes-reshare.states.${entry.toStatus.code}`} />}</td>
+                <td>{entry.message}</td>
                 </tr>
-              : ''
             ))
           }
         </tbody>
