@@ -12,7 +12,8 @@ import {
   RequestingUserInfo,
   CitationMetadataInfo,
   SuppliersInfo,
-  AuditInfo
+  AuditInfo,
+  ProtocolInfo
 } from './sections';
 
 const ViewPatronRequest = ({ record }) => {
@@ -73,6 +74,11 @@ const ViewPatronRequest = ({ record }) => {
       <div ref={auditRef}>
         <Accordion id="auditInfo" label={<FormattedMessage id="ui-rs.information.heading.audit" />}>
           <AuditInfo id="auditInfo" record={record} />
+        </Accordion>
+      </div>
+      <div>
+        <Accordion id="protocolInfo" label={<FormattedMessage id="ui-rs.information.heading.protocol" />}>
+          <ProtocolInfo id="protocolInfo" record={record} />
         </Accordion>
       </div>
       {/* No card */}
