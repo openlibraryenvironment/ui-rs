@@ -20,7 +20,7 @@ table.protocolEntryList th {
     text-align: left;
 }
 
-table.protocolEntryList th, table.auditEntryList td {
+table.protocolEntryList th, table.protocolEntryList td {
     padding: 0.25em 1em;
     vertical-align: top;
 }
