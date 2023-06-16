@@ -13,11 +13,11 @@ export default {
       previewValue: 'Serial',
     },
     {
-        token: 'item.location',
+      token: 'item.location',
       previewValue: 'MAIN',
     },
     {
-        token: 'item.shelvingLocation',
+      token: 'item.shelvingLocation',
       previewValue: 'STACKS',
     }
   ],
@@ -51,6 +51,10 @@ export default {
     {
       token: 'request.pickupLocation',
       previewValue: 'Main Library',
+    },
+    {
+      token: 'request.pickupURL',
+      previewValue: 'http://host.domain?param=value',
     },
     {
       token: 'request.neededBy',
