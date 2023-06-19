@@ -67,6 +67,16 @@ class RequestInfo extends React.Component {
             />
           </Col>
         </Row>
+        {record?.pickupURL &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.pickupURL" />}
+                value={record.pickupURL}
+              />
+            </Col>
+          </Row>
+        }
         {record?.requestIdentifiers?.length > 0 &&
           <Row>
             <Col xs={12}>
