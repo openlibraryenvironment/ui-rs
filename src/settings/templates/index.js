@@ -68,6 +68,7 @@ Templates.manifest = Object.freeze({
     path: TEMPLATES_ENDPOINT,
     params: (_q, _p, _r, _s, props) => ({
       filters: `context=${props.context}`,
+      max: 1000,
       sort: 'id'
     })
   },

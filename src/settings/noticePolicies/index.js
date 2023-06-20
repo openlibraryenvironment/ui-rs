@@ -34,6 +34,7 @@ NoticePolicies.manifest = Object.freeze({
   entries: {
     type: 'okapi',
     path: 'rs/noticePolicies',
+    max: 1000,
   }
 });
 
