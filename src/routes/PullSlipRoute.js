@@ -29,7 +29,7 @@ const PullSlipRoute = ({ match, history }) => {
     queryKey: [fetchPath, fetchParams],
     queryFn: () => okapiKy(fetchPath, { searchParams: fetchParams }).blob(),
     // we never want to re-fetch the PDF
-    staleTime: Infinity
+    staleTime: 0
   });
 
   useEffect(() => {
