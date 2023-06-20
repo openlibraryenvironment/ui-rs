@@ -18,8 +18,6 @@ const PullSlipRoute = ({ match, history }) => {
 
   const reqQuery = useOkapiQuery(`rs/patronrequests/${requestId}`, {
     enabled: !!requestId,
-    // will still be invalidated by performAction() eg. this will not prevent the "mark printed" button being greyed out after it is clicked
-    staleTime: Infinity
   });
   const isReqPrintable = reqQuery?.data?.validActions?.includes('supplierPrintPullSlip');
 
@@ -28,15 +26,13 @@ const PullSlipRoute = ({ match, history }) => {
   const pdfQuery = useQuery({
     queryKey: [fetchPath, fetchParams],
     queryFn: () => okapiKy(fetchPath, { searchParams: fetchParams }).blob(),
-    // we never want to re-fetch the PDF
-    staleTime: 0
   });
 
   useEffect(() => {
-    if (pdfQuery.isSuccess) {
+    if (pdfQuery.isSuccess && !pdfUrl) {
       setPdfUrl(URL.createObjectURL(pdfQuery.data));
     }
-  }, [pdfQuery.isSuccess, pdfQuery.data]);
+  }, [pdfQuery.isSuccess, pdfQuery.data, pdfUrl]);
 
   if (!pdfUrl) return null;
 
