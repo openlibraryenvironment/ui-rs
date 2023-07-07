@@ -81,6 +81,9 @@
   "information.slug": "Slug",
   "information.symbols": "Symbols",
   "information.tags": "Tags",
+
+  "requestform.populateFromSI": "Search shared catalog",
+
   "audit.user": "User",
   "audit.date": "Date",
   "audit.from": "From state",

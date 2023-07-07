@@ -94,7 +94,7 @@ const PatronRequestForm = ({ locations, requesters, onSISelect }) => {
           type={`rs-siquery-${stripes.config?.reshare?.sharedIndex?.type}`}
           endpoint={stripes.config?.reshare?.sharedIndex?.query}
           searchButtonStyle="primary marginBottom0"
-          searchLabel="Populate from shared index"
+          searchLabel={<FormattedMessage id="ui-rs.requestform.populateFromSI" />}
           selectInstance={onSISelect}
         />}
       >
