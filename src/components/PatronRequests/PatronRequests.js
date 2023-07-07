@@ -163,7 +163,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                             marginBottom0
                             to={`requests/create${location.search}`}
                           >
-                            <FormattedMessage id="stripes-smart-components.new" />
+                            <FormattedMessage id="ui-rs.createPatronRequest" />
                           </Button>
                         </IfPermission>
                       : ''}
