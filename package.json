@@ -11,7 +11,7 @@
     "lint": "eslint src"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^6.1.0",
+    "@folio/eslint-config-stripes": "~6.3.0",
     "@folio/stripes-cli": "~2.6.0",
     "eslint": "^7.0.0"
   },
