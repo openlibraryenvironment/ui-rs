@@ -245,7 +245,6 @@ class DirectoryEntries extends React.Component {
     const helperApps = { tags: ERMTags };
     const path = '/directory/entries';
     packageInfo.stripes.route = path;
-    packageInfo.stripes.home = path;
     const { visibleColumns } = appDetails.directory;
 
     return (
