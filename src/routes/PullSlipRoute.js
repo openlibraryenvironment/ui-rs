@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy } from '@folio/stripes/core';
 import { Button, Pane, Paneset } from '@folio/stripes/components';
-import { useOkapiQuery, usePerformAction } from '@reshare/stripes-reshare';
+import { useIntlCallout, useOkapiQuery, usePerformAction } from '@reshare/stripes-reshare';
 
 const PullSlipRoute = ({ match, history }) => {
   const requestId = match.params?.id;
@@ -12,7 +12,7 @@ const PullSlipRoute = ({ match, history }) => {
   const intl = useIntl();
   const okapiKy = useOkapiKy();
   const queryClient = useQueryClient();
-  const callout = useContext(CalloutContext);
+  const sendCallout = useIntlCallout();
   const performAction = usePerformAction(requestId);
   const title = intl.formatMessage({ id: requestId ? 'ui-rs.pullSlip' : 'ui-rs.pullSlips' });
 
@@ -42,10 +42,9 @@ const PullSlipRoute = ({ match, history }) => {
     } else if (batchId) {
       okapiKy('rs/patronrequests/markBatchAsPrinted', { searchParams: { batchId } }).then(() => {
         queryClient.invalidateQueries('rs/patronrequests');
-        callout.sendCallout({ type: 'success', message: intl.formatMessage({ id: 'ui-rs.pullSlip.mark.success' }) });
+        sendCallout('ui-rs.pullSlip.mark.success');
       }).catch(async e => {
-        const message = intl.formatMessage({ id: 'ui-rs.pullSlip.mark.error' }, { errMsg: e.message });
-        callout.sendCallout({ type: 'error', message });
+        sendCallout('ui-rs.pullSlip.mark.error', 'error', { errMsg: e.message ?? '' });
       });
     }
   };

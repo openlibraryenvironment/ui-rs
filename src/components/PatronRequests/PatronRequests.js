@@ -17,8 +17,9 @@ import {
   Pane,
   PaneMenu,
 } from '@folio/stripes/components';
-import { AppIcon, CalloutContext, IfPermission, useOkapiKy } from '@folio/stripes/core';
+import { AppIcon, IfPermission, useOkapiKy } from '@folio/stripes/core';
 import { SearchAndSortQuery, PersistedPaneset } from '@folio/stripes/smart-components';
+import { useIntlCallout } from '@reshare/stripes-reshare';
 import AppNameContext from '../../AppNameContext';
 import Filters from './Filters';
 import Search from './Search';
@@ -56,7 +57,7 @@ const appDetails = {
 
 const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions, searchParams, children }) => {
   const appName = useContext(AppNameContext);
-  const callout = useContext(CalloutContext);
+  const sendCallout = useIntlCallout();
   const history = useHistory();
   const intl = useIntl();
   const location = useLocation();
@@ -78,9 +79,8 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
       queryClient.invalidateQueries('rs/batch');
       history.push(`requests/batch/${batchId}/pullslip`);
     }).catch(async e => {
-      const res = await e?.response?.json();
-      const message = intl.formatMessage({ id: 'ui-rs.pullSlip.error' }, { errMsg: res?.error ?? e.message });
-      callout.sendCallout({ type: 'error', message });
+      const res = await e?.response?.text();
+      sendCallout('ui-rs.pullSlip.error', 'error', { errMsg: (res.startsWith('{') ? JSON.parse(res)?.error : res) || (e.message ?? '') });
     });
   };
 
