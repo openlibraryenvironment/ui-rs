@@ -171,8 +171,8 @@ class DirectoryEntries extends React.Component {
       })
       .catch(response => {
         response.json()
-          .then(error => this.context.sendCallout({ type: 'error', message: <FormattedMessage id="ui-directory.create.callout.error" values={{ err: error.message }} /> }))
-          .catch(() => this.context.sendCallout({ type: 'error', message: <FormattedMessage id="ui-directory.create.callout.error" values={{ err: '' }} /> }));
+          .then(error => this.context.sendCallout({ type: 'error', message: <FormattedMessage id="ui-directory.create.callout.error" values={{ err: error.message }} />, timeout: 8000 }))
+          .catch(() => this.context.sendCallout({ type: 'error', message: <FormattedMessage id="ui-directory.create.callout.error" values={{ err: '' }} />, timeout: 8000 }));
       });
   };
 
