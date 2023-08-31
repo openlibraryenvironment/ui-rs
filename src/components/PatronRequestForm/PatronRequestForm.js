@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Field, useForm } from 'react-final-form';
-import { AccordionSet, Accordion, Col, Row, Datepicker, Select, TextArea, TextField } from '@folio/stripes/components';
+import { Field, useForm, useFormState } from 'react-final-form';
+import { AccordionSet, Accordion, Col, Row, Datepicker, Select, TextArea, TextField, ButtonGroup } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 import { Pluggable, useStripes } from '@folio/stripes/core';
 
 const PatronRequestForm = ({ locations, requesters, onSISelect }) => {
   const { change } = useForm();
+  const { values } = useFormState();
   const stripes = useStripes();
   useEffect(() => {
     if (locations?.length === 1) {
@@ -99,12 +100,27 @@ const PatronRequestForm = ({ locations, requesters, onSISelect }) => {
         />}
       >
         <Row>
-          <Col xs={4}>
+          <Col xs={8}>
             <Field
               id="edit-patron-request-systemInstanceIdentifier"
               name="systemInstanceIdentifier"
               label={<FormattedMessage id="ui-rs.information.systemInstanceIdentifier" />}
               component={TextField}
+              endControl={
+                // The padding on endControl the necessitates this margin when using Button rather than IconButton
+                // will be removed soon, perhaps Quesnelia
+                <span style={{ marginRight: '-6px' }}>
+                  <Pluggable
+                    type={`rs-siquery-${stripes.config?.reshare?.sharedIndex?.type}`}
+                    endpoint={stripes.config?.reshare?.sharedIndex?.query}
+                    searchButtonStyle="noRadius primary marginBottom0"
+                    searchLabel={<FormattedMessage id="ui-rs.requestform.populateById" />}
+                    selectInstance={onSISelect}
+                    specifiedId={values?.systemInstanceIdentifier}
+                    disabled={!values?.systemInstanceIdentifier}
+                  />
+                </span>
+              }
             />
           </Col>
         </Row>

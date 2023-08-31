@@ -82,6 +82,7 @@
   "information.symbols": "Symbols",
   "information.tags": "Tags",
 
+  "requestform.populateById": "Use to fill form",
   "requestform.populateFromSI": "Search shared catalog",
 
   "audit.user": "User",
