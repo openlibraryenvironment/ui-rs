@@ -10,6 +10,8 @@ import css from './ActionButton.css';
 import NoteForm from '../NoteForm';
 import { includesNote } from './actionsByState';
 
+const DEFAULT_ICON = 'chevron-double-right';
+
 const ActionButton = ({ action, disabled, performAction, payload = {}, success = null, error = null, icon = null, label, withoutNote = false }) => {
   const [noteFieldOpen, setNoteFieldOpen] = useState(false);
   const onSubmitNote = (note) => {
@@ -38,7 +40,7 @@ const ActionButton = ({ action, disabled, performAction, payload = {}, success =
           buttonClass={classNames({ [`${css.actionButton}`] : true, [`${css.withInlineForm}`]: withNote })}
           disabled={disabled}
         >
-          <Icon icon={icon || 'default'} className={css.button}>
+          <Icon icon={icon || DEFAULT_ICON} className={css.button}>
             <FormattedMessage id={label} />
           </Icon>
         </Button>
