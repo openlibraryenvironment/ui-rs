@@ -152,7 +152,7 @@
   "flow.volumes.status.temporary_item_creation_(no_integration)": "LMS temporary item creation disabled; please create manually",
 
   "view.showTags": "Show tags",
-  "view.showChat": "Show chat",
+  "view.showChat": "Request messages",
   "view.title": "Request {id}",
   "view.chatPane": "Messages with {chatOtherParty}",
   "view.chatPane.sendMessage": "Send",

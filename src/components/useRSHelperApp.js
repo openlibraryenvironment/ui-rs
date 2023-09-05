@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { useHelperApp } from '@k-int/stripes-kint-components';
 
-import { IconButton } from '@folio/stripes/components';
+import { IconButton, Tooltip } from '@folio/stripes/components';
 import { Tags } from '@folio/stripes-erm-components';
 import { ChatPane } from './chat';
 
@@ -15,8 +15,11 @@ const useRSHelperApp = () => {
   });
 
   const TagButton = ({ request, onClick = () => null }) => (
-    <FormattedMessage id="ui-rs.view.showTags">
-      {ariaLabel => (
+    <Tooltip
+      id="rs-chat-tooltip"
+      text={<FormattedMessage id="ui-rs.view.showTags" />}
+    >
+      {({ ref, ariaIds }) => (
         <IconButton
           icon="tag"
           id="clickable-show-tags"
@@ -27,17 +30,21 @@ const useRSHelperApp = () => {
               onClick({ open: isOpen('tags') });
             }
           }
-          ariaLabel={ariaLabel[0]}
+          aria-labelledby={ariaIds.text}
+          ref={ref}
         />
       )}
-    </FormattedMessage>
+    </Tooltip>
   );
 
   const ChatButton = ({ request, onClick = () => null }) => {
     const unseenNotifications = request?.notifications?.filter(notification => notification.seen === false && notification.isSender === false)?.length ?? 0;
     return (
-      <FormattedMessage id="ui-rs.view.showChat">
-        {ariaLabel => (
+      <Tooltip
+        id="rs-chat-tooltip"
+        text={<FormattedMessage id="ui-rs.view.showChat" />}
+      >
+        {({ ref, ariaIds }) => (
           <IconButton
             icon="comment"
             id="clickable-show-chat"
@@ -48,10 +55,11 @@ const useRSHelperApp = () => {
                 onClick({ open: isOpen('chat') });
               }
             }
-            ariaLabel={ariaLabel[0]}
+            aria-labelledby={ariaIds.text}
+            ref={ref}
           />
         )}
-      </FormattedMessage>
+      </Tooltip>
     );
   };
 
