@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Headline, Layout } from '@folio/stripes/components';
-import { useGetSIURL } from '@reshare/stripes-reshare';
+import { DirectLink, useGetSIURL } from '@reshare/stripes-reshare';
 
 import css from './Flow.css';
 
@@ -26,7 +26,15 @@ const TitleAndSILink = ({ request }) => {
         <strong>{`${request.hrid || request.id}: `}</strong>
         {request.title}
       </Headline>
-      {inventoryLink}
+      <Layout className={css.title_links}>
+        { request.precededBy &&
+          <DirectLink to={`../${request.precededBy.id}`} preserveSearch><FormattedMessage id="ui-rs.flow.info.precededByLink" /></DirectLink>
+        }
+        { request.succeededBy &&
+          <DirectLink to={`../${request.succeededBy.id}`} preserveSearch><FormattedMessage id="ui-rs.flow.info.succeededByLink" /></DirectLink>
+        }
+        {inventoryLink}
+      </Layout>
     </Layout>
   );
 };

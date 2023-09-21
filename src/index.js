@@ -52,6 +52,9 @@ const ResourceSharing = (props) => {
         />
         <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
         <Route path={`${path}/requests/batch/:batchId/pullslip`} component={PullSlipRoute} />
+        {appName === 'request' &&
+          <Route path={`${path}/requests/view/:id/rerequest`} component={CreateEditRoute} />
+        }
 
         {/* Contains nested routes: ./details and ./flow */}
         <Route path={`${path}/requests/view/:id`} component={ViewRoute} />

@@ -5,43 +5,21 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
-import { useOkapiQuery } from '@reshare/stripes-reshare';
+import { useOkapiQuery, usePerformAction } from '@reshare/stripes-reshare';
 import PatronRequestForm from '../components/PatronRequestForm';
+
+const CREATE = 'create';
+const EDIT = 'update';
+const REREQUEST = 'rerequest';
 
 const handleSISelect = (args, state, tools) => {
   Object.entries(args[0]).forEach(([field, value]) => tools.changeValue(state, field, () => value));
 };
 
-const renderLastMenu = (pristine, submitting, submit, isEditing) => {
-  let id;
-  let label;
-  if (isEditing) {
-    id = 'clickble-update-rs-entry';
-    label = <FormattedMessage id="ui-rs.updatePatronRequest" />;
-  } else {
-    id = 'clickable-create-rs-entry';
-    label = <FormattedMessage id="ui-rs.createPatronRequest" />;
-  }
-
-  return (
-    <PaneMenu>
-      <Button
-        id={id}
-        type="submit"
-        disabled={pristine || submitting}
-        onClick={submit}
-        buttonStyle="primary paneHeaderNewButton"
-        marginBottom0
-      >
-        {label}
-      </Button>
-    </PaneMenu>
-  );
-};
-
 const CreateEditRoute = props => {
   const { history, match } = props;
   const id = match.params?.id;
+  const performAction = usePerformAction(id);
   const routerLocation = useLocation();
   const callout = useContext(CalloutContext);
   const intl = useIntl();
@@ -110,9 +88,9 @@ const CreateEditRoute = props => {
   if (!validRequesterRecords?.[0]) throw new Error('Cannot resolve symbol to create requests as');
   const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
-  const isEditing = typeof match.params.id === 'string';
+  const op = id ? (routerLocation.pathname.endsWith('rerequest') ? REREQUEST : EDIT) : CREATE;
   let initialValues = {};
-  if (isEditing) {
+  if (id) {
     if (!reqQuery.isSuccess) return null;
     const record = reqQuery.data;
     initialValues = { ...record,
@@ -121,8 +99,22 @@ const CreateEditRoute = props => {
       ) };
   }
 
-  const submit = newRecord => {
-    if (isEditing) return updater.mutateAsync(newRecord);
+  const submit = async newRecord => {
+    if (op === EDIT) return updater.mutateAsync(newRecord);
+    else if (op === REREQUEST) {
+      const res = await performAction('rerequest', newRecord,
+        { error: 'stripes-reshare.actions.rerequest.error', success: 'stripes-reshare.actions.rerequest.success' });
+      if (res.json && (await res.json()).status === true) {
+        const refetched = await reqQuery.refetch();
+        const newReqId = refetched.data?.succeededBy?.id;
+        // When creating a new request we need to delay before redirecting to the request's page to
+        // give the server some time to resolve the requesting institution from the symbol and generate
+        // an appropriate ID.
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        if (newReqId) history.replace(`../${newReqId}${routerLocation.search}`);
+      }
+      return res;
+    }
     const baseRecord = {
       requestingInstitutionSymbol: requesters[0].value,
       isRequester: true
@@ -139,8 +131,21 @@ const CreateEditRoute = props => {
             centerContent
             onClose={history.goBack}
             dismissible
-            lastMenu={renderLastMenu(pristine, submitting, handleSubmit, isEditing)}
-            paneTitle={<FormattedMessage id={isEditing ? 'ui-rs.updatePatronRequest' : 'ui-rs.createPatronRequest'} />}
+            lastMenu={
+              <PaneMenu>
+                <Button
+                  id={`clickable-${op}-rs-entry`}
+                  type="submit"
+                  disabled={pristine || submitting}
+                  onClick={handleSubmit}
+                  buttonStyle="primary paneHeaderNewButton"
+                  marginBottom0
+                >
+                  <FormattedMessage id={`ui-rs.${op}PatronRequest`} />
+                </Button>
+              </PaneMenu>
+            }
+            paneTitle={<FormattedMessage id={`ui-rs.${op}PatronRequest`} />}
           >
             <form onSubmit={handleSubmit} id="form-rs-entry">
               <PatronRequestForm locations={locations} requesters={requesters} onSISelect={form.mutators.handleSISelect} />

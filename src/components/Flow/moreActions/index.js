@@ -37,6 +37,12 @@ export const SupplierAddCondition = () => (
   </ShowModalButton>
 );
 
+export const Rerequest = () => (
+  <DirectLink component={Button} buttonStyle="dropdownItem" to="rerequest">
+    <Icon icon="refresh"><FormattedMessage id="stripes-reshare.actions.rerequest" /></Icon>
+  </DirectLink>
+);
+
 export const RequesterCancel = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="requesterCancel">
     <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.requesterCancel" /></Icon>

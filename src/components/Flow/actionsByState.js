@@ -108,7 +108,13 @@ export const actionsByState = {
   },
   REQ_LOCAL_REVIEW: {
     primaryAction: 'fillLocally',
-  }
+  },
+  REQ_CANCELLED: {
+    primaryAction: null,
+  },
+  REQ_END_OF_ROTA: {
+    primaryAction: null,
+  },
 };
 
 /* The idea behind this object is that we can use it to lookup whether or not any given action needs the ability to add a note or not,
