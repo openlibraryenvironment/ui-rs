@@ -110,7 +110,7 @@ const CreateEditRoute = props => {
         // When creating a new request we need to delay before redirecting to the request's page to
         // give the server some time to resolve the requesting institution from the symbol and generate
         // an appropriate ID.
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
         if (newReqId) history.replace(`../${newReqId}${routerLocation.search}`);
       }
       return res;
