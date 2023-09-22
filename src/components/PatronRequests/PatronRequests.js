@@ -256,6 +256,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                         }
                       </>
                     }
+                    key={requestsQuery?.dataUpdatedAt}
                     loading={requestsQuery?.isFetching}
                     onHeaderClick={onSort}
                     onNeedMoreData={fetchMore}
