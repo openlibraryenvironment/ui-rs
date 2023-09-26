@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Form, Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
+import { Button, Layout, Pane, TextArea } from '@folio/stripes/components';
 import { useIntlCallout, usePerformAction } from '@reshare/stripes-reshare';
 import { ChatMessage } from './components';
 import css from './ChatPane.css';
@@ -23,6 +23,7 @@ const ChatPane = ({
 }) => {
   const latestMessage = useRef();
 
+  const intl = useIntl();
   const performAction = usePerformAction(reqId);
 
   const sendCallout = useIntlCallout();
@@ -97,28 +98,29 @@ const ChatPane = ({
               }}
               autoComplete="off"
             >
-              <Row>
-                <Col xs={1} />
-                <Col xs={7}>
+              <Layout className="flex full">
+                <div className={css.messageFieldContainer}>
                   <Field
+                    className={css.messageField}
                     name="note"
                     component={TextArea}
                     onKeyDown={onEnterPress}
                     autoFocus
+                    placeholder={intl.formatMessage({ id: 'ui-rs.view.chatPane.placeholder' }, { chatOtherParty: isRequester ? 'supplier' : 'requester' })}
                   />
-                </Col>
-                <Col xs={4}>
-                  <Button
-                    onClick={async event => {
-                      await handleSubmit(event);
-                      form.reset();
-                    }}
-                    disabled={pristine || !messageValid}
-                  >
-                    <FormattedMessage id="ui-rs.view.chatPane.sendMessage" />
-                  </Button>
-                </Col>
-              </Row>
+                </div>
+                <Button
+                  buttonClass={css.sendButton}
+                  buttonStyle="primary"
+                  onClick={async event => {
+                    await handleSubmit(event);
+                    form.reset();
+                  }}
+                  disabled={pristine || !messageValid}
+                >
+                  <FormattedMessage id="ui-rs.view.chatPane.sendMessage" />
+                </Button>
+              </Layout>
             </form>
           );
         }}
@@ -141,6 +143,11 @@ const ChatPane = ({
               handleMessageRead={handleMessageRead}
             />
           ))}
+          {notifications.length === 0 &&
+            <Layout className={`padding-all-gutter flex ${css.noMessages}`}>
+              <FormattedMessage id="ui-rs.view.chatPane.noMessages" />
+            </Layout>
+          }
         </div>
       );
     }

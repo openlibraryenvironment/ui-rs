@@ -1,3 +1,26 @@
+.messageFieldContainer {
+  flex: 1;
+}
+
+.messageField {
+  width: 100%;
+  min-height: 5em;
+}
+
 .noTopMargin {
   margin-top: -15px;
+}
+
+.noMessages {
+  border-width: 0px 0px 1px 5px;
+  border-style: solid;
+  border-color:  var(--color-fill-disabled);
+  color:  var(--checkable-disabled-fill);
+  font-style: italic;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.sendButton {
+  margin: var(--gutter);
 }

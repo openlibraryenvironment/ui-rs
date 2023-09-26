@@ -158,6 +158,8 @@
   "view.showChat": "Request messages",
   "view.title": "Request {id}",
   "view.chatPane": "Messages with {chatOtherParty}",
+  "view.chatPane.noMessages": "Messages will appear here...",
+  "view.chatPane.placeholder": "Message to {chatOtherParty}...",
   "view.chatPane.sendMessage": "Send",
   "view.chatPane.unableToMessage": "A message cannot be sent at this stage",
   "view.chatPane.actions": "Actions",
