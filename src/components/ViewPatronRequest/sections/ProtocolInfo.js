@@ -3,12 +3,11 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Card } from '@folio/stripes/components';
-import { useOkapiQuery } from '@reshare/stripes-reshare';
 import formattedDateTime from '../../../util/formattedDateTime';
 import css from './ProtocolInfo.css';
 
 const ProtocolInfo = ({ record, id }) => {
-    const protocolMessages = (record || {}).protocolAudit || [];
+  const protocolMessages = (record || {}).protocolAudit || [];
 
   return (
     <Card
@@ -42,12 +41,12 @@ const ProtocolInfo = ({ record, id }) => {
                 <tr key={i + protocolMessages.length}>
                   <td />
                   <td><FormattedMessage id="ui-rs.protocol.request" /></td>
-                  <td colspan="3">{entry.requestBody}</td>
+                  <td colSpan="3">{entry.requestBody}</td>
                 </tr>
                 <tr key={i + (protocolMessages.length * 2)}>
-                  <td/>
+                  <td />
                   <td><FormattedMessage id="ui-rs.protocol.response" /></td>
-                  <td colspan="3">{entry.responseBody}</td>
+                  <td colSpan="3">{entry.responseBody}</td>
                 </tr>
               </>
             ))
