@@ -2,9 +2,66 @@
 // (it doesn't recognise FormattedMessage as a text label for th)
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { github as githubStyle } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import XmlBeautify from 'xml-beautify';
 import { Card } from '@folio/stripes/components';
 import formattedDateTime from '../../../util/formattedDateTime';
 import css from './ProtocolInfo.css';
+
+const FormatEntry = ({ entry, property }) => {
+  const txt = entry[property];
+  if (!txt) return null;
+  switch (entry.protocolType) {
+    case 'NCIP':
+    case 'ISO18626': {
+      if (txt.startsWith('<')) {
+        const formatted = new XmlBeautify().beautify(txt);
+        return <SyntaxHighlighter language="xml" style={githubStyle} wrapLongLines>{formatted}</SyntaxHighlighter>;
+      }
+      return txt;
+    }
+    case 'Z3950_RESPONDER': {
+      if (txt.startsWith('{')) {
+        const parsed = JSON.parse(txt);
+        const xmlSnippets = [];
+        if (Array.isArray(parsed.searches)) {
+          parsed.searches.forEach((search, i) => {
+            xmlSnippets.push(<span key={'span' + i}>Search #{i} <code>searchRequest</code></span>);
+            xmlSnippets.push(
+              <SyntaxHighlighter language="xml" style={githubStyle} wrapLongLines key={'xml' + i}>
+                {new XmlBeautify().beautify(search?.searchRequest)}
+              </SyntaxHighlighter>
+            );
+            if (Array.isArray(search.records)) {
+              search.records.forEach((record, j) => {
+                xmlSnippets.push(<span key={'span' + i + 'r' + j}>Search #{i}, record #{j}</span>);
+                xmlSnippets.push(
+                  <SyntaxHighlighter language="xml" style={githubStyle} wrapLongLines key={'xml' + i + 'r' + j}>
+                    {new XmlBeautify().beautify(record)}
+                  </SyntaxHighlighter>
+                );
+              });
+              parsed.searches[i].records = 'See below';
+            }
+            parsed.searches[i].searchRequest = 'See below';
+          });
+        }
+        const formatted = JSON.stringify(parsed, null, 2);
+        return (
+          <>
+            <SyntaxHighlighter language="json" style={githubStyle} wrapLongLines key="json">{formatted}</SyntaxHighlighter>
+            {xmlSnippets}
+          </>
+        );
+      }
+      return txt;
+    }
+    default: {
+      return txt;
+    }
+  }
+};
 
 const ProtocolInfo = ({ record, id }) => {
   const protocolMessages = (record || {}).protocolAudit || [];
@@ -41,12 +98,12 @@ const ProtocolInfo = ({ record, id }) => {
                 <tr key={i + protocolMessages.length}>
                   <td />
                   <td><FormattedMessage id="ui-rs.protocol.request" /></td>
-                  <td colSpan="3">{entry.requestBody}</td>
+                  <td colSpan="3"><FormatEntry entry={entry} property="requestBody" /></td>
                 </tr>
                 <tr key={i + (protocolMessages.length * 2)}>
                   <td />
                   <td><FormattedMessage id="ui-rs.protocol.response" /></td>
-                  <td colSpan="3">{entry.responseBody}</td>
+                  <td colSpan="3"><FormatEntry entry={entry} property="responseBody" /></td>
                 </tr>
               </>
             ))
