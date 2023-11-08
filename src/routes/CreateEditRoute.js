@@ -12,8 +12,12 @@ const CREATE = 'create';
 const EDIT = 'update';
 const REREQUEST = 'rerequest';
 
+const SI_FIELDS = ['title', 'author', 'edition', 'isbn', 'issn', 'oclcNumber', 'publisher', 'publicationDate', 'placeOfPublication'];
+
+// state, tools parameters are from being used as Final Form "mutator" rather than called directly
 const handleSISelect = (args, state, tools) => {
   Object.entries(args[0]).forEach(([field, value]) => tools.changeValue(state, field, () => value));
+  SI_FIELDS.filter(field => !(field in args[0])).forEach(field => tools.changeValue(state, field, () => undefined));
 };
 
 const CreateEditRoute = props => {
