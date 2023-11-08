@@ -16,14 +16,14 @@ const PatronReturnedItem = ({ performAction }) => {
       'patronReturnedItemAndShippedReturn' :
       'patronReturnedItem',
     values, {
-        success: combine ? 'ui-rs.actions.checkIn.patron.combined.success' : 'ui-rs.actions.checkIn.patron.success',
+      success: combine ? 'ui-rs.actions.checkIn.patron.combined.success' : 'ui-rs.actions.checkIn.patron.success',
       error: 'ui-rs.actions.checkIn.error',
     }
   );
   return (
     <Form
       onSubmit={onSubmit}
-      render={({ handleSubmit, submitting, form }) => (
+      render={({ handleSubmit, submitting }) => (
         <form onSubmit={handleSubmit} autoComplete="off">
           <FormattedMessage id={`ui-rs.actions.${combine ? 'patronReturnedItemAndShipped' : 'patronReturnedItem'}.prompt`} />
           <Row>

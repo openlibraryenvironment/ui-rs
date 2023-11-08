@@ -12,7 +12,6 @@ import useChatActions from './useChatActions';
 const ENTER_KEY = 13;
 
 const ChatPane = ({
-  isOpen,
   onToggle,
   request: {
     id: reqId,
@@ -38,7 +37,7 @@ const ChatPane = ({
   };
 
   // TODO Maybe no longer need this with hasFired
-/*   const [unreadMessageCount, setUnreadMessageCount] = useState(notifications?.filter(notification => notification.seen === false && notification.isSender === false)?.length ?? 0);
+  /*   const [unreadMessageCount, setUnreadMessageCount] = useState(notifications?.filter(notification => notification.seen === false && notification.isSender === false)?.length ?? 0);
 
   useEffect(() => {
     setUnreadMessageCount(notifications?.filter(notification => notification.seen === false && notification.isSender === false)?.length ?? 0);
@@ -46,7 +45,7 @@ const ChatPane = ({
 
   // Ensure this only fires once, on mount
   useEffect(() => {
-   /*  if (isOpen('chat') && unreadMessageCount > 0) {
+    /*  if (isOpen('chat') && unreadMessageCount > 0) {
       handleMarkAllRead(true);
     } */
     jumpToLatestMessage();

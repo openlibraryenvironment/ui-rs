@@ -23,7 +23,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
   return (
     <Form
       onSubmit={onSubmit}
-      render={({ handleSubmit, submitting, form }) => (
+      render={({ handleSubmit, submitting }) => (
         <form onSubmit={handleSubmit} autoComplete="off">
           {prompt && <FormattedMessage id={prompt} />}
           {!prompt &&

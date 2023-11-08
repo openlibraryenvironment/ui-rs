@@ -22,7 +22,7 @@ const AuditUser = ({ id }) => {
 
 const AuditInfo = ({ record, id }) => {
   const audit = (record || {}).audit || [];
-    const filteredAudit = audit.filter(entry => entry.showInAuditTrail);
+  const filteredAudit = audit.filter(entry => entry.showInAuditTrail);
 
   return (
     <Card
@@ -53,7 +53,7 @@ const AuditInfo = ({ record, id }) => {
                 <td>{entry.fromStatus && <FormattedMessage id={`stripes-reshare.states.${entry.fromStatus.code}`} />}</td>
                 <td>{entry.toStatus && <FormattedMessage id={`stripes-reshare.states.${entry.toStatus.code}`} />}</td>
                 <td>{entry.message}</td>
-                </tr>
+              </tr>
             ))
           }
         </tbody>

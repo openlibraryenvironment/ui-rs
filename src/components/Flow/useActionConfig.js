@@ -9,7 +9,8 @@ const useActionConfig = () => {
 
   const returnObj = {};
 
-  settings.map(st => returnObj[st.key] = st.value ?? st.defValue);
+  // eslint-disable-next-line no-return-assign
+  settings.map(st => (returnObj[st.key] = st.value ?? st.defValue));
   return returnObj;
 };
 

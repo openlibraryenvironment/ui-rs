@@ -137,7 +137,7 @@ const HostLMSItemLoanPolicies = () => {
             let message = res.message;
             if (message != null) {
               if (message.endsWith('must be unique')) {
-                  message = <FormattedMessage id="ui-rs.settings.lmsilp.alreadyExists" />;
+                message = <FormattedMessage id="ui-rs.settings.lmsilp.alreadyExists" />;
               }
             }
             return { [FORM_ERROR]: message ?? e.message };

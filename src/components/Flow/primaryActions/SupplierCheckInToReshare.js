@@ -23,7 +23,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
   return (
     <Form
       onSubmit={onSubmit}
-      render={({ handleSubmit, submitting, form }) => (
+      render={({ handleSubmit, submitting }) => (
         <form onSubmit={handleSubmit} autoComplete="off">
           <FormattedMessage id={`ui-rs.actions.${combine ? 'checkInAndShip' : 'checkIn'}.prompt`} />
           <Row>

@@ -155,7 +155,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                   defaultWidth="fill"
                   lastMenu={(
                     <PaneMenu>
-                      {(appName === 'request') ?
+                      {(appName === 'request') &&
                         <IfPermission perm={createPerm}>
                           <Button
                             buttonStyle="primary"
@@ -166,7 +166,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                             <FormattedMessage id="ui-rs.createPatronRequest" />
                           </Button>
                         </IfPermission>
-                      : ''}
+                      }
                     </PaneMenu>
                   )}
                   noOverflow

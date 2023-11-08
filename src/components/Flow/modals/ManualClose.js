@@ -23,7 +23,7 @@ const ManualClose = ({ request, performAction }) => {
   const closeModal = () => setModal(null);
   const { formatMessage } = useIntl();
 
-    const terminalQuery = useOkapiQuery('rs/patronrequests/' + request.id + '/manualCloseStates', {
+  const terminalQuery = useOkapiQuery('rs/patronrequests/' + request.id + '/manualCloseStates', {
     staleTime: 8 * 60 * 1000
   });
   if (!terminalQuery.isSuccess) return null;
@@ -42,7 +42,7 @@ const ManualClose = ({ request, performAction }) => {
     <Form
       onSubmit={onSubmit}
       initialValues={{
-          terminalState: terminalOptions[0].value
+        terminalState: terminalOptions[0].value
       }}
       render={({ handleSubmit, submitting, form }) => (
         <form onSubmit={handleSubmit}>

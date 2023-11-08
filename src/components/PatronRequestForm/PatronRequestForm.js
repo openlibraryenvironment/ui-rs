@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Field, useForm, useFormState } from 'react-final-form';
-import { AccordionSet, Accordion, Col, Row, Datepicker, Select, TextArea, TextField, ButtonGroup } from '@folio/stripes/components';
+import { AccordionSet, Accordion, Col, Row, Datepicker, Select, TextArea, TextField } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 import { Pluggable, useStripes } from '@folio/stripes/core';
 

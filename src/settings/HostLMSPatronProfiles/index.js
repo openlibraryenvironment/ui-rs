@@ -137,7 +137,7 @@ const HostLMSPatronProfiles = () => {
             let message = res.message;
             if (message != null) {
               if (message.endsWith('must be unique')) {
-                  message = <FormattedMessage id="ui-rs.settings.lmspprf.alreadyExists" />;
+                message = <FormattedMessage id="ui-rs.settings.lmspprf.alreadyExists" />;
               }
             }
             return { [FORM_ERROR]: message ?? e.message };
