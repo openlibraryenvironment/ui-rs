@@ -52,7 +52,7 @@ const ActionButton = ({ action, disabled, performAction, payload = {}, success =
     return (
       <span className={`${css.actionWrapper} ${interCss.interactionStyles}`}>
         <span className={css.inlineFormWrapper}>
-          <Icon icon={icon || 'default'} className={css.button}>
+          <Icon icon={icon || DEFAULT_ICON} className={css.button}>
             <FormattedMessage id={label} />
           </Icon>
         </span>
