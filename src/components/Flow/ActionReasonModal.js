@@ -58,7 +58,7 @@ const ActionReasonModal = props => {
             dismissible
             footer={<Footer disableSubmit={submitting || pristine || actionPending} submit={form.submit} />}
           >
-            <FormattedMessage id={`ui-rs.actions.${action}.confirm`} values={{ id: request.id, item: request.title }} />
+            <FormattedMessage id={`ui-rs.actions.${action}.confirm`} values={{ id: (request.hrid || request.id), item: request.title }} />
             <Layout className="padding-top-gutter">
               <strong><FormattedMessage id={`ui-rs.actions.${action}.reason`} /></strong>
             </Layout>
