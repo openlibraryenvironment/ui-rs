@@ -459,6 +459,7 @@
   "settings.z3950.z3950ServerAddress": "Z39.50 server address",
   "settings.requests.defaultRequestSymbol": "Default request symbol",
   "settings.requests.lastResortLenders": "Lenders of last resort (Comma-separated list of symbols)",
+  "settings.requests.maxRequests": "Maximum active requests per patron",
   "settings.requests.requestIdPrefix": "Request ID prefix",
   "settings.requests.defaultInstitutionalPatronId": "Default institutional patron ID",
   "settings.localNCIP.ncipServerAddress": "NCIP server address",
