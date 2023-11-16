@@ -155,7 +155,7 @@ export const excludeRemote = [
 ];
 
 /* Actions from request.validActions that cannot become the primary action */
-const excludePrimary = [];
+const excludePrimary = [ "requesterCancel" ];
 
 /* UI-only actions to exclude from electronic requests */
 const excludeElectronic = ['FillMultiVolumeRequest'];
