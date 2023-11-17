@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Form } from 'react-final-form';
@@ -13,6 +14,10 @@ const EDIT = 'update';
 const REREQUEST = 'rerequest';
 
 const SI_FIELDS = ['title', 'author', 'edition', 'isbn', 'issn', 'oclcNumber', 'publisher', 'publicationDate', 'placeOfPublication'];
+// Eventually we want an allowlist of the fields mutable via the form but currently rerequest depends on
+// the previous behaviour of resubmitting the whole request. Trimming at this point mainly to avoid noise
+// in the audit trail.
+const LARGE_UNEDITABLE_FIELDS = ['audit', 'bibrecord', 'batches', 'conditions', 'notifications', 'requestIdentifiers', 'rota', 'tags', 'validActions', 'volumes', 'lastProtocolData', 'resolvedPatron', 'resolvedPickupLocation', 'resolvedSupplier', 'state', 'stateModel'];
 
 // state, tools parameters are from being used as Final Form "mutator" rather than called directly
 const handleSISelect = (args, state, tools) => {
@@ -104,11 +109,24 @@ const CreateEditRoute = props => {
   }
 
   const submit = async newRecord => {
-    if (op === EDIT) return updater.mutateAsync(newRecord);
-    else if (op === REREQUEST) {
-      const res = await performAction('rerequest', newRecord,
-        { error: 'stripes-reshare.actions.rerequest.error', success: 'stripes-reshare.actions.rerequest.success' });
-      if (res.json && (await res.json()).status === true) {
+    if (op === CREATE) {
+      const baseRecord = {
+        requestingInstitutionSymbol: requesters[0].value,
+        isRequester: true
+      };
+      return creator.mutateAsync({ ...baseRecord, ...newRecord });
+    }
+
+    // too many fields flow through from the record used to initialise the form
+    const trimmedRecord = omit(newRecord, LARGE_UNEDITABLE_FIELDS);
+
+    if (op === EDIT) return updater.mutateAsync(trimmedRecord);
+
+    const res = await performAction(op, trimmedRecord,
+      { error: `stripes-reshare.actions.${op}.error`, success: `stripes-reshare.actions.${op}.success` });
+
+    if (res.json && (await res.json()).status === true) {
+      if (op === REREQUEST) {
         const refetched = await reqQuery.refetch();
         const newReqId = refetched.data?.succeededBy?.id;
         // When creating a new request we need to delay before redirecting to the request's page to
@@ -117,13 +135,8 @@ const CreateEditRoute = props => {
         await new Promise(resolve => setTimeout(resolve, 3000));
         if (newReqId) history.replace(`../${newReqId}${routerLocation.search}`);
       }
-      return res;
     }
-    const baseRecord = {
-      requestingInstitutionSymbol: requesters[0].value,
-      isRequester: true
-    };
-    return creator.mutateAsync({ ...baseRecord, ...newRecord });
+    return res;
   };
 
   return (
