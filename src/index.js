@@ -55,6 +55,9 @@ const ResourceSharing = (props) => {
         {appName === 'request' &&
           <Route path={`${path}/requests/view/:id/rerequest`} component={CreateEditRoute} />
         }
+        {appName === 'request' &&
+          <Route path={`${path}/requests/view/:id/revalidate`} component={CreateEditRoute} />
+        }
 
         {/* Contains nested routes: ./details and ./flow */}
         <Route path={`${path}/requests/view/:id`} component={ViewRoute} />
