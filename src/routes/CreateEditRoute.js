@@ -9,9 +9,17 @@ import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import { useOkapiQuery, usePerformAction } from '@reshare/stripes-reshare';
 import PatronRequestForm from '../components/PatronRequestForm';
 
+// Possible operations performed by submitting this form
 const CREATE = 'create';
 const EDIT = 'update';
 const REREQUEST = 'rerequest';
+const REVALIDATE = 'revalidate';
+
+// Actions performed by each operation
+const OP_ACTION = {
+  [REREQUEST]: 'rerequest',
+  [REVALIDATE]: 'requesterRetryValidation'
+};
 
 const SI_FIELDS = ['title', 'author', 'edition', 'isbn', 'issn', 'oclcNumber', 'publisher', 'publicationDate', 'placeOfPublication'];
 // Eventually we want an allowlist of the fields mutable via the form but currently rerequest depends on
@@ -38,16 +46,18 @@ const CreateEditRoute = props => {
   const locQuery = useOkapiQuery('directory/entry', { searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100' });
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
 
+  const onSuccessfulEdit = async () => {
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    await queryClient.invalidateQueries(`rs/patronrequests/${id}`);
+    await queryClient.invalidateQueries('rs/patronrequests');
+    history.goBack();
+  };
+
   const updater = useMutation({
     mutationFn: (updated) => okapiKy
       .put(`rs/patronrequests/${id}`, { json: updated })
       .then((res) => res.data),
-    onSuccess: async () => {
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      await queryClient.invalidateQueries(`rs/patronrequests/${id}`);
-      await queryClient.invalidateQueries('rs/patronrequests');
-      history.goBack();
-    },
+    onSuccess: onSuccessfulEdit,
     onError: async (err) => {
       callout.sendCallout({ type: 'error',
         message: (
@@ -97,7 +107,14 @@ const CreateEditRoute = props => {
   if (!validRequesterRecords?.[0]) throw new Error('Cannot resolve symbol to create requests as');
   const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
-  const op = id ? (routerLocation.pathname.endsWith('rerequest') ? REREQUEST : EDIT) : CREATE;
+  // Determine operation
+  let op;
+  if (id) {
+    if (routerLocation.pathname.endsWith('rerequest')) op = REREQUEST;
+    else if (routerLocation.pathname.endsWith('revalidate')) op = REVALIDATE;
+    else op = EDIT;
+  } else op = CREATE;
+
   let initialValues = {};
   if (id) {
     if (!reqQuery.isSuccess) return null;
@@ -122,8 +139,10 @@ const CreateEditRoute = props => {
 
     if (op === EDIT) return updater.mutateAsync(trimmedRecord);
 
-    const res = await performAction(op, trimmedRecord,
-      { error: `stripes-reshare.actions.${op}.error`, success: `stripes-reshare.actions.${op}.success` });
+    // Since it's not create or edit, this route is for an action that involves updating the request
+    const opAction = OP_ACTION[op];
+    const res = await performAction(opAction, trimmedRecord,
+      { error: `stripes-reshare.actions.${opAction}.error`, success: `stripes-reshare.actions.${opAction}.success` });
 
     if (res.json && (await res.json()).status === true) {
       if (op === REREQUEST) {
@@ -134,6 +153,8 @@ const CreateEditRoute = props => {
         // an appropriate ID.
         await new Promise(resolve => setTimeout(resolve, 3000));
         if (newReqId) history.replace(`../${newReqId}${routerLocation.search}`);
+      } else {
+        await onSuccessfulEdit();
       }
     }
     return res;
