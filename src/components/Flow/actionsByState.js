@@ -39,21 +39,19 @@ import initialToUpper from '../../util/initialToUpper';
  *
 */
 
+const noPrimary = {
+  primaryAction: null,
+};
+
 export const actionsByState = {
   default: {
     flowComponents: ['TitleAndSILink', 'RequestInfo', 'ActionAccordion', 'Volumes', 'LoanConditions'],
     primaryAction: null,
     moreActions: [],
   },
-  RES_IDLE:{
-    primaryAction: null,
-  },
-  REQ_IDLE:{
-    primaryAction: null,
-  },
-  REQ_INVALID_PATRON:{
-    primaryAction: null,
-  },
+  RES_IDLE: noPrimary,
+  REQ_IDLE: noPrimary,
+  REQ_INVALID_PATRON: noPrimary,
   RES_PENDING_CONDITIONAL_ANSWER: {
     primaryAction: 'SupplierMarkConditionsAgreed',
   },
@@ -87,12 +85,8 @@ export const actionsByState = {
   RES_CANCEL_REQUEST_RECEIVED:{
     primaryAction: 'SupplierRespondToCancel',
   },
-  REQ_REQUEST_SENT_TO_SUPPLIER: {
-    primaryAction: null,
-  },
-  REQ_EXPECTS_TO_SUPPLY: {
-    primaryAction: null,
-  },
+  REQ_REQUEST_SENT_TO_SUPPLIER: noPrimary,
+  REQ_EXPECTS_TO_SUPPLY: noPrimary,
   REQ_BORROWING_LIBRARY_RECEIVED: {
     primaryAction: 'RequesterManualCheckIn',
   },
@@ -109,12 +103,10 @@ export const actionsByState = {
   REQ_LOCAL_REVIEW: {
     primaryAction: 'fillLocally',
   },
-  REQ_CANCELLED: {
-    primaryAction: null,
-  },
-  REQ_END_OF_ROTA: {
-    primaryAction: null,
-  },
+  REQ_CANCELLED: noPrimary,
+  REQ_END_OF_ROTA: noPrimary,
+  REQ_BLANK_FORM_REVIEW: noPrimary,
+  REQ_DUPLICATE_REVIEW: noPrimary,
 };
 
 /* The idea behind this object is that we can use it to lookup whether or not any given action needs the ability to add a note or not,
