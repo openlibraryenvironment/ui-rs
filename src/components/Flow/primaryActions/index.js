@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import { DirectLink } from '@reshare/stripes-reshare';
+import { DirectLink } from '@projectreshare/stripes-reshare';
 import { ShowModalButton } from '../../ModalButtons';
 
 export { default as Generic } from './Generic';

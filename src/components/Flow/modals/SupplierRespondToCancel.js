@@ -5,7 +5,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Layout, Modal, ModalFooter, RadioButton, RadioButtonGroup, Row, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
-import { useIsActionPending } from '@reshare/stripes-reshare';
+import { useIsActionPending } from '@projectreshare/stripes-reshare';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 

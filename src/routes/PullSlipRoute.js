@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
 import { Button, Pane, Paneset } from '@folio/stripes/components';
-import { useIntlCallout, useOkapiQuery, usePerformAction } from '@reshare/stripes-reshare';
+import { useIntlCallout, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
 
 const PullSlipRoute = ({ match, history }) => {
   const requestId = match.params?.id;

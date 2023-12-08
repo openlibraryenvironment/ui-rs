@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
-import { useIsActionPending } from '@reshare/stripes-reshare';
+import { useIsActionPending } from '@projectreshare/stripes-reshare';
 import { useMessage } from '../MessageModalState';
 import AddNoteField from '../AddNoteField';
 import { includesNote } from './actionsByState';

@@ -5,7 +5,7 @@ import { Button, Card, Layout } from '@folio/stripes/components';
 import { FileUploader } from '@folio/stripes-data-transfer-components';
 import { useOkapiKy } from '@folio/stripes/core';
 import { useQueryClient } from 'react-query';
-import { useIntlCallout } from '@reshare/stripes-reshare';
+import { useIntlCallout } from '@projectreshare/stripes-reshare';
 
 const FileSetting = ({ setting, fileType }) => {
   const okapiKy = useOkapiKy();
