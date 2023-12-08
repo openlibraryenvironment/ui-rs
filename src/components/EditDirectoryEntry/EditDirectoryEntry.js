@@ -41,7 +41,7 @@ const EditDirectoryEntry = (props) => {
   const ky = useOkapiKy();
 
   const { mutateAsync: validate } = useMutation(
-    ['@reshare/ui-directory', 'validateDirectoryEntry'],
+    ['@projectreshare/ui-directory', 'validateDirectoryEntry'],
     (data) => ky.post(`directory/entry/validate`, { json: data }).json()
   );
 
