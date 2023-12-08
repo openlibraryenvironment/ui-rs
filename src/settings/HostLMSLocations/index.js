@@ -9,7 +9,7 @@ import queryString from 'query-string';
 import { Button, Layer, Layout, Pane, Paneset, Select, Spinner, TextField } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 import { ActionList, FormModal, generateKiwtQuery } from '@k-int/stripes-kint-components';
-import { useOkapiQueryConfig, useIntlCallout } from '@reshare/stripes-reshare';
+import { useOkapiQueryConfig, useIntlCallout } from '@projectreshare/stripes-reshare';
 import HostLMSLocationForm from './HostLMSLocationForm';
 import ShelvingLocationSites from './ShelvingLocationSites';
 

@@ -3,7 +3,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Card } from '@folio/stripes/components';
-import { useOkapiQuery } from '@reshare/stripes-reshare';
+import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 import formattedDateTime from '../../../util/formattedDateTime';
 import css from './AuditInfo.css';
 

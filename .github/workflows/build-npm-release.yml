@@ -1,0 +1,36 @@
+name: Publish release npm
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    env:
+      FOLIO_NPM_REGISTRY: 'https://repository.folio.org/repository/npm-folioci/'
+      RESHARE_NPM_REGISTRY: 'https://registry.npmjs.org'
+      NODEJS_VERSION: '18'
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODEJS_VERSION }}
+          registry-url: ${{ env.RESHARE_NPM_REGISTRY }}
+          scope: '@projectreshare'
+
+      - name: Set yarn config
+        run: |
+          yarn config set @folio:registry ${{ env.FOLIO_NPM_REGISTRY }}
+          yarn config set @projectreshare:registry ${{ env.RESHARE_NPM_REGISTRY }}
+
+      - run: yarn install
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

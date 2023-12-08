@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { useRefdata } from '@k-int/stripes-kint-components';
-import { RefdataButtons, useIsActionPending } from '@reshare/stripes-reshare';
+import { RefdataButtons, useIsActionPending } from '@projectreshare/stripes-reshare';
 import { Button, Col, Layout, Modal, ModalFooter, Row, TextArea } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 

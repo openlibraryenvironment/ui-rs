@@ -19,7 +19,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, useOkapiKy } from '@folio/stripes/core';
 import { SearchAndSortQuery, PersistedPaneset } from '@folio/stripes/smart-components';
-import { useIntlCallout } from '@reshare/stripes-reshare';
+import { useIntlCallout } from '@projectreshare/stripes-reshare';
 import AppNameContext from '../../AppNameContext';
 import Filters from './Filters';
 import Search from './Search';
@@ -123,7 +123,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
         }) => (
           <div>
             <PersistedPaneset
-              appId={`@reshare/${appName}`}
+              appId={`@projectreshare/${appName}`}
               id="requests"
             >
               <Pane

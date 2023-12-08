@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Button, Layout, Pane, TextArea } from '@folio/stripes/components';
-import { useIntlCallout, usePerformAction } from '@reshare/stripes-reshare';
+import { useIntlCallout, usePerformAction } from '@projectreshare/stripes-reshare';
 import { ChatMessage } from './components';
 import css from './ChatPane.css';
 import MessageDropdown from './components/MessageDropdown';

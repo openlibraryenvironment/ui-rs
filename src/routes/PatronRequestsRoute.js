@@ -3,7 +3,7 @@ import { useInfiniteQuery } from 'react-query';
 import { useIntl } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
 import { generateKiwtQuery, useKiwtSASQuery } from '@k-int/stripes-kint-components';
-import { useOkapiQuery } from '@reshare/stripes-reshare';
+import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 import PatronRequests from '../components/PatronRequests';
 
 const PER_PAGE = 100;
@@ -57,7 +57,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
 
   const prQuery = useInfiniteQuery(
     {
-      queryKey: ['rs/patronrequests', query, `@reshare/${appName}`],
+      queryKey: ['rs/patronrequests', query, `@projectreshare/${appName}`],
       queryFn: ({ pageParam = 0 }) => ky(`rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`).json(),
       useErrorBoundary: true,
       staleTime: 2 * 60 * 1000,

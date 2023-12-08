@@ -1,5 +1,5 @@
 import { Pane, Paneset } from '@folio/stripes/components';
-import { useOkapiQuery } from '@reshare/stripes-reshare';
+import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 import { FormattedMessage } from 'react-intl';
 import FileSetting from './FileSetting';
 import ReportSetting from './ReportSetting';

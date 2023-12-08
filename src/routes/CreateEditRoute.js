@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
-import { useOkapiQuery, usePerformAction } from '@reshare/stripes-reshare';
+import { useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
 import PatronRequestForm from '../components/PatronRequestForm';
 
 // Possible operations performed by submitting this form

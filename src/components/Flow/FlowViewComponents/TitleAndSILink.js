@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Headline, Layout } from '@folio/stripes/components';
-import { DirectLink, useGetSIURL } from '@reshare/stripes-reshare';
+import { DirectLink, useGetSIURL } from '@projectreshare/stripes-reshare';
 
 import css from './Flow.css';
 

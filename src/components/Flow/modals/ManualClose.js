@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Button, Modal, ModalFooter, Select } from '@folio/stripes/components';
-import { useIsActionPending, useOkapiQuery } from '@reshare/stripes-reshare';
+import { useIsActionPending, useOkapiQuery } from '@projectreshare/stripes-reshare';
 import { required } from '../../../util/validators';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';

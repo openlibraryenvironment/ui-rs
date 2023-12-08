@@ -7,7 +7,7 @@ import { FORM_ERROR } from 'final-form';
 import { Button, Pane, Checkbox } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 import { ActionList, FormModal, generateKiwtQuery } from '@k-int/stripes-kint-components';
-import { useOkapiQuery, useIntlCallout } from '@reshare/stripes-reshare';
+import { useOkapiQuery, useIntlCallout } from '@projectreshare/stripes-reshare';
 import ItemLoanPolicyForm from './ItemLoanPolicyForm';
 
 const HostLMSItemLoanPolicies = () => {

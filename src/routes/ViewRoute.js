@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
-import { upNLevels, useCloseDirect, usePerformAction, useOkapiQuery } from '@reshare/stripes-reshare';
+import { upNLevels, useCloseDirect, usePerformAction, useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { MessageModalProvider } from '../components/MessageModalState';
