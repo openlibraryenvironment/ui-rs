@@ -1,5 +1,5 @@
 {
-  "name": "@reshare/rs",
+  "name": "@projectreshare/rs",
   "version": "1.15.0",
   "description": "Resource Sharing",
   "main": "src/index.js",
@@ -20,7 +20,7 @@
     "@folio/stripes-erm-components": "^6.1.0",
     "@folio/stripes-template-editor": "^3.0.0",
     "@k-int/stripes-kint-components": "^4.2.0",
-    "@reshare/stripes-reshare": "^1.11.0",
+    "@projectreshare/stripes-reshare": "^1.11.0",
     "classnames": "^2.2.6",
     "final-form": "^4.2.0",
     "final-form-arrays": "^3.0.2",
@@ -48,6 +48,10 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.0.0"
   },
+  "resolutions": {
+        "@rehooks/local-storage": "2.4.4",
+        "postcss-nesting" : "^10.0.0"
+  },
   "stripes": {
     "actsAs": [
       "settings"
@@ -57,7 +61,7 @@
     "stripesDeps": [
       "@folio/stripes-erm-components",
       "@k-int/stripes-kint-components",
-      "@reshare/stripes-reshare",
+      "@projectreshare/stripes-reshare",
       "@folio/stripes-template-editor"
     ],
     "icons": [
