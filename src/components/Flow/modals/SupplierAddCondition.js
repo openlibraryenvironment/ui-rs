@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 import { Button, Col, Layout, Modal, ModalFooter, Row, Select, TextArea } from '@folio/stripes/components';
-import { RefdataButtons, useIsActionPending } from '@reshare/stripes-reshare';
+import { RefdataButtons, useIsActionPending } from '@projectreshare/stripes-reshare';
 import { required } from '@folio/stripes/util';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';

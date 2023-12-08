@@ -21,7 +21,7 @@ import {
   Row,
   TextField
 } from '@folio/stripes/components';
-import { useIsActionPending } from '@reshare/stripes-reshare';
+import { useIsActionPending } from '@projectreshare/stripes-reshare';
 
 import volumeStateStatus from '../../../util/volumeStateStatus';
 import { required as requiredValidator } from '../../../util/validators';

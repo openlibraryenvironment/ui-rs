@@ -7,7 +7,7 @@ jobs:
   build:
     env:
       FOLIO_NPM_REGISTRY: 'https://repository.folio.org/repository/npm-folioci/'
-      RESHARE_NPM_REGISTRY: 'https://registry.nodejs.org'
+      RESHARE_NPM_REGISTRY: 'https://registry.npmjs.org'
       NODEJS_VERSION: '18'
 
     runs-on: ubuntu-latest

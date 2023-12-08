@@ -2,7 +2,7 @@ import { Field, useFormState } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { Col, Row, Select, TextField, MessageBanner } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
-import { useOkapiQuery } from '@reshare/stripes-reshare';
+import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 
