@@ -1,4 +1,4 @@
-import { usePerformAction } from '@reshare/stripes-reshare';
+import { usePerformAction } from '@projectreshare/stripes-reshare';
 
 const useChatActions = (reqId) => {
   const performAction = usePerformAction(reqId);

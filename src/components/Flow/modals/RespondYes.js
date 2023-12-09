@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { Button, Modal, ModalFooter, Row, Col, Select, TextArea } from '@folio/stripes/components';
-import { useOkapiQuery } from '@reshare/stripes-reshare';
+import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';

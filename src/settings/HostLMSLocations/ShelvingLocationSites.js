@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 import { Button, Pane, TextField } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 import { ActionList, FormModal } from '@k-int/stripes-kint-components';
-import { useIntlCallout } from '@reshare/stripes-reshare';
+import { useIntlCallout } from '@projectreshare/stripes-reshare';
 import ShelvingLocationSiteForm from './ShelvingLocationSiteForm';
 
 const ShelvingLocationSites = ({ location }) => {
