@@ -19,8 +19,8 @@ const AddCondition = props => {
 
   const onSubmit = values => {
     return performAction('supplierAddCondition', values, {
-      error: 'ui-rs.actions.addCondition.success',
-      success: 'ui-rs.actions.addCondition.error',
+      error: 'ui-rs.actions.addCondition.error',
+      success: 'ui-rs.actions.addCondition.success',
     })
       .then(closeModal);
   };
