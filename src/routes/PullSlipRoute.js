@@ -3,7 +3,13 @@ import { useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
 import { Button, Pane, Paneset } from '@folio/stripes/components';
-import { useIntlCallout, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
+import {
+  useIntlCallout,
+  useOkapiQuery,
+  usePerformAction,
+  upNLevels,
+  useCloseDirect} from '@projectreshare/stripes-reshare';
+import { useLocation } from "react-router";
 
 const PullSlipRoute = ({ match, history }) => {
   const requestId = match.params?.id;
@@ -15,6 +21,8 @@ const PullSlipRoute = ({ match, history }) => {
   const sendCallout = useIntlCallout();
   const performAction = usePerformAction(requestId);
   const title = intl.formatMessage({ id: requestId ? 'ui-rs.pullSlip' : 'ui-rs.pullSlips' });
+  const location = useLocation();
+  const close = useCloseDirect(upNLevels(location, 3));
 
   const reqQuery = useOkapiQuery(`rs/patronrequests/${requestId}`, {
     enabled: !!requestId,
@@ -53,7 +61,7 @@ const PullSlipRoute = ({ match, history }) => {
     <Paneset>
       <Pane
         defaultWidth="100%"
-        onClose={history.goBack}
+        onClose={close}
         dismissible
         paneTitle={title}
         lastMenu={
