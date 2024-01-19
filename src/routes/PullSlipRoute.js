@@ -7,9 +7,8 @@ import {
   useIntlCallout,
   useOkapiQuery,
   usePerformAction,
-  upNLevels,
-  useCloseDirect} from '@projectreshare/stripes-reshare';
-import { useLocation } from "react-router";
+  useCloseDirect
+} from '@projectreshare/stripes-reshare';
 
 const PullSlipRoute = ({ match, history }) => {
   const requestId = match.params?.id;
@@ -21,8 +20,7 @@ const PullSlipRoute = ({ match, history }) => {
   const sendCallout = useIntlCallout();
   const performAction = usePerformAction(requestId);
   const title = intl.formatMessage({ id: requestId ? 'ui-rs.pullSlip' : 'ui-rs.pullSlips' });
-  const location = useLocation();
-  const close = useCloseDirect(upNLevels(location, 3));
+  const close = useCloseDirect();
 
   const reqQuery = useOkapiQuery(`rs/patronrequests/${requestId}`, {
     enabled: !!requestId,
