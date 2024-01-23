@@ -76,7 +76,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
 
   useEffect(() => {
     // Update the search criteria to default if none found in location search
-    if (!location.search || location.search === "") {
+    if (!location.search || location.search === '') {
       history.push(location.pathname + initialSearch);
     }
   });
