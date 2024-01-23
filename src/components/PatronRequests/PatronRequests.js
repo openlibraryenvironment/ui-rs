@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   FormattedDate,
   FormattedMessage,
@@ -72,6 +72,14 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
   const fetchMore = (_askAmount, index) => {
     requestsQuery.fetchNextPage({ pageParam: index });
   };
+  const initialSearch = '?filters=terminal.false&sort=-dateCreated';
+
+  useEffect(() => {
+    // Update the search criteria to default if none found in location search
+    if (!location.search || location.search === '') {
+      history.push(location.pathname + initialSearch);
+    }
+  });
 
   const onPrintAll = () => {
     okapiKy(`rs/patronrequests/generatePickListBatch${searchParams}`).then(async res => {
@@ -103,7 +111,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
 
   return (
     <SearchAndSortQuery
-      initialSearch="?filters=terminal.false&sort=-dateCreated"
+      initialSearch={initialSearch}
       initialSearchState={{ query: '' }}
       key={location.search}
       queryGetter={queryGetter}
