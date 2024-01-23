@@ -72,7 +72,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
   const fetchMore = (_askAmount, index) => {
     requestsQuery.fetchNextPage({ pageParam: index });
   };
-  const initialSearch = "?filters=terminal.false&sort=-dateCreated";
+  const initialSearch = '?filters=terminal.false&sort=-dateCreated';
 
   useEffect(() => {
     // Update the search criteria to default if none found in location search
