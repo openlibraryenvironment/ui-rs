@@ -77,7 +77,7 @@ const ViewPatronRequest = ({ record }) => {
         </Accordion>
       </div>
       <div>
-        <Accordion id="protocolInfo" label={<FormattedMessage id="ui-rs.information.heading.protocol" />}>
+        <Accordion id="protocolInfo" closedByDefault label={<FormattedMessage id="ui-rs.information.heading.protocol" />}>
           <ProtocolInfo id="protocolInfo" record={record} />
         </Accordion>
       </div>
