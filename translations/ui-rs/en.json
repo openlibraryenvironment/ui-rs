@@ -480,6 +480,8 @@
   "settings.hostLMSIntegration.checkOutItem": "Check out item method",
   "settings.hostLMSIntegration.useRequestItem" : "Request item method",
   "settings.other.cancellationReasons": "Cancellation reasons",
+  "settings.other.copyrightType": "Copyright type (for copy requests)",
+  "settings.other.defaultCopyrightType": "Default copyright type",
   "settings.autoResponder.autoResponderCancel": "Cancellation auto responder",
   "settings.autoResponder.autoResponderCancel.help": "<p>Affects: Supply</p><ul><li>On: The cancellation auto-responder will automatically approve cancellation requests if the item has not yet shipped.</li><li>Off: All cancellation requests must receive a manual response.</li></ul>",
   "settings.autoResponder.autoResponderLocal": "Local request auto responder",
