@@ -103,7 +103,7 @@ const ResourceSharingSettings = (props) => {
   ];
 
   const { isLoading, SettingsComponent } = useSettings({
-    dynamicPageExclusions: ['pullslipConfiguration', 'pullslipTemplateConfig'],
+    dynamicPageExclusions: ['other', 'pullslipConfiguration', 'pullslipTemplateConfig'],
     intlKey: 'ui-rs',
     persistentPages,
     refdataEndpoint: REFDATA_ENDPOINT,
