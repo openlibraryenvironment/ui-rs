@@ -213,10 +213,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
           </Col>
         </Row>
       </Accordion>
-      <Accordion
-        closedByDefault={!isCopyReq}
-        label={<FormattedMessage id="ui-rs.information.heading.partDetails" />}
-      >
+      <Accordion label={<FormattedMessage id="ui-rs.information.heading.partDetails" />}>
         <Row>
           <Col xs={4}>
             <Field
