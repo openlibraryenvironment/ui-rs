@@ -8,7 +8,6 @@ import PullSlipRoute from './routes/PullSlipRoute';
 import { EditPullslipNotification } from './settings/pullslipNotifications';
 import Settings from './settings';
 import AppNameContext from './AppNameContext';
-import StaleBundleWarning from './components/StaleBundleWarning';
 
 const ResourceSharing = (props) => {
   const {
@@ -30,9 +29,6 @@ const ResourceSharing = (props) => {
 
   return (
     <AppNameContext.Provider value={appName}>
-      {/* TODO: remove after switching to the Stripes version from a future release
-      which will include this functionality in stripes-ui */}
-      <StaleBundleWarning />
       <Switch>
         <Redirect
           exact
