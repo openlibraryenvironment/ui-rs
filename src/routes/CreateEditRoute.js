@@ -6,8 +6,11 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
-import { useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
+import { useAppSettings, useRefdata } from '@k-int/stripes-kint-components';
+import { selectifyRefdata, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
 import PatronRequestForm from '../components/PatronRequestForm';
+import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT } from '../constants/endpoints';
+import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
 
 // Possible operations performed by submitting this form
 const CREATE = 'create';
@@ -45,6 +48,20 @@ const CreateEditRoute = props => {
 
   const locQuery = useOkapiQuery('directory/entry', { searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100' });
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
+  const copyrightTypeRefdata = useRefdata({
+    desc: 'copyrightType',
+    endpoint: REFDATA_ENDPOINT,
+    queryParams: {
+      staleTime: 5 * 60 * 1000,
+    }
+  });
+  const copyrightTypes = selectifyRefdata(copyrightTypeRefdata);
+  const defaultCopyrightSetting = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'other',
+    keyName: 'default_copyright_type',
+  });
+  const defaultCopyrightTypeId = copyrightTypeRefdata[0]?.values?.filter(v => v.value === defaultCopyrightSetting.value)?.[0]?.id;
 
   const onSuccessfulEdit = async () => {
     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -94,7 +111,7 @@ const CreateEditRoute = props => {
     },
   });
 
-  if (!locQuery.isSuccess) return null;
+  if (!locQuery.isSuccess || !copyrightTypeRefdata || !defaultCopyrightSetting) return null;
   // locations are where rec.type.value is 'branch' and there is a tag in rec.type.tags where the value is 'pickup'
   // and are formatted for the Select component as { value: lmsLocationCode, label: name }
   const locations = locQuery.data
@@ -115,7 +132,7 @@ const CreateEditRoute = props => {
     else op = EDIT;
   } else op = CREATE;
 
-  let initialValues = {};
+  let initialValues;
   if (id) {
     if (!reqQuery.isSuccess) return null;
     const record = reqQuery.data;
@@ -123,19 +140,28 @@ const CreateEditRoute = props => {
       formattedDateCreated: (
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
       ) };
+  } else {
+    initialValues = {
+      copyrightType: { id: defaultCopyrightTypeId },
+      serviceType: { value: SERVICE_TYPE_LOAN },
+    };
   }
 
-  const submit = async newRecord => {
+  const submit = async submittedRecord => {
     if (op === CREATE) {
       const baseRecord = {
         requestingInstitutionSymbol: requesters[0].value,
         isRequester: true
       };
-      return creator.mutateAsync({ ...baseRecord, ...newRecord });
+      const newRecord = {
+        ...baseRecord,
+        ...(submittedRecord.serviceType?.value === SERVICE_TYPE_COPY ? submittedRecord : omit(submittedRecord, 'copyrightType')),
+      };
+      return creator.mutateAsync(newRecord);
     }
 
     // too many fields flow through from the record used to initialise the form
-    const trimmedRecord = omit(newRecord, LARGE_UNEDITABLE_FIELDS);
+    const trimmedRecord = omit(submittedRecord, LARGE_UNEDITABLE_FIELDS);
 
     if (op === EDIT) return updater.mutateAsync(trimmedRecord);
 
@@ -186,7 +212,12 @@ const CreateEditRoute = props => {
             paneTitle={<FormattedMessage id={`ui-rs.${op}PatronRequest`} />}
           >
             <form onSubmit={handleSubmit} id="form-rs-entry">
-              <PatronRequestForm locations={locations} requesters={requesters} onSISelect={form.mutators.handleSISelect} />
+              <PatronRequestForm
+                copyrightTypes={copyrightTypes}
+                locations={locations}
+                requesters={requesters}
+                onSISelect={form.mutators.handleSISelect}
+              />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">
               {prompt => <Prompt when={!pristine && !(submitting || submitSucceeded)} message={prompt[0]} />}
