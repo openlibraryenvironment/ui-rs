@@ -61,7 +61,11 @@ export const RespondYes = () => (
   </ShowModalButton>
 );
 
-
+export const SlnpRespondYes = () => (
+    <ShowModalButton buttonStyle="dropdownItem" modal="SlnpRespondYes">
+        <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.respondYes" /></Icon>
+    </ShowModalButton>
+);
 
 // Client only, component names do not correspond to actions
 export const PrintPullSlip = () => (
