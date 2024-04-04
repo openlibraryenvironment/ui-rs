@@ -93,9 +93,6 @@ export const excludeRemote = [
   'patronReturnedItemAndShippedReturn'// This will replace the action performed by "mark returned by patron" depending on config
 ];
 
-/* Actions from request.validActions that cannot become the primary action */
-const excludePrimary = ['requesterCancel'];
-
 /* UI-only actions to exclude from electronic requests */
 const excludeElectronic = ['FillMultiVolumeRequest'];
 
