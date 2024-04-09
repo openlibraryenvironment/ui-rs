@@ -39,7 +39,7 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   const appName = useContext(AppNameContext);
   const performAction = usePerformAction(id);
   const { handleMarkAllRead } = useChatActions(id);
-  const close = useCloseDirect();
+  const close = useCloseDirect(upNLevels(location, 2));
 
   // Fetch the request
   const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000, notifyOnChangeProps: 'tracked' });
