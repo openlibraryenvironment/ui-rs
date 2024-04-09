@@ -268,7 +268,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                     loading={requestsQuery?.isFetching}
                     onHeaderClick={onSort}
                     onNeedMoreData={fetchMore}
-                    onRowClick={(_e, rowData) => history.push(`${match.url}/view/${rowData.id}${location.search}`)}
+                    onRowClick={(_e, rowData) => history.push(`${match.url}/${rowData.id}${location.search}`)}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     totalCount={totalCount}
