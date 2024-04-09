@@ -7,7 +7,7 @@ import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import { useAppSettings, useRefdata } from '@k-int/stripes-kint-components';
-import { selectifyRefdata, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
+import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
 import PatronRequestForm from '../components/PatronRequestForm';
 import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT } from '../constants/endpoints';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
@@ -45,6 +45,7 @@ const CreateEditRoute = props => {
   const intl = useIntl();
   const queryClient = useQueryClient();
   const okapiKy = useOkapiKy();
+  const close = useCloseDirect();
 
   const locQuery = useOkapiQuery('directory/entry', { searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100' });
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
@@ -67,7 +68,7 @@ const CreateEditRoute = props => {
     await new Promise(resolve => setTimeout(resolve, 3000));
     await queryClient.invalidateQueries(`rs/patronrequests/${id}`);
     await queryClient.invalidateQueries('rs/patronrequests');
-    history.goBack();
+    close();
   };
 
   const updater = useMutation({
@@ -193,7 +194,7 @@ const CreateEditRoute = props => {
           <Pane
             defaultWidth="100%"
             centerContent
-            onClose={history.goBack}
+            onClose={close}
             dismissible
             lastMenu={
               <PaneMenu>
