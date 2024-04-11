@@ -20,7 +20,7 @@ const PullSlipRoute = ({ match, history }) => {
   const sendCallout = useIntlCallout();
   const performAction = usePerformAction(requestId);
   const title = intl.formatMessage({ id: requestId ? 'ui-rs.pullSlip' : 'ui-rs.pullSlips' });
-  const close = useCloseDirect();
+  const close = useCloseDirect('../../..');
 
   const reqQuery = useOkapiQuery(`rs/patronrequests/${requestId}`, {
     enabled: !!requestId,

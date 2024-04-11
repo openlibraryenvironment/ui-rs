@@ -85,7 +85,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
     okapiKy(`rs/patronrequests/generatePickListBatch${searchParams}`).then(async res => {
       const { batchId } = await res.json();
       queryClient.invalidateQueries('rs/batch');
-      history.push(`requests/batch/${batchId}/pullslip`);
+      history.push(`requests/batch/${batchId}/pullslip`, { direct: true });
     }).catch(async e => {
       const res = await e?.response?.text();
       sendCallout('ui-rs.pullSlip.error', 'error', { errMsg: (res.startsWith('{') ? JSON.parse(res)?.error : res) || (e.message ?? '') });
