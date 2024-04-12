@@ -4,13 +4,14 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
 import { Button, Pane, Paneset } from '@folio/stripes/components';
 import {
+  upNLevels,
   useIntlCallout,
   useOkapiQuery,
   usePerformAction,
   useCloseDirect
 } from '@projectreshare/stripes-reshare';
 
-const PullSlipRoute = ({ match, history }) => {
+const PullSlipRoute = ({ match, location }) => {
   const requestId = match.params?.id;
   const batchId = match.params?.batchId;
   const [pdfUrl, setPdfUrl] = useState();
@@ -20,7 +21,7 @@ const PullSlipRoute = ({ match, history }) => {
   const sendCallout = useIntlCallout();
   const performAction = usePerformAction(requestId);
   const title = intl.formatMessage({ id: requestId ? 'ui-rs.pullSlip' : 'ui-rs.pullSlips' });
-  const close = useCloseDirect('../../..');
+  const close = useCloseDirect(upNLevels(location, requestId ? 1 : 3));
 
   const reqQuery = useOkapiQuery(`rs/patronrequests/${requestId}`, {
     enabled: !!requestId,
