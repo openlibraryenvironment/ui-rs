@@ -53,12 +53,6 @@ const ResourceSharing = (props) => {
           to={`${path}/requests/:id/details${search}`}
         />
 
-        <Redirect
-          exact
-          from={`${path}/requests/:id`}
-          to={`${path}/requests/:id/flow${search}`}
-        />
-
         {appName === 'request' &&
           <Route path={`${path}/requests/create`} component={CreateEditRoute} />
         }
@@ -73,6 +67,11 @@ const ResourceSharing = (props) => {
         {appName === 'request' &&
           <Route path={`${path}/requests/:id/revalidate`} component={CreateEditRoute} />
         }
+        <Redirect
+          exact
+          from={`${path}/requests/:id`}
+          to={`${path}/requests/:id/flow${search}`}
+        />
 
         {/* Contains nested routes: ./details and ./flow */}
         <Route path={`${path}/requests/:id`} component={ViewRoute} />
