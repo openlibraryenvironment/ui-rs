@@ -99,7 +99,7 @@ const CreateEditRoute = props => {
       // We want to go to the new record but we also want it to be easy to return to where we were,
       // hence use of history.replace rather than history.push -- the create form turns into the
       // created record.
-      history.replace(`view/${created.id}${routerLocation.search}`);
+      history.replace(`view/${created.id}?${routerLocation.search}`);
     },
     onError: async (err) => {
       callout.sendCallout({ type: 'error',
