@@ -11,6 +11,14 @@ const PER_PAGE = 100;
 const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 const compareCreated = (a, b) => (new Date(b?.dateCreated) - new Date(a?.dateCreated));
 
+const SLNP_PREFIX = 'SLNP';
+const STATE_MODEL_RESPONDER = 'state_model_responder';
+const STATE_MODEL_REQUESTER = 'state_model_requester';
+const SLNP_REQ_TRANSLATION_PREFIX = 'SLNP_REQ';
+const SLNP_RESP_TRANSLATION_PREFIX = 'SLNP_RESP';
+const REQ_TRANSLATION_PREFIX = 'REQ';
+const RESP_TRANSLATION_PREFIX = 'RESP';
+
 const PatronRequestsRoute = ({ appName, children }) => {
   const intl = useIntl();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
@@ -45,14 +53,46 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }],
   };
 
+  const settingsQuery = useOkapiQuery('rs/settings/appSettings', {
+    searchParams: {
+      filters: 'hidden=true',
+    }
+  });
+
   const states = useMemo(() => {
-    const statePrefix = appName === 'supply' ? 'RES' : 'REQ';
+    let statePrefix = null;
+    if (settingsQuery.isSuccess && settingsQuery.data) {
+      if (appName === 'supply') {
+        const slnpResponder = settingsQuery.data.filter(d => d.key === STATE_MODEL_RESPONDER && d.value.includes(SLNP_PREFIX))[0];
+        const responder = settingsQuery.data.filter(d => d.key === STATE_MODEL_RESPONDER && !d.value.includes(SLNP_PREFIX))[0];
+
+        if (slnpResponder) {
+          statePrefix = SLNP_RESP_TRANSLATION_PREFIX;
+        } else if (responder) {
+          statePrefix = RESP_TRANSLATION_PREFIX;
+        }
+
+      } else {
+        const slnpRequester = settingsQuery.data.filter(d => d.key === STATE_MODEL_REQUESTER && d.value.includes(SLNP_PREFIX))[0];
+        const requester = settingsQuery.data.filter(d => d.key === STATE_MODEL_REQUESTER && !d.value.includes(SLNP_PREFIX))[0];
+
+        if (slnpRequester) {
+          statePrefix = SLNP_REQ_TRANSLATION_PREFIX;
+        } else if (requester) {
+          statePrefix = REQ_TRANSLATION_PREFIX;
+        }
+      }
+
+    } else {
+      statePrefix = appName === 'supply' ? RESP_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX;
+    }
+
     const keys = Object.keys(intl.messages).filter(
-      key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
+        key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
     );
     return keys
-      .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
-      .sort(compareLabel);
+        .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
+        .sort(compareLabel);
   }, [appName, intl]);
 
   const prQuery = useInfiniteQuery(
