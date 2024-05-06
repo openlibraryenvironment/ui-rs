@@ -12,7 +12,7 @@ const OtherSettings = () => {
     settingEndpoint: SETTINGS_ENDPOINT
   });
   return (
-    <Pane paneTitle={<FormattedMessage id="ui-rs.settings.settingsSection.other" />}>
+    <Pane defaultWidth="fill" paneTitle={<FormattedMessage id="ui-rs.settings.settingsSection.other" />}>
       <Layout className="display-flex" style={{ 'flex-direction': 'column', gap: '1em' }}>
         <EditableRefdataList
           desc="cancellationReasons"
