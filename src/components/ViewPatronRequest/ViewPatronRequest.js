@@ -13,7 +13,8 @@ import {
   CitationMetadataInfo,
   SuppliersInfo,
   AuditInfo,
-  ProtocolInfo
+  ProtocolInfo,
+  CustomIdentifiersInfo,
 } from './sections';
 
 const ViewPatronRequest = ({ record }) => {
@@ -53,6 +54,10 @@ const ViewPatronRequest = ({ record }) => {
           </Accordion>
         )}
       </AppNameContext.Consumer>
+      {/* Pink card */}
+      <Accordion id="customIdentifiers" label={<FormattedMessage id="ui-rs.information.heading.customIdentifiers" closedByDefault />}>
+        <CustomIdentifiersInfo id="customIdentifiersInfo" record={record} />
+      </Accordion>
       {/* Pink card */}
       <Accordion id="citationMetadataInfo" label={<FormattedMessage id="ui-rs.information.heading.citationMetadata" closedByDefault />}>
         <CitationMetadataInfo id="citationMetadataInfo" record={record} />
