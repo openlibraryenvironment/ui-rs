@@ -70,6 +70,7 @@
   "information.heading.requestinginstitution": "Requesting institution",
   "information.heading.requester": "Requesting user",
   "information.heading.citationMetadata": "Citation metadata",
+  "information.heading.customIdentifiers": "Custom Identifiers",
   "information.heading.suppliers": "Suppliers",
   "information.heading.audit": "Audit trail",
   "information.heading.partDetails": "Part details",
