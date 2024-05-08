@@ -19,8 +19,9 @@ class CitationMetadataInfo extends React.Component {
     const { record } = this.props;
     const { customIdentifiers } = record;
     const summary = 'ZFL identifiers';
+    const identifiers = JSON.parse(customIdentifiers);
 
-    if (customIdentifiers && customIdentifiers.length > 0) {
+    if (identifiers && identifiers.length > 0) {
       return (
           <Card
               id={`${this.props.id}-card`}
@@ -29,7 +30,7 @@ class CitationMetadataInfo extends React.Component {
               cardClass={css.citationMetadataCard}
               headerClass={css.citationMetadataCardHeader}
           >
-            {customIdentifiers.map(id =>
+            {identifiers.map(id =>
                 <React.Fragment>
                   <Row>
                     <Col xs={6}>
