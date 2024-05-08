@@ -7,9 +7,9 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import css from './CitationMetadata.css';
+import css from './CustomIdentifiers.css';
 
-class CitationMetadataInfo extends React.Component {
+class CustomIdentifiersInfo extends React.Component {
   static propTypes = {
     record: PropTypes.object,
     id: PropTypes.string,
@@ -19,7 +19,13 @@ class CitationMetadataInfo extends React.Component {
     const { record } = this.props;
     const { customIdentifiers } = record;
     const summary = 'ZFL identifiers';
-    const identifiers = JSON.parse(customIdentifiers);
+    let identifiers = [];
+    if (customIdentifiers) {
+      const parsedResponse = JSON.parse(customIdentifiers);
+      if (parsedResponse.customIdentifiers && parsedResponse.customIdentifiers.length > 0) {
+        identifiers = parsedResponse.customIdentifiers
+      }
+    }
 
     if (identifiers && identifiers.length > 0) {
       return (
@@ -50,4 +56,4 @@ class CitationMetadataInfo extends React.Component {
   }
 }
 
-export default CitationMetadataInfo;
+export default CustomIdentifiersInfo;
