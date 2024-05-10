@@ -475,6 +475,8 @@
   "settings.requests.maxRequests": "Maximum active requests per patron",
   "settings.requests.requestIdPrefix": "Request ID prefix",
   "settings.requests.defaultInstitutionalPatronId": "Default institutional patron ID",
+  "settings.localNCIP.ncipRequestItemPickupLocation": "NCIP Request Item Pickup Location Code",
+  "settings.localNCIP.ncipRequestItemPickupLocation.help" : "<p>This field currently only needs to be populated if using the Sierra Host LMS Adapter</p>", 
   "settings.localNCIP.ncipServerAddress": "NCIP server address",
   "settings.localNCIP.ncipAppProfile": "NCIP app profile",
   "settings.localNCIP.ncipFromAgency": "NCIP from agency",
