@@ -15,6 +15,7 @@ const Search = ({ resetAll, searchHandlers, searchValue, searchChanged, filterCh
     { label: 'extid', value: 'requestIdentifiers.identifier' },
     { label: 'requesterGivenName', value: 'patronGivenName' },
     { label: 'requesterSurname', value: 'patronSurname' },
+    { label: 'requesterIdentifier', value: 'patronIdentifier' },
     { label: 'title', value: 'title' },
     { label: 'author', value: 'author' },
     { label: 'issn', value: 'issn' },
