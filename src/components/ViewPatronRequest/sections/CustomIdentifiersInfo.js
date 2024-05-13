@@ -17,13 +17,16 @@ class CustomIdentifiersInfo extends React.Component {
 
   render() {
     const { record } = this.props;
-    const { customIdentifiers } = record;
-    const summary = 'ZFL identifiers';
     let identifiers = [];
+    const { customIdentifiers } = record;
+    let summary = '';
     if (customIdentifiers) {
       const parsedResponse = JSON.parse(customIdentifiers);
-      if (parsedResponse.customIdentifiers && parsedResponse.customIdentifiers.length > 0) {
-        identifiers = parsedResponse.customIdentifiers
+      if (parsedResponse.identifiers && parsedResponse.identifiers.length > 0) {
+        identifiers = parsedResponse.identifiers
+      }
+      if (parsedResponse.schemeValue) {
+        summary = `${parsedResponse.schemeValue} identifiers`
       }
     }
 
