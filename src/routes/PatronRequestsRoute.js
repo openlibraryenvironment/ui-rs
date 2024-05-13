@@ -17,7 +17,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
   const ky = useOkapiKy();
 
   const SASQ_MAP = {
-    searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,volumes.itemId,selectedItemBarcode',
+    searchKey: 'id,hrid,patronGivenName,patronSurname,patronIdentifier,title,author,issn,isbn,volumes.itemId,selectedItemBarcode',
     // Omitting the date and unread filter keys here causes it to include their value verbatim
     // rather than adding the key name and operator. This way we can store the operator and field
     // in the value eg. how the hasUnread checkbox sets a value of 'unreadMessageCount>0'.

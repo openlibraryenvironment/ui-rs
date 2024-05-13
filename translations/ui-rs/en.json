@@ -565,6 +565,7 @@
   "index.extidType": "External ID source",
   "index.requesterGivenName": "Requester first name",
   "index.requesterSurname": "Requester last name",
+  "index.requesterIdentifier": "Requester identifier",
   "index.title": "Title",
   "index.author": "Author",
   "index.issn": "ISSN",
