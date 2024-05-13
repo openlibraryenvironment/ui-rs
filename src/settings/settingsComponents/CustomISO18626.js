@@ -53,7 +53,7 @@ class CustomISO18626 extends React.Component {
   }
 
   renderRowFilter(intl) {
-    const custOptions = ['cannotSupplyReasons', 'loanConditions'];
+    const custOptions = ['cannotSupplyReasons', 'loanConditions', 'customIdentifiersScheme'];
     const refdataValues = this.props?.resources?.refdatavalues?.records;
     const filteredList = refdataValues ? refdataValues.filter(obj => custOptions.includes(obj.desc)) : [];
     return (

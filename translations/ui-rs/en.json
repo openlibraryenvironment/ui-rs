@@ -352,6 +352,7 @@
   "settings.customiseList": "ISO18626 custom options",
   "settings.customiseListSelect": "Select an option to customize",
   "settings.customiseListSelect.cannotSupplyReasons": "Cannot supply reasons",
+  "settings.customiseListSelect.customIdentifiersScheme": "Custom identifiers",
   "settings.customiseListSelect.loanConditions": "Loan conditions",
   "settings.customiseListSelect.loanConditions.libraryuseonly": "Use in library only",
   "settings.customiseListSelect.loanConditions.noreproduction": "No reproduction",
