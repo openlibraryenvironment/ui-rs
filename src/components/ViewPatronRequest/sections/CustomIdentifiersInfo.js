@@ -41,7 +41,7 @@ class CustomIdentifiersInfo extends React.Component {
           >
             {identifiers.map(id =>
                 <React.Fragment>
-                  <Row>
+                  <Row key={`${this.props.id}-${id.value}`}>
                     <Col xs={6}>
                       <KeyValue
                           label={id.key}
