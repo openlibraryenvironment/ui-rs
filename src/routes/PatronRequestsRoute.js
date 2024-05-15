@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { useIntl } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
@@ -55,31 +55,25 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }],
   };
 
-  const settingsQuery = useOkapiQuery('rs/settings/appSettings', {
-    searchParams: {
-      filters: 'hidden=true',
-    }
-  });
-
-  const getPrefixValueByStateModel = (stateModel, isRequester) => {
-    const includesSlnpPrefixValue = settingsQuery.data.some(d => d.key === stateModel && d.value.includes(SLNP_PREFIX));
+  const getPrefixValueByStateModel = (data, stateModel, isRequester) => {
+    const includesSlnpPrefixValue = data.some(d => d.key === stateModel && d.value.includes(SLNP_PREFIX));
     return isRequester
         ? includesSlnpPrefixValue ? SLNP_REQ_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX
         : includesSlnpPrefixValue ? SLNP_RESP_TRANSLATION_PREFIX : RESP_TRANSLATION_PREFIX;
   };
 
-  const getStatePrefix = () => {
-    if (settingsQuery.isSuccess && settingsQuery.data) {
+  const getStatePrefix = (data) => {
+    if (data) {
       const stateModel = isSupplier ? STATE_MODEL_RESPONDER : STATE_MODEL_REQUESTER;
       const isRequester = !isSupplier;
-      return getPrefixValueByStateModel(stateModel, isRequester);
+      return getPrefixValueByStateModel(data, stateModel, isRequester);
     } else {
       return isSupplier ? RESP_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX;
     }
   };
 
-  const states = useMemo(() => {
-    const statePrefix = getStatePrefix();
+  const getStates = (data) => {
+    const statePrefix = getStatePrefix(data);
 
     const keys = Object.keys(intl.messages).filter(
         key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
@@ -87,18 +81,18 @@ const PatronRequestsRoute = ({ appName, children }) => {
     return keys
         .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
         .sort(compareLabel);
-  }, [appName, intl]);
+  }
 
   const prQuery = useInfiniteQuery(
-    {
-      queryKey: ['rs/patronrequests', query, `@projectreshare/${appName}`],
-      queryFn: ({ pageParam = 0 }) => ky(`rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`).json(),
-      useErrorBoundary: true,
-      staleTime: 2 * 60 * 1000,
-      cacheTime: 10 * 60 * 1000,
-      // we render before useKiwtSASQuery() finishes, let's prevent an extra, unnecessary, fetch
-      enabled: Object.prototype.hasOwnProperty.call(query, 'query'),
-    }
+      {
+        queryKey: ['rs/patronrequests', query, `@projectreshare/${appName}`],
+        queryFn: ({ pageParam = 0 }) => ky(`rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`).json(),
+        useErrorBoundary: true,
+        staleTime: 2 * 60 * 1000,
+        cacheTime: 10 * 60 * 1000,
+        // we render before useKiwtSASQuery() finishes, let's prevent an extra, unnecessary, fetch
+        enabled: Object.prototype.hasOwnProperty.call(query, 'query'),
+      }
   );
 
   const filterQueries = [
@@ -119,41 +113,47 @@ const PatronRequestsRoute = ({ appName, children }) => {
       },
       staleTime: 2 * 60 * 60 * 1000
     }),
+    useOkapiQuery('rs/settings/appSettings', {
+      searchParams: {
+        filters: 'hidden=true',
+        staleTime: 2 * 60 * 60 * 1000
+      }
+    })
   ];
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
-    const [batches, lmsLocations, shelvingLocations, { results: institutions }] = filterQueries.map(x => x.data);
+    const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
-        .sort(compareCreated)
-        .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
+          .sort(compareCreated)
+          .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
       hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'hasUnreadMessages=true' })],
       institution: institutions
-        .map(x => ({ label: x.name, value: x.id }))
-        .sort(compareLabel),
+          .map(x => ({ label: x.name, value: x.id }))
+          .sort(compareLabel),
       location: lmsLocations
-        .map(x => ({ label: x.name, value: x.id }))
-        .sort(compareLabel),
+          .map(x => ({ label: x.name, value: x.id }))
+          .sort(compareLabel),
       needsAttention: [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })],
       shelvingLocation: shelvingLocations
-        .map(x => ({ label: x.name, value: x.id }))
-        .sort(compareLabel),
-      state: states,
+          .map(x => ({ label: x.name, value: x.id }))
+          .sort(compareLabel),
+      state: getStates(settings),
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
     };
   }
 
   return (
-    <PatronRequests
-      requestsQuery={prQuery}
-      queryGetter={queryGetter}
-      querySetter={querySetter}
-      filterOptions={filterOptions}
-      searchParams={generateKiwtQuery(SASQ_MAP, query)}
-    >
-      {children}
-    </PatronRequests>
+      <PatronRequests
+          requestsQuery={prQuery}
+          queryGetter={queryGetter}
+          querySetter={querySetter}
+          filterOptions={filterOptions}
+          searchParams={generateKiwtQuery(SASQ_MAP, query)}
+      >
+        {children}
+      </PatronRequests>
   );
 };
 
