@@ -18,11 +18,13 @@ const SLNP_REQ_TRANSLATION_PREFIX = 'SLNP_REQ';
 const SLNP_RESP_TRANSLATION_PREFIX = 'SLNP_RESP';
 const REQ_TRANSLATION_PREFIX = 'REQ';
 const RESP_TRANSLATION_PREFIX = 'RESP';
+const SUPPLIER = 'supply';
 
 const PatronRequestsRoute = ({ appName, children }) => {
   const intl = useIntl();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
   const ky = useOkapiKy();
+  const isSupplier = appName = SUPPLIER;
 
   const SASQ_MAP = {
     searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,volumes.itemId,selectedItemBarcode',
@@ -49,7 +51,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     perPage: PER_PAGE,
     filters: [{
       path: 'isRequester',
-      value: appName === 'request' ? 'true' : 'false'
+      value: isSupplier ? 'false' : 'true'
     }],
   };
 
@@ -70,37 +72,22 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .sort(compareLabel);
   }, [appName, intl]);
 
+  const getPrefixValueByStateModel = (stateModel, isRequester) => {
+    const includesSlnpPrefixValue = settingsQuery.data.some(d => d.key === stateModel && d.value.includes(SLNP_PREFIX));
+    return isRequester
+        ? includesSlnpPrefixValue ? SLNP_REQ_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX
+        : includesSlnpPrefixValue ? SLNP_RESP_TRANSLATION_PREFIX : RESP_TRANSLATION_PREFIX;
+  };
+
   const getStatePrefix = () => {
-    let statePrefix = null;
-
     if (settingsQuery.isSuccess && settingsQuery.data) {
-      if (appName === 'supply') {
-        const slnpResponder = settingsQuery.data.filter(d => d.key === STATE_MODEL_RESPONDER && d.value.includes(SLNP_PREFIX))[0];
-        const responder = settingsQuery.data.filter(d => d.key === STATE_MODEL_RESPONDER && !d.value.includes(SLNP_PREFIX))[0];
-
-        if (slnpResponder) {
-          statePrefix = SLNP_RESP_TRANSLATION_PREFIX;
-        } else if (responder) {
-          statePrefix = RESP_TRANSLATION_PREFIX;
-        }
-
-      } else {
-        const slnpRequester = settingsQuery.data.filter(d => d.key === STATE_MODEL_REQUESTER && d.value.includes(SLNP_PREFIX))[0];
-        const requester = settingsQuery.data.filter(d => d.key === STATE_MODEL_REQUESTER && !d.value.includes(SLNP_PREFIX))[0];
-
-        if (slnpRequester) {
-          statePrefix = SLNP_REQ_TRANSLATION_PREFIX;
-        } else if (requester) {
-          statePrefix = REQ_TRANSLATION_PREFIX;
-        }
-      }
-
+      const stateModel = isSupplier ? STATE_MODEL_RESPONDER : STATE_MODEL_REQUESTER;
+      const isRequester = !isSupplier;
+      return getPrefixValueByStateModel(stateModel, isRequester);
     } else {
-      statePrefix = appName === 'supply' ? RESP_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX;
+      return isSupplier ? RESP_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX;
     }
-
-    return statePrefix;
-  }
+  };
 
   const prQuery = useInfiniteQuery(
     {
@@ -118,7 +105,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     useOkapiQuery('rs/batch', {
       searchParams: {
         perPage: '1000',
-        filters: appName === 'supply' ? 'isRequester!=true' : 'isRequester==true',
+        filters: appName === SUPPLIER ? 'isRequester!=true' : 'isRequester==true',
       },
       staleTime: 15 * 60 * 1000
     }),
