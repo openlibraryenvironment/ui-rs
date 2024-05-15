@@ -60,7 +60,19 @@ const PatronRequestsRoute = ({ appName, children }) => {
   });
 
   const states = useMemo(() => {
+    const statePrefix = getStatePrefix();
+
+    const keys = Object.keys(intl.messages).filter(
+        key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
+    );
+    return keys
+        .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
+        .sort(compareLabel);
+  }, [appName, intl]);
+
+  const getStatePrefix = () => {
     let statePrefix = null;
+
     if (settingsQuery.isSuccess && settingsQuery.data) {
       if (appName === 'supply') {
         const slnpResponder = settingsQuery.data.filter(d => d.key === STATE_MODEL_RESPONDER && d.value.includes(SLNP_PREFIX))[0];
@@ -87,13 +99,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
       statePrefix = appName === 'supply' ? RESP_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX;
     }
 
-    const keys = Object.keys(intl.messages).filter(
-        key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
-    );
-    return keys
-        .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
-        .sort(compareLabel);
-  }, [appName, intl]);
+    return statePrefix;
+  }
 
   const prQuery = useInfiniteQuery(
     {
