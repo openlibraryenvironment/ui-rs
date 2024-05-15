@@ -24,7 +24,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
   const intl = useIntl();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
   const ky = useOkapiKy();
-  const isSupplier = appName = SUPPLIER;
+  const isSupplier = appName === SUPPLIER;
 
   const SASQ_MAP = {
     searchKey: 'id,hrid,patronGivenName,patronSurname,title,author,issn,isbn,volumes.itemId,selectedItemBarcode',
@@ -105,7 +105,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     useOkapiQuery('rs/batch', {
       searchParams: {
         perPage: '1000',
-        filters: appName === SUPPLIER ? 'isRequester!=true' : 'isRequester==true',
+        filters: isSupplier ? 'isRequester!=true' : 'isRequester==true',
       },
       staleTime: 15 * 60 * 1000
     }),
