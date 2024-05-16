@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { useIntl } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
@@ -11,10 +11,20 @@ const PER_PAGE = 100;
 const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 : 0);
 const compareCreated = (a, b) => (new Date(b?.dateCreated) - new Date(a?.dateCreated));
 
+const SLNP_PREFIX = 'SLNP';
+const STATE_MODEL_RESPONDER = 'state_model_responder';
+const STATE_MODEL_REQUESTER = 'state_model_requester';
+const SLNP_REQ_TRANSLATION_PREFIX = 'SLNP_REQ';
+const SLNP_RESP_TRANSLATION_PREFIX = 'SLNP_RESP';
+const REQ_TRANSLATION_PREFIX = 'REQ';
+const RESP_TRANSLATION_PREFIX = 'RESP';
+const SUPPLIER = 'supply';
+
 const PatronRequestsRoute = ({ appName, children }) => {
   const intl = useIntl();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
   const ky = useOkapiKy();
+  const isSupplier = appName === SUPPLIER;
 
   const SASQ_MAP = {
     searchKey: 'id,hrid,patronGivenName,patronSurname,patronIdentifier,title,author,issn,isbn,volumes.itemId,selectedItemBarcode',
@@ -41,19 +51,37 @@ const PatronRequestsRoute = ({ appName, children }) => {
     perPage: PER_PAGE,
     filters: [{
       path: 'isRequester',
-      value: appName === 'request' ? 'true' : 'false'
+      value: isSupplier ? 'false' : 'true'
     }],
   };
 
-  const states = useMemo(() => {
-    const statePrefix = appName === 'supply' ? 'RES' : 'REQ';
+  const getPrefixValueByStateModel = (data, stateModel, isRequester) => {
+    const includesSlnpPrefixValue = data.some(d => d.key === stateModel && d.value.includes(SLNP_PREFIX));
+    return isRequester
+      ? includesSlnpPrefixValue ? SLNP_REQ_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX
+      : includesSlnpPrefixValue ? SLNP_RESP_TRANSLATION_PREFIX : RESP_TRANSLATION_PREFIX;
+  };
+
+  const getStatePrefix = (data) => {
+    if (data) {
+      const stateModel = isSupplier ? STATE_MODEL_RESPONDER : STATE_MODEL_REQUESTER;
+      const isRequester = !isSupplier;
+      return getPrefixValueByStateModel(data, stateModel, isRequester);
+    } else {
+      return isSupplier ? RESP_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX;
+    }
+  };
+
+  const getStates = (data) => {
+    const statePrefix = getStatePrefix(data);
+
     const keys = Object.keys(intl.messages).filter(
       key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
     );
     return keys
       .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
       .sort(compareLabel);
-  }, [appName, intl]);
+  };
 
   const prQuery = useInfiniteQuery(
     {
@@ -71,7 +99,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     useOkapiQuery('rs/batch', {
       searchParams: {
         perPage: '1000',
-        filters: appName === 'supply' ? 'isRequester!=true' : 'isRequester==true',
+        filters: isSupplier ? 'isRequester!=true' : 'isRequester==true',
       },
       staleTime: 15 * 60 * 1000
     }),
@@ -85,11 +113,17 @@ const PatronRequestsRoute = ({ appName, children }) => {
       },
       staleTime: 2 * 60 * 60 * 1000
     }),
+    useOkapiQuery('rs/settings/appSettings', {
+      searchParams: {
+        filters: 'hidden=true',
+        staleTime: 2 * 60 * 60 * 1000
+      }
+    })
   ];
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
-    const [batches, lmsLocations, shelvingLocations, { results: institutions }] = filterQueries.map(x => x.data);
+    const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
         .sort(compareCreated)
@@ -105,7 +139,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       shelvingLocation: shelvingLocations
         .map(x => ({ label: x.name, value: x.id }))
         .sort(compareLabel),
-      state: states,
+      state: getStates(settings),
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
     };
   }
