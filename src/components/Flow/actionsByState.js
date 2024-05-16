@@ -118,6 +118,12 @@ export const actionsForRequest = request => {
     const remoteMoreActions = remote.map(action => action.actionCode);
     actions.moreActions = remoteMoreActions.concat(client);
 
+    // SLNP specific action linking to patron record to add fees
+    const manualFeeStates = ['SLNP_REQ_IDLE', 'SLNP_REQ_SHIPPED', 'SLNP_REQ_CHECKED_IN'];
+    if (manualFeeStates.includes(request.state?.code)) {
+      actions.moreActions.push('addManualFee');
+    }
+
     if (actions.moreActions) {
       actions.moreActions.sort();
     }

@@ -208,6 +208,7 @@
   "view.withAction.ReShareSupplierConditionsAssumedAgreed": "The supplier has continued along their workflow of this request. The loan conditions are assumed to have been read and agreed to",
   "view.withAction.ReShareAddLoanCondition": "The supplier has added a loan condition",
   "view.withAction.statusChange.overdue": "The supplier has marked the item overdue",
+  "actions.addManualFee": "Add fee manually",
   "actions.addNote": "Add note",
   "actions.cancelLocal": "Cancel local request",
   "actions.cancelLocal.success": "Successfully submitted cancellation request",
