@@ -58,8 +58,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
   const getPrefixValueByStateModel = (data, stateModel, isRequester) => {
     const includesSlnpPrefixValue = data.some(d => d.key === stateModel && d.value.includes(SLNP_PREFIX));
     return isRequester
-        ? includesSlnpPrefixValue ? SLNP_REQ_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX
-        : includesSlnpPrefixValue ? SLNP_RESP_TRANSLATION_PREFIX : RESP_TRANSLATION_PREFIX;
+      ? includesSlnpPrefixValue ? SLNP_REQ_TRANSLATION_PREFIX : REQ_TRANSLATION_PREFIX
+      : includesSlnpPrefixValue ? SLNP_RESP_TRANSLATION_PREFIX : RESP_TRANSLATION_PREFIX;
   };
 
   const getStatePrefix = (data) => {
@@ -81,7 +81,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     return keys
       .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
       .sort(compareLabel);
-  }
+  };
 
   const prQuery = useInfiniteQuery(
     {
