@@ -145,15 +145,15 @@ const PatronRequestsRoute = ({ appName, children }) => {
   }
 
   return (
-      <PatronRequests
-        requestsQuery={prQuery}
-        queryGetter={queryGetter}
-        querySetter={querySetter}
-        filterOptions={filterOptions}
-        searchParams={generateKiwtQuery(SASQ_MAP, query)}
-      >
-        {children}
-      </PatronRequests>
+    <PatronRequests
+      requestsQuery={prQuery}
+      queryGetter={queryGetter}
+      querySetter={querySetter}
+      filterOptions={filterOptions}
+      searchParams={generateKiwtQuery(SASQ_MAP, query)}
+    >
+      {children}
+    </PatronRequests>
   );
 };
 
