@@ -76,23 +76,23 @@ const PatronRequestsRoute = ({ appName, children }) => {
     const statePrefix = getStatePrefix(data);
 
     const keys = Object.keys(intl.messages).filter(
-        key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
+      key => key.startsWith(`stripes-reshare.states.${statePrefix}_`)
     );
     return keys
-        .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
-        .sort(compareLabel);
+      .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
+      .sort(compareLabel);
   }
 
   const prQuery = useInfiniteQuery(
-      {
-        queryKey: ['rs/patronrequests', query, `@projectreshare/${appName}`],
-        queryFn: ({ pageParam = 0 }) => ky(`rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`).json(),
-        useErrorBoundary: true,
-        staleTime: 2 * 60 * 1000,
-        cacheTime: 10 * 60 * 1000,
-        // we render before useKiwtSASQuery() finishes, let's prevent an extra, unnecessary, fetch
-        enabled: Object.prototype.hasOwnProperty.call(query, 'query'),
-      }
+    {
+      queryKey: ['rs/patronrequests', query, `@projectreshare/${appName}`],
+      queryFn: ({ pageParam = 0 }) => ky(`rs/patronrequests${generateKiwtQuery({ offset: pageParam, ...SASQ_MAP }, query)}`).json(),
+      useErrorBoundary: true,
+      staleTime: 2 * 60 * 1000,
+      cacheTime: 10 * 60 * 1000,
+      // we render before useKiwtSASQuery() finishes, let's prevent an extra, unnecessary, fetch
+      enabled: Object.prototype.hasOwnProperty.call(query, 'query'),
+    }
   );
 
   const filterQueries = [
@@ -126,19 +126,19 @@ const PatronRequestsRoute = ({ appName, children }) => {
     const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
-          .sort(compareCreated)
-          .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
+        .sort(compareCreated)
+        .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
       hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'hasUnreadMessages=true' })],
       institution: institutions
-          .map(x => ({ label: x.name, value: x.id }))
-          .sort(compareLabel),
+        .map(x => ({ label: x.name, value: x.id }))
+        .sort(compareLabel),
       location: lmsLocations
-          .map(x => ({ label: x.name, value: x.id }))
-          .sort(compareLabel),
+        .map(x => ({ label: x.name, value: x.id }))
+        .sort(compareLabel),
       needsAttention: [({ label: intl.formatMessage({ id: 'ui-rs.needsAttention' }), value: 'true' })],
       shelvingLocation: shelvingLocations
-          .map(x => ({ label: x.name, value: x.id }))
-          .sort(compareLabel),
+        .map(x => ({ label: x.name, value: x.id }))
+        .sort(compareLabel),
       state: getStates(settings),
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
     };
@@ -146,11 +146,11 @@ const PatronRequestsRoute = ({ appName, children }) => {
 
   return (
       <PatronRequests
-          requestsQuery={prQuery}
-          queryGetter={queryGetter}
-          querySetter={querySetter}
-          filterOptions={filterOptions}
-          searchParams={generateKiwtQuery(SASQ_MAP, query)}
+        requestsQuery={prQuery}
+        queryGetter={queryGetter}
+        querySetter={querySetter}
+        filterOptions={filterOptions}
+        searchParams={generateKiwtQuery(SASQ_MAP, query)}
       >
         {children}
       </PatronRequests>
