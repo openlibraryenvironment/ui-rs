@@ -249,6 +249,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       state: a => <FormattedMessage id={`stripes-reshare.states.${a.state?.code}`} />,
                       serviceType: a => a.serviceType && a.serviceType.value,
                       supplyingInstitutionSymbol: a => (a?.resolvedSupplier?.owner?.symbolSummary ?? '').replace(/,.*/, ''),
+                      title: a => a.title || a.titleOfComponent,
                       pickLocation: a => a.pickLocation && a.pickLocation.name,
                       pickShelvingLocation: a => a.pickShelvingLocation && a.pickShelvingLocation.name,
                       selectedItemBarcode: a => (a.volumes?.length <= 1 ? (a.volumes[0]?.itemId || a.selectedItemBarcode) : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />)
