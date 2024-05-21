@@ -23,38 +23,36 @@ class CustomIdentifiersInfo extends React.Component {
     if (customIdentifiers) {
       const parsedResponse = JSON.parse(customIdentifiers);
       if (parsedResponse.identifiers && parsedResponse.identifiers.length > 0) {
-        identifiers = parsedResponse.identifiers
+        identifiers = parsedResponse.identifiers;
       }
       if (parsedResponse.schemeValue) {
-        summary = `${parsedResponse.schemeValue} identifiers`
+        summary = `${parsedResponse.schemeValue} identifiers`;
       }
     }
 
     if (identifiers && identifiers.length > 0) {
       return (
-          <Card
-              id={`${this.props.id}-card`}
-              headerStart={summary}
-              roundedBorder
-              cardClass={css.citationMetadataCard}
-              headerClass={css.citationMetadataCardHeader}
-          >
-            {identifiers.map(id =>
-                <React.Fragment>
-                  <Row key={`${this.props.id}-${id.value}`}>
-                    <Col xs={6}>
-                      <KeyValue
-                          label={id.key}
-                          value={id.value}
-                      />
-                    </Col>
-                  </Row>
-                </React.Fragment>
-            )}
-          </Card>
+        <Card
+          id={`${this.props.id}-card`}
+          headerStart={summary}
+          roundedBorder
+          cardClass={css.citationMetadataCard}
+          headerClass={css.citationMetadataCardHeader}
+        >
+          {identifiers.map(id => <>
+            <Row key={`${this.props.id}-${id.value}`}>
+              <Col xs={6}>
+                <KeyValue
+                  label={id.key}
+                  value={id.value}
+                />
+              </Col>
+            </Row>
+          </>)}
+        </Card>
       );
     } else {
-      return (<React.Fragment></React.Fragment>)
+      return (<></>);
     }
   }
 }

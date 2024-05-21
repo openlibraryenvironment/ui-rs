@@ -19,7 +19,7 @@ const ViewMessageBanners = ({ request }) => {
     && new Date(request.parsedDueDateRS) - Date.now() < 1000 * 60 * 60 * 24 * 7;
 
   const renderConditionsBanner = () => {
-    if (relevantPendingConditions.length > 0) {
+    if (relevantPendingConditions && relevantPendingConditions.length > 0) {
       return (
         <MessageBanner
           type="warning"
@@ -27,7 +27,7 @@ const ViewMessageBanners = ({ request }) => {
           <FormattedMessage id="ui-rs.actions.requestPendingLoanConditions" />
         </MessageBanner>
       );
-    } else if (relevantAcceptedConditions.length > 0) {
+    } else if (relevantAcceptedConditions && relevantAcceptedConditions.length > 0) {
       /* It's not particularly useful to show two banners when there is a pending AND accepted request */
       return (
         <MessageBanner
