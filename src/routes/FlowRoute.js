@@ -16,8 +16,8 @@ const FlowRoute = ({ request, performAction }) => {
   });
 
   if (!autoRespondLoaded) return null;
-  const autoLoanDisabled = autoRespondRequest.some(item => item.value && (item.value === 'off'));
-  const forCurrent = actionsForRequest(request, autoLoanDisabled);
+  const autoLoanEnabled = autoRespondRequest.some(item => item.key === 'auto_responder_status' && (item.value && item.value === 'off'));
+  const forCurrent = actionsForRequest(request, autoLoanEnabled);
 
   const sectionProps = {
     forCurrent,
