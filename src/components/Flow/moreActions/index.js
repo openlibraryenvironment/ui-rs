@@ -63,9 +63,9 @@ export const RespondYes = () => (
 );
 
 export const SlnpRespondYes = () => (
-    <ShowModalButton buttonStyle="dropdownItem" modal="SlnpRespondYes">
-        <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.respondYes" /></Icon>
-    </ShowModalButton>
+  <ShowModalButton buttonStyle="dropdownItem" modal="SlnpRespondYes">
+    <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.slnpRespondYes" /></Icon>
+  </ShowModalButton>
 );
 
 // Client only, component names do not correspond to mod-rs actions

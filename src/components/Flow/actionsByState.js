@@ -1,4 +1,3 @@
-import initialToUpper from '../../util/initialToUpper';
 /*
  * This object describes what to render for a request given its state (directories
  * relative to src/components/Flow).
@@ -99,7 +98,7 @@ const excludeElectronic = ['FillMultiVolumeRequest'];
 /* This function returns the contextual actions for a provided request,
  * falling back to the default for unknown states.
  */
-export const actionsForRequest = request => {
+export const actionsForRequest = (request, autoLoanDisabled) => {
   /* Since state model types aren't implemented yet and deliveryMethod won't necessarily be set we currently
   need to rely on discrete state model codes to determine if a request is electronic */
   const isElectronic = ['CDLResponder', 'DigitalReturnableRequester'].includes(request.stateModel?.shortcode);
@@ -111,17 +110,25 @@ export const actionsForRequest = request => {
 
     const remote = validActions.filter(action => !(excludeRemote.includes(action.actionCode)) && !action.primaryOnly);
     const client = actions.moreActions.filter(
-        action => !(remote.includes(`${action.charAt(0).toLowerCase()}${action.substring(1)}`))
+      action => !(remote.includes(`${action.charAt(0).toLowerCase()}${action.substring(1)}`))
             && !(isElectronic && excludeElectronic.includes(action))
     );
 
     const remoteMoreActions = remote.map(action => action.actionCode);
     actions.moreActions = remoteMoreActions.concat(client);
 
-    // SLNP specific action linking to patron record to add fees
+    // SLNP specific - action linking to patron record to add fees
     const manualFeeStates = ['SLNP_REQ_IDLE', 'SLNP_REQ_SHIPPED', 'SLNP_REQ_CHECKED_IN'];
     if (manualFeeStates.includes(request.state?.code)) {
       actions.moreActions.push('addManualFee');
+    }
+
+    // SLNP specific - remove actions when auto loan is disabled
+    if (autoLoanDisabled) {
+      if (request.state?.code === 'SLNP_RES_IDLE') {
+        const actionsToRemove = ['slnpRespondYes', 'supplierCannotSupply'];
+        actions.moreActions = actions.moreActions.filter(action => !actionsToRemove.includes(action));
+      }
     }
 
     if (actions.moreActions) {
