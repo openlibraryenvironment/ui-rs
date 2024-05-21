@@ -87,8 +87,8 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
 
 
   if (!hasRequestLoaded && !autoRespondLoaded) return null;
-  const autoLoanEnabled = autoRespondRequest.some(item => item.key === 'auto_responder_status' && (item.value && item.value === 'off'));
-  const forCurrent = actionsForRequest(request, autoLoanEnabled);
+  const autoLoanOff = autoRespondRequest.some(item => item.key === 'auto_responder_status' && (item.value && item.value === 'off'));
+  const forCurrent = actionsForRequest(request, autoLoanOff);
 
   return (
     <>

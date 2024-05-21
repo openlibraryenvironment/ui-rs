@@ -98,7 +98,7 @@ const excludeElectronic = ['FillMultiVolumeRequest'];
 /* This function returns the contextual actions for a provided request,
  * falling back to the default for unknown states.
  */
-export const actionsForRequest = (request, autoLoanEnabled) => {
+export const actionsForRequest = (request, autoLoanOff) => {
   /* Since state model types aren't implemented yet and deliveryMethod won't necessarily be set we currently
   need to rely on discrete state model codes to determine if a request is electronic */
   const isElectronic = ['CDLResponder', 'DigitalReturnableRequester'].includes(request.stateModel?.shortcode);
@@ -124,7 +124,7 @@ export const actionsForRequest = (request, autoLoanEnabled) => {
     }
 
     // SLNP specific - remove actions when auto loan is disabled
-    if (!autoLoanEnabled) {
+    if (!autoLoanOff) {
       if (request.state?.code === 'SLNP_RES_IDLE') {
         const actionsToRemove = ['slnpRespondYes', 'supplierCannotSupply'];
         actions.moreActions = actions.moreActions.filter(action => !actionsToRemove.includes(action));
