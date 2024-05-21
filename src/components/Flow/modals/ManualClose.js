@@ -42,7 +42,7 @@ const ManualClose = ({ request, performAction }) => {
     <Form
       onSubmit={onSubmit}
       initialValues={{
-        terminalState: terminalOptions[0].value
+        terminalState: terminalOptions[0]?.value
       }}
       render={({ handleSubmit, submitting, form }) => (
         <form onSubmit={handleSubmit}>
