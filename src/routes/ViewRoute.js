@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
-import { upNLevels, useCloseDirect, usePerformAction, useOkapiQuery } from '@projectreshare/stripes-reshare';
+import { DirectLink, upNLevels, useCloseDirect, usePerformAction, useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { MessageModalProvider } from '../components/MessageModalState';
@@ -39,7 +39,7 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   const appName = useContext(AppNameContext);
   const performAction = usePerformAction(id);
   const { handleMarkAllRead } = useChatActions(id);
-  const close = useCloseDirect(upNLevels(location, 3));
+  const close = useCloseDirect(upNLevels(location, 2));
 
   // Fetch the request
   const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000, notifyOnChangeProps: 'tracked' });
@@ -130,11 +130,11 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
             <>
               {
                 appName === 'request' && stripes.hasPerm(`ui-${appName}.edit`) && (
-                  <Button buttonStyle="dropdownItem" to={`../../edit/${match.params.id}`} id="clickable-edit-patronrequest">
+                  <DirectLink component={Button} buttonStyle="dropdownItem" to="edit" id="clickable-edit-patronrequest">
                     <Icon icon="edit">
                       <FormattedMessage id="ui-rs.edit" />
                     </Icon>
-                  </Button>
+                  </DirectLink>
                 )
               }
               {request?.validActions?.includes('manualClose') &&

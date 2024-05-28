@@ -35,28 +35,46 @@ const ResourceSharing = (props) => {
           from={path}
           to={`${path}/requests`}
         />
+
+        {/* Backwards compatibility for previous client-side URLs */}
+        <Redirect
+          exact
+          from={`${path}/requests/view/:id`}
+          to={`${path}/requests/:id${search}`}
+        />
+        <Redirect
+          exact
+          from={`${path}/requests/view/:id/flow`}
+          to={`${path}/requests/:id/flow${search}`}
+        />
+        <Redirect
+          exact
+          from={`${path}/requests/view/:id/details`}
+          to={`${path}/requests/:id/details${search}`}
+        />
+
         {appName === 'request' &&
           <Route path={`${path}/requests/create`} component={CreateEditRoute} />
         }
         {appName === 'request' &&
-          <Route path={`${path}/requests/edit/:id`} component={CreateEditRoute} />
+          <Route path={`${path}/requests/:id/edit`} component={CreateEditRoute} />
+        }
+        <Route path={`${path}/requests/:id/pullslip`} component={PullSlipRoute} />
+        <Route path={`${path}/requests/batch/:batchId/pullslip`} component={PullSlipRoute} />
+        {appName === 'request' &&
+          <Route path={`${path}/requests/:id/rerequest`} component={CreateEditRoute} />
+        }
+        {appName === 'request' &&
+          <Route path={`${path}/requests/:id/revalidate`} component={CreateEditRoute} />
         }
         <Redirect
           exact
-          from={`${path}/requests/view/:id`}
-          to={`${path}/requests/view/:id/flow${search}`}
+          from={`${path}/requests/:id`}
+          to={`${path}/requests/:id/flow${search}`}
         />
-        <Route path={`${path}/requests/view/:id/pullslip`} component={PullSlipRoute} />
-        <Route path={`${path}/requests/batch/:batchId/pullslip`} component={PullSlipRoute} />
-        {appName === 'request' &&
-          <Route path={`${path}/requests/view/:id/rerequest`} component={CreateEditRoute} />
-        }
-        {appName === 'request' &&
-          <Route path={`${path}/requests/view/:id/revalidate`} component={CreateEditRoute} />
-        }
 
         {/* Contains nested routes: ./details and ./flow */}
-        <Route path={`${path}/requests/view/:id`} component={ViewRoute} />
+        <Route path={`${path}/requests/:id`} component={ViewRoute} />
 
         <Route
           path={`${path}/requests/:action?`}

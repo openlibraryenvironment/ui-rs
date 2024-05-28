@@ -85,7 +85,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
     okapiKy(`rs/patronrequests/generatePickListBatch${searchParams}`).then(async res => {
       const { batchId } = await res.json();
       queryClient.invalidateQueries('rs/batch');
-      history.push(`requests/batch/${batchId}/pullslip`);
+      history.push(`requests/batch/${batchId}/pullslip`, { direct: true });
     }).catch(async e => {
       const res = await e?.response?.text();
       sendCallout('ui-rs.pullSlip.error', 'error', { errMsg: (res.startsWith('{') ? JSON.parse(res)?.error : res) || (e.message ?? '') });
@@ -249,6 +249,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       state: a => <FormattedMessage id={`stripes-reshare.states.${a.state?.code}`} />,
                       serviceType: a => a.serviceType && a.serviceType.value,
                       supplyingInstitutionSymbol: a => (a?.resolvedSupplier?.owner?.symbolSummary ?? '').replace(/,.*/, ''),
+                      title: a => a.title || a.titleOfComponent,
                       pickLocation: a => a.pickLocation && a.pickLocation.name,
                       pickShelvingLocation: a => a.pickShelvingLocation && a.pickShelvingLocation.name,
                       selectedItemBarcode: a => (a.volumes?.length <= 1 ? (a.volumes[0]?.itemId || a.selectedItemBarcode) : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />)
@@ -268,7 +269,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                     loading={requestsQuery?.isFetching}
                     onHeaderClick={onSort}
                     onNeedMoreData={fetchMore}
-                    onRowClick={(_e, rowData) => history.push(`${match.url}/view/${rowData.id}${location.search}`)}
+                    onRowClick={(_e, rowData) => history.push(`${match.url}/${rowData.id}${location.search}`)}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     totalCount={totalCount}

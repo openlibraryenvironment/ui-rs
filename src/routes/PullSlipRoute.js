@@ -4,13 +4,14 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
 import { Button, Pane, Paneset } from '@folio/stripes/components';
 import {
+  upNLevels,
   useIntlCallout,
   useOkapiQuery,
   usePerformAction,
   useCloseDirect
 } from '@projectreshare/stripes-reshare';
 
-const PullSlipRoute = ({ match, history }) => {
+const PullSlipRoute = ({ match, location }) => {
   const requestId = match.params?.id;
   const batchId = match.params?.batchId;
   const [pdfUrl, setPdfUrl] = useState();
@@ -20,12 +21,13 @@ const PullSlipRoute = ({ match, history }) => {
   const sendCallout = useIntlCallout();
   const performAction = usePerformAction(requestId);
   const title = intl.formatMessage({ id: requestId ? 'ui-rs.pullSlip' : 'ui-rs.pullSlips' });
-  const close = useCloseDirect();
+  const close = useCloseDirect(upNLevels(location, requestId ? 1 : 3));
 
   const reqQuery = useOkapiQuery(`rs/patronrequests/${requestId}`, {
     enabled: !!requestId,
   });
-  const isReqPrintable = reqQuery?.data?.validActions?.includes('supplierPrintPullSlip');
+
+  const markableAction = reqQuery?.data?.validActions?.find(element => element.endsWith("PrintPullSlip"));
 
   const fetchPath = 'rs/report/generatePicklist';
   const fetchParams = requestId ? { requestId } : { batchId };
@@ -43,8 +45,8 @@ const PullSlipRoute = ({ match, history }) => {
   if (!pdfUrl) return null;
 
   const markPrinted = () => {
-    if (requestId && isReqPrintable) {
-      performAction('supplierPrintPullSlip');
+    if (requestId && markableAction) {
+      performAction(markableAction);
     } else if (batchId) {
       okapiKy('rs/patronrequests/markBatchAsPrinted', { searchParams: { batchId } }).then(() => {
         queryClient.invalidateQueries('rs/patronrequests');
@@ -66,7 +68,7 @@ const PullSlipRoute = ({ match, history }) => {
           <Button
             buttonStyle="primary"
             marginBottom0
-            disabled={(requestId && !reqQuery.isSuccess) || (reqQuery.isSuccess && !isReqPrintable)}
+            disabled={(requestId && !reqQuery.isSuccess) || (reqQuery.isSuccess && !markableAction)}
             onClick={markPrinted}
           >
             <FormattedMessage id="ui-rs.pullSlip.mark" />

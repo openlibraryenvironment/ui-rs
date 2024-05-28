@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 // (it doesn't recognise FormattedMessage as a text label for th)
-import React from 'react';
+import { Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { github as githubStyle } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -87,7 +87,7 @@ const ProtocolInfo = ({ record, id }) => {
         <tbody>
           {
             protocolMessages.map((entry, i) => (
-              <>
+              <Fragment key={i}>
                 <tr key={i}>
                   <td>{protocolMessages.length - i}</td>
                   <td>{formattedDateTime(entry.dateCreated)}</td>
@@ -105,7 +105,7 @@ const ProtocolInfo = ({ record, id }) => {
                   <td><FormattedMessage id="ui-rs.protocol.response" /></td>
                   <td colSpan="3"><FormatEntry entry={entry} property="responseBody" /></td>
                 </tr>
-              </>
+              </Fragment>
             ))
           }
         </tbody>
