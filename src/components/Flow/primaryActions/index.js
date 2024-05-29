@@ -72,10 +72,7 @@ export const RequesterAgreeConditions = ({ performAction }) => (
 export { default as SupplierCheckInToReshare } from './SupplierCheckInToReshare';
 export { default as SupplierFillDigitalLoan } from './SupplierFillDigitalLoan';
 export { default as PatronReturnedItem } from './PatronReturnedItem';
-<<<<<<< Updated upstream
-=======
 export { default as NonreturnableSupplierAddURLToDocument } from './NonreturnableSupplierAddURLToDocument';
->>>>>>> Stashed changes
 
 
 // Client only, component names do not correspond to actions
