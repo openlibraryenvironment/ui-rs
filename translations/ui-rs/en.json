@@ -323,7 +323,7 @@
   "actions.nonreturnableSupplierAddURLToDocument.success":"Successfully added URL to request",
   "actions.nonreturnableSupplierAddURLToDocument.error":"Error adding URL to request",
   "actions.nonreturnableSupplierAddURLToDocument.prompt":"Enter URL to add to request",
-  "ui-rs.actions.nonreturnableSupplierAddURLToDocument.button":"Submit URL",
+  "actions.nonreturnableSupplierAddURLToDocument.button":"Submit URL",
   "cards.reqSup.searching": "Searching for supplier.",
   "pullSlip": "Pull slip",
   "pullSlips": "Pull slips",
