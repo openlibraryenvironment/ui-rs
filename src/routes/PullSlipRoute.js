@@ -25,7 +25,7 @@ const PullSlipRoute = ({ match, history }) => {
   const reqQuery = useOkapiQuery(`rs/patronrequests/${requestId}`, {
     enabled: !!requestId,
   });
-  const isReqPrintable = reqQuery?.data?.validActions?.includes('supplierPrintPullSlip');
+  const markableAction = reqQuery?.data?.validActions?.find(element => element.actionCode.endsWith("PrintPullSlip"));
 
   const fetchPath = 'rs/report/generatePicklist';
   const fetchParams = requestId ? { requestId } : { batchId };
@@ -43,8 +43,8 @@ const PullSlipRoute = ({ match, history }) => {
   if (!pdfUrl) return null;
 
   const markPrinted = () => {
-    if (requestId && isReqPrintable) {
-      performAction('supplierPrintPullSlip');
+    if (requestId && markableAction) {
+      performAction(markableAction.actionCode);
     } else if (batchId) {
       okapiKy('rs/patronrequests/markBatchAsPrinted', { searchParams: { batchId } }).then(() => {
         queryClient.invalidateQueries('rs/patronrequests');
@@ -66,7 +66,7 @@ const PullSlipRoute = ({ match, history }) => {
           <Button
             buttonStyle="primary"
             marginBottom0
-            disabled={(requestId && !reqQuery.isSuccess) || (reqQuery.isSuccess && !isReqPrintable)}
+            disabled={(requestId && !reqQuery.isSuccess) || (reqQuery.isSuccess && !markableAction)}
             onClick={markPrinted}
           >
             <FormattedMessage id="ui-rs.pullSlip.mark" />

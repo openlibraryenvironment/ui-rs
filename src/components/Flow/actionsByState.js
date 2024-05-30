@@ -45,13 +45,34 @@ export const actionsByState = {
     moreActions: [],
   },
   RES_AWAIT_PICKING: {
-    moreActions: ['FillMultiVolumeRequest'],
+    moreActions: ['FillMultiVolumeRequest', 'PrintPullSlip'],
   },
   RES_AWAIT_PROXY_BORROWER: {
     moreActions: ['FillMultiVolumeRequest'],
   },
   RES_AWAIT_SHIP: {
     moreActions: ['FillMultiVolumeRequest'],
+  },
+  RES_NEW_AWAIT_PULL_SLIP: {
+    primaryAction: 'PrintPullSlip',
+  },
+  REQ_SHIPPED: {
+    moreActions: ['PrintPullSlip']
+  },
+  REQ_CHECKED_IN: {
+    moreActions: ['PrintPullSlip']
+  },
+  REQ_AWAITING_RETURN_SHIPPING: {
+    moreActions: ['PrintPullSlip']
+  },
+  SLNP_REQ_SHIPPED: {
+    moreActions: ['PrintPullSlip']
+  },
+  SLNP_REQ_CHECKED_IN: {
+    moreActions: ['PrintPullSlip']
+  },
+  SLNP_REQ_AWAITING_RETURN_SHIPPING: {
+    moreActions: ['PrintPullSlip']
   }
 };
 
