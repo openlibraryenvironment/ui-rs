@@ -5,7 +5,7 @@ import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
 import useActionConfig from '../useActionConfig';
 
-const SupplierCheckInToReshare = ({ performAction, request }) => {
+const SupplierCheckInToReshare = ({ performAction }) => {
   // eslint-disable-next-line camelcase
   const { combine_fill_and_ship } = useActionConfig();
   // eslint-disable-next-line camelcase
@@ -27,15 +27,9 @@ const SupplierCheckInToReshare = ({ performAction, request }) => {
         <form onSubmit={handleSubmit} autoComplete="off">
           <FormattedMessage id={`ui-rs.actions.${combine ? 'checkInAndShip' : 'checkIn'}.prompt`} />
           <Row>
-            <Col xs={11}>
-              <Field
-                name="itemBarcodes[0].itemId"
-                component={TextField}
-                autoFocus
-                value={request.selectedItemBarcode}
-                defaultValue={request.selectedItemBarcode}
-              />
-            </Col>
+              <Col xs={11}>
+                <Field name="itemBarcodes[0].itemId" component={TextField} autoFocus />
+              </Col>
             <Col xs={1}>
               <Button buttonStyle="primary mega" type="submit" disabled={submitting}>
                 <FormattedMessage id="ui-rs.button.scan" />
