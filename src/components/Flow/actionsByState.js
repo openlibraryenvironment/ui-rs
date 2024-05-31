@@ -42,19 +42,19 @@ export const actionsByState = {
   default: {
     flowComponents: ['TitleAndSILink', 'RequestInfo', 'RequestingUser', 'ActionAccordion', 'Volumes', 'LoanConditions'],
     primaryAction: null,
-    moreActions: [],
+    moreActions: []
   },
   RES_AWAIT_PICKING: {
-    moreActions: ['FillMultiVolumeRequest', 'PrintPullSlip'],
+    moreActions: ['FillMultiVolumeRequest', 'PrintPullSlip']
   },
   RES_AWAIT_PROXY_BORROWER: {
-    moreActions: ['FillMultiVolumeRequest'],
+    moreActions: ['FillMultiVolumeRequest']
   },
   RES_AWAIT_SHIP: {
-    moreActions: ['FillMultiVolumeRequest'],
+    moreActions: ['FillMultiVolumeRequest']
   },
   RES_NEW_AWAIT_PULL_SLIP: {
-    primaryAction: 'PrintPullSlip',
+    primaryAction: 'PrintPullSlip'
   },
   REQ_SHIPPED: {
     moreActions: ['PrintPullSlip']
@@ -76,6 +76,9 @@ export const actionsByState = {
   },
   SLNP_RES_AWAIT_PICKING: {
     moreActions: ['PrintPullSlip']
+  },
+  SLNP_RES_NEW_AWAIT_PULL_SLIP: {
+    primaryAction: 'PrintPullSlip'
   }
 };
 
