@@ -73,6 +73,9 @@ export const actionsByState = {
   },
   SLNP_REQ_AWAITING_RETURN_SHIPPING: {
     moreActions: ['PrintPullSlip']
+  },
+  SLNP_RES_AWAIT_PICKING: {
+    moreActions: ['PrintPullSlip']
   }
 };
 
