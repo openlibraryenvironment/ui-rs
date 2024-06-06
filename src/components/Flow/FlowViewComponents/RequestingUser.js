@@ -1,24 +1,12 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import { Accordion, Col, KeyValue, Row } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 
 const RequestingUser = ({ request }) => {
-  const intl = useIntl();
   const stripes = useStripes();
   const patronURL = stripes?.config?.reshare?.patronURL?.replace('{patronid}', request.patronIdentifier);
-
-  const colKeyVal = (labelId, value) => {
-    return (
-      <Col xs={3}>
-        <KeyValue
-          label={<FormattedMessage id={`ui-rs.flow.info.${labelId}`} />}
-          value={value}
-        />
-      </Col>
-    );
-  };
 
   if (!request.isRequester || !patronURL) return null;
 
