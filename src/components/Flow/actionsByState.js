@@ -40,7 +40,7 @@
 
 export const actionsByState = {
   default: {
-    flowComponents: ['TitleAndSILink', 'RequestInfo', 'RequestingUser', 'ActionAccordion', 'Volumes', 'LoanConditions'],
+    flowComponents: ['TitleAndSILink', 'RequestInfo', 'ILSCirculation', 'RequestingUser', 'ActionAccordion', 'Volumes', 'LoanConditions'],
     primaryAction: null,
     moreActions: []
   },

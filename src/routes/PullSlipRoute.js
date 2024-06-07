@@ -10,7 +10,7 @@ import {
   useCloseDirect
 } from '@projectreshare/stripes-reshare';
 
-const PullSlipRoute = ({ match, history }) => {
+const PullSlipRoute = ({ match }) => {
   const requestId = match.params?.id;
   const batchId = match.params?.batchId;
   const [pdfUrl, setPdfUrl] = useState();
@@ -25,7 +25,7 @@ const PullSlipRoute = ({ match, history }) => {
   const reqQuery = useOkapiQuery(`rs/patronrequests/${requestId}`, {
     enabled: !!requestId,
   });
-  const markableAction = reqQuery?.data?.validActions?.find(element => element.actionCode.endsWith("PrintPullSlip"));
+  const markableAction = reqQuery?.data?.validActions?.find(element => element.actionCode.endsWith('PrintPullSlip'));
 
   const fetchPath = 'rs/report/generatePicklist';
   const fetchParams = requestId ? { requestId } : { batchId };
