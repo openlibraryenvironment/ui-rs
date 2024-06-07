@@ -172,6 +172,7 @@
   "flow.volumes.status.awaiting_temporary_item_creation": "Awaiting temporary item creation",
   "flow.volumes.status.temporary_item_created_in_host_lms": "Temporary item created in host LMS",
   "flow.volumes.status.temporary_item_creation_(no_integration)": "LMS temporary item creation disabled; please create manually",
+  "flow.volumes.status.requested_from_the_ils": "Requested from the ILS",
 
   "view.showTags": "Show tags",
   "view.showChat": "Request messages",
