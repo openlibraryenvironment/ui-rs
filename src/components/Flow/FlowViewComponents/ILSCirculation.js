@@ -6,37 +6,43 @@ const ILSCirculation = ({ request }) => {
   const { customIdentifiers } = request;
   let loanUUID = null;
   let patronUUID = null;
+  let requestUUID = null;
 
   if (customIdentifiers) {
     const parsedResponse = JSON.parse(customIdentifiers);
-    if (parsedResponse && parsedResponse.loanUuid && parsedResponse.patronUuid) {
+    if (parsedResponse) {
       loanUUID = parsedResponse.loanUuid;
       patronUUID = parsedResponse.patronUuid;
+      requestUUID = parsedResponse.requestUuid;
     }
   }
 
   return (
-    loanUUID && patronUUID ?
+    ((loanUUID && patronUUID) || requestUUID) ? (
       <Accordion
-        id="ilsCirculation"
+        id="requestInfo"
         label={<FormattedMessage id="ui-rs.flow.sections.ilsCirculation" />}
       >
         <Layout className="padding-top-gutter">
           <Row>
-            <Col xs={3}>
-              <Link to={`/users/${patronUUID}/loans/open`}>
-                <FormattedMessage id="ui-rs.flow.info.request" />
-              </Link>
-            </Col>
-            <Col xs={3}>
-              <Link to={`/users/${patronUUID}/loans/view/${loanUUID}`}>
-                <FormattedMessage id="ui-rs.flow.info.createdLoan" />
-              </Link>
-            </Col>
+            {requestUUID && (
+              <Col xs={3}>
+                <Link to={`/requests/view/${requestUUID}?sort=requestDate`}>
+                  <FormattedMessage id="ui-rs.flow.info.request" />
+                </Link>
+              </Col>
+            )}
+            {patronUUID && loanUUID && (
+              <Col xs={3}>
+                <Link to={`/users/${patronUUID}/loans/view/${loanUUID}`}>
+                  <FormattedMessage id="ui-rs.flow.info.createdLoan" />
+                </Link>
+              </Col>
+            )}
           </Row>
         </Layout>
       </Accordion>
-      : ''
+    ) : null
   );
 };
 
