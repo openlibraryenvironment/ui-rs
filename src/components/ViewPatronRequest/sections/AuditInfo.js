@@ -17,7 +17,7 @@ const AuditUser = ({ id }) => {
   // maintain in the interim.
   const { data: user = {}, isSuccess } = useOkapiQuery(`users/${id}`, { staleTime: 4 * 60 * 60 * 1000 });
   if (!isSuccess) return null;
-  return user.username;
+  return user.username || user?.personal.lastName || null;
 };
 
 const AuditInfo = ({ record, id }) => {
