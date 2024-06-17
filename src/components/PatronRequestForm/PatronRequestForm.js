@@ -250,7 +250,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
           <Col xs={4}>
             <Field
               id="edit-patron-request-pages"
-              name="pages"
+              name="pagesRequested"
               label={<FormattedMessage id="ui-rs.information.pages" />}
               component={TextField}
             />
