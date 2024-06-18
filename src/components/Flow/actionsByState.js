@@ -47,6 +47,10 @@ export const actionsByState = {
   RES_AWAIT_PICKING: {
     moreActions: ['FillMultiVolumeRequest', 'PrintPullSlip']
   },
+  RES_COPY_AWAIT_PICKING: {
+    primaryAction: 'nonreturnableSupplierAddURLToDocument',
+    excludeActions: ['nonreturnableSupplierAddURLToDocument']
+  },
   RES_AWAIT_PROXY_BORROWER: {
     moreActions: ['FillMultiVolumeRequest']
   },

@@ -45,22 +45,36 @@ class CitationMetadataInfo extends React.Component {
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-rs.information.author" />}
-              value={record.author}
+              label={<FormattedMessage id="ui-rs.information.titleOfComponent" />}
+              value={record.titleOfComponent}
             />
           </Col>
         </Row>
         <Row>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id={idKey} />}
-              value={idValue}
+              label={<FormattedMessage id="ui-rs.information.author" />}
+              value={record.author}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-rs.information.date" />}
-              value={record.publicationDate}
+              label={<FormattedMessage id="ui-rs.information.authorOfComponent" />}
+              value={record.authorOfComponent}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.edition" />}
+              value={record.edition}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id={idKey} />}
+              value={idValue}
             />
           </Col>
         </Row>
@@ -73,8 +87,8 @@ class CitationMetadataInfo extends React.Component {
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-rs.information.edition" />}
-              value={record.edition}
+              label={<FormattedMessage id="ui-rs.information.date" />}
+              value={record.publicationDate}
             />
           </Col>
         </Row>
@@ -83,6 +97,18 @@ class CitationMetadataInfo extends React.Component {
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.volume" />}
               value={record.volume}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.issue" />}
+              value={record.issue}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.pages" />}
+              value={record.pagesRequested}
             />
           </Col>
         </Row>
