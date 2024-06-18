@@ -5,7 +5,7 @@ import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
 import useActionConfig from '../useActionConfig';
 
-const SupplierCheckInToReshare = ({ performAction, request }) => {
+const SupplierCheckInToReshare = ({ performAction }) => {
   // eslint-disable-next-line camelcase
   const { combine_fill_and_ship } = useActionConfig();
   // eslint-disable-next-line camelcase
@@ -32,8 +32,6 @@ const SupplierCheckInToReshare = ({ performAction, request }) => {
                 name="itemBarcodes[0].itemId"
                 component={TextField}
                 autoFocus
-                value={request.selectedItemBarcode}
-                defaultValue={request.selectedItemBarcode}
               />
             </Col>
             <Col xs={1}>
