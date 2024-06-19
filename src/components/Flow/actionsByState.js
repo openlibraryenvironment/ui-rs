@@ -1,4 +1,3 @@
-import initialToUpper from '../../util/initialToUpper';
 /*
  * This object describes what to render for a request given its state (directories
  * relative to src/components/Flow).
@@ -39,78 +38,52 @@ import initialToUpper from '../../util/initialToUpper';
  *
 */
 
-const noPrimary = {
-  primaryAction: null,
-};
-
 export const actionsByState = {
   default: {
-    flowComponents: ['TitleAndSILink', 'RequestInfo', 'ActionAccordion', 'Volumes', 'LoanConditions'],
+    flowComponents: ['TitleAndSILink', 'RequestInfo', 'ILSCirculation', 'RequestingUser', 'ActionAccordion', 'Volumes', 'LoanConditions'],
     primaryAction: null,
-    moreActions: [],
-  },
-  RES_IDLE: noPrimary,
-  REQ_IDLE: noPrimary,
-  REQ_INVALID_PATRON: noPrimary,
-  RES_PENDING_CONDITIONAL_ANSWER: {
-    primaryAction: 'SupplierMarkConditionsAgreed',
-  },
-  RES_NEW_AWAIT_PULL_SLIP: {
-    primaryAction: 'PrintPullSlip',
+    moreActions: []
   },
   RES_AWAIT_PICKING: {
-    primaryAction: 'SupplierCheckInToReshare',
-    moreActions: ['PrintPullSlip', 'FillMultiVolumeRequest'],
+    moreActions: ['FillMultiVolumeRequest', 'PrintPullSlip']
   },
   RES_COPY_AWAIT_PICKING: {
     primaryAction: 'nonreturnableSupplierAddURLToDocument',
     excludeActions: ['nonreturnableSupplierAddURLToDocument']
   },
   RES_AWAIT_PROXY_BORROWER: {
-    moreActions: ['FillMultiVolumeRequest'],
+    moreActions: ['FillMultiVolumeRequest']
   },
-  RES_AWAIT_LMS_CHECKOUT: {
-    primaryAction: 'supplierManualCheckout',
-  },
-  // TODO we will want to replace primary actions like this sometimes for multivol requests.
-  // Perhaps have switch inside the default component itself?
   RES_AWAIT_SHIP: {
-    primaryAction: 'supplierMarkShipped',
-    moreActions: ['FillMultiVolumeRequest'],
-    excludeActions: ['supplierCheckInToReshare']
+    moreActions: ['FillMultiVolumeRequest']
   },
-  RES_SEQUESTERED: {
-    primaryAction: 'supplierFillDigitalLoan',
-    excludeActions: ['supplierFillDigitalLoan'],
+  RES_NEW_AWAIT_PULL_SLIP: {
+    primaryAction: 'PrintPullSlip'
   },
   REQ_SHIPPED: {
-    moreActions: ['PrintPullSlip'],
-  },
-  RES_CANCEL_REQUEST_RECEIVED:{
-    primaryAction: 'SupplierRespondToCancel',
-  },
-  REQ_REQUEST_SENT_TO_SUPPLIER: noPrimary,
-  REQ_EXPECTS_TO_SUPPLY: noPrimary,
-  REQ_BORROWING_LIBRARY_RECEIVED: {
-    primaryAction: 'RequesterManualCheckIn',
+    moreActions: ['PrintPullSlip']
   },
   REQ_CHECKED_IN: {
-    primaryAction: 'PatronReturnedItem',
-    moreActions: ['PrintPullSlip'],
-  },
-  REQ_CONDITIONAL_ANSWER_RECEIVED: {
-    primaryAction: 'RequesterAgreeConditions',
+    moreActions: ['PrintPullSlip']
   },
   REQ_AWAITING_RETURN_SHIPPING: {
-    moreActions: ['PrintPullSlip'],
+    moreActions: ['PrintPullSlip']
   },
-  REQ_LOCAL_REVIEW: {
-    primaryAction: 'fillLocally',
+  SLNP_REQ_SHIPPED: {
+    moreActions: ['PrintPullSlip']
   },
-  REQ_CANCELLED: noPrimary,
-  REQ_END_OF_ROTA: noPrimary,
-  REQ_BLANK_FORM_REVIEW: noPrimary,
-  REQ_DUPLICATE_REVIEW: noPrimary,
+  SLNP_REQ_CHECKED_IN: {
+    moreActions: ['PrintPullSlip']
+  },
+  SLNP_REQ_AWAITING_RETURN_SHIPPING: {
+    moreActions: ['PrintPullSlip']
+  },
+  SLNP_RES_AWAIT_PICKING: {
+    moreActions: ['PrintPullSlip']
+  },
+  SLNP_RES_NEW_AWAIT_PULL_SLIP: {
+    primaryAction: 'PrintPullSlip'
+  }
 };
 
 /* The idea behind this object is that we can use it to lookup whether or not any given action needs the ability to add a note or not,
@@ -150,31 +123,52 @@ export const excludeRemote = [
   'patronReturnedItemAndShippedReturn'// This will replace the action performed by "mark returned by patron" depending on config
 ];
 
-/* Actions from request.validActions that cannot become the primary action */
-const excludePrimary = ['requesterCancel'];
-
 /* UI-only actions to exclude from electronic requests */
 const excludeElectronic = ['FillMultiVolumeRequest'];
 
 /* This function returns the contextual actions for a provided request,
  * falling back to the default for unknown states.
  */
-export const actionsForRequest = request => {
+export const actionsForRequest = (request, autoLoanOff) => {
   /* Since state model types aren't implemented yet and deliveryMethod won't necessarily be set we currently
   need to rely on discrete state model codes to determine if a request is electronic */
   const isElectronic = ['CDLResponder', 'DigitalReturnableRequester'].includes(request.stateModel?.shortcode);
   const actions = { ...actionsByState.default, ...actionsByState[request.state?.code] || {} };
-  if (Array.isArray(request.validActions)) {
-    const remote = request.validActions.filter(
-      action => actions.primaryAction !== initialToUpper(action) && !(excludeRemote.includes(action)) && !(actions.excludeActions?.includes(action))
-    );
+  const validActions = request.validActions;
+
+  if (Array.isArray(validActions)) {
+    const primaryAction = validActions.filter(action => !(excludeRemote.includes(action.actionCode)) && action.isPrimary)[0];
+
+    const remote = validActions.filter(action => !(excludeRemote.includes(action.actionCode)) && !action.primaryOnly);
     const client = actions.moreActions.filter(
       action => !(remote.includes(`${action.charAt(0).toLowerCase()}${action.substring(1)}`))
-        && !(isElectronic && excludeElectronic.includes(action))
+            && !(isElectronic && excludeElectronic.includes(action))
     );
-    actions.moreActions = remote.concat(client);
-    const maybePrimary = remote.filter(action => !excludePrimary.includes(action));
-    if (maybePrimary.length > 0 && actionsByState?.[request.state?.code]?.primaryAction === undefined) actions.primaryAction = maybePrimary[0];
+
+    const remoteMoreActions = remote.map(action => action.actionCode);
+    actions.moreActions = remoteMoreActions.concat(client);
+
+    // SLNP specific - action linking to patron record to add fees
+    const manualFeeStates = ['SLNP_REQ_IDLE', 'SLNP_REQ_SHIPPED', 'SLNP_REQ_CHECKED_IN'];
+    if (manualFeeStates.includes(request.state?.code)) {
+      actions.moreActions.push('addManualFee');
+    }
+
+    // SLNP specific - remove actions when auto loan is disabled
+    if (!autoLoanOff) {
+      if (request.state?.code === 'SLNP_RES_IDLE') {
+        const actionsToRemove = ['slnpRespondYes', 'supplierCannotSupply'];
+        actions.moreActions = actions.moreActions.filter(action => !actionsToRemove.includes(action));
+      }
+    }
+
+    if (actions.moreActions) {
+      actions.moreActions.sort();
+    }
+
+    if (primaryAction) {
+      actions.primaryAction = primaryAction.actionCode;
+    }
   }
   return actions;
 };

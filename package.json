@@ -11,15 +11,15 @@
     "lint": "eslint src"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "~6.3.0",
-    "@folio/stripes-cli": "~2.6.0",
+    "@folio/eslint-config-stripes": "~7.0.0",
+    "@folio/stripes-cli": "~3.0.0",
     "eslint": "^7.0.0"
   },
   "dependencies": {
-    "@folio/stripes-data-transfer-components": "^5.4.0",
-    "@folio/stripes-erm-components": "^7.0.0",
+    "@folio/stripes-data-transfer-components": "~6.0.0",
+    "@folio/stripes-erm-components": "~9.0.0",
     "@folio/stripes-template-editor": "^3.0.0",
-    "@k-int/stripes-kint-components": "^4.2.0",
+    "@k-int/stripes-kint-components": "^5.4.0",
     "@projectreshare/stripes-reshare": "^1.12.0",
     "classnames": "^2.2.6",
     "final-form": "^4.2.0",
@@ -39,10 +39,10 @@
     "xml-beautify": "^1.2.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^6.1.0 || ^7.0.0 || ^8.0.0",
+    "@folio/stripes": "^9.0.0",
     "moment": "^2.29.0",
     "react": "*",
-    "react-intl": "^5.0.0",
+    "react-intl": "^6.0.0",
     "react-query": "^3.9.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.0.0"

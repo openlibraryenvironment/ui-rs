@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import stringify from 'json-stable-stringify';
+import { Link } from 'react-router-dom';
 import { withStripes } from '@folio/stripes/core';
 import {
   Accordion,
@@ -26,6 +27,7 @@ class UserCard extends React.Component {
 
   render() {
     const props = { ...this.props };
+    const patronURLTemplate = props.stripes?.config?.reshare?.patronURL;
     // React complains if any of these props are passed in <Card>
     delete props.refreshRemote;
     delete props.dataKey;
@@ -42,6 +44,11 @@ class UserCard extends React.Component {
       if (!user) user = {};
     }
 
+    let patronLink;
+    if (user.id && patronURLTemplate) {
+      patronLink = <Link to={patronURLTemplate.replace('{patronid}', user.id)}>{user.id}</Link>;
+    }
+
     return (
       <Card
         id="requestingUserInfo-card"
@@ -53,7 +60,7 @@ class UserCard extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.userId" />}
-              value={user.id}
+              value={patronLink || user.id}
             />
           </Col>
           <Col xs={6}>
