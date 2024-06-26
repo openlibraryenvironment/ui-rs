@@ -131,6 +131,7 @@
   "flow.itemFound": "Item found - ready to ship",
   "flow.shippedToRequester": "Item shipped to requester",
   "flow.sections.actions": "Actions",
+  "flow.sections.citation": "Copy citation",
   "flow.sections.requestInfo": "Request information",
   "flow.sections.supplyInfo": "Supply information",
   "flow.sections.loanConditions": "Loan conditions",

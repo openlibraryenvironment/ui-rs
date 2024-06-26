@@ -45,7 +45,7 @@ const noPrimary = {
 
 export const actionsByState = {
   default: {
-    flowComponents: ['TitleAndSILink', 'RequestInfo', 'ActionAccordion', 'Volumes', 'LoanConditions'],
+    flowComponents: ['TitleAndSILink', 'RequestInfo', 'Citation', 'ActionAccordion', 'Volumes', 'LoanConditions'],
     primaryAction: null,
     moreActions: [],
   },
