@@ -26,11 +26,6 @@ const TitleAndSILink = ({ request }) => {
         <strong>{`${request.hrid || request.id}: `}</strong>
         {request.title || request.titleOfComponent}
       </Headline>
-      {request.title && request.titleOfComponent &&
-        <Headline margin="none" size="x-large" tag="h3" weight="regular">
-          {request.titleOfComponent}
-        </Headline>
-      }
       <Layout className={css.title_links}>
         { request.precededBy &&
           <DirectLink to={`../${request.precededBy.id}`} preserveSearch><FormattedMessage id="ui-rs.flow.info.precededByLink" /></DirectLink>
