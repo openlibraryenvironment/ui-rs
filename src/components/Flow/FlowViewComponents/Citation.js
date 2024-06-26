@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion, Col, KeyValue, Row } from '@folio/stripes/components';
 
 const Citation = ({ request }) => {
-  if (!request.serviceType?.value === 'copy') return null;
+  if (request.serviceType?.value !== 'copy') return null;
 
   return (
     <Accordion
