@@ -17,11 +17,13 @@ const CREATE = 'create';
 const EDIT = 'update';
 const REREQUEST = 'rerequest';
 const REVALIDATE = 'revalidate';
+const NRREVALIDATE = 'nrrevalidate';
 
 // Actions performed by each operation
 const OP_ACTION = {
   [REREQUEST]: 'rerequest',
-  [REVALIDATE]: 'requesterRetryValidation'
+  [REVALIDATE]: 'requesterRetryValidation',
+  [NRREVALIDATE]: 'nonreturnableRequesterRetryValidation'
 };
 
 const SI_FIELDS = ['title', 'author', 'edition', 'isbn', 'issn', 'oclcNumber', 'publisher', 'publicationDate', 'placeOfPublication'];
@@ -129,6 +131,7 @@ const CreateEditRoute = props => {
   let op;
   if (id) {
     if (routerLocation.pathname.endsWith('rerequest')) op = REREQUEST;
+    else if (routerLocation.pathname.endsWith('nrrevalidate')) op = NRREVALIDATE;
     else if (routerLocation.pathname.endsWith('revalidate')) op = REVALIDATE;
     else op = EDIT;
   } else op = CREATE;
