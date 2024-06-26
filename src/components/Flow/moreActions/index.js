@@ -55,6 +55,12 @@ export const RequesterRetryValidation = () => (
   </DirectLink>
 );
 
+export const NonreturnableRequesterRetryValidation = () => (
+  <DirectLink component={Button} buttonStyle="dropdownItem" to="nrrevalidate">
+    <Icon icon="refresh"><FormattedMessage id="stripes-reshare.actions.nonreturnableRequesterRetryValidation" /></Icon>
+  </DirectLink>
+);
+
 export const RespondYes = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="RespondYes">
     <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.respondYes" /></Icon>

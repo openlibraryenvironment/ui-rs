@@ -55,6 +55,7 @@
   "update.error": "Error updating patron request",
   "rerequestPatronRequest": "Create revised request",
   "revalidatePatronRequest": "Resubmit request",
+  "nrrevalidatePatronRequest": "Resubmit request",
   "closeNewPatronRequest": "Close new patron request",
   "information.hrid": "Request ID",
   "information.fullId": "Full ID",

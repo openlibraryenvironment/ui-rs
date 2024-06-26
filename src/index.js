@@ -67,6 +67,9 @@ const ResourceSharing = (props) => {
         {appName === 'request' &&
           <Route path={`${path}/requests/:id/revalidate`} component={CreateEditRoute} />
         }
+        {appName === 'request' &&
+          <Route path={`${path}/requests/:id/nrrevalidate`} component={CreateEditRoute} />
+        }
         <Redirect
           exact
           from={`${path}/requests/:id`}
