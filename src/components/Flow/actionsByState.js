@@ -154,8 +154,8 @@ export const actionsForRequest = (request, autoLoanOff) => {
       actions.moreActions.push('addManualFee');
     }
 
-    // SLNP specific - remove actions when auto loan is disabled
-    if (!autoLoanOff) {
+    // SLNP Responder service type Loan specific - remove actions when auto loan is disabled
+    if (request.stateModel?.shortcode === 'SLNPResponder' && !autoLoanOff) {
       if (request.state?.code === 'SLNP_RES_IDLE') {
         const actionsToRemove = ['slnpRespondYes', 'supplierCannotSupply'];
         actions.moreActions = actions.moreActions.filter(action => !actionsToRemove.includes(action));
