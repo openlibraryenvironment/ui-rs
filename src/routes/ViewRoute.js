@@ -137,7 +137,7 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
                   </DirectLink>
                 )
               }
-              {request?.validActions?.includes('manualClose') &&
+              {request?.validActions?.some(a => a.actionCode === 'manualClose') &&
                 <ManualClose />
               }
               <PrintPullSlip />
