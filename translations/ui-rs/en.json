@@ -508,6 +508,7 @@
   "settings.localNCIP.ncipFromAgencyAuthentication": "NCIP from agency authentication",
   "settings.localNCIP.ncipUseBarcodeForAcceptItem": "Use item barcode for Accept Item",
   "settings.localNCIP.ncipUseTitleRequestType": "Use Title type for Request Item",
+  "settings.localNCIP.ncipUseDefaultPatronFee": "Add patron fee automatically",
   "settings.hostLMSIntegration.hostLmsIntegration": "Host LMS integration",
   "settings.hostLMSIntegration.borrowerCheck": "Borrower check",
   "settings.hostLMSIntegration.acceptItem": "Accept item method",
