@@ -149,13 +149,13 @@ export const actionsForRequest = (request, autoLoanOff) => {
     actions.moreActions = remoteMoreActions.concat(client);
 
     // SLNP specific - action linking to patron record to add fees
-    const manualFeeStates = ['SLNP_REQ_IDLE', 'SLNP_REQ_SHIPPED', 'SLNP_REQ_CHECKED_IN'];
+    const manualFeeStates = ['SLNP_REQ_IDLE', 'SLNP_REQ_SHIPPED', 'SLNP_REQ_CHECKED_IN', 'SLNP_REQ_DOCUMENT_AVAILABLE'];
     if (manualFeeStates.includes(request.state?.code)) {
       actions.moreActions.push('addManualFee');
     }
 
-    // SLNP specific - remove actions when auto loan is disabled
-    if (!autoLoanOff) {
+    // SLNP Responder service type Loan specific - remove actions when auto loan is disabled
+    if (request.stateModel?.shortcode === 'SLNPResponder' && !autoLoanOff) {
       if (request.state?.code === 'SLNP_RES_IDLE') {
         const actionsToRemove = ['slnpRespondYes', 'supplierCannotSupply'];
         actions.moreActions = actions.moreActions.filter(action => !actionsToRemove.includes(action));
