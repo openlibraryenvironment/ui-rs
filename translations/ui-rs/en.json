@@ -153,6 +153,7 @@
   "flow.info.patronQuery": "All active requests by this user",
   "flow.info.request": "Request",
   "flow.info.createdLoan": "Loan",
+  "flow.info.createdFeeFine": "Fee/fine",
   "flow.actions.moreOptions": "More options",
   "flow.loanConditions": "Loan Conditions",
   "flow.loanConditions.condition": "Loan condition",

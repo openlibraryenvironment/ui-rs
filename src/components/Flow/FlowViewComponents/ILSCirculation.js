@@ -7,6 +7,8 @@ const ILSCirculation = ({ request }) => {
   let loanUUID = null;
   let patronUUID = null;
   let requestUUID = null;
+  let userUUID = null;
+  let feeUUID = null;
 
   if (customIdentifiers) {
     const parsedResponse = JSON.parse(customIdentifiers);
@@ -14,11 +16,13 @@ const ILSCirculation = ({ request }) => {
       loanUUID = parsedResponse.loanUuid;
       patronUUID = parsedResponse.patronUuid;
       requestUUID = parsedResponse.requestUuid;
+      userUUID = parsedResponse.userUUID;
+      feeUUID = parsedResponse.feeUUID;
     }
   }
 
   return (
-    ((loanUUID && patronUUID) || requestUUID) ? (
+    ((loanUUID && patronUUID) || requestUUID || (userUUID && feeUUID)) ? (
       <Accordion
         id="requestInfo"
         label={<FormattedMessage id="ui-rs.flow.sections.ilsCirculation" />}
@@ -36,6 +40,13 @@ const ILSCirculation = ({ request }) => {
               <Col xs={3}>
                 <Link to={`/users/${patronUUID}/loans/view/${loanUUID}`}>
                   <FormattedMessage id="ui-rs.flow.info.createdLoan" />
+                </Link>
+              </Col>
+            )}
+            {userUUID && feeUUID && (
+              <Col xs={3}>
+                <Link to={`/users/${userUUID}/accounts/view/${feeUUID}`}>
+                  <FormattedMessage id="ui-rs.flow.info.createdFeeFine" />
                 </Link>
               </Col>
             )}
