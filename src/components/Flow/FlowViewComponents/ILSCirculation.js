@@ -16,8 +16,8 @@ const ILSCirculation = ({ request }) => {
       loanUUID = parsedResponse.loanUuid;
       patronUUID = parsedResponse.patronUuid;
       requestUUID = parsedResponse.requestUuid;
-      userUUID = parsedResponse.userUUID;
-      feeUUID = parsedResponse.feeUUID;
+      userUUID = parsedResponse.userUuid;
+      feeUUID = parsedResponse.feeUuid;
     }
   }
 
