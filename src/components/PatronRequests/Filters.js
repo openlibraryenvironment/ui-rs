@@ -131,6 +131,22 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
             onFilter={(value, opts) => opts.filter(({ label }) => label.toLowerCase().includes(value.toLowerCase()))}
           />
         </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-rs.filter.serviceType" />}
+          id="serviceType"
+          name="serviceType"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={activeFilters?.serviceType?.length > 0}
+          onClearFilter={() => filterHandlers.clearGroup('serviceType')}
+        >
+          <MultiSelectionFilter
+            name="serviceType"
+            dataOptions={options.serviceType}
+            selectedValues={activeFilters.serviceType}
+            onChange={onChangeHandler}
+          />
+        </Accordion>
         <DateFilter
           accordionLabel={<FormattedMessage id="ui-rs.filter.dateSubmitted" />}
           activeFilters={activeFilters}

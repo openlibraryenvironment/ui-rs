@@ -40,7 +40,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
       'requester': 'resolvedRequester.owner.id',
       'shelvingLocation': 'pickShelvingLocation.id',
       'supplier': 'resolvedSupplier.owner.id',
-      'terminal': 'state.terminal'
+      'terminal': 'state.terminal',
+      'serviceType': 'serviceType.value'
     },
     sortKeys: {
       'pickLocation': 'pickLocation.name',
@@ -80,6 +81,15 @@ const PatronRequestsRoute = ({ appName, children }) => {
     );
     return keys
       .map(key => ({ label: intl.messages[key], value: key.replace('stripes-reshare.states.', '') }))
+      .sort(compareLabel);
+  };
+
+  const getServiceTypes = () => {
+    const keys = Object.keys(intl.messages).filter(
+      key => key.startsWith('ui-rs.filter.serviceType.')
+    );
+    return keys
+      .map(key => ({ label: intl.messages[key], value: key.replace('ui-rs.filter.serviceType.', '') }))
       .sort(compareLabel);
   };
 
@@ -141,6 +151,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .sort(compareLabel),
       state: getStates(settings),
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
+      serviceType: getServiceTypes()
     };
   }
 
