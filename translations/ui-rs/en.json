@@ -568,6 +568,7 @@
   "settings.logging.loggingZ3950RequesterDays": "Number of days to keep rota building messages",
   "settings.logging.loggingZ3950Responder": "Enable logging for auto responder messages",
   "settings.logging.loggingZ3950ResponderDays": "Number of days to keep auto responder messages",
+  "settings.automaticFees.requestServiceType": "Request service type",
   "filter.batch": "Batch",
   "filter.state": "State",
   "filter.pullSlip": "Pull slip",
