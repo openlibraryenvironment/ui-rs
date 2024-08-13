@@ -75,6 +75,12 @@ const RequestInfo = ({ request }) => {
           {colKeyVal('itemBarcode', itemBarcodeText || <NoValue />)}
           {colKeyVal('dueDate', calculateDueDate(intl, request))}
           {colKeyVal('volumesNeeded', request.volume) || <NoValue />}
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.serviceType" />}
+              value={request.serviceType?.label}
+            />
+          </Col>
         </Row>
         {request.patronNote &&
           <Row>
