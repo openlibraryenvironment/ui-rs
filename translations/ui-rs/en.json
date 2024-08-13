@@ -452,6 +452,7 @@
 
   "settings.pullslipNotifications.new": "New",
   "settings.settingsSection.z3950": "Z39.50 settings",
+  "settings.settingsSection.automaticFees": "Automatic fees",
   "settings.settingsSection.sharedIndex": "Shared index settings",
   "settings.settingsSection.localNCIP": "Local NCIP settings",
   "settings.settingsSection.logging": "Logging",
