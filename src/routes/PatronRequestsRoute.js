@@ -84,13 +84,14 @@ const PatronRequestsRoute = ({ appName, children }) => {
       .sort(compareLabel);
   };
 
-  const getServiceTypes = () => {
-    const keys = Object.keys(intl.messages).filter(
-      key => key.startsWith('ui-rs.filter.serviceType.')
-    );
-    return keys
-      .map(key => ({ label: intl.messages[key], value: key.replace('ui-rs.filter.serviceType.', '') }))
-      .sort(compareLabel);
+  const getRequestServiceTypes = (refDataRequestServiceType) => {
+    if (refDataRequestServiceType) {
+      return refDataRequestServiceType[0]
+        .values
+        .map(x => ({ label: x.label, value: x.value }))
+        .sort(compareLabel);
+    }
+    return [];
   };
 
   const prQuery = useInfiniteQuery(
@@ -128,12 +129,18 @@ const PatronRequestsRoute = ({ appName, children }) => {
         filters: 'hidden=true',
         staleTime: 2 * 60 * 60 * 1000
       }
+    }),
+    useOkapiQuery('rs/refdata', {
+      searchParams: {
+        filters: 'desc=request.serviceType',
+        staleTime: 2 * 60 * 60 * 1000
+      }
     })
   ];
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
-    const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings] = filterQueries.map(x => x.data);
+    const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
         .sort(compareCreated)
@@ -151,7 +158,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .sort(compareLabel),
       state: getStates(settings),
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
-      serviceType: getServiceTypes()
+      serviceType: getRequestServiceTypes(refDataRequestServiceType)
     };
   }
 
