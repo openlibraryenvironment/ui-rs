@@ -40,7 +40,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
       'requester': 'resolvedRequester.owner.id',
       'shelvingLocation': 'pickShelvingLocation.id',
       'supplier': 'resolvedSupplier.owner.id',
-      'terminal': 'state.terminal'
+      'terminal': 'state.terminal',
+      'serviceType': 'serviceType.value'
     },
     sortKeys: {
       'pickLocation': 'pickLocation.name',
@@ -83,6 +84,16 @@ const PatronRequestsRoute = ({ appName, children }) => {
       .sort(compareLabel);
   };
 
+  const getRequestServiceTypes = (refDataRequestServiceType) => {
+    if (refDataRequestServiceType) {
+      return refDataRequestServiceType[0]
+        .values
+        .map(x => ({ label: x.label, value: x.value }))
+        .sort(compareLabel);
+    }
+    return [];
+  };
+
   const prQuery = useInfiniteQuery(
     {
       queryKey: ['rs/patronrequests', query, `@projectreshare/${appName}`],
@@ -118,12 +129,18 @@ const PatronRequestsRoute = ({ appName, children }) => {
         filters: 'hidden=true',
         staleTime: 2 * 60 * 60 * 1000
       }
+    }),
+    useOkapiQuery('rs/refdata', {
+      searchParams: {
+        filters: 'desc=request.serviceType',
+        staleTime: 2 * 60 * 60 * 1000
+      }
     })
   ];
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
-    const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings] = filterQueries.map(x => x.data);
+    const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
         .sort(compareCreated)
@@ -141,6 +158,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .sort(compareLabel),
       state: getStates(settings),
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
+      serviceType: getRequestServiceTypes(refDataRequestServiceType)
     };
   }
 
