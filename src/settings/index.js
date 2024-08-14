@@ -3,6 +3,7 @@ import { useIntl } from 'react-intl';
 import { Route } from 'react-router-dom';
 
 import { useSettings } from '@k-int/stripes-kint-components';
+import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 import { CustomISO18626 } from './settingsComponents';
 import HostLMSLocations from './HostLMSLocations';
@@ -15,6 +16,7 @@ import NoticePolicies from './noticePolicies';
 import OtherSettings from './OtherSettings';
 import PullslipConfiguration from './pullslipConfiguration';
 import PullslipTemplates from './pullslipTemplates';
+import AutomaticFeesSettings from './AutomaticFeesSettings';
 import {
   PullslipNotifications, ViewPullslipNotification, EditPullslipNotification, CreatePullslipNotification
 } from './pullslipNotifications';
@@ -23,6 +25,10 @@ import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT, TEMPLATES_ENDPOINT } from '../cons
 const ResourceSharingSettings = (props) => {
   const { match } = props;
   const intl = useIntl();
+
+  const { data: featureFlagData = {}, isSuccess: automaticFeesFeatureFlagLoaded } = useOkapiQuery('rs/settings/appSettings', {
+    searchParams: '?filters=key==feature_flag_automatic_fees&filters=hidden=true'
+  });
 
   const persistentPages = [
     {
@@ -102,8 +108,24 @@ const ResourceSharingSettings = (props) => {
     },
   ];
 
+  if (automaticFeesFeatureFlagLoaded) {
+    if (featureFlagData.length > 0) {
+      const featureFlag = featureFlagData[0];
+
+      if (featureFlag && featureFlag.value === 'true') {
+        const automaticFeesSetting = {
+          route: 'automaticFees',
+          id: 'automaticFees',
+          label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.automaticFees' }),
+          component: AutomaticFeesSettings
+        };
+        persistentPages.push(automaticFeesSetting);
+      }
+    }
+  }
+
   const { isLoading, SettingsComponent } = useSettings({
-    dynamicPageExclusions: ['other', 'pullslipConfiguration', 'pullslipTemplateConfig'],
+    dynamicPageExclusions: ['other', 'pullslipConfiguration', 'pullslipTemplateConfig', 'automaticFees'],
     intlKey: 'ui-rs',
     persistentPages,
     refdataEndpoint: REFDATA_ENDPOINT,
