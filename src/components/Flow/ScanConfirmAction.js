@@ -24,14 +24,14 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
         if (itemBarcode && itemBarcode !== inputValue) {
           setMessage('ui-rs.actions.wrongBarcodeId', 'error');
           return {
-            FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongBarcodeId' }),
+            FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongBarcodeId' })
           };
         }
       }
     } else if (inputValue !== request.hrid) {
       setMessage('ui-rs.actions.wrongId', 'error');
       return {
-        FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' }),
+        FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' })
       };
     }
     return performAction(action, { note: values.note }, { success, error });
