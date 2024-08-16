@@ -144,6 +144,7 @@
   "flow.info.itemBarcode": "Item barcode",
   "flow.info.itemCallNumber": "Item call number",
   "flow.info.itemBarcode.multiVolRequest": "Multi-volume request",
+  "flow.info.itemCallNumber.multiVolRequest": "Multi-volume request",
   "flow.info.dueDate": "Due date",
   "flow.info.requester": "Requester",
   "flow.info.supplier": "Supplier",
