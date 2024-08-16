@@ -13,9 +13,10 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
   const actionPending = !!useIsActionPending(request.id);
   const onSubmit = async values => {
     const inputValue = values?.reqId?.trim();
+    const validActions = request.validActions.map(a => a.actionCode);
     const isSlnpResponderAndCheckOutOfReshareAction =
         request.stateModel?.shortcode === 'SLNPResponder' &&
-          request.validActions.includes('slnpSupplierCheckOutOfReshare');
+          validActions.includes('slnpSupplierCheckOutOfReshare');
 
     if (isSlnpResponderAndCheckOutOfReshareAction) {
       if (request.volumes && request.volumes.length > 0) {
