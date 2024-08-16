@@ -22,7 +22,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
       if (request.volumes && request.volumes.length > 0) {
         const itemBarcode = request.volumes[0].itemId || request.volumes[0].name;
         if (itemBarcode && itemBarcode !== inputValue) {
-          setMessage('ui-rs.actions.wrongId', 'error');
+          setMessage('ui-rs.actions.wrongBarcodeId', 'error');
           return {
             FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongBarcodeId' }),
           };
