@@ -7,7 +7,6 @@ import { useIsActionPending } from '@projectreshare/stripes-reshare';
 import { useMessage } from '../MessageModalState';
 import AddNoteField from '../AddNoteField';
 import { includesNote } from './actionsByState';
-import volumes from "./FlowViewComponents/Volumes";
 
 const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
   const [, setMessage] = useMessage();
@@ -20,7 +19,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
 
     if (isSlnpResponderAndCheckOutOfReshareAction) {
       if (request.volumes && request.volumes.length > 0) {
-        const itemBarcode = volumes[0].itemId || volumes[0].name;
+        const itemBarcode = request.volumes[0].itemId || request.volumes[0].name;
         if (itemBarcode && itemBarcode !== inputValue) {
           setMessage('ui-rs.actions.wrongId', 'error');
           return {
