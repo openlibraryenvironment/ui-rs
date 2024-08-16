@@ -7,14 +7,32 @@ import { useIsActionPending } from '@projectreshare/stripes-reshare';
 import { useMessage } from '../MessageModalState';
 import AddNoteField from '../AddNoteField';
 import { includesNote } from './actionsByState';
+import volumes from "./FlowViewComponents/Volumes";
 
 const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
   const [, setMessage] = useMessage();
   const actionPending = !!useIsActionPending(request.id);
   const onSubmit = async values => {
-    if (values?.reqId?.trim() !== request.hrid) {
+    const inputValue = values?.reqId?.trim();
+    const isSlnpResponderAndCheckOutOfReshareAction =
+        request.stateModel?.shortcode === 'SLNPResponder' &&
+          request.validActions.includes('slnpSupplierCheckOutOfReshare');
+
+    if (isSlnpResponderAndCheckOutOfReshareAction) {
+      if (request.volumes && request.volumes.length > 0) {
+        const itemBarcode = volumes[0].itemId || volumes[0].name;
+        if (itemBarcode && itemBarcode !== inputValue) {
+          setMessage('ui-rs.actions.wrongId', 'error');
+          return {
+            FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongBarcodeId' }),
+          };
+        }
+      }
+    } else if (inputValue !== request.hrid) {
       setMessage('ui-rs.actions.wrongId', 'error');
-      return { FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' }) };
+      return {
+        FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' }),
+      };
     }
     return performAction(action, { note: values.note }, { success, error });
   };
