@@ -9,6 +9,7 @@ const ILSCirculation = ({ request }) => {
   let requestUUID = null;
   let userUUID = null;
   let feeUUID = null;
+  let itemUUID = null;
 
   if (customIdentifiers) {
     const parsedResponse = JSON.parse(customIdentifiers);
@@ -18,6 +19,17 @@ const ILSCirculation = ({ request }) => {
       requestUUID = parsedResponse.requestUuid;
       userUUID = parsedResponse.userUuid;
       feeUUID = parsedResponse.feeUuid;
+      itemUUID = parsedResponse.itemUuid;
+    }
+
+    if (itemUUID && patronUUID) {
+      const { isSuccess, data } = useOkapiQuery('circulation/loans', {
+        searchParams: `?query=(itemId=="${itemUUID}" and userId=="${patronUUID}")`
+      });
+
+      if (isSuccess && data && data.loans && data.loans.length > 0) {
+        loanUUID = data.loans[0].id;
+      }
     }
   }
 
