@@ -61,6 +61,12 @@ export const NonreturnableRequesterRetryValidation = () => (
   </DirectLink>
 );
 
+export const NonreturnableRequesterCancel = () => (
+  <ShowModalButton buttonStyle="dropdownItem" modal="nonreturnableRequesterCancel">
+    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.nonreturnableRequesterCancel" /></Icon>
+  </ShowModalButton>
+);
+
 export const RespondYes = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="RespondYes">
     <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.respondYes" /></Icon>

@@ -3,6 +3,7 @@ import ActionReasonModal from '../ActionReasonModal';
 
 export const SupplierCannotSupply = props => <ActionReasonModal action="supplierCannotSupply" reasonVocab="cannotSupplyReasons" {...props} />;
 export const RequesterCancel = props => <ActionReasonModal action="requesterCancel" reasonVocab="cancellationReasons" {...props} />;
+export const NonreturnableRequesterCancel = props => <ActionReasonModal action="nonreturnableRequesterCancel" reasonVocab="cancellationReasons" {...props} />;
 export const CancelLocal = props => <ActionReasonModal action="cancelLocal" reasonVocab="cancellationReasons" {...props} />;
 
 export const Cancel = () => null;
