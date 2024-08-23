@@ -12,9 +12,27 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
   const [, setMessage] = useMessage();
   const actionPending = !!useIsActionPending(request.id);
   const onSubmit = async values => {
-    if (values?.reqId?.trim() !== request.hrid) {
+    const inputValue = values?.reqId?.trim();
+    const validActions = request.validActions.map(a => a.actionCode);
+    const isSlnpResponderAndCheckOutOfReshareAction =
+        request.stateModel?.shortcode === 'SLNPResponder' &&
+          validActions.includes('slnpSupplierCheckOutOfReshare');
+
+    if (isSlnpResponderAndCheckOutOfReshareAction) {
+      if (request.volumes && request.volumes.length > 0) {
+        const itemBarcode = request.volumes[0].itemId || request.volumes[0].name;
+        if (itemBarcode && itemBarcode !== inputValue) {
+          setMessage('ui-rs.actions.wrongBarcodeId', 'error');
+          return {
+            FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongBarcodeId' })
+          };
+        }
+      }
+    } else if (inputValue !== request.hrid) {
       setMessage('ui-rs.actions.wrongId', 'error');
-      return { FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' }) };
+      return {
+        FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' })
+      };
     }
     return performAction(action, { note: values.note }, { success, error });
   };
