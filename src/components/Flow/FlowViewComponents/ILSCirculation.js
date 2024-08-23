@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { Accordion, Col, Layout, Row } from '@folio/stripes/components';
+import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 const ILSCirculation = ({ request }) => {
   const { customIdentifiers } = request;
   let loanUUID = null;
   let patronUUID = null;
   let requestUUID = null;
-  let userUUID = null;
   let feeUUID = null;
   let itemUUID = null;
 
@@ -17,7 +17,6 @@ const ILSCirculation = ({ request }) => {
       loanUUID = parsedResponse.loanUuid;
       patronUUID = parsedResponse.patronUuid;
       requestUUID = parsedResponse.requestUuid;
-      userUUID = parsedResponse.userUuid;
       feeUUID = parsedResponse.feeUuid;
       itemUUID = parsedResponse.itemUuid;
     }
@@ -34,7 +33,7 @@ const ILSCirculation = ({ request }) => {
   }
 
   return (
-    ((loanUUID && patronUUID) || requestUUID || (userUUID && feeUUID)) ? (
+    ((loanUUID && patronUUID) || requestUUID || (patronUUID && feeUUID)) ? (
       <Accordion
         id="requestInfo"
         label={<FormattedMessage id="ui-rs.flow.sections.ilsCirculation" />}
@@ -55,9 +54,9 @@ const ILSCirculation = ({ request }) => {
                 </Link>
               </Col>
             )}
-            {userUUID && feeUUID && (
+            {patronUUID && feeUUID && (
               <Col xs={3}>
-                <Link to={`/users/${userUUID}/accounts/view/${feeUUID}`}>
+                <Link to={`/users/${patronUUID}/accounts/view/${feeUUID}`}>
                   <FormattedMessage id="ui-rs.flow.info.createdFeeFine" />
                 </Link>
               </Col>
