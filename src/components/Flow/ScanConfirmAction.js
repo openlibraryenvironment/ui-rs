@@ -11,14 +11,16 @@ import { includesNote } from './actionsByState';
 const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
   const [, setMessage] = useMessage();
   const actionPending = !!useIsActionPending(request.id);
+  const validActions = request.validActions.map(a => a.actionCode);
+  const isSlnpItemBarcodeAction =
+      request.stateModel?.shortcode === 'SLNPResponder' &&
+      (validActions.includes('slnpSupplierCheckOutOfReshare')  ||
+          validActions.includes('supplierMarkShipped'));
+
   const onSubmit = async values => {
     const inputValue = values?.reqId?.trim();
-    const validActions = request.validActions.map(a => a.actionCode);
-    const isSlnpResponderAndCheckOutOfReshareAction =
-        request.stateModel?.shortcode === 'SLNPResponder' &&
-          validActions.includes('slnpSupplierCheckOutOfReshare');
 
-    if (isSlnpResponderAndCheckOutOfReshareAction) {
+    if (isSlnpItemBarcodeAction) {
       if (request.volumes && request.volumes.length > 0) {
         const itemBarcode = request.volumes[0].itemId || request.volumes[0].name;
         if (itemBarcode && itemBarcode !== inputValue) {
@@ -43,7 +45,8 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting }) => (
         <form onSubmit={handleSubmit} autoComplete="off">
-          {prompt && <FormattedMessage id={prompt} />}
+          {prompt && isSlnpItemBarcodeAction && <FormattedMessage id={prompt + ".barcode"} />}
+          {prompt && !isSlnpItemBarcodeAction && <FormattedMessage id={prompt} />}
           {!prompt &&
             <FormattedMessage id={`stripes-reshare.actions.${action}`}>
               {dispAction => <FormattedMessage id="ui-rs.actions.generic.prompt" values={{ action: dispAction }} />}
