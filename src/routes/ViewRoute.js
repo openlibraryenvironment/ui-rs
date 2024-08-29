@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
-import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset } from '@folio/stripes/components';
+import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset, Tooltip } from '@folio/stripes/components';
 import { DirectLink, upNLevels, useCloseDirect, usePerformAction, useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 import renderNamedWithProps from '../util/renderNamedWithProps';
@@ -72,6 +72,34 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
           />
         }
         <TagButton request={request} />
+        {request?.localNote &&
+          <Tooltip
+            id="rs-local-note-tooltip"
+            text={<FormattedMessage id="stripes-reshare.hasLocalNote" />}
+          >
+            {({ ref, ariaIds }) => (
+              <Icon
+                icon="document"
+                aria-labelledby={ariaIds.text}
+                ref={ref}
+              />
+            )}
+          </Tooltip>
+        }
+        {request?.patronNote &&
+          <Tooltip
+            id="rs-patron-note-tooltip"
+            text={<FormattedMessage id="stripes-reshare.hasPatronNote" />}
+          >
+            {({ ref, ariaIds }) => (
+              <Icon
+                icon="profile"
+                aria-labelledby={ariaIds.text}
+                ref={ref}
+              />
+            )}
+          </Tooltip>
+        }
       </PaneMenu>
     );
   };
@@ -126,6 +154,13 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
                     </Icon>
                   </DirectLink>
                 )
+              }
+              {request?.validActions?.includes('localNote') &&
+                <DirectLink component={Button} buttonStyle="dropdownItem" to="localNote" id="clickable-localnote">
+                  <Icon icon="edit">
+                    <FormattedMessage id="stripes-reshare.actions.localNote" />
+                  </Icon>
+                </DirectLink>
               }
               {request?.validActions?.includes('manualClose') &&
                 <ManualClose />

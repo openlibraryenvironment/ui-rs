@@ -144,6 +144,7 @@ export const actionIcons = {
 
 /* Actions from request.validActions to exclude from all states when using the below function */
 export const excludeRemote = [
+  'localNote',
   'message',
   'manualClose',
   'supplierCheckInToReshareAndSupplierMarkShipped', // This will replace the action performed by "fill request" depending on config
