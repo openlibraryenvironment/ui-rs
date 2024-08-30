@@ -521,7 +521,7 @@
   "settings.localNCIP.ncipUseDueDate": "Use due date received from NCIP",
   "settings.localNCIP.ncipDueDateFormat": "Format we expect the Due Date to be in",
   "settings.localNCIP.ncipFromAgencyAuthentication": "NCIP from agency authentication",
-  "settings.localNCIP.ncipUseBarcodeForAcceptItem": "Use item barcode for Accept Item",
+  "settings.localNCIP.ncipUseBarcodeForAcceptItem": "Use supplier’s item barcode for Accept Item",
   "settings.localNCIP.ncipUseTitleRequestType": "Use Title type for Request Item",
   "settings.localNCIP.ncipUseDefaultPatronFee": "Add patron fee automatically",
   "settings.hostLMSIntegration.hostLmsIntegration": "Host LMS integration",
