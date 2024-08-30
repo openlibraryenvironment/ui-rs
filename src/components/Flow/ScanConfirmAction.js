@@ -15,7 +15,8 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
   const isSlnpItemBarcodeAction =
       request.stateModel?.shortcode === 'SLNPResponder' &&
       (validActions.includes('slnpSupplierCheckOutOfReshare')  ||
-          validActions.includes('supplierMarkShipped'));
+          validActions.includes('supplierMarkShipped')  ||
+          validActions.includes('slnpSupplierFillAndMarkShipped'));
 
   const onSubmit = async values => {
     const inputValue = values?.reqId?.trim();
