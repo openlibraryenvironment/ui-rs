@@ -313,7 +313,7 @@
   "actions.supplierCheckOutOfReshare.prompt": "Scan request ID to <strong>complete request</strong>",
   "actions.supplierCheckOutOfReshare.prompt.barcode": "Scan item barcode to <strong>complete request</strong>",
   "actions.slnpSupplierCheckOutOfReshare.prompt": "Scan item barcode to <strong>complete request</strong>",
-  "actions.slnpSupplierFillAndMarkShipped.prompt": "Scan item barcode to <strong>fill and mark it shipped</strong>",
+  "actions.slnpSupplierFillAndMarkShipped.prompt.barcode": "Scan item barcode to <strong>fill and mark it shipped</strong>",
   "actions.supplierManualCheckout.prompt": "Scan request ID to <strong>mark item checked out of local LMS</strong>",
   "actions.supplierFillDigitalLoan": "Fill digital loan",
   "actions.supplierFillDigitalLoan.prompt": "Enter URL to fill digital loan",
