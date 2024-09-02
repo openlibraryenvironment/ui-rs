@@ -37,7 +37,12 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
         FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' })
       };
     }
-    return performAction(action, { note: values.note }, { success, error });
+
+    if (isSlnpItemBarcodeAction) {
+      return performAction(action, inputValue, { note: values.note }, { success, error });
+    } else {
+      return performAction(action, { note: values.note }, { success, error });
+    }
   };
 
   const withNote = includesNote[action] ?? includesNote.default;
