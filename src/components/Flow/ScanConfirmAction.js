@@ -39,7 +39,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
     }
 
     if (isSlnpItemBarcodeAction) {
-      return performAction(action, inputValue, { note: values.note }, { success, error });
+      return performAction(action, { itemBarcodes: [{itemId: inputValue}], note: values.note, }, { success, error });
     } else {
       return performAction(action, { note: values.note }, { success, error });
     }
