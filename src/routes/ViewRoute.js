@@ -88,7 +88,7 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
           >
             {({ ref, ariaIds }) => (
               <Icon
-                icon="document"
+                icon="report"
                 aria-labelledby={ariaIds.text}
                 ref={ref}
               />
