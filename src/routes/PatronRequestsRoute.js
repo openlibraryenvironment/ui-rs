@@ -145,6 +145,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       batch: batches
         .sort(compareCreated)
         .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
+      hasLocalNote: [({ label: intl.formatMessage({ id: 'stripes-reshare.hasLocalNote' }), value: 'localNote ISNOTNULL' })],
       hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'hasUnreadMessages=true' })],
       institution: institutions
         .map(x => ({ label: x.name, value: x.id }))
