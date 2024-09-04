@@ -21,21 +21,9 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
   const onSubmit = async values => {
     const inputValue = values?.reqId?.trim();
 
-    if (isSlnpItemBarcodeAction) {
-      if (request.volumes && request.volumes.length > 0) {
-        const itemBarcode = request.volumes[0].itemId || request.volumes[0].name;
-        if (itemBarcode && itemBarcode !== inputValue) {
-          setMessage('ui-rs.actions.wrongBarcodeId', 'error');
-          return {
-            FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongBarcodeId' })
-          };
-        }
-      }
-    } else if (inputValue !== request.hrid) {
+    if (!isSlnpItemBarcodeAction && values?.reqId?.trim() !== request.hrid) {
       setMessage('ui-rs.actions.wrongId', 'error');
-      return {
-        FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' })
-      };
+      return { FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' }) };
     }
 
     if (isSlnpItemBarcodeAction) {
