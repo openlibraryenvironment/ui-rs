@@ -64,7 +64,7 @@
   "information.pickupURL": "Pickup URL",
   "information.requestingInstitution": "Requesting institution",
   "information.notes": "Patron note",
-  "information.localNote": "Local note",
+  "information.localNote": "Internal note",
   "information.requestingUser": "Requesting user",
   "information.dateSubmitted": "Date submitted",
   "information.dateNeeded": "Date needed",
