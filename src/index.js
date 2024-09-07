@@ -1,13 +1,15 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useIntlKeyStore } from '@k-int/stripes-kint-components';
-import PatronRequestsRoute from './routes/PatronRequestsRoute';
-import CreateEditRoute from './routes/CreateEditRoute';
-import ViewRoute from './routes/ViewRoute';
-import PullSlipRoute from './routes/PullSlipRoute';
 import { EditPullslipNotification } from './settings/pullslipNotifications';
 import Settings from './settings';
 import AppNameContext from './AppNameContext';
+
+import CreateEditRoute from './routes/CreateEditRoute';
+import LocalNoteRoute from './routes/LocalNoteRoute';
+import PatronRequestsRoute from './routes/PatronRequestsRoute';
+import PullSlipRoute from './routes/PullSlipRoute';
+import ViewRoute from './routes/ViewRoute';
 
 const ResourceSharing = (props) => {
   const {
@@ -59,6 +61,7 @@ const ResourceSharing = (props) => {
         {appName === 'request' &&
           <Route path={`${path}/requests/:id/edit`} component={CreateEditRoute} />
         }
+        <Route path={`${path}/requests/:id/localnote`} component={LocalNoteRoute} />
         <Route path={`${path}/requests/:id/pullslip`} component={PullSlipRoute} />
         <Route path={`${path}/requests/batch/:batchId/pullslip`} component={PullSlipRoute} />
         {appName === 'request' &&
