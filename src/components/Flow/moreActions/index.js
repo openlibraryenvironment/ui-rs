@@ -68,12 +68,6 @@ export const RespondYes = () => (
   </ShowModalButton>
 );
 
-export const SlnpRespondYes = () => (
-  <ShowModalButton buttonStyle="dropdownItem" modal="SlnpRespondYes">
-    <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.slnpRespondYes" /></Icon>
-  </ShowModalButton>
-);
-
 // Client only, component names do not correspond to mod-rs actions
 export const PrintPullSlip = () => (
   <DirectLink component={Button} buttonStyle="dropdownItem" to="pullslip">
