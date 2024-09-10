@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import pluginGeneric from '@k-int/address-plugin-generic';
 import pluginNA from '@k-int/address-plugin-north-america';
 import pluginGBR from '@k-int/address-plugin-british-isles';
-import pluginDE from 'src/components/plugins/addressPluginGerman'
+import pluginDE from '../components/plugins/addressPluginGerman'
 
 const COUNTRY_CODE_DE = 'DE';
 
