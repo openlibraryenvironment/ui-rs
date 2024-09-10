@@ -13,6 +13,15 @@ plugins.forEach(plugin => {
   });
 });
 
+// Function to generate the message ID, checking for 'DE'
+const getCountryCodeId = (pluginName, country) => {
+  const COUNTRY_CODE_DE = 'DE';
+  const COUNTRY_CODE_ID_DE = `ui-directory.${pluginName}.countryCode`;
+  return country.includes(COUNTRY_CODE_DE)
+      ? COUNTRY_CODE_ID_DE
+      : `ui-${pluginName}.${country}.countryCode`;
+};
+
 const useSupportedAddressFormats = () => {
   const intl = useIntl();
   const supportedAddressFormats = [{ value: '', label: '', disabled: true }];
@@ -21,8 +30,7 @@ const useSupportedAddressFormats = () => {
       supportedAddressFormats.push(
           {
             value: country,
-            label: country.includes('DE') ? intl.formatMessage({ id: `ui-directory.${plugin.pluginName}.countryCode` }) :
-                intl.formatMessage({ id: `ui-${plugin.pluginName}.${country}.countryCode` })
+            label: intl.formatMessage({ id: getCountryCodeId(plugin.pluginName, country) })
           }
       );
     });
