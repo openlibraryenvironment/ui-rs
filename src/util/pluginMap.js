@@ -5,6 +5,8 @@ import pluginNA from '@k-int/address-plugin-north-america';
 import pluginGBR from '@k-int/address-plugin-british-isles';
 import pluginDE from 'src/components/Plugins/addressPluginGerman'
 
+const COUNTRY_CODE_DE = 'DE';
+
 const plugins = [pluginGeneric, pluginNA, pluginGBR, pluginDE];
 const pluginMap = {};
 plugins.forEach(plugin => {
@@ -15,10 +17,8 @@ plugins.forEach(plugin => {
 
 // Function to generate the message ID, checking for 'DE'
 const getCountryCodeId = (pluginName, country) => {
-  const COUNTRY_CODE_DE = 'DE';
-  const COUNTRY_CODE_ID_DE = `ui-directory.${pluginName}.countryCode`;
   return country.includes(COUNTRY_CODE_DE)
-      ? COUNTRY_CODE_ID_DE
+      ? `ui-directory.${pluginName}.countryCode`
       : `ui-${pluginName}.${country}.countryCode`;
 };
 
