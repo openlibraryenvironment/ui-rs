@@ -38,8 +38,11 @@ const AddressField = ({
       setPlugin(newPlugin);
       
       // When changing country code, automatically change country field with it
-      const newCountry = intl.formatMessage({ id: `ui-${newPlugin.pluginName}.${countryCode}.countryCode` })
-  
+      const pluginName = newPlugin.pluginName;
+      const baseId = pluginName.includes('DE') ? 'ui-directory' : `ui-${pluginName}`;
+
+      const newCountry = intl.formatMessage({ id: `${baseId}.${pluginName}.countryCode` });
+
       const newAddress = {
         addressLabel,
         countryCode,
