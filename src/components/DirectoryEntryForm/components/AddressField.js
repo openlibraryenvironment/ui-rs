@@ -40,7 +40,7 @@ const AddressField = ({
       
       // When changing country code, automatically change country field with it
       const pluginName = newPlugin.pluginName;
-      const translationPath = pluginName.includes(COUNTRY_CODE_DE) ? `ui-directory.${pluginName}.countryCode`: `ui-${pluginName}.${countryCode}.countryCode`;
+      const translationPath = newPlugin.listOfSupportedCountries.includes(COUNTRY_CODE_DE) ? `ui-directory.${pluginName}.countryCode`: `ui-${pluginName}.${countryCode}.countryCode`;
       const newCountry = intl.formatMessage({ id: translationPath });
 
       const newAddress = {
