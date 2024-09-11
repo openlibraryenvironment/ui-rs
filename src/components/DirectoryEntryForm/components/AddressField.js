@@ -26,6 +26,7 @@ const AddressField = ({
   const supportedAddressFormats = useSupportedAddressFormats();
   const [domain, setDomain] = useState(address.countryCode);
   const [plugin, setPlugin] = useState(pluginMap[domain] ?? pluginMap.Generic);
+  const COUNTRY_CODE_DE = 'DE';
 
   const { change } = useForm();
 
@@ -39,9 +40,8 @@ const AddressField = ({
       
       // When changing country code, automatically change country field with it
       const pluginName = newPlugin.pluginName;
-      const baseId = pluginName.includes('DE') ? 'ui-directory' : `ui-${pluginName}`;
-
-      const newCountry = intl.formatMessage({ id: `${baseId}.${pluginName}.countryCode` });
+      const translationPath = pluginName.includes(COUNTRY_CODE_DE) ? `ui-directory.${pluginName}.countryCode`: `ui-${pluginName}.${countryCode}.countryCode`;
+      const newCountry = intl.formatMessage({ id: translationPath });
 
       const newAddress = {
         addressLabel,
