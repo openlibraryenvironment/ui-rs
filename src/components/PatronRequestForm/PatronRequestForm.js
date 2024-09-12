@@ -128,6 +128,8 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
               placeholder=" "
               component={Select}
               dataOptions={copyrightTypes}
+              required
+              validate={required}
             />
           </Col>
         }
