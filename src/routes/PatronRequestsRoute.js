@@ -17,7 +17,7 @@ const STATE_MODEL_REQUESTER = 'state_model_requester';
 const SLNP_REQ_TRANSLATION_PREFIX = 'SLNP_REQ';
 const SLNP_RESP_TRANSLATION_PREFIX = 'SLNP_RES';
 const REQ_TRANSLATION_PREFIX = 'REQ';
-const RESP_TRANSLATION_PREFIX = 'RESP';
+const RESP_TRANSLATION_PREFIX = 'RES';
 const SUPPLIER = 'supply';
 
 const PatronRequestsRoute = ({ appName, children }) => {
