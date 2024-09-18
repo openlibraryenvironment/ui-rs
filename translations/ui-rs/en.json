@@ -258,7 +258,7 @@
   "actions.requesterCancelDuplicate.error" : "Failed to cancel duplicate request. {errMsg}",
   "actions.slnpAbortSupply": "Cancel or abort supply",
   "actions.slnpAbortSupply.confirm": "Do you wish to allow the cancellation or aborting of this request?",
-  "actions.slnpAbortSupply.reason": "Reason for cancelling or aborting supply:",
+  "actions.slnpAbortSupply.reason": "Type of cancellation:",
   "actions.respondToCancel": "Send response",
   "actions.respondToCancel.confirm": "Do you wish to allow the cancellation of this request?",
   "actions.respondToCancel.yes": "Agree to cancellation",
