@@ -149,11 +149,9 @@
   "directoryEntry.warning.managedInstitutionAlreadyExists": "A managed root entry already exists for type 'Institution' for your tenant in this ReShare system. If you meant to add a Branch record for your tenant please select your tenant's Institution record and under Actions choose Create Unit and select Branch in the Type field.",
   "directoryEntry.warning.consortiumAlreadyExists": "An root entry already exists for type 'Consortium' in this ReShare system. Adding a second Consortium directory record is not recommended. If you meant to add an Institution record please update the entry in the Type field accordingly before creating the record. If you meant to add a Branch record please find the Institution record you wish to add a branch for and under Actions choose Create Unit and select Branch in the Type field.",
 
-  "address-plugin-german.institution": "Institution",
-  "address-plugin-german.library": "Library",
+  "address-plugin-german.institutionLibrary": "Institution / Library",
   "address-plugin-german.department": "Department",
-  "address-plugin-german.street": "Street",
-  "address-plugin-german.number": "Number",
+  "address-plugin-german.streetNumber": "Street / Number",
   "address-plugin-german.zipCode": "Zip code",
   "address-plugin-german.town": "Town",
   "address-plugin-german.country": "Country",
