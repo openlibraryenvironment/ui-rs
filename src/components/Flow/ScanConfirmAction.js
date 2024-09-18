@@ -1,29 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import {FormattedMessage, injectIntl} from 'react-intl';
 import { Form, Field } from 'react-final-form';
-import { Button, Row, Col, TextField } from '@folio/stripes/components';
-import { useIsActionPending } from '@projectreshare/stripes-reshare';
-import { useMessage } from '../MessageModalState';
+import {Button, Row, Col, TextField} from '@folio/stripes/components';
 import AddNoteField from '../AddNoteField';
 import { includesNote } from './actionsByState';
+import { useIntlCallout, useIsActionPending } from '@projectreshare/stripes-reshare';
 
 const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
-  const [, setMessage] = useMessage();
+  const sendCallout = useIntlCallout();
   const actionPending = !!useIsActionPending(request.id);
   const validActions = request.validActions.map(a => a.actionCode);
-  const isSlnpItemBarcodeAction =
-      request.stateModel?.shortcode === 'SLNPResponder' &&
-      (validActions.includes('slnpSupplierCheckOutOfReshare')  ||
-          validActions.includes('supplierMarkShipped')  ||
-          validActions.includes('slnpSupplierFillAndMarkShipped'));
+  const slnpItemBarcodeActions = [
+    'slnpSupplierCheckOutOfReshare',
+    'supplierMarkShipped',
+    'slnpSupplierFillAndMarkShipped',
+  ];
+
+  const slnpCompleteItemBarcodeActions = [
+    'slnpSupplierCheckOutOfReshare',
+  ];
+
+  const isSlnpResponder = request.stateModel?.shortcode === 'SLNPResponder';
+  const isSlnpItemBarcodeAction = isSlnpResponder && slnpItemBarcodeActions.some(action => validActions.includes(action));
+  const isSlnpCompleteItemBarcodeAction = isSlnpResponder && slnpCompleteItemBarcodeActions.some(action => validActions.includes(action));
 
   const onSubmit = async values => {
     const inputValue = values?.reqId?.trim();
 
     if (!isSlnpItemBarcodeAction && values?.reqId?.trim() !== request.hrid) {
-      setMessage('ui-rs.actions.wrongId', 'error');
-      return { FORM_ERROR: intl.formatMessage({ id: 'ui-rs.actions.wrongId' }) };
+      sendCallout('ui-rs.actions.wrongId', 'error');
+    }
+
+    if (isSlnpCompleteItemBarcodeAction) {
+      if (request.volumes && request.volumes.length > 0) {
+        const itemBarcode = request.volumes[0].itemId || request.volumes[0].name;
+        if (itemBarcode && itemBarcode !== inputValue) {
+          sendCallout('ui-rs.actions.wrongBarcodeId', 'error');
+        }
+      }
     }
 
     if (isSlnpItemBarcodeAction) {
