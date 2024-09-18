@@ -8,13 +8,11 @@ const fieldsToBackend = (address) => {
 
   // Array of address fields to process
   const fieldNames = [
-    { key: 'institution', label: 'Institution' },
-    { key: 'library', label: 'Library' },
+    { key: 'premise', label: 'Premise' },
     { key: 'department', label: 'Department' },
-    { key: 'street', label: 'Street' },
-    { key: 'number', label: 'Number' },
-    { key: 'zipCode', label: 'Zip code' },
-    { key: 'town', label: 'Town' },
+    { key: 'thoroughfare', label: 'Thoroughfare' },
+    { key: 'postalcode', label: 'PostalCode' },
+    { key: 'postalcodeortown', label: 'PostalCodeOrTown' },
     { key: 'country', label: 'Country' }
   ];
 

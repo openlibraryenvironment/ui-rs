@@ -1,65 +1,56 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Row, Col } from 'react-flexbox-grid';
-import { AddressTextField, requiredValidator } from '@k-int/address-utils';
+import { AddressTextField } from '@k-int/address-utils';
+import backendToFields from "./backendToFields";
 
-const AddressFieldsGerman = ({ name, textFieldComponent }) => {
+const AddressFieldsGerman = ({ name, requiredValidator, savedAddress, textFieldComponent }) => {
+  const initialValues = backendToFields(savedAddress);
   return (
     <>
       <Row>
         <Col xs={6}>
           <AddressTextField
-            name={name ? `${name}.institution` : 'institution'}
-            label={<FormattedMessage id="ui-directory.address-plugin-german.institution" />}
+            name={name ? `${name}.premise` : 'premise'}
+            label={<FormattedMessage id="ui-directory.address-plugin-german.institutionLibrary" />}
             component={textFieldComponent}
+            initialValue={initialValues.premise}
           />
         </Col>
         <Col xs={6}>
           <AddressTextField
-            name={name ? `${name}.library` : 'library'}
-            label={<FormattedMessage id="ui-directory.address-plugin-german.library" />}
-            component={textFieldComponent}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <AddressTextField
-            name={name ? `${name}.department` : 'department'}
-            label={<FormattedMessage id="ui-directory.address-plugin-german.department" />}
-            component={textFieldComponent}
+              name={name ? `${name}.department` : 'department'}
+              label={<FormattedMessage id="ui-directory.address-plugin-german.department" />}
+              component={textFieldComponent}
+              initialValue={initialValues.department}
           />
         </Col>
       </Row>
       <Row>
         <Col xs={6}>
           <AddressTextField
-            name={name ? `${name}.street` : 'street'}
-            label={<FormattedMessage id="ui-directory.address-plugin-german.street" />}
+            name={name ? `${name}.thoroughfare` : 'thoroughfare'}
+            label={<FormattedMessage id="ui-directory.address-plugin-german.streetNumber" />}
             component={textFieldComponent}
-          />
-        </Col>
-        <Col xs={6}>
-          <AddressTextField
-            name={name ? `${name}.number` : 'number'}
-            label={<FormattedMessage id="ui-directory.address-plugin-german.number" />}
-            component={textFieldComponent}
+            initialValue={initialValues.thoroughfare}
           />
         </Col>
       </Row>
       <Row>
         <Col xs={4}>
           <AddressTextField
-            name={name ? `${name}.zipCode` : 'zipCode'}
+            name={name ? `${name}.postalcode` : 'postalcode'}
             label={<FormattedMessage id="ui-directory.address-plugin-german.zipCode" />}
             component={textFieldComponent}
+            initialValue={initialValues.postalcode}
           />
         </Col>
         <Col xs={4}>
           <AddressTextField
-            name={name ? `${name}.town` : 'town'}
+            name={name ? `${name}.postalcodeortown` : 'postalcodeortown'}
             label={<FormattedMessage id="ui-directory.address-plugin-german.town" />}
             component={textFieldComponent}
+            initialValue={initialValues.postalcodeortown}
           />
         </Col>
       </Row>
@@ -71,6 +62,7 @@ const AddressFieldsGerman = ({ name, textFieldComponent }) => {
             component={textFieldComponent}
             required
             validator={requiredValidator}
+            initialValue={initialValues.country}
           />
         </Col>
       </Row>

@@ -1,12 +1,10 @@
 const fieldOrder = {
-  'Institution': 0,
-  'Library': 1,
-  'Department': 2,
-  'Street': 3,
-  'Number': 4,
-  'Zip code': 5,
-  'Town': 6,
-  'Country': 7
+  'Premise': 0,
+  'Department': 1,
+  'Thoroughfare': 2,
+  'PostalCode': 3,
+  'PostalCodeOrTown': 4,
+  'Country': 5
 };
 
 export default fieldOrder;

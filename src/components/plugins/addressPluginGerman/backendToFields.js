@@ -4,13 +4,11 @@ const backendToFields = (address) => {
   const addressFields = {};
 
   const fieldNames = [
-    'institution',
-    'library',
+    'premise',
     'department',
-    'street',
-    'number',
-    'zipCode',
-    'town',
+    'thoroughfare',
+    'postalcode',
+    'postalcodeortown',
     'country'
   ];
 
