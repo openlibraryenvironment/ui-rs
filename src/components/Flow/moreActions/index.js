@@ -80,3 +80,9 @@ export const FillMultiVolumeRequest = () => (
     <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest" /></Icon>
   </ShowModalButton>
 );
+
+export const SlnpAbortSupply = () => (
+    <ShowModalButton buttonStyle="dropdownItem" modal="slnpAbortSupply">
+        <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.slnpAbortSupply" /></Icon>
+    </ShowModalButton>
+);
