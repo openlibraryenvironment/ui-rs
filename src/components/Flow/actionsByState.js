@@ -102,6 +102,7 @@ export const includesNote = {
   // Special cases, where this file isn't drawn from at the moment:
   // modals
   RespondYes: true,
+  SlnpAbortSupply: true,
   SupplierCannotSupply: true,
   SupplierConditionalSupply: true,
   // others, triggered by other means
