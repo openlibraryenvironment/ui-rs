@@ -30,6 +30,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
 
     if (!isSlnpItemBarcodeAction && values?.reqId?.trim() !== request.hrid) {
       sendCallout('ui-rs.actions.wrongId', 'error');
+      return;
     }
 
     if (isSlnpCompleteItemBarcodeAction) {
@@ -37,6 +38,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
         const itemBarcode = request.volumes[0].itemId || request.volumes[0].name;
         if (itemBarcode && itemBarcode !== inputValue) {
           sendCallout('ui-rs.actions.wrongBarcodeId', 'error');
+          return;
         }
       }
     }
