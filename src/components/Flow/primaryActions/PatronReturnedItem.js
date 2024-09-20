@@ -19,7 +19,7 @@ const PatronReturnedItem = ({ performAction, request }) => {
 
     if (isRequesterSLNP && isWrongId) {
       sendCallout('ui-rs.actions.wrongId', 'error');
-        return;
+      return;
     }
 
     performAction(
