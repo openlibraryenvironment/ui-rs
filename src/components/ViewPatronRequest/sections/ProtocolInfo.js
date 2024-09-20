@@ -1,11 +1,8 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-// (it doesn't recognise FormattedMessage as a text label for th)
-import { Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { github as githubStyle } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import XmlBeautify from 'xml-beautify';
-import { Card, ErrorBoundary } from '@folio/stripes/components';
+import { AccordionSet, Accordion, Card, ErrorBoundary, Layout } from '@folio/stripes/components';
 import formattedDateTime from '../../../util/formattedDateTime';
 import css from './ProtocolInfo.css';
 
@@ -76,42 +73,41 @@ const ProtocolInfo = ({ record, id }) => {
       cardClass={css.protocolCard}
       headerClass={css.protocolCardHeader}
     >
-      <table className={css.protocolEntryList}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th><FormattedMessage id="ui-rs.protocol.date" /></th>
-            <th><FormattedMessage id="ui-rs.protocol.duration" /></th>
-            <th><FormattedMessage id="ui-rs.protocol.protocol" /></th>
-            <th><FormattedMessage id="ui-rs.protocol.url" /></th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            protocolMessages.map((entry, i) => (
-              <Fragment key={i}>
-                <tr key={i}>
-                  <td>{protocolMessages.length - i}</td>
-                  <td>{formattedDateTime(entry.dateCreated)}</td>
-                  <td>{entry.duration}</td>
-                  <td>{entry.protocolType}</td>
-                  <td>{entry.url}</td>
-                </tr>
-                <tr key={i + protocolMessages.length}>
-                  <td />
-                  <td><FormattedMessage id="ui-rs.protocol.request" /></td>
-                  <td colSpan="3"><ErrorBoundary><FormatEntry entry={entry} property="requestBody" /></ErrorBoundary></td>
-                </tr>
-                <tr key={i + (protocolMessages.length * 2)}>
-                  <td />
-                  <td><FormattedMessage id="ui-rs.protocol.response" /></td>
-                  <td colSpan="3"><ErrorBoundary><FormatEntry entry={entry} property="responseBody" /></ErrorBoundary></td>
-                </tr>
-              </Fragment>
-            ))
-          }
-        </tbody>
-      </table>
+      <Layout flex full className={css.protocolCardHeadings}>
+        <span style={{ width: '1.5em' }}>&nbsp;</span>
+        <span style={{ width: '3em' }}>#</span>
+        <span style={{ width: '12em' }}><FormattedMessage id="ui-rs.protocol.date" /></span>
+        <span style={{ width: '8em' }}><FormattedMessage id="ui-rs.protocol.duration" /></span>
+        <span style={{ width: '12em' }}><FormattedMessage id="ui-rs.protocol.protocol" /></span>
+        <span><FormattedMessage id="ui-rs.protocol.url" /></span>
+      </Layout>
+      <AccordionSet>
+        {
+          protocolMessages.map((entry, i) => (
+            <Accordion
+              key={i}
+              closedByDefault
+              label={
+                <Layout flex full className={css.protocolEntryHeader}>
+                  <span style={{ width: '3em' }}>{protocolMessages.length - i}</span>
+                  <span style={{ width: '12em' }}>{formattedDateTime(entry.dateCreated)}</span>
+                  <span style={{ width: '8em' }}>{entry.duration}</span>
+                  <span style={{ width: '12em' }}>{entry.protocolType}</span>
+                  <span style={{ flex: '1' }}>{entry.url}</span>
+                </Layout>
+              }
+            >
+              <>
+                <h2><FormattedMessage id="ui-rs.protocol.request" /></h2>
+                <ErrorBoundary><FormatEntry entry={entry} property="requestBody" /></ErrorBoundary>
+                <hr />
+                <h2><FormattedMessage id="ui-rs.protocol.response" /></h2>
+                <ErrorBoundary><FormatEntry entry={entry} property="responseBody" /></ErrorBoundary>
+              </>
+            </Accordion>
+          ))
+        }
+      </AccordionSet>
     </Card>
   );
 };
