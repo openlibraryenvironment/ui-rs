@@ -14,10 +14,14 @@ const PatronReturnedItem = ({ performAction, request }) => {
   const combine = combine_returned_by_patron_and_return_ship === 'yes';
 
   const onSubmit = values => {
-    if (values?.itemBarcodes[0].itemId?.trim() !== request.hrid) {
+    const isRequesterSLNP = request.stateModel?.shortcode === 'SLNPRequester';
+    const isWrongId = values?.itemBarcodes[0].itemId?.trim() !== request.hrid;
+
+    if (isRequesterSLNP && isWrongId) {
       sendCallout('ui-rs.actions.wrongId', 'error');
         return;
     }
+
     performAction(
       combine ?
         'patronReturnedItemAndShippedReturn' :
