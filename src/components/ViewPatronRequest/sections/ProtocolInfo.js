@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { github as githubStyle } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import XmlBeautify from 'xml-beautify';
-import { Card } from '@folio/stripes/components';
+import { Card, ErrorBoundary } from '@folio/stripes/components';
 import formattedDateTime from '../../../util/formattedDateTime';
 import css from './ProtocolInfo.css';
 
@@ -27,12 +27,15 @@ const FormatEntry = ({ entry, property }) => {
         const xmlSnippets = [];
         if (Array.isArray(parsed.searches)) {
           parsed.searches.forEach((search, i) => {
-            xmlSnippets.push(<span key={'span' + i}>Search #{i} <code>searchRequest</code></span>);
-            xmlSnippets.push(
-              <SyntaxHighlighter language="xml" style={githubStyle} wrapLongLines key={'xml' + i}>
-                {new XmlBeautify().beautify(search?.searchRequest)}
-              </SyntaxHighlighter>
-            );
+            if (search.searchRequest) {
+              xmlSnippets.push(<span key={'span' + i}>Search #{i} <code>searchRequest</code></span>);
+              xmlSnippets.push(
+                <SyntaxHighlighter language="xml" style={githubStyle} wrapLongLines key={'xml' + i}>
+                  {new XmlBeautify().beautify(search?.searchRequest)}
+                </SyntaxHighlighter>
+              );
+              parsed.searches[i].searchRequest = 'See below';
+            }
             if (Array.isArray(search.records)) {
               search.records.forEach((record, j) => {
                 xmlSnippets.push(<span key={'span' + i + 'r' + j}>Search #{i}, record #{j}</span>);
@@ -44,7 +47,6 @@ const FormatEntry = ({ entry, property }) => {
               });
               parsed.searches[i].records = 'See below';
             }
-            parsed.searches[i].searchRequest = 'See below';
           });
         }
         const formatted = JSON.stringify(parsed, null, 2);
@@ -98,12 +100,12 @@ const ProtocolInfo = ({ record, id }) => {
                 <tr key={i + protocolMessages.length}>
                   <td />
                   <td><FormattedMessage id="ui-rs.protocol.request" /></td>
-                  <td colSpan="3"><FormatEntry entry={entry} property="requestBody" /></td>
+                  <td colSpan="3"><ErrorBoundary><FormatEntry entry={entry} property="requestBody" /></ErrorBoundary></td>
                 </tr>
                 <tr key={i + (protocolMessages.length * 2)}>
                   <td />
                   <td><FormattedMessage id="ui-rs.protocol.response" /></td>
-                  <td colSpan="3"><FormatEntry entry={entry} property="responseBody" /></td>
+                  <td colSpan="3"><ErrorBoundary><FormatEntry entry={entry} property="responseBody" /></ErrorBoundary></td>
                 </tr>
               </Fragment>
             ))
