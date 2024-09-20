@@ -1,26 +1,20 @@
 .protocolCard {
-    background-color: #ffe700;
+  background-color: #fff069;
+}
+
+.protocolCardHeadings {
+  font-weight: bold;
+  display: inline-flex;
 }
 
 .protocolCardHeader {
-    background-color: #f4cd00;
-    font-weight: bold;
+  background-color: #ffe043;
+  font-weight: bold;
 }
 
-table.protocolEntryList {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table.protocolEntryList tbody tr:nth-child(odd) {
-    background-color: #fff400;
-}
-
-table.protocolEntryList th {
-    text-align: left;
-}
-
-table.protocolEntryList th, table.protocolEntryList td {
-    padding: 0.25em 1em;
-    vertical-align: top;
+.protocolEntryHeader {
+  font-weight: normal;
+  font-size: 1rem;
+  display: inline-flex;
+  flex-wrap: nowrap;
 }
