@@ -524,6 +524,7 @@
   "settings.autoResponder.staleRequest3ExcludeWeekend": "Do we exclude weekends when we determine if a request is stale or not",
   "settings.autoResponder.staleRequest3ExcludeWeekend.help": "Libraries quite often do not work on weekends when supplying material to other libraries, so if we do not exclude weekends when determining if a request is stale ot not the request may become stale before the supplying library has had a chance to look at the request",
   "settings.autoResponder.checkDuplicateTime" : "The number of hours post-creation in which to check for a duplicate of any given request",
+  "settings.autoResponder.autoRerequest" : "Automatically re-request unfilled requests with status of 'transfer' from lender of last resort",
   "settings.chat.chatAutoRead": "Auto mark as read",
   "settings.pullslipConfiguration.pullSlipLogoId": "Pull slip logo",
   "settings.pullslipConfiguration.pullSlipReportId": "Pull slip report",
