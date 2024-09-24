@@ -179,6 +179,7 @@
   "flow.volumes.status.temporary_item_creation_(no_integration)": "LMS temporary item creation disabled; please create manually",
   "flow.volumes.status.requested_from_the_ils": "Requested from the ILS",
   "flow.volumes.status.ils_request_cancelled": "Item cancelled because different item was checkout",
+  "flow.volumes.status.failed_lms_check_out": "Item failed because it was not found",
 
   "view.showTags": "Show tags",
   "view.showChat": "Request messages",
