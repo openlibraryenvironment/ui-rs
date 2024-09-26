@@ -26,6 +26,12 @@ export const SupplierCannotSupply = () => (
   </ShowModalButton>
 );
 
+export const NonreturnableSupplierRespondCannotSupply = () => (
+  <ShowModalButton buttonStyle="dropdownItem" modal="nonreturnableSupplierRespondCannotSupply">
+    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.supplierCannotSupply" /></Icon>
+  </ShowModalButton>
+);
+
 export const SupplierConditionalSupply = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="ConditionalSupply">
     <Icon icon="ellipsis"><FormattedMessage id="ui-rs.actions.conditionalSupply" /></Icon>

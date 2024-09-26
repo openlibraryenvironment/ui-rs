@@ -17,7 +17,7 @@ const STATE_MODEL_REQUESTER = 'state_model_requester';
 const SLNP_REQ_TRANSLATION_PREFIX = 'SLNP_REQ';
 const SLNP_RESP_TRANSLATION_PREFIX = 'SLNP_RES';
 const REQ_TRANSLATION_PREFIX = 'REQ';
-const RESP_TRANSLATION_PREFIX = 'RESP';
+const RESP_TRANSLATION_PREFIX = 'RES';
 const SUPPLIER = 'supply';
 
 const PatronRequestsRoute = ({ appName, children }) => {
@@ -145,6 +145,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       batch: batches
         .sort(compareCreated)
         .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
+      hasLocalNote: [({ label: intl.formatMessage({ id: 'stripes-reshare.hasLocalNote' }), value: 'localNote ISNOTNULL' })],
       hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'hasUnreadMessages=true' })],
       institution: institutions
         .map(x => ({ label: x.name, value: x.id }))

@@ -84,16 +84,24 @@ const RequestInfo = ({ request }) => {
             />
           </Col>
         </Row>
-        {request.patronNote &&
-          <Row>
-            <Col xs={12}>
+        <Row>
+          {request.patronNote &&
+            <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-rs.information.notes" />}
                 value={request.patronNote}
               />
             </Col>
-          </Row>
-        }
+          }
+          {request.localNote &&
+            <Col xs={6}>
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.localNote" />}
+                value={request.localNote}
+              />
+            </Col>
+          }
+        </Row>
       </Layout>
     </Accordion>
   );

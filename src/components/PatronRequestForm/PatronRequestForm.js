@@ -31,7 +31,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
   return (
     <AccordionSet>
       <Row>
-        <Col xs={3}>
+        <Col xs={4}>
           <Field
             id="edit-request-metadata-requestingUser"
             name="patronIdentifier"
@@ -41,7 +41,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
             validate={required}
           />
         </Col>
-        <Col xs={3}>
+        <Col xs={2}>
           <Field
             id="edit-request-metadata-neededBy"
             name="neededBy"
@@ -51,7 +51,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
             component={Datepicker}
           />
         </Col>
-        <Col xs={3}>
+        <Col xs={4}>
           <Field
             id="edit-request-metadata-pickupLocation"
             name="pickupLocationSlug"
@@ -63,7 +63,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
             validate={!isCopyReq && required}
           />
         </Col>
-        <Col xs={3}>
+        <Col xs={2}>
           <Label><FormattedMessage id="ui-rs.information.serviceType" /></Label>
           <Field
             component={RadioButton}
@@ -100,7 +100,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
         </Row>
       )}
       <Row>
-        <Col xs={9}>
+        <Col xs={5}>
           <Field
             id="edit-request-metadata-patronNote"
             name="patronNote"
@@ -110,8 +110,17 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
             maxLength={255}
           />
         </Col>
+        <Col xs={5}>
+          <Field
+            id="edit-request-metadata-localNote"
+            name="localNote"
+            label={<FormattedMessage id="ui-rs.information.localNote" />}
+            component={TextArea}
+            rows={5}
+          />
+        </Col>
         {isCopyReq &&
-          <Col xs={3}>
+          <Col xs={2}>
             <Field
               id="edit-request-metadata-copyright-type"
               name="copyrightType.id"
@@ -119,6 +128,8 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
               placeholder=" "
               component={Select}
               dataOptions={copyrightTypes}
+              required
+              validate={required}
             />
           </Col>
         }
