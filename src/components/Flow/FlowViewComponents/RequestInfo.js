@@ -36,6 +36,7 @@ const RequestInfo = ({ request }) => {
 
   const location = useLocation();
   const itemBarcodeText = request.volumes?.length <= 1 ? (request.volumes[0]?.itemId || request.selectedItemBarcode) : <FormattedMessage id="ui-rs.flow.info.itemBarcode.multiVolRequest" />;
+  const itemCallNumberText = request.volumes?.length <= 1 ? (request.volumes[0]?.callNumber) : <FormattedMessage id="ui-rs.flow.info.itemCallNumber.multiVolRequest" />;
   const [showStateCode, setShowStateCode] = useState(false);
 
   return (
@@ -73,6 +74,7 @@ const RequestInfo = ({ request }) => {
             </Link> :
             <NoValue />)}
           {colKeyVal('itemBarcode', itemBarcodeText || <NoValue />)}
+          {colKeyVal('itemCallNumber', itemCallNumberText || <NoValue />)}
           {colKeyVal('dueDate', calculateDueDate(intl, request))}
           {colKeyVal('volumesNeeded', request.volume) || <NoValue />}
           <Col xs={6}>

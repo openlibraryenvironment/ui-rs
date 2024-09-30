@@ -5,3 +5,4 @@ export { default as CitationMetadataInfo } from './CitationMetadataInfo';
 export { default as SuppliersInfo } from './SuppliersInfo';
 export { default as AuditInfo } from './AuditInfo';
 export { default as ProtocolInfo } from './ProtocolInfo';
+export { default as CustomIdentifiersInfo } from './CustomIdentifiersInfo';

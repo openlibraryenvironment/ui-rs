@@ -44,6 +44,15 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   // Fetch the request
   const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000, notifyOnChangeProps: 'tracked' });
 
+  // Fetch Auto Responder
+  const { data: autoRespondRequest = {}, isSuccess: autoRespondLoaded } = useOkapiQuery('rs/settings/appSettings', {
+    searchParams: {
+      filters: 'section==autoResponder',
+      perPage: '100',
+      staleTime: 2 * 60 * 60 * 1000
+    }
+  });
+
   /* On mount ONLY we want to check if the helper is open, and if so then mark all messages as read.
    * If this useEffect is handed dependencies handleMarkAllRead and isOpen then it will infinitely loop,
    */
@@ -79,7 +88,7 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
           >
             {({ ref, ariaIds }) => (
               <Icon
-                icon="document"
+                icon="report"
                 aria-labelledby={ariaIds.text}
                 ref={ref}
               />
@@ -105,8 +114,9 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   };
 
 
-  if (!hasRequestLoaded) return null;
-  const forCurrent = actionsForRequest(request);
+  if (!hasRequestLoaded || !autoRespondLoaded) return null;
+  const autoLoanOff = autoRespondRequest.some(item => item.key === 'auto_responder_status' && (item.value && item.value === 'off'));
+  const forCurrent = actionsForRequest(request, autoLoanOff);
 
   return (
     <>
@@ -155,14 +165,22 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
                   </DirectLink>
                 )
               }
+<<<<<<< HEAD
               {request?.validActions?.includes('localNote') &&
+=======
+              {request?.validActions?.some(a => a.actionCode === 'localNote') &&
+>>>>>>> 0b71e6741a8247cb299bfe9084518f675fcfa3a6
                 <DirectLink component={Button} buttonStyle="dropdownItem" to="localNote" id="clickable-localnote">
                   <Icon icon="edit">
                     <FormattedMessage id="stripes-reshare.actions.localNote" />
                   </Icon>
                 </DirectLink>
               }
+<<<<<<< HEAD
               {request?.validActions?.includes('manualClose') &&
+=======
+              {request?.validActions?.some(a => a.actionCode === 'manualClose') &&
+>>>>>>> 0b71e6741a8247cb299bfe9084518f675fcfa3a6
                 <ManualClose />
               }
               <PrintPullSlip />

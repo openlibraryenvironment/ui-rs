@@ -62,7 +62,7 @@ const ChatPane = ({
   }, [notificationCount, notifications, setNotificationCount]);
 
   const renderPaneFooter = () => {
-    const messageValid = validActions?.includes('message');
+    const messageValid = validActions?.some(a => a.actionCode === 'message');
     return (
       <Form
         onSubmit={payload => performAction('message', (payload || {}), {

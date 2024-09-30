@@ -5,6 +5,7 @@ import { Button, Icon } from '@folio/stripes/components';
 import { ShowModalButton } from '../../ModalButtons';
 
 export { default as Generic } from './Generic';
+export { default as AddManualFee } from './AddManualFee';
 
 // Named corresponding to actions
 export const CancelLocal = () => (
@@ -79,9 +80,7 @@ export const RespondYes = () => (
   </ShowModalButton>
 );
 
-
-
-// Client only, component names do not correspond to actions
+// Client only, component names do not correspond to mod-rs actions
 export const PrintPullSlip = () => (
   <DirectLink component={Button} buttonStyle="dropdownItem" to="pullslip">
     <Icon icon="print"><FormattedMessage id="ui-rs.printPullslip" /></Icon>
@@ -92,4 +91,10 @@ export const FillMultiVolumeRequest = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="FillMultiVolumeRequest">
     <Icon icon="check-circle"><FormattedMessage id="ui-rs.actions.fillMultiVolumeRequest" /></Icon>
   </ShowModalButton>
+);
+
+export const SlnpAbortSupply = () => (
+    <ShowModalButton buttonStyle="dropdownItem" modal="slnpAbortSupply">
+        <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.slnpAbortSupply" /></Icon>
+    </ShowModalButton>
 );
