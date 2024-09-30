@@ -80,6 +80,7 @@ const DirectoryEntryForm = ({
     form,
     onToggle: handleSectionToggle,
     parentResources,
+    managed,
   };
 
   const name = resources?.selectedRecord?.records?.[0]?.fullyQualifiedName ??
@@ -108,13 +109,15 @@ const DirectoryEntryForm = ({
       </Layout>
       {tab === 'shared' &&
         <>
-          <Row>
-            <Col xs={12} lgOffset={1} lg={10}>
-              <MessageBanner>
-                <FormattedMessage id="ui-directory.information.heading.display-text" values={{ directory_entry: name }} />
-              </MessageBanner>
-            </Col>
-          </Row>
+          {!managed &&
+            <Row>
+              <Col xs={12} lgOffset={1} lg={10}>
+                <MessageBanner>
+                  <FormattedMessage id="ui-directory.information.heading.display-text" values={{ directory_entry: name }} />
+                </MessageBanner>
+              </Col>
+            </Row>
+          }
           <AccordionSet>
             <Row end="xs">
               <Col xs>
@@ -133,13 +136,15 @@ const DirectoryEntryForm = ({
       }
       {tab === 'local' &&
         <>
-          <Row>
-            <Col xs={12} lgOffset={1} lg={10}>
-              <MessageBanner>
-                <FormattedMessage id="ui-directory.information.local.heading.display-text" />
-              </MessageBanner>
-            </Col>
-          </Row>
+          {!managed &&
+            <Row>
+              <Col xs={12} lgOffset={1} lg={10}>
+                <MessageBanner>
+                  <FormattedMessage id="ui-directory.information.local.heading.display-text" />
+                </MessageBanner>
+              </Col>
+            </Row>
+          }
           <AccordionSet>
             <Row end="xs">
               <Col xs>
