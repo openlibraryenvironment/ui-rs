@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
-import useActionConfig from '../useActionConfig';
 import { useIntlCallout } from '@projectreshare/stripes-reshare';
+import useActionConfig from '../useActionConfig';
 
 const PatronReturnedItem = ({ performAction, request }) => {
   const sendCallout = useIntlCallout();
@@ -26,12 +26,12 @@ const PatronReturnedItem = ({ performAction, request }) => {
       combine ?
         'patronReturnedItemAndShippedReturn' :
         'patronReturnedItem',
-        values, {
-          success: combine ? 'ui-rs.actions.checkIn.patron.combined.success' : 'ui-rs.actions.checkIn.patron.success',
-          error: 'ui-rs.actions.checkIn.error',
-        }
+      values, {
+        success: combine ? 'ui-rs.actions.checkIn.patron.combined.success' : 'ui-rs.actions.checkIn.patron.success',
+        error: 'ui-rs.actions.checkIn.error',
+      }
     );
-  }
+  };
   return (
     <Form
       onSubmit={onSubmit}

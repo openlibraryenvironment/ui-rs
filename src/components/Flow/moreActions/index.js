@@ -82,7 +82,7 @@ export const FillMultiVolumeRequest = () => (
 );
 
 export const SlnpAbortSupply = () => (
-    <ShowModalButton buttonStyle="dropdownItem" modal="slnpAbortSupply">
-        <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.slnpAbortSupply" /></Icon>
-    </ShowModalButton>
+  <ShowModalButton buttonStyle="dropdownItem" modal="slnpAbortSupply">
+    <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.slnpAbortSupply" /></Icon>
+  </ShowModalButton>
 );

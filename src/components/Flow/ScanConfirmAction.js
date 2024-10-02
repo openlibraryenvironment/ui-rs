@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage, injectIntl} from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Form, Field } from 'react-final-form';
-import {Button, Row, Col, TextField} from '@folio/stripes/components';
+import { Button, Row, Col, TextField } from '@folio/stripes/components';
+import { useIntlCallout, useIsActionPending } from '@projectreshare/stripes-reshare';
 import AddNoteField from '../AddNoteField';
 import { includesNote } from './actionsByState';
-import { useIntlCallout, useIsActionPending } from '@projectreshare/stripes-reshare';
 
 const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
   const sendCallout = useIntlCallout();
@@ -22,8 +22,8 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
   ];
 
   const isSlnpResponder = request.stateModel?.shortcode === 'SLNPResponder';
-  const isSlnpItemBarcodeAction = isSlnpResponder && slnpItemBarcodeActions.some(action => validActions.includes(action));
-  const isSlnpCompleteItemBarcodeAction = isSlnpResponder && slnpCompleteItemBarcodeActions.some(action => validActions.includes(action));
+  const isSlnpItemBarcodeAction = isSlnpResponder && slnpItemBarcodeActions.some(act => validActions.includes(act));
+  const isSlnpCompleteItemBarcodeAction = isSlnpResponder && slnpCompleteItemBarcodeActions.some(act => validActions.includes(act));
 
   const onSubmit = async values => {
     const inputValue = values?.reqId?.trim();
@@ -44,7 +44,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
     }
 
     if (isSlnpItemBarcodeAction) {
-      return performAction(action, { itemBarcodes: [{itemId: inputValue}], note: values.note, }, { success, error });
+      return performAction(action, { itemBarcodes: [{ itemId: inputValue }], note: values.note }, { success, error });
     } else {
       return performAction(action, { note: values.note }, { success, error });
     }
@@ -56,7 +56,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting }) => (
         <form onSubmit={handleSubmit} autoComplete="off">
-          {prompt && isSlnpItemBarcodeAction && <FormattedMessage id={prompt + ".barcode"} />}
+          {prompt && isSlnpItemBarcodeAction && <FormattedMessage id={prompt + '.barcode'} />}
           {prompt && !isSlnpItemBarcodeAction && <FormattedMessage id={prompt} />}
           {!prompt &&
             <FormattedMessage id={`stripes-reshare.actions.${action}`}>
