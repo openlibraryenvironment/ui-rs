@@ -25,12 +25,12 @@ import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT, TEMPLATES_ENDPOINT } from '../cons
 const ResourceSharingSettings = (props) => {
   const { match } = props;
   const intl = useIntl();
-
-  const { data: featureFlagData = {}, isSuccess: automaticFeesFeatureFlagLoaded } = useOkapiQuery('rs/settings/appSettings', {
-    searchParams: '?filters=key==feature_flag_automatic_fees&filters=hidden=true'
+  
+  const { data: featureFlagData = [], isSuccess: featureFlagsLoaded } = useOkapiQuery('rs/settings/appSettings', {
+    searchParams: '?filters=section==featureFlags&filters=hidden=true&sort=key==asc&perPage=100'
   });
 
-  const persistentPages = [
+  let persistentPages = [
     {
       route: 'CustomISO18626Settings',
       id: 'iso18626',
@@ -106,22 +106,25 @@ const ResourceSharingSettings = (props) => {
       component: HostLMSShelvingLocations,
       perm: 'ui-rs.settings.hostlmslocations',
     },
+    {
+      route: 'automaticFees',
+      id: 'automaticFees',
+      label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.automaticFees' }),
+      component: AutomaticFeesSettings
+    }
   ];
 
-  if (automaticFeesFeatureFlagLoaded) {
-    if (featureFlagData.length > 0) {
-      const featureFlag = featureFlagData[0];
-
-      if (featureFlag && featureFlag.value === 'true') {
-        const automaticFeesSetting = {
-          route: 'automaticFees',
-          id: 'automaticFees',
-          label: intl.formatMessage({ id: 'ui-rs.settings.settingsSection.automaticFees' }),
-          component: AutomaticFeesSettings
-        };
-        persistentPages.push(automaticFeesSetting);
-      }
+  if (featureFlagData && featureFlagData.length > 0) {
+    const featureFlagsMap = {};
+    for (const item of featureFlagData) {
+      const key = item.key.split('.')[0];
+      featureFlagsMap[key] = item.value;
     }
+
+    persistentPages = persistentPages.filter((page) => {
+      const flagValue = featureFlagsMap[page.id];
+      return flagValue === 'true' || flagValue === null || flagValue === undefined;
+    });
   }
 
   const { isLoading, SettingsComponent } = useSettings({
