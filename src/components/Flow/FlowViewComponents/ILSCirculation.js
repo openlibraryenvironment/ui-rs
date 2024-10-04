@@ -20,52 +20,50 @@ const ILSCirculation = ({ request }) => {
       feeUUID = parsedResponse.feeUuid;
       itemUUID = parsedResponse.itemUuid;
     }
-
-    if (itemUUID && patronUUID) {
-      const { isSuccess, data } = useOkapiQuery('circulation/loans', {
-        searchParams: `?query=(itemId=="${itemUUID}" and userId=="${patronUUID}")`
-      });
-
-      if (isSuccess && data && data.loans && data.loans.length > 0) {
-        loanUUID = data.loans[0].id;
-      }
-    }
   }
 
-  return (
-    ((loanUUID && patronUUID) || requestUUID || (patronUUID && feeUUID)) ? (
-      <Accordion
-        id="requestInfo"
-        label={<FormattedMessage id="ui-rs.flow.sections.ilsCirculation" />}
-      >
-        <Layout className="padding-top-gutter">
-          <Row>
-            {requestUUID && (
-              <Col xs={3}>
-                <Link to={`/requests/view/${requestUUID}?sort=requestDate`}>
-                  <FormattedMessage id="ui-rs.flow.info.request" />
-                </Link>
-              </Col>
-            )}
-            {patronUUID && loanUUID && (
-              <Col xs={3}>
-                <Link to={`/users/${patronUUID}/loans/view/${loanUUID}`}>
-                  <FormattedMessage id="ui-rs.flow.info.createdLoan" />
-                </Link>
-              </Col>
-            )}
-            {patronUUID && feeUUID && (
-              <Col xs={3}>
-                <Link to={`/users/${patronUUID}/accounts/view/${feeUUID}`}>
-                  <FormattedMessage id="ui-rs.flow.info.createdFeeFine" />
-                </Link>
-              </Col>
-            )}
-          </Row>
-        </Layout>
-      </Accordion>
-    ) : null
-  );
+  const { isSuccess, data } = useOkapiQuery('circulation/loans', {
+    searchParams: `?query=(itemId=="${itemUUID || ''}" and userId=="${patronUUID || ''}")`
+  });
+
+  if (isSuccess && data && data.loans && data.loans.length > 0) {
+    loanUUID = data.loans[0].id;
+  }
+
+  const showAccordion = (loanUUID && patronUUID) || requestUUID || (patronUUID && feeUUID);
+
+  return showAccordion ? (
+    <Accordion
+      id="requestInfo"
+      label={<FormattedMessage id="ui-rs.flow.sections.ilsCirculation" />}
+    >
+      <Layout className="padding-top-gutter">
+        <Row>
+          {requestUUID && (
+          <Col xs={3}>
+            <Link to={`/requests/view/${requestUUID}?sort=requestDate`}>
+              <FormattedMessage id="ui-rs.flow.info.request" />
+            </Link>
+          </Col>
+          )}
+          {patronUUID && loanUUID && (
+          <Col xs={3}>
+            <Link to={`/users/${patronUUID}/loans/view/${loanUUID}`}>
+              <FormattedMessage id="ui-rs.flow.info.createdLoan" />
+            </Link>
+          </Col>
+          )}
+          {patronUUID && feeUUID && (
+          <Col xs={3}>
+            <Link to={`/users/${patronUUID}/accounts/view/${feeUUID}`}>
+              <FormattedMessage id="ui-rs.flow.info.createdFeeFine" />
+            </Link>
+          </Col>
+          )}
+        </Row>
+      </Layout>
+    </Accordion>
+  ) : null;
 };
 
 export default ILSCirculation;
