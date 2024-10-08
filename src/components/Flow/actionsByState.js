@@ -69,9 +69,6 @@ export const actionsByState = {
   REQ_AWAITING_RETURN_SHIPPING: {
     moreActions: ['PrintPullSlip']
   },
-  SLNP_REQ_SHIPPED: {
-    moreActions: ['PrintPullSlip']
-  },
   SLNP_REQ_CHECKED_IN: {
     moreActions: ['PrintPullSlip']
   },
