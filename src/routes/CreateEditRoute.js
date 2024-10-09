@@ -140,7 +140,8 @@ const CreateEditRoute = props => {
     initialValues = { ...record,
       formattedDateCreated: (
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
-      ) };
+      ),
+      serviceType: { value: record?.serviceType?.value } };
   } else {
     initialValues = {
       copyrightType: { id: defaultCopyrightTypeId },
