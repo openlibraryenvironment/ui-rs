@@ -62,10 +62,18 @@ export const actionsByState = {
     primaryAction: 'SupplierCheckInToReshare',
     moreActions: ['PrintPullSlip', 'FillMultiVolumeRequest'],
   },
+  /*
   RES_COPY_AWAIT_PICKING: {
     primaryAction: 'nonreturnableSupplierAddURLToDocument',
     excludeActions: ['nonreturnableSupplierAddURLToDocument']
   },
+  */
+ 
+  RES_COPY_AWAIT_PICKING: {
+    primaryAction: 'supplierAddURLToDocument',
+    excludeActions: ['supplierAddURLToDocument']
+  },
+  
   RES_AWAIT_PROXY_BORROWER: {
     moreActions: ['FillMultiVolumeRequest'],
   },

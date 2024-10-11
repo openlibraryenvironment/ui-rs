@@ -72,7 +72,7 @@ export const RequesterAgreeConditions = ({ performAction }) => (
 export { default as SupplierCheckInToReshare } from './SupplierCheckInToReshare';
 export { default as SupplierFillDigitalLoan } from './SupplierFillDigitalLoan';
 export { default as PatronReturnedItem } from './PatronReturnedItem';
-export { default as NonreturnableSupplierAddURLToDocument } from './NonreturnableSupplierAddURLToDocument';
+export { default as SupplierAddURLToDocument } from './SupplierAddURLToDocument';
 
 
 
