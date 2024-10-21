@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   FormattedDate,
   FormattedMessage,
@@ -13,6 +13,7 @@ import {
   Button,
   Icon,
   LoadingPane,
+  MCLPagingTypes,
   MultiColumnList,
   Pane,
   PaneMenu,
@@ -55,7 +56,7 @@ const appDetails = {
   },
 };
 
-const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions, searchParams, children }) => {
+const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions, searchParams, perPage, children }) => {
   const appName = useContext(AppNameContext);
   const sendCallout = useIntlCallout();
   const history = useHistory();
@@ -64,13 +65,16 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
   const match = useRouteMatch();
   const okapiKy = useOkapiKy();
   const queryClient = useQueryClient();
+  const [offset, setOffset] = useState(0);
 
-  const requests = requestsQuery?.data?.pages?.flatMap(x => x.results);
+  const requests = requestsQuery?.data?.pages?.[offset / perPage]?.results;
+  const sparseRequests = (new Array(offset)).concat(requests);
   const totalCount = requestsQuery?.data?.pages?.[0]?.total;
   const parsedParams = queryString.parse(location.search);
   const sortOrder = parsedParams.sort || '';
   const fetchMore = (_askAmount, index) => {
     requestsQuery.fetchNextPage({ pageParam: index });
+    setOffset(index);
   };
   const initialSearch = '?filters=terminal.false&sort=-dateCreated';
 
@@ -213,7 +217,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       serviceType: { max: 80 },
                       selectedItemBarcode: '130px',
                     }}
-                    contentData={requests}
+                    contentData={sparseRequests}
                     formatter={{
                       flags: a => {
                         const needsAttention = a?.state?.needsAttention;
@@ -270,10 +274,11 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                     onHeaderClick={onSort}
                     onNeedMoreData={fetchMore}
                     onRowClick={(_e, rowData) => history.push(`${match.url}/${rowData.id}${location.search}`)}
+                    pageAmount={perPage}
+                    pagingType={MCLPagingTypes.PREV_NEXT}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     totalCount={totalCount}
-                    virtualize
                     visibleColumns={visibleColumns}
                   />
                 </Pane>

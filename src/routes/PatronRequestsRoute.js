@@ -170,6 +170,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       querySetter={querySetter}
       filterOptions={filterOptions}
       searchParams={generateKiwtQuery(SASQ_MAP, query)}
+      perPage={PER_PAGE}
     >
       {children}
     </PatronRequests>
