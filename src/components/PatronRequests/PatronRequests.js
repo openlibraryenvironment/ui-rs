@@ -213,6 +213,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       flags: '48px',
                       id: { max: 115 },
                       dateCreated: '96px',
+                      lastUpdated: '96px',
                       state: { min: 84 },
                       serviceType: { max: 80 },
                       selectedItemBarcode: '130px',
