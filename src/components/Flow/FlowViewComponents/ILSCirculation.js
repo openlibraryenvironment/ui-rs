@@ -4,8 +4,8 @@ import { Accordion, Col, Layout, Row } from '@folio/stripes/components';
 import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 const ILSCirculation = ({ request }) => {
-  // Do nothing for Non-ZFL tenants/models
-  if (!['SLNPRequester', 'SLNPResponder'].includes(request.stateModel?.shortcode)) {
+  const validShortcodes = ['SLNPRequester', 'SLNPResponder', 'SLNPNonReturnableResponder', 'SLNPNonReturnableRequester'];
+  if (!validShortcodes.includes(request.stateModel?.shortcode)) {
     return null;
   }
 
