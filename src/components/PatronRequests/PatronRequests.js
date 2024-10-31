@@ -12,13 +12,15 @@ import {
   Badge,
   Button,
   Icon,
+  IconButton,
+  Loading,
   LoadingPane,
   MCLPagingTypes,
   MultiColumnList,
   Pane,
   PaneMenu,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, useOkapiKy } from '@folio/stripes/core';
+import { AppIcon, IfPermission, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { SearchAndSortQuery, PersistedPaneset } from '@folio/stripes/smart-components';
 import { useIntlCallout } from '@projectreshare/stripes-reshare';
 import AppNameContext from '../../AppNameContext';
@@ -65,6 +67,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
   const match = useRouteMatch();
   const okapiKy = useOkapiKy();
   const queryClient = useQueryClient();
+  const stripes = useStripes();
   const [offset, setOffset] = useState(0);
 
   const requests = requestsQuery?.data?.pages?.[offset / perPage]?.results;
@@ -165,6 +168,15 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                   actionMenu={getActionMenu}
                   appIcon={<AppIcon app={appName} iconKey="app" size="small" />}
                   defaultWidth="fill"
+                  firstMenu={(
+                    <>
+                      {stripes.config?.reshare?.showRefresh &&
+                        <PaneMenu>
+                          { requestsQuery?.isRefetching ? <Loading /> : <IconButton icon="refresh" onClick={() => requestsQuery?.refetch()} /> }
+                        </PaneMenu>
+                      }
+                    </>
+                  )}
                   lastMenu={(
                     <PaneMenu>
                       {(appName === 'request') &&
