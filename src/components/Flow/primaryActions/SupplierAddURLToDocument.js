@@ -4,11 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField } from '@folio/stripes/components';
 
-const NonreturnableSupplierAddURLToDocument = ({ performAction }) => {
+const SupplierAddURLToDocument = ({ performAction }) => {
   const onSubmit = values => {
-    return performAction('nonreturnableSupplierAddURLToDocument', values, {
-      success: 'ui-rs.actions.nonreturnableSupplierAddURLToDocument.success',
-      error: 'ui-rs.actions.nonreturnableSupplierAddURLToDocument.error',
+    return performAction('supplierAddURLToDocument', values, {
+      success: 'ui-rs.actions.supplierAddURLToDocument.success',
+      error: 'ui-rs.actions.supplierAddURLToDocument.error',
     });
   };
   return (
@@ -16,14 +16,14 @@ const NonreturnableSupplierAddURLToDocument = ({ performAction }) => {
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting }) => (
         <form onSubmit={handleSubmit} autoComplete="off">
-          <FormattedMessage id="ui-rs.actions.nonreturnableSupplierAddURLToDocument.prompt" />
+          <FormattedMessage id="ui-rs.actions.supplierAddURLToDocument.prompt" />
           <Row>
             <Col xs={11}>
               <Field name="url" component={TextField} autoFocus />
             </Col>
             <Col xs={1}>
               <Button buttonStyle="primary mega" type="submit" disabled={submitting}>
-                <FormattedMessage id="ui-rs.actions.nonreturnableSupplierAddURLToDocument.button" />
+                <FormattedMessage id="ui-rs.actions.supplierAddURLToDocument.button" />
               </Button>
             </Col>
           </Row>
@@ -32,7 +32,7 @@ const NonreturnableSupplierAddURLToDocument = ({ performAction }) => {
     />
   );
 };
-NonreturnableSupplierAddURLToDocument.propTypes = {
+SupplierAddURLToDocument.propTypes = {
   performAction: PropTypes.func.isRequired,
 };
-export default NonreturnableSupplierAddURLToDocument;
+export default SupplierAddURLToDocument;
