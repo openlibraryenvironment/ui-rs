@@ -578,6 +578,8 @@
   "settings.network.networkMaximumSendAttempts": "The maximum number of times we attempt to send the message before we error (0 means we just keep retrying)",
   "settings.network.networkRetryPeriod": "If we hit a network error, the number of minutes before we try again",
   "settings.network.networkTimeoutPeriod": "The number of seconds before we give up waiting for a response after sending a message",
+  "settings.network.iso18626GatewayAddress": "ISO18626 gateway address",
+  "settings.network.iso18626GatewayAddress.help": "This ISO18626 gateway is used when no Service Account is associated directly with the Directory entry of the peer.",
   "settings.fileStorage.storageEngine": "Storage engine",
   "settings.fileStorage.s3Endpoint": "S3 endpoint",
   "settings.fileStorage.s3AccessKey": "S3 access key",
