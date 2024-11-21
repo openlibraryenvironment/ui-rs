@@ -577,6 +577,8 @@
   "settings.network.networkMaximumSendAttempts": "Die maximale Anzahl der Versuche, die Nachricht zu senden, bevor ein Fehler auftritt (0 bedeutet, dass es immer weiter versucht wird)",
   "settings.network.networkRetryPeriod": "Bei Auftreten eines Netzwerkfehlers, Anzahl Minuten bevor es erneut versucht wird",
   "settings.network.networkTimeoutPeriod": " Die Anzahl der Sekunden nach Versenden einer Nachricht, nach denen das Warten auf eine Antwort aufgeben wird",
+  "settings.network.iso18626GatewayAddress": "ISO18626-Gateway-Adresse",
+  "settings.network.iso18626GatewayAddress.help": "Diese ISO18626-Gateway-Adresse wird verwendet, wenn kein Service-Account im Eintrag der betroffenen Bibliothek in FL-Bibliotheken vorhanden ist.",
   "settings.fileStorage.storageEngine": " Storage engine",
   "settings.fileStorage.s3Endpoint": " S3 endpoint",
   "settings.fileStorage.s3AccessKey": " S3 access key",
