@@ -137,7 +137,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
       <Accordion
         label={<FormattedMessage id="ui-rs.information.heading.requestedTitle" />}
         displayWhenOpen={<Pluggable
-          type={`rs-siquery-${stripes.config?.reshare?.sharedIndex?.type}`}
+          type="rs-siquery"
           endpoint={stripes.config?.reshare?.sharedIndex?.query}
           searchButtonStyle="primary marginBottom0"
           searchLabel={<FormattedMessage id="ui-rs.requestform.populateFromSI" />}
@@ -156,7 +156,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
                 // will be removed soon, perhaps Quesnelia
                 <span style={{ marginRight: '-6px' }}>
                   <Pluggable
-                    type={`rs-siquery-${stripes.config?.reshare?.sharedIndex?.type}`}
+                    type="rs-siquery"
                     endpoint={stripes.config?.reshare?.sharedIndex?.query}
                     searchButtonStyle="noRadius primary marginBottom0"
                     searchLabel={<FormattedMessage id="ui-rs.requestform.populateById" />}
