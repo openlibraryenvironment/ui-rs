@@ -12,8 +12,8 @@ const compareLabel = (a, b) => (a.label > b.label ? 1 : a.label < b.label ? -1 :
 const compareCreated = (a, b) => (new Date(b?.dateCreated) - new Date(a?.dateCreated));
 
 const SLNP_PREFIX = 'SLNP';
-const STATE_MODEL_RESPONDER = 'state_model_responder';
-const STATE_MODEL_REQUESTER = 'state_model_requester';
+const STATE_MODEL_RESPONDER = 'responder_returnables_state_model';
+const STATE_MODEL_REQUESTER = 'requester_returnables_state_model';
 const SLNP_REQ_TRANSLATION_PREFIX = 'SLNP_REQ';
 const SLNP_RESP_TRANSLATION_PREFIX = 'SLNP_RES';
 const REQ_TRANSLATION_PREFIX = 'REQ';
