@@ -127,14 +127,15 @@ const PatronRequestsRoute = ({ appName, children }) => {
     useOkapiQuery('rs/settings/appSettings', {
       searchParams: {
         filters: 'hidden=true',
-        staleTime: 2 * 60 * 60 * 1000
-      }
+        perPage: '1000',
+      },
+      staleTime: 2 * 60 * 60 * 1000
     }),
     useOkapiQuery('rs/refdata', {
       searchParams: {
         filters: 'desc=request.serviceType',
-        staleTime: 2 * 60 * 60 * 1000
-      }
+      },
+      staleTime: 2 * 60 * 60 * 1000
     })
   ];
 
