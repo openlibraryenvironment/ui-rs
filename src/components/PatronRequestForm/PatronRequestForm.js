@@ -17,7 +17,7 @@ import { required } from '@folio/stripes/util';
 import { Pluggable, useStripes } from '@folio/stripes/core';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
 
-const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }) => {
+const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locations, requesters, onSISelect }) => {
   const { change } = useForm();
   const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
@@ -100,7 +100,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
         </Row>
       )}
       <Row>
-        <Col xs={5}>
+        <Col xs={3}>
           <Field
             id="edit-request-metadata-patronNote"
             name="patronNote"
@@ -110,7 +110,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
             maxLength={255}
           />
         </Col>
-        <Col xs={5}>
+        <Col xs={3}>
           <Field
             id="edit-request-metadata-localNote"
             name="localNote"
@@ -119,21 +119,64 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
             rows={5}
           />
         </Col>
-        {isCopyReq &&
-          <Col xs={2}>
+        <Col xs={6}>
+          <Row>
+            {isCopyReq &&
+            <Col xs={2}>
+              <Field
+                id="edit-request-metadata-copyright-type"
+                name="copyrightType.id"
+                label={<FormattedMessage id="ui-rs.information.copyrightType" />}
+                placeholder=" "
+                component={Select}
+                dataOptions={copyrightTypes}
+                required
+                validate={required}
+              />
+            </Col>
+            }
+          </Row>
+          <Row>
+            <Col xs={6}>
             <Field
-              id="edit-request-metadata-copyright-type"
-              name="copyrightType.id"
-              label={<FormattedMessage id="ui-rs.information.copyrightType" />}
+              id="edit-request-metadata-serviceLevel"
+              name="serviceLevel.id"
+              label={<FormattedMessage id="ui-rs.information.serviceLevel" />}
               placeholder=" "
               component={Select}
-              dataOptions={copyrightTypes}
-              required
+              dataOptions={serviceLevels}
               validate={required}
             />
+            </Col>
+
+          </Row>
+          <Row>
+          <Col xs={3}>
+            <Field
+              id="edit-request-metadata-maximumCostsCurrencyCode"
+              name="maximumCostsCurrencyCode.id"
+              label={<FormattedMessage id="ui-rs.information.maximumCostsCurrencyCode" />}
+              placeholder=" "
+              component={Select}
+              dataOptions={currencyCodes}
+              validate={required}
+            />
+            </Col>
+            <Col xs={3}>
+            <Field
+              id="edit-request-metadata-maximumCostsMonetaryValue"
+              name="maximumCostsMonetaryValue"
+              label={<FormattedMessage id="ui-rs.information.maximumCostsMonetaryValue" />}
+              component={TextField}
+            />
           </Col>
-        }
+          </Row>
+        </Col>
+        
       </Row>
+
+
+
       <Accordion
         label={<FormattedMessage id="ui-rs.information.heading.requestedTitle" />}
         displayWhenOpen={<Pluggable

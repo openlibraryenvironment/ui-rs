@@ -56,13 +56,38 @@ const CreateEditRoute = props => {
       staleTime: 5 * 60 * 1000,
     }
   });
+  const serviceLevelRefdata = useRefdata({
+    desc: 'ServiceLevels',
+    endpoint: REFDATA_ENDPOINT,
+    queryParams: {
+      staleTime: 5 * 60 * 1000,
+    }
+  });
+  const currencyCodeRefdata = useRefdata({
+    desc: 'CurrencyCodes',
+    endpoint: REFDATA_ENDPOINT,
+    queryParams: {
+      staleTime: 5 * 60 * 1000,
+    }
+  });
   const copyrightTypes = selectifyRefdata(copyrightTypeRefdata);
+  const serviceLevels = selectifyRefdata(serviceLevelRefdata);
+  const currencyCodes = selectifyRefdata(currencyCodeRefdata);
+
   const defaultCopyrightSetting = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     sectionName: 'other',
     keyName: 'default_copyright_type',
   });
+
+  const defaultServiceLevelSetting = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'other',
+    keyName: 'default_service_level',
+  });
+
   const defaultCopyrightTypeId = copyrightTypeRefdata[0]?.values?.filter(v => v.value === defaultCopyrightSetting.value)?.[0]?.id;
+  const defaultServiceLevelId = serviceLevelRefdata[0]?.values?.filter(v => v.value === defaultServiceLevelSetting.value)?.[0]?.id;
 
   const onSuccessfulEdit = async () => {
     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -145,6 +170,7 @@ const CreateEditRoute = props => {
   } else {
     initialValues = {
       copyrightType: { id: defaultCopyrightTypeId },
+      serviceLevel: { id: defaultServiceLevelId },
       serviceType: { value: SERVICE_TYPE_LOAN },
     };
   }
@@ -216,6 +242,8 @@ const CreateEditRoute = props => {
             <form onSubmit={handleSubmit} id="form-rs-entry">
               <PatronRequestForm
                 copyrightTypes={copyrightTypes}
+                serviceLevels={serviceLevels}
+                currencyCodes={currencyCodes}
                 locations={locations}
                 requesters={requesters}
                 onSISelect={form.mutators.handleSISelect}
