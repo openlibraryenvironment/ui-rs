@@ -159,7 +159,6 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
               placeholder=" "
               component={Select}
               dataOptions={currencyCodes}
-              validate={required}
             />
             </Col>
             <Col xs={3}>
