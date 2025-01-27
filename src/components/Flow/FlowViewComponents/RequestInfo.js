@@ -85,6 +85,20 @@ const RequestInfo = ({ request }) => {
           </Col>
         </Row>
         <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.serviceLevel" />}
+              value={request.serviceLevel?.label}
+            />
+          </Col>
+          <Col xs={6}>
+          <KeyValue
+          label={<FormattedMessage id="ui-rs.information.maximumCost" />}
+          value={request.maximumCostsMonetaryValue + " " + request.maximumCostsCurrencyCode?.label} 
+          />
+          </Col>
+        </Row>
+        <Row>
           {request.patronNote &&
             <Col xs={6}>
               <KeyValue
