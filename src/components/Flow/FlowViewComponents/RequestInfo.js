@@ -109,12 +109,14 @@ const RequestInfo = ({ request }) => {
               value={request.serviceLevel?.label}
             />
           </Col>
+          {request.maximumCostsMonetaryValue &&
           <Col xs={6}>
           <KeyValue
           label={<FormattedMessage id="ui-rs.information.maximumCost" />}
           value={request.maximumCostsMonetaryValue + " " + request.maximumCostsCurrencyCode?.label} 
           />
           </Col>
+          }
         </Row>
       </Layout>
     </Accordion>
