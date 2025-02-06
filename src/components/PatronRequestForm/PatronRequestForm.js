@@ -16,12 +16,34 @@ import {
 import { required } from '@folio/stripes/util';
 import { Pluggable, useStripes } from '@folio/stripes/core';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
+import { useAppSettings } from '@k-int/stripes-kint-components';
+import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
 const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locations, requesters, onSISelect }) => {
   const { change } = useForm();
   const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
+
+  const xUsername = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'sharedIndex',
+    keyName: 'shared_index_user',
+  });
+  
+  const xPassword = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'sharedIndex',
+    keyName: 'shared_index_pass',
+  });
+
+  const metaproxyUrl = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'z3950',
+    keyName: 'z3950_proxy_address',
+  });
+
+
   useEffect(() => {
     if (locations?.length === 1) {
       change('pickupLocationSlug', locations[0]?.value);
@@ -184,6 +206,9 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
           searchButtonStyle="primary marginBottom0"
           searchLabel={<FormattedMessage id="ui-rs.requestform.populateFromSI" />}
           selectInstance={onSISelect}
+          xPassword={xPassword?.value}
+          xUsername={xUsername?.value}
+          metaproxyUrl={metaproxyUrl.value ?? metaproxyUrl.defValue}
         />}
       >
         <Row>
@@ -205,6 +230,9 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
                     selectInstance={onSISelect}
                     specifiedId={values?.systemInstanceIdentifier}
                     disabled={!values?.systemInstanceIdentifier}
+                    xPassword={xPassword?.value}
+                    xUsername={xUsername?.value}
+                    metaproxyUrl={metaproxyUrl.value ?? metaproxyUrl.defValue}
                   />
                 </span>
               }
