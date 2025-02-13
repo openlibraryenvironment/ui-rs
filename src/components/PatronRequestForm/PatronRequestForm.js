@@ -43,6 +43,12 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
     keyName: 'z3950_proxy_address',
   });
 
+  const zTarget = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'z3950',
+    keyName: 'z3950_server_address',
+  });
+
 
   useEffect(() => {
     if (locations?.length === 1) {
@@ -209,6 +215,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
           xPassword={xPassword?.value}
           xUsername={xUsername?.value}
           metaproxyUrl={metaproxyUrl.value ?? metaproxyUrl.defValue}
+          zTarget={zTarget?.value}
         />}
       >
         <Row>
@@ -233,6 +240,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
                     xPassword={xPassword?.value}
                     xUsername={xUsername?.value}
                     metaproxyUrl={metaproxyUrl.value ?? metaproxyUrl.defValue}
+                    zTarget={zTarget?.value}
                   />
                 </span>
               }
