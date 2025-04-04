@@ -150,6 +150,7 @@ const CreateEditRoute = props => {
   if (!validRequesterRecords?.[0]) throw new Error('Cannot resolve symbol to create requests as');
   const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
+  console.log(`routerLocation: ${routerLocation?.pathname}`);
   // Determine operation
   let op;
   if (id) {
@@ -174,6 +175,8 @@ const CreateEditRoute = props => {
       serviceType: { value: SERVICE_TYPE_LOAN },
     };
   }
+
+  initialValues['systemInstanceIdentifier'] = '000076432623';
 
   const submit = async submittedRecord => {
     if (op === CREATE) {
