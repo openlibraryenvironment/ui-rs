@@ -116,14 +116,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }),
     useOkapiQuery('rs/hostLMSLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
     useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
-    useOkapiQuery('directory/entry', {
-      searchParams: {
-        filters: 'type.value=institution',
-        perPage: '1000',
-        stats: 'true',
-      },
-      staleTime: 2 * 60 * 60 * 1000
-    }),
+    
+    
     useOkapiQuery('rs/settings/appSettings', {
       searchParams: {
         filters: 'hidden=true',
@@ -139,18 +133,28 @@ const PatronRequestsRoute = ({ appName, children }) => {
     })
   ];
 
+  const dirQuery = useOkapiQuery('directory/entry', {
+    searchParams: {
+      filters: 'type.value=institution',
+      perPage: '1000',
+      stats: 'true',
+    },
+    staleTime: 2 * 60 * 60 * 1000,
+    useErrorBoundary: false,
+  })
+
+  
+
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
-    const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
+    const [batches, lmsLocations, shelvingLocations, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
+    //const [batches, lmsLocations, shelvingLocations, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
         .sort(compareCreated)
         .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
       hasLocalNote: [({ label: intl.formatMessage({ id: 'stripes-reshare.hasLocalNote' }), value: 'localNote ISNOTNULL' })],
       hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'hasUnreadMessages=true' })],
-      institution: institutions
-        .map(x => ({ label: x.name, value: x.id }))
-        .sort(compareLabel),
       location: lmsLocations
         .map(x => ({ label: x.name, value: x.id }))
         .sort(compareLabel),
@@ -162,6 +166,16 @@ const PatronRequestsRoute = ({ appName, children }) => {
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
       serviceType: getRequestServiceTypes(refDataRequestServiceType)
     };
+
+  }
+
+  if (dirQuery.isSuccess) {
+    filterOptions.institutions = dirQuery.data?.results
+      ?.map(x => ({ label: x.name, value: x.id })).sort(compareLabel);
+  }
+
+  if (dirQuery.isLoading) {
+    return null;
   }
 
   return (
