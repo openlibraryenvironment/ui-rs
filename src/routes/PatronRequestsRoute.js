@@ -147,7 +147,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
-    const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
+    const [batches, lmsLocations, shelvingLocations, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
     //const [batches, lmsLocations, shelvingLocations, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
@@ -155,13 +155,6 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
       hasLocalNote: [({ label: intl.formatMessage({ id: 'stripes-reshare.hasLocalNote' }), value: 'localNote ISNOTNULL' })],
       hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'hasUnreadMessages=true' })],
-
-      /*
-      institution: institutions
-        ?.map(x => ({ label: x.name, value: x.id }))
-        .sort(compareLabel),
-      */
-      
       location: lmsLocations
         .map(x => ({ label: x.name, value: x.id }))
         .sort(compareLabel),
@@ -179,6 +172,10 @@ const PatronRequestsRoute = ({ appName, children }) => {
   if (dirQuery.isSuccess) {
     filterOptions.institutions = dirQuery.data?.results
       ?.map(x => ({ label: x.name, value: x.id })).sort(compareLabel);
+  }
+
+  if (dirQuery.isLoading) {
+    return null;
   }
 
   return (

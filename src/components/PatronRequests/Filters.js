@@ -68,7 +68,7 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
             onChange={onChangeHandler}
           />
         </Accordion>
-        { options.institution != null &&
+        { options.institutions != null &&
         <Accordion
           label={<FormattedMessage id={`ui-rs.filter.${intlId}`} />}
           id="institution"
@@ -80,7 +80,7 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
         >
           <MultiSelectionFilter
             name={institutionFilterId}
-            dataOptions={options.institution}
+            dataOptions={options.institutions}
             selectedValues={activeFilters[institutionFilterId]}
             onChange={onChangeHandler}
           />
