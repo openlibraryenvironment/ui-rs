@@ -25,6 +25,8 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
 
+  console.log(requesters);
+
   const xUsername = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     sectionName: 'sharedIndex',
@@ -49,12 +51,30 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
     keyName: 'z3950_server_address',
   });
 
+  const freePickupLocation = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'requests',
+    keyName: 'free_text_pickup_location'
+  });
+
+  const isEmpty = (obj) => {
+    return Object.keys(obj).length === 0;
+  }
+
 
   useEffect(() => {
     if (locations?.length === 1) {
       change('pickupLocationSlug', locations[0]?.value);
     }
   }, [locations, change]);
+
+  if (isEmpty(freePickupLocation) ||
+      isEmpty(zTarget) ||
+      isEmpty(metaproxyUrl) ||
+      isEmpty(xPassword) ||
+      isEmpty(xUsername)) {
+        return null;
+  }
 
   return (
     <AccordionSet>
@@ -79,6 +99,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
             component={Datepicker}
           />
         </Col>
+        { freePickupLocation.value != 'yes' &&
         <Col xs={4}>
           <Field
             id="edit-request-metadata-pickupLocation"
@@ -91,6 +112,19 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
             validate={!isCopyReq && required}
           />
         </Col>
+        }
+        { freePickupLocation.value == 'yes' &&
+        <Col xs={4}>
+          <Field
+            id="edit-request-metadata-pickupLocation"
+            name="pickupLocation"
+            label={<FormattedMessage id="ui-rs.information.pickupLocation" />}
+            component={TextField}
+            required={!isCopyReq}
+            validate={!isCopyReq && required}
+          />
+        </Col>
+        }
         <Col xs={2}>
           <Label><FormattedMessage id="ui-rs.information.serviceType" /></Label>
           <Field

@@ -68,6 +68,7 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
             onChange={onChangeHandler}
           />
         </Accordion>
+        { options.institution != null &&
         <Accordion
           label={<FormattedMessage id={`ui-rs.filter.${intlId}`} />}
           id="institution"
@@ -83,7 +84,9 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
             selectedValues={activeFilters[institutionFilterId]}
             onChange={onChangeHandler}
           />
+      
         </Accordion>
+        }
         {appName === 'supply' &&
           <>
             <Accordion
