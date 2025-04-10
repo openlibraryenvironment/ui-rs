@@ -173,11 +173,10 @@ const PatronRequestsRoute = ({ appName, children }) => {
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
       serviceType: getRequestServiceTypes(refDataRequestServiceType)
     };
-    console.log(filterOptions);
+
   }
 
   if (dirQuery.isSuccess) {
-    console.log(dirQuery.data);
     filterOptions.institutions = dirQuery.data?.results
       ?.map(x => ({ label: x.name, value: x.id })).sort(compareLabel);
   }

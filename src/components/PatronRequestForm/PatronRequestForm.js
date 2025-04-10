@@ -25,8 +25,6 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
 
-  console.log(requesters);
-
   const xUsername = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     sectionName: 'sharedIndex',

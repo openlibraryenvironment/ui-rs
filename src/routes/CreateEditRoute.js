@@ -167,13 +167,8 @@ const CreateEditRoute = props => {
     .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), [])) : [];
 
 
-    console.log("locQuery")
-    console.log(locQuery)
   const validRequesterRecords = locQuery.isSuccess ? (locQuery.data
     .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol)) : [];
-
-  console.log(`validRequesterRecords: ${validRequesterRecords}`);
-  console.log(`defaultRequesterSymbolSetting: ${defaultRequesterSymbolSetting}`);
 
     if (!validRequesterRecords?.[0] &&
       !defaultRequesterSymbolSetting.value) {
