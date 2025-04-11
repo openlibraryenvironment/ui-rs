@@ -133,6 +133,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     })
   ];
 
+  console.log("Initiating directory query...if it exists");
   const dirQuery = useOkapiQuery('directory/entry', {
     searchParams: {
       filters: 'type.value=institution',
