@@ -53,6 +53,7 @@ const CreateEditRoute = props => {
       searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100' ,
       kyOpt: { throwHttpErrors: false },
       useErrorBoundary: false,
+      refetchOnWindowFocus: false,
     }
   );
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
@@ -206,7 +207,7 @@ const CreateEditRoute = props => {
   const submit = async submittedRecord => {
     if (op === CREATE) {
       const baseRecord = {
-        requestingInstitutionSymbol: requesters[0].value,
+        requestingInstitutionSymbol: requesterList[0].value,
         isRequester: true
       };
       const newRecord = {
