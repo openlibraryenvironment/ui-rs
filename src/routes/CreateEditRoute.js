@@ -207,7 +207,6 @@ const CreateEditRoute = props => {
   const submit = async submittedRecord => {
     if (op === CREATE) {
       const baseRecord = {
-        //requestingInstitutionSymbol: requesters[0].value,
         requestingInstitutionSymbol: requesterList[0].value,
         isRequester: true
       };
