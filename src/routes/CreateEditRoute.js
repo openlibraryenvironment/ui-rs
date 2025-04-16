@@ -179,7 +179,6 @@ const CreateEditRoute = props => {
     
   const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
-  console.log(`routerLocation: ${routerLocation?.pathname}`);
   // Determine operation
   let op;
   if (id) {
