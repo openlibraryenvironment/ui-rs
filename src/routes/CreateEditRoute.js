@@ -204,6 +204,13 @@ const CreateEditRoute = props => {
     };
   }
 
+  const reg = /.+\/create\/(\d+)/;
+  const sysIdMatch = reg.exec(routerLocation?.pathname)
+
+  if (sysIdMatch && op === CREATE) {
+    initialValues['systemInstanceIdentifier'] = sysIdMatch[1];
+  }
+
   const submit = async submittedRecord => {
     if (op === CREATE) {
       const baseRecord = {

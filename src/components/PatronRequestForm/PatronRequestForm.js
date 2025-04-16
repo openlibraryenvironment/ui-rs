@@ -66,6 +66,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
     }
   }, [locations, change]);
 
+
   if (isEmpty(freePickupLocation) ||
       isEmpty(zTarget) ||
       isEmpty(metaproxyUrl) ||
@@ -73,6 +74,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
       isEmpty(xUsername)) {
         return null;
   }
+
 
   return (
     <AccordionSet>
