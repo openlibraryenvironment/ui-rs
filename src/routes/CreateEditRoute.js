@@ -54,6 +54,7 @@ const CreateEditRoute = props => {
       kyOpt: { throwHttpErrors: false },
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
+      retryOnMount:false
     }
   );
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });

@@ -55,6 +55,12 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
     keyName: 'free_text_pickup_location'
   });
 
+  const ncipBorrowerCheck = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    keyName: 'borrower_check',
+    sectionName: 'hostLMSIntegration'
+  })
+
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
   }
@@ -71,7 +77,8 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
       isEmpty(zTarget) ||
       isEmpty(metaproxyUrl) ||
       isEmpty(xPassword) ||
-      isEmpty(xUsername)) {
+      isEmpty(xUsername) ||
+      isEmpty(ncipBorrowerCheck)) {
         return null;
   }
 
@@ -145,6 +152,40 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
           />
         </Col>
       </Row>
+      { (ncipBorrowerCheck?.value == "none" || !ncipBorrowerCheck?.value) && (
+      <Row>
+        <Col xs={4}>
+          <Field
+              id="edit-request-metadata-patronGivenName"
+              name="patronGivenName"
+              label={<FormattedMessage id="ui-rs.information.patronGivenName" />}
+              component={TextField}
+              required
+              validate={required}
+            />
+        </Col>
+        <Col xs={4}>
+          <Field
+            id="edit-request-metadata-patronSurname"
+            name="patronSurname"
+            label={<FormattedMessage id="ui-rs.information.patronSurname" />}
+            component={TextField}
+            required
+            validate={required}
+          />
+        </Col>
+        <Col xs={4}>
+          <Field
+            id="edit-request-metadata-patronEmail"
+            name="patronEmail"
+            label={<FormattedMessage id="ui-rs.information.patronEmail" />}
+            component={TextField}
+            required
+            validate={required}
+          />
+        </Col>
+      </Row>
+      )}
       {requesters.length > 1 && (
         <Row>
           <Col xs={3}>
