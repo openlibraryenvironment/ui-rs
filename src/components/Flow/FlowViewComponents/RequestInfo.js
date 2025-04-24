@@ -20,8 +20,8 @@ function calculateDueDate(intl, request) {
 
 const RequestInfo = ({ request }) => {
   const intl = useIntl();
-  const requester = request?.resolvedRequester?.owner;
-  const supplier = request?.resolvedSupplier?.owner;
+  const requester = (request?.resolvedRequester?.owner) ?? request?.requestingInstitutionSymbol;
+  const supplier = (request?.resolvedSupplier?.owner) ?? request?.supplyingInstitutionSymbol;
 
   const colKeyVal = (labelId, value) => {
     return (
@@ -63,15 +63,17 @@ const RequestInfo = ({ request }) => {
       </Layout>
       <Layout className="padding-top-gutter">
         <Row>
-          {colKeyVal('requester', requester ?
+          {colKeyVal('requester', requester?.name ?
             <Link to={`/directory/entries/view/${requester.id}`}>
-              {requester.name}
+              {requester?.name ?? requester}
             </Link> :
+            requester ??
             <NoValue />)}
-          {colKeyVal('supplier', supplier ?
+          {colKeyVal('supplier', supplier?.name ?
             <Link to={`/directory/entries/view/${supplier.id}`}>
               {supplier.name}
             </Link> :
+            supplier ??
             <NoValue />)}
           {colKeyVal('itemBarcode', itemBarcodeText || <NoValue />)}
           {colKeyVal('itemCallNumber', itemCallNumberText || <NoValue />)}
@@ -111,10 +113,10 @@ const RequestInfo = ({ request }) => {
           </Col>
           {request.maximumCostsMonetaryValue &&
           <Col xs={6}>
-          <KeyValue
-          label={<FormattedMessage id="ui-rs.information.maximumCost" />}
-          value={request.maximumCostsMonetaryValue + " " + request.maximumCostsCurrencyCode?.label} 
-          />
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.maximumCost" />}
+              value={request.maximumCostsMonetaryValue + " " + request.maximumCostsCurrencyCode?.label} 
+            />
           </Col>
           }
         </Row>
