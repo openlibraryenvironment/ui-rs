@@ -20,7 +20,7 @@
     "@folio/stripes-erm-components": "~9.0.0",
     "@folio/stripes-template-editor": "^3.0.0",
     "@k-int/stripes-kint-components": "^5.4.0",
-    "@projectreshare/stripes-reshare": "^1.12.0",
+    "@projectreshare/stripes-reshare": "^2.0.0",
     "classnames": "^2.2.6",
     "final-form": "^4.2.0",
     "final-form-arrays": "^3.0.2",

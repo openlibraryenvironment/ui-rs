@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { DirectLink } from '@projectreshare/stripes-reshare';
 import { Button, Icon } from '@folio/stripes/components';
+import { IfInterface } from '@folio/stripes/core';
 import { ShowModalButton } from '../../ModalButtons';
 
 export { default as Generic } from './Generic';
@@ -85,4 +86,12 @@ export const SlnpAbortSupply = () => (
   <ShowModalButton buttonStyle="dropdownItem" modal="slnpAbortSupply">
     <Icon icon="times-circle-solid"><FormattedMessage id="ui-rs.actions.slnpAbortSupply" /></Icon>
   </ShowModalButton>
+);
+
+export const UploadToFill = () => (
+  <IfInterface name="dms">
+    <ShowModalButton buttonStyle="dropdownItem" modal="UploadToFill">
+      <Icon icon="arrow-up"><FormattedMessage id="ui-rs.actions.uploadToFill" /></Icon>
+    </ShowModalButton>
+  </IfInterface>
 );

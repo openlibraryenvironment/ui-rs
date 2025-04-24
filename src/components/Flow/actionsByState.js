@@ -56,6 +56,9 @@ export const actionsByState = {
   RES_NEW_AWAIT_PULL_SLIP: {
     primaryAction: 'PrintPullSlip'
   },
+  RES_COPY_AWAIT_PICKING: {
+    moreActions: ['UploadToFill']
+  },
   REQ_SHIPPED: {
     moreActions: ['PrintPullSlip']
   },
