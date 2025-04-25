@@ -69,7 +69,7 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   const paneButtons = () => {
     return (
       <PaneMenu>
-        {request?.resolvedSupplier &&
+        {request?.supplyingInstitutionSymbol &&
           <ChatButton
             request={request}
             onClick={({ open }) => {
