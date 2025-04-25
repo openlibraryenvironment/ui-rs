@@ -168,11 +168,10 @@ const PatronRequestsRoute = ({ appName, children }) => {
       serviceType: getRequestServiceTypes(refDataRequestServiceType)
     };
 
-  }
-
-  if (dirQuery.isSuccess) {
-    filterOptions.institutions = dirQuery.data?.results
-      ?.map(x => ({ label: x.name, value: x.id })).sort(compareLabel);
+    if (dirQuery.isSuccess) {
+      filterOptions.institutions = dirQuery.data?.results
+        ?.map(x => ({ label: x.name, value: x.id })).sort(compareLabel);
+    }
   }
 
   if (dirQuery.isLoading) {
