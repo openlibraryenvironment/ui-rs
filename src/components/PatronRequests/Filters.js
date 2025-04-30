@@ -84,7 +84,7 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
             selectedValues={activeFilters[institutionFilterId]}
             onChange={onChangeHandler}
           />
-      
+
         </Accordion>
         }
         {appName === 'supply' &&

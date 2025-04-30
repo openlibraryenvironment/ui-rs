@@ -116,8 +116,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }),
     useOkapiQuery('rs/hostLMSLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
     useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
-    
-    
+
     useOkapiQuery('rs/settings/appSettings', {
       searchParams: {
         filters: 'hidden=true',
@@ -133,7 +132,6 @@ const PatronRequestsRoute = ({ appName, children }) => {
     })
   ];
 
-  console.log("Initiating directory query...if it exists");
   const dirQuery = useOkapiQuery('directory/entry', {
     searchParams: {
       filters: 'type.value=institution',
@@ -142,14 +140,11 @@ const PatronRequestsRoute = ({ appName, children }) => {
     },
     staleTime: 2 * 60 * 60 * 1000,
     useErrorBoundary: false,
-  })
-
-  
+  });
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
     const [batches, lmsLocations, shelvingLocations, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
-    //const [batches, lmsLocations, shelvingLocations, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
         .sort(compareCreated)

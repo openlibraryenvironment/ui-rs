@@ -115,7 +115,7 @@ const RequestInfo = ({ request }) => {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.maximumCost" />}
-              value={request.maximumCostsMonetaryValue + " " + request.maximumCostsCurrencyCode?.label} 
+              value={request.maximumCostsMonetaryValue + ' ' + request.maximumCostsCurrencyCode?.label}
             />
           </Col>
           }
