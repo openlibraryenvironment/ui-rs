@@ -5,10 +5,7 @@ import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 const ILSCirculation = ({ request }) => {
   const validShortcodes = ['SLNPRequester', 'SLNPResponder', 'SLNPNonReturnableResponder', 'SLNPNonReturnableRequester'];
-  if (!validShortcodes.includes(request.stateModel?.shortcode)) {
-    return null;
-  }
-
+  const hasILS = validShortcodes.includes(request.stateModel?.shortcode);
   const { customIdentifiers } = request;
   let loanUUID = null;
   let patronUUID = null;
@@ -28,6 +25,7 @@ const ILSCirculation = ({ request }) => {
   }
 
   const { isSuccess, data } = useOkapiQuery('circulation/loans', {
+    enabled: hasILS,
     searchParams: `?query=(itemId=="${itemUUID || ''}" and userId=="${patronUUID || ''}")`
   });
 
@@ -36,6 +34,10 @@ const ILSCirculation = ({ request }) => {
   }
 
   const showAccordion = (loanUUID && patronUUID) || requestUUID || (patronUUID && feeUUID);
+
+  if (!hasILS) {
+    return null;
+  }
 
   return showAccordion ? (
     <Accordion
