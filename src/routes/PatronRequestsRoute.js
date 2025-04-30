@@ -132,8 +132,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
       staleTime: 2 * 60 * 60 * 1000
     })
   ];
+  
 
-  console.log("Initiating directory query...if it exists");
   const dirQuery = useOkapiQuery('directory/entry', {
     searchParams: {
       filters: 'type.value=institution',

@@ -531,6 +531,7 @@
   "settings.z3950.z3950ServerAddress": "Z39.50 server address",
   "settings.requests.defaultPeerSymbol": "Default peer symbol",
   "settings.requests.defaultRequestSymbol": "Default request symbol",
+  "settings.requests.directoryApiUrl": "Directory API endpoint",
   "settings.requests.freeTextPickupLocation" : "Free text for pickup location",
   "settings.requests.lastResortLenders": "Lenders of last resort (Comma-separated list of symbols)",
   "settings.requests.localSymbols" : "Local symbols (Comma-separated list)",

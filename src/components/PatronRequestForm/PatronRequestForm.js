@@ -15,8 +15,8 @@ import {
 } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 import { Pluggable, useStripes } from '@folio/stripes/core';
-import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
 import { useAppSettings } from '@k-int/stripes-kint-components';
+import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
 import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
 const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locations, requesters, onSISelect }) => {
@@ -30,7 +30,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
     sectionName: 'sharedIndex',
     keyName: 'shared_index_user',
   });
-  
+
   const xPassword = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     sectionName: 'sharedIndex',
@@ -59,11 +59,11 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
     endpoint: SETTINGS_ENDPOINT,
     keyName: 'borrower_check',
     sectionName: 'hostLMSIntegration'
-  })
+  });
 
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
-  }
+  };
 
 
   useEffect(() => {
@@ -79,9 +79,8 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
       isEmpty(xPassword) ||
       isEmpty(xUsername) ||
       isEmpty(ncipBorrowerCheck)) {
-        return null;
+    return null;
   }
-
 
   return (
     <AccordionSet>
@@ -106,7 +105,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
             component={Datepicker}
           />
         </Col>
-        { freePickupLocation.value != 'yes' &&
+        { freePickupLocation.value !== 'yes' &&
         <Col xs={4}>
           <Field
             id="edit-request-metadata-pickupLocation"
@@ -120,7 +119,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
           />
         </Col>
         }
-        { freePickupLocation.value == 'yes' &&
+        { freePickupLocation.value === 'yes' &&
         <Col xs={4}>
           <Field
             id="edit-request-metadata-pickupLocation"
@@ -152,17 +151,17 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
           />
         </Col>
       </Row>
-      { (ncipBorrowerCheck?.value == "none" || !ncipBorrowerCheck?.value) && (
+      { (ncipBorrowerCheck?.value === 'none' || !ncipBorrowerCheck?.value) && (
       <Row>
         <Col xs={4}>
           <Field
-              id="edit-request-metadata-patronGivenName"
-              name="patronGivenName"
-              label={<FormattedMessage id="ui-rs.information.patronGivenName" />}
-              component={TextField}
-              required
-              validate={required}
-            />
+            id="edit-request-metadata-patronGivenName"
+            name="patronGivenName"
+            label={<FormattedMessage id="ui-rs.information.patronGivenName" />}
+            component={TextField}
+            required
+            validate={required}
+          />
         </Col>
         <Col xs={4}>
           <Field
@@ -241,40 +240,39 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
           </Row>
           <Row>
             <Col xs={6}>
-            <Field
-              id="edit-request-metadata-serviceLevel"
-              name="serviceLevel.id"
-              label={<FormattedMessage id="ui-rs.information.serviceLevel" />}
-              placeholder=" "
-              component={Select}
-              dataOptions={serviceLevels}
-              validate={required}
-            />
+              <Field
+                id="edit-request-metadata-serviceLevel"
+                name="serviceLevel.id"
+                label={<FormattedMessage id="ui-rs.information.serviceLevel" />}
+                placeholder=" "
+                component={Select}
+                dataOptions={serviceLevels}
+                validate={required}
+              />
             </Col>
 
           </Row>
           <Row>
-          <Col xs={3}>
-            <Field
-              id="edit-request-metadata-maximumCostsCurrencyCode"
-              name="maximumCostsCurrencyCode.id"
-              label={<FormattedMessage id="ui-rs.information.maximumCostsCurrencyCode" />}
-              placeholder=" "
-              component={Select}
-              dataOptions={currencyCodes}
-            />
+            <Col xs={3}>
+              <Field
+                id="edit-request-metadata-maximumCostsCurrencyCode"
+                name="maximumCostsCurrencyCode.id"
+                label={<FormattedMessage id="ui-rs.information.maximumCostsCurrencyCode" />}
+                placeholder=" "
+                component={Select}
+                dataOptions={currencyCodes}
+              />
             </Col>
             <Col xs={3}>
-            <Field
-              id="edit-request-metadata-maximumCostsMonetaryValue"
-              name="maximumCostsMonetaryValue"
-              label={<FormattedMessage id="ui-rs.information.maximumCostsMonetaryValue" />}
-              component={TextField}
-            />
-          </Col>
+              <Field
+                id="edit-request-metadata-maximumCostsMonetaryValue"
+                name="maximumCostsMonetaryValue"
+                label={<FormattedMessage id="ui-rs.information.maximumCostsMonetaryValue" />}
+                component={TextField}
+              />
+            </Col>
           </Row>
         </Col>
-        
       </Row>
 
 

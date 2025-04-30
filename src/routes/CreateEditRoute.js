@@ -2,15 +2,17 @@ import { omit } from 'lodash';
 import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Form } from 'react-final-form';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import { useAppSettings, useRefdata } from '@k-int/stripes-kint-components';
 import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
+import ky from 'ky';
 import PatronRequestForm from '../components/PatronRequestForm';
 import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT } from '../constants/endpoints';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
+
 
 // Possible operations performed by submitting this form
 const CREATE = 'create';
@@ -47,16 +49,30 @@ const CreateEditRoute = props => {
   const okapiKy = useOkapiKy();
   const close = useCloseDirect();
 
+  const isEmpty = (obj) => {
+    return Object.keys(obj).length === 0;
+  };
+
+  const defaultRequesterSymbolSetting = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'requests',
+    keyName: 'default_request_symbol',
+    returnQuery: true,
+  });
+
+
   const locQuery = useOkapiQuery(
-    'directory/entry', 
-    { 
-      searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100' ,
+    'directory/entry',
+    {
+      searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100',
       kyOpt: { throwHttpErrors: false },
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
-      retryOnMount:false
+      retryOnMount:false,
+      enabled: !isEmpty(defaultRequesterSymbolSetting)
     }
   );
+
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
   const copyrightTypeRefdata = useRefdata({
     desc: 'copyrightType',
@@ -95,10 +111,10 @@ const CreateEditRoute = props => {
     keyName: 'default_service_level',
   });
 
-  const defaultRequesterSymbolSetting = useAppSettings({
+  const directoryAPIEndpointSetting = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     sectionName: 'requests',
-    keyName: 'default_request_symbol',
+    keyName: 'directory_api_url',
     returnQuery: true,
   });
 
@@ -153,14 +169,49 @@ const CreateEditRoute = props => {
     },
   });
 
-  const isEmpty = (obj) => {
-    return Object.keys(obj).length === 0;
+  const validRequesterRecords = locQuery.isSuccess ? (locQuery.data
+    .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol)) : [];
+
+  const requesters = validRequesterRecords?.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
+
+  const requesterList = requesters?.length > 0 ? requesters : [defaultRequesterSymbolSetting.value];
+
+
+  if (!(requesterList?.length)) {
+    throw new Error('Cannot resolve symbol to create requests as');
   }
 
-  //if (!locQuery.isSuccess || !copyrightTypeRefdata || !defaultCopyrightSetting) return null;
-  if (locQuery.isLoading || isEmpty(copyrightTypeRefdata) || isEmpty(defaultCopyrightSetting) || isEmpty(defaultRequesterSymbolSetting)) {
+  const queryFunc = async () => {
+    const res = await ky(
+      encodeURI(`${directoryAPIEndpointSetting.value}?maximumRecords=100&cql=symbol any ${requesterList[0]}`),
+      {
+        throwHttpErrors: false
+      }
+    );
+    return res.json();
+  };
+
+  const directoryAPIQuery = useQuery(
+    'directoryAPIQuery',
+    queryFunc,
+    {
+      useErrorBoundary: false,
+      refetchOnWindowFocus: false,
+      retryOnMount:false,
+      enabled: !isEmpty(directoryAPIEndpointSetting) && !isEmpty(defaultRequesterSymbolSetting)
+    }
+  );
+
+
+  if (locQuery.isLoading ||
+     directoryAPIQuery.isLoading ||
+     isEmpty(copyrightTypeRefdata) ||
+     isEmpty(defaultCopyrightSetting) ||
+     isEmpty(defaultRequesterSymbolSetting)) {
     return null;
   }
+
+
   // locations are where rec.type.value is 'branch' and there is a tag in rec.type.tags where the value is 'pickup'
   // and are formatted for the Select component as { value: lmsLocationCode, label: name }
   const locations = locQuery.isSuccess ? (locQuery.data
@@ -169,16 +220,11 @@ const CreateEditRoute = props => {
     .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), [])) : [];
 
 
-  const validRequesterRecords = locQuery.isSuccess ? (locQuery.data
-    .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol)) : [];
+  const apiLocations = directoryAPIQuery.isSuccess
+    ? directoryAPIQuery.data?.items?.filter(item => item.type === 'branch')?.map(item => ({ label: item.name, value: item.name }))
+    : [];
 
-    if (!validRequesterRecords?.[0] &&
-      !defaultRequesterSymbolSetting.value) {
-      throw new Error('Cannot resolve symbol to create requests as');
-    }
 
-    
-  const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
   // Determine operation
   let op;
@@ -206,10 +252,10 @@ const CreateEditRoute = props => {
   }
 
   const reg = /.+\/create\/(\d+)/;
-  const sysIdMatch = reg.exec(routerLocation?.pathname)
+  const sysIdMatch = reg.exec(routerLocation?.pathname);
 
   if (sysIdMatch && op === CREATE) {
-    initialValues['systemInstanceIdentifier'] = sysIdMatch[1];
+    initialValues.systemInstanceIdentifier = sysIdMatch[1];
   }
 
   const submit = async submittedRecord => {
@@ -251,8 +297,6 @@ const CreateEditRoute = props => {
     return res;
   };
 
-  let requesterList = requesters?.length > 0 ? requesters : [ defaultRequesterSymbolSetting.value ]
-
   return (
     <Paneset>
       <Form onSubmit={submit} initialValues={initialValues} mutators={{ handleSISelect }} keepDirtyOnReinitialize>
@@ -283,7 +327,7 @@ const CreateEditRoute = props => {
                 copyrightTypes={copyrightTypes}
                 serviceLevels={serviceLevels}
                 currencyCodes={currencyCodes}
-                locations={locations}
+                locations={locations?.length ? locations : apiLocations}
                 requesters={requesterList}
                 onSISelect={form.mutators.handleSISelect}
               />
