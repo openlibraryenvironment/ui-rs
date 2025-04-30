@@ -15,7 +15,7 @@ import {
 } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 import { Pluggable, useStripes } from '@folio/stripes/core';
-import { useAppSettings } from '@k-int/stripes-kint-components';
+import { endpoints, useAppSettings } from '@k-int/stripes-kint-components';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
 import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
@@ -61,6 +61,12 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
     sectionName: 'hostLMSIntegration'
   });
 
+  const routingAdapterSetting = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    keyName: 'routing_adapter',
+    returnQuery: true
+  });
+
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
   };
@@ -78,7 +84,8 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
       isEmpty(metaproxyUrl) ||
       isEmpty(xPassword) ||
       isEmpty(xUsername) ||
-      isEmpty(ncipBorrowerCheck)) {
+      isEmpty(ncipBorrowerCheck) ||
+      isEmpty(routingAdapterSetting)) {
     return null;
   }
 
@@ -109,7 +116,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
         <Col xs={4}>
           <Field
             id="edit-request-metadata-pickupLocation"
-            name="pickupLocationSlug"
+            name={routingAdapterSetting?.value === 'disabled' ? 'pickupLocation' : 'pickupLocationSlug'}
             label={<FormattedMessage id="ui-rs.information.pickupLocation" />}
             placeholder=" "
             component={Select}
