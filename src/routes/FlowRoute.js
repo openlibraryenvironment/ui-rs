@@ -11,8 +11,8 @@ const FlowRoute = ({ request, performAction }) => {
     searchParams: {
       filters: 'section==autoResponder',
       perPage: '100',
-      staleTime: 2 * 60 * 60 * 1000
-    }
+    },
+    staleTime: 2 * 60 * 60 * 1000,
   });
 
   if (!autoRespondLoaded) return null;

@@ -49,8 +49,8 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
     searchParams: {
       filters: 'section==autoResponder',
       perPage: '100',
-      staleTime: 2 * 60 * 60 * 1000
-    }
+    },
+    staleTime: 2 * 60 * 60 * 1000
   });
 
   /* On mount ONLY we want to check if the helper is open, and if so then mark all messages as read.
