@@ -15,7 +15,7 @@ import {
 } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 import { Pluggable, useStripes } from '@folio/stripes/core';
-import { endpoints, useAppSettings } from '@k-int/stripes-kint-components';
+import { useAppSettings } from '@k-int/stripes-kint-components';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
 import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
