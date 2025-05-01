@@ -41,6 +41,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
       'shelvingLocation': 'pickShelvingLocation.id',
       'supplier': 'resolvedSupplier.owner.id',
       'terminal': 'state.terminal',
+      'serviceLevel': 'serviceLevel.value',
       'serviceType': 'serviceType.value'
     },
     sortKeys: {
@@ -94,6 +95,19 @@ const PatronRequestsRoute = ({ appName, children }) => {
     return [];
   };
 
+  const getRequestServiceLevels = (refDataRequestServiceLevel) => {
+    if (refDataRequestServiceLevel) {
+      return refDataRequestServiceLevel[0]
+        .values
+        .map(x => ({
+          label: intl.formatMessage({ id: `ui-rs.refdata.serviceLevel.${x.value}` }),
+          value: x.value
+        }))
+        .sort(compareLabel);
+    }
+    return [];
+  };
+
   const prQuery = useInfiniteQuery(
     {
       queryKey: ['rs/patronrequests', query, `@projectreshare/${appName}`],
@@ -126,12 +140,17 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }),
     useOkapiQuery('rs/refdata', {
       searchParams: {
+        filters: 'desc=ServiceLevels',
+      },
+      staleTime: 2 * 60 * 60 * 1000
+    }),
+    useOkapiQuery('rs/refdata', {
+      searchParams: {
         filters: 'desc=request.serviceType',
       },
       staleTime: 2 * 60 * 60 * 1000
     })
   ];
-  
 
   const dirQuery = useOkapiQuery('directory/entry', {
     searchParams: {
@@ -145,7 +164,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
 
   let filterOptions;
   if (filterQueries.every(x => x.isSuccess)) {
-    const [batches, lmsLocations, shelvingLocations, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
+    const [batches, lmsLocations, shelvingLocations, settings, serviceLevel, serviceType] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
         .sort(compareCreated)
@@ -161,7 +180,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .sort(compareLabel),
       state: getStates(settings),
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
-      serviceType: getRequestServiceTypes(refDataRequestServiceType)
+      serviceLevel: getRequestServiceLevels(serviceLevel),
+      serviceType: getRequestServiceTypes(serviceType)
     };
 
     if (dirQuery.isSuccess) {
