@@ -7,7 +7,7 @@ import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import { useAppSettings, useRefdata } from '@k-int/stripes-kint-components';
-import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
+import { selectifyRefdata, selectifyAndTranslateRefdata, useCloseDirect, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
 import ky from 'ky';
 import PatronRequestForm from '../components/PatronRequestForm';
 import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT } from '../constants/endpoints';
@@ -96,7 +96,7 @@ const CreateEditRoute = props => {
     }
   });
   const copyrightTypes = selectifyRefdata(copyrightTypeRefdata);
-  const serviceLevels = selectifyRefdata(serviceLevelRefdata);
+  const serviceLevels = selectifyAndTranslateRefdata(serviceLevelRefdata, 'ui-rs.refdata.serviceLevel', intl);
   const currencyCodes = selectifyRefdata(currencyCodeRefdata);
 
   const defaultCopyrightSetting = useAppSettings({

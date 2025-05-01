@@ -141,6 +141,22 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
           />
         </Accordion>
         <Accordion
+          label={<FormattedMessage id="ui-rs.filter.serviceLevel" />}
+          id="serviceLevel"
+          name="serviceLevel"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={activeFilters?.serviceLevel?.length > 0}
+          onClearFilter={() => filterHandlers.clearGroup('serviceLevel')}
+        >
+          <MultiSelectionFilter
+            name="serviceLevel"
+            dataOptions={options.serviceLevel}
+            selectedValues={activeFilters.serviceLevel}
+            onChange={onChangeHandler}
+          />
+        </Accordion>
+        <Accordion
           label={<FormattedMessage id="ui-rs.filter.serviceType" />}
           id="serviceType"
           name="serviceType"
