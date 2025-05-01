@@ -30,7 +30,7 @@ const SI_FIELDS = ['title', 'author', 'edition', 'isbn', 'issn', 'oclcNumber', '
 // Eventually we want an allowlist of the fields mutable via the form but currently rerequest depends on
 // the previous behaviour of resubmitting the whole request. Trimming at this point mainly to avoid noise
 // in the audit trail.
-const LARGE_UNEDITABLE_FIELDS = ['audit', 'bibrecord', 'batches', 'conditions', 'notifications', 'requestIdentifiers', 'rota', 'tags', 'validActions', 'volumes', 'lastProtocolData', 'resolvedPatron', 'resolvedPickupLocation', 'resolvedSupplier', 'state', 'stateModel'];
+const LARGE_UNEDITABLE_FIELDS = ['audit', 'bibrecord', 'batches', 'conditions', 'notifications', 'requestIdentifiers', 'rota', 'tags', 'validActions', 'volumes', 'lastProtocolData', 'protocolAudit', 'resolvedPatron', 'resolvedPickupLocation', 'resolvedSupplier', 'state', 'stateModel'];
 
 // state, tools parameters are from being used as Final Form "mutator" rather than called directly
 const handleSISelect = (args, state, tools) => {
