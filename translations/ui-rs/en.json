@@ -37,7 +37,7 @@
   "information.subtitle": "Subtitle",
   "information.author": "Author",
   "information.date": "Date of publication",
-  "information.patronEmail" : "Patron Email",
+  "information.patronEmail" : "Delivery Email",
   "information.patronGivenName" : "First Name",
   "information.patronSurname" : "Last Name",
   "information.publisher": "Publisher",
