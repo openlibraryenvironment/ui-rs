@@ -108,7 +108,7 @@ const RequestInfo = ({ request }) => {
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.serviceLevel" />}
-              value={request.serviceLevel?.label}
+              value={<FormattedMessage id={`ui-rs.refdata.serviceLevel.${request.serviceLevel?.value}`} />}
             />
           </Col>
           {request.maximumCostsMonetaryValue &&
