@@ -265,7 +265,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       },
                       state: a => <FormattedMessage id={`stripes-reshare.states.${a.state?.code}`} />,
                       serviceType: a => a.serviceType && a.serviceType.value,
-                      supplyingInstitutionSymbol: 
+                      supplyingInstitutionSymbol:
                         a => (a?.resolvedSupplier?.owner?.symbolSummary ?? (a?.supplyingInstitutionSymbol ?? '')).replace(/,.*/, ''),
                       title: a => a.title || a.titleOfComponent,
                       pickLocation: a => a.pickLocation && a.pickLocation.name,
