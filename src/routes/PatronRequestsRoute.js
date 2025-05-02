@@ -5,6 +5,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { generateKiwtQuery, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 import PatronRequests from '../components/PatronRequests';
+import useFilteredSelectifiedRefdata from '../util/useFilteredSelectifiedRefdata';
 
 const PER_PAGE = 100;
 
@@ -95,19 +96,6 @@ const PatronRequestsRoute = ({ appName, children }) => {
     return [];
   };
 
-  const getRequestServiceLevels = (refDataRequestServiceLevel) => {
-    if (refDataRequestServiceLevel) {
-      return refDataRequestServiceLevel[0]
-        .values
-        .map(x => ({
-          label: intl.formatMessage({ id: `ui-rs.refdata.serviceLevel.${x.value}` }),
-          value: x.value
-        }))
-        .sort(compareLabel);
-    }
-    return [];
-  };
-
   const prQuery = useInfiniteQuery(
     {
       queryKey: ['rs/patronrequests', query, `@projectreshare/${appName}`],
@@ -119,6 +107,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
       enabled: Object.prototype.hasOwnProperty.call(query, 'query'),
     }
   );
+
+  const [serviceLevels, serviceLevelsLoaded] = useFilteredSelectifiedRefdata('ServiceLevels', 'other', 'displayed_service_levels', 'ui-rs.refdata.serviceLevel');
 
   const filterQueries = [
     useOkapiQuery('rs/batch', {
@@ -163,8 +153,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
   });
 
   let filterOptions;
-  if (filterQueries.every(x => x.isSuccess)) {
-    const [batches, lmsLocations, shelvingLocations, settings, serviceLevel, serviceType] = filterQueries.map(x => x.data);
+  if (filterQueries.every(x => x.isSuccess) && serviceLevelsLoaded) {
+    const [batches, lmsLocations, shelvingLocations, settings, serviceType] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
         .sort(compareCreated)
@@ -180,7 +170,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
         .sort(compareLabel),
       state: getStates(settings),
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
-      serviceLevel: getRequestServiceLevels(serviceLevel),
+      serviceLevel: serviceLevels,
       serviceType: getRequestServiceTypes(serviceType)
     };
 

@@ -249,7 +249,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
             <Col xs={6}>
               <Field
                 id="edit-request-metadata-serviceLevel"
-                name="serviceLevel.id"
+                name="serviceLevel.value"
                 label={<FormattedMessage id="ui-rs.information.serviceLevel" />}
                 placeholder=" "
                 component={Select}

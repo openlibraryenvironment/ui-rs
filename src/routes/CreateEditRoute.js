@@ -7,11 +7,12 @@ import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import { useAppSettings, useRefdata } from '@k-int/stripes-kint-components';
-import { selectifyRefdata, selectifyAndTranslateRefdata, useCloseDirect, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
+import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
 import ky from 'ky';
 import PatronRequestForm from '../components/PatronRequestForm';
 import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT } from '../constants/endpoints';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
+import useFilteredSelectifiedRefdata from '../util/useFilteredSelectifiedRefdata';
 
 
 // Possible operations performed by submitting this form
@@ -48,6 +49,7 @@ const CreateEditRoute = props => {
   const queryClient = useQueryClient();
   const okapiKy = useOkapiKy();
   const close = useCloseDirect();
+  const [serviceLevels, serviceLevelsLoaded] = useFilteredSelectifiedRefdata('ServiceLevels', 'other', 'displayed_service_levels', 'ui-rs.refdata.serviceLevel');
 
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
@@ -59,7 +61,6 @@ const CreateEditRoute = props => {
     keyName: 'default_request_symbol',
     returnQuery: true,
   });
-
 
   const locQuery = useOkapiQuery(
     'directory/entry',
@@ -81,13 +82,6 @@ const CreateEditRoute = props => {
       staleTime: 5 * 60 * 1000,
     }
   });
-  const serviceLevelRefdata = useRefdata({
-    desc: 'ServiceLevels',
-    endpoint: REFDATA_ENDPOINT,
-    queryParams: {
-      staleTime: 5 * 60 * 1000,
-    }
-  });
   const currencyCodeRefdata = useRefdata({
     desc: 'CurrencyCodes',
     endpoint: REFDATA_ENDPOINT,
@@ -96,7 +90,6 @@ const CreateEditRoute = props => {
     }
   });
   const copyrightTypes = selectifyRefdata(copyrightTypeRefdata);
-  const serviceLevels = selectifyAndTranslateRefdata(serviceLevelRefdata, 'ui-rs.refdata.serviceLevel', intl);
   const currencyCodes = selectifyRefdata(currencyCodeRefdata);
 
   const defaultCopyrightSetting = useAppSettings({
@@ -119,7 +112,6 @@ const CreateEditRoute = props => {
   });
 
   const defaultCopyrightTypeId = copyrightTypeRefdata[0]?.values?.filter(v => v.value === defaultCopyrightSetting.value)?.[0]?.id;
-  const defaultServiceLevelId = serviceLevelRefdata[0]?.values?.filter(v => v.value === defaultServiceLevelSetting.value)?.[0]?.id;
 
   const onSuccessfulEdit = async () => {
     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -246,7 +238,7 @@ const CreateEditRoute = props => {
   } else {
     initialValues = {
       copyrightType: { id: defaultCopyrightTypeId },
-      serviceLevel: { id: defaultServiceLevelId },
+      serviceLevel: { value: defaultServiceLevelSetting.value },
       serviceType: { value: SERVICE_TYPE_LOAN },
     };
   }
