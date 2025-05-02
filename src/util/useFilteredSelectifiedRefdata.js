@@ -8,12 +8,6 @@ import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 // returns tuple of [ <data for select>, <bool that is false until data available> ]
 const useFilteredSelectifiedRefdata = (vocab, settingSection, settingKey, translationPrefix) => {
   const intl = useIntl();
-  const refdataQ = useOkapiQuery('rs/refdata', {
-    searchParams: {
-      filters: `desc=${vocab}`,
-    },
-    staleTime: 2 * 60 * 60 * 1000
-  });
   const settingQ = useOkapiQuery('rs/settings/appSettings', {
     searchParams: {
       filters: `section==${settingSection}`,
@@ -21,22 +15,33 @@ const useFilteredSelectifiedRefdata = (vocab, settingSection, settingKey, transl
     },
     staleTime: 2 * 60 * 60 * 1000
   });
+  const settingValue = settingQ.data?.find(el => el.key === settingKey)?.value;
+  const refdataQ = useOkapiQuery('rs/refdata', {
+    searchParams: {
+      filters: `desc=${vocab}`,
+    },
+    staleTime: 2 * 60 * 60 * 1000,
+    enabled: settingQ.isSuccess && !settingValue
+  });
 
-  if (!(refdataQ.isSuccess && settingQ.isSuccess && Array.isArray(settingQ.data))) {
+  if (!settingQ.isSuccess || (!settingValue && !refdataQ.isSuccess)) {
     return [undefined, false];
   }
 
-  const settingValue = settingQ.data.find(el => el.key === settingKey).value;
+  let values;
+  if (settingValue) {
+    values = settingValue?.split(',');
+  } else {
+    values = refdataQ.data[0].values
+      .map(entry => entry.value)
+      .sort((a, b) => a.label?.localeCompare(b.label));
+  }
 
-  const validValues = settingValue?.split(',');
-  const result = refdataQ.data[0].values
-    .map(entry => entry.value)
-    .filter(v => (settingValue ? validValues.includes(v) : true))
-    .map(v => ({
-      label: intl.formatMessage({ id: `${translationPrefix}.${v}` }),
-      value: v
-    }))
-    .sort((a, b) => a.label?.localeCompare(b.label));
+  const result = values.map(v => ({
+    label: intl.formatMessage({ id: `${translationPrefix}.${v}` }),
+    value: v
+  }));
+
   return [result, true];
 };
 

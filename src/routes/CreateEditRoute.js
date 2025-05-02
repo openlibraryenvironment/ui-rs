@@ -197,6 +197,7 @@ const CreateEditRoute = props => {
 
   if (locQuery.isLoading ||
      directoryAPIQuery.isLoading ||
+     !serviceLevelsLoaded ||
      isEmpty(copyrightTypeRefdata) ||
      isEmpty(defaultCopyrightSetting) ||
      isEmpty(defaultRequesterSymbolSetting)) {
