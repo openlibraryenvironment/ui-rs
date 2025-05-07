@@ -25,6 +25,8 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
 
+  /*
+
   const xUsername = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     sectionName: 'sharedIndex',
@@ -43,11 +45,14 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
     keyName: 'z3950_proxy_address',
   });
 
+ 
   const zTarget = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     sectionName: 'z3950',
     keyName: 'z3950_server_address',
   });
+
+  */}
 
   const freePickupLocation = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
@@ -80,10 +85,10 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
 
 
   if (isEmpty(freePickupLocation) ||
-      isEmpty(zTarget) ||
-      isEmpty(metaproxyUrl) ||
-      isEmpty(xPassword) ||
-      isEmpty(xUsername) ||
+      //isEmpty(zTarget) ||
+      //isEmpty(metaproxyUrl) ||
+      //isEmpty(xPassword) ||
+      //isEmpty(xUsername) ||
       isEmpty(ncipBorrowerCheck) ||
       isEmpty(routingAdapterSetting)) {
     return null;
@@ -292,10 +297,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
           searchButtonStyle="primary marginBottom0"
           searchLabel={<FormattedMessage id="ui-rs.requestform.populateFromSI" />}
           selectInstance={onSISelect}
-          xPassword={xPassword?.value}
-          xUsername={xUsername?.value}
-          metaproxyUrl={metaproxyUrl.value ?? metaproxyUrl.defValue}
-          zTarget={zTarget?.value}
+
         />}
       >
         <Row>
