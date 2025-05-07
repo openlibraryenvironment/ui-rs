@@ -5,7 +5,10 @@ import stringify from 'json-stable-stringify';
 import { useStripes } from '@folio/stripes/core';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
 import { CatalogInfo } from '@projectreshare/stripes-reshare/cards';
+import { useAppSettings } from '@k-int/stripes-kint-components';
 import AppNameContext from '../../AppNameContext';
+import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
+
 import {
   RequestInfo,
   RequestingInstitutionInfo,
@@ -16,6 +19,8 @@ import {
   ProtocolInfo,
   CustomIdentifiersInfo,
 } from './sections';
+
+
 
 const ViewPatronRequest = ({ record }) => {
   const location = useLocation();
@@ -34,6 +39,27 @@ const ViewPatronRequest = ({ record }) => {
       executeScrollToAuditLog();
     }
   }, [location.state]);
+
+  const routingAdapterSetting = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    keyName: 'routing_adapter',
+    returnQuery: true
+  });
+
+
+  const brokerLink = routingAdapterSetting.value === 'disabled' ? (
+    <a
+      href={`${stripes?.okapi?.url}/broker/ill_transactions?requester_req_id=${record?.hrid}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Broker Transaction Log
+    </a>
+  ) : null;
+
+  if (Object.keys(routingAdapterSetting).length === 0)  {
+    return null;
+  }
 
   return (
     <AccordionSet>
@@ -78,6 +104,7 @@ const ViewPatronRequest = ({ record }) => {
       {/* Purple card--div to hold scrolling ref */}
       <div ref={auditRef}>
         <Accordion id="auditInfo" label={<FormattedMessage id="ui-rs.information.heading.audit" />}>
+          { brokerLink }
           <AuditInfo id="auditInfo" record={record} />
         </Accordion>
       </div>
