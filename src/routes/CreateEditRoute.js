@@ -104,14 +104,6 @@ const CreateEditRoute = props => {
     keyName: 'default_service_level',
   });
 
-  /*
-  const directoryAPIEndpointSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'requests',
-    keyName: 'directory_api_url',
-    returnQuery: true,
-  });
-  */
 
   const defaultCopyrightTypeId = copyrightTypeRefdata[0]?.values?.filter(v => v.value === defaultCopyrightSetting.value)?.[0]?.id;
 
@@ -177,7 +169,6 @@ const CreateEditRoute = props => {
 
   const queryFunc = async () => {
     const res = await okapiKy(
-      //encodeURI(`${directoryAPIEndpointSetting.value}?maximumRecords=100&cql=symbol any ${requesterList[0]}`),
       encodeURI(`directory/entries?maximumRecords=100&cql=symbol any ${requesterList[0]}`),
       {
         throwHttpErrors: false
