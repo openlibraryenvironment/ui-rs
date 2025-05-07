@@ -104,12 +104,6 @@ const CreateEditRoute = props => {
     keyName: 'default_service_level',
   });
 
-  const directoryAPIEndpointSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'requests',
-    keyName: 'directory_api_url',
-    returnQuery: true,
-  });
 
   const defaultCopyrightTypeId = copyrightTypeRefdata[0]?.values?.filter(v => v.value === defaultCopyrightSetting.value)?.[0]?.id;
 
@@ -174,8 +168,8 @@ const CreateEditRoute = props => {
   }
 
   const queryFunc = async () => {
-    const res = await ky(
-      encodeURI(`${directoryAPIEndpointSetting.value}?maximumRecords=100&cql=symbol any ${requesterList[0]}`),
+    const res = await okapiKy(
+      encodeURI(`directory/entries?maximumRecords=100&cql=symbol any ${requesterList[0]}`),
       {
         throwHttpErrors: false
       }
@@ -183,20 +177,20 @@ const CreateEditRoute = props => {
     return res.json();
   };
 
-  const directoryAPIQuery = useQuery(
+  const directoryEntriesQuery = useQuery(
     'directoryAPIQuery',
     queryFunc,
     {
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
       retryOnMount:false,
-      enabled: !isEmpty(directoryAPIEndpointSetting) && !isEmpty(defaultRequesterSymbolSetting)
+      enabled: !isEmpty(defaultRequesterSymbolSetting)
     }
   );
 
 
   if (locQuery.isLoading ||
-     directoryAPIQuery.isLoading ||
+     directoryEntriesQuery.isLoading ||
      !serviceLevelsLoaded ||
      isEmpty(copyrightTypeRefdata) ||
      isEmpty(defaultCopyrightSetting) ||
@@ -213,8 +207,8 @@ const CreateEditRoute = props => {
     .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), [])) : [];
 
 
-  const apiLocations = directoryAPIQuery.isSuccess
-    ? directoryAPIQuery.data?.items?.filter(item => item.type === 'branch')?.map(item => ({ label: item.name, value: item.name }))
+  const apiLocations = directoryEntriesQuery.isSuccess
+    ? directoryEntriesQuery.data?.items?.filter(item => item.type === 'branch')?.map(item => ({ label: item.name, value: item.name }))
     : [];
 
 
