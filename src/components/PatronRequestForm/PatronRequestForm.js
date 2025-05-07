@@ -52,7 +52,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
     keyName: 'z3950_server_address',
   });
 
-  */}
+  */
 
   const freePickupLocation = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
@@ -319,10 +319,6 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
                     selectInstance={onSISelect}
                     specifiedId={values?.systemInstanceIdentifier}
                     disabled={!values?.systemInstanceIdentifier}
-                    xPassword={xPassword?.value}
-                    xUsername={xUsername?.value}
-                    metaproxyUrl={metaproxyUrl.value ?? metaproxyUrl.defValue}
-                    zTarget={zTarget?.value}
                   />
                 </span>
               }
