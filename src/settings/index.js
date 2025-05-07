@@ -27,7 +27,8 @@ const ResourceSharingSettings = (props) => {
   const intl = useIntl();
 
   const { data: featureFlagData = [], isSuccess: featureFlagsLoaded } = useOkapiQuery('rs/settings/appSettings', {
-    searchParams: '?filters=section==featureFlags&filters=hidden=true&sort=key==asc&perPage=100'
+    searchParams: '?filters=section==featureFlags&filters=hidden=true&sort=key==asc&perPage=100',
+    staleTime: 2 * 60 * 1000,
   });
 
   let persistentPages = [
