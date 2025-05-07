@@ -49,7 +49,7 @@ const ViewPatronRequest = ({ record }) => {
 
   const brokerLink = routingAdapterSetting.value === 'disabled' ? (
     <a
-      href={`${stripes?.okapi?.url}/broker/ill_transactions?requester_req_id=${record?.hrid}`}
+      href={`${stripes?.okapi?.url}/broker/ill_transactions?requester_req_id=${record?.hrid}~norota`}
       target="_blank"
       rel="noopener noreferrer"
     >
