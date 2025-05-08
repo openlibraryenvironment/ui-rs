@@ -146,7 +146,7 @@ const CreateEditRoute = props => {
       
 
       //Conditional to see if we have a deeplink attached to the path
-      if (routerLocation?.pathname.match("\/request\/requests/create\/.+")) {
+      if (routerLocation?.pathname?.match("\/request\/requests/create\/.+")) {
         history.replace(`../view/${created.id}?${routerLocation.search}`);
       } else {
         history.replace(`view/${created.id}?${routerLocation.search}`);
