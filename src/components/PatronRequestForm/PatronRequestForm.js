@@ -25,34 +25,6 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
 
-  /*
-
-  const xUsername = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'sharedIndex',
-    keyName: 'shared_index_user',
-  });
-
-  const xPassword = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'sharedIndex',
-    keyName: 'shared_index_pass',
-  });
-
-  const metaproxyUrl = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'z3950',
-    keyName: 'z3950_proxy_address',
-  });
-
- 
-  const zTarget = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'z3950',
-    keyName: 'z3950_server_address',
-  });
-
-  */
 
   const freePickupLocation = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
@@ -85,10 +57,6 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
 
 
   if (isEmpty(freePickupLocation) ||
-      //isEmpty(zTarget) ||
-      //isEmpty(metaproxyUrl) ||
-      //isEmpty(xPassword) ||
-      //isEmpty(xUsername) ||
       isEmpty(ncipBorrowerCheck) ||
       isEmpty(routingAdapterSetting)) {
     return null;

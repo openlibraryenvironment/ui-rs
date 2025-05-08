@@ -116,6 +116,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
 
   const { title, visibleColumns, createPerm } = appDetails[appName];
 
+
   return (
     <SearchAndSortQuery
       initialSearch={initialSearch}
