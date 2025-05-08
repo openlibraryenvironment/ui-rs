@@ -9,12 +9,12 @@ const LoanConditions = (props) => {
   const request = props?.request;
   const { conditions } = request;
 
-  const currentSupplier = request.resolvedSupplier?.id;
+  const currentSupplier = request.resolvedSupplier?.id ?? request.supplyingInstitutionSymbol;
   if (currentSupplier && conditions.length > 0) {
     // We only want to display loanConditions on the record that are relevant to the current supplier.
     // We then sort these by dateCreated, with newest at the top
     const relevantConditions = conditions.filter(
-      condition => condition.relevantSupplier?.id === currentSupplier
+      condition => currentSupplier === condition.relevantSupplier?.id ?? condition.supplyingInstitutionSymbol
     ).sort((a, b) => {
       return (
         (a.dateCreated > b.dateCreated) ? -1 : ((a.dateCreated < b.dateCreated) ? 1 : 0)
