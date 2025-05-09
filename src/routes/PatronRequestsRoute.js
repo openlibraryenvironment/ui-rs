@@ -130,12 +130,6 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }),
     useOkapiQuery('rs/refdata', {
       searchParams: {
-        filters: 'desc=ServiceLevels',
-      },
-      staleTime: 2 * 60 * 60 * 1000
-    }),
-    useOkapiQuery('rs/refdata', {
-      searchParams: {
         filters: 'desc=request.serviceType',
       },
       staleTime: 2 * 60 * 60 * 1000
