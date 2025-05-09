@@ -248,8 +248,9 @@ const CreateEditRoute = props => {
 
   const reg = /.+\/create\/(\d+)/;
   const sysIdMatch = reg.exec(routerLocation?.pathname);
+  const autopopulate = sysIdMatch && op === CREATE;
 
-  if (sysIdMatch && op === CREATE) {
+  if (autopopulate) {
     initialValues.systemInstanceIdentifier = sysIdMatch[1];
   }
 
@@ -325,6 +326,7 @@ const CreateEditRoute = props => {
                 locations={locations?.length ? locations : apiLocations}
                 requesters={requesterList}
                 onSISelect={form.mutators.handleSISelect}
+                autopopulate={autopopulate}
               />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">

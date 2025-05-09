@@ -19,7 +19,7 @@ import { useAppSettings } from '@k-int/stripes-kint-components';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
 import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
-const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locations, requesters, onSISelect }) => {
+const PatronRequestForm = ({ autopopulate, copyrightTypes, serviceLevels, currencyCodes, locations, requesters, onSISelect }) => {
   const { change } = useForm();
   const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
@@ -286,6 +286,7 @@ const PatronRequestForm = ({ copyrightTypes, serviceLevels, currencyCodes, locat
                     searchLabel={<FormattedMessage id="ui-rs.requestform.populateById" />}
                     selectInstance={onSISelect}
                     specifiedId={values?.systemInstanceIdentifier}
+                    autopopulate={autopopulate}
                     disabled={!values?.systemInstanceIdentifier}
                   />
                 </span>
