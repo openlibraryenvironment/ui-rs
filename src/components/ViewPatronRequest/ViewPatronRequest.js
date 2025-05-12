@@ -57,7 +57,7 @@ const ViewPatronRequest = ({ record }) => {
     </a>
   ) : null;
 
-  if (Object.keys(routingAdapterSetting).length === 0)  {
+  if (Object.keys(routingAdapterSetting).length === 0) {
     return null;
   }
 

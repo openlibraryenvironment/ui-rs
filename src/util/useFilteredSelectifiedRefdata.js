@@ -32,7 +32,7 @@ const useFilteredSelectifiedRefdata = (vocab, settingSection, settingKey, transl
   if (settingValue) {
     values = settingValue?.split(',');
   } else {
-    values = refdataQ.data[0].values.map(entry => entry.value)
+    values = refdataQ.data[0].values.map(entry => entry.value);
   }
 
   let result = values.map(v => ({
