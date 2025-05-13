@@ -73,7 +73,10 @@ const CreateEditRoute = props => {
       enabled: !isEmpty(defaultRequesterSymbolSetting)
     }
   );
-
+  const { data: enabledFields } = useOkapiQuery('rs/patronrequests/editableFields/edit', {
+    useErrorBoundary: false,
+    staleTime: 2 * 60 * 60 * 1000
+  });
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
   const copyrightTypeRefdata = useRefdata({
     desc: 'copyrightType',
@@ -325,6 +328,7 @@ const CreateEditRoute = props => {
                 requesters={requesterList}
                 onSISelect={form.mutators.handleSISelect}
                 autopopulate={autopopulate}
+                enabledFields={op === EDIT ? enabledFields : undefined}
               />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">
