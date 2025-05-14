@@ -8,7 +8,6 @@ import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/compon
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 import { useAppSettings, useRefdata } from '@k-int/stripes-kint-components';
 import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
-import ky from 'ky';
 import PatronRequestForm from '../components/PatronRequestForm';
 import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT } from '../constants/endpoints';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
@@ -74,7 +73,10 @@ const CreateEditRoute = props => {
       enabled: !isEmpty(defaultRequesterSymbolSetting)
     }
   );
-
+  const { data: enabledFields } = useOkapiQuery('rs/patronrequests/editableFields/edit', {
+    useErrorBoundary: false,
+    staleTime: 2 * 60 * 60 * 1000
+  });
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
   const copyrightTypeRefdata = useRefdata({
     desc: 'copyrightType',
@@ -143,10 +145,9 @@ const CreateEditRoute = props => {
       // We want to go to the new record but we also want it to be easy to return to where we were,
       // hence use of history.replace rather than history.push -- the create form turns into the
       // created record.
-      
 
-      //Conditional to see if we have a deeplink attached to the path
-      if (routerLocation?.pathname?.match("\/request\/requests/create\/.+")) {
+      // Conditional to see if we have a deeplink attached to the path
+      if (routerLocation?.pathname?.match('/request/requests/create/.+')) {
         history.replace(`../view/${created.id}?${routerLocation.search}`);
       } else {
         history.replace(`view/${created.id}?${routerLocation.search}`);
@@ -327,6 +328,7 @@ const CreateEditRoute = props => {
                 requesters={requesterList}
                 onSISelect={form.mutators.handleSISelect}
                 autopopulate={autopopulate}
+                enabledFields={op === EDIT ? enabledFields : undefined}
               />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">

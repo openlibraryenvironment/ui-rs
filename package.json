@@ -1,6 +1,6 @@
 {
   "name": "@projectreshare/rs",
-  "version": "1.20.2",
+  "version": "1.20.3",
   "description": "Resource Sharing",
   "main": "src/index.js",
   "repository": "",

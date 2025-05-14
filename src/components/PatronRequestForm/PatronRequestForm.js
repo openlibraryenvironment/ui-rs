@@ -19,7 +19,7 @@ import { useAppSettings } from '@k-int/stripes-kint-components';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
 import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
-const PatronRequestForm = ({ autopopulate, copyrightTypes, serviceLevels, currencyCodes, locations, requesters, onSISelect }) => {
+const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, serviceLevels, currencyCodes, locations, requesters, onSISelect }) => {
   const { change } = useForm();
   const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
@@ -62,7 +62,35 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, serviceLevels, curren
     return null;
   }
 
-  return (
+  function applyDisabledToFields(children) {
+    return React.Children.map(children, child => {
+      if (!React.isValidElement(child)) return child;
+
+      // Check if the component is Field
+      if (child.type === Field) {
+        const { name, disabled } = child.props;
+
+        // Only apply if "disabled" is not already set
+        if (disabled === undefined && name !== undefined) {
+          return React.cloneElement(child, {
+            disabled: !enabledFields.includes(name),
+            validate: undefined,
+          });
+        }
+        return child;
+      }
+
+      // If it has children, recursively process them
+      if (child.props && child.props.children) {
+        const newChildren = applyDisabledToFields(child.props.children);
+        return React.cloneElement(child, {}, newChildren);
+      }
+
+      return child;
+    });
+  }
+
+  const requestForm = (
     <AccordionSet>
       <Row>
         <Col xs={4}>
@@ -431,6 +459,12 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, serviceLevels, curren
       </Accordion>
     </AccordionSet>
   );
+
+  if (Array.isArray(enabledFields)) {
+    return applyDisabledToFields(requestForm);
+  } else {
+    return requestForm;
+  }
 };
 
 export default PatronRequestForm;
