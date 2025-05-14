@@ -243,7 +243,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
               />
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col xs={6}>
               <Field
                 id="edit-request-metadata-maximumCostsCurrencyCode"
@@ -262,7 +262,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
                 component={TextField}
               />
             </Col>
-          </Row>
+          </Row> */}
         </Col>
         {isCopyReq &&
         <Col xs={3}>
