@@ -66,7 +66,6 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
     return React.Children.map(children, child => {
       if (!React.isValidElement(child)) return child;
 
-      // Check if the component is Field
       if (child.type === Field) {
         const { name, disabled } = child.props;
 
@@ -74,6 +73,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
         if (disabled === undefined && name !== undefined) {
           return React.cloneElement(child, {
             disabled: !enabledFields.includes(name),
+            // Can't fulfil the validation if you can't change the field from its current value
             validate: undefined,
           });
         }
@@ -229,25 +229,9 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
             rows={5}
           />
         </Col>
-        <Col xs={6}>
+        <Col xs={3}>
           <Row>
-            {isCopyReq &&
-            <Col xs={2}>
-              <Field
-                id="edit-request-metadata-copyright-type"
-                name="copyrightType.id"
-                label={<FormattedMessage id="ui-rs.information.copyrightType" />}
-                placeholder=" "
-                component={Select}
-                dataOptions={copyrightTypes}
-                required
-                validate={required}
-              />
-            </Col>
-            }
-          </Row>
-          <Row>
-            <Col xs={6}>
+            <Col xs={12}>
               <Field
                 id="edit-request-metadata-serviceLevel"
                 name="serviceLevel.value"
@@ -258,10 +242,9 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
                 validate={required}
               />
             </Col>
-
           </Row>
           <Row>
-            <Col xs={3}>
+            <Col xs={6}>
               <Field
                 id="edit-request-metadata-maximumCostsCurrencyCode"
                 name="maximumCostsCurrencyCode.id"
@@ -271,7 +254,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
                 dataOptions={currencyCodes}
               />
             </Col>
-            <Col xs={3}>
+            <Col xs={6}>
               <Field
                 id="edit-request-metadata-maximumCostsMonetaryValue"
                 name="maximumCostsMonetaryValue"
@@ -281,6 +264,20 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
             </Col>
           </Row>
         </Col>
+        {isCopyReq &&
+        <Col xs={3}>
+          <Field
+            id="edit-request-metadata-copyright-type"
+            name="copyrightType.id"
+            label={<FormattedMessage id="ui-rs.information.copyrightType" />}
+            placeholder=" "
+            component={Select}
+            dataOptions={copyrightTypes}
+            required
+            validate={required}
+          />
+        </Col>
+        }
       </Row>
 
 
