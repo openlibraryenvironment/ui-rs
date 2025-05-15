@@ -147,12 +147,11 @@ export const actionsForRequest = (request, autoLoanOff) => {
     actions.moreActions = remoteMoreActions.concat(client);
 
     // Nonreturnable specific
-    if (request.serviceType?.value === 'copy' && request.isRequester) {
+    if (request.stateModel?.shortcode === 'NonreturnableRequester' || request.stateModel?.shortcode === 'NonreturnableResponder') {
+      // requester actions
       excludeRemote.push('requesterAgreeConditions');
       excludeRemote.push('requesterRejectConditions');
-    }
-
-    if (request.serviceType?.value === 'copy' && !request.isRequester) {
+      // supplier actions
       excludeRemote.push('supplierConditionalSupply');
       excludeRemote.push('supplierAddCondition');
       excludeRemote.push('supplierMarkConditionsAgreed');
