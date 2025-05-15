@@ -157,9 +157,6 @@ export const actionsForRequest = (request, autoLoanOff) => {
       excludeRemote.push('supplierMarkConditionsAgreed');
     }
 
-
-    // Nonreturnable responder statemodel specific
-
     // SLNP specific - action linking to patron record to add fees
     const manualFeeStates = ['SLNP_REQ_IDLE', 'SLNP_REQ_SHIPPED', 'SLNP_REQ_CHECKED_IN', 'SLNP_REQ_DOCUMENT_AVAILABLE'];
     if (manualFeeStates.includes(request.state?.code)) {
