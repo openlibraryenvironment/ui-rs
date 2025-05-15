@@ -146,6 +146,21 @@ export const actionsForRequest = (request, autoLoanOff) => {
     const remoteMoreActions = remote.map(action => action.actionCode);
     actions.moreActions = remoteMoreActions.concat(client);
 
+    // Nonreturnable specific
+    if (request.serviceType?.value === 'copy' && request.isRequester) {
+      excludeRemote.push('requesterAgreeConditions');
+      excludeRemote.push('requesterRejectConditions');
+    }
+
+    if (request.serviceType?.value === 'copy' && !request.isRequester) {
+      excludeRemote.push('supplierConditionalSupply');
+      excludeRemote.push('supplierAddCondition');
+      excludeRemote.push('supplierMarkConditionsAgreed');
+    }
+
+
+    // Nonreturnable responder statemodel specific
+
     // SLNP specific - action linking to patron record to add fees
     const manualFeeStates = ['SLNP_REQ_IDLE', 'SLNP_REQ_SHIPPED', 'SLNP_REQ_CHECKED_IN', 'SLNP_REQ_DOCUMENT_AVAILABLE'];
     if (manualFeeStates.includes(request.state?.code)) {
