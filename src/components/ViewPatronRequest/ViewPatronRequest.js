@@ -104,7 +104,7 @@ const ViewPatronRequest = ({ record }) => {
       {/* Purple card--div to hold scrolling ref */}
       <div ref={auditRef}>
         <Accordion id="auditInfo" label={<FormattedMessage id="ui-rs.information.heading.audit" />}>
-          { brokerLink }
+          { record.isRequester && brokerLink }
           <AuditInfo id="auditInfo" record={record} />
         </Accordion>
       </div>
