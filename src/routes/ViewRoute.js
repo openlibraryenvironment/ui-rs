@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
-
-import { useStripes } from '@folio/stripes/core';
+import { useQuery } from 'react-query';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset, Tooltip } from '@folio/stripes/components';
 import { DirectLink, upNLevels, useCloseDirect, usePerformAction, useOkapiQuery } from '@projectreshare/stripes-reshare';
 
@@ -41,8 +41,14 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   const { handleMarkAllRead } = useChatActions(id);
   const close = useCloseDirect(upNLevels(location, 2));
 
-  // Fetch the request
-  const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000, notifyOnChangeProps: 'tracked' });
+  
+  // Set an access cookie to use with the broker link
+  document.cookie = `folioAccessToken=${stripes?.okapi.token}; path=/broker; secure; SameSite=Lax`;
+
+
+  const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { parseResponse: false, staleTime: 2 * 60 * 1000, notifyOnChangeProps: 'tracked' });
+
+
 
   // Fetch Auto Responder
   const { data: autoRespondRequest = {}, isSuccess: autoRespondLoaded } = useOkapiQuery('rs/settings/appSettings', {
