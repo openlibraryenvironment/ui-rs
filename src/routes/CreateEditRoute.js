@@ -5,13 +5,14 @@ import { Form } from 'react-final-form';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
-import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useAppSettings, useRefdata } from '@k-int/stripes-kint-components';
 import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
 import PatronRequestForm from '../components/PatronRequestForm';
 import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT } from '../constants/endpoints';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
 import useFilteredSelectifiedRefdata from '../util/useFilteredSelectifiedRefdata';
+
 
 
 // Possible operations performed by submitting this form
@@ -49,7 +50,9 @@ const CreateEditRoute = props => {
   const okapiKy = useOkapiKy();
   const close = useCloseDirect();
   const [serviceLevels, serviceLevelsLoaded] = useFilteredSelectifiedRefdata('ServiceLevels', 'other', 'displayed_service_levels', 'ui-rs.refdata.serviceLevel');
+  const stripes = useStripes();
 
+  
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
   };
@@ -107,6 +110,12 @@ const CreateEditRoute = props => {
     keyName: 'default_service_level',
   });
 
+
+  const borrowerCheckSetting = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'hostLMSIntegration',
+    keyName: 'borrower_check'
+  });
 
   const defaultCopyrightTypeId = copyrightTypeRefdata[0]?.values?.filter(v => v.value === defaultCopyrightSetting.value)?.[0]?.id;
 
@@ -203,7 +212,8 @@ const CreateEditRoute = props => {
      !serviceLevelsLoaded ||
      isEmpty(copyrightTypeRefdata) ||
      isEmpty(defaultCopyrightSetting) ||
-     isEmpty(defaultRequesterSymbolSetting)) {
+     isEmpty(defaultRequesterSymbolSetting) ||
+     isEmpty(borrowerCheckSetting)) {
     return null;
   }
 
@@ -219,7 +229,6 @@ const CreateEditRoute = props => {
   const apiLocations = directoryEntriesQuery.isSuccess
     ? directoryEntriesQuery.data?.items?.filter(item => item.type === 'branch')?.map(item => ({ label: item.name, value: item.name }))
     : [];
-
 
 
   // Determine operation
@@ -253,6 +262,19 @@ const CreateEditRoute = props => {
 
   if (autopopulate) {
     initialValues.systemInstanceIdentifier = sysIdMatch[1];
+  }
+
+  if (borrowerCheckSetting.value === 'none' && op === CREATE) {
+    const institutions = directoryEntriesQuery.isSuccess
+      ? directoryEntriesQuery.data?.items?.filter(item => item.type === 'institution')
+      : [];
+
+    if (institutions?.length) {
+      initialValues.patronEmail = institutions[0].email;
+    }
+
+    initialValues.patronGivenName = stripes?.user?.user?.firstName;
+    initialValues.patronSurname = stripes?.user?.user?.lastName;
   }
 
   const submit = async submittedRecord => {
