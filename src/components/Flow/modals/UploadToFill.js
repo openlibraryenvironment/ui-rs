@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FileUploader } from '@folio/stripes-data-transfer-components';
 import { Modal, ModalFooter } from '@folio/stripes/components';
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 // import { useIntlCallout, useIsActionPending } from '@projectreshare/stripes-reshare';
 import { useIntlCallout } from '@projectreshare/stripes-reshare';
 import { CancelModalButton } from '../../ModalButtons';
@@ -20,6 +20,8 @@ const UploadToFill = ({ _request, performAction }) => {
   const closeModal = () => setModal(null);
   const okapiKy = useOkapiKy();
   const sendCallout = useIntlCallout();
+  const stripes = useStripes();
+  const maxUpload = stripes.config?.reshare?.maxDMSUpload;
 
   const upload = async (dropped) => {
     const formData = new FormData();
@@ -54,8 +56,11 @@ const UploadToFill = ({ _request, performAction }) => {
         title={<FormattedMessage id="ui-rs.actions.uploadToFill.drop" />}
         uploadButtonText={<FormattedMessage id="ui-rs.actions.uploadToFill.button" />}
         onDrop={onDrop}
+        maxSize={maxUpload * 1024 * 1024}
         // isDropZoneActive={!actionPending}
-      />
+      >
+        {maxUpload && <FormattedMessage id="ui-rs.actions.uploadToFill.max" values={{ max: maxUpload }} />}
+      </FileUploader>
     </Modal>
   );
 };
