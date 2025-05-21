@@ -77,13 +77,23 @@ const RespondYes = ({ performAction }) => {
               <FormattedMessage id="ui-rs.actions.respondYes.pickLocation" />
               <Row>
                 <Col xs={11}>
-                  <Field
-                    component={Select}
-                    dataOptions={[{ label: '', value: '' }, ...locOptions]}
-                    name="pickLocation"
-                    required
-                    validate={requiredValidator}
-                  />
+                  { locOptions.length ?
+                    (
+                      <Field
+                        component={Select}
+                        dataOptions={[{ label: '', value: '' }, ...locOptions]}
+                        name="pickLocation"
+                        required
+                        validate={requiredValidator}
+                      />
+                    ) :
+                    (
+                      <Field
+                        component={TextArea}
+                        name="pickLocation"
+                      />
+                    )
+                  }
                 </Col>
               </Row>
               {shelvingOptions.length > 0 &&

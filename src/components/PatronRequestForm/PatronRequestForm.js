@@ -189,6 +189,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
             component={TextField}
             required
             validate={required}
+            readOnly
           />
         </Col>
       </Row>

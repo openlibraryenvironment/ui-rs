@@ -379,6 +379,7 @@
   "actions.uploadToFill.error": "Error uploading file. {errMsg}",
   "actions.uploadToFill.drop":"Drop file here to fill request",
   "actions.uploadToFill.button": "...or click to choose a file",
+  "actions.uploadToFill.max": "Maximum upload size: {max}MiB",
   "cards.reqSup.searching": "Searching for supplier.",
   "pullSlip": "Pull slip",
   "pullSlips": "Pull slips",
