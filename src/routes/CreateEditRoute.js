@@ -65,19 +65,6 @@ const CreateEditRoute = props => {
     returnQuery: true,
   });
 
-  /*
-  const locQuery = useOkapiQuery(
-    'directory/entry',
-    {
-      searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100',
-      kyOpt: { throwHttpErrors: false },
-      useErrorBoundary: false,
-      refetchOnWindowFocus: false,
-      retryOnMount:false,
-      enabled: !isEmpty(defaultRequesterSymbolSetting)
-    }
-  );
-  */
 
   const locationQuery = useOkapiQuery(
     'directory/entry',
