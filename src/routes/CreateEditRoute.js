@@ -47,8 +47,6 @@ const CreateEditRoute = props => {
   const okapiKy = useOkapiKy();
   const close = useCloseDirect();
 
-  // const locQuery = useOkapiQuery('directory/entry', { searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100' });
-
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
   };
@@ -146,16 +144,6 @@ const CreateEditRoute = props => {
     },
   });
 
-/*
-
-<<<<<<< HEAD
-  if (!locQuery.isSuccess || !copyrightTypeRefdata || !defaultCopyrightSetting) return null;
-  // locations are where rec.type.value is 'branch' and there is a tag in rec.type.tags where the value is 'pickup'
-  // and are formatted for the Select component as { value: lmsLocationCode, label: name }
-  const locations = locQuery.data
-=======
-*/
-
 
   if (locationQuery.isLoading ||
      institutionQuery.isLoading ||
@@ -179,12 +167,6 @@ const CreateEditRoute = props => {
       && rec?.tags.reduce((acc, cur) => acc || cur?.value === 'pickup', false))
     .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), [])) : [];
 
-  /*
-  const validRequesterRecords = locQuery.data
-    .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol);
-  */
-
-  // const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
   // Determine operation
   let op;
