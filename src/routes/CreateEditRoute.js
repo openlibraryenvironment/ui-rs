@@ -47,7 +47,39 @@ const CreateEditRoute = props => {
   const okapiKy = useOkapiKy();
   const close = useCloseDirect();
 
-  const locQuery = useOkapiQuery('directory/entry', { searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100' });
+  const isEmpty = (obj) => {
+    return Object.keys(obj).length === 0;
+  };
+
+
+  const locationQuery = useOkapiQuery(
+    'directory/entry',
+    {
+      searchParams: encodeURI('?filters=tags.value=i=pickup&filters=status.value==managed&perPage=1000'),
+      kyOpt: { throwHttpErrors: false },
+      useErrorBoundary: false,
+      refetchOnWindowFocus: false,
+      retryOnMount:false,
+    }
+  );
+
+  const institutionQuery = useOkapiQuery(
+    'directory/entry',
+    {
+      searchParams: encodeURI('?filters=type.value==institution&filters=status.value==managed&perPage=1000'),
+      kyOpt: { throwHttpErrors: false },
+      useErrorBoundary: false,
+      refetchOnWindowFocus: false,
+      retryOnMount:false,
+    }
+  );
+
+
+  const { data: enabledFields } = useOkapiQuery('rs/patronrequests/editableFields/edit', {
+    useErrorBoundary: false,
+    staleTime: 2 * 60 * 60 * 1000
+  });
+
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
   const copyrightTypeRefdata = useRefdata({
     desc: 'copyrightType',
@@ -112,18 +144,29 @@ const CreateEditRoute = props => {
     },
   });
 
-  if (!locQuery.isSuccess || !copyrightTypeRefdata || !defaultCopyrightSetting) return null;
+
+  if (locationQuery.isLoading ||
+     institutionQuery.isLoading ||
+     isEmpty(copyrightTypeRefdata) ||
+     isEmpty(defaultCopyrightSetting)) {
+    return null;
+  }
+
+  const validRequesterRecords = institutionQuery.isSuccess ? (institutionQuery.data
+    .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol)) : [];
+
+  if (!validRequesterRecords?.[0]) throw new Error('Cannot resolve symbol to create requests as');
+
+  const requesters = validRequesterRecords?.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
+
+
   // locations are where rec.type.value is 'branch' and there is a tag in rec.type.tags where the value is 'pickup'
   // and are formatted for the Select component as { value: lmsLocationCode, label: name }
-  const locations = locQuery.data
+  const pickupLocations = locationQuery.isSuccess ? (locationQuery.data
     .filter(rec => rec?.type?.value === 'branch'
       && rec?.tags.reduce((acc, cur) => acc || cur?.value === 'pickup', false))
-    .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), []);
+    .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), [])) : [];
 
-  const validRequesterRecords = locQuery.data
-    .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol);
-  if (!validRequesterRecords?.[0]) throw new Error('Cannot resolve symbol to create requests as');
-  const requesters = validRequesterRecords.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
   // Determine operation
   let op;
@@ -216,7 +259,7 @@ const CreateEditRoute = props => {
             <form onSubmit={handleSubmit} id="form-rs-entry">
               <PatronRequestForm
                 copyrightTypes={copyrightTypes}
-                locations={locations}
+                locations={pickupLocations}
                 requesters={requesters}
                 onSISelect={form.mutators.handleSISelect}
               />
