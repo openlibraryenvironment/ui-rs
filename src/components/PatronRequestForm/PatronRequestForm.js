@@ -19,11 +19,15 @@ import { useAppSettings } from '@k-int/stripes-kint-components';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
 import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
-const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, serviceLevels, currencyCodes, locations, requesters, onSISelect }) => {
+const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
+  serviceLevels, currencyCodes, locations, requesters, onSISelect, operation, patronRequest }) => {
   const { change } = useForm();
   const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
+
+  const CREATE = 'create';
+  const EDIT = 'update';
 
 
   const freePickupLocation = useAppSettings({
@@ -194,7 +198,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
         </Col>
       </Row>
       )}
-      {requesters.length > 1 && (
+      { (requesters.length > 1 && operation !== EDIT) && (
         <Row>
           <Col xs={3}>
             <Field
@@ -210,6 +214,22 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields, servic
           </Col>
         </Row>
       )}
+      { ((patronRequest?.stateModel?.shortcode === 'SLNPRequester' || patronRequest?.stateModel?.shortcode === 'SLNPNonReturnableRequester')
+        && operation === EDIT) && (
+        <Row>
+          <Col xs={3}>
+            <Field
+              id="edit-request-metadata-requestingInstitution"
+              name="requestingInstitutionSymbol"
+              label={<FormattedMessage id="ui-rs.information.requestingInstitution" />}
+              component={TextField}
+              disabled
+            />
+          </Col>
+        </Row>
+      )
+
+      }
       <Row>
         <Col xs={3}>
           <Field
