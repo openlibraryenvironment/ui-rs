@@ -33,19 +33,21 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   const freePickupLocation = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     sectionName: 'requests',
-    keyName: 'free_text_pickup_location'
+    keyName: 'free_text_pickup_location',
+    returnQueryObject: true
   });
 
   const ncipBorrowerCheck = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     keyName: 'borrower_check',
-    sectionName: 'hostLMSIntegration'
+    sectionName: 'hostLMSIntegration',
+    returnQueryObject: true
   });
 
   const routingAdapterSetting = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     keyName: 'routing_adapter',
-    returnQuery: true
+    returnQueryObject: true
   });
 
   const isEmpty = (obj) => {
@@ -63,6 +65,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   if (isEmpty(freePickupLocation) ||
       isEmpty(ncipBorrowerCheck) ||
       isEmpty(routingAdapterSetting)) {
+    console.log("Settings not initalized");
     return null;
   }
 

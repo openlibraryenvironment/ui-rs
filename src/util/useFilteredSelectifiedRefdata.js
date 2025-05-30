@@ -32,16 +32,16 @@ const useFilteredSelectifiedRefdata = (vocab, settingSection, settingKey, transl
   if (settingValue) {
     values = settingValue?.split(',');
   } else {
-    values = refdataQ.data[0].values.map(entry => entry.value);
+    values = refdataQ.data[0]?.values.map(entry => entry.value);
   }
 
-  let result = values.map(v => ({
+  let result = values?.map(v => ({
     label: intl.formatMessage({ id: `${translationPrefix}.${v}` }),
     value: v
   }));
 
   if (!settingValue) {
-    result = result.sort((a, b) => a.label?.localeCompare(b.label));
+    result = result?.sort((a, b) => a.label?.localeCompare(b.label));
   }
 
   return [result, true];
