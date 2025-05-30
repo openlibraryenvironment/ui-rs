@@ -12,10 +12,10 @@ const isEmpty = (obj) => {
 };
 
 const SupplierCheckInToReshare = ({ performAction }) => {
-  const useNCIPDateSetting = useAppSettings({
+  const checkOutItemMethodSetting = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'localNCIP',
-    keyName: 'ncip_use_due_date',
+    sectionName: 'hostLMSIntegration',
+    keyName: 'check_out_item',
     returnQuery: true
   });
 
@@ -49,7 +49,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
 
 
   if (isEmpty(defaultLoanPeriodSetting) ||
-      isEmpty(useNCIPDateSetting)) {
+      isEmpty(checkOutItemMethodSetting)) {
     return null;
   }
 
@@ -73,7 +73,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
             </Col>
           </Row>
           <FormattedMessage id={`ui-rs.actions.${combine ? 'checkInAndShip' : 'checkIn'}.prompt`} />
-          { useNCIPDateSetting.value === 'off' &&
+          { checkOutItemMethodSetting.value === 'none' &&
           <Row>
             <Col xs={8}>
               <Field
@@ -83,7 +83,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
               />
             </Col>
           </Row>}
-          { (defaultLoanPeriodSetting.value && parseInt(defaultLoanPeriodSetting.value, 10)) && useNCIPDateSetting.value === 'off' &&
+          { (defaultLoanPeriodSetting.value && parseInt(defaultLoanPeriodSetting.value, 10)) && checkOutItemMethodSetting.value === 'none' &&
             <div>Default Due Date: {getDateFromDays(parseInt(defaultLoanPeriodSetting.value, 10))}</div>}
         </form>
       )}

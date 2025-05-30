@@ -6,11 +6,12 @@ import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
+import { useAppSettings, useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import {
   Button,
   Col,
+  Datepicker,
   Headline,
   Icon,
   IconButton,
@@ -29,6 +30,8 @@ import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
 
 import useActionConfig from '../useActionConfig';
+import { SETTINGS_ENDPOINT } from '../../../constants/endpoints';
+
 
 const ItemBarcodeFieldArray = ({
   fields: {
@@ -127,6 +130,10 @@ const ItemBarcodeFieldArray = ({
   );
 };
 
+const isEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
+};
+
 const FillMultiVolumeRequest = ({ request, performAction }) => {
   const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
@@ -135,6 +142,26 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
 
   const { combine_fill_and_ship } = useActionConfig();
   const combine = combine_fill_and_ship === 'yes';
+
+  const checkOutItemMethodSetting = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'hostLMSIntegration',
+    keyName: 'check_out_item',
+    returnQuery: true
+  });
+
+  const defaultLoanPeriodSetting = useAppSettings({
+    endpoint: SETTINGS_ENDPOINT,
+    sectionName: 'requests',
+    keyName: 'default_loan_period',
+    returnQuery:true
+  });
+
+  const getDateFromDays = days => {
+    const date = new Date(Date.now());
+    date.setDate(date.getDate() + days);
+    return date.toDateString();
+  };
 
   const onSubmit = values => {
     return performAction(
@@ -166,6 +193,11 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
     disableSubmit: PropTypes.bool,
     submit: PropTypes.func.isRequired,
   };
+
+  if (isEmpty(defaultLoanPeriodSetting) ||
+      isEmpty(checkOutItemMethodSetting)) {
+    return null;
+  }
 
   return (
     <Form
@@ -204,6 +236,18 @@ const FillMultiVolumeRequest = ({ request, performAction }) => {
               request={request}
               component={ItemBarcodeFieldArray}
             />
+            { checkOutItemMethodSetting.value === 'none' &&
+            <Row>
+              <Col xs={8}>
+                <Field
+                  name="loanDateOverride"
+                  label={<FormattedMessage id="ui-rs.flow.info.dueDate" />}
+                  component={Datepicker}
+                />
+              </Col>
+            </Row>}
+            { (defaultLoanPeriodSetting.value && parseInt(defaultLoanPeriodSetting.value, 10)) && checkOutItemMethodSetting.value === 'none' &&
+              <div>Default Due Date: {getDateFromDays(parseInt(defaultLoanPeriodSetting.value, 10))}</div>}
           </Modal>
         </form>
       )}
