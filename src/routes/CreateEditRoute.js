@@ -177,15 +177,17 @@ const CreateEditRoute = props => {
   } else op = CREATE;
 
   let initialValues;
+  let record;
   if (id) {
     if (!reqQuery.isSuccess) return null;
-    const record = reqQuery.data;
+    record = reqQuery.data;
     initialValues = { ...record,
       formattedDateCreated: (
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
       ),
       serviceType: { value: record?.serviceType?.value } };
   } else {
+    record = null;
     initialValues = {
       copyrightType: { id: defaultCopyrightTypeId },
       serviceType: { value: SERVICE_TYPE_LOAN },
@@ -262,6 +264,8 @@ const CreateEditRoute = props => {
                 locations={pickupLocations}
                 requesters={requesters}
                 onSISelect={form.mutators.handleSISelect}
+                operation={op}
+                patronRequest={record}
               />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">
