@@ -17,11 +17,17 @@ import { required } from '@folio/stripes/util';
 import { Pluggable, useStripes } from '@folio/stripes/core';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
 
-const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }) => {
+const CREATE = 'create';
+const EDIT = 'update';
+
+
+const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect,
+  operation, patronRequest }) => {
   const { change } = useForm();
   const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
+
   useEffect(() => {
     if (locations?.length === 1) {
       change('pickupLocationSlug', locations[0]?.value);
@@ -29,6 +35,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
   }, [locations, change]);
 
   return (
+
     <AccordionSet>
       <Row>
         <Col xs={4}>
@@ -83,7 +90,8 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
           />
         </Col>
       </Row>
-      {requesters.length > 1 && (
+      {requesters.length > 1 && operation !== EDIT && (
+
         <Row>
           <Col xs={3}>
             <Field
@@ -99,6 +107,22 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect }
           </Col>
         </Row>
       )}
+      { ((patronRequest?.stateModel?.shortcode === 'SLNPRequester' || patronRequest?.stateModel?.shortcode === 'SLNPNonReturnableRequester')
+        && operation === EDIT) && (
+        <Row>
+          <Col xs={3}>
+            <Field
+              id="edit-request-metadata-requestingInstitution"
+              name="requestingInstitutionSymbol"
+              label={<FormattedMessage id="ui-rs.information.requestingInstitution" />}
+              component={TextField}
+              disabled
+            />
+          </Col>
+        </Row>
+      )
+
+      }
       <Row>
         <Col xs={5}>
           <Field
