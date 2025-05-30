@@ -256,15 +256,17 @@ const CreateEditRoute = props => {
   } else op = CREATE;
 
   let initialValues;
+  let record;
   if (id) {
     if (!reqQuery.isSuccess) return null;
-    const record = reqQuery.data;
+    record = reqQuery.data;
     initialValues = { ...record,
       formattedDateCreated: (
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
       ),
       serviceType: { value: record?.serviceType?.value } };
   } else {
+    record = null;
     initialValues = {
       copyrightType: { id: defaultCopyrightTypeId },
       serviceLevel: { value: defaultServiceLevelSetting.value },
@@ -367,6 +369,8 @@ const CreateEditRoute = props => {
                 onSISelect={form.mutators.handleSISelect}
                 autopopulate={autopopulate}
                 enabledFields={op === EDIT ? enabledFields : undefined}
+                operation={op}
+                patronRequest={record}
               />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">
