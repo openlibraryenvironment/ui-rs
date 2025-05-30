@@ -90,7 +90,7 @@ const PatronRequestForm = ({ copyrightTypes, locations, requesters, onSISelect,
           />
         </Col>
       </Row>
-      {requesters.length > 1 && (
+      {requesters.length > 1 && operation !== EDIT && (
 
         <Row>
           <Col xs={3}>
