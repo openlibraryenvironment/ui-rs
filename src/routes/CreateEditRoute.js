@@ -52,7 +52,7 @@ const CreateEditRoute = props => {
   const [serviceLevels, serviceLevelsLoaded] = useFilteredSelectifiedRefdata('ServiceLevels', 'other', 'displayed_service_levels', 'ui-rs.refdata.serviceLevel');
   const stripes = useStripes();
 
-  
+
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
   };
@@ -65,10 +65,11 @@ const CreateEditRoute = props => {
     returnQuery: true,
   });
 
-  const locQuery = useOkapiQuery(
+
+  const locationQuery = useOkapiQuery(
     'directory/entry',
     {
-      searchParams: '?filters=(type.value%3D%3Dinstitution)%7C%7C(tags.value%3Di%3Dpickup)&filters=status.value%3D%3Dmanaged&perPage=100',
+      searchParams: encodeURI('?filters=tags.value=i=pickup&filters=status.value==managed&perPage=1000'),
       kyOpt: { throwHttpErrors: false },
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
@@ -76,6 +77,20 @@ const CreateEditRoute = props => {
       enabled: !isEmpty(defaultRequesterSymbolSetting)
     }
   );
+
+  const institutionQuery = useOkapiQuery(
+    'directory/entry',
+    {
+      searchParams: encodeURI('?filters=type.value==institution&filters=status.value==managed&perPage=1000'),
+      kyOpt: { throwHttpErrors: false },
+      useErrorBoundary: false,
+      refetchOnWindowFocus: false,
+      retryOnMount:false,
+      enabled: !isEmpty(defaultRequesterSymbolSetting)
+    }
+  );
+
+
   const { data: enabledFields } = useOkapiQuery('rs/patronrequests/editableFields/edit', {
     useErrorBoundary: false,
     staleTime: 2 * 60 * 60 * 1000
@@ -173,7 +188,7 @@ const CreateEditRoute = props => {
     },
   });
 
-  const validRequesterRecords = locQuery.isSuccess ? (locQuery.data
+  const validRequesterRecords = institutionQuery.isSuccess ? (institutionQuery.data
     .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol)) : [];
 
   const requesters = validRequesterRecords?.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
@@ -207,7 +222,8 @@ const CreateEditRoute = props => {
   );
 
 
-  if (locQuery.isLoading ||
+  if (locationQuery.isLoading ||
+     institutionQuery.isLoading ||
      directoryEntriesQuery.isLoading ||
      !serviceLevelsLoaded ||
      isEmpty(copyrightTypeRefdata) ||
@@ -220,7 +236,7 @@ const CreateEditRoute = props => {
 
   // locations are where rec.type.value is 'branch' and there is a tag in rec.type.tags where the value is 'pickup'
   // and are formatted for the Select component as { value: lmsLocationCode, label: name }
-  const locations = locQuery.isSuccess ? (locQuery.data
+  const pickupLocations = locationQuery.isSuccess ? (locationQuery.data
     .filter(rec => rec?.type?.value === 'branch'
       && rec?.tags.reduce((acc, cur) => acc || cur?.value === 'pickup', false))
     .reduce((acc, cur) => ([...acc, { value: cur.slug, label: cur.name }]), [])) : [];
@@ -240,15 +256,17 @@ const CreateEditRoute = props => {
   } else op = CREATE;
 
   let initialValues;
+  let record;
   if (id) {
     if (!reqQuery.isSuccess) return null;
-    const record = reqQuery.data;
+    record = reqQuery.data;
     initialValues = { ...record,
       formattedDateCreated: (
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
       ),
       serviceType: { value: record?.serviceType?.value } };
   } else {
+    record = null;
     initialValues = {
       copyrightType: { id: defaultCopyrightTypeId },
       serviceLevel: { value: defaultServiceLevelSetting.value },
@@ -346,11 +364,13 @@ const CreateEditRoute = props => {
                 copyrightTypes={copyrightTypes}
                 serviceLevels={serviceLevels}
                 currencyCodes={currencyCodes}
-                locations={locations?.length ? locations : apiLocations}
+                locations={pickupLocations?.length ? pickupLocations : apiLocations}
                 requesters={requesterList}
                 onSISelect={form.mutators.handleSISelect}
                 autopopulate={autopopulate}
                 enabledFields={op === EDIT ? enabledFields : undefined}
+                operation={op}
+                patronRequest={record}
               />
             </form>
             <FormattedMessage id="ui-rs.confirmDirtyNavigate">

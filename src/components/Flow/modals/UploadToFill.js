@@ -18,7 +18,7 @@ const UploadToFill = ({ _request, performAction }) => {
   // const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
   const closeModal = () => setModal(null);
-  const okapiKy = useOkapiKy();
+  const okapiKy = useOkapiKy().extend({ timeout: false });
   const sendCallout = useIntlCallout();
   const stripes = useStripes();
   const maxUpload = stripes.config?.reshare?.maxDMSUpload;
