@@ -41,13 +41,11 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
     endpoint: SETTINGS_ENDPOINT,
     keyName: 'borrower_check',
     sectionName: 'hostLMSIntegration',
-    returnQueryObject: true
   });
 
   const routingAdapterSetting = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
     keyName: 'routing_adapter',
-    returnQueryObject: true
   });
 
   const isEmpty = (obj) => {
@@ -65,9 +63,12 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   if (isEmpty(freePickupLocation) ||
       isEmpty(ncipBorrowerCheck) ||
       isEmpty(routingAdapterSetting)) {
-    console.log("Settings not initalized");
+    console.log('Settings not initalized');
     return null;
   }
+
+  console.log(`freePickupLocation value set to ${freePickupLocation?.value}`);
+  console.log(`routingAdapterSetting value set to ${routingAdapterSetting?.value}`);
 
   function applyDisabledToFields(children) {
     return React.Children.map(children, child => {
