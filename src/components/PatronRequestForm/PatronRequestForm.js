@@ -67,9 +67,6 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
     return null;
   }
 
-  console.log(`freePickupLocation value set to ${freePickupLocation?.value}`);
-  console.log(`routingAdapterSetting value set to ${routingAdapterSetting?.value}`);
-
   function applyDisabledToFields(children) {
     return React.Children.map(children, child => {
       if (!React.isValidElement(child)) return child;

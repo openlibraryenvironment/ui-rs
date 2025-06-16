@@ -95,6 +95,7 @@ const CreateEditRoute = props => {
     useErrorBoundary: false,
     staleTime: 2 * 60 * 60 * 1000
   });
+
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
   const copyrightTypeRefdata = useRefdata({
     desc: 'copyrightType',
@@ -103,6 +104,7 @@ const CreateEditRoute = props => {
       staleTime: 5 * 60 * 1000,
     }
   });
+
   const currencyCodeRefdata = useRefdata({
     desc: 'CurrencyCodes',
     endpoint: REFDATA_ENDPOINT,
@@ -110,6 +112,7 @@ const CreateEditRoute = props => {
       staleTime: 5 * 60 * 1000,
     }
   });
+
   const copyrightTypes = selectifyRefdata(copyrightTypeRefdata);
   const currencyCodes = selectifyRefdata(currencyCodeRefdata);
 
@@ -295,12 +298,88 @@ const CreateEditRoute = props => {
     initialValues.patronSurname = stripes?.user?.user?.lastName;
   }
 
+  const getEntriesByType = (entryData, typeValue) => {
+    return entryData?.items?.filter(entry => { return entry.type === typeValue; });
+  };
+
+  const getEntryByName = (entryList, nameValue) => {
+    return entryList?.find(entry => { return entry.name === nameValue; });
+  };
+
+  const getShippingAddressEntry = entry => entry?.addresses?.find(address => address?.type === 'Shipping');
+
+  const formatAddressEntryString = addressComponents => {
+    const addressStruct = {};
+    for (let i = 0; i < addressComponents.length; i++) {
+      const addressComponent = addressComponents[i];
+      addressStruct[addressComponent.type] = addressComponent.value;
+    }
+    const cityLineList = [];
+    cityLineList.push(addressStruct.Locality);
+    cityLineList.push(addressStruct.AdministrativeArea);
+    cityLineList.push(addressStruct.PostalCode);
+
+    const lineList = [];
+    lineList.push(addressStruct.Other);
+    lineList.push(addressStruct.Thoroughfare);
+    lineList.push(cityLineList.filter(x => !!x).join(', ')); // filter nulls before joining
+    lineList.push(addressStruct.CountryCode);
+
+    return lineList.filter(x => !!x).join('\n'); // ditto as above
+  };
+
+  const formatAddressEntryObject = (addressComponents, line1 = null) => {
+    const addressStruct = {};
+    for (let i = 0; i < addressComponents.length; i++) {
+      const addressComponent = addressComponents[i];
+      addressStruct[addressComponent.type] = addressComponent.value;
+    }
+    const resultObject = {};
+
+    if (line1 || addressStruct.Other) {
+      resultObject.line1 = line1 ?? addressStruct.Other;
+    } else {
+      resultObject.line1 = addressStruct.ThoroughFare;
+    }
+    if (addressStruct.Locality) { resultObject.locality = addressStruct.Locality; }
+    if (addressStruct.PostalCode) { resultObject.postalCode = addressStruct.PostalCode; }
+    if (addressStruct.AdministrativeArea) { resultObject.region = addressStruct.AdministrativeArea; }
+    if (addressStruct.CountryCode) { resultObject.country = addressStruct.CountryCode; }
+
+    return resultObject;
+  };
+
+  const getAddressForPickupLocation = (entryData, pickupLocation) => {
+    const branchEntries = getEntriesByType(entryData, 'branch');
+    const branchEntry = getEntryByName(branchEntries, pickupLocation);
+    let shippingAddressEntry = getShippingAddressEntry(branchEntry);
+    if (!shippingAddressEntry) {
+      const institutionEntry = getEntriesByType(entryData, 'institution')?.at(0);
+      shippingAddressEntry = getShippingAddressEntry(institutionEntry);
+    }
+
+    const addressString = JSON.stringify(formatAddressEntryObject(
+      shippingAddressEntry.addressComponents, pickupLocation
+    ));
+    return addressString;
+  };
+
+
+
   const submit = async submittedRecord => {
     if (op === CREATE) {
       const baseRecord = {
         requestingInstitutionSymbol: requesterList[0].value,
-        isRequester: true
+        isRequester: true,
+        // deliveryAddress: 'dummy address'
       };
+
+      if (submittedRecord.pickupLocation && directoryEntriesQuery.isSuccess) {
+        baseRecord.deliveryAddress = getAddressForPickupLocation(
+          directoryEntriesQuery.data, submittedRecord.pickupLocation,
+        );
+      }
+
       const newRecord = {
         ...baseRecord,
         ...(submittedRecord.serviceType?.value === SERVICE_TYPE_COPY ? submittedRecord : omit(submittedRecord, 'copyrightType')),
