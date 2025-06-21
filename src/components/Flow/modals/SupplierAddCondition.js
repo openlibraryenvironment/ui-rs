@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { stripesConnect } from '@folio/stripes/core';
-import { Button, Col, Layout, Modal, ModalFooter, Row, Select, TextArea } from '@folio/stripes/components';
+import { stripesConnect, useStripes } from '@folio/stripes/core';
+import { Button, Col, Label, Layout, Modal, ModalFooter, Row, Select, TextArea, TextField } from '@folio/stripes/components';
 import { RefdataButtons, useIsActionPending } from '@projectreshare/stripes-reshare';
 import { required } from '@folio/stripes/util';
 import { CancelModalButton } from '../../ModalButtons';
@@ -16,9 +16,10 @@ const AddCondition = props => {
   const actionPending = !!useIsActionPending(request.id);
   const [currentModal, setModal] = useModal();
   const closeModal = () => setModal(null);
+  const stripes = useStripes();
 
   const onSubmit = values => {
-    return performAction('supplierAddCondition', values, {
+    return performAction('supplierAddCondition', { ...values, costCurrency: stripes.currency }, {
       error: 'ui-rs.actions.addCondition.error',
       success: 'ui-rs.actions.addCondition.success',
     })
@@ -57,17 +58,24 @@ const AddCondition = props => {
             <FormattedMessage id="ui-rs.actions.conditionalSupply.confirm" values={{ id: displayId, item: request.title }} />
             <Row>
               <Col xs={6}>
-                <Layout className="padding-top-gutter">
-                  <strong><FormattedMessage id="ui-rs.actions.conditionalSupply.condition" /></strong>
+                <Layout className="padding-bottom-gutter padding-top-gutter">
+                  <Label>
+                    <FormattedMessage id="ui-rs.actions.conditionalSupply.condition" />
+                  </Label>
+                  <Field
+                    name="loanCondition"
+                    component={RefdataButtons}
+                    dataOptions={listOfConditions}
+                    labelTranslations={{ key: 'ui-rs.settings.customiseListSelect.loanConditions' }}
+                    maxCols={1}
+                    required
+                    validate={required}
+                  />
                 </Layout>
                 <Field
-                  name="loanCondition"
-                  component={RefdataButtons}
-                  dataOptions={listOfConditions}
-                  labelTranslations={{ key: 'ui-rs.settings.customiseListSelect.loanConditions' }}
-                  maxCols={1}
-                  required
-                  validate={required}
+                  name="cost"
+                  label={<FormattedMessage id="ui-rs.flow.loanConditions.cost" />}
+                  component={TextField}
                 />
               </Col>
               <Col xs={6}>
