@@ -20,7 +20,7 @@ import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceTyp
 import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
 const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
-  serviceLevels, currencyCodes, locations, requesters, onSISelect, operation, patronRequest }) => {
+  serviceLevels, currencyCodes, publicationTypes, locations, requesters, onSISelect, operation, patronRequest }) => {
   const { change } = useForm();
   const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
@@ -66,9 +66,6 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
     console.log('Settings not initalized');
     return null;
   }
-
-  console.log(`freePickupLocation value set to ${freePickupLocation?.value}`);
-  console.log(`routingAdapterSetting value set to ${routingAdapterSetting?.value}`);
 
   function applyDisabledToFields(children) {
     return React.Children.map(children, child => {
@@ -475,6 +472,16 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
               name="edition"
               label={<FormattedMessage id="ui-rs.information.edition" />}
               component={TextField}
+            />
+          </Col>
+          <Col xs={4}>
+            <Field
+              id="edit-patron-request-publicationType"
+              name="publicationType"
+              label={<FormattedMessage id="ui-rs.information.publicationType" />}
+              placeholder=" "
+              component={Select}
+              dataOptions={publicationTypes}
             />
           </Col>
         </Row>
