@@ -103,6 +103,7 @@
   "information.slug": "Slug",
   "information.symbols": "Symbols",
   "information.tags": "Tags",
+  "information.publicationType" : "Publication Type",
 
   "requestform.populateById": "Use to fill form",
   "requestform.populateFromSI": "Search shared catalog",
@@ -167,6 +168,8 @@
   "flow.actions.moreOptions": "More options",
   "flow.loanConditions": "Loan Conditions",
   "flow.loanConditions.condition": "Loan condition",
+  "flow.loanConditions.cost": "Cost",
+  "flow.loanConditions.currency": "Currency",
   "flow.loanConditions.note": "Note",
   "flow.loanConditions.dateReceived": "Date received",
   "flow.loanConditions.status": "Status",
