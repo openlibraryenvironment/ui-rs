@@ -103,6 +103,7 @@
   "information.slug": "Slug",
   "information.symbols": "Symbols",
   "information.tags": "Tags",
+  "information.publicationType" : "Publication Type",
 
   "requestform.populateById": "Use to fill form",
   "requestform.populateFromSI": "Search shared catalog",
