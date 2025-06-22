@@ -36,36 +36,38 @@ const LARGE_UNEDITABLE_FIELDS = ['audit', 'bibrecord', 'batches', 'conditions', 
 // state, tools parameters are from being used as Final Form "mutator" rather than called directly
 const handleSISelect = (args, state, tools) => {
   const leader = args?.[0]?.__leader__;
-  const stval = state.formState.values?.serviceType?.value;
-  const leaderField = leader?.[6];
-  const setPubType = (pubTypeVal) => args[0]['publicationType'] = pubTypeVal;
-  const pubTypeMatch = {
-    'loan' : {
-      'a' : 'chapter',
-      'b' : 'article',
-      'm' : 'book'
-    },
-    'copy' : {
-      'a' : 'chapter',
-      'b' : 'article',
-      'm' : 'chapter',
-      's' : 'article'
-    }
-  };
+  if (leader && leader?.[6] === 'a') {
+    const stval = state.formState.values?.serviceType?.value;
+    const leaderField = leader?.[7];
+    const pubTypeMatch = {
+      'loan' : {
+        'a' : 'chapter',
+        'b' : 'article',
+        'm' : 'book',
+        's' : 'journal'
+      },
+      'copy' : {
+        'a' : 'chapter',
+        'b' : 'article',
+        'm' : 'chapter',
+        's' : 'article'
+      }
+    };
 
-  if (stval in pubTypeMatch) {
-    const pubTypeVal = pubTypeMatch[stval][leaderField];
-    if (pubTypeVal) {
-      setPubType(pubTypeVal);
+    if (stval in pubTypeMatch) {
+      const pubTypeVal = pubTypeMatch[stval][leaderField];
+      if (pubTypeVal) {
+        args[0].publicationType = pubTypeVal;
+      }
     }
   }
 
   Object.entries(args[0]).forEach(([field, value]) => {
-    tools.changeValue(state, field, () => value)
+    tools.changeValue(state, field, () => value);
   });
 
   SI_FIELDS.filter(field => !(field in args[0])).forEach(field => {
-    tools.changeValue(state, field, () => undefined)
+    tools.changeValue(state, field, () => undefined);
   });
 };
 
@@ -139,15 +141,15 @@ const CreateEditRoute = props => {
       staleTime: 5 * 60 * 1000,
     }
   });
- 
+
   const copyrightTypes = selectifyRefdata(copyrightTypeRefdata);
   const currencyCodes = selectifyRefdata(currencyCodeRefdata);
-  const publicationTypesList = [ 'ArchiveMaterial', 'Article', 'AudioBook', 
-    'Book', 'Chapter', 'ConferenceProc', 'Game', 'GovernmentPubl', 'Image', 
-    'Journal', 'Manuscript', 'Map', 'Movie', 'MusicRecording', 'MusicScore', 
-    'Newspaper', 'Patent', 'Report', 'SoundRecording', 'Thesis' 
+  const publicationTypesList = ['ArchiveMaterial', 'Article', 'AudioBook',
+    'Book', 'Chapter', 'ConferenceProc', 'Game', 'GovernmentPubl', 'Image',
+    'Journal', 'Manuscript', 'Map', 'Movie', 'MusicRecording', 'MusicScore',
+    'Newspaper', 'Patent', 'Report', 'SoundRecording', 'Thesis'
   ];
-  const publicationTypes = publicationTypesList.map( x => ({ label: x, value: x.toLowerCase()}));
+  const publicationTypes = publicationTypesList.map(x => ({ label: x, value: x.toLowerCase() }));
 
   const defaultCopyrightSetting = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
