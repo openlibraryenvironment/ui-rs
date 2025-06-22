@@ -35,9 +35,9 @@ const LARGE_UNEDITABLE_FIELDS = ['audit', 'bibrecord', 'batches', 'conditions', 
 
 // state, tools parameters are from being used as Final Form "mutator" rather than called directly
 const handleSISelect = (args, state, tools) => {
-  const leader = args[0]['__leader__']
+  const leader = args?.[0]?.__leader__;
   const stval = state.formState.values?.serviceType?.value;
-  const leaderField = leader[6];
+  const leaderField = leader?.[6];
   const setPubType = (pubTypeVal) => args[0]['publicationType'] = pubTypeVal;
   const pubTypeMatch = {
     'loan' : {
