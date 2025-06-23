@@ -72,11 +72,13 @@ const AddCondition = props => {
                     validate={required}
                   />
                 </Layout>
-                <Field
-                  name="cost"
-                  label={<FormattedMessage id="ui-rs.flow.loanConditions.cost" />}
-                  component={TextField}
-                />
+                {stripes.config?.reshare?.showCost &&
+                  <Field
+                    name="cost"
+                    label={<FormattedMessage id="ui-rs.flow.loanConditions.cost" />}
+                    component={TextField}
+                  />
+                }
               </Col>
               <Col xs={6}>
                 <Layout className="padding-top-gutter">
