@@ -92,11 +92,13 @@ const ConditionalSupply = props => {
                   required
                   validate={required}
                 />
-                <Field
-                  name="cost"
-                  label={<FormattedMessage id="ui-rs.flow.loanConditions.cost" />}
-                  component={TextField}
-                />
+                {stripes.config?.reshare?.showCost &&
+                  <Field
+                    name="cost"
+                    label={<FormattedMessage id="ui-rs.flow.loanConditions.cost" />}
+                    component={TextField}
+                  />
+                }
               </Col>
             </Row>
             <Layout className="padding-top-gutter">
