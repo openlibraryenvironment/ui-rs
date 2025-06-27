@@ -27,7 +27,7 @@ const OP_ACTION = {
   [REVALIDATE]: 'requesterRetryValidation'
 };
 
-const SI_FIELDS = ['title', 'author', 'edition', 'isbn', 'issn', 'oclcNumber', 'publisher', 'publicationDate', 'placeOfPublication'];
+const SI_FIELDS = ['title', 'author', 'edition', 'isbn', 'issn', 'oclcNumber', 'publisher', 'publicationDate', 'placeOfPublication', 'publicationType'];
 // Eventually we want an allowlist of the fields mutable via the form but currently rerequest depends on
 // the previous behaviour of resubmitting the whole request. Trimming at this point mainly to avoid noise
 // in the audit trail.
@@ -35,8 +35,40 @@ const LARGE_UNEDITABLE_FIELDS = ['audit', 'bibrecord', 'batches', 'conditions', 
 
 // state, tools parameters are from being used as Final Form "mutator" rather than called directly
 const handleSISelect = (args, state, tools) => {
-  Object.entries(args[0]).forEach(([field, value]) => tools.changeValue(state, field, () => value));
-  SI_FIELDS.filter(field => !(field in args[0])).forEach(field => tools.changeValue(state, field, () => undefined));
+  const leader = args?.[0]?.__leader__;
+  if (leader && leader?.[6] === 'a') {
+    const stval = state.formState.values?.serviceType?.value;
+    const leaderField = leader?.[7];
+    const pubTypeMatch = {
+      'loan' : {
+        'a' : 'chapter',
+        'b' : 'article',
+        'm' : 'book',
+        's' : 'journal'
+      },
+      'copy' : {
+        'a' : 'chapter',
+        'b' : 'article',
+        'm' : 'chapter',
+        's' : 'article'
+      }
+    };
+
+    if (stval in pubTypeMatch) {
+      const pubTypeVal = pubTypeMatch[stval][leaderField];
+      if (pubTypeVal) {
+        args[0].publicationType = pubTypeVal;
+      }
+    }
+  }
+
+  Object.entries(args[0]).forEach(([field, value]) => {
+    tools.changeValue(state, field, () => value);
+  });
+
+  SI_FIELDS.filter(field => !(field in args[0])).forEach(field => {
+    tools.changeValue(state, field, () => undefined);
+  });
 };
 
 const CreateEditRoute = props => {
@@ -51,7 +83,6 @@ const CreateEditRoute = props => {
   const close = useCloseDirect();
   const [serviceLevels, serviceLevelsLoaded] = useFilteredSelectifiedRefdata('ServiceLevels', 'other', 'displayed_service_levels', 'ui-rs.refdata.serviceLevel');
   const stripes = useStripes();
-
 
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
@@ -115,6 +146,12 @@ const CreateEditRoute = props => {
 
   const copyrightTypes = selectifyRefdata(copyrightTypeRefdata);
   const currencyCodes = selectifyRefdata(currencyCodeRefdata);
+  const publicationTypesList = ['ArchiveMaterial', 'Article', 'AudioBook',
+    'Book', 'Chapter', 'ConferenceProc', 'Game', 'GovernmentPubl', 'Image',
+    'Journal', 'Manuscript', 'Map', 'Movie', 'MusicRecording', 'MusicScore',
+    'Newspaper', 'Patent', 'Report', 'SoundRecording', 'Thesis'
+  ];
+  const publicationTypes = publicationTypesList.map(x => ({ label: x, value: x.toLowerCase() }));
 
   const defaultCopyrightSetting = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
@@ -127,7 +164,6 @@ const CreateEditRoute = props => {
     sectionName: 'other',
     keyName: 'default_service_level',
   });
-
 
   const borrowerCheckSetting = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
@@ -443,6 +479,7 @@ const CreateEditRoute = props => {
                 copyrightTypes={copyrightTypes}
                 serviceLevels={serviceLevels}
                 currencyCodes={currencyCodes}
+                publicationTypes={publicationTypes}
                 locations={pickupLocations?.length ? pickupLocations : apiLocations}
                 requesters={requesterList}
                 onSISelect={form.mutators.handleSISelect}

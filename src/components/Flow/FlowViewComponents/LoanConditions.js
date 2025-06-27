@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, MultiColumnList } from '@folio/stripes/components';
-import { formatConditionCode, formatConditionNote } from '../../../util/formatCondition';
+import { formatConditionCode, formatConditionCost, formatConditionNote } from '../../../util/formatCondition';
 
 const LoanConditions = (props) => {
   const { formatDate, formatMessage } = useIntl();
@@ -22,6 +22,7 @@ const LoanConditions = (props) => {
     });
     const conditionFormatter = {
       code: cond => formatConditionCode(cond, formatMessage),
+      cost: cond => formatConditionCost(cond),
       note: cond => formatConditionNote(cond),
       dateCreated: cond => formatDate(cond.dateCreated),
       accepted: cond => (cond.accepted ? <FormattedMessage id="ui-rs.flow.loanConditions.status.accepted" /> : <FormattedMessage id="ui-rs.flow.loanConditions.status.pending" />)
@@ -35,13 +36,14 @@ const LoanConditions = (props) => {
         <MultiColumnList
           columnMapping={{
             code: <FormattedMessage id="ui-rs.flow.loanConditions.condition" />,
+            cost: <FormattedMessage id="ui-rs.flow.loanConditions.cost" />,
             note: <FormattedMessage id="ui-rs.flow.loanConditions.note" />,
             dateCreated: <FormattedMessage id="ui-rs.flow.loanConditions.dateReceived" />,
             accepted: <FormattedMessage id="ui-rs.flow.loanConditions.status" />,
           }}
           contentData={relevantConditions}
           formatter={conditionFormatter}
-          visibleColumns={['code', 'dateCreated', 'accepted', 'note']}
+          visibleColumns={['code', 'cost', 'dateCreated', 'accepted', 'note']}
         />
       </Accordion>
     );

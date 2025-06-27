@@ -14,3 +14,8 @@ export const formatConditionCode = (condition, formatMessage) => {
     defaultMessage: condition.code,
   });
 };
+
+export const formatConditionCost = (condition) => {
+  if (!condition.cost) return '';
+  return condition.cost + ' ' + condition.costCurrency?.value?.toUpperCase();
+};
