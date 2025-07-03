@@ -198,7 +198,7 @@ const CreateEditRoute = props => {
 
   const creator = useMutation({
     mutationFn: (newRecord) => okapiKy
-      .post('rs/patronrequests', { json: newRecord }),
+      .post('rs/patronrequests', { json: { ...newRecord, maximumCostsCurrencyCode: stripes.currency } }),
     onSuccess: async (res) => {
       const created = await res.json();
       // When creating a new request we need to delay before redirecting to the request's page to
@@ -285,6 +285,24 @@ const CreateEditRoute = props => {
     ? directoryEntriesQuery.data?.items?.filter(item => item.type === 'branch')?.map(item => ({ label: item.name, value: item.name }))
     : [];
 
+  const tiersByRequester = directoryEntriesQuery.data?.items
+    ?.filter(item => item.type === 'institution')
+    ?.reduce((acc, item) => {
+      const formattedTiers = item.tiers?.map(tier => ({
+        label: tier.name,
+        value: tier.id,
+        ...tier
+      }));
+
+      item.symbols?.forEach(sym => {
+        if (sym?.authority && sym?.symbol) {
+          const symbolKey = `${sym.authority}:${sym.symbol}`;
+          acc[symbolKey] = formattedTiers;
+        }
+      });
+
+      return acc;
+    }, {});
 
   // Determine operation
   let op;
@@ -308,7 +326,7 @@ const CreateEditRoute = props => {
     record = null;
     initialValues = {
       copyrightType: { id: defaultCopyrightTypeId },
-      serviceLevel: { value: defaultServiceLevelSetting.value },
+      serviceLevel: { value: stripes.config?.reshare?.useTiers ? undefined : defaultServiceLevelSetting.value },
       serviceType: { value: SERVICE_TYPE_LOAN },
     };
   }
@@ -482,6 +500,7 @@ const CreateEditRoute = props => {
                 publicationTypes={publicationTypes}
                 locations={pickupLocations?.length ? pickupLocations : apiLocations}
                 requesters={requesterList}
+                tiersByRequester={tiersByRequester}
                 onSISelect={form.mutators.handleSISelect}
                 autopopulate={autopopulate}
                 enabledFields={op === EDIT ? enabledFields : undefined}
