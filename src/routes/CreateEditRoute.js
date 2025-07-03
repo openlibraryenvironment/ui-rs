@@ -362,25 +362,6 @@ const CreateEditRoute = props => {
 
   const getShippingAddressEntry = entry => entry?.addresses?.find(address => address?.type === 'Shipping');
 
-  const formatAddressEntryString = addressComponents => {
-    const addressStruct = {};
-    for (let i = 0; i < addressComponents.length; i++) {
-      const addressComponent = addressComponents[i];
-      addressStruct[addressComponent.type] = addressComponent.value;
-    }
-    const cityLineList = [];
-    cityLineList.push(addressStruct.Locality);
-    cityLineList.push(addressStruct.AdministrativeArea);
-    cityLineList.push(addressStruct.PostalCode);
-
-    const lineList = [];
-    lineList.push(addressStruct.Other);
-    lineList.push(addressStruct.Thoroughfare);
-    lineList.push(cityLineList.filter(x => !!x).join(', ')); // filter nulls before joining
-    lineList.push(addressStruct.CountryCode);
-
-    return lineList.filter(x => !!x).join('\n'); // ditto as above
-  };
 
   const formatAddressEntryObject = (addressComponents, line1 = null) => {
     const addressStruct = {};
@@ -392,8 +373,9 @@ const CreateEditRoute = props => {
 
     if (line1 || addressStruct.Other) {
       resultObject.line1 = line1 ?? addressStruct.Other;
+      resultObject.line2 = addressStruct.Thoroughfare;
     } else {
-      resultObject.line1 = addressStruct.ThoroughFare;
+      resultObject.line1 = addressStruct.Thoroughfare;
     }
     if (addressStruct.Locality) { resultObject.locality = addressStruct.Locality; }
     if (addressStruct.PostalCode) { resultObject.postalCode = addressStruct.PostalCode; }
