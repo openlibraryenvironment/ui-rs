@@ -28,7 +28,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
   const onSubmit = async values => {
     const inputValue = values?.reqId?.trim();
 
-    if (!isSlnpItemBarcodeAction && values?.reqId?.trim() !== request.hrid) {
+    if (!isSlnpItemBarcodeAction && values?.reqId?.trim()?.toUpperCase() !== request.hrid?.toUpperCase()) {
       sendCallout('ui-rs.actions.wrongId', 'error');
       return;
     }
