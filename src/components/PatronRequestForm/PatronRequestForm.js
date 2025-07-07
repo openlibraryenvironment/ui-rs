@@ -25,7 +25,6 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
-  const CREATE = 'create';
   const EDIT = 'update';
 
   const currentRequester = values.requestingInstitutionSymbol?.value ?? requesters[0];
@@ -74,7 +73,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   if (isEmpty(freePickupLocation) ||
       isEmpty(ncipBorrowerCheck) ||
       isEmpty(routingAdapterSetting)) {
-    console.log('Settings not initalized');
+    // Settings not initalized
     return null;
   }
 

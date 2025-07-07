@@ -7,7 +7,7 @@ import { useIntlCallout, useIsActionPending } from '@projectreshare/stripes-resh
 import AddNoteField from '../AddNoteField';
 import { includesNote } from './actionsByState';
 
-const ScanConfirmAction = ({ performAction, request, action, prompt, error, success, intl }) => {
+const ScanConfirmAction = ({ performAction, request, action, prompt, error, success }) => {
   const sendCallout = useIntlCallout();
   const actionPending = !!useIsActionPending(request.id);
   const validActions = request.validActions.map(a => a.actionCode);
@@ -30,7 +30,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
 
     if (!isSlnpItemBarcodeAction && values?.reqId?.trim()?.toUpperCase() !== request.hrid?.toUpperCase()) {
       sendCallout('ui-rs.actions.wrongId', 'error');
-      return;
+      return false;
     }
 
     if (isSlnpCompleteItemBarcodeAction) {
@@ -38,7 +38,7 @@ const ScanConfirmAction = ({ performAction, request, action, prompt, error, succ
         const itemBarcode = request.volumes[0].itemId || request.volumes[0].name;
         if (itemBarcode && itemBarcode !== inputValue) {
           sendCallout('ui-rs.actions.wrongBarcodeId', 'error');
-          return;
+          return false;
         }
       }
     }
@@ -86,6 +86,5 @@ ScanConfirmAction.propTypes = {
   prompt: PropTypes.string,
   error: PropTypes.string.isRequired,
   success: PropTypes.string.isRequired,
-  intl: PropTypes.object.isRequired,
 };
 export default injectIntl(ScanConfirmAction);
