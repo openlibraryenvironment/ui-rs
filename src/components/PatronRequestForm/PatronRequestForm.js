@@ -22,7 +22,7 @@ import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   serviceLevels, publicationTypes, locations, requesters, tiersByRequester, onSISelect, operation, patronRequest }) => {
   const { change } = useForm();
-  const { initialValues, values } = useFormState();
+  const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
   const EDIT = 'update';
@@ -34,11 +34,14 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   const resetTier = () => { if (useTiers) change('tier', undefined); };
   const tier = useTiers && values.tier ? tiers.find(t => t.id === values.tier) : undefined;
   useEffect(() => {
-    if (tier && initialValues.maximumCostsMonetaryValue === undefined) {
+    // When using tiers we want the cost/level from the selected tier except when we're editing as we may then be
+    // displaying a higher cost from an accepted condition and won't be able to select a different tier as that's
+    // not editable once a request is submitted.
+    if (tier && operation !== EDIT) {
       if (showCost) change('maximumCostsMonetaryValue', tier?.cost);
       change('serviceLevel.value', tier?.level?.toLowerCase());
     }
-  }, [change, initialValues, tier, showCost]);
+  }, [change, operation, showCost, tier]);
 
   const freePickupLocation = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
