@@ -83,6 +83,7 @@ const CreateEditRoute = props => {
   const close = useCloseDirect();
   const [serviceLevels, serviceLevelsLoaded] = useFilteredSelectifiedRefdata('ServiceLevels', 'other', 'displayed_service_levels', 'ui-rs.refdata.serviceLevel');
   const stripes = useStripes();
+  const config = stripes.config?.reshare;
 
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
@@ -322,11 +323,16 @@ const CreateEditRoute = props => {
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
       ),
       serviceType: { value: record?.serviceType?.value } };
+    if (config?.useTiers) {
+      initialValues.tier = tiersByRequester[record.requestingInstitutionSymbol]
+        ?.find(t => t.level?.toLowerCase() === record.serviceLevel?.value?.toLowerCase()
+          && t.cost >= record.maximumCostsMonetaryValue)?.id;
+    }
   } else {
     record = null;
     initialValues = {
       copyrightType: { id: defaultCopyrightTypeId },
-      serviceLevel: { value: stripes.config?.reshare?.useTiers ? undefined : defaultServiceLevelSetting.value },
+      serviceLevel: { value: config?.useTiers ? undefined : defaultServiceLevelSetting.value },
       serviceType: { value: SERVICE_TYPE_LOAN },
     };
   }

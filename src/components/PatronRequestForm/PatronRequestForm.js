@@ -22,7 +22,7 @@ import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   serviceLevels, publicationTypes, locations, requesters, tiersByRequester, onSISelect, operation, patronRequest }) => {
   const { change } = useForm();
-  const { values } = useFormState();
+  const { initialValues, values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
   const EDIT = 'update';
@@ -34,11 +34,11 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   const resetTier = () => { if (useTiers) change('tier', undefined); };
   const tier = useTiers && values.tier ? tiers.find(t => t.id === values.tier) : undefined;
   useEffect(() => {
-    if (useTiers) {
+    if (tier && initialValues.maximumCostsMonetaryValue === undefined) {
       if (showCost) change('maximumCostsMonetaryValue', tier?.cost);
       change('serviceLevel.value', tier?.level?.toLowerCase());
     }
-  }, [change, tier, showCost, useTiers]);
+  }, [change, initialValues, tier, showCost]);
 
   const freePickupLocation = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
