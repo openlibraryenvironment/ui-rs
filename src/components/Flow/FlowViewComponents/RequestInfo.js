@@ -105,12 +105,14 @@ const RequestInfo = ({ request }) => {
           }
         </Row>
         <Row>
+          {request.serviceLevel !== undefined &&
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.serviceLevel" />}
               value={<FormattedMessage id={`ui-rs.refdata.serviceLevel.${request.serviceLevel?.value}`} />}
             />
           </Col>
+          }
           {request.maximumCostsMonetaryValue !== undefined &&
           <Col xs={6}>
             <KeyValue
