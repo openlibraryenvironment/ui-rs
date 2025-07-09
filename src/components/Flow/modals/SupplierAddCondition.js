@@ -72,7 +72,7 @@ const AddCondition = props => {
                     validate={required}
                   />
                 </Layout>
-                {stripes.config?.reshare?.showCost &&
+                {stripes.config?.reshare?.showCost && request.maximumCostsMonetaryValue > 0 &&
                   <Field
                     name="cost"
                     label={<FormattedMessage id="ui-rs.flow.loanConditions.cost" />}

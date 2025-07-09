@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
-import { Button, Row, Col, TextField, Datepicker} from '@folio/stripes/components';
+import { Button, Row, Col, TextField, Datepicker } from '@folio/stripes/components';
 import { useAppSettings } from '@k-int/stripes-kint-components';
 import useActionConfig from '../useActionConfig';
 import { SETTINGS_ENDPOINT } from '../../../constants/endpoints';

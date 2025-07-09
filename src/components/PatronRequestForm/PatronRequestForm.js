@@ -20,15 +20,28 @@ import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceTyp
 import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
 const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
-  serviceLevels, currencyCodes, publicationTypes, locations, requesters, onSISelect, operation, patronRequest }) => {
+  serviceLevels, publicationTypes, locations, requesters, tiersByRequester, onSISelect, operation, patronRequest }) => {
   const { change } = useForm();
   const { values } = useFormState();
   const isCopyReq = values?.serviceType?.value === SERVICE_TYPE_COPY;
   const stripes = useStripes();
-
-  const CREATE = 'create';
   const EDIT = 'update';
 
+  const currentRequester = values.requestingInstitutionSymbol?.value ?? requesters[0];
+  const tiers = tiersByRequester?.[currentRequester]?.filter(tier => tier.type?.toLowerCase() === values.serviceType?.value) ?? [];
+  const showCost = stripes.config?.reshare?.showCost;
+  const useTiers = stripes.config?.reshare?.useTiers;
+  const resetTier = () => { if (useTiers) change('tier', undefined); };
+  const tier = useTiers && values.tier ? tiers.find(t => t.id === values.tier) : undefined;
+  useEffect(() => {
+    // When using tiers we want the cost/level from the selected tier except when we're editing as we may then be
+    // displaying a higher cost from an accepted condition and won't be able to select a different tier as that's
+    // not editable once a request is submitted.
+    if (tier && operation !== EDIT) {
+      if (showCost) change('maximumCostsMonetaryValue', tier?.cost);
+      change('serviceLevel.value', tier?.level?.toLowerCase());
+    }
+  }, [change, operation, showCost, tier]);
 
   const freePickupLocation = useAppSettings({
     endpoint: SETTINGS_ENDPOINT,
@@ -63,7 +76,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   if (isEmpty(freePickupLocation) ||
       isEmpty(ncipBorrowerCheck) ||
       isEmpty(routingAdapterSetting)) {
-    console.log('Settings not initalized');
+    // Settings not initalized
     return null;
   }
 
@@ -149,6 +162,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
           <Field
             component={RadioButton}
             inline
+            onClick={resetTier}
             label={<FormattedMessage id="ui-rs.information.serviceType.loan" />}
             name="serviceType.value"
             type="radio"
@@ -157,6 +171,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
           <Field
             component={RadioButton}
             inline
+            onClick={resetTier}
             label={<FormattedMessage id="ui-rs.information.serviceType.copy" />}
             name="serviceType.value"
             type="radio"
@@ -252,8 +267,24 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
           />
         </Col>
         <Col xs={3}>
+          {useTiers &&
+            <Row>
+              <Col xs={12}>
+                <Field
+                  id="edit-request-metadata-tier"
+                  name="tier"
+                  placeholder=" "
+                  label={<FormattedMessage id="ui-rs.information.tier" />}
+                  component={Select}
+                  dataOptions={tiers}
+                  required
+                  validate={required}
+                />
+              </Col>
+            </Row>
+          }
           <Row>
-            <Col xs={12}>
+            <Col xs={6}>
               <Field
                 id="edit-request-metadata-serviceLevel"
                 name="serviceLevel.value"
@@ -261,30 +292,22 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
                 placeholder=" "
                 component={Select}
                 dataOptions={serviceLevels}
+                disabled={useTiers}
                 validate={required}
               />
             </Col>
+            {showCost &&
+              <Col xs={6}>
+                <Field
+                  id="edit-request-metadata-maximumCostsMonetaryValue"
+                  name="maximumCostsMonetaryValue"
+                  label={<FormattedMessage id="ui-rs.information.maximumCost" />}
+                  component={TextField}
+                  disabled={useTiers}
+                />
+              </Col>
+            }
           </Row>
-          {/* <Row>
-            <Col xs={6}>
-              <Field
-                id="edit-request-metadata-maximumCostsCurrencyCode"
-                name="maximumCostsCurrencyCode.id"
-                label={<FormattedMessage id="ui-rs.information.maximumCostsCurrencyCode" />}
-                placeholder=" "
-                component={Select}
-                dataOptions={currencyCodes}
-              />
-            </Col>
-            <Col xs={6}>
-              <Field
-                id="edit-request-metadata-maximumCostsMonetaryValue"
-                name="maximumCostsMonetaryValue"
-                label={<FormattedMessage id="ui-rs.information.maximumCostsMonetaryValue" />}
-                component={TextField}
-              />
-            </Col>
-          </Row> */}
         </Col>
         {isCopyReq &&
         <Col xs={3}>

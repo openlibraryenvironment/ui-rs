@@ -39,16 +39,18 @@ class CustomIdentifiersInfo extends React.Component {
           cardClass={css.citationMetadataCard}
           headerClass={css.citationMetadataCardHeader}
         >
-          {identifiers.map(id => <>
-            <Row key={`${this.props.id}-${id.value}`}>
-              <Col xs={6}>
-                <KeyValue
-                  label={id.key}
-                  value={id.value}
-                />
-              </Col>
-            </Row>
-          </>)}
+          {identifiers.map(id => (
+            <>
+              <Row key={`${this.props.id}-${id.value}`}>
+                <Col xs={6}>
+                  <KeyValue
+                    label={id.key}
+                    value={id.value}
+                  />
+                </Col>
+              </Row>
+            </>
+          ))}
         </Card>
       );
     } else {

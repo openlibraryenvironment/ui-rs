@@ -83,6 +83,7 @@ const CreateEditRoute = props => {
   const close = useCloseDirect();
   const [serviceLevels, serviceLevelsLoaded] = useFilteredSelectifiedRefdata('ServiceLevels', 'other', 'displayed_service_levels', 'ui-rs.refdata.serviceLevel');
   const stripes = useStripes();
+  const config = stripes.config?.reshare;
 
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
@@ -126,6 +127,7 @@ const CreateEditRoute = props => {
     useErrorBoundary: false,
     staleTime: 2 * 60 * 60 * 1000
   });
+
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
   const copyrightTypeRefdata = useRefdata({
     desc: 'copyrightType',
@@ -134,6 +136,7 @@ const CreateEditRoute = props => {
       staleTime: 5 * 60 * 1000,
     }
   });
+
   const currencyCodeRefdata = useRefdata({
     desc: 'CurrencyCodes',
     endpoint: REFDATA_ENDPOINT,
@@ -196,7 +199,7 @@ const CreateEditRoute = props => {
 
   const creator = useMutation({
     mutationFn: (newRecord) => okapiKy
-      .post('rs/patronrequests', { json: newRecord }),
+      .post('rs/patronrequests', { json: { ...newRecord, maximumCostsCurrencyCode: stripes.currency } }),
     onSuccess: async (res) => {
       const created = await res.json();
       // When creating a new request we need to delay before redirecting to the request's page to
@@ -283,6 +286,24 @@ const CreateEditRoute = props => {
     ? directoryEntriesQuery.data?.items?.filter(item => item.type === 'branch')?.map(item => ({ label: item.name, value: item.name }))
     : [];
 
+  const tiersByRequester = directoryEntriesQuery.data?.items
+    ?.filter(item => item.type === 'institution')
+    ?.reduce((acc, item) => {
+      const formattedTiers = item.tiers?.map(tier => ({
+        label: tier.name,
+        value: tier.id,
+        ...tier
+      }));
+
+      item.symbols?.forEach(sym => {
+        if (sym?.authority && sym?.symbol) {
+          const symbolKey = `${sym.authority}:${sym.symbol}`;
+          acc[symbolKey] = formattedTiers;
+        }
+      });
+
+      return acc;
+    }, {});
 
   // Determine operation
   let op;
@@ -302,11 +323,16 @@ const CreateEditRoute = props => {
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
       ),
       serviceType: { value: record?.serviceType?.value } };
+    if (config?.useTiers) {
+      initialValues.tier = tiersByRequester[record.requestingInstitutionSymbol]
+        ?.find(t => t.level?.toLowerCase() === record.serviceLevel?.value?.toLowerCase()
+          && t.cost >= record.maximumCostsMonetaryValue)?.id;
+    }
   } else {
     record = null;
     initialValues = {
       copyrightType: { id: defaultCopyrightTypeId },
-      serviceLevel: { value: defaultServiceLevelSetting.value },
+      serviceLevel: { value: config?.useTiers ? undefined : defaultServiceLevelSetting.value },
       serviceType: { value: SERVICE_TYPE_LOAN },
     };
   }
@@ -332,12 +358,70 @@ const CreateEditRoute = props => {
     initialValues.patronSurname = stripes?.user?.user?.lastName;
   }
 
+  const getEntriesByType = (entryData, typeValue) => {
+    return entryData?.items?.filter(entry => { return entry.type === typeValue; });
+  };
+
+  const getEntryByName = (entryList, nameValue) => {
+    return entryList?.find(entry => { return entry.name === nameValue; });
+  };
+
+  const getShippingAddressEntry = entry => entry?.addresses?.find(address => address?.type === 'Shipping');
+
+
+  const formatAddressEntryObject = (addressComponents, line1 = null) => {
+    const addressStruct = {};
+    for (let i = 0; i < addressComponents.length; i++) {
+      const addressComponent = addressComponents[i];
+      addressStruct[addressComponent.type] = addressComponent.value;
+    }
+    const resultObject = {};
+
+    if (line1 || addressStruct.Other) {
+      resultObject.line1 = line1 ?? addressStruct.Other;
+      resultObject.line2 = addressStruct.Thoroughfare;
+    } else {
+      resultObject.line1 = addressStruct.Thoroughfare;
+    }
+    if (addressStruct.Locality) { resultObject.locality = addressStruct.Locality; }
+    if (addressStruct.PostalCode) { resultObject.postalCode = addressStruct.PostalCode; }
+    if (addressStruct.AdministrativeArea) { resultObject.region = addressStruct.AdministrativeArea; }
+    if (addressStruct.CountryCode) { resultObject.country = addressStruct.CountryCode; }
+
+    return resultObject;
+  };
+
+  const getAddressForPickupLocation = (entryData, pickupLocation) => {
+    const branchEntries = getEntriesByType(entryData, 'branch');
+    const branchEntry = getEntryByName(branchEntries, pickupLocation);
+    let shippingAddressEntry = getShippingAddressEntry(branchEntry);
+    if (!shippingAddressEntry) {
+      const institutionEntry = getEntriesByType(entryData, 'institution')?.at(0);
+      shippingAddressEntry = getShippingAddressEntry(institutionEntry);
+    }
+
+    const addressString = JSON.stringify(formatAddressEntryObject(
+      shippingAddressEntry.addressComponents, pickupLocation
+    ));
+    return addressString;
+  };
+
+
+
   const submit = async submittedRecord => {
     if (op === CREATE) {
       const baseRecord = {
         requestingInstitutionSymbol: requesterList[0].value,
-        isRequester: true
+        isRequester: true,
+        // deliveryAddress: 'dummy address'
       };
+
+      if (submittedRecord.pickupLocation && directoryEntriesQuery.isSuccess) {
+        baseRecord.deliveryAddress = getAddressForPickupLocation(
+          directoryEntriesQuery.data, submittedRecord.pickupLocation,
+        );
+      }
+
       const newRecord = {
         ...baseRecord,
         ...(submittedRecord.serviceType?.value === SERVICE_TYPE_COPY ? submittedRecord : omit(submittedRecord, 'copyrightType')),
@@ -404,6 +488,7 @@ const CreateEditRoute = props => {
                 publicationTypes={publicationTypes}
                 locations={pickupLocations?.length ? pickupLocations : apiLocations}
                 requesters={requesterList}
+                tiersByRequester={tiersByRequester}
                 onSISelect={form.mutators.handleSISelect}
                 autopopulate={autopopulate}
                 enabledFields={op === EDIT ? enabledFields : undefined}
