@@ -6,10 +6,10 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useAppSettings, useRefdata } from '@k-int/stripes-kint-components';
-import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction } from '@projectreshare/stripes-reshare';
+import { useRefdata } from '@k-int/stripes-kint-components';
+import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction, useSetting } from '@projectreshare/stripes-reshare';
 import PatronRequestForm from '../components/PatronRequestForm';
-import { REFDATA_ENDPOINT, SETTINGS_ENDPOINT } from '../constants/endpoints';
+import { REFDATA_ENDPOINT } from '../constants/endpoints';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
 import useFilteredSelectifiedRefdata from '../util/useFilteredSelectifiedRefdata';
 
@@ -85,18 +85,11 @@ const CreateEditRoute = props => {
   const stripes = useStripes();
   const config = stripes.config?.reshare;
 
-  const isEmpty = (obj) => {
-    return Object.keys(obj).length === 0;
-  };
-
-
-  const defaultRequesterSymbolSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'requests',
-    keyName: 'default_request_symbol',
-    returnQuery: true,
-  });
-
+  const borrowerCheckSetting = useSetting('borrower_check', 'hostLMSIntegration');
+  const defaultRequesterSymbolSetting = useSetting('default_request_symbol', 'requests');
+  const defaultCopyrightSetting = useSetting('default_copyright_type', 'other');
+  const defaultServiceLevelSetting = useSetting('default_service_level', 'other');
+  const routingAdapterSetting = useSetting('routing_adapter');
 
   const locationQuery = useOkapiQuery(
     'directory/entry',
@@ -106,10 +99,9 @@ const CreateEditRoute = props => {
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
       retryOnMount:false,
-      enabled: !isEmpty(defaultRequesterSymbolSetting)
+      enabled: routingAdapterSetting.isSuccess === true && routingAdapterSetting.value !== 'disabled'
     }
   );
-
   const institutionQuery = useOkapiQuery(
     'directory/entry',
     {
@@ -118,17 +110,15 @@ const CreateEditRoute = props => {
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
       retryOnMount:false,
-      enabled: !isEmpty(defaultRequesterSymbolSetting)
+      enabled: routingAdapterSetting.isSuccess === true && routingAdapterSetting.value !== 'disabled'
     }
   );
-
-
   const { data: enabledFields } = useOkapiQuery('rs/patronrequests/editableFields/edit', {
     useErrorBoundary: false,
     staleTime: 2 * 60 * 60 * 1000
   });
-
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
+
   const copyrightTypeRefdata = useRefdata({
     desc: 'copyrightType',
     endpoint: REFDATA_ENDPOINT,
@@ -136,41 +126,14 @@ const CreateEditRoute = props => {
       staleTime: 5 * 60 * 1000,
     }
   });
-
-  const currencyCodeRefdata = useRefdata({
-    desc: 'CurrencyCodes',
-    endpoint: REFDATA_ENDPOINT,
-    queryParams: {
-      staleTime: 5 * 60 * 1000,
-    }
-  });
-
   const copyrightTypes = selectifyRefdata(copyrightTypeRefdata);
-  const currencyCodes = selectifyRefdata(currencyCodeRefdata);
+
   const publicationTypesList = ['ArchiveMaterial', 'Article', 'AudioBook',
     'Book', 'Chapter', 'ConferenceProc', 'Game', 'GovernmentPubl', 'Image',
     'Journal', 'Manuscript', 'Map', 'Movie', 'MusicRecording', 'MusicScore',
     'Newspaper', 'Patent', 'Report', 'SoundRecording', 'Thesis'
   ];
   const publicationTypes = publicationTypesList.map(x => ({ label: x, value: x.toLowerCase() }));
-
-  const defaultCopyrightSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'other',
-    keyName: 'default_copyright_type',
-  });
-
-  const defaultServiceLevelSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'other',
-    keyName: 'default_service_level',
-  });
-
-  const borrowerCheckSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'hostLMSIntegration',
-    keyName: 'borrower_check'
-  });
 
   const defaultCopyrightTypeId = copyrightTypeRefdata[0]?.values?.filter(v => v.value === defaultCopyrightSetting.value)?.[0]?.id;
 
@@ -230,12 +193,8 @@ const CreateEditRoute = props => {
 
   const validRequesterRecords = institutionQuery.isSuccess ? (institutionQuery.data
     .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol)) : [];
-
   const requesters = validRequesterRecords?.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
-
   const requesterList = requesters?.length > 0 ? requesters : [defaultRequesterSymbolSetting.value];
-
-
   if (!(requesterList?.length)) {
     throw new Error('Cannot resolve symbol to create requests as');
   }
@@ -257,19 +216,17 @@ const CreateEditRoute = props => {
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
       retryOnMount:false,
-      enabled: !isEmpty(defaultRequesterSymbolSetting)
+      enabled: routingAdapterSetting.isSuccess === true && routingAdapterSetting.value === 'disabled'
     }
   );
 
-
-  if (locationQuery.isLoading ||
-     institutionQuery.isLoading ||
-     directoryEntriesQuery.isLoading ||
+  // Only proceed to render once everything is loaded
+  if (!routingAdapterSetting.isSuccess) return null;
+  const dirQueries = (routingAdapterSetting.value === 'disabled') ? [directoryEntriesQuery] : [locationQuery, institutionQuery];
+  if (!routingAdapterSetting.isSuccess ||
+     dirQueries.some(q => q.isSuccess !== true) ||
      !serviceLevelsLoaded ||
-     isEmpty(copyrightTypeRefdata) ||
-     isEmpty(defaultCopyrightSetting) ||
-     isEmpty(defaultRequesterSymbolSetting) ||
-     isEmpty(borrowerCheckSetting)) {
+     Object.keys(copyrightTypeRefdata).length === 0) {
     return null;
   }
 
@@ -484,7 +441,6 @@ const CreateEditRoute = props => {
               <PatronRequestForm
                 copyrightTypes={copyrightTypes}
                 serviceLevels={serviceLevels}
-                currencyCodes={currencyCodes}
                 publicationTypes={publicationTypes}
                 locations={pickupLocations?.length ? pickupLocations : apiLocations}
                 requesters={requesterList}
