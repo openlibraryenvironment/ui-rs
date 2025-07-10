@@ -3,7 +3,7 @@ import { useInfiniteQuery } from 'react-query';
 import { useIntl } from 'react-intl';
 import { useOkapiKy } from '@folio/stripes/core';
 import { generateKiwtQuery, useKiwtSASQuery } from '@k-int/stripes-kint-components';
-import { useOkapiQuery } from '@projectreshare/stripes-reshare';
+import { useOkapiQuery, useSetting, useSettings } from '@projectreshare/stripes-reshare';
 import PatronRequests from '../components/PatronRequests';
 import useFilteredSelectifiedRefdata from '../util/useFilteredSelectifiedRefdata';
 
@@ -120,14 +120,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }),
     useOkapiQuery('rs/hostLMSLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
     useOkapiQuery('rs/shelvingLocations', { searchParams: { perPage: '1000' }, staleTime: 2 * 60 * 60 * 1000 }),
-
-    useOkapiQuery('rs/settings/appSettings', {
-      searchParams: {
-        filters: 'hidden=true',
-        perPage: '1000',
-      },
-      staleTime: 2 * 60 * 60 * 1000
-    }),
+    useSettings(),
     useOkapiQuery('rs/refdata', {
       searchParams: {
         filters: 'desc=request.serviceType',
@@ -136,6 +129,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     })
   ];
 
+  const routingAdapterSetting = useSetting('routing_adapter');
   const dirQuery = useOkapiQuery('directory/entry', {
     searchParams: {
       filters: 'type.value=institution',
@@ -144,6 +138,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     },
     staleTime: 2 * 60 * 60 * 1000,
     useErrorBoundary: false,
+    enabled: routingAdapterSetting.isSuccess === true && routingAdapterSetting.value !== 'disabled'
   });
 
   let filterOptions;

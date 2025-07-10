@@ -15,9 +15,8 @@ import {
 } from '@folio/stripes/components';
 import { required } from '@folio/stripes/util';
 import { Pluggable, useStripes } from '@folio/stripes/core';
-import { useAppSettings } from '@k-int/stripes-kint-components';
+import { useSetting } from '@projectreshare/stripes-reshare';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../../constants/serviceType';
-import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
 const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
   serviceLevels, publicationTypes, locations, requesters, tiersByRequester, onSISelect, operation, patronRequest }) => {
@@ -43,28 +42,9 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
     }
   }, [change, operation, showCost, tier]);
 
-  const freePickupLocation = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'requests',
-    keyName: 'free_text_pickup_location',
-    returnQueryObject: true
-  });
-
-  const ncipBorrowerCheck = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    keyName: 'borrower_check',
-    sectionName: 'hostLMSIntegration',
-  });
-
-  const routingAdapterSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    keyName: 'routing_adapter',
-  });
-
-  const isEmpty = (obj) => {
-    return Object.keys(obj).length === 0;
-  };
-
+  const freePickupLocation = useSetting('free_text_pickup_location');
+  const ncipBorrowerCheck = useSetting('borrower_check', 'hostLMSIntegration');
+  const routingAdapterSetting = useSetting('routing_adapter');
 
   useEffect(() => {
     if (locations?.length === 1) {
@@ -72,13 +52,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
     }
   }, [locations, change]);
 
-
-  if (isEmpty(freePickupLocation) ||
-      isEmpty(ncipBorrowerCheck) ||
-      isEmpty(routingAdapterSetting)) {
-    // Settings not initalized
-    return null;
-  }
+  if ([freePickupLocation, ncipBorrowerCheck, routingAdapterSetting].some(v => v.isSuccess !== true)) return null;
 
   function applyDisabledToFields(children) {
     return React.Children.map(children, child => {
