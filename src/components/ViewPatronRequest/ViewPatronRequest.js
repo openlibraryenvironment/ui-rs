@@ -4,10 +4,9 @@ import { useLocation } from 'react-router-dom';
 import stringify from 'json-stable-stringify';
 import { useStripes } from '@folio/stripes/core';
 import { AccordionSet, Accordion } from '@folio/stripes/components';
+import { useSetting } from '@projectreshare/stripes-reshare';
 import { CatalogInfo } from '@projectreshare/stripes-reshare/cards';
-import { useAppSettings } from '@k-int/stripes-kint-components';
 import AppNameContext from '../../AppNameContext';
-import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
 
 import {
   RequestInfo,
@@ -19,8 +18,6 @@ import {
   ProtocolInfo,
   CustomIdentifiersInfo,
 } from './sections';
-
-
 
 const ViewPatronRequest = ({ record }) => {
   const location = useLocation();
@@ -40,13 +37,7 @@ const ViewPatronRequest = ({ record }) => {
     }
   }, [location.state]);
 
-  const routingAdapterSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    keyName: 'routing_adapter',
-    returnQuery: true
-  });
-
-
+  const routingAdapterSetting = useSetting('routing_adapter');
   const brokerLink = routingAdapterSetting.value === 'disabled' ? (
     <a
       href={`${stripes?.okapi?.url}/broker/ill_transactions?requester_req_id=${record?.hrid}~norota`}
@@ -57,7 +48,7 @@ const ViewPatronRequest = ({ record }) => {
     </a>
   ) : null;
 
-  if (Object.keys(routingAdapterSetting).length === 0) {
+  if (!routingAdapterSetting.isSuccess) {
     return null;
   }
 

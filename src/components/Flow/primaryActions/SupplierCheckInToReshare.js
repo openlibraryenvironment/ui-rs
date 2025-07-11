@@ -3,28 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
 import { Button, Row, Col, TextField, Datepicker } from '@folio/stripes/components';
-import { useAppSettings } from '@k-int/stripes-kint-components';
+import { useSetting } from '@projectreshare/stripes-reshare';
 import useActionConfig from '../useActionConfig';
-import { SETTINGS_ENDPOINT } from '../../../constants/endpoints';
-
-const isEmpty = (obj) => {
-  return Object.keys(obj).length === 0;
-};
 
 const SupplierCheckInToReshare = ({ performAction }) => {
-  const checkOutItemMethodSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'hostLMSIntegration',
-    keyName: 'check_out_item',
-    returnQuery: true
-  });
-
-  const defaultLoanPeriodSetting = useAppSettings({
-    endpoint: SETTINGS_ENDPOINT,
-    sectionName: 'requests',
-    keyName: 'default_loan_period',
-    returnQuery:true
-  });
+  const checkOutItemMethodSetting = useSetting('check_out_item', 'hostLMSIntegration');
+  const defaultLoanPeriodSetting = useSetting('default_loan_period', 'requests');
 
   const getDateFromDays = days => {
     const date = new Date(Date.now());
@@ -47,9 +31,7 @@ const SupplierCheckInToReshare = ({ performAction }) => {
     }
   );
 
-
-  if (isEmpty(defaultLoanPeriodSetting) ||
-      isEmpty(checkOutItemMethodSetting)) {
+  if ([checkOutItemMethodSetting, defaultLoanPeriodSetting].some(s => !s.isSuccess)) {
     return null;
   }
 
