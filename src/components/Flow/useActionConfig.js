@@ -1,11 +1,9 @@
-import { useSettingSection } from '@k-int/stripes-kint-components';
-import { SETTINGS_ENDPOINT } from '../../constants/endpoints';
+import { useSettings } from '@projectreshare/stripes-reshare';
 
 const useActionConfig = () => {
-  const { settings } = useSettingSection({
-    sectionName: 'state_action_config',
-    settingEndpoint: SETTINGS_ENDPOINT
-  });
+  const allSettings = useSettings();
+  if (!allSettings.isSuccess) return {};
+  const settings = allSettings.data.filter(st => st.section === 'state_action_config');
 
   const returnObj = {};
 

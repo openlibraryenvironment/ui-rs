@@ -1,36 +1,29 @@
 import { useIntl } from 'react-intl';
-import { useOkapiQuery } from '@projectreshare/stripes-reshare';
+import { useOkapiQuery, useSetting } from '@projectreshare/stripes-reshare';
 
-// Fetches a refdata vocab and filters its contents to only include values
-// specified in a comma delimited setting and arranges the result for use
-// in a select element (eg. as an array of { label: ..., value: ... })
+// Formats values from a comma-delimited setting (or refdata if unset)
+// and their translations for use in a select element
+// (eg. as an array of { label: ..., value: ... })
 //
 // returns tuple of [ <data for select>, <bool that is false until data available> ]
 const useFilteredSelectifiedRefdata = (vocab, settingSection, settingKey, translationPrefix) => {
   const intl = useIntl();
-  const settingQ = useOkapiQuery('rs/settings/appSettings', {
-    searchParams: {
-      filters: `section==${settingSection}`,
-      perPage: '100',
-    },
-    staleTime: 2 * 60 * 60 * 1000
-  });
-  const settingValue = settingQ.data?.find(el => el.key === settingKey)?.value;
+  const setting = useSetting(settingKey, settingSection);
   const refdataQ = useOkapiQuery('rs/refdata', {
     searchParams: {
       filters: `desc=${vocab}`,
     },
     staleTime: 2 * 60 * 60 * 1000,
-    enabled: settingQ.isSuccess && !settingValue
+    enabled: setting.isSuccess && !setting.value
   });
 
-  if (!settingQ.isSuccess || (!settingValue && !refdataQ.isSuccess)) {
+  if (!setting.isSuccess || (!setting.value && !refdataQ.isSuccess)) {
     return [undefined, false];
   }
 
   let values;
-  if (settingValue) {
-    values = settingValue?.split(',');
+  if (setting.value) {
+    values = setting.value?.split(',');
   } else {
     values = refdataQ.data[0]?.values.map(entry => entry.value);
   }
@@ -40,7 +33,7 @@ const useFilteredSelectifiedRefdata = (vocab, settingSection, settingKey, transl
     value: v
   }));
 
-  if (!settingValue) {
+  if (!setting.value) {
     result = result?.sort((a, b) => a.label?.localeCompare(b.label));
   }
 
