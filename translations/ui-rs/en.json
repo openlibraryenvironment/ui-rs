@@ -173,6 +173,7 @@
   "flow.loanConditions.currency": "Currency",
   "flow.loanConditions.note": "Note",
   "flow.loanConditions.dateReceived": "Date received",
+  "flow.loanConditions.belowMinimum": "Below minimum cost of {minimum}",
   "flow.loanConditions.status": "Status",
   "flow.loanConditions.status.pending": "Pending",
   "flow.loanConditions.status.accepted": "Accepted",

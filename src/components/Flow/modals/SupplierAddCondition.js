@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { stripesConnect, useStripes } from '@folio/stripes/core';
 import { Button, Col, Label, Layout, Modal, ModalFooter, Row, Select, TextArea, TextField } from '@folio/stripes/components';
-import { RefdataButtons, useIsActionPending } from '@projectreshare/stripes-reshare';
+import { RefdataButtons, useIsActionPending, useSetting } from '@projectreshare/stripes-reshare';
 import { required } from '@folio/stripes/util';
 import { CancelModalButton } from '../../ModalButtons';
 import { useModal } from '../../MessageModalState';
@@ -17,6 +17,8 @@ const AddCondition = props => {
   const [currentModal, setModal] = useModal();
   const closeModal = () => setModal(null);
   const stripes = useStripes();
+  const minCostSetting = useSetting('minimum_cost');
+  const minCost = Number(minCostSetting?.value);
 
   const onSubmit = values => {
     return performAction('supplierAddCondition', { ...values, costCurrency: stripes.currency }, {
@@ -77,6 +79,7 @@ const AddCondition = props => {
                     name="cost"
                     label={<FormattedMessage id="ui-rs.flow.loanConditions.cost" />}
                     component={TextField}
+                    validate={v => ((minCost > 0 && v < minCost) ? <FormattedMessage id="ui-rs.flow.loanConditions.belowMinimum" values={{ minimum: minCost }} /> : undefined)}
                   />
                 }
               </Col>
