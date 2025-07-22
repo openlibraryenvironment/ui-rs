@@ -8,9 +8,9 @@ import useActionConfig from './Flow/useActionConfig';
 const ViewMessageBanners = ({ request }) => {
   const stripes = useStripes();
   // eslint-disable-next-line camelcase
-  const { combine_returned_by_patron_and_return_ship } = useActionConfig();
+  const { combine_fill_and_ship } = useActionConfig();
   // eslint-disable-next-line camelcase
-  const combine = combine_returned_by_patron_and_return_ship === 'yes';
+  const combine = combine_fill_and_ship === 'yes';
   const lastCostStates = ['RES_COPY_AWAIT_PICKING', combine ? 'RES_AWAIT_PICKING' : 'RES_AWAIT_SHIP'];
   const lastChanceForCost = stripes.config?.reshare?.useTiers && stripes.config?.reshare?.showCost && lastCostStates.includes(request?.state?.code);
 
