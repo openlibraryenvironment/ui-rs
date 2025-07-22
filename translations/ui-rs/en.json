@@ -197,6 +197,7 @@
   "view.showTags": "Show tags",
   "view.showChat": "Request messages",
   "view.title": "Request {id}",
+  "view.banners.lastChanceCost": "Last chance to add a cost condition before request cost finalized",
   "view.chatPane": "Messages with {chatOtherParty}",
   "view.chatPane.noMessages": "Messages will appear here...",
   "view.chatPane.placeholder": "Message to {chatOtherParty}...",
