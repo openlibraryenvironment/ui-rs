@@ -114,10 +114,18 @@ const RequestInfo = ({ request }) => {
           </Col>
           }
           {request.maximumCostsMonetaryValue !== undefined &&
-          <Col xs={6}>
+          <Col xs={3}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.maximumCost" />}
               value={request.maximumCostsMonetaryValue + ' ' + request.maximumCostsCurrencyCode?.label}
+            />
+          </Col>
+          }
+          {request.cost !== undefined &&
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.cost" />}
+              value={request.cost + ' ' + request.costCurrency?.label}
             />
           </Col>
           }

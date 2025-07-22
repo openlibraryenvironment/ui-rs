@@ -88,6 +88,7 @@
   "information.itemId": "Item ID",
   "information.state": "State",
   "information.availability": "Availability",
+  "information.cost" : "Cost",
   "information.maximumCost" : "Maximum Cost",
   "information.maximumCostsCurrencyCode" : "Currency Code",
   "information.maximumCostsMonetaryValue" : "Monetary Value",
