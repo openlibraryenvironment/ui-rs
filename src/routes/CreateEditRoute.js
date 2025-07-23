@@ -14,6 +14,7 @@ import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
 import tiersBySymbol from '../util/tiersBySymbol';
 import useFilteredSelectifiedRefdata from '../util/useFilteredSelectifiedRefdata';
 import useNewDirectoryEntries from '../util/useNewDirectoryEntries';
+import tierForRequest from '../util/tierForRequest';
 
 
 // Possible operations performed by submitting this form
@@ -246,9 +247,7 @@ const CreateEditRoute = props => {
       ),
       serviceType: { value: record?.serviceType?.value } };
     if (config?.useTiers) {
-      initialValues.tier = tiersByRequester[record.requestingInstitutionSymbol]
-        ?.find(t => t.level?.toLowerCase() === record.serviceLevel?.value?.toLowerCase()
-          && t.cost === record.maximumCostsMonetaryValue)?.id;
+      initialValues.tier = tierForRequest(record, tiersByRequester[record.requestingInstitutionSymbol])?.id;
     }
   } else {
     record = null;

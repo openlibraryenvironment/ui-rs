@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 import useNewDirectoryEntries from '../../../util/useNewDirectoryEntries';
+import tierForRequest from '../../../util/tierForRequest';
 import tiersBySymbol from '../../../util/tiersBySymbol';
 
 function calculateDueDate(intl, request) {
@@ -31,8 +32,7 @@ const RequestInfo = ({ request }) => {
   if (stripes.config?.reshare?.useTiers && entries.isSuccess) {
     const byRequester = tiersBySymbol(entries?.data?.items);
     const tiers = (byRequester?.[request.requestingInstitutionSymbol] ?? byRequester?.[request.supplyingInstitutionSymbol]);
-    tier = tiers?.find?.(t => t.level?.toLowerCase() === request.serviceLevel?.value?.toLowerCase()
-      && t.cost === request.maximumCostsMonetaryValue)?.name;
+    tier = tierForRequest(request, tiers)?.name;
   }
 
   const colKeyVal = (labelId, value) => {
