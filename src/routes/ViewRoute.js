@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 import { useStripes } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset, Tooltip } from '@folio/stripes/components';
-import { DirectLink, upNLevels, useCloseDirect, usePerformAction, useOkapiQuery } from '@projectreshare/stripes-reshare';
+import { DirectLink, upNLevels, useCloseDirect, usePerformAction, useOkapiQuery, useSetting } from '@projectreshare/stripes-reshare';
 
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { MessageModalProvider } from '../components/MessageModalState';
@@ -40,30 +40,17 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   const { handleMarkAllRead } = useChatActions(id);
   const close = useCloseDirect(upNLevels(location, 2));
 
-
   // Set an access cookie to use with the broker link
   document.cookie = `folioAccessToken=${stripes?.okapi.token}; path=/broker; secure; SameSite=Lax`;
 
-
   const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { parseResponse: false, staleTime: 2 * 60 * 1000, notifyOnChangeProps: 'tracked' });
-
-
-
-  // Fetch Auto Responder
-  const { data: autoRespondRequest = {}, isSuccess: autoRespondLoaded } = useOkapiQuery('rs/settings/appSettings', {
-    searchParams: {
-      filters: 'section==autoResponder',
-      perPage: '100',
-    },
-    staleTime: 2 * 60 * 60 * 1000
-  });
+  const autoResponderStatus = useSetting('auto_responder_status');
 
   /* On mount ONLY we want to check if the helper is open, and if so then mark all messages as read.
    * If this useEffect is handed dependencies handleMarkAllRead and isOpen then it will infinitely loop,
    */
 
   // This could maybe be solved by memoizing isOpen within useHelperApp?
-
   useEffect(() => {
     if (isOpen('chat')) {
       handleMarkAllRead(true, true);
@@ -119,8 +106,8 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   };
 
 
-  if (!hasRequestLoaded || !autoRespondLoaded) return null;
-  const autoLoanOff = autoRespondRequest.some(item => item.key === 'auto_responder_status' && (item.value && item.value === 'off'));
+  if (!hasRequestLoaded || !autoResponderStatus.isSuccess) return null;
+  const autoLoanOff = autoResponderStatus.value === 'off';
   const forCurrent = actionsForRequest(request, autoLoanOff);
 
   return (

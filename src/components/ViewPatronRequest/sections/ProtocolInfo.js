@@ -73,7 +73,7 @@ const ProtocolInfo = ({ record, id }) => {
       cardClass={css.protocolCard}
       headerClass={css.protocolCardHeader}
     >
-      <Layout flex full className={css.protocolCardHeadings}>
+      <Layout className={`flex full ${css.protocolCardHeadings}`}>
         <span style={{ width: '1.5em' }}>&nbsp;</span>
         <span style={{ width: '3em' }}>#</span>
         <span style={{ width: '12em' }}><FormattedMessage id="ui-rs.protocol.date" /></span>
@@ -88,7 +88,7 @@ const ProtocolInfo = ({ record, id }) => {
               key={i}
               closedByDefault
               label={
-                <Layout flex full className={css.protocolEntryHeader}>
+                <Layout className={`flex full ${css.protocolEntryHeader}`}>
                   <span style={{ width: '3em' }}>{protocolMessages.length - i}</span>
                   <span style={{ width: '12em' }}>{formattedDateTime(entry.dateCreated)}</span>
                   <span style={{ width: '8em' }}>{entry.duration}</span>
