@@ -2,7 +2,7 @@ import { omit } from 'lodash';
 import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Form } from 'react-final-form';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
@@ -11,8 +11,9 @@ import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction, useS
 import PatronRequestForm from '../components/PatronRequestForm';
 import { REFDATA_ENDPOINT } from '../constants/endpoints';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
+import tiersBySymbol from '../util/tiersBySymbol';
 import useFilteredSelectifiedRefdata from '../util/useFilteredSelectifiedRefdata';
-
+import useNewDirectoryEntries from '../util/useNewDirectoryEntries';
 
 
 // Possible operations performed by submitting this form
@@ -199,26 +200,7 @@ const CreateEditRoute = props => {
     throw new Error('Cannot resolve symbol to create requests as');
   }
 
-  const queryFunc = async () => {
-    const res = await okapiKy(
-      encodeURI(`directory/entries?maximumRecords=100&cql=symbol any ${requesterList[0]}`),
-      {
-        throwHttpErrors: false
-      }
-    );
-    return res.json();
-  };
-
-  const directoryEntriesQuery = useQuery(
-    'directoryAPIQuery',
-    queryFunc,
-    {
-      useErrorBoundary: false,
-      refetchOnWindowFocus: false,
-      retryOnMount:false,
-      enabled: routingAdapterSetting.isSuccess === true && routingAdapterSetting.value === 'disabled'
-    }
-  );
+  const directoryEntriesQuery = useNewDirectoryEntries();
 
   // Only proceed to render once everything is loaded
   if (!routingAdapterSetting.isSuccess) return null;
@@ -243,24 +225,7 @@ const CreateEditRoute = props => {
     ? directoryEntriesQuery.data?.items?.filter(item => item.type === 'branch')?.map(item => ({ label: item.name, value: item.name }))
     : [];
 
-  const tiersByRequester = directoryEntriesQuery.data?.items
-    ?.filter(item => item.type === 'institution')
-    ?.reduce((acc, item) => {
-      const formattedTiers = item.tiers?.map(tier => ({
-        label: tier.name,
-        value: tier.id,
-        ...tier
-      }));
-
-      item.symbols?.forEach(sym => {
-        if (sym?.authority && sym?.symbol) {
-          const symbolKey = `${sym.authority}:${sym.symbol}`;
-          acc[symbolKey] = formattedTiers;
-        }
-      });
-
-      return acc;
-    }, {});
+  const tiersByRequester = tiersBySymbol(directoryEntriesQuery.data?.items);
 
   // Determine operation
   let op;
@@ -283,7 +248,7 @@ const CreateEditRoute = props => {
     if (config?.useTiers) {
       initialValues.tier = tiersByRequester[record.requestingInstitutionSymbol]
         ?.find(t => t.level?.toLowerCase() === record.serviceLevel?.value?.toLowerCase()
-          && t.cost >= record.maximumCostsMonetaryValue)?.id;
+          && t.cost === record.maximumCostsMonetaryValue)?.id;
     }
   } else {
     record = null;

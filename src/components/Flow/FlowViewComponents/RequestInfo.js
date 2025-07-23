@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, Col, Headline, KeyValue, Layout, NoValue, Row } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
+import useNewDirectoryEntries from '../../../util/useNewDirectoryEntries';
+import tiersBySymbol from '../../../util/tiersBySymbol';
 
 function calculateDueDate(intl, request) {
   if (request.parsedDueDateRS) {
@@ -20,8 +23,17 @@ function calculateDueDate(intl, request) {
 
 const RequestInfo = ({ request }) => {
   const intl = useIntl();
+  const stripes = useStripes();
   const requester = (request?.resolvedRequester?.owner) ?? request?.requestingInstitutionSymbol;
   const supplier = (request?.resolvedSupplier?.owner) ?? request?.supplyingInstitutionSymbol;
+  const entries = useNewDirectoryEntries();
+  let tier;
+  if (stripes.config?.reshare?.useTiers && entries.isSuccess) {
+    const byRequester = tiersBySymbol(entries?.data?.items);
+    const tiers = (byRequester?.[request.requestingInstitutionSymbol] ?? byRequester?.[request.supplyingInstitutionSymbol]);
+    tier = tiers?.find?.(t => t.level?.toLowerCase() === request.serviceLevel?.value?.toLowerCase()
+      && t.cost === request.maximumCostsMonetaryValue)?.name;
+  }
 
   const colKeyVal = (labelId, value) => {
     return (
@@ -79,12 +91,20 @@ const RequestInfo = ({ request }) => {
           {colKeyVal('itemCallNumber', itemCallNumberText || <NoValue />)}
           {colKeyVal('dueDate', calculateDueDate(intl, request))}
           {colKeyVal('volumesNeeded', request.volume) || <NoValue />}
-          <Col xs={6}>
+          <Col xs={3}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.serviceType" />}
               value={request.serviceType?.label}
             />
           </Col>
+          {request.serviceLevel !== undefined &&
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.serviceLevel" />}
+              value={<FormattedMessage id={`ui-rs.refdata.serviceLevel.${request.serviceLevel?.value}`} />}
+            />
+          </Col>
+          }
         </Row>
         <Row>
           {request.patronNote &&
@@ -105,11 +125,11 @@ const RequestInfo = ({ request }) => {
           }
         </Row>
         <Row>
-          {request.serviceLevel !== undefined &&
+          {tier !== undefined &&
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-rs.information.serviceLevel" />}
-              value={<FormattedMessage id={`ui-rs.refdata.serviceLevel.${request.serviceLevel?.value}`} />}
+              label={<FormattedMessage id="ui-rs.information.tier" />}
+              value={tier}
             />
           </Col>
           }
