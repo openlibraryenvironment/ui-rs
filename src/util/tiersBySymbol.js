@@ -1,7 +1,6 @@
-/** Fetches entries from the new directory from an array of symbol strings (the only parameter)
- *  or, if absent, the symbol configured at the default_request_symbol AppSetting.
- *
- *  Returns the react-query (which is only enabled if the router adapter setting is disabled)
+/**
+ * Takes a list of tiers as returned by the new directory and arranges them in an
+ * object keyed by symbol with added label/value properties for use with Select.
  */
 const tiersBySymbol = (entries) => {
   return entries?.filter?.(item => item.type === 'institution')
