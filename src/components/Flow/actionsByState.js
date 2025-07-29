@@ -38,6 +38,9 @@
  *
 */
 
+import { useStripes } from '@folio/stripes/core';
+import { useSetting } from '@projectreshare/stripes-reshare';
+
 export const actionsByState = {
   default: {
     flowComponents: ['TitleAndSILink', 'RequestInfo', 'Citation', 'ILSCirculation', 'RequestingUser', 'ActionAccordion', 'Volumes', 'LoanConditions'],
@@ -127,7 +130,18 @@ const excludeElectronic = ['FillMultiVolumeRequest'];
 /* This function returns the contextual actions for a provided request,
  * falling back to the default for unknown states.
  */
-export const actionsForRequest = (request, autoLoanOff) => {
+export const useActionsForRequest = (request) => {
+  const stripes = useStripes();
+
+  const autoResponderStatus = useSetting('auto_responder_status');
+  if (!autoResponderStatus.isSuccess || !request) return null;
+  const autoLoanOff = autoResponderStatus.value === 'off';
+
+  const excludeRemoteCopy = [...excludeRemote];
+  if (stripes.config?.reshare?.showCost) {
+    excludeRemoteCopy.push('supplierMarkConditionsAgreed');
+  }
+
   /* Since state model types aren't implemented yet and deliveryMethod won't necessarily be set we currently
   need to rely on discrete state model codes to determine if a request is electronic */
   const isElectronic = ['CDLResponder', 'DigitalReturnableRequester'].includes(request.stateModel?.shortcode);
@@ -135,9 +149,9 @@ export const actionsForRequest = (request, autoLoanOff) => {
   const validActions = request.validActions;
 
   if (Array.isArray(validActions)) {
-    const primaryAction = validActions.filter(action => !(excludeRemote.includes(action.actionCode)) && action.isPrimary)[0];
+    const primaryAction = validActions.filter(action => !(excludeRemoteCopy.includes(action.actionCode)) && action.isPrimary)[0];
 
-    const remote = validActions.filter(action => !(excludeRemote.includes(action.actionCode)) && !action.primaryOnly);
+    const remote = validActions.filter(action => !(excludeRemoteCopy.includes(action.actionCode)) && !action.primaryOnly);
     const client = actions.moreActions.filter(
       action => !(remote.includes(`${action.charAt(0).toLowerCase()}${action.substring(1)}`))
             && !(isElectronic && excludeElectronic.includes(action))
