@@ -1,4 +1,6 @@
 {
+  "information.notes": "Public note",
   "information.oclcNumber": "Deprecated ID",
-  "refdata.serviceLevel.standard": "Core"
+  "refdata.serviceLevel.standard": "Core",
+  "view.banners.lastChanceCost": "Last chance to add a cost condition before request cost finalised"
 }
