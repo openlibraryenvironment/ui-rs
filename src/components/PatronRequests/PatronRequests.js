@@ -234,21 +234,18 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                     contentData={sparseRequests}
                     formatter={{
                       flags: a => {
-                        const needsAttention = a?.state?.needsAttention;
-                        if (a?.unreadMessageCount > 0) {
-                          if (needsAttention) {
-                            return (
-                              <Badge
-                                color="red"
-                                aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' }) + intl.formatMessage({ id: 'ui-rs.unread' })}
-                              >
-                                {`${a.unreadMessageCount}!`}
-                              </Badge>
-                            );
-                          }
-                          return <Badge color="primary" aria-label={intl.formatMessage({ id: 'ui-rs.unread' })}>{a.unreadMessageCount}</Badge>;
-                        } else if (needsAttention) return <Badge color="red" aria-label={intl.formatMessage({ id: 'ui-rs.needsAttention' })}>!</Badge>;
-                        return '';
+                        const attn = a?.state?.needsAttention;
+                        const msgs = a?.unreadMessageCount;
+                        const cost = a?.cost;
+                        if (!(attn || msgs > 0 || cost > 0)) return '';
+                        const str = (msgs > 0 ? msgs : '') + (attn ? '!' : '') + (cost > 0 ? '$' : '');
+                        const color = attn ? 'red' : (msgs > 0 ? 'primary' : 'default');
+                        const ariaLabel = [
+                          ...(attn ? [intl.formatMessage({ id: 'ui-rs.needsAttention' })] : []),
+                          ...(msgs > 0 ? [intl.formatMessage({ id: 'ui-rs.unread' })] : []),
+                          ...(cost > 0 ? [intl.formatMessage({ id: 'ui-rs.hasCost' })] : []),
+                        ].join(' ');
+                        return <Badge color={color} aria-label={ariaLabel}>{str}</Badge>;
                       },
                       isRequester: a => (a.isRequester === true ? '✓' : a.isRequester === false ? '✗' : ''),
                       dateCreated: a => (new Date(a.dateCreated).toLocaleDateString() === new Date().toLocaleDateString()

@@ -649,6 +649,7 @@
   "hideComplete": "Hide completed",
   "unread": "Unread messages",
   "needsAttention": "Needs attention",
+  "hasCost": "Has cost",
   "index.allFields": "All fields",
   "index.id": "Full ID",
   "index.hrid": "Request ID",

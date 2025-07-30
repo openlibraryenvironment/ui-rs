@@ -34,6 +34,12 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
         onChange={onChangeHandler}
       />
       <CheckboxFilter
+        name="hasCost"
+        dataOptions={options.hasCost}
+        selectedValues={activeFilters.hasCost}
+        onChange={onChangeHandler}
+      />
+      <CheckboxFilter
         name="hasLocalNote"
         dataOptions={options.hasLocalNote}
         selectedValues={activeFilters.hasLocalNote}
