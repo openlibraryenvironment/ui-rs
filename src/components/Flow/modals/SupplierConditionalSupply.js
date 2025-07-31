@@ -126,8 +126,7 @@ const ConditionalSupply = props => {
                 { value: 'no', label: formatMessage({ id: 'ui-rs.actions.conditionalSupply.holdingState.no', defaultMessage: 'no' }) }
               ]}
               initialValue="yes"
-              required
-              validate={required}
+              disabled={stripes.config?.reshare?.showCost}
             />
           </Modal>
         </form>
