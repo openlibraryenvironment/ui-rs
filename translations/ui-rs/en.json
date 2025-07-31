@@ -557,6 +557,7 @@
   "settings.requests.localSymbols" : "Local symbols (Comma-separated list)",
   "settings.requests.maxRequests": "Maximum active requests per patron",
   "settings.requests.requestIdPrefix": "Request ID prefix",
+  "settings.requests.suppressPatronInfo": "Suppress sending patron information to supplier",
   "settings.requests.defaultInstitutionalPatronId": "Default institutional patron ID",
   "settings.requests.defaultLoanPeriod": "Default loan period (days)",
   "settings.requests.minimumCost": "Minimum cost",
