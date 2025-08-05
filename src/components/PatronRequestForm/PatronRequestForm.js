@@ -287,7 +287,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
         <Col xs={3}>
           <Field
             id="edit-request-metadata-copyright-type"
-            name="copyrightType.id"
+            name="copyrightType.value"
             label={<FormattedMessage id="ui-rs.information.copyrightType" />}
             placeholder=" "
             component={Select}
