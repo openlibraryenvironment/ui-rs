@@ -68,7 +68,7 @@ const ProtocolInfo = ({ record, id }) => {
   return (
     <Card
       id={`${id}-card`}
-      headerStart="Reverse chronological"
+      headerStart={<FormattedMessage id="ui-rs.reverseChronological" />}
       roundedBorder
       cardClass={css.protocolCard}
       headerClass={css.protocolCardHeader}

@@ -27,7 +27,7 @@ const AuditInfo = ({ record, id }) => {
   return (
     <Card
       id={`${id}-card`}
-      headerStart="Reverse chronological"
+      headerStart={<FormattedMessage id="ui-rs.reverseChronological" />}
       roundedBorder
       cardClass={css.auditCard}
       headerClass={css.auditCardHeader}

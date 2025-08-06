@@ -33,12 +33,12 @@ class SuppliersInfo extends React.Component {
           <Row>
             <Col xs={6}>
               <KeyValue
-                label="Branch"
+                label={<FormattedMessage id="ui-rs.branch" />}
                 value={supplier.directoryId}
               />
             </Col>
             <Col xs={6}>
-              <KeyValue label="Status">
+              <KeyValue label={<FormattedMessage id="ui-rs.status" />}>
                 {supplier.state && <FormattedMessage id={`stripes-reshare.states.${supplier.state?.code}`} />}
               </KeyValue>
             </Col>

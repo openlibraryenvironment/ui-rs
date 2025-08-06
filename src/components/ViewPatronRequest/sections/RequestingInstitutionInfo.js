@@ -46,7 +46,7 @@ class RequestingInstitutionInfo extends React.Component {
     return (
       <Card
         id="requestingInstitutionInfo-card"
-        headerStart="Institution"
+        headerStart={<FormattedMessage id="ui-rs.institution" />}
         headerEnd={<Link to={`/directory/entries/view/${institution.id}`}>View in directory</Link>}
         roundedBorder
         cardStyle={cardStyle}
