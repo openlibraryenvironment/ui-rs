@@ -54,7 +54,7 @@ const Citation = ({ request }) => {
         <Col xs={6}>
           <KeyValue
             label={<FormattedMessage id="ui-rs.information.copyrightType" />}
-            value={request.copyrightType?.label}
+            value={<FormattedMessage id={`ui-rs.refdata.copyrightType.${request.copyrightType?.value}`} />}
           />
         </Col>
       </Row>
