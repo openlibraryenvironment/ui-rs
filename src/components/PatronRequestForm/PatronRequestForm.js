@@ -91,8 +91,8 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
             name="patronIdentifier"
             label={<FormattedMessage id="ui-rs.information.requestingUser" />}
             component={TextField}
-            required
-            validate={required}
+            required={(ncipBorrowerCheck?.value && ncipBorrowerCheck?.value !== 'none')}
+            validate={(ncipBorrowerCheck?.value && ncipBorrowerCheck?.value !== 'none') && required}
           />
         </Col>
         <Col xs={2}>
@@ -287,7 +287,7 @@ const PatronRequestForm = ({ autopopulate, copyrightTypes, enabledFields,
         <Col xs={3}>
           <Field
             id="edit-request-metadata-copyright-type"
-            name="copyrightType.id"
+            name="copyrightType.value"
             label={<FormattedMessage id="ui-rs.information.copyrightType" />}
             placeholder=" "
             component={Select}

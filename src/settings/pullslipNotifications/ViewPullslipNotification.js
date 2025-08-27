@@ -80,15 +80,16 @@ class ViewPullslipNotification extends React.Component {
   }
 
   headerEnd(record) {
+    const { intl } = this.props;
     return (
       <>
         <Link to={`${record.id}/edit`}>
-          <IconButton icon="edit" title="Edit in place" />
+          <IconButton icon="edit" title={intl.formatMessage({ id: 'ui-rs.settings.pullslipNotifications.editInPlace' })} />
         </Link>
         <Link to={`/supply/pullslip-notifications/${record.id}/edit`}>
-          <IconButton icon="search" title="Edit full screen" />
+          <IconButton icon="search" title={intl.formatMessage({ id: 'ui-rs.settings.pullslipNotifications.editFullScreen' })} />
         </Link>
-        <IconButton icon="trash" title="Delete" onClick={(e) => this.handleDelete(e, record.id)} />
+        <IconButton icon="trash" title={intl.formatMessage({ id: 'ui-rs.settings.pullslipNotifications.delete' })} onClick={(e) => this.handleDelete(e, record.id)} />
       </>
     );
   }

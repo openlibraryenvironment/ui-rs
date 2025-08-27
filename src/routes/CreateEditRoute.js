@@ -6,13 +6,11 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Prompt, useLocation } from 'react-router-dom';
 import { Button, Pane, Paneset, PaneMenu, KeyValue } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useRefdata } from '@k-int/stripes-kint-components';
-import { selectifyRefdata, useCloseDirect, useOkapiQuery, usePerformAction, useSetting } from '@projectreshare/stripes-reshare';
+import { useCloseDirect, useOkapiQuery, usePerformAction, useSetting } from '@projectreshare/stripes-reshare';
 import PatronRequestForm from '../components/PatronRequestForm';
-import { REFDATA_ENDPOINT } from '../constants/endpoints';
 import { SERVICE_TYPE_COPY, SERVICE_TYPE_LOAN } from '../constants/serviceType';
 import tiersBySymbol from '../util/tiersBySymbol';
-import useFilteredSelectifiedRefdata from '../util/useFilteredSelectifiedRefdata';
+import useSelectifiedRefdata from '../util/useSelectifiedRefdata';
 import useNewDirectoryEntries from '../util/useNewDirectoryEntries';
 import tierForRequest from '../util/tierForRequest';
 
@@ -83,7 +81,8 @@ const CreateEditRoute = props => {
   const queryClient = useQueryClient();
   const okapiKy = useOkapiKy();
   const close = useCloseDirect();
-  const [serviceLevels, serviceLevelsLoaded] = useFilteredSelectifiedRefdata('ServiceLevels', 'other', 'displayed_service_levels', 'ui-rs.refdata.serviceLevel');
+  const [copyrightTypes, copyrightTypesLoaded] = useSelectifiedRefdata('copyrightType', 'ui-rs.refdata.copyrightType');
+  const [serviceLevels, serviceLevelsLoaded] = useSelectifiedRefdata('ServiceLevels', 'ui-rs.refdata.serviceLevel', 'other', 'displayed_service_levels');
   const stripes = useStripes();
   const config = stripes.config?.reshare;
 
@@ -121,23 +120,12 @@ const CreateEditRoute = props => {
   });
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
 
-  const copyrightTypeRefdata = useRefdata({
-    desc: 'copyrightType',
-    endpoint: REFDATA_ENDPOINT,
-    queryParams: {
-      staleTime: 5 * 60 * 1000,
-    }
-  });
-  const copyrightTypes = selectifyRefdata(copyrightTypeRefdata);
-
   const publicationTypesList = ['ArchiveMaterial', 'Article', 'AudioBook',
     'Book', 'Chapter', 'ConferenceProc', 'Game', 'GovernmentPubl', 'Image',
     'Journal', 'Manuscript', 'Map', 'Movie', 'MusicRecording', 'MusicScore',
     'Newspaper', 'Patent', 'Report', 'SoundRecording', 'Thesis'
   ];
   const publicationTypes = publicationTypesList.map(x => ({ label: x, value: x.toLowerCase() }));
-
-  const defaultCopyrightTypeId = copyrightTypeRefdata[0]?.values?.filter(v => v.value === defaultCopyrightSetting.value)?.[0]?.id;
 
   const onSuccessfulEdit = async () => {
     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -209,7 +197,7 @@ const CreateEditRoute = props => {
   if (!routingAdapterSetting.isSuccess ||
      dirQueries.some(q => q.isSuccess !== true) ||
      !serviceLevelsLoaded ||
-     Object.keys(copyrightTypeRefdata).length === 0) {
+     !copyrightTypesLoaded) {
     return null;
   }
 
@@ -252,7 +240,7 @@ const CreateEditRoute = props => {
   } else {
     record = null;
     initialValues = {
-      copyrightType: { id: defaultCopyrightTypeId },
+      copyrightType: defaultCopyrightSetting,
       serviceLevel: { value: config?.useTiers ? undefined : defaultServiceLevelSetting.value },
       serviceType: { value: SERVICE_TYPE_LOAN },
     };

@@ -15,7 +15,7 @@ const ViewMessageBanners = ({ request }) => {
   const lastChanceForCost = stripes.config?.reshare?.useTiers && stripes.config?.reshare?.showCost && lastCostStates.includes(request?.state?.code);
 
   const relevantPendingConditions = request.conditions?.filter(
-    condition => condition.relevantSupplier?.id === request.resolvedSupplier?.id && condition.accepted !== true
+    condition => condition.relevantSupplier?.id === request.resolvedSupplier?.id && condition.accepted === false
   );
 
   const relevantAcceptedConditions = request.conditions?.filter(

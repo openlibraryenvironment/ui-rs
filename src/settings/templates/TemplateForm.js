@@ -4,6 +4,7 @@ import { Form, Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { Prompt, useLocation } from 'react-router-dom';
 import omitDeep from 'omit-deep-lodash';
+import { cloneDeep } from 'lodash';
 
 import {
   Accordion,
@@ -38,8 +39,7 @@ const TemplateForm = ({ initialValues, onSubmit, onCancel, templateContextLabel,
   const cloning = location.search.match('layer=clone');
   let sanitizedInitial;
   if (cloning) {
-    // let's preserve the id of the template resolver
-    sanitizedInitial = { ...initialValues, localizedTemplates: omitDeep(initialValues.localizedTemplates, 'id') };
+    sanitizedInitial = omitDeep(cloneDeep(initialValues), 'id');
   } else sanitizedInitial = initialValues;
 
   return (

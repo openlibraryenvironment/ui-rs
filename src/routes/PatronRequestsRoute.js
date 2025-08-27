@@ -5,7 +5,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { generateKiwtQuery, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 import { useOkapiQuery, useSetting, useSettings } from '@projectreshare/stripes-reshare';
 import PatronRequests from '../components/PatronRequests';
-import useFilteredSelectifiedRefdata from '../util/useFilteredSelectifiedRefdata';
+import useSelectifiedRefdata from '../util/useSelectifiedRefdata';
 
 const PER_PAGE = 100;
 
@@ -108,7 +108,7 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }
   );
 
-  const [serviceLevels, serviceLevelsLoaded] = useFilteredSelectifiedRefdata('ServiceLevels', 'other', 'displayed_service_levels', 'ui-rs.refdata.serviceLevel');
+  const [serviceLevels, serviceLevelsLoaded] = useSelectifiedRefdata('ServiceLevels', 'ui-rs.refdata.serviceLevel', 'other', 'displayed_service_levels');
 
   const filterQueries = [
     useOkapiQuery('rs/batch', {

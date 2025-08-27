@@ -52,7 +52,7 @@ class UserCard extends React.Component {
     return (
       <Card
         id="requestingUserInfo-card"
-        headerStart="User"
+        headerStart={<FormattedMessage id="ui-rs.user" />}
         roundedBorder
         {...props}
       >

@@ -223,7 +223,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
                       pickupLocation: <FormattedMessage id="ui-rs.patronrequests.pickupLocation" />,
                     }}
                     columnWidths={{
-                      flags: '48px',
+                      flags: '60px',
                       id: { max: 115 },
                       dateCreated: '96px',
                       lastUpdated: '96px',

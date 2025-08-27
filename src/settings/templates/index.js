@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { sortBy } from 'lodash';
 import { EntryManager } from '@folio/stripes/smart-components';
@@ -31,14 +31,14 @@ const Templates = (props) => {
   });
   const sortedEntryList = sortBy(entryList, ['name']);
 
-  const ContextualisedTemplateForm = (prps) => (
+  const ContextualisedTemplateForm = useCallback((prps) => (
     <TemplateForm
       {...prps}
       tokens={tokens}
       tokensList={tokensList}
       templateContextLabel={templateContextLabel}
     />
-  );
+  ), [tokens, tokensList, templateContextLabel]);
 
   return (
     <EntryManager
@@ -52,6 +52,15 @@ const Templates = (props) => {
       defaultEntry={{
         context,
         templateResolver: 'handlebars',
+        localizedTemplates: {
+          en: {
+            locality: 'en',
+            template: {
+              header: '',
+              templateBody: ''
+            }
+          }
+        }
       }}
       nameKey="name"
       permissions={props.permissions}

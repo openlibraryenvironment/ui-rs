@@ -6,7 +6,7 @@ import { useOkapiQuery, useSetting } from '@projectreshare/stripes-reshare';
 // (eg. as an array of { label: ..., value: ... })
 //
 // returns tuple of [ <data for select>, <bool that is false until data available> ]
-const useFilteredSelectifiedRefdata = (vocab, settingSection, settingKey, translationPrefix) => {
+const useSelectifiedRefdata = (vocab, translationPrefix, settingSection, settingKey) => {
   const intl = useIntl();
   const setting = useSetting(settingKey, settingSection);
   const refdataQ = useOkapiQuery('rs/refdata', {
@@ -14,16 +14,15 @@ const useFilteredSelectifiedRefdata = (vocab, settingSection, settingKey, transl
       filters: `desc=${vocab}`,
     },
     staleTime: 2 * 60 * 60 * 1000,
-    enabled: setting.isSuccess && !setting.value
   });
 
-  if (!setting.isSuccess || (!setting.value && !refdataQ.isSuccess)) {
+  if ((settingKey && !setting.isSuccess) || !refdataQ.isSuccess) {
     return [undefined, false];
   }
 
   let values;
-  if (setting.value) {
-    values = setting.value?.split(',');
+  if (setting?.value) {
+    values = setting?.value?.split(',');
   } else {
     values = refdataQ.data[0]?.values.map(entry => entry.value);
   }
@@ -40,4 +39,4 @@ const useFilteredSelectifiedRefdata = (vocab, settingSection, settingKey, transl
   return [result, true];
 };
 
-export default useFilteredSelectifiedRefdata;
+export default useSelectifiedRefdata;
