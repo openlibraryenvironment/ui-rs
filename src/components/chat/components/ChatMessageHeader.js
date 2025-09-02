@@ -50,7 +50,7 @@ const ChatMessageHeader = ({ notification }) => {
       className={css.header}
     >
       <b>
-        {notification?.messageSender?.owner?.name}
+        {notification?.messageSender?.owner?.name ?? notification?.senderSymbol}
       </b>
       <span className={css.headerTime}>&nbsp;</span>
       <span className={css.headerTime}>
