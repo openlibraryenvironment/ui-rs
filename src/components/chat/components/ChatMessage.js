@@ -26,7 +26,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
   };
 
   const renderActionContents = () => {
-    const { attachedAction: action, actionStatus } = notification;
+    const { attachedAction: action, actionData, actionStatus } = notification;
 
     let loanNotification = false;
     let actionKey = lowerCaseFirstLetter(action);
@@ -51,7 +51,12 @@ const ChatMessage = React.forwardRef((props, ref) => {
         <span
           className={css.actionText}
         >
-          <FormattedMessage id={`ui-rs.view.withAction.${actionKey}`} />
+          {(() => {
+            if (actionStatus === 'Unfilled') {
+              return <FormattedMessage id="ui-rs.view.withAction.unfilled" values={{ reason: actionData }} />;
+            }
+            return <FormattedMessage id={`ui-rs.view.withAction.${actionKey}`} />;
+          })()}
         </span>
         <span>&nbsp;</span>
       </>
