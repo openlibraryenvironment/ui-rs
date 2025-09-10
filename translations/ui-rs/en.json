@@ -245,7 +245,7 @@
   "view.withAction.ReShareSupplierConditionsAssumedAgreed": "The supplier has continued along their workflow of this request. The conditions are assumed to have been read and agreed to",
   "view.withAction.ReShareAddLoanCondition": "The supplier has added a condition",
   "view.withAction.statusChange.overdue": "The supplier has marked the item overdue",
-  "view.withAction.unfilled": "<p>The supplier has responded 'Cannot supply' to this request.</p><p>Reason: {reason}</p>Note:",
+  "view.withAction.unfilled": "<p>The supplier has responded 'Cannot supply' to this request.</p><p>Reason: {reason}</p>",
   "actions.addManualFee": "Add fee manually",
   "actions.addNote": "Add note",
   "actions.cancelLocal": "Cancel local request",
