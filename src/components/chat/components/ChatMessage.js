@@ -41,8 +41,8 @@ const ChatMessage = React.forwardRef((props, ref) => {
       loanNotification = true;
     }
 
-    // If there's no action, or this is a non-loan-notification, return null
-    if (!action || (lowerCaseFirstLetter(action) === 'notification' && !loanNotification)) {
+    // If there's no action, or this is a non-loan-notification (that's not unfilled), return null
+    if (!action || (lowerCaseFirstLetter(action) === 'notification' && !loanNotification && actionStatus !== 'Unfilled')) {
       return null;
     }
 
