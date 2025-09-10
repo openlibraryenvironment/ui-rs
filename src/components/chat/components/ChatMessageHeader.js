@@ -44,13 +44,16 @@ const ChatMessageHeader = ({ notification }) => {
     return <FormattedMessage id="ui-rs.view.chatMessage.justNow" />;
   };
 
+  // when full directory info is not available we want to fall back on displaying the sender symbol
+  // trimming authority for compact display
+  const senderSymbol = notification?.senderSymbol ? notification.senderSymbol.substring(notification.senderSymbol.indexOf(':') + 1) : '';
 
   return (
     <div
       className={css.header}
     >
       <b>
-        {notification?.messageSender?.owner?.name}
+        {notification?.messageSender?.owner?.name ?? senderSymbol}
       </b>
       <span className={css.headerTime}>&nbsp;</span>
       <span className={css.headerTime}>

@@ -3,10 +3,6 @@
   font-size: 75%;
 }
 
-.header {
-  font-size: 125%;
-}
-
 .contents {
   word-wrap: break-word;
 }
@@ -23,6 +19,7 @@
 
 .leftHandSide {
   margin: 10px auto 10px 5px;
+  width: 100%;
 }
 
 .unread {

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link, useLocation } from 'react-router-dom';
 
 import classNames from 'classnames';
+import { Layout, MessageBanner } from '@folio/stripes/components';
 
 import ChatMessageHeader from './ChatMessageHeader';
 import css from './ChatMessage.css';
@@ -16,6 +18,7 @@ const systemMessageKeys = [
 ];
 
 const ChatMessage = React.forwardRef((props, ref) => {
+  const location = useLocation();
   const { notification } = props;
 
   const lowerCaseFirstLetter = (string) => {
@@ -23,7 +26,7 @@ const ChatMessage = React.forwardRef((props, ref) => {
   };
 
   const renderActionContents = () => {
-    const { attachedAction: action, actionStatus } = notification;
+    const { attachedAction: action, actionData, actionStatus } = notification;
 
     let loanNotification = false;
     let actionKey = lowerCaseFirstLetter(action);
@@ -38,8 +41,8 @@ const ChatMessage = React.forwardRef((props, ref) => {
       loanNotification = true;
     }
 
-    // If there's no action, or this is a non-loan-notification, return null
-    if (!action || (lowerCaseFirstLetter(action) === 'notification' && !loanNotification)) {
+    // If there's no action, or this is a non-loan-notification (that's not unfilled), return null
+    if (!action || (lowerCaseFirstLetter(action) === 'notification' && !loanNotification && actionStatus !== 'Unfilled')) {
       return null;
     }
 
@@ -48,7 +51,12 @@ const ChatMessage = React.forwardRef((props, ref) => {
         <span
           className={css.actionText}
         >
-          <FormattedMessage id={`ui-rs.view.withAction.${actionKey}`} />
+          {(() => {
+            if (actionStatus === 'Unfilled') {
+              return <FormattedMessage id="ui-rs.view.withAction.unfilled" values={{ reason: actionData }} />;
+            }
+            return <FormattedMessage id={`ui-rs.view.withAction.${actionKey}`} />;
+          })()}
         </span>
         <span>&nbsp;</span>
       </>
@@ -66,12 +74,32 @@ const ChatMessage = React.forwardRef((props, ref) => {
 
     // Sometimes there will be an action message preceding the message itself
     return (
-      <div
-        className={classNames(css.contents, css.displayFlex)}
-      >
-        {renderActionContents()}
-        {contents}
-      </div>
+      <>
+        <div
+          className={classNames(css.contents, css.displayFlex)}
+        >
+          {renderActionContents()}
+          {contents}
+        </div>
+        {notification.messageStatus && notification.messageStatus !== 'OK' &&
+          <Layout className="padding-all-gutter">
+            <MessageBanner type="error">
+              <FormattedMessage id="ui-rs.actions.message.error" values={{ errMsg: '' }} />
+              {/* Once ILLDEV-214 is complete we can use this to link to the audit log */}
+              {/* <Link to={{
+                pathname: location?.pathname?.replace('flow', 'details'),
+                search: location?.search,
+                state: {
+                  scrollToAuditTrail: true
+                }
+              }}
+              >
+                &nbsp;<FormattedMessage id="ui-rs.flow.info.viewAuditLog" />
+              </Link> */}
+            </MessageBanner>
+          </Layout>
+        }
+      </>
     );
   };
 
