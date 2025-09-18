@@ -50,14 +50,16 @@ const Citation = ({ request }) => {
           />
         </Col>
       </Row>
-      <Row>
-        <Col xs={6}>
-          <KeyValue
-            label={<FormattedMessage id="ui-rs.information.copyrightType" />}
-            value={<FormattedMessage id={`ui-rs.refdata.copyrightType.${request.copyrightType?.value}`} />}
-          />
-        </Col>
-      </Row>
+      {request.copyrightType?.value !== undefined &&
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-rs.information.copyrightType" />}
+              value={<FormattedMessage id={`ui-rs.refdata.copyrightType.${request.copyrightType?.value}`} />}
+            />
+          </Col>
+        </Row>
+      }
     </Accordion>
   );
 };
