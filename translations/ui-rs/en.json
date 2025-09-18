@@ -265,6 +265,8 @@
   "actions.slnpAbortSupply": "Cancel or abort supply",
   "actions.slnpAbortSupply.confirm": "Do you wish to allow the cancellation or aborting of this request?",
   "actions.slnpAbortSupply.reason": "Reason for cancelling or aborting supply:",
+  "actions.slnpAbortSupply.reason.true": "With abort",
+  "actions.slnpAbortSupply.reason.false": "Without abort",
   "actions.respondToCancel": "Send response",
   "actions.respondToCancel.confirm": "Do you wish to allow the cancellation of this request?",
   "actions.respondToCancel.yes": "Agree to cancellation",
