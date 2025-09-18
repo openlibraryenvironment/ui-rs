@@ -12,7 +12,7 @@ import { useModal } from '../MessageModalState';
 import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
 const ActionReasonModal = props => {
-  const { action, request, performAction, reasonVocab } = props;
+  const { action, labelTranslations, request, performAction, reasonVocab } = props;
   const [currentModal, setModal] = useModal();
   const isOpen = currentModal === action;
   const refdatavalues = useRefdata({
@@ -68,6 +68,7 @@ const ActionReasonModal = props => {
                   name="reason"
                   component={RefdataButtons}
                   dataOptions={listOfReasons}
+                  labelTranslations={labelTranslations}
                   maxCols={1}
                   required
                   validate={required}
