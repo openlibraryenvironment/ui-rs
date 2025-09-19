@@ -101,6 +101,7 @@
   "information.institutionId": "ID",
   "information.institutionName": "Name",
   "information.institutionStatus": "Status",
+  "information.institutionStatus.managed": "Managed",
   "information.copyrightType": "Copyright type",
   "information.serviceLevel" : "Service level",
   "information.serviceType": "Service type",
@@ -109,6 +110,7 @@
   "information.slug": "Slug",
   "information.symbols": "Symbols",
   "information.tags": "Tags",
+  "information.tags.none": "No tags",
   "information.tier": "Tier",
   "information.publicationType" : "Publication Type",
 
