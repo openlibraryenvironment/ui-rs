@@ -94,6 +94,7 @@
   "information.institutionId": "ID",
   "information.institutionName": "Name",
   "information.institutionStatus": "Status",
+  "information.institutionStatus.managed": "Managed",
   "information.copyrightType": "Copyright type",
   "information.serviceType": "Service type",
   "information.serviceType.copy": "Copy",
@@ -101,6 +102,7 @@
   "information.slug": "Slug",
   "information.symbols": "Symbols",
   "information.tags": "Tags",
+  "information.tags.none": "No tags",
 
   "requestform.populateById": "Use to fill form",
   "requestform.populateFromSI": "Search shared catalog",

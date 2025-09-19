@@ -69,10 +69,15 @@ class RequestingInstitutionInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={6}>
-            <KeyValue
-              label={<FormattedMessage id="ui-rs.information.institutionStatus" />}
-              value={get(institution.status, ['label'])}
-            />
+            {institution.status?.value !== undefined &&
+              <KeyValue
+                label={<FormattedMessage id="ui-rs.information.institutionStatus" />}
+                value={<FormattedMessage
+                  id={`ui-rs.information.institutionStatus.${institution.status.value}`}
+                  defaultMessage={institution.status?.label ?? institution.status.value}
+                />}
+              />
+            }
           </Col>
           <Col xs={6}>
             <KeyValue
@@ -93,7 +98,7 @@ class RequestingInstitutionInfo extends React.Component {
           <Col xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-rs.information.tags" />}
-              value={institution.tagSummary}
+              value={institution.tagSummary === 'No tags' ? <FormattedMessage id="ui-rs.information.tags.none" /> : institution.tagSummary}
             />
           </Col>
         </Row>
