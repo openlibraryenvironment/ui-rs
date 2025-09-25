@@ -14,12 +14,14 @@ const ViewMessageBanners = ({ request }) => {
   const lastCostStates = ['RES_COPY_AWAIT_PICKING', combine ? 'RES_AWAIT_PICKING' : 'RES_AWAIT_SHIP'];
   const lastChanceForCost = stripes.config?.reshare?.useTiers && stripes.config?.reshare?.showCost && lastCostStates.includes(request?.state?.code);
 
+  const currentSupplier = request.resolvedSupplier?.id ?? request.supplyingInstitutionSymbol;
+
   const relevantPendingConditions = request.conditions?.filter(
-    condition => condition.relevantSupplier?.id === request.resolvedSupplier?.id && condition.accepted === false
+    condition => currentSupplier === (condition.relevantSupplier?.id ?? condition.supplyingInstitutionSymbol) && condition.accepted === false
   );
 
   const relevantAcceptedConditions = request.conditions?.filter(
-    condition => condition.relevantSupplier?.id === request.resolvedSupplier?.id && condition.accepted === true
+    condition => currentSupplier === (condition.relevantSupplier?.id ?? condition.supplyingInstitutionSymbol) && condition.accepted === true
   );
 
   const cancellationRequested = request?.state?.code === 'RES_CANCEL_REQUEST_RECEIVED';
