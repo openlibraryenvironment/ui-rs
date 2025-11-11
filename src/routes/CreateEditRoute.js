@@ -233,6 +233,7 @@ const CreateEditRoute = props => {
       formattedDateCreated: (
         intl.formatDate(record.dateCreated) + ', ' + intl.formatTime(record.dateCreated)
       ),
+      serviceLevel: { value: record?.serviceLevel?.value },
       serviceType: { value: record?.serviceType?.value } };
     if (config?.useTiers) {
       initialValues.tier = tierForRequest(record, tiersByRequester[record.requestingInstitutionSymbol])?.id;
