@@ -8,7 +8,7 @@ jobs:
     env:
       FOLIO_NPM_REGISTRY: 'https://repository.folio.org/repository/npm-folioci/'
       RESHARE_NPM_REGISTRY: 'https://registry.npmjs.org'
-      NODEJS_VERSION: '18'
+      NODEJS_VERSION: '20'
 
     runs-on: ubuntu-latest
     permissions:
@@ -22,6 +22,11 @@ jobs:
           node-version: ${{ env.NODEJS_VERSION }}
           registry-url: ${{ env.RESHARE_NPM_REGISTRY }}
           scope: '@projectreshare'
+
+      - name: Upgrade npm to version that supports trusted publishing
+        run: |
+          npm install -g npm@^11.5.1
+          npm -v
 
       - name: Set yarn config
         run: |
