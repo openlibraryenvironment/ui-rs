@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Layout, Pane } from '@folio/stripes/components';
 import { useSettingSection } from '@k-int/stripes-kint-components';
-import { EditableSettingsList } from '@k-int/stripes-kint-components/es/lib/EditableSettingsList';
+import { EditableSettingsList } from '@k-int/stripes-kint-components';
 import { SETTINGS_ENDPOINT } from '../constants/endpoints';
 
 const AutomaticFeesSettings = () => {
