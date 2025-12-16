@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { useIntl } from 'react-intl';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import { useOkapiKy } from '@folio/stripes/core';
 import { generateKiwtQuery, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 import { useOkapiQuery } from '@projectreshare/stripes-reshare';
@@ -22,9 +24,38 @@ const SUPPLIER = 'supply';
 
 const PatronRequestsRoute = ({ appName, children }) => {
   const intl = useIntl();
+  const location = useLocation();
+  const history = useHistory();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
   const ky = useOkapiKy();
   const isSupplier = appName === SUPPLIER;
+
+  // Sync query state when location.search changes (e.g., reset filters link clicked)
+  useEffect(() => {
+    const parsedQuery = queryString.parse(location.search);
+
+    // Ensure all standard query fields are present (set to empty string if missing)
+    // This is important because querySetter merges rather than replaces
+    const fullQuery = {
+      query: '',
+      filters: '',
+      sort: '',
+      ...parsedQuery
+    };
+
+    const currentQueryString = queryString.stringify(query);
+    const newQueryString = queryString.stringify(fullQuery);
+
+    if (currentQueryString !== newQueryString) {
+      querySetter({
+        nsValues: fullQuery,
+        location,
+        history,
+        state: { changeType: 'external-location' } // Prevents duplicate URL being pushed to history
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);  // Only depend on location.search (not query) to avoid infinite loop
 
   const SASQ_MAP = {
     searchKey: 'id,hrid,patronGivenName,patronSurname,patronIdentifier,title,author,issn,isbn,volumes.itemId,selectedItemBarcode',
