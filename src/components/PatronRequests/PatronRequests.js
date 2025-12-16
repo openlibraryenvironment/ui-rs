@@ -125,7 +125,6 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
     <SearchAndSortQuery
       initialSearch={initialSearch}
       initialSearchState={{ query: '' }}
-      key={location.search}
       queryGetter={queryGetter}
       querySetter={querySetter}
     >
