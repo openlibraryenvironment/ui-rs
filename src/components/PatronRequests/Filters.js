@@ -12,6 +12,7 @@ import {
 // import { DateFilter } from '@folio/stripes-erm-components';
 import AppNameContext from '../../AppNameContext';
 import DateFilter from './DateFilter';
+import BackendMultiSelectionFilter from './BackendMultiSelectionFilter';
 
 // import css from './Filters.css';
 
@@ -77,12 +78,25 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
           displayClearButton={activeFilters?.[institutionFilterId]?.length > 0}
           onClearFilter={() => filterHandlers.clearGroup(institutionFilterId)}
         >
-          <MultiSelectionFilter
-            name={institutionFilterId}
-            dataOptions={options.institution}
-            selectedValues={activeFilters[institutionFilterId]}
-            onChange={onChangeHandler}
-          />
+          {options.institution ? (
+            <MultiSelectionFilter
+              name={institutionFilterId}
+              dataOptions={options.institution}
+              selectedValues={activeFilters[institutionFilterId]}
+              onChange={onChangeHandler}
+            />
+          ) : (
+            <BackendMultiSelectionFilter
+              name={institutionFilterId}
+              selectedValues={activeFilters[institutionFilterId]}
+              onChange={onChangeHandler}
+              endpoint="directory/entry"
+              searchParamsTemplate="filters=type.value=institution&match=name&term={searchTerm}&perPage=100&stats=true"
+              resultsPath="results"
+              labelKey="name"
+              valueKey="id"
+            />
+          )}
         </Accordion>
         {appName === 'supply' &&
           <>
