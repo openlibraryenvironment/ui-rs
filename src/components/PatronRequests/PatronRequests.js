@@ -70,6 +70,11 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
   const stripes = useStripes();
   const [offset, setOffset] = useState(0);
 
+  // Reset pagination when filters/search changes
+  useEffect(() => {
+    setOffset(0);
+  }, [location.search]);
+
   const requests = requestsQuery?.data?.pages?.[offset / perPage]?.results;
   const sparseRequests = (new Array(offset)).concat(requests);
   const totalCount = requestsQuery?.data?.pages?.[0]?.total;
