@@ -5,7 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useOkapiKy } from '@folio/stripes/core';
 import { generateKiwtQuery, useKiwtSASQuery } from '@k-int/stripes-kint-components';
-import { useOkapiQuery } from '@projectreshare/stripes-reshare';
+import { useOkapiQuery, useSetting } from '@projectreshare/stripes-reshare';
 import PatronRequests from '../components/PatronRequests';
 
 const PER_PAGE = 100;
@@ -56,6 +56,11 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);  // Only depend on location.search (not query) to avoid infinite loop
+
+  // Check if backend institution filter should be used (SLNP mode)
+  const stateModelSetting = useSetting('requester_returnables_state_model');
+  const useBackendFilter = stateModelSetting.isSuccess &&
+                           stateModelSetting.value?.startsWith('SLNP');
 
   const SASQ_MAP = {
     searchKey: 'id,hrid,patronGivenName,patronSurname,patronIdentifier,title,author,issn,isbn,volumes.itemId,selectedItemBarcode',
@@ -153,7 +158,8 @@ const PatronRequestsRoute = ({ appName, children }) => {
         perPage: '1000',
         stats: 'true',
       },
-      staleTime: 2 * 60 * 60 * 1000
+      staleTime: 2 * 60 * 60 * 1000,
+      enabled: !useBackendFilter  // Only load static institutions when backend filter is disabled
     }),
     useOkapiQuery('rs/settings/appSettings', {
       searchParams: {
@@ -171,17 +177,17 @@ const PatronRequestsRoute = ({ appName, children }) => {
   ];
 
   let filterOptions;
-  if (filterQueries.every(x => x.isSuccess)) {
-    const [batches, lmsLocations, shelvingLocations, { results: institutions }, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
+  // Check if queries are ready (successful or disabled/idle)
+  const queriesReady = filterQueries.every(x => x.isSuccess || x.status === 'idle');
+
+  if (queriesReady) {
+    const [batches, lmsLocations, shelvingLocations, dirQueryData, settings, refDataRequestServiceType] = filterQueries.map(x => x.data);
     filterOptions = {
       batch: batches
         .sort(compareCreated)
         .map(x => ({ label: x.description, value: x.id, dateCreated: x.dateCreated })),
       hasLocalNote: [({ label: intl.formatMessage({ id: 'stripes-reshare.hasLocalNote' }), value: 'localNote ISNOTNULL' })],
       hasUnread: [({ label: intl.formatMessage({ id: 'ui-rs.unread' }), value: 'hasUnreadMessages=true' })],
-      institution: institutions
-        .map(x => ({ label: x.name, value: x.id }))
-        .sort(compareLabel),
       location: lmsLocations
         .map(x => ({ label: x.name, value: x.id }))
         .sort(compareLabel),
@@ -193,6 +199,13 @@ const PatronRequestsRoute = ({ appName, children }) => {
       terminal: [({ label: intl.formatMessage({ id: 'ui-rs.hideComplete' }), value: 'false' })],
       serviceType: getRequestServiceTypes(refDataRequestServiceType)
     };
+
+    // Only add static institutions if NOT using backend filter
+    if (!useBackendFilter && dirQueryData?.results) {
+      filterOptions.institution = dirQueryData.results
+        .map(x => ({ label: x.name, value: x.id }))
+        .sort(compareLabel);
+    }
   }
 
   return (
