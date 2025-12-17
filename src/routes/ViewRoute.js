@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
 import { Button, ButtonGroup, Icon, Layout, Pane, PaneMenu, Paneset, Tooltip } from '@folio/stripes/components';
-import { DirectLink, upNLevels, useCloseDirect, usePerformAction, useOkapiQuery } from '@projectreshare/stripes-reshare';
+import { DirectLink, upNLevels, useCloseDirect, usePerformAction, useOkapiQuery, useSetting } from '@projectreshare/stripes-reshare';
 
 import renderNamedWithProps from '../util/renderNamedWithProps';
 import { MessageModalProvider } from '../components/MessageModalState';
@@ -40,6 +40,7 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
   const performAction = usePerformAction(id);
   const { handleMarkAllRead } = useChatActions(id);
   const close = useCloseDirect(upNLevels(location, 2));
+  const chatFeatureFlag = useSetting('chat.feature_flag', 'featureFlags');
 
   // Fetch the request
   const { data: request = {}, isSuccess: hasRequestLoaded } = useOkapiQuery(`rs/patronrequests/${id}`, { staleTime: 2 * 60 * 1000, notifyOnChangeProps: 'tracked' });
@@ -70,6 +71,7 @@ const ViewRoute = ({ location, location: { pathname }, match }) => {
     return (
       <PaneMenu>
         {request?.resolvedSupplier &&
+        (!chatFeatureFlag.isSuccess || chatFeatureFlag.value !== 'false') &&
           <ChatButton
             request={request}
             onClick={({ open }) => {
