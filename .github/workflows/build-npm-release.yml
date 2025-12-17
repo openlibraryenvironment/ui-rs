@@ -37,4 +37,4 @@ jobs:
 
       - run: yarn install
 
-      - run: npm publish --tag v1.19
+      - run: npm publish --tag legacy-1-19
