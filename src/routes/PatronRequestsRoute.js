@@ -5,7 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useOkapiKy } from '@folio/stripes/core';
 import { generateKiwtQuery, useKiwtSASQuery } from '@k-int/stripes-kint-components';
-import { useOkapiQuery, useSetting } from '@projectreshare/stripes-reshare';
+import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 import PatronRequests from '../components/PatronRequests';
 
 const PER_PAGE = 100;
@@ -56,11 +56,6 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);  // Only depend on location.search (not query) to avoid infinite loop
-
-  // Check if backend institution filter should be used (SLNP mode)
-  const stateModelSetting = useSetting('requester_returnables_state_model');
-  const useBackendFilter = stateModelSetting.isSuccess &&
-                           stateModelSetting.value?.startsWith('SLNP');
 
   const SASQ_MAP = {
     searchKey: 'id,hrid,patronGivenName,patronSurname,patronIdentifier,title,author,issn,isbn,volumes.itemId,selectedItemBarcode',
@@ -142,6 +137,16 @@ const PatronRequestsRoute = ({ appName, children }) => {
     }
   );
 
+  // Fetch settings to determine if we're in SLNP mode
+  const settingsQuery = useOkapiQuery('rs/settings/appSettings', {
+    searchParams: {
+      filters: 'hidden=true',
+      perPage: '1000',
+    },
+    staleTime: 2 * 60 * 60 * 1000
+  });
+  const useBackendFilter = settingsQuery.data?.some(d => d.key === STATE_MODEL_REQUESTER && d.value?.startsWith(SLNP_PREFIX));
+
   const filterQueries = [
     useOkapiQuery('rs/batch', {
       searchParams: {
@@ -159,15 +164,9 @@ const PatronRequestsRoute = ({ appName, children }) => {
         stats: 'true',
       },
       staleTime: 2 * 60 * 60 * 1000,
-      enabled: !useBackendFilter  // Only load static institutions when backend filter is disabled
+      enabled: settingsQuery.isSuccess && !useBackendFilter  // Only load static institutions when backend filter is disabled
     }),
-    useOkapiQuery('rs/settings/appSettings', {
-      searchParams: {
-        filters: 'hidden=true',
-        perPage: '1000',
-      },
-      staleTime: 2 * 60 * 60 * 1000
-    }),
+    settingsQuery,
     useOkapiQuery('rs/refdata', {
       searchParams: {
         filters: 'desc=request.serviceType',
