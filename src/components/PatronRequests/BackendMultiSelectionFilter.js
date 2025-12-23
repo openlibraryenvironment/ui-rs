@@ -20,6 +20,7 @@ const BackendMultiSelectionFilter = ({
   valueKey,
   placeholder,
   disabled,
+  buildBatchSearchParams,
   ...otherProps
 }) => {
   const intl = useIntl();
@@ -44,9 +45,29 @@ const BackendMultiSelectionFilter = ({
     cacheTime: 2 * 60 * 60 * 1000,
   });
 
+  // Batch fetch labels for selected values missing from cache
+  const missingIds = selectedValues.filter(val => !cache.has(val));
+  const batchSearchParams = buildBatchSearchParams && missingIds.length > 0
+    ? buildBatchSearchParams(missingIds)
+    : '';
+
+  const initialFetchQuery = useOkapiQuery(endpoint, {
+    searchParams: batchSearchParams,
+    enabled: !!batchSearchParams,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 2 * 60 * 60 * 1000,
+  });
+
   // Map response data to dataOptions format
   const data = query.data?.[resultsPath] || [];
   const searchResults = data.map(item => ({
+    label: item[labelKey],
+    value: item[valueKey]
+  }));
+
+  // Map initial fetch results
+  const initialData = initialFetchQuery.data?.[resultsPath] || [];
+  const initialResults = initialData.map(item => ({
     label: item[labelKey],
     value: item[valueKey]
   }));
@@ -58,8 +79,15 @@ const BackendMultiSelectionFilter = ({
     });
   }, [searchResults, cache]);
 
-  // Build dataOptions: include search results + any selected items from cache
-  const dataOptions = [...searchResults];
+  // Update cache with initial fetch results
+  useEffect(() => {
+    initialResults.forEach(item => {
+      cache.set(item.value, item.label);
+    });
+  }, [initialResults, cache]);
+
+  // Build dataOptions: include search results + initial fetch results + any selected items from cache
+  const dataOptions = [...searchResults, ...initialResults];
   selectedValues.forEach(val => {
     if (!dataOptions.find(opt => opt.value === val) && cache.has(val)) {
       dataOptions.push({ label: cache.get(val), value: val });
@@ -107,6 +135,7 @@ BackendMultiSelectionFilter.propTypes = {
   valueKey: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
+  buildBatchSearchParams: PropTypes.func,
 };
 
 export default BackendMultiSelectionFilter;

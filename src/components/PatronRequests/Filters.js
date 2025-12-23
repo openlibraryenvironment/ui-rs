@@ -95,6 +95,7 @@ const Filters = ({ activeFilters, filterHandlers, options, appDetails }) => {
               resultsPath="results"
               labelKey="name"
               valueKey="id"
+              buildBatchSearchParams={(ids) => `filters=${ids.map(id => `id=${id}`).join('||')}&perPage=1000&stats=true`}
             />
           )}
         </Accordion>
