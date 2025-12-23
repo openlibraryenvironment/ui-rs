@@ -1,8 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { MultiSelection } from '@folio/stripes/components';
 import { useOkapiQuery } from '@projectreshare/stripes-reshare';
+
+// Structure: { [endpoint]: Map<id, label> }
+const labelCaches = {};
 
 const MIN_SEARCH_LENGTH = 2;
 
@@ -22,8 +25,11 @@ const BackendMultiSelectionFilter = ({
   const intl = useIntl();
   const [filterValue, setFilterValue] = useState('');
 
-  // Cache all items we've seen in order to display selected items
-  const itemCache = useRef(new Map());
+  // Get or create cache for this endpoint
+  if (!labelCaches[endpoint]) {
+    labelCaches[endpoint] = new Map();
+  }
+  const cache = labelCaches[endpoint];
 
   // Note: MultiSelection already debounces the filter function call at 300ms
   const shouldFetch = filterValue.length >= MIN_SEARCH_LENGTH;
@@ -48,15 +54,15 @@ const BackendMultiSelectionFilter = ({
   // Update cache with new search results
   useEffect(() => {
     searchResults.forEach(item => {
-      itemCache.current.set(item.value, item);
+      cache.set(item.value, item.label);
     });
-  }, [searchResults]);
+  }, [searchResults, cache]);
 
   // Build dataOptions: include search results + any selected items from cache
   const dataOptions = [...searchResults];
   selectedValues.forEach(val => {
-    if (!dataOptions.find(opt => opt.value === val) && itemCache.current.has(val)) {
-      dataOptions.push(itemCache.current.get(val));
+    if (!dataOptions.find(opt => opt.value === val) && cache.has(val)) {
+      dataOptions.push({ label: cache.get(val), value: val });
     }
   });
 
