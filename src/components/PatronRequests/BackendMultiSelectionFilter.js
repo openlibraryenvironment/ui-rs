@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { debounce } from 'lodash';
@@ -82,10 +82,10 @@ const BackendMultiSelectionFilter = ({
     });
   };
 
-  const handleFilterChange = (value) => {
+  const handleFilterChange = useCallback((value, options) => {
     debouncedSetFilterValue(value);
-    return { renderedItems: dataOptions, exactMatch: false };
-  };
+    return { renderedItems: options || [], exactMatch: false };
+  }, [debouncedSetFilterValue]);
 
   return (
     <MultiSelection
