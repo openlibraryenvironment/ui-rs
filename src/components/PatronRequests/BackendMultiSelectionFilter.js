@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
+import { debounce } from 'lodash';
 import { MultiSelection } from '@folio/stripes/components';
 import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 
@@ -8,6 +9,7 @@ import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 const labelCaches = {};
 
 const MIN_SEARCH_LENGTH = 2;
+const DEBOUNCE_MS = 300;
 
 const BackendMultiSelectionFilter = ({
   name,
@@ -26,13 +28,23 @@ const BackendMultiSelectionFilter = ({
   const intl = useIntl();
   const [filterValue, setFilterValue] = useState('');
 
-  // Get or create cache for this endpoint
+  const debouncedSetFilterValue = useMemo(
+    () => debounce(setFilterValue, DEBOUNCE_MS),
+    []
+  );
+
   if (!labelCaches[endpoint]) {
     labelCaches[endpoint] = new Map();
   }
   const cache = labelCaches[endpoint];
 
-  // Note: MultiSelection already debounces the filter function call at 300ms
+  const updateCache = (data) => {
+    const results = data?.[resultsPath] || [];
+    results.forEach(item => {
+      cache.set(item[valueKey], item[labelKey]);
+    });
+  };
+
   const shouldFetch = filterValue.length >= MIN_SEARCH_LENGTH;
   const searchParams = shouldFetch
     ? searchParamsTemplate.replace('{searchTerm}', filterValue)
@@ -43,6 +55,7 @@ const BackendMultiSelectionFilter = ({
     enabled: shouldFetch,
     staleTime: 5 * 60 * 1000,
     cacheTime: 2 * 60 * 60 * 1000,
+    onSuccess: updateCache,
   });
 
   // Batch fetch labels for selected values missing from cache
@@ -51,48 +64,16 @@ const BackendMultiSelectionFilter = ({
     ? buildBatchSearchParams(missingIds)
     : '';
 
-  const initialFetchQuery = useOkapiQuery(endpoint, {
+  useOkapiQuery(endpoint, {
     searchParams: batchSearchParams,
     enabled: !!batchSearchParams,
     staleTime: 5 * 60 * 1000,
     cacheTime: 2 * 60 * 60 * 1000,
+    onSuccess: updateCache,
   });
 
-  // Map response data to dataOptions format
-  const data = query.data?.[resultsPath] || [];
-  const searchResults = data.map(item => ({
-    label: item[labelKey],
-    value: item[valueKey]
-  }));
-
-  // Map initial fetch results
-  const initialData = initialFetchQuery.data?.[resultsPath] || [];
-  const initialResults = initialData.map(item => ({
-    label: item[labelKey],
-    value: item[valueKey]
-  }));
-
-  // Update cache with new search results
-  useEffect(() => {
-    searchResults.forEach(item => {
-      cache.set(item.value, item.label);
-    });
-  }, [searchResults, cache]);
-
-  // Update cache with initial fetch results
-  useEffect(() => {
-    initialResults.forEach(item => {
-      cache.set(item.value, item.label);
-    });
-  }, [initialResults, cache]);
-
-  // Build dataOptions: include search results + initial fetch results + any selected items from cache
-  const dataOptions = [...searchResults, ...initialResults];
-  selectedValues.forEach(val => {
-    if (!dataOptions.find(opt => opt.value === val) && cache.has(val)) {
-      dataOptions.push({ label: cache.get(val), value: val });
-    }
-  });
+  const dataOptions = (query.data?.[resultsPath] || [])
+    .map(item => ({ label: item[labelKey], value: item[valueKey] }));
 
   const onChangeHandler = (selectedDataOptions) => {
     onChange({
@@ -101,18 +82,16 @@ const BackendMultiSelectionFilter = ({
     });
   };
 
-  // Handle filter input changes - called by MultiSelection when asyncFiltering is true
   const handleFilterChange = (value) => {
-    setFilterValue(value);
+    debouncedSetFilterValue(value);
     return { renderedItems: dataOptions, exactMatch: false };
   };
 
   return (
     <MultiSelection
-      asyncFiltering
       dataOptions={dataOptions}
       value={selectedValues
-        .map(val => dataOptions.find(opt => opt.value === val))
+        .map(val => (cache.has(val) ? { label: cache.get(val), value: val } : null))
         .filter(Boolean)}
       onChange={onChangeHandler}
       filter={handleFilterChange}
