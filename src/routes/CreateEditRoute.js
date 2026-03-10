@@ -74,12 +74,6 @@ const CreateEditRoute = props => {
     }
   );
 
-
-  const { data: enabledFields } = useOkapiQuery('rs/patronrequests/editableFields/edit', {
-    useErrorBoundary: false,
-    staleTime: 2 * 60 * 60 * 1000
-  });
-
   const reqQuery = useOkapiQuery(`rs/patronrequests/${id}`, { enabled: !!id });
   const copyrightTypeRefdata = useRefdata({
     desc: 'copyrightType',
