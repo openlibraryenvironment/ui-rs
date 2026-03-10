@@ -77,7 +77,7 @@ const PatronRequests = ({ requestsQuery, queryGetter, querySetter, filterOptions
 
   const requests = requestsQuery?.data?.pages?.[offset / perPage]?.results;
   const sparseRequests = (new Array(offset)).concat(requests);
-  const totalCount = requestsQuery?.data?.pages?.[0]?.total;
+  const totalCount = requestsQuery?.data?.pages?.[0]?.total ?? 0;
   const parsedParams = queryString.parse(location.search);
   const sortOrder = parsedParams.sort || '';
   const fetchMore = (_askAmount, index) => {

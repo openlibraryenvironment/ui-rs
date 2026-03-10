@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "~7.1.0",
-    "@folio/stripes-cli": "~3.1.0",
+    "@folio/stripes-cli": "~4.0.0",
     "eslint": "^7.0.0"
   },
   "dependencies": {
@@ -23,7 +23,7 @@
     "@folio/stripes-erm-components": "~9.0.0",
     "@folio/stripes-template-editor": "^3.0.0",
     "@k-int/stripes-kint-components": "^5.4.0",
-    "@projectreshare/stripes-reshare": "^1.12.0",
+    "@projectreshare/stripes-reshare": "^2.1.0",
     "classnames": "^2.2.6",
     "final-form": "^4.2.0",
     "final-form-arrays": "^3.0.2",
@@ -42,10 +42,10 @@
     "xml-beautify": "^1.2.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^9.0.0",
+    "@folio/stripes": "^9.0.0 || ^10.0.0",
     "moment": "^2.29.0",
     "react": "*",
-    "react-intl": "^6.4.7",
+    "react-intl": "^6.4.7 || ^7.0.0",
     "react-query": "^3.9.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.0.0"
