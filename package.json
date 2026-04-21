@@ -1,7 +1,11 @@
 {
   "name": "@projectreshare/rs",
-  "version": "1.20.17",
+  "version": "1.20.18",
   "description": "Resource Sharing",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openlibraryenvironment/ui-rs"
+  },
   "main": "src/index.js",
   "repository": "",
   "license": "Apache-2.0",

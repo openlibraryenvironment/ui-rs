@@ -16,6 +16,7 @@
   "supplier": "Supplier",
   "yes": "Yes",
   "no": "No",
+  "viewInDirectory": "View in directory",
   "patronrequests.id": "Request Id",
   "patronrequests.isRequester": "Requester?",
   "patronrequests.dateCreated": "Created",

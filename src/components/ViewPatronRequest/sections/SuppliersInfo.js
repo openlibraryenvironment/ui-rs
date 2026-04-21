@@ -25,7 +25,7 @@ class SuppliersInfo extends React.Component {
           key={i}
           id={`${this.props.id}-card`}
           headerStart={`Supplier ${i + 1}`}
-          headerEnd={<Link to={`/directory/entries?qindex=symbols.symbol&query=${supplier.directoryId.replace(/.*:/, '')}`}>View in directory</Link>}
+          headerEnd={<Link to={`/directory/entries?qindex=symbols.symbol&query=${supplier.directoryId.replace(/.*:/, '')}`}><FormattedMessage id="ui-rs.viewInDirectory" /></Link>}
           roundedBorder
           cardClass={css.supplierCard}
           headerClass={css.supplierCardHeader}

@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Layout, Pane } from '@folio/stripes/components';
 import { useSettingSection } from '@k-int/stripes-kint-components';
-import { EditableSettingsList } from '@k-int/stripes-kint-components/es/lib/EditableSettingsList';
+import { EditableSettingsList } from '@k-int/stripes-kint-components';
 import { SETTINGS_ENDPOINT } from '../constants/endpoints';
 
 const AutomaticFeesSettings = () => {
@@ -13,7 +13,7 @@ const AutomaticFeesSettings = () => {
 
   return (
     <Pane defaultWidth="fill" paneTitle={<FormattedMessage id="ui-rs.settings.settingsSection.automaticFees" />}>
-      <Layout className="display-flex" style={{ 'flex-direction': 'column', gap: '1em' }}>
+      <Layout className="display-flex" style={{ 'flexDirection': 'column', gap: '1em' }}>
         <EditableSettingsList
           allowEdit
           initialValues={{ 'settings': settings }}
