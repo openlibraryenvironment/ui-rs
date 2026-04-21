@@ -1,0 +1,40 @@
+name: Publish release npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
+jobs:
+  build:
+    env:
+      FOLIO_NPM_REGISTRY: 'https://repository.folio.org/repository/npm-folioci/'
+      RESHARE_NPM_REGISTRY: 'https://registry.npmjs.org'
+      NODEJS_VERSION: '20'
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODEJS_VERSION }}
+          registry-url: ${{ env.RESHARE_NPM_REGISTRY }}
+          scope: '@projectreshare'
+
+      - name: Upgrade npm to version that supports trusted publishing
+        run: |
+          npm install -g npm@^11.5.1
+          npm -v
+
+      - name: Set yarn config
+        run: |
+          yarn config set @folio:registry ${{ env.FOLIO_NPM_REGISTRY }}
+          yarn config set @projectreshare:registry ${{ env.RESHARE_NPM_REGISTRY }}
+
+      - run: yarn install
+
+      - run: npm publish --tag legacy-1-19
