@@ -7,7 +7,6 @@
     "url": "https://github.com/openlibraryenvironment/ui-rs"
   },
   "main": "src/index.js",
-  "repository": "",
   "license": "Apache-2.0",
   "scripts": {
     "start": "stripes serve",
