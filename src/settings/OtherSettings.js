@@ -21,10 +21,11 @@ const OtherSettings = () => {
         />
         <EditableSettingsList
           allowEdit
-          initialValues={{ 'settings': settings }}
+          initialValues={{ settings }}
           intlKey="ui-rs"
           onSave={handleSettingSubmit}
           onSubmit={handleSettingSubmit}
+          settingData={{ settings }}
           settingSection="other"
         />
       </Layout>
