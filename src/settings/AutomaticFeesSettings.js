@@ -16,7 +16,8 @@ const AutomaticFeesSettings = () => {
       <Layout className="display-flex" style={{ 'flexDirection': 'column', gap: '1em' }}>
         <EditableSettingsList
           allowEdit
-          initialValues={{ 'settings': settings }}
+          settingData={{ settings }}
+          initialValues={{ settings }}
           intlKey="ui-rs"
           onSave={handleSettingSubmit}
           onSubmit={handleSettingSubmit}
