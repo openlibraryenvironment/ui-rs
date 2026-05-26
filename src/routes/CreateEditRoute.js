@@ -71,6 +71,7 @@ const CreateEditRoute = props => {
       useErrorBoundary: false,
       refetchOnWindowFocus: false,
       retryOnMount:false,
+      enabled: routerLocation.pathname.endsWith('create'),
     }
   );
 
@@ -146,12 +147,6 @@ const CreateEditRoute = props => {
     return null;
   }
 
-  const validRequesterRecords = institutionQuery.isSuccess ? (institutionQuery.data
-    .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol)) : [];
-
-  if (!validRequesterRecords?.[0]) throw new Error('Cannot resolve symbol to create requests as');
-
-  const requesters = validRequesterRecords?.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
 
   // locations are where rec.type.value is 'branch' and there is a tag in rec.type.tags where the value is 'pickup'
@@ -169,6 +164,11 @@ const CreateEditRoute = props => {
     else if (routerLocation.pathname.endsWith('revalidate')) op = REVALIDATE;
     else op = EDIT;
   } else op = CREATE;
+
+  const validRequesterRecords = institutionQuery.isSuccess ? (institutionQuery.data
+    .filter(rec => rec?.type?.value === 'institution' && rec?.symbols?.[0]?.authority?.symbol)) : [];
+  if (op === CREATE && !validRequesterRecords?.[0]) throw new Error('Cannot resolve symbol to create requests as');
+  const requesters = validRequesterRecords?.reduce((acc, cur) => ([...acc, { value: `${cur.symbols[0].authority.symbol}:${cur.symbols[0].symbol}`, label: cur.name }]), []);
 
   let initialValues;
   let record;
