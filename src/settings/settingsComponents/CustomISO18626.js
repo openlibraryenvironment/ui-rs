@@ -1,108 +1,75 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import React, { useMemo, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
-import { IntlConsumer } from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
+import { useOkapiQuery } from '@projectreshare/stripes-reshare';
 
 import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
-class CustomISO18626 extends React.Component {
-  static manifest = Object.freeze({
-    refdatavalues: {
-      type: 'okapi',
-      path: REFDATA_ENDPOINT,
-      params: {
-        max: '500',
-      },
-    }
-  });
+const CUST_OPTIONS = ['cannotSupplyReasons', 'loanConditions', 'customIdentifiersScheme'];
 
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      refdatavalues: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.shape({
-          id: PropTypes.string,
-          desc: PropTypes.string,
-          values: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.string,
-            value: PropTypes.string,
-            label: PropTypes.string,
-          })),
-        })),
-      }),
-    })
+const CustomISO18626 = () => {
+  const intl = useIntl();
+  const stripes = useStripes();
+  const [categoryId, setCategoryId] = useState(null);
+  const [categoryName, setCategoryName] = useState(null);
+
+  const { data: refdataValues = [] } = useOkapiQuery(REFDATA_ENDPOINT, { searchParams: { max: '500' } });
+
+  const ConnectedControlledVocab = useMemo(
+    () => stripes.connect(ControlledVocab),
+    [stripes]
+  );
+
+  const filteredList = refdataValues.filter(obj => CUST_OPTIONS.includes(obj.desc));
+
+  const onChangeCategory = (e) => {
+    const selected = refdataValues.find(obj => obj.id === e.target.value);
+    setCategoryId(e.target.value);
+    setCategoryName(selected?.desc);
   };
 
-  constructor(props) {
-    super(props);
-    this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
+  const rowFilter = (
+    <Select
+      dataOptions={[
+        { value: 'empty', label: intl.formatMessage({ id: 'ui-rs.settings.customiseListSelect' }) },
+        ...filteredList.map(c => ({
+          value: c.id,
+          label: intl.formatMessage({ id: `ui-rs.settings.customiseListSelect.${c.desc}`, defaultMessage: c.desc }),
+        })),
+      ]}
+      id="categorySelect"
+      label={<FormattedMessage id="ui-rs.settings.customiseList" />}
+      name="categorySelect"
+      onChange={onChangeCategory}
+    />
+  );
 
-    this.state = {
-      categoryId: null,
-    };
-  }
+  return (
+    <ConnectedControlledVocab
+      stripes={stripes}
+      actuatorType="refdata"
+      baseUrl={`${REFDATA_ENDPOINT}/${categoryId}`}
+      columnMapping={{
+        label: intl.formatMessage({ id: 'ui-rs.settings.value' }),
+        actions: intl.formatMessage({ id: 'ui-rs.settings.actions' }),
+      }}
+      dataKey={undefined}
+      formatter={{ label: r => intl.formatMessage({ id: `ui-rs.settings.customiseListSelect.${categoryName}.${r.value}`, defaultMessage: r.label }) }}
+      hiddenFields={['lastUpdated', 'numberOfObjects']}
+      id="custom-iso18626"
+      label={<FormattedMessage id="ui-rs.settings.customISO18626" />}
+      labelSingular={intl.formatMessage({ id: 'ui-rs.settings.value' })}
+      listSuppressor={() => !categoryId}
+      nameKey="label"
+      objectLabel={<FormattedMessage id="ui-rs.settings.values" />}
+      records="values"
+      rowFilter={rowFilter}
+      sortby="label"
+      visibleFields={['label']}
+    />
+  );
+};
 
-  onChangeCategory = (e) => {
-    const refdataValues = this.props?.resources?.refdatavalues?.records;
-    const categoryName = refdataValues ? refdataValues.filter(obj => obj.id === e.target.value)[0]?.desc : '';
-    this.setState({ categoryId: e.target.value, categoryName });
-  }
-
-  renderRowFilter(intl) {
-    const custOptions = ['cannotSupplyReasons', 'loanConditions', 'customIdentifiersScheme'];
-    const refdataValues = this.props?.resources?.refdatavalues?.records;
-    const filteredList = refdataValues ? refdataValues.filter(obj => custOptions.includes(obj.desc)) : [];
-    return (
-      <Select
-        dataOptions={[
-          { value: 'empty', label: intl.formatMessage({ id: 'ui-rs.settings.customiseListSelect' }) },
-          ...filteredList.map(c => ({ value: c.id, label: intl.formatMessage({ id: `ui-rs.settings.customiseListSelect.${c.desc}`, defaultMessage: c.desc }) })),
-        ]}
-        id="categorySelect"
-        label={<FormattedMessage id="ui-rs.settings.customiseList" />}
-        name="categorySelect"
-        onChange={this.onChangeCategory}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <IntlConsumer>
-        {intl => (
-          <this.connectedControlledVocab
-            {...this.props}
-            actuatorType="refdata"
-            baseUrl={`${REFDATA_ENDPOINT}/${this.state.categoryId}`}
-            columnMapping={{
-              label: intl.formatMessage({ id: 'ui-rs.settings.value' }),
-              actions: intl.formatMessage({ id: 'ui-rs.settings.actions' }),
-            }}
-            // We have to unset the dataKey to prevent the props.resources in
-            // <ControlledVocab> from being overwritten by the props.resources here.
-            formatter={{ label: r => intl.formatMessage({ id: `ui-rs.settings.customiseListSelect.${this.state.categoryName}.${r.value}`, defaultMessage: r.label }) }}
-            dataKey={undefined}
-            hiddenFields={['lastUpdated', 'numberOfObjects']}
-            id="custom-iso18626"
-            label={<FormattedMessage id="ui-rs.settings.customISO18626" />}
-            labelSingular={intl.formatMessage({ id: 'ui-rs.settings.value' })}
-            listSuppressor={() => !this.state.categoryId}
-            nameKey="label"
-            objectLabel={<FormattedMessage id="ui-rs.settings.values" />}
-            records="values"
-            rowFilter={this.renderRowFilter(intl)}
-            sortby="label"
-            stripes={this.props.stripes}
-            visibleFields={['label']}
-          />
-        )}
-      </IntlConsumer>
-    );
-  }
-}
-
-export default injectIntl(CustomISO18626);
+export default CustomISO18626;
